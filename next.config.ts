@@ -10,9 +10,6 @@ const nextConfig: NextConfig = {
     };
     return config;
   },
-  // images: {
-  //   domains: ['example.com'],
-  // },
 };
 
 module.exports = nextConfig;

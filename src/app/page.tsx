@@ -1,8 +1,15 @@
+'use client';
 import Image from 'next/image';
 import styles from './page.module.scss';
 import Loader from '@c/Loader/Loader';
+import { useSelector } from 'react-redux';
+import { FilterState } from '../types/storeType';
 export default function Home() {
-  console.log('gfhfdghfdh');
+  const filter = useSelector(
+    (state: { reduserFilter: { filter: FilterState } }) =>
+      state.reduserFilter.filter
+  );
+  console.log(filter);
   return (
     <main className={styles.main}>
       <Image

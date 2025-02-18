@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -12,9 +12,11 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.5.1",
     "next": "15.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-redux": "^9.2.0",
     "sass": "^1.83.4"
   },
   "devDependencies": {
