@@ -4,6 +4,7 @@ import styles from './page.module.scss';
 import Loader from '@c/Loader/Loader';
 import { useSelector } from 'react-redux';
 import { FilterState } from '../types/storeType';
+import { GateWindow } from '@c/GateWindow/GateWindow';
 export default function Home() {
   const filter = useSelector(
     (state: { reduserFilter: { filter: FilterState } }) =>
@@ -21,7 +22,7 @@ export default function Home() {
         priority
       />
       <Loader />
-
+      <GateWindow />
       <a
         className={styles.primary}
         href="/ptk"

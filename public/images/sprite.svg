@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+
+    <symbol id="icon-gate-right" width="25" height="26" viewBox="0 0 25 26">
+        <path d="M1.09119 13L24.5027 0.81931L24.5027 25.1807L1.09119 13Z" fill="currentColor" stroke="#005C00" stroke-width="0.994587"/>
+    </symbol>
+
+    <symbol id="icon-gate-left" width="25" height="26" viewBox="0 0 25 26">
+        <path d="M23.9088 13L0.497293 25.1807L0.497292 0.819326L23.9088 13Z" fill="currentColor" stroke="#005C00" stroke-width="0.994587"/>
+    </symbol>
+
+</svg>
