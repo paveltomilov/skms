@@ -2,15 +2,8 @@
 import Image from 'next/image';
 import styles from './page.module.scss';
 import Loader from '@c/Loader/Loader';
-import { useSelector } from 'react-redux';
-import { FilterState } from '../types/storeType';
 import { GateWindow } from '@c/GateWindow/GateWindow';
 export default function Home() {
-  const filter = useSelector(
-    (state: { reduserFilter: { filter: FilterState } }) =>
-      state.reduserFilter.filter
-  );
-  console.log(filter);
   return (
     <main className={styles.main}>
       <Image
