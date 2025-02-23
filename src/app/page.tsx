@@ -9,7 +9,6 @@ export default function Home() {
     (state: { reduserFilter: { filter: FilterState } }) =>
       state.reduserFilter.filter
   );
-  console.log(filter);
   return (
     <main className={styles.main}>
       <Image
