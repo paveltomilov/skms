@@ -9,9 +9,12 @@ interface ButtonProps {
   width: number;
   height: number;
   image?: string;
-  isActive?: boolean;
   disabled?: boolean;
   onClick?: () => void;
+  // Добавляем пропс для дополнительных стилей
+  style?: React.CSSProperties;
+  // Добавляем пропс для дополнительных классов
+  className?: string;
 }
 
 const Button = ({ 
@@ -19,14 +22,19 @@ const Button = ({
   width, 
   height, 
   image, 
-  isActive = false, 
   disabled = false, 
-  onClick 
+  onClick,
+  style, // Дополнительные стили
+  className // Дополнительные классы
 }: ButtonProps) => {
   return (
     <button 
-      className={`${styles.button} ${isActive ? styles.active : ''}`} 
-      style={{ width: `${width}px`, height: `${height}px` }}
+      className={`${styles.button} ${className || ''}`} // Добавляем переданные классы
+      style={{ 
+        width: `${width}px`, 
+        height: `${height}px`, 
+        ...style // Добавляем переданные стили
+      }}
       onClick={onClick}
       disabled={disabled}
     >
