@@ -11,9 +11,9 @@ interface ButtonProps {
   image?: string;
   disabled?: boolean;
   onClick?: () => void;
-  // Добавляем пропс для дополнительных стилей
+  // Добавен пропс для дополнительных стилей
   style?: React.CSSProperties;
-  // Добавляем пропс для дополнительных классов
+  // Добавен пропс для дополнительных классов
   className?: string;
 }
 
