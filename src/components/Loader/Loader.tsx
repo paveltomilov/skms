@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const Loader: FC = () => {
   return (
-    <div className={style.load} data-testId="loading">
+    <div className={style.load} data-testid="loading">
       <Image
         width="121"
         height="130"
