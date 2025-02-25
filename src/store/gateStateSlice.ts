@@ -6,11 +6,12 @@ export const initialState = [
   style.toClose,
   style.open,
   style.toOpen,
+  style.noPower,
 ]; // массив состояний задвижки
 
 const gateStateSlice = createSlice({
   name: "gate",
-  initialState,
+  initialState: initialState[3],
 
   reducers: {
     setGateState: (state, action) => (state = action.payload),

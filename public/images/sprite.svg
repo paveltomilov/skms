@@ -8,4 +8,9 @@
         <path d="M23.9088 13L0.497293 25.1807L0.497292 0.819326L23.9088 13Z" fill="currentColor" stroke="#005C00" stroke-width="0.994587"/>
     </symbol>
 
+    <symbol id="icon-cross" width="23" height="22" viewBox="0 0 23 22">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M1.25126 -3.90102e-07L22.5 21.2487L21.7487 22L0.5 0.751256L1.25126 -3.90102e-07Z" fill="#8F1313"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M22.5 0.751255L1.25126 22L0.499999 21.2487L21.7487 -3.28385e-08L22.5 0.751255Z" fill="#8F1313"/>
+    </symbol>
+
 </svg>

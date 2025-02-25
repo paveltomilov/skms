@@ -1,7 +1,19 @@
 $color-open: #08FE07;
-$color-close: #8A8A8A;
+$color-noPower: #8A8A8A;
 $color-intermediate: #FFFFFF;
+$color-cross: #8F1313;
 $animation-blink: blink 1s step-end infinite;
+
+.gate {
+    position: relative;
+}
+
+.cross {
+    color: $color-cross;
+    position: absolute;
+    left: 27%;
+    transform: translateY(10%);
+}
 
 //задвижка открыта 
 #open svg {
@@ -10,7 +22,12 @@ $animation-blink: blink 1s step-end infinite;
 
 // задвижка закрыта
 #close svg {
-    color: $color-close;
+    color: $color-intermediate;
+}
+
+// нет питания
+#noPower {
+    color: $color-noPower;
 }
 
 // задвижка идет на закрытие
@@ -19,7 +36,7 @@ $animation-blink: blink 1s step-end infinite;
         color: $color-intermediate;
     }
 
-    &:last-child {
+    &:nth-child(2) {
         animation: $animation-blink;
         color: $color-open;
     }
@@ -32,7 +49,7 @@ $animation-blink: blink 1s step-end infinite;
         animation: $animation-blink;
     }
 
-    &:last-child {
+    &:nth-child(2) {
         color: $color-open;
     }
 }
