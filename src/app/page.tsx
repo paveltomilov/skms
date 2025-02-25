@@ -4,6 +4,10 @@ import styles from './page.module.scss';
 import Loader from '@c/Loader/Loader';
 import { GateWindow } from '@c/GateWindow/GateWindow';
 export default function Home() {
+  // const filter = useSelector(
+  //   (state: { reduserFilter: { filter: FilterState } }) =>
+  //     state.reduserFilter.filter
+  // );
   return (
     <main className={styles.main}>
       <Image
