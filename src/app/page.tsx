@@ -1,15 +1,18 @@
-'use client';
-import Image from 'next/image';
-import styles from './page.module.scss';
-import Loader from '@c/Loader/Loader';
+"use client";
+import Image from "next/image";
+import styles from "./page.module.scss";
+import { useState } from "react";
+import Loader from "@c/Loader/Loader";
+import nextIcon from "../../public/images/file.svg";
 import { GateWindow } from '@c/GateWindow/GateWindow';
 export default function Home() {
-  // const filter = useSelector(
-  //   (state: { reduserFilter: { filter: FilterState } }) =>
-  //     state.reduserFilter.filter
-  // );
+  const [loading, setLoading] = useState(false);
+  const handleClick = () => setLoading((prev) => !prev);
   return (
     <main className={styles.main}>
+      <h1>Home</h1>
+      {loading && <Loader />}
+      <button onClick={handleClick}>TOGGLE LOADING</button>
       <Image
         className={styles.logo}
         src="/images/next.svg"
@@ -18,7 +21,12 @@ export default function Home() {
         height={38}
         priority
       />
-      <Loader />
+      <Image
+        className={styles.logo}
+        src={nextIcon}
+        alt="Next.js logo"
+        priority
+      />
       <GateWindow />
       <a
         className={styles.primary}
