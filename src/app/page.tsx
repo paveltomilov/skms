@@ -5,7 +5,6 @@ import { useState } from "react";
 import Loader from "@c/Loader/Loader";
 import nextIcon from "../../public/images/file.svg";
 import { GateWindow } from '@c/GateWindow/GateWindow';
-import Button from "@/components/Button";
 export default function Home() {
   const [loading, setLoading] = useState(false);
   const handleClick = () => setLoading((prev) => !prev);
@@ -29,14 +28,6 @@ export default function Home() {
         priority
       />
       <GateWindow />
-      <Button 
-        width={100} 
-        height={50} 
-        text="Кнопка" 
-        onClick={() => console.log('Кнопка работает!')} 
-        style={{ backgroundColor: 'gray' }} 
-        className="custom-class" 
-      />
       <a
         className={styles.primary}
         href="/ptk"
