@@ -1,17 +1,26 @@
-import { createSlice } from "@reduxjs/toolkit";
-import style from "../components/Gate/Gate.module.scss";
+import { createSlice } from '@reduxjs/toolkit';
 
-export const initialGateState = [
-  style.close,
-  style.toClose,
-  style.open,
-  style.toOpen,
-  style.noPower,
-]; // массив состояний задвижки
+// перечисление состояний задвижки
+enum GATE_STATE_TYPE {
+  close = 'close',
+  toClose = 'toClose',
+  open = 'open',
+  toOpen = 'toOpen',
+  noPower = 'noPower',
+}
+
+// Интерфейс для состояния
+interface GateState {
+  state: GATE_STATE_TYPE;
+  value: number;
+}
+
+// Инициализация состояния
+const initialState: GateState = { state: GATE_STATE_TYPE.close, value: 18.8 };
 
 const gateStateSlice = createSlice({
-  name: "gate",
-  initialState: { gate: initialGateState[2], value: 18.8 },
+  name: 'gate',
+  initialState,
 
   reducers: {
     setGateState: (state, action) => (state = action.payload),

@@ -9,7 +9,7 @@ export const GateWindow: FC = () => {
   return (
     <>
       <div className={style.window}>
-        <Gate gateState={gateState.gate} disable />
+        <Gate gateState={gateState.state} disable />
         <div className={style.indication}>
           <span className={style.value}>{gateState.value}</span>
           <span className={style.measurements}>м3/ч</span>

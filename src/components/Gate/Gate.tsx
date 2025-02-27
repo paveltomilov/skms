@@ -8,7 +8,7 @@ interface GateProps {
 
 export const Gate: FC<GateProps> = ({ gateState, disable }) => {
   return (
-    <div className={`${style.gate}`} id={gateState}>
+    <div className={`${style.gate} ${style[gateState]}`}>
       <svg width="24" height="26" aria-hidden="true">
         <use xlinkHref="/images/sprite.svg#icon-gate-left"></use>
       </svg>

@@ -16,22 +16,22 @@ $animation-blink: blink 1s step-end infinite;
 }
 
 //задвижка открыта 
-#open svg {
+.open svg {
     color: $color-open;
 }
 
 // задвижка закрыта
-#close svg {
+.close svg {
     color: $color-intermediate;
 }
 
 // нет питания
-#noPower {
+.noPower {
     color: $color-noPower;
 }
 
 // задвижка идет на закрытие
-#toClose svg {
+.toClose svg {
     &:first-child {
         color: $color-intermediate;
     }
@@ -43,7 +43,7 @@ $animation-blink: blink 1s step-end infinite;
 }
 
 // задвижка идет на открытие
-#toOpen svg {
+.toOpen svg {
     &:first-child {
         color: $color-intermediate;
         animation: $animation-blink;
