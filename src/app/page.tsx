@@ -4,7 +4,7 @@ import styles from "./page.module.scss";
 import { useState } from "react";
 import Loader from "@c/Loader/Loader";
 import nextIcon from "../../public/images/file.svg";
-
+import { GateWindow } from '@c/GateWindow/GateWindow';
 export default function Home() {
   const [loading, setLoading] = useState(false);
   const handleClick = () => setLoading((prev) => !prev);
@@ -27,7 +27,7 @@ export default function Home() {
         alt="Next.js logo"
         priority
       />
-
+      <GateWindow />
       <a
         className={styles.primary}
         href="/ptk"
