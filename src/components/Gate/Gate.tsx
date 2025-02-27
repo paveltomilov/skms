@@ -1,12 +1,12 @@
-import style from "@/components/Gate/Gate.module.scss";
-import { FC } from "react";
+import style from '@/components/Gate/Gate.module.scss';
+import { FC } from 'react';
 
 interface GateProps {
   gateState: string;
   disable?: boolean;
 }
 
-export const Gate: FC<GateProps> = ({ gateState, disable }) => {
+export const Gate: FC<GateProps> = ({ gateState, disable = false }) => {
   return (
     <div className={`${style.gate} ${style[gateState]}`}>
       <svg width="24" height="26" aria-hidden="true">
