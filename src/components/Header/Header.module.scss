@@ -1,0 +1,16 @@
+$color-bg: #C0C0C0;
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6.5px 8px;
+    background: $color-bg;
+    position: relative;
+}
+
+.defense {
+    position: absolute;
+    left: 8px;
+    
+}

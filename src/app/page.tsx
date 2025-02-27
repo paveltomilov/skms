@@ -4,12 +4,14 @@ import styles from "./page.module.scss";
 import { useState } from "react";
 import Loader from "@c/Loader/Loader";
 import nextIcon from "../../public/images/file.svg";
+import { Header } from "@/components/Header/Header";
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
   const handleClick = () => setLoading((prev) => !prev);
   return (
     <main className={styles.main}>
+      <Header/>
       <h1>Home</h1>
       {loading && <Loader />}
       <button onClick={handleClick}>TOGGLE LOADING</button>

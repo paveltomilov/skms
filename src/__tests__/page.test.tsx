@@ -1,12 +1,17 @@
 import "@testing-library/jest-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
 import Home from "../app/page";
+import StoreProvider from "@/app/StoreProvider";
 
 //test to check if the <Home /> component successfully renders a heading
 
 describe("Home", () => {
   it("renders a heading", () => {
-    render(<Home />);
+    render(
+      <StoreProvider>
+        <Home />
+      </StoreProvider>
+    );
 
     const heading = screen.getByText(/home/i);
 
@@ -19,7 +24,11 @@ describe("Home", () => {
   });
 
   it("toggle loading", () => {
-    render(<Home />);
+    render(
+      <StoreProvider>
+        <Home />
+      </StoreProvider>
+    );
 
     const button = screen.getByRole("button", { name: /toggle loading/i });
 
