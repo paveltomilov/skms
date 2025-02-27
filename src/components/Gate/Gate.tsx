@@ -1,17 +1,21 @@
 import style from "@/components/Gate/Gate.module.scss";
+import { FC } from "react";
 
-export const Gate = ({ id, disable }: { id: string; disable?: boolean }) => {
+interface GateProps {
+  id: string;
+  disable?: boolean;
+}
+
+export const Gate: FC<GateProps> = ({ id, disable }) => {
   return (
-    <div className={`${style.gate} ${disable}`} id={id}>
-      {" "}
-      {/* если запрещено управление disable={true}*/}
+    <div className={`${style.gate}`} id={id}>
       <svg width="24" height="26" aria-hidden="true">
         <use xlinkHref="/images/sprite.svg#icon-gate-left"></use>
       </svg>
       <svg width="25" height="26" aria-hidden="true">
         <use xlinkHref="/images/sprite.svg#icon-gate-right"></use>
       </svg>
-      {disable === true && (
+      {disable && (
         <svg className={style.cross} width="23" height="22" aria-hidden="true">
           <use xlinkHref="/images/sprite.svg#icon-cross"></use>
         </svg>

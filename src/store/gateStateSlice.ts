@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import style from "../components/Gate/Gate.module.scss";
 
-export const initialState = [
+export const initialGateState = [
   style.close,
   style.toClose,
   style.open,
@@ -11,7 +11,7 @@ export const initialState = [
 
 const gateStateSlice = createSlice({
   name: "gate",
-  initialState: initialState[3],
+  initialState: { gate: initialGateState[2], value: 18.8 },
 
   reducers: {
     setGateState: (state, action) => (state = action.payload),
