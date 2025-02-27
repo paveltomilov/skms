@@ -2,13 +2,13 @@ import style from "@/components/Gate/Gate.module.scss";
 import { FC } from "react";
 
 interface GateProps {
-  id: string;
+  gateState: string;
   disable?: boolean;
 }
 
-export const Gate: FC<GateProps> = ({ id, disable }) => {
+export const Gate: FC<GateProps> = ({ gateState, disable }) => {
   return (
-    <div className={`${style.gate}`} id={id}>
+    <div className={`${style.gate}`} id={gateState}>
       <svg width="24" height="26" aria-hidden="true">
         <use xlinkHref="/images/sprite.svg#icon-gate-left"></use>
       </svg>
