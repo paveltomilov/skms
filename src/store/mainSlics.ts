@@ -1,12 +1,12 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { FilterState, MainState } from '../types/storeType';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { FilterState, MainState } from "../types/storeType";
 
 const mainSlice = createSlice({
-  name: 'main',
+  name: "main",
   initialState: {
     filter: {
-      country: ['gfdgdfsgf'], // Начальный массив для стран
-      region: ['gsdgsd'], // Начальный массив для регионов
+      country: ["gfdgdfsgf"], // Начальный массив для стран
+      region: ["gsdgsd"], // Начальный массив для регионов
     },
   },
   reducers: {
