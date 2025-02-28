@@ -1,12 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 // перечисление состояний задвижки
 enum GATE_STATE_TYPE {
-  close = 'close',
-  toClose = 'toClose',
-  open = 'open',
-  toOpen = 'toOpen',
-  noPower = 'noPower',
+  close = "close",
+  toClose = "toClose",
+  open = "open",
+  toOpen = "toOpen",
+  noPower = "noPower",
 }
 
 // Интерфейс для состояния
@@ -16,10 +16,10 @@ interface GateState {
 }
 
 // Инициализация состояния
-const initialState: GateState = { state: GATE_STATE_TYPE.close, value: 18.8 };
+const initialState: GateState = { state: GATE_STATE_TYPE.open, value: 18.8 };
 
 const gateStateSlice = createSlice({
-  name: 'gate',
+  name: "gate",
   initialState,
 
   reducers: {

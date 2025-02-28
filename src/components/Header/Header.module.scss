@@ -1,4 +1,5 @@
 $color-bg: #C0C0C0;
+$color-borderBottom: #8A8A8A;
 
 .header {
     max-height: 52px;
@@ -11,12 +12,25 @@ $color-bg: #C0C0C0;
     padding: 6.5px 8px;
     background: $color-bg;
     position: relative;
-    border-bottom: 1px solid #8A8A8A;
+    border-bottom: 1px solid $color-borderBottom;
     max-height: inherit;
 }
 
 .defense {
     position: absolute;
     left: 8px;
-    
+}
+
+.part {
+    display: flex;
+    gap: 4px;
+
+    & span {
+        margin: 0px 12px;
+        font-weight: 400;
+        font-size: 24px;
+        line-height: 28.13px;
+        letter-spacing: 0%;
+        text-transform: uppercase;
+    }
 }
