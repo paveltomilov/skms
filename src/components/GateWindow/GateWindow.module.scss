@@ -4,14 +4,14 @@ $white: #ffffff;
 $color-disabled: #8a8a8a;
 
 .window {
-  background-image: url('/images/gate-window.png');
+  background: url('/images/gate-window.png') center/98.5% no-repeat, url('/images/stroke.png') center/cover no-repeat;
   width: 206px;
   height: 101px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-shadow: 4px 5px 8px 0px #00000073 inset;
+  margin: 50px 56px 0;
 }
 
 .indication {

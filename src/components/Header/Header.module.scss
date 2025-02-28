@@ -1,5 +1,9 @@
 $color-bg: #C0C0C0;
 
+.header {
+    max-height: 52px;
+}
+
 .wrapper {
     display: flex;
     justify-content: center;
@@ -7,6 +11,8 @@ $color-bg: #C0C0C0;
     padding: 6.5px 8px;
     background: $color-bg;
     position: relative;
+    border-bottom: 1px solid #8A8A8A;
+    max-height: inherit;
 }
 
 .defense {

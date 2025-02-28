@@ -1,5 +1,6 @@
 import { FC } from "react";
 import style from "./Header.module.scss"
+import { GateWindow } from "@c/GateWindow/GateWindow";
 
 export const Header: FC = () => {
     return (
@@ -10,7 +11,7 @@ export const Header: FC = () => {
                 <button>Закрыть</button>
                 <button>Стоп</button>
                 <button>Открыть</button>
-                <img></img>
+                <GateWindow />
                 <button>Закрыть</button>
                 <button>Стоп</button>
                 <button>Открыть</button>
