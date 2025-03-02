@@ -1,11 +1,11 @@
-"use client";
-import Image from "next/image";
-import styles from "./page.module.scss";
-import { useState } from "react";
-import Loader from "@c/Loader/Loader";
-import nextIcon from "../../public/images/file.svg";
+'use client';
+import Image from 'next/image';
+import styles from './page.module.scss';
+import { useState } from 'react';
+import Loader from '@c/Loader/Loader';
+import nextIcon from '../../public/images/file.svg';
 import { GateWindow } from '@c/GateWindow/GateWindow';
-import Button from "@/components/Button";
+import Button from '@/components/Button';
 export default function Home() {
   const [loading, setLoading] = useState(false);
   const handleClick = () => setLoading((prev) => !prev);
@@ -29,14 +29,15 @@ export default function Home() {
         priority
       />
       <GateWindow />
-      <Button 
-        width={100} 
-        height={50} 
-        text="Это слишком большой текст"
-        // image="/images/button-icon.webp"
-        onClick={() => console.log('Кнопка работает!')} 
-        style={{ backgroundColor: 'gray', padding: '10px' }} 
-        className="custom-class"
+      <Button
+        id={'cat'}
+        width={100}
+        height={50}
+        //disabled
+        //text="Это слишком большой текст"
+        image={{ src: '/images/button-icon.webp', width: 80, height: 30 }}
+        onClick={() => console.log('Кнопка работает!')}
+        success
       />
 
       <a

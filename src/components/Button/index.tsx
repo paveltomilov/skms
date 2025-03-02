@@ -2,36 +2,41 @@
 import React from 'react';
 import styles from './styles.module.scss';
 import Image from 'next/image';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/store/store';
 import { buttonClicked } from '@/store/buttonsSlice';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+
+interface ImageProps {
+  src: string;
+  width: number;
+  height: number;
+}
 
 interface ButtonProps {
   id: string; // Добавляем обязательный идентификатор
-  text?: string;
   width: number;
   height: number;
-  image?: string;
+  text?: string;
+  image?: ImageProps;
   disabled?: boolean;
+  success?: boolean;
   onClick?: () => void;
   style?: React.CSSProperties;
-  className?: string;
 }
 
-const Button = ({ 
+const Button = ({
   id,
-  text, 
-  width, 
-  height, 
-  image, 
-  disabled = false, 
+  width,
+  height,
+  text,
+  image,
+  disabled = false,
+  success = false,
   onClick,
   style,
-  className
 }: ButtonProps) => {
-  const dispatch = useDispatch();
-  const isActive = useSelector((state: RootState) => 
-    state.buttonsReducer.activeButtons[id] || false
+  const dispatch = useAppDispatch();
+  const isActive = useAppSelector(
+    (state) => state.buttonsReducer.activeButtons[id] || false
   );
 
   const handleClick = () => {
@@ -42,31 +47,27 @@ const Button = ({
   };
 
   return (
-    <button 
-      className={`${styles.button} ${className || ''} ${isActive ? styles.active : ''}`}
-      style={{ 
-        width: `${width}px`, 
-        height: `${height}px`, 
-        ...style 
+    <button
+      className={`${styles.button} 
+      ${isActive && styles.active}
+      ${success && styles.success}`}
+      style={{
+        width: `${width}px`,
+        height: `${height}px`,
+        ...style,
       }}
       onClick={handleClick}
       disabled={disabled}
     >
-      <div className={`${styles.content} ${!text && image ? styles.noPadding : ''}`}>
-        {image && (
-          <div className={styles.iconWrapper}>
-            <Image
-              src={image}
-              alt="Button icon"
-              fill
-              className={styles.icon}
-              priority
-              style={{ objectFit: 'contain' }}
-            />
-          </div>
-        )}
-        {text && <span className={styles.text}>{text}</span>}
-      </div>
+      {image && (
+        <Image
+          src={image.src}
+          alt="Button icon"
+          width={image.width}
+          height={image.height}
+        />
+      )}
+      {text && <span className={styles.text}>{text}</span>}
     </button>
   );
 };
