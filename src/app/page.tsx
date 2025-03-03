@@ -29,15 +29,25 @@ export default function Home() {
         priority
       />
       <GateWindow />
-      <Button
-        id={'cat'}
-        width={100}
-        height={50}
-        //disabled
-        //text="Это слишком большой текст"
-        image={{ src: '/images/button-icon.webp', width: 80, height: 30 }}
-        onClick={() => console.log('Кнопка работает!')}
-        success
+
+      <Button 
+        id="cat"
+        width={100} 
+        height={50} 
+        text="Это слишком большой текст"
+        onClick={() => console.log('Кнопка работает!')} 
+        style={{ backgroundColor: 'gray', padding: '10px' }} 
+        className="custom-class"
+      />
+
+      <Button 
+        id="text" 
+        width={100} 
+        height={50} 
+        image="/images/button-icon.webp"
+        onClick={() => console.log('Кнопка работает!')} 
+        style={{ backgroundColor: 'gray', padding: '10px' }} 
+        className="custom-class"
       />
 
       <a
