@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use client";
 import Image from "next/image";
 import styles from "./page.module.scss";
@@ -62,3 +63,49 @@ export default function Home() {
     </main>
   );
 }
+=======
+'use client';
+import Image from 'next/image';
+import styles from './page.module.scss';
+import { FC, useState } from 'react';
+import Loader from '@c/Loader/Loader';
+import GateWindow from '@c/GateWindow/GateWindow';
+import Button from '@/components/Button';
+
+const Home: FC = () => {
+	const [loading, setLoading] = useState(false);
+	const handleClick = () => setLoading(prev => !prev);
+	return (
+		<main className={styles.main}>
+			<h1>Home</h1>
+			{loading && <Loader />}
+			<button onClick={handleClick}>TOGGLE LOADING</button>
+			<Image
+				className={styles.logo}
+				src="/images/next.svg"
+				alt="Next.js logo"
+				width={180}
+				height={38}
+				priority
+			/>
+			<GateWindow />
+			<Button
+				id={'cat'}
+				width={100}
+				height={50}
+				//disabled
+				//text="Это слишком большой текст"
+				image={{
+					src: '/images/button-icon.webp',
+					width: 80,
+					height: 30,
+				}}
+				onClick={() => console.log('Кнопка работает!')}
+				//success
+			/>
+		</main>
+	);
+};
+
+export default Home;
+>>>>>>> 4de87c84e557cfd1be50254c09758036a7cabbb9
