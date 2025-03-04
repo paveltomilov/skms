@@ -7,6 +7,7 @@ enum GATE_STATE_TYPE {
   open = "open",
   toOpen = "toOpen",
   noPower = "noPower",
+  intermediate = "intermediate",
 }
 
 // Интерфейс для состояния
@@ -16,7 +17,7 @@ interface GateState {
 }
 
 // Инициализация состояния
-const initialState: GateState = { state: GATE_STATE_TYPE.open, value: 18.8 };
+const initialState: GateState = { state: GATE_STATE_TYPE.close, value: 18.8 };
 
 const gateStateSlice = createSlice({
   name: "gate",

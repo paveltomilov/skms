@@ -34,10 +34,10 @@ $animation-blink: blink 1s step-end infinite;
 .toClose svg {
     &:first-child {
         color: $color-intermediate;
+        animation: $animation-blink;
     }
 
     &:nth-child(2) {
-        animation: $animation-blink;
         color: $color-open;
     }
 }
@@ -46,7 +46,17 @@ $animation-blink: blink 1s step-end infinite;
 .toOpen svg {
     &:first-child {
         color: $color-intermediate;
+    }
+
+    &:nth-child(2) {
+        color: $color-open;
         animation: $animation-blink;
+    }
+}
+
+.intermediate svg {
+    &:first-child {
+        color: $color-intermediate;
     }
 
     &:nth-child(2) {

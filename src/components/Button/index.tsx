@@ -2,7 +2,7 @@
 import React from 'react';
 import styles from './styles.module.scss';
 import Image from 'next/image';
-import { buttonClicked } from '@/store/buttonsSlice';
+// import { buttonClicked } from '@/store/buttonsSlice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 
 interface ImageProps {
@@ -42,7 +42,7 @@ const Button = ({
   const handleClick = () => {
     if (!disabled) {
       onClick?.();
-      dispatch(buttonClicked(id));
+      // dispatch(buttonClicked(id));
     }
   };
 
