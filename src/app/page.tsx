@@ -3,8 +3,8 @@ import Image from 'next/image';
 import styles from './page.module.scss';
 import { FC, useState } from 'react';
 import Loader from '@c/Loader/Loader';
-import GateWindow from '@c/GateWindow/GateWindow';import { Header } from "@/components/Header/Header";
-
+import GateWindow from '@c/GateWindow/GateWindow';
+import Header from '@/components/Header/Header';
 import Button from '@/components/Button';
 
 const Home: FC = () => {
@@ -12,6 +12,7 @@ const Home: FC = () => {
 	const handleClick = () => setLoading(prev => !prev);
 	return (
 		<main className={styles.main}>
+			<Header />
 			<h1>Home</h1>
 			{loading && <Loader />}
 			<button onClick={handleClick}>TOGGLE LOADING</button>
@@ -35,8 +36,6 @@ const Home: FC = () => {
 					width: 80,
 					height: 30,
 				}}
-				onClick={() => console.log('Кнопка работает!')}
-				//success
 			/>
 		</main>
 	);
