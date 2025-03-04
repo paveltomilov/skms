@@ -38,7 +38,6 @@ export default function Home() {
         //disabled
         //text="Это слишком большой текст"
         image={{ src: '/images/button-icon.webp', width: 80, height: 30 }}
-        onClick={() => console.log('Кнопка работает!')}
         success
       />
 

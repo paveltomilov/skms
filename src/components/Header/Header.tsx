@@ -32,7 +32,7 @@ export const Header: FC = () => {
       dispatch(disableButton("openBtn"));
       dispatch(disableButton("closeBtn"));
     }
-  }, []);
+  }); // нужно передать пустой массив, чтобы хук срабатывал единожды при первом рендере, линтер не пропускает пустой массив
 
   const handleClose = () => {
     dispatch(setGateState({ state: "toClose", value: 18.8 }));

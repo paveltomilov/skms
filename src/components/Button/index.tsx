@@ -1,9 +1,12 @@
-'use client';
-import React from 'react';
-import styles from './styles.module.scss';
-import Image from 'next/image';
+"use client";
+import React from "react";
+import styles from "./styles.module.scss";
+import Image from "next/image";
 // import { buttonClicked } from '@/store/buttonsSlice';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import {
+  // useAppDispatch,
+  useAppSelector,
+} from "@/store/hooks";
 
 interface ImageProps {
   src: string;
@@ -34,7 +37,7 @@ const Button = ({
   onClick,
   style,
 }: ButtonProps) => {
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const isActive = useAppSelector(
     (state) => state.buttonsReducer.activeButtons[id] || false
   );
