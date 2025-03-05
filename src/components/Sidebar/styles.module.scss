@@ -86,6 +86,7 @@
     border-right: 1px solid #8A8A8A;
     transform: skew(0deg, 30deg);
     z-index: 3000;
+    transition: 0.2s ease-in;
   }
 
   .toggleButtonRight {
@@ -99,6 +100,7 @@
     border-bottom: 1px solid #8A8A8A;
     transform: skew(0deg, -30deg);
     z-index: 4000;
+    transition: 0.2s ease-in;
   }
 
   .toggleButtonIcon {
@@ -109,6 +111,24 @@
     transition: transform 0.3s ease;
     z-index: 5000;
   }
+}
+
+.toggleButton:hover .toggleButtonLeft,
+.toggleButton:hover .toggleButtonRight {
+    background: #b0b0b0; 
+}
+
+.toggleButton:hover .toggleButtonIcon {
+    transform: translate(-50%, -50%) scale(1.1); 
+}
+
+.toggleButton:active .toggleButtonLeft,
+.toggleButton:active .toggleButtonRight {
+    background: #b0b0b0; 
+}
+
+.toggleButton:active .toggleButtonIcon {
+    transform: translate(-50%, -50%) scale(0.9); 
 }
 
 .openButton {

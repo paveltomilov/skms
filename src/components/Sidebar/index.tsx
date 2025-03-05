@@ -55,34 +55,43 @@ const Sidebar = () => {
       <div className={`${styles.sidebar} ${isSidebarOpen ? styles.open : ''}`}>
         <div className={styles.sidebarContent}>
           <Button
+            id="main-button" 
             width={90}
             height={34}
             onClick={() => {
+              // eslint-disable-next-line no-console
               console.log('Кнопка Главная нажата');
             }}
             className={styles.menuButton}
+            aria-label="Главная"
           >
             Главная
           </Button>
 
           <Button
+            id="scheme-button"
             width={90}
             height={34}
             onClick={() => {
+              // eslint-disable-next-line no-console
               console.log('Кнопка Схема нажата');
             }}
             className={styles.menuButton}
+            aria-label="Схема" 
           >
             Схема
           </Button>
 
           <Button
+            id="training-button"
             width={90}
             height={34}
             onClick={() => {
+              // eslint-disable-next-line no-console
               console.log('Кнопка Обучение нажата');
             }}
             className={styles.menuButton}
+            aria-label="Обучение"
           >
             Обучение
           </Button>
