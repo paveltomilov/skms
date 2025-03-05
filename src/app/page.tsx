@@ -24,18 +24,29 @@ const Home: FC = () => {
 			/>
 			<GateWindow />
 			<Button
-				id={'cat'}
+				id="first-button" 
 				width={100}
 				height={50}
-				//disabled
-				//text="Это слишком большой текст"
-				image={{
-					src: '/images/button-icon.webp',
-					width: 80,
-					height: 30,
-				}}
+				text="Это слишком большой текст"
+				// eslint-disable-next-line no-console
 				onClick={() => console.log('Кнопка работает!')}
-				//success
+				style={{ padding: '10px' }}
+				className="custom-class"
+			/>
+
+			<Button
+				id="second-button"
+				width={100}
+				height={50}
+				image={{
+				src: '/images/button-icon.webp',
+				width: 20,
+				height: 20,
+				}}
+				// eslint-disable-next-line no-console
+				onClick={() => console.log('Кнопка работает!')}
+				style={{ padding: '10px' }}
+				className="custom-class"
 			/>
 		</main>
 	);
