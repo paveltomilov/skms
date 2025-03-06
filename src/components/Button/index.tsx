@@ -2,8 +2,7 @@
 import React from 'react';
 import styles from './styles.module.scss';
 import Image from 'next/image';
-import { buttonClicked } from '@/store/buttonsSlice';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { useAppSelector } from '@/store/hooks';
 
 interface ImageProps {
   src: string;
