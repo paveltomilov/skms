@@ -34,12 +34,12 @@ const Home: FC = () => {
 				width={100}
 				height={50}
 				//disabled
-				//text="Это слишком большой текст"
-				image={{
+				text="Это слишком большой текст"
+				/* image={{
 					src: '/images/button-icon.webp',
 					width: 80,
 					height: 30,
-				}}
+				}} */
 				onClick={() => dispatch(buttonClicked('cat'))}
 				//success
 			/>

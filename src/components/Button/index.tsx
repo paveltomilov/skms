@@ -41,7 +41,7 @@ const Button = ({
 		<button
 			className={`${styles.button} 
 			${className && className}
-      ${isActive && styles.active}
+      ${isActive && !disabled && styles.active}
       ${success && styles.success}`}
 			style={{
 				width: `${width}px`,

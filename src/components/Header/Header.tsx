@@ -5,7 +5,7 @@ import Button from '@c/Button';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { disableButton, enableButton } from '@/store/buttonsSlice';
 import GateWindow from '@c/GateWindow/GateWindow';
-import { GATE_ACTIONS } from '@/utils/headerConfig';
+import { GATE_ACTIONS, DISABLED_BUTTONS_MAP } from '@/utils/headerConfig';
 
 const Header: FC = () => {
 	const dispatch = useAppDispatch();
@@ -17,18 +17,7 @@ const Header: FC = () => {
 	const { closeBtn, openBtn, stopBtn } = buttonState;
 
 	useEffect(() => {
-		const disabledButtonsMap = {
-			// ключи - состояния gateState,
-			//значения - массивы кнопок, которые должны быть отключены
-			open: ['openBtn', 'stopBtn'],
-			close: ['closeBtn', 'stopBtn'],
-			toOpen: ['openBtn', 'closeBtn'],
-			toClose: ['closeBtn', 'openBtn'],
-			intermediate: ['stopBtn'],
-			noPower: ['stopBtn', 'openBtn', 'closeBtn'],
-		};
-
-		disabledButtonsMap[gateState]?.forEach(btn => {
+		DISABLED_BUTTONS_MAP[gateState]?.forEach(btn => {
 			dispatch(disableButton(btn));
 		});
 	}, [gateState, dispatch]);

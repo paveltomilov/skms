@@ -12,10 +12,10 @@ const buttonsSlice = createSlice({
 	name: 'buttons',
 	initialState,
 	reducers: {
-		// buttonClicked: (state, action: PayloadAction<string>) => {
-		//   const buttonId = action.payload;
-		//   state.activeButtons[buttonId] = !state.activeButtons[buttonId];
-		// },
+		buttonClicked: (state, action: PayloadAction<string>) => {
+			const buttonId = action.payload;
+			state.activeButtons[buttonId] = !state.activeButtons[buttonId];
+		},
 
 		disableButton: (state, action: PayloadAction<string>) => {
 			const buttonId = action.payload;
@@ -29,9 +29,6 @@ const buttonsSlice = createSlice({
 	},
 });
 
-export const {
-	// buttonClicked,
-	disableButton,
-	enableButton,
-} = buttonsSlice.actions;
+export const { buttonClicked, disableButton, enableButton } =
+	buttonsSlice.actions;
 export default buttonsSlice.reducer;

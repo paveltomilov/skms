@@ -1,0 +1,76 @@
+$color-open: #08fe07;
+$color-noPower: #8a8a8a;
+$color-intermediate: #ffffff;
+$color-cross: #8f1313;
+$animation-blink: blink 1s step-end infinite;
+
+.gate {
+	position: relative;
+}
+
+.cross {
+	color: $color-cross;
+	position: absolute;
+	left: 27%;
+	transform: translateY(10%);
+}
+
+//задвижка открыта
+.open svg {
+	color: $color-open;
+}
+
+// задвижка закрыта
+.close svg {
+	color: $color-intermediate;
+}
+
+// нет питания
+.noPower {
+	color: $color-noPower;
+}
+
+// задвижка идет на закрытие
+.toClose svg {
+	&:first-child {
+		color: $color-intermediate;
+		animation: $animation-blink;
+	}
+
+	&:nth-child(2) {
+		color: $color-open;
+	}
+}
+
+// задвижка идет на открытие
+.toOpen svg {
+	&:first-child {
+		color: $color-intermediate;
+	}
+
+	&:nth-child(2) {
+		color: $color-open;
+		animation: $animation-blink;
+	}
+}
+
+.intermediate svg {
+	&:first-child {
+		color: $color-intermediate;
+	}
+
+	&:nth-child(2) {
+		color: $color-open;
+	}
+}
+
+@keyframes blink {
+	0%,
+	100% {
+		opacity: 1;
+	}
+
+	50% {
+		opacity: 0;
+	}
+}
