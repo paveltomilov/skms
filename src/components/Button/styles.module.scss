@@ -1,60 +1,67 @@
 $padding: 10px;
 
 .button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #c0c0c0;
-  cursor: pointer;
-  box-shadow: -1px -1px #1d1d1b inset, -2px -2px #d9d9d9 inset,
-    1px 1px #d9d9d9 inset, 2px 2px #ffffff inset;
-  transition: all 0.2s ease;
-  padding: $padding;
-  border: none;
-  outline: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #c0c0c0;
+	cursor: pointer;
+	box-shadow: -1px -1px #1d1d1b inset, -2px -2px #d9d9d9 inset,
+		1px 1px #d9d9d9 inset, 2px 2px #ffffff inset;
+	transition: all 0.2s ease;
+	padding: $padding;
+	border: none;
+	outline: none;
 
-  .text {
-    font-size: 32px;
-    font-weight: 400;
-    text-align: center;
-    color: black;
-    white-space: nowrap;
-    overflow: hidden;
-  }
+	.text {
+		font-size: 32px;
+		font-weight: 400;
+		text-align: center;
+		color: black;
+		white-space: nowrap;
+		overflow: hidden;
+	}
 
-  &:hover {
-    background-color: #a9a9a9;
-    box-shadow: -1px -1px #1d1d1b inset, -2px -2px #d9d9d9 inset,
-      1px 1px #d9d9d9 inset, 2px 2px #ffffff inset, 0px 0px 0px 4px #8a8a8a;
-  }
+	&:hover {
+		background-color: #a9a9a9;
+		box-shadow: -1px -1px #1d1d1b inset, -2px -2px #d9d9d9 inset,
+			1px 1px #d9d9d9 inset, 2px 2px #ffffff inset,
+			0px 0px 0px 4px #8a8a8a;
+	}
 
-  &:disabled {
-    background-color: #c0c0c0;
-    color: #808080;
-    box-shadow: 2px 2px 0px 0px #8a8a8a inset,
-      -2px -1.46px 0px 0px #d9d9d9 inset;
-    cursor: not-allowed;
-  }
+	&:disabled {
+		background-color: #c0c0c0;
+		color: #8a8a8a;
+		box-shadow: 2px 2px 0px 0px #8a8a8a inset,
+			-2px -1.46px 0px 0px #d9d9d9 inset;
+		cursor: not-allowed;
 
-  &.active {
-    // стили активной кнопки (нет по макету)
-  }
+		.text {
+			color: #808080;
+		}
+	}
 
-  &.success {
-    background-color: #0ab700;
-    color: white;
-    transform: translate(1px, 1px);
-    box-shadow: -1px -1px #1d1d1b inset, -2px -2px #d9d9d9 inset,
-      1px 1px #d9d9d9 inset, 2px 2px #ffffff inset;
+	&.active {
+		background-color: #8a8a8a;
+		box-shadow: -1px -1px #d9d9d9 inset, 1px 1px #000000 inset,
+			-2px -2px #c0c0c0 inset, 2px 2px #c0c0c0 inset;
+	}
 
-    .text {
-      color: #ffffff;
-      text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
-    }
+	&.success {
+		background-color: #0ab700;
+		color: white;
+		transform: translate(1px, 1px);
+		box-shadow: -1px -1px #1d1d1b inset, -2px -2px #d9d9d9 inset,
+			1px 1px #d9d9d9 inset, 2px 2px #ffffff inset;
 
-    .icon {
-      filter: brightness(0.9);
-      transform: translate(0.5px, 0.5px);
-    }
-  }
+		.text {
+			color: #ffffff;
+			text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+		}
+
+		.icon {
+			filter: brightness(0.9);
+			transform: translate(0.5px, 0.5px);
+		}
+	}
 }
