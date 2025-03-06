@@ -11,13 +11,13 @@ export enum GATE_STATE_TYPE {
 }
 
 // Интерфейс для состояния
-interface GateState {
+export interface GateState {
 	state: GATE_STATE_TYPE;
 	value: number;
 }
 
 // Инициализация состояния
-const initialState: GateState = { state: GATE_STATE_TYPE.close, value: 18.8 };
+const initialState: GateState = { state: GATE_STATE_TYPE.open, value: 18.8 };
 
 const gateStateSlice = createSlice({
 	name: 'gate',

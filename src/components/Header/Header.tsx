@@ -1,62 +1,53 @@
 import { FC, useEffect } from 'react';
 import style from './Header.module.scss';
-import { useDispatch } from 'react-redux';
 import { setGateState } from '@/store/gateStateSlice';
 import Button from '@c/Button';
-import { useAppSelector } from '@/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { disableButton, enableButton } from '@/store/buttonsSlice';
 import GateWindow from '@c/GateWindow/GateWindow';
-import { GATE_STATE_TYPE } from '@/store/gateStateSlice';
+import { GATE_ACTIONS } from '@/utils/headerConfig';
 
 const Header: FC = () => {
-	const dispatch = useDispatch();
-	const buttonState = useAppSelector(state => state.buttonsReducer);
+	const dispatch = useAppDispatch();
 	const gateState = useAppSelector(state => state.gateReducer.state);
+	const buttonState = useAppSelector(
+		state => state.buttonsReducer.activeButtons,
+	);
+
+	const { closeBtn, openBtn, stopBtn } = buttonState;
 
 	useEffect(() => {
-		if (gateState === 'open') {
-			dispatch(disableButton('openBtn'));
-			dispatch(disableButton('stopBtn'));
-		} else if (gateState === 'close') {
-			dispatch(disableButton('closeBtn'));
-			dispatch(disableButton('stopBtn'));
-		} else if (gateState === 'toOpen') {
-			dispatch(disableButton('openBtn'));
-			dispatch(disableButton('closeBtn'));
-		} else if (gateState === 'toClose') {
-			dispatch(disableButton('closeBtn'));
-			dispatch(disableButton('openBtn'));
-		} else if (gateState === 'intermediate') {
-			dispatch(disableButton('stopBtn'));
-		} else if (gateState === 'noPower') {
-			dispatch(disableButton('stopBtn'));
-			dispatch(disableButton('openBtn'));
-			dispatch(disableButton('closeBtn'));
+		const disabledButtonsMap = {
+			// ключи - состояния gateState,
+			//значения - массивы кнопок, которые должны быть отключены
+			open: ['openBtn', 'stopBtn'],
+			close: ['closeBtn', 'stopBtn'],
+			toOpen: ['openBtn', 'closeBtn'],
+			toClose: ['closeBtn', 'openBtn'],
+			intermediate: ['stopBtn'],
+			noPower: ['stopBtn', 'openBtn', 'closeBtn'],
+		};
+
+		disabledButtonsMap[gateState]?.forEach(btn => {
+			dispatch(disableButton(btn));
+		});
+	}, [gateState, dispatch]);
+
+	const handleGateAction = (action: keyof typeof GATE_ACTIONS) => {
+		const config = GATE_ACTIONS[action];
+
+		if (config) {
+			dispatch(
+				setGateState({ state: config.state, value: config.value }),
+			);
+			config.disabled.forEach(btn => dispatch(disableButton(btn)));
+			config.enabled.forEach(btn => dispatch(enableButton(btn)));
 		}
-	}, []);
-
-	const handleClose = () => {
-		dispatch(setGateState({ state: GATE_STATE_TYPE.toClose, value: 18.8 }));
-		dispatch(disableButton('closeBtn'));
-		dispatch(disableButton('openBtn'));
-		dispatch(enableButton('stopBtn'));
 	};
 
-	const handleOpen = () => {
-		dispatch(setGateState({ state: GATE_STATE_TYPE.toOpen, value: 18.8 }));
-		dispatch(disableButton('closeBtn'));
-		dispatch(disableButton('openBtn'));
-		dispatch(enableButton('stopBtn'));
-	};
-
-	const handleStop = () => {
-		dispatch(
-			setGateState({ state: GATE_STATE_TYPE.intermediate, value: 18.8 }),
-		);
-		dispatch(enableButton('closeBtn'));
-		dispatch(enableButton('openBtn'));
-		dispatch(disableButton('stopBtn'));
-	};
+	const handleClose = () => handleGateAction('close');
+	const handleOpen = () => handleGateAction('open');
+	const handleStop = () => handleGateAction('stop');
 
 	return (
 		<header className={style.header}>
@@ -71,7 +62,7 @@ const Header: FC = () => {
 						width={105}
 						height={38}
 						id="closeBtn"
-						disabled={buttonState.activeButtons['closeBtn']}
+						disabled={closeBtn}
 					/>
 					<Button
 						text="Стоп"
@@ -79,7 +70,7 @@ const Header: FC = () => {
 						height={38}
 						id="stopBtn"
 						onClick={handleStop}
-						disabled={buttonState.activeButtons['stopBtn']}
+						disabled={stopBtn}
 					/>
 					<Button
 						onClick={handleOpen}
@@ -87,7 +78,7 @@ const Header: FC = () => {
 						width={106}
 						height={38}
 						id="openBtn"
-						disabled={buttonState.activeButtons['openBtn']}
+						disabled={openBtn}
 					/>
 				</div>
 
@@ -100,7 +91,7 @@ const Header: FC = () => {
 						width={105}
 						height={38}
 						id="closeBtn"
-						disabled={buttonState.activeButtons['closeBtn']}
+						disabled={closeBtn}
 					/>
 					<Button
 						text="Стоп"
@@ -108,7 +99,7 @@ const Header: FC = () => {
 						height={38}
 						id="stopBtn"
 						onClick={handleStop}
-						disabled={buttonState.activeButtons['stopBtn']}
+						disabled={stopBtn}
 					/>
 					<Button
 						onClick={handleOpen}
@@ -116,7 +107,7 @@ const Header: FC = () => {
 						width={106}
 						height={38}
 						id="openBtn"
-						disabled={buttonState.activeButtons['openBtn']}
+						disabled={openBtn}
 					/>
 					<span className={style.name}>Круза-п</span>
 				</div>

@@ -35,6 +35,10 @@ $shadowWhite: #FFFFFFCC;
             gap: 4px;
             align-items: center;
 
+            &:first-of-type {
+                margin-left: 52px;
+            }
+
             .name {
                 margin: 0px 12px;
                 font-weight: 400;
