@@ -26,8 +26,9 @@ const Home: FC = () => {
 				priority
 			/>
 			<GateWindow />
+
 			<Button
-				id={'cat'}
+				id="cat"
 				width={100}
 				height={50}
 				//disabled
