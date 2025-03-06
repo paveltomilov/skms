@@ -2,8 +2,7 @@
 import React from 'react';
 import styles from './styles.module.scss';
 import Image from 'next/image';
-import { buttonClicked } from '@/store/buttonsSlice';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { useAppSelector } from '@/store/hooks';
 
 interface ImageProps {
 	src: string;
@@ -12,7 +11,7 @@ interface ImageProps {
 }
 
 interface ButtonProps {
-	id: string; // Добавляем обязательный идентификатор
+	id: string;
 	width: number;
 	height: number;
 	text?: string;
@@ -20,7 +19,7 @@ interface ButtonProps {
 	disabled?: boolean;
 	success?: boolean;
 	onClick?: () => void;
-	style?: React.CSSProperties;
+	className?: string;
 }
 
 const Button = ({
@@ -32,31 +31,23 @@ const Button = ({
 	disabled = false,
 	success = false,
 	onClick,
-	style,
+	className,
 }: ButtonProps) => {
-	const dispatch = useAppDispatch();
 	const isActive = useAppSelector(
 		state => state.buttonsReducer.activeButtons[id] || false,
 	);
 
-	const handleClick = () => {
-		if (!disabled) {
-			onClick?.();
-			dispatch(buttonClicked(id));
-		}
-	};
-
 	return (
 		<button
 			className={`${styles.button} 
-      ${isActive && styles.active}
+			${className && className}
+      ${isActive && !disabled && styles.active}
       ${success && styles.success}`}
 			style={{
 				width: `${width}px`,
 				height: `${height}px`,
-				...style,
 			}}
-			onClick={handleClick}
+			onClick={onClick}
 			disabled={disabled}
 		>
 			{image && (
