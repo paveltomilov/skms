@@ -5,6 +5,7 @@ import styles from './page.module.scss';
 import { useState } from 'react';
 import Loader from '@c/Loader/Loader';
 import GateWindow from '@c/GateWindow/GateWindow';
+import Header from '@/components/Header/Header';
 import Button from '@/components/Button';
 import Sidebar from '@c/Sidebar';
 import Footer from '@c/Footer';

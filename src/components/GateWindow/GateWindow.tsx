@@ -1,5 +1,5 @@
 import style from './GateWindow.module.scss';
-import { Gate } from '@/components/Gate/Gate';
+import { Gate } from '@c/GateWindow/Gate/Gate';
 import { useAppSelector } from '@/store/hooks';
 //import { useAppSelector } from '@/store/hooks';
 import { FC } from 'react';
