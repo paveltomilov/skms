@@ -34,7 +34,6 @@ const Home: FC = () => {
 					width: 80,
 					height: 30,
 				}}
-				onClick={() => console.log('Кнопка работает!')}
 				//success
 			/>
 		</main>
