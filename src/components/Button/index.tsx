@@ -2,73 +2,65 @@
 import React from 'react';
 import styles from './styles.module.scss';
 import Image from 'next/image';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/store/store';
-import { buttonClicked } from '@/store/buttonsSlice';
+import { useAppSelector } from '@/store/hooks';
 
-interface ButtonProps {
-  id: string; // Добавляем обязательный идентификатор
-  text?: string;
-  width: number;
-  height: number;
-  image?: string;
-  disabled?: boolean;
-  onClick?: () => void;
-  style?: React.CSSProperties;
-  className?: string;
+interface ImageProps {
+	src: string;
+	width: number;
+	height: number;
 }
 
-const Button = ({ 
-  id,
-  text, 
-  width, 
-  height, 
-  image, 
-  disabled = false, 
-  onClick,
-  style,
-  className
+interface ButtonProps {
+	id: string;
+	width: number;
+	height: number;
+	text?: string;
+	image?: ImageProps;
+	disabled?: boolean;
+	success?: boolean;
+	onClick?: () => void;
+	className?: string;
+}
+
+const Button = ({
+	id,
+	width,
+	height,
+	text,
+	image,
+	disabled = false,
+	success = false,
+	onClick,
+	className,
 }: ButtonProps) => {
-  const dispatch = useDispatch();
-  const isActive = useSelector((state: RootState) => 
-    state.buttonsReducer.activeButtons[id] || false
-  );
+	const isActive = useAppSelector(
+		state => state.buttonsReducer.activeButtons[id] || false,
+	);
 
-  const handleClick = () => {
-    if (!disabled) {
-      onClick?.();
-      dispatch(buttonClicked(id));
-    }
-  };
-
-  return (
-    <button 
-      className={`${styles.button} ${className || ''} ${isActive ? styles.active : ''}`}
-      style={{ 
-        width: `${width}px`, 
-        height: `${height}px`, 
-        ...style 
-      }}
-      onClick={handleClick}
-      disabled={disabled}
-    >
-      <div className={`${styles.content} ${!text && image ? styles.noPadding : ''}`}>
-        {image && (
-          <div className={styles.iconWrapper}>
-            <Image
-              src={image}
-              alt="Button icon"
-              fill
-              className={styles.icon}
-              priority
-              style={{ objectFit: 'contain' }}
-            />
-          </div>
-        )}
-        {text && <span className={styles.text}>{text}</span>}
-      </div>
-    </button>
-  );
+	return (
+		<button
+			className={`${styles.button} 
+			${className && className}
+      ${isActive && styles.active}
+      ${success && styles.success}`}
+			style={{
+				width: `${width}px`,
+				height: `${height}px`,
+			}}
+			onClick={onClick}
+			disabled={disabled}
+		>
+			{image && (
+				<Image
+					src={image.src}
+					alt="Button icon"
+					width={image.width}
+					height={image.height}
+				/>
+			)}
+			{text && <span className={styles.text}>{text}</span>}
+		</button>
+	);
 };
 
 export default Button;
