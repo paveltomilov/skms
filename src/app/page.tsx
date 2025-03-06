@@ -6,10 +6,13 @@ import Loader from '@c/Loader/Loader';
 import GateWindow from '@c/GateWindow/GateWindow';
 import Header from '@/components/Header/Header';
 import Button from '@/components/Button';
+import { useAppDispatch } from '@/store/hooks';
+import { buttonClicked } from '@/store/buttonsSlice';
 
 const Home: FC = () => {
 	const [loading, setLoading] = useState(false);
 	const handleClick = () => setLoading(prev => !prev);
+	const dispatch = useAppDispatch();
 	return (
 		<main className={styles.main}>
 			<Header />
@@ -25,8 +28,9 @@ const Home: FC = () => {
 				priority
 			/>
 			<GateWindow />
+
 			<Button
-				id={'cat'}
+				id="cat"
 				width={100}
 				height={50}
 				//disabled
@@ -36,6 +40,8 @@ const Home: FC = () => {
 					width: 80,
 					height: 30,
 				}}
+				onClick={() => dispatch(buttonClicked('cat'))}
+				//success
 			/>
 		</main>
 	);
