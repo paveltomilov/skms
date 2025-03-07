@@ -2,7 +2,8 @@
 import React from 'react';
 import styles from './styles.module.scss';
 import Image from 'next/image';
-import { useAppSelector } from '@/store/hooks';
+import { buttonClicked } from '@/store/buttonsSlice';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 
 interface ImageProps {
   src: string;

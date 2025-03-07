@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styles from './styles.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleSidebar } from '@/store/sidebarSlice';
@@ -10,27 +10,14 @@ import type { RootState } from '@/store/store';
 const Sidebar = () => {
   const dispatch = useDispatch();
   const isSidebarOpen = useSelector((state: RootState) => state.sidebar.isOpen);
-  const [isVisibleCloseButton, setIsVisibleCloseButton] = useState(false);
 
   const handleToggleSidebar = () => {
     dispatch(toggleSidebar());
   };
 
-  useEffect(() => {
-    if (isSidebarOpen) {
-      const timer = setTimeout(() => {
-        setIsVisibleCloseButton(true);
-      }, 300); // Время анимации сайдбара
-      return () => clearTimeout(timer);
-    } else {
-      setIsVisibleCloseButton(false);
-    }
-  }, [isSidebarOpen]);
-
   return (
     <>
-      {!isSidebarOpen && (
-        <button
+      <button
         onClick={handleToggleSidebar}
         className={styles.openButton}
       >
@@ -50,7 +37,6 @@ const Sidebar = () => {
           />
         </svg>
       </button>
-      )}
 
       <div className={`${styles.sidebar} ${isSidebarOpen ? styles.open : ''}`}>
         <div className={styles.sidebarContent}>
@@ -58,50 +44,42 @@ const Sidebar = () => {
             id="main-button" 
             width={90}
             height={34}
+            text='Главная'
             onClick={() => {
-              // eslint-disable-next-line no-console
               console.log('Кнопка Главная нажата');
             }}
             className={styles.menuButton}
             aria-label="Главная"
-          >
-            Главная
-          </Button>
+          />
 
           <Button
             id="scheme-button"
             width={90}
             height={34}
+            text='Схема'
             onClick={() => {
-              // eslint-disable-next-line no-console
               console.log('Кнопка Схема нажата');
             }}
             className={styles.menuButton}
             aria-label="Схема" 
-          >
-            Схема
-          </Button>
+          />
 
           <Button
             id="training-button"
             width={90}
             height={34}
+            text='Обучение'
             onClick={() => {
-              // eslint-disable-next-line no-console
               console.log('Кнопка Обучение нажата');
             }}
             className={styles.menuButton}
             aria-label="Обучение"
-          >
-            Обучение
-          </Button>
+          />
         </div>
 
         <button
           onClick={handleToggleSidebar}
-          className={`${styles.toggleButton} ${
-            isVisibleCloseButton ? styles.visible : ''
-          }`}
+          className={`${styles.toggleButton} ${isSidebarOpen ? styles.visible : ''}`}
         >
           <div className={styles.toggleButtonInner}>
             <div className={styles.toggleButtonLeft}></div>
