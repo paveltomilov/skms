@@ -1,0 +1,45 @@
+:root {
+	// font
+	--font-family: 'Roboto', Arial, Helvetica, sans-serif;
+	--font-line-height: 100%;
+	--font-letter-spacing: 0%;
+
+	// font weight
+	--font-weight-bold: 700;
+	--font-weight-medium: 500;
+	--font-weight-regular: 400;
+
+	//colors
+	--primary-color: #d9d9d9;
+	--secondary-color: #c0c0c0;
+	--gray-disabled-color: #8a8a8a;
+	--B8-color: #1f1f1f;
+
+	--error-color: #ed3932;
+	--success-color: #0ab700;
+	--attention-color: #ff7e22;
+
+	--red-color: #8f1313;
+	--magenta-color: #e00671;
+	--cyan-color: #69fffa;
+	--nephritis-color: #0bb4b4;
+	--yellow-color: #fffe05;
+	--lightblue-color: #8282fb;
+	--blue-color: #110f93;
+	--electric-green-color: #0bf40e;
+	--black-color: #000;
+	--white-color: #fff;
+
+	// box-shadows
+	--default-button-box-shadow: -1px -1px #1d1d1b inset,
+		-2px -2px #d9d9d9 inset, 1px 1px #d9d9d9 inset, 2px 2px #ffffff inset;
+
+	--disabled-button-box-shadow: 2px 2px 0px 0px #8a8a8a inset,
+		-2px -1.46px 0px 0px #d9d9d9 inset;
+
+	--pressed-button-box-shadow: -1px -1px #d9d9d9 inset, 1px 1px #000000 inset,
+		-2px -2px #c0c0c0 inset, 2px 2px #c0c0c0 inset;
+
+	--success-button-box-shadow: -1px -1px #1d1d1b inset,
+		-2px -2px #d9d9d9 inset, 1px 1px #d9d9d9 inset, 2px 2px #ffffff inset;
+}
