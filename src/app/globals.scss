@@ -1,4 +1,4 @@
-@import '../scss/variables.module.scss';
+@use '../scss/variables.module';
 
 /* Указываем box sizing */
 *,
@@ -31,6 +31,13 @@ dd {
 	margin: 0;
 }
 
+:root {
+	// font
+	--font-family: 'Roboto', Arial, Helvetica, sans-serif;
+	--font-line-height: 100%;
+	--font-letter-spacing: 0%;
+}
+
 /* Выставляем основные настройки по-умолчанию для body */
 body {
 	min-height: 100vh;
@@ -43,13 +50,13 @@ body {
 	-ms-text-size-adjust: 100%;
 	-moz-text-size-adjust: 100%;
 
-	background: var(--primary-color);
-	color: var(--black-color);
+	background: variables.$primary-color;
+	color: variables.$black-color;
 
 	font-family: var(--font-family);
 	line-height: var(--font-line-height);
 	letter-spacing: var(--font-letter-spacing);
-	font-weight: var(--font-weight-regular);
+	font-weight: variables.$font-weight-regular;
 }
 
 /* Удаляем стандартную стилизацию для всех ul и il, у которых есть атрибут class*/
