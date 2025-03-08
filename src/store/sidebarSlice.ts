@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 interface SidebarState {
   isOpen: boolean;
@@ -14,20 +14,10 @@ const sidebarSlice = createSlice({
   reducers: {
     toggleSidebar: (state) => {
       state.isOpen = !state.isOpen;
-    },
-    openSidebar: (state) => {
-      state.isOpen = true;
-    },
-    closeSidebar: (state) => {
-      state.isOpen = false;
-    },
-    // Action для установки состояния меню (например, из localStorage)
-    setSidebarState: (state, action: PayloadAction<boolean>) => {
-      state.isOpen = action.payload;
-    },
+    }
   },
 });
 
-export const { toggleSidebar, openSidebar, closeSidebar, setSidebarState } = sidebarSlice.actions;
+export const { toggleSidebar } = sidebarSlice.actions;
 
 export default sidebarSlice.reducer;

@@ -2,14 +2,18 @@
 
 import React from 'react';
 import styles from './styles.module.scss';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 import { toggleSidebar } from '@/store/sidebarSlice';
 import Button from '@c/Button';
-import type { RootState } from '@/store/store';
+import type { RootState, AppDispatch } from '@/store/store';
+
+// типизированные версии useDispatch и useSelector
+const useAppDispatch = () => useDispatch<AppDispatch>();
+const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 const Sidebar = () => {
-  const dispatch = useDispatch();
-  const isSidebarOpen = useSelector((state: RootState) => state.sidebar.isOpen);
+  const dispatch = useAppDispatch();
+  const isSidebarOpen = useAppSelector((state) => state.sidebar.isOpen);
 
   const handleToggleSidebar = () => {
     dispatch(toggleSidebar());
