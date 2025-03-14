@@ -1,24 +1,41 @@
 import { FlatCompat } from '@eslint/eslintrc';
+
 const compat = new FlatCompat({
 	baseDirectory: import.meta.dirname,
 });
 
 const eslintConfig = [
 	...compat.config({
-		extends: ['next/core-web-vitals', 'next/typescript', 'prettier'],
+		extends: [
+			'next',
+			'next/core-web-vitals',
+			'next/typescript',
+			'prettier',
+			'plugin:storybook/recommended',
+		],
 		parser: '@typescript-eslint/parser',
 		parserOptions: {
+			project: './tsconfig.json',
+			tsconfigRootDir: import.meta.dirname,
+			ecmaVersion: 'latest',
 			sourceType: 'module',
-			project: true,
+			ecmaFeatures: {
+				jsx: true,
+			},
 		},
+		plugins: ['@next/next'],
 		ignorePatterns: [
+			'storybook-static/',
+			'/.bundle$/',
+			'coverage',
 			'*.scss',
 			'*.css',
 			'**/stories/**',
 			'node_modules/',
 			'dist/',
-			'.config/*',
+			'*.config.ts',
 			'*.mjs',
+			'*.d.ts',
 		],
 		rules: {
 			semi: ['error'],
