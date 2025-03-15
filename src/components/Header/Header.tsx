@@ -1,3 +1,4 @@
+'use client';
 import { FC, useEffect } from 'react';
 import style from './Header.module.scss';
 import { setGateState } from '@/store/gateStateSlice';
@@ -5,7 +6,10 @@ import Button from '@c/Button';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { disableButton, enableButton } from '@/store/buttonsSlice';
 import GateWindow from '@c/GateWindow/GateWindow';
-import { GATE_ACTIONS, DISABLED_BUTTONS_MAP } from '@/utils/headerConfig';
+import {
+	GATE_ACTIONS,
+	DISABLED_BUTTONS_MAP,
+} from '@/shared/configs/headerConfig';
 
 const Header: FC = () => {
 	const dispatch = useAppDispatch();
