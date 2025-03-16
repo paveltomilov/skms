@@ -21,10 +21,13 @@ $yellow-color: #fffe05;
 $lightblue-color: #8282fb;
 $blue-color: #110f93;
 $electric-green-color: #0bf40e;
+$dark-green-color: #005c00;
 $black-color: #000;
 $white-color: #fff;
 
 // box-shadows
+$default-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+
 $default-button-box-shadow: -1px -1px #1d1d1b inset, -2px -2px #d9d9d9 inset,
 	1px 1px #d9d9d9 inset, 2px 2px #ffffff inset;
 
@@ -42,3 +45,15 @@ $success-button-box-shadow: -1px -1px #1d1d1b inset, -2px -2px #d9d9d9 inset,
 // animation
 $transition-time: 0.2s;
 $transition: all $transition-time ease;
+
+@keyframes blink {
+	from {
+		opacity: 1;
+	}
+
+	to {
+		opacity: 0;
+	}
+}
+
+$blink: blink 1s infinite;

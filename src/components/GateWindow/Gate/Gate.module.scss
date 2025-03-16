@@ -1,76 +1,72 @@
-$color-open: #08fe07;
-$color-noPower: #8a8a8a;
-$color-intermediate: #ffffff;
-$color-cross: #8f1313;
-$animation-blink: blink 1s step-end infinite;
+@use '../../../scss/variables.module';
+@use '../../../scss/mixins.module';
 
 .gate {
 	position: relative;
-}
+	overflow: hidden;
+	background: none;
+	filter: drop-shadow(variables.$default-box-shadow);
+	& > :first-child {
+		transform: rotate(270deg);
+	}
 
-.cross {
-	color: $color-cross;
-	position: absolute;
-	left: 27%;
-	transform: translateY(10%);
+	& > :nth-child(2) {
+		transform: rotate(90deg);
+	}
+
+	&__cross {
+		color: variables.$red-color;
+		position: absolute;
+		left: 27%;
+		transform: translateY(10%);
+	}
 }
 
 //задвижка открыта
-.open svg {
-	color: $color-open;
+.open {
+	@include mixins.triangle('green');
 }
 
 // задвижка закрыта
-.close svg {
-	color: $color-intermediate;
+.close {
+	@include mixins.triangle('black-white');
 }
 
 // нет питания
 .noPower {
-	color: $color-noPower;
+	@include mixins.triangle('grey');
 }
 
 // задвижка идет на закрытие
-.toClose svg {
-	&:first-child {
-		color: $color-intermediate;
-		animation: $animation-blink;
+.toClose {
+	& > :first-child {
+		@include mixins.triangle('black-white');
+		animation: variables.$blink;
 	}
 
-	&:nth-child(2) {
-		color: $color-open;
+	& > :nth-child(2) {
+		@include mixins.triangle('green');
 	}
 }
 
 // задвижка идет на открытие
-.toOpen svg {
-	&:first-child {
-		color: $color-intermediate;
+.toOpen {
+	& > :first-child {
+		@include mixins.triangle('black-white');
 	}
 
-	&:nth-child(2) {
-		color: $color-open;
-		animation: $animation-blink;
-	}
-}
-
-.intermediate svg {
-	&:first-child {
-		color: $color-intermediate;
-	}
-
-	&:nth-child(2) {
-		color: $color-open;
+	& > :nth-child(2) {
+		@include mixins.triangle('green');
+		animation: variables.$blink;
 	}
 }
 
-@keyframes blink {
-	0%,
-	100% {
-		opacity: 1;
+.intermediate {
+	& > :first-child {
+		@include mixins.triangle('black-white');
 	}
 
-	50% {
-		opacity: 0;
+	& > :nth-child(2) {
+		@include mixins.triangle('green');
 	}
 }
