@@ -1,7 +1,4 @@
-$color-indicator: #69fffa;
-$black: #000000;
-$white: #ffffff;
-$color-disabled: #8a8a8a;
+@use '../../scss/variables.module';
 
 .window {
 	background: url('/images/gate-window.png') center/98.5% no-repeat,
@@ -24,9 +21,9 @@ $color-disabled: #8a8a8a;
 
 .value {
 	display: block;
-	background: $color-indicator;
+	background: variables.$cyan-color;
 	min-width: 50px;
-	border: 1px solid $black;
+	border: 1px solid variables.$black-color;
 	font-weight: 400;
 	font-size: 14px;
 	line-height: 14px;
@@ -34,8 +31,8 @@ $color-disabled: #8a8a8a;
 	box-sizing: border-box;
 	padding: 1px 2px;
 	margin-top: 2px;
-	color: $black;
-	box-shadow: 2px 3px 6px 2px #0000004d;
+	color: variables.$black-color;
+	box-shadow: variables.$default-box-shadow;
 }
 
 .measurements {
@@ -43,5 +40,5 @@ $color-disabled: #8a8a8a;
 	font-size: 14px;
 	line-height: 14px;
 	letter-spacing: 0%;
-	color: $white;
+	color: variables.$white-color;
 }

@@ -1,160 +1,151 @@
 .sidebar {
-  position: absolute;
-  top: 0;
-  left: -126px; 
-  padding: 60px 8px 8px 8px;
-  height: 800px;
-  background: #C0C0C0;
-  border-right: 1px solid #8A8A8A;
-  transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 1;
+	position: absolute;
+	top: 0;
+	left: -126px;
+	padding: 60px 8px 8px 8px;
+	height: 800px;
+	background: #c0c0c0;
+	border-right: 1px solid #8a8a8a;
+	transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	z-index: 1;
 
-  &.open {
-    left: 0; 
-  }
+	&.open {
+		left: 0;
+	}
 
-  .sidebarContent {
-    display: flex;
-    flex-direction: column;
-    row-gap: 12px;
-  }
+	.sidebarContent {
+		display: flex;
+		flex-direction: column;
+		row-gap: 12px;
+	}
 
-  .menuButton {
-    all: unset;
-    font-family: Roboto;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 14px;
-    letter-spacing: 0%;
-    text-align: center;
-    background-color: #D9D9D9;
-    color: #000000;
-    cursor: pointer;
+	.menuButton {
+		all: unset;
+		font-family: Roboto;
+		font-weight: 400;
+		font-size: 14px;
+		line-height: 14px;
+		letter-spacing: 0%;
+		text-align: center;
+		background-color: #d9d9d9;
+		color: #000000;
+		cursor: pointer;
 
-    box-shadow:
-      -1px -1px 0px 0px rgb(41, 39, 39) inset,
-      1px 1px 0px 0px rgba(176, 176, 176, 1) inset,
-      2px 2px 0px 0px rgba(255, 255, 255, 0.8) inset,
-      1px 1px 0px 0px rgba(217, 217, 217, 1) inset;
+		box-shadow: -1px -1px 0px 0px rgb(41, 39, 39) inset,
+			1px 1px 0px 0px rgba(176, 176, 176, 1) inset,
+			2px 2px 0px 0px rgba(255, 255, 255, 0.8) inset,
+			1px 1px 0px 0px rgba(217, 217, 217, 1) inset;
 
-    &:hover {
-      background-color: #C9C9C9;
-      box-shadow:
-        -1px -1px 0px 0px rgb(41, 39, 39) inset,
-        1px 1px 0px 0px rgba(176, 176, 176, 1) inset,
-        2px 2px 0px 0px rgba(255, 255, 255, 0.8) inset,
-        1px 1px 0px 0px rgba(200, 200, 200, 1) inset;
-    }
+		&:hover {
+			background-color: #c9c9c9;
+			box-shadow: -1px -1px 0px 0px rgb(41, 39, 39) inset,
+				1px 1px 0px 0px rgba(176, 176, 176, 1) inset,
+				2px 2px 0px 0px rgba(255, 255, 255, 0.8) inset,
+				1px 1px 0px 0px rgba(200, 200, 200, 1) inset;
+		}
 
-    &:active {
-      background-color: #B9B9B9;
-      box-shadow:
-        -1px -1px 0px 0px rgb(41, 39, 39) inset,
-        1px 1px 0px 0px rgba(150, 150, 150, 1) inset,
-        2px 2px 0px 0px rgba(255, 255, 255, 0.8) inset,
-        1px 1px 0px 0px rgba(180, 180, 180, 1) inset;
-    }
-  }
+		&:active {
+			background-color: #b9b9b9;
+			box-shadow: -1px -1px 0px 0px rgb(41, 39, 39) inset,
+				1px 1px 0px 0px rgba(150, 150, 150, 1) inset,
+				2px 2px 0px 0px rgba(255, 255, 255, 0.8) inset,
+				1px 1px 0px 0px rgba(180, 180, 180, 1) inset;
+		}
+	}
 
-  .toggleButton {
-    position: absolute;
-    top: 50%;
-    right: -25px;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    width: 25px;
-  
-  }
+	.toggleButton {
+		position: absolute;
+		top: 50%;
+		right: -25px;
+		transform: translateY(-50%);
+		background: none;
+		border: none;
+		padding: 0;
+		cursor: pointer;
+		width: 25px;
+	}
 
-  .toggleButtonInner {
-    position: relative;
-    height: 90px;
-    background: transparent;
-    z-index: 2000;
-  }
+	.toggleButtonInner {
+		position: relative;
+		height: 90px;
+		background: transparent;
+		z-index: 2000;
+	}
 
-  .toggleButtonLeft {
-    position: absolute;
-    top: 10px;
-    left: 0;
-    width: 20px;
-    height: 50%;
-    background: #C0C0C0;
-    border-right: 1px solid #8A8A8A;
-    transform: skew(0deg, 30deg);
-    z-index: 3000;
-    transition: 0.2s ease-in;
-  }
+	.toggleButtonLeft {
+		position: absolute;
+		top: 10px;
+		left: 0;
+		width: 20px;
+		height: 50%;
+		background: #c0c0c0;
+		border-right: 1px solid #8a8a8a;
+		transform: skew(0deg, 30deg);
+		z-index: 3000;
+		transition: 0.2s ease-in;
+	}
 
-  .toggleButtonRight {
-    position: absolute;
-    bottom: 10px;
-    left: 0;
-    width: 20px;
-    height: 50%;
-    background: #C0C0C0;
-    border-right: 1px solid #8A8A8A;
-    border-bottom: 1px solid #8A8A8A;
-    transform: skew(0deg, -30deg);
-    z-index: 4000;
-    transition: 0.2s ease-in;
-  }
+	.toggleButtonRight {
+		position: absolute;
+		bottom: 10px;
+		left: 0;
+		width: 20px;
+		height: 50%;
+		background: #c0c0c0;
+		border-right: 1px solid #8a8a8a;
+		border-bottom: 1px solid #8a8a8a;
+		transform: skew(0deg, -30deg);
+		z-index: 4000;
+		transition: 0.2s ease-in;
+	}
 
-  .toggleButtonIcon {
-    position: absolute;
-    top: 50%;
-    left: 30%;
-    transform: translate(-50%, -50%);
-    transition: transform 0.3s ease;
-    z-index: 5000;
-  }
+	.toggleButtonIcon {
+		position: absolute;
+		top: 50%;
+		left: 30%;
+		transform: translate(-50%, -50%);
+		transition: transform 0.3s ease;
+		z-index: 5000;
+	}
 }
 
 .toggleButton:hover .toggleButtonLeft,
 .toggleButton:hover .toggleButtonRight {
-    background: #b0b0b0; 
+	background: #b0b0b0;
 }
 
 .toggleButton:hover .toggleButtonIcon {
-    transform: translate(-50%, -50%) scale(1.1); 
+	transform: translate(-50%, -50%) scale(1.1);
 }
 
 .toggleButton:active .toggleButtonLeft,
 .toggleButton:active .toggleButtonRight {
-    background: #b0b0b0; 
+	background: #b0b0b0;
 }
 
 .toggleButton:active .toggleButtonIcon {
-    transform: translate(-50%, -50%) scale(0.9); 
+	transform: translate(-50%, -50%) scale(0.9);
 }
 
 .openButton {
-  width: 20px;
-  height: 800px;
-  background: #C0C0C0;
-  border-right: 1px solid #8A8A8A;
-  cursor: pointer;
-  padding: 0;
-  border: none;
-  z-index: 999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s;
+	width: 20px;
+	height: 800px;
+	background: #c0c0c0;
+	border-right: 1px solid #8a8a8a;
+	cursor: pointer;
+	padding: 0;
+	border: none;
+	z-index: 999;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: background 0.2s;
 
-  &:hover {
-    background: #b0b0b0;
-  }
-
-  svg {
-    width: 8px;
-    height: 18px;
-  }
+	&:hover {
+		background: #b0b0b0;
+	}
 }
 
 .rotatedSvg {
-  transform: rotate(180deg);
+	transform: rotate(180deg);
 }

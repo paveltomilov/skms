@@ -45,3 +45,26 @@
 		overflow: hidden;
 	}
 }
+
+// треугольники
+@mixin triangle($color) {
+	@if $color == 'green' {
+		stroke: variables.$dark-green-color;
+		color: variables.$electric-green-color;
+	}
+
+	@if $color == 'grey' {
+		stroke: variables.$black-color;
+		color: variables.$gray-disabled-color;
+	}
+
+	@if $color == 'black-white' {
+		stroke: variables.$black-color;
+		color: variables.$white-color;
+	}
+
+	@if $color == 'magenta-white' {
+		stroke: variables.$magenta-color;
+		color: variables.$white-color;
+	}
+}
