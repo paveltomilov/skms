@@ -33,9 +33,9 @@ const Sidebar = () => {
 							console.log('Кнопка Главная нажата');
 						}}
 						aria-label="Главная"
-					>
-						Главная
-					</Button>
+						text="Главная"
+						className={styles.buttonText}
+					/>
 
 					<Button
 						id="scheme-button"
@@ -45,9 +45,9 @@ const Sidebar = () => {
 							console.log('Кнопка Схема нажата');
 						}}
 						aria-label="Схема"
-					>
-						Схема
-					</Button>
+						text="Схема"
+						className={styles.buttonText}
+					/>
 
 					<Button
 						id="training-button"
@@ -57,9 +57,9 @@ const Sidebar = () => {
 							console.log('Кнопка Обучение нажата');
 						}}
 						aria-label="Обучение"
-					>
-						Обучение
-					</Button>
+						text="Обучение"
+						className={styles.buttonText}
+					/>
 				</div>
 
 				<button
