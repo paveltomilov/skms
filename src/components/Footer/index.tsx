@@ -131,6 +131,7 @@ const Footer = () => {
 						width: 40,
 						height: 40,
 					}}
+					style={{ padding: '1px' }} 
 					onClick={() => console.log('Кнопка оператор работает!')}
 				/>
 				<div className={styles.footer__operator__wrapper}>

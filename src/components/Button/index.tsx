@@ -47,16 +47,16 @@ const Button = ({
 		<button
 			className={`${styles.button} ${className && className}
 				${isActive && !disabled && styles.active}
-      ${success && styles.success}`}
-			style={{
-				width: `${width}px`,
-				height: `${height}px`,
-				...style, // Распространяем переданные стили
-			}}
-			onClick={onClick}
-			disabled={disabled}
-			aria-label={ariaLabel}
-		>
+			${success && styles.success}`}
+					style={{
+						width: `${width}px`,
+						height: `${height}px`,
+						...style, 
+					}}
+					onClick={onClick}
+					disabled={disabled}
+					aria-label={ariaLabel}
+				>
 			{image && (
 				<Image
 					src={image.src}
