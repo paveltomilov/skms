@@ -1,4 +1,4 @@
-import { Cross, Triangle } from '../../../shared/svg';
+import { BigCross, Triangle } from '../../../shared/svg';
 import style from './Gate.module.scss';
 import { FC } from 'react';
 
@@ -12,7 +12,7 @@ const Gate: FC<GateProps> = ({ gateState, disable = false }) => {
 		<div className={`${style.gate} ${style[gateState]}`}>
 			<Triangle />
 			<Triangle />
-			{disable && <Cross className={style.gate__cross} />}
+			{disable && <BigCross className={style.gate__cross} />}
 		</div>
 	);
 };

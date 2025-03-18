@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import { ReactNode } from 'react';
 import styles from './styles.module.scss';
 import Image from 'next/image';
 import { useAppSelector } from '@/store/hooks';
@@ -14,24 +14,25 @@ interface ButtonProps {
 	id: string;
 	width: number;
 	height: number;
-	text?: string;
 	image?: ImageProps;
 	disabled?: boolean;
 	success?: boolean;
 	onClick?: () => void;
 	className?: string;
+	children?: ReactNode;
+	'aria-label'?: string;
 }
 
 const Button = ({
 	id,
 	width,
 	height,
-	text,
 	image,
 	disabled = false,
 	success = false,
 	onClick,
 	className,
+	children,
 }: ButtonProps) => {
 	const isActive = useAppSelector(
 		state => state.buttonsReducer.activeButtons[id] || false,
@@ -39,9 +40,8 @@ const Button = ({
 
 	return (
 		<button
-			className={`${styles.button} 
-			${className && className}
-      ${isActive && !disabled && styles.active}
+			className={`${styles.button} ${className && className}
+				${isActive && !disabled && styles.active}
       ${success && styles.success}`}
 			style={{
 				width: `${width}px`,
@@ -49,6 +49,7 @@ const Button = ({
 			}}
 			onClick={onClick}
 			disabled={disabled}
+			aria-label={id}
 		>
 			{image && (
 				<Image
@@ -58,7 +59,7 @@ const Button = ({
 					height={image.height}
 				/>
 			)}
-			{text && <span className={styles.text}>{text}</span>}
+			{children}
 		</button>
 	);
 };

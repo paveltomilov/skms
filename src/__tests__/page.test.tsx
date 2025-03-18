@@ -12,7 +12,6 @@ describe('Home', () => {
 				<Home />
 			</StoreProvider>,
 		);
-		screen.debug();
 		const heading = screen.getByText(/птк/i);
 
 		expect(heading).toBeInTheDocument();
