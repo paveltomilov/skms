@@ -25,7 +25,7 @@
 			stroke: variables.$gray-disabled-color;
 		}
 	}
-	&:hover {
+	&:hover:enabled {
 		@include mixins.change-button(_, _, variables.$hover-button-box-shadow);
 	}
 

@@ -1,11 +1,11 @@
 'use client';
 
-import React from 'react';
+import { FC } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/components/Button';
 import { SmallCross, CurvedArrow, EllipseClose, Micro } from '@/shared/svg';
 
-const Footer = () => {
+const Footer: FC = () => {
 	return (
 		<footer className={styles.footer} aria-label="Панель управления">
 			<nav
@@ -18,10 +18,8 @@ const Footer = () => {
 						id={`footer-button-${i}`}
 						width={88}
 						height={28}
-						/* className={`${styles.footer__button} ${
-							i < 8 && styles['footer__button--first-row']
-						}`} */
 						aria-label={`Кнопка ${i}`}
+						disabled={i > 1}
 						text={
 							i === 0 ? (
 								<span className={styles.footer__buttonText}>
@@ -43,7 +41,6 @@ const Footer = () => {
 						id="footer-control-button-c"
 						width={26}
 						height={26}
-						//className={styles.footer__controlButton}
 						aria-label="Кнопка С"
 						text="С"
 					/>
@@ -51,7 +48,6 @@ const Footer = () => {
 						id="footer-control-button-z"
 						width={26}
 						height={26}
-						//className={styles.footer__controlButton}
 						aria-label="Кнопка З"
 						text="З"
 					/>
@@ -61,7 +57,6 @@ const Footer = () => {
 						id="footer-left-control-button"
 						width={88}
 						height={28}
-						//className={styles.footer__mainButton}
 						aria-label="Левый контрол"
 						icon={<CurvedArrow />}
 					/>
@@ -69,7 +64,6 @@ const Footer = () => {
 						id="footer-right-control-button"
 						width={88}
 						height={28}
-						//className={styles.footer__mainButton}
 						aria-label="Правый контрол"
 						icon={<CurvedArrow className={styles.footer__arrow} />}
 					/>
@@ -79,7 +73,6 @@ const Footer = () => {
 						id="footer-block-1-button"
 						width={88}
 						height={26}
-						//className={styles.footer__actionButton}
 						aria-label="Блок 1"
 						text="Бл1"
 					/>
@@ -87,7 +80,6 @@ const Footer = () => {
 						id="footer-close-button"
 						width={26}
 						height={26}
-						//className={styles.footer__closeButton}
 						aria-label="Закрыть"
 						icon={<SmallCross />}
 					/>
@@ -100,7 +92,6 @@ const Footer = () => {
 						id="footer-tool-1-button"
 						width={88}
 						height={28}
-						//className={styles.footer__toolButton}
 						aria-label="Инструмент 1"
 						icon={<EllipseClose />}
 					/>
@@ -108,7 +99,6 @@ const Footer = () => {
 						id="footer-tool-2-button"
 						width={88}
 						height={28}
-						//className={styles.footer__toolButton}
 						aria-label="Инструмент 2"
 						icon={<Micro />}
 					/>
@@ -125,13 +115,12 @@ const Footer = () => {
 					id="footer-operator-button"
 					width={44}
 					height={44}
-					//className={styles.footer__largeButton}
 					image={{
 						src: '/images/operator.webp',
 						width: 40,
 						height: 40,
 					}}
-					style={{ padding: '1px' }} 
+					style={{ padding: '1px' }}
 					onClick={() => console.log('Кнопка оператор работает!')}
 				/>
 				<div className={styles.footer__operator__wrapper}>
