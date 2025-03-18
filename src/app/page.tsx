@@ -3,6 +3,7 @@ import { FC } from 'react';
 import Header from '@/components/Header/Header';
 import Sidebar from '@c/Sidebar';
 import Footer from '@c/Footer';
+import SettingsBtns from '@c/SettingsBtns';
 
 const Home: FC = () => {
 	return (
@@ -10,6 +11,7 @@ const Home: FC = () => {
 			<Header />
 			<Sidebar />
 			<Footer />
+			<SettingsBtns />
 		</main>
 	);
 };
