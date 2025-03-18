@@ -1,9 +1,12 @@
+@use '../../scss/variables.module';
+@use '../../scss/mixins.module';
+
 .sidebar {
 	position: absolute;
-	top: 0;
+	top: 52px;
 	left: -126px;
-	padding: 60px 8px 8px 8px;
-	height: 800px;
+	padding: 60px 8px 8px;
+	height: calc(100vh - 130px); //от общей высоты вычла высоту хедера и футера
 	background: #c0c0c0;
 	border-right: 1px solid #8a8a8a;
 	transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -17,40 +20,6 @@
 		display: flex;
 		flex-direction: column;
 		row-gap: 12px;
-	}
-
-	.menuButton {
-		all: unset;
-		font-family: Roboto;
-		font-weight: 400;
-		font-size: 14px;
-		line-height: 14px;
-		letter-spacing: 0%;
-		text-align: center;
-		background-color: #d9d9d9;
-		color: #000000;
-		cursor: pointer;
-
-		box-shadow: -1px -1px 0px 0px rgb(41, 39, 39) inset,
-			1px 1px 0px 0px rgba(176, 176, 176, 1) inset,
-			2px 2px 0px 0px rgba(255, 255, 255, 0.8) inset,
-			1px 1px 0px 0px rgba(217, 217, 217, 1) inset;
-
-		&:hover {
-			background-color: #c9c9c9;
-			box-shadow: -1px -1px 0px 0px rgb(41, 39, 39) inset,
-				1px 1px 0px 0px rgba(176, 176, 176, 1) inset,
-				2px 2px 0px 0px rgba(255, 255, 255, 0.8) inset,
-				1px 1px 0px 0px rgba(200, 200, 200, 1) inset;
-		}
-
-		&:active {
-			background-color: #b9b9b9;
-			box-shadow: -1px -1px 0px 0px rgb(41, 39, 39) inset,
-				1px 1px 0px 0px rgba(150, 150, 150, 1) inset,
-				2px 2px 0px 0px rgba(255, 255, 255, 0.8) inset,
-				1px 1px 0px 0px rgba(180, 180, 180, 1) inset;
-		}
 	}
 
 	.toggleButton {
@@ -129,16 +98,15 @@
 
 .openButton {
 	width: 20px;
-	height: 800px;
+	height: calc(100vh - 130px);
 	background: #c0c0c0;
-	border-right: 1px solid #8a8a8a;
+	border-top: 1px solid variables.$primary-color;
+	border-left: 1px solid variables.$primary-color;
+	border-right: 1px solid variables.$gray-disabled-color;
+	border-bottom: 1px solid variables.$gray-disabled-color;
 	cursor: pointer;
 	padding: 0;
-	border: none;
-	z-index: 999;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	@include mixins.flex-center;
 	transition: background 0.2s;
 
 	&:hover {

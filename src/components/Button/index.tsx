@@ -1,80 +1,67 @@
 'use client';
-import React from 'react';
+import { ReactNode } from 'react';
 import styles from './styles.module.scss';
 import Image from 'next/image';
-import { buttonClicked } from '@/store/buttonsSlice';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { useAppSelector } from '@/store/hooks';
 
 interface ImageProps {
-  src: string;
-  width: number;
-  height: number;
+	src: string;
+	width: number;
+	height: number;
 }
 
 interface ButtonProps {
-  id: string;
-  width: number;
-  height: number;
-  text?: string;
-  image?: ImageProps;
-  disabled?: boolean;
-  success?: boolean;
-  onClick?: () => void;
-  style?: React.CSSProperties;
-  className?: string; 
-  children?: React.ReactNode;
-  'aria-label'?: string;
+	id: string;
+	width: number;
+	height: number;
+	image?: ImageProps;
+	disabled?: boolean;
+	success?: boolean;
+	onClick?: () => void;
+	className?: string;
+	children?: ReactNode;
+	'aria-label'?: string;
 }
 
 const Button = ({
-  id,
-  width,
-  height,
-  text,
-  image,
-  disabled = false,
-  success = false,
-  onClick,
-  style,
-  className, 
-  children, 
+	id,
+	width,
+	height,
+	image,
+	disabled = false,
+	success = false,
+	onClick,
+	className,
+	children,
 }: ButtonProps) => {
-  const dispatch = useAppDispatch();
-  const isActive = useAppSelector(
-    (state) => state.buttonsReducer.activeButtons[id] || false,
-  );
+	const isActive = useAppSelector(
+		state => state.buttonsReducer.activeButtons[id] || false,
+	);
 
-  const handleClick = () => {
-    if (!disabled) {
-      onClick?.();
-      dispatch(buttonClicked(id));
-    }
-  };
-
-  return (
-    <button
-      className={`${styles.button} ${className || ''} ${isActive ? styles.active : ''} ${success ? styles.success : ''}`} 
-      style={{
-        width: `${width}px`,
-        height: `${height}px`,
-        ...style,
-      }}
-      onClick={handleClick}
-      disabled={disabled}
-      aria-label={id}
-    >
-      {image && (
-        <Image
-          src={image.src}
-          alt="Button icon"
-          width={image.width}
-          height={image.height}
-        />
-      )}
-      {text && <span className={styles.text}>{text}</span>}
-      {children}
-    </button>
-  );
+	return (
+		<button
+			className={`${styles.button} ${className && className}
+				${isActive && !disabled && styles.active}
+      ${success && styles.success}`}
+			style={{
+				width: `${width}px`,
+				height: `${height}px`,
+			}}
+			onClick={onClick}
+			disabled={disabled}
+			aria-label={id}
+		>
+			{image && (
+				<Image
+					src={image.src}
+					alt="Button icon"
+					width={image.width}
+					height={image.height}
+				/>
+			)}
+			{children}
+		</button>
+	);
 };
 
 export default Button;

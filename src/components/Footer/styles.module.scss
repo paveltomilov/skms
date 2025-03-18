@@ -1,3 +1,5 @@
+@use '../../scss/variables.module';
+
 .footer {
 	display: flex;
 	flex-direction: row;
@@ -5,6 +7,7 @@
 	padding: 8px;
 	background-color: #c0c0c0;
 	gap: 12px;
+	border-top: 1px solid variables.$white-color;
 
 	&__leftPanel {
 		display: grid;

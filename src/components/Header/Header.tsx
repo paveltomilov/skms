@@ -51,28 +51,34 @@ const Header: FC = () => {
 					<span className={style.name}>птк</span>
 					<Button
 						onClick={handleClose}
-						text="Закрыть"
 						width={105}
 						height={38}
 						id="closeBtn"
 						disabled={closeBtn}
-					/>
+						className={style.header__button}
+					>
+						Закрыть
+					</Button>
 					<Button
-						text="Стоп"
 						width={70}
 						height={38}
 						id="stopBtn"
 						onClick={handleStop}
 						disabled={stopBtn}
-					/>
+						className={style.header__button}
+					>
+						Стоп
+					</Button>
 					<Button
 						onClick={handleOpen}
-						text="Открыть"
 						width={106}
 						height={38}
 						id="openBtn"
 						disabled={openBtn}
-					/>
+						className={style.header__button}
+					>
+						Открыть
+					</Button>
 				</div>
 
 				<GateWindow />
@@ -80,28 +86,34 @@ const Header: FC = () => {
 				<div className={style.part}>
 					<Button
 						onClick={handleClose}
-						text="Закрыть"
 						width={105}
 						height={38}
 						id="closeBtn"
 						disabled={closeBtn}
-					/>
+						className={style.header__button}
+					>
+						Закрыть
+					</Button>
 					<Button
-						text="Стоп"
 						width={70}
 						height={38}
 						id="stopBtn"
 						onClick={handleStop}
 						disabled={stopBtn}
-					/>
+						className={style.header__button}
+					>
+						Стоп
+					</Button>
 					<Button
 						onClick={handleOpen}
-						text="Открыть"
 						width={106}
 						height={38}
 						id="openBtn"
 						disabled={openBtn}
-					/>
+						className={style.header__button}
+					>
+						Открыть
+					</Button>
 					<span className={style.name}>Круза-п</span>
 				</div>
 			</div>
