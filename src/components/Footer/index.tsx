@@ -18,22 +18,22 @@ const Footer = () => {
 						id={`footer-button-${i}`}
 						width={88}
 						height={28}
-						className={`${styles.footer__button} ${
+						/* className={`${styles.footer__button} ${
 							i < 8 && styles['footer__button--first-row']
-						}`}
+						}`} */
 						aria-label={`Кнопка ${i}`}
-					>
-						{i === 0 && (
-							<span className={styles.footer__buttonText}>
-								КА
-							</span>
-						)}
-						{i === 1 && (
-							<span className={styles.footer__buttonText}>
-								ТА
-							</span>
-						)}
-					</Button>
+						text={
+							i === 0 ? (
+								<span className={styles.footer__buttonText}>
+									КА
+								</span>
+							) : i === 1 ? (
+								<span className={styles.footer__buttonText}>
+									ТА
+								</span>
+							) : undefined
+						}
+					/>
 				))}
 			</nav>
 
@@ -43,60 +43,54 @@ const Footer = () => {
 						id="footer-control-button-c"
 						width={26}
 						height={26}
-						className={styles.footer__controlButton}
+						//className={styles.footer__controlButton}
 						aria-label="Кнопка С"
-					>
-						С
-					</Button>
+						text="С"
+					/>
 					<Button
 						id="footer-control-button-z"
 						width={26}
 						height={26}
-						className={styles.footer__controlButton}
+						//className={styles.footer__controlButton}
 						aria-label="Кнопка З"
-					>
-						З
-					</Button>
+						text="З"
+					/>
 				</div>
 				<div className={styles.footer__centralGroup__middle}>
 					<Button
 						id="footer-left-control-button"
 						width={88}
 						height={28}
-						className={styles.footer__mainButton}
+						//className={styles.footer__mainButton}
 						aria-label="Левый контрол"
-					>
-						<CurvedArrow />
-					</Button>
+						icon={<CurvedArrow />}
+					/>
 					<Button
 						id="footer-right-control-button"
 						width={88}
 						height={28}
-						className={styles.footer__mainButton}
+						//className={styles.footer__mainButton}
 						aria-label="Правый контрол"
-					>
-						<CurvedArrow className={styles.footer__arrow} />
-					</Button>
+						icon={<CurvedArrow className={styles.footer__arrow} />}
+					/>
 				</div>
 				<div className={styles.footer__centralGroup__right}>
 					<Button
 						id="footer-block-1-button"
 						width={88}
 						height={26}
-						className={styles.footer__actionButton}
+						//className={styles.footer__actionButton}
 						aria-label="Блок 1"
-					>
-						Бл1
-					</Button>
+						text="Бл1"
+					/>
 					<Button
 						id="footer-close-button"
 						width={26}
 						height={26}
-						className={styles.footer__closeButton}
+						//className={styles.footer__closeButton}
 						aria-label="Закрыть"
-					>
-						<SmallCross />
-					</Button>
+						icon={<SmallCross />}
+					/>
 				</div>
 			</div>
 
@@ -106,20 +100,18 @@ const Footer = () => {
 						id="footer-tool-1-button"
 						width={88}
 						height={28}
-						className={styles.footer__toolButton}
+						//className={styles.footer__toolButton}
 						aria-label="Инструмент 1"
-					>
-						<EllipseClose />
-					</Button>
+						icon={<EllipseClose />}
+					/>
 					<Button
 						id="footer-tool-2-button"
 						width={88}
 						height={28}
-						className={styles.footer__toolButton}
+						//className={styles.footer__toolButton}
 						aria-label="Инструмент 2"
-					>
-						<Micro />
-					</Button>
+						icon={<Micro />}
+					/>
 				</div>
 				<div className={styles.footer__warning__wrapper}>
 					<p className={styles.footer__warning__text}>
@@ -133,15 +125,13 @@ const Footer = () => {
 					id="footer-operator-button"
 					width={44}
 					height={44}
-					className={styles.footer__largeButton}
+					//className={styles.footer__largeButton}
 					image={{
 						src: '/images/operator.webp',
 						width: 40,
 						height: 40,
 					}}
-					// eslint-disable-next-line no-console
 					onClick={() => console.log('Кнопка оператор работает!')}
-					style={{ padding: '1px' }}
 				/>
 				<div className={styles.footer__operator__wrapper}>
 					<span className={styles.footer__operator}>Оператор:</span>

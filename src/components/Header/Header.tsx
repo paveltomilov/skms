@@ -55,30 +55,24 @@ const Header: FC = () => {
 						height={38}
 						id="closeBtn"
 						disabled={closeBtn}
-						className={style.header__button}
-					>
-						Закрыть
-					</Button>
+						text="Закрыть"
+					/>
 					<Button
 						width={70}
 						height={38}
 						id="stopBtn"
 						onClick={handleStop}
 						disabled={stopBtn}
-						className={style.header__button}
-					>
-						Стоп
-					</Button>
+						text="Стоп"
+					/>
 					<Button
 						onClick={handleOpen}
 						width={106}
 						height={38}
 						id="openBtn"
 						disabled={openBtn}
-						className={style.header__button}
-					>
-						Открыть
-					</Button>
+						text="Открыть"
+					/>
 				</div>
 
 				<GateWindow />
@@ -90,30 +84,24 @@ const Header: FC = () => {
 						height={38}
 						id="closeBtn"
 						disabled={closeBtn}
-						className={style.header__button}
-					>
-						Закрыть
-					</Button>
+						text="Закрыть"
+					/>
 					<Button
 						width={70}
 						height={38}
 						id="stopBtn"
 						onClick={handleStop}
 						disabled={stopBtn}
-						className={style.header__button}
-					>
-						Стоп
-					</Button>
+						text="Стоп"
+					/>
 					<Button
 						onClick={handleOpen}
 						width={106}
 						height={38}
 						id="openBtn"
 						disabled={openBtn}
-						className={style.header__button}
-					>
-						Открыть
-					</Button>
+						text="Открыть"
+					/>
 					<span className={style.name}>Круза-п</span>
 				</div>
 			</div>
