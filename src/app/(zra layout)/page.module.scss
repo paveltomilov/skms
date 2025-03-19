@@ -1,6 +1,7 @@
 @use '../../scss/variables.module';
 
 .main {
+	display: flex;
 	min-height: calc(
 		100vh - (variables.$header-height + variables.$footer-height)
 	);

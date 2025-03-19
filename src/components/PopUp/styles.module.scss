@@ -1,9 +1,10 @@
 .popup {
-    position: absolute;
-    top: 120px;
     right: 160px;
     width: 246px;
     background-color: #8A8A8A;
+    position: absolute;
+    right: 158px;
+    top: 69px;
 
     &__window {
         display: flex;
