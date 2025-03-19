@@ -1,15 +1,13 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import Home from '../app/page';
 import StoreProvider from '@/app/StoreProvider';
-
-//test to check if the <Home /> component successfully renders a heading
+import Header from '@c/Header/Header';
 
 describe('Home', () => {
-	it('renders a heading', () => {
+	it('renders a header', () => {
 		render(
 			<StoreProvider>
-				<Home />
+				<Header />
 			</StoreProvider>,
 		);
 		const heading = screen.getByText(/птк/i);
