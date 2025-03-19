@@ -1,0 +1,70 @@
+@use '../scss/variables.module';
+
+// Центрирование flex
+@mixin flex-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+// изменяемая часть кнопок
+@mixin change-button(
+	$bg-color: variables.$primary-color,
+	$text-color: variables.$black-color,
+	$box-shadow: variables.$default-button-box-shadow,
+	$cursor: pointer
+) {
+	background-color: $bg-color;
+	color: $text-color;
+	box-shadow: $box-shadow;
+	cursor: $cursor;
+}
+
+// основная часть кнопок
+@mixin button(
+	$bg-color: variables.$primary-color,
+	$text-color: variables.$black-color,
+	$box-shadow: variables.$default-button-box-shadow,
+	$cursor: 'pointer'
+) {
+	@include flex-center;
+	@include change-button;
+	transition: all variables.$transition-time ease;
+	border: none;
+	outline: none;
+}
+
+// текст
+@mixin text($font-size, $font-weight, $overflow: 'false') {
+	// если нужно чтобы текст, который выходит за границы блока, обрезался, нужно третьим параметром передать overflow
+	font-size: $font-size;
+	font-weight: $font-weight;
+	text-align: center;
+	@if $overflow == 'overflow' {
+		white-space: nowrap;
+		overflow: hidden;
+	}
+}
+
+// треугольники
+@mixin triangle($color) {
+	@if $color == 'green' {
+		stroke: variables.$dark-green-color;
+		color: variables.$electric-green-color;
+	}
+
+	@if $color == 'grey' {
+		stroke: variables.$black-color;
+		color: variables.$gray-disabled-color;
+	}
+
+	@if $color == 'black-white' {
+		stroke: variables.$black-color;
+		color: variables.$white-color;
+	}
+
+	@if $color == 'magenta-white' {
+		stroke: variables.$magenta-color;
+		color: variables.$white-color;
+	}
+}

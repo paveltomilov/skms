@@ -1,3 +1,4 @@
+'use client';
 import { FC, useEffect } from 'react';
 import style from './Header.module.scss';
 import { setGateState } from '@/store/gateStateSlice';
@@ -5,7 +6,10 @@ import Button from '@c/Button';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { disableButton, enableButton } from '@/store/buttonsSlice';
 import GateWindow from '@c/GateWindow/GateWindow';
-import { GATE_ACTIONS, DISABLED_BUTTONS_MAP } from '@/utils/headerConfig';
+import {
+	GATE_ACTIONS,
+	DISABLED_BUTTONS_MAP,
+} from '@/shared/configs/headerConfig';
 
 const Header: FC = () => {
 	const dispatch = useAppDispatch();
@@ -47,27 +51,27 @@ const Header: FC = () => {
 					<span className={style.name}>птк</span>
 					<Button
 						onClick={handleClose}
-						text="Закрыть"
 						width={105}
 						height={38}
 						id="closeBtn"
 						disabled={closeBtn}
+						text="Закрыть"
 					/>
 					<Button
-						text="Стоп"
 						width={70}
 						height={38}
 						id="stopBtn"
 						onClick={handleStop}
 						disabled={stopBtn}
+						text="Стоп"
 					/>
 					<Button
 						onClick={handleOpen}
-						text="Открыть"
 						width={106}
 						height={38}
 						id="openBtn"
 						disabled={openBtn}
+						text="Открыть"
 					/>
 				</div>
 
@@ -76,27 +80,27 @@ const Header: FC = () => {
 				<div className={style.part}>
 					<Button
 						onClick={handleClose}
-						text="Закрыть"
 						width={105}
 						height={38}
 						id="closeBtn"
 						disabled={closeBtn}
+						text="Закрыть"
 					/>
 					<Button
-						text="Стоп"
 						width={70}
 						height={38}
 						id="stopBtn"
 						onClick={handleStop}
 						disabled={stopBtn}
+						text="Стоп"
 					/>
 					<Button
 						onClick={handleOpen}
-						text="Открыть"
 						width={106}
 						height={38}
 						id="openBtn"
 						disabled={openBtn}
+						text="Открыть"
 					/>
 					<span className={style.name}>Круза-п</span>
 				</div>
