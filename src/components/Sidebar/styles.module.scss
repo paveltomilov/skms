@@ -3,10 +3,10 @@
 
 .sidebar {
 	position: absolute;
-	top: 52px;
+	top: 0;
 	left: -126px;
 	padding: 60px 8px 8px;
-	height: calc(100vh - 130px); //от общей высоты вычла высоту хедера и футера
+	height: 100%;
 	background: #c0c0c0;
 	border-right: 1px solid #8a8a8a;
 	transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -101,8 +101,10 @@
 }
 
 .openButton {
+	position: absolute;
+	top: 0;
 	width: 20px;
-	height: calc(100vh - 130px);
+	height: 100%;
 	background: #c0c0c0;
 	border-top: 1px solid variables.$primary-color;
 	border-left: 1px solid variables.$primary-color;

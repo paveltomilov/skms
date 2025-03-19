@@ -1,12 +1,8 @@
-$color-bg: #c0c0c0;
-$color-borderBottom: #8a8a8a;
-$shadowBlack: #000000cc;
-$shadowWhite: #ffffffcc;
-
+@use '../../scss/variables.module';
 @use '../../scss/mixins.module';
 
 .header {
-	max-height: 52px;
+	max-height: variables.$header-height;
 
 	&__button {
 		@include mixins.text(18px, 400, overflow);
@@ -17,9 +13,9 @@ $shadowWhite: #ffffffcc;
 		justify-content: center;
 		align-items: center;
 		padding: 6.5px 8px;
-		background: $color-bg;
+		background: variables.$secondary-color;
 		position: relative;
-		border-bottom: 1px solid $color-borderBottom;
+		border-bottom: 1px solid variables.$gray-disabled-color;
 		max-height: inherit;
 
 		.defense {
@@ -32,8 +28,8 @@ $shadowWhite: #ffffffcc;
 			line-height: 16px;
 			letter-spacing: 0%;
 			text-align: center;
-			box-shadow: 1.46px 1.46px 0px 0px $shadowBlack inset,
-				-1.46px -1.46px 0px 0px $shadowWhite inset;
+			box-shadow: 1.46px 1.46px 0px 0px variables.$black-color inset,
+				-1.46px -1.46px 0px 0px variables.$white-color inset;
 			max-width: 92px;
 		}
 
@@ -53,7 +49,7 @@ $shadowWhite: #ffffffcc;
 				line-height: 28.13px;
 				letter-spacing: 0%;
 				text-transform: uppercase;
-				color: #000000;
+				color: variables.$black-color;
 			}
 		}
 	}
