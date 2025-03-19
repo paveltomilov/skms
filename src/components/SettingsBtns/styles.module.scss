@@ -1,5 +1,7 @@
 .settings {
-    margin-left: 50px;
+    position: absolute;
+    top: 120px;
+    right: 160px;
     width: 246px;
     background-color: #8A8A8A;
 
@@ -59,8 +61,8 @@
 
         &__popup {
             position: absolute;
-            top: 5px;
-            left: 250px;
+            top: 350px;
+            left: 0px;
             z-index: 5;
         }
     }

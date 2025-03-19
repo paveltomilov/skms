@@ -10,8 +10,8 @@ const Home: FC = () => {
 		<main className={styles.main}>
 			<Header />
 			<Sidebar />
-			<Footer />
 			<SettingsBtns />
+			<Footer />
 		</main>
 	);
 };

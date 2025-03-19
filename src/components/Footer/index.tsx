@@ -5,7 +5,7 @@ import styles from './styles.module.scss';
 import Button from '@/components/Button';
 import { SmallCross, CurvedArrow, EllipseClose, Micro } from '@/shared/svg';
 
-const Footer: FC = () => {
+const Footer: FC = () => {  
 	return (
 		<footer className={styles.footer} aria-label="Панель управления">
 			<nav
