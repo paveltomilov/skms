@@ -1,4 +1,4 @@
-.settings {
+.popup {
     position: absolute;
     top: 120px;
     right: 160px;
@@ -20,8 +20,6 @@
                     4px 4px 0px 0px #1D1D1B inset,
                     -4px -4px 0px 0px #FFFFFF inset,
                     1px 1px 0px 0px #D9D9D9 inset;
-        position: relative;
-        z-index: 4;
 
         &__element {
             width: 100%;
@@ -41,7 +39,6 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                cursor: pointer;
                 &__textWpapper {
                     display: flex;
                     align-items: center;
@@ -57,13 +54,6 @@
                     }
                 }
             }
-        }
-
-        &__popup {
-            position: absolute;
-            top: 350px;
-            left: 0px;
-            z-index: 5;
         }
     }
 

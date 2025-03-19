@@ -12,7 +12,3 @@ const Multimetr: FC = () => {
 };
 
 export default Multimetr;
-
-
-
-
