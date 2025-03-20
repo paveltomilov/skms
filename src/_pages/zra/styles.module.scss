@@ -1,13 +1,19 @@
-.title {
-	font-weight: 400;
-	font-size: 32px;
-	line-height: 32px;
-	letter-spacing: 0%;
-}
+@use '../../scss/mixins.module';
 
-.wrapper {
-	margin: 38px 124px 16px 85px;
-	display: flex;
-	align-items: center;
-	gap: 44px;
+.page {
+	@include mixins.flex-center;
+	flex-direction: column;
+	padding: 12px 0;
+	margin: 0 auto;
+	max-width: 1600px;
+
+	&__title {
+		font-weight: 400;
+		font-size: 32px;
+		align-self: flex-start;
+	}
+
+	&__wrapper {
+		@include mixins.flex-center;
+	}
 }

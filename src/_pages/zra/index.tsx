@@ -1,22 +1,12 @@
-import Image from 'next/image';
 import styles from './styles.module.scss';
+import Scheme from '@/widgets/Scheme';
 const Zra = () => {
 	return (
-		<section>
-			<h1 className={styles.title}>Тренажёр</h1>
-			<div className={styles.wrapper}>
-				<Image
-					src="/images/scheme.png"
-					alt="Схема"
-					width={1053.33}
-					height={693.6}
-				/>
-				<Image
-					src="/images/functional-scheme.png"
-					alt="Функциональность"
-					width={166}
-					height={504}
-				/>
+		<section className={styles.page}>
+			<h1 className={styles.page__title}>Тренажёр</h1>
+			<div className={styles.page__wrapper}>
+				<Scheme />
+				{/* сюда вставить мультиметр и попап */}
 			</div>
 		</section>
 	);

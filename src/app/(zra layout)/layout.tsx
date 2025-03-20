@@ -1,8 +1,8 @@
-import Footer from '@c/Footer';
-import Sidebar from '@c/Sidebar';
+import Footer from '@/widgets/Footer';
+import Sidebar from '@/widgets/Sidebar';
 import { Suspense } from 'react';
 import styles from './page.module.scss';
-import Header from '@c/Header/Header';
+import Header from '@/widgets/Header/Header';
 
 export default function RootLayout({
 	children,
