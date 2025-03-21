@@ -3,9 +3,9 @@
 import React from 'react';
 import styles from './styles.module.scss';
 import { toggleSidebar } from '@/store/sidebarSlice';
-import Button from '@c/Button';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import Button from '@/shared/UI/Button';
 import { Arrow } from '@/shared/svg';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 
 const Sidebar = () => {
 	const dispatch = useAppDispatch();

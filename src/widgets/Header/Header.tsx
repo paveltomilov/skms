@@ -2,14 +2,14 @@
 import { FC, useEffect } from 'react';
 import style from './Header.module.scss';
 import { setGateState } from '@/store/gateStateSlice';
-import Button from '@c/Button';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import Button from '@/shared/UI/Button';
 import { disableButton, enableButton } from '@/store/buttonsSlice';
-import GateWindow from '@c/GateWindow/GateWindow';
 import {
 	GATE_ACTIONS,
 	DISABLED_BUTTONS_MAP,
 } from '@/shared/configs/headerConfig';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
+import GateWindow from '@/entities/GateWindow/GateWindow';
 
 const Header: FC = () => {
 	const dispatch = useAppDispatch();

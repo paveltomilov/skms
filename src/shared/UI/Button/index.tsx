@@ -2,7 +2,7 @@
 import { CSSProperties, ReactNode } from 'react';
 import styles from './styles.module.scss';
 import Image from 'next/image';
-import { useAppSelector } from '@/store/hooks';
+import { useAppSelector } from '@/shared/hooks/store';
 
 interface ImageProps {
 	src: string;
@@ -48,15 +48,15 @@ const Button = ({
 			className={`${styles.button} ${className && className}
 				${isActive && !disabled && styles.active}
 			${success && styles.success}`}
-					style={{
-						width: `${width}px`,
-						height: `${height}px`,
-						...style, 
-					}}
-					onClick={onClick}
-					disabled={disabled}
-					aria-label={ariaLabel}
-				>
+			style={{
+				width: `${width}px`,
+				height: `${height}px`,
+				...style,
+			}}
+			onClick={onClick}
+			disabled={disabled}
+			aria-label={ariaLabel}
+		>
 			{image && (
 				<Image
 					src={image.src}

@@ -1,4 +1,13 @@
-@use '../../scss/mixins.module';
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
+
+.main {
+	min-height: calc(
+		100vh - (variables.$header-height + variables.$footer-height)
+	);
+	position: relative;
+	overflow-x: hidden;
+}
 
 .page {
 	@include mixins.flex-center;

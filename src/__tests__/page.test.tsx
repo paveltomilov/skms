@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import StoreProvider from '@/app/StoreProvider';
-import Header from '@/widgets/Footer/Header/Header';
+import Header from '@/widgets/Header/Header';
 
 describe('Home', () => {
 	it('renders a header', () => {
