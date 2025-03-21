@@ -1,24 +1,25 @@
-import Image from 'next/image';
 import styles from './styles.module.scss';
+import Scheme from '@/widgets/Scheme';
+import Footer from '@/widgets/Footer';
+import Sidebar from '@/widgets/Sidebar';
+import Header from '@/widgets/Header/Header';
+import Measurements from '@/widgets/Measurements';
 const Zra = () => {
 	return (
-		<section>
-			<h1 className={styles.title}>Тренажёр</h1>
-			<div className={styles.wrapper}>
-				<Image
-					src="/images/scheme.png"
-					alt="Схема"
-					width={1053.33}
-					height={693.6}
-				/>
-				<Image
-					src="/images/functional-scheme.png"
-					alt="Функциональность"
-					width={166}
-					height={504}
-				/>
-			</div>
-		</section>
+		<>
+			<Header />
+			<main className={styles.main}>
+				<Sidebar />
+				<section className={styles.page}>
+					<h1 className={styles.page__title}>Тренажёр</h1>
+					<div className={styles.page__wrapper}>
+						<Scheme />
+						<Measurements />
+					</div>
+				</section>
+			</main>
+			<Footer />
+		</>
 	);
 };
 

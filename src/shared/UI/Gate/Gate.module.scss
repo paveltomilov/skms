@@ -1,5 +1,5 @@
-@use '../../../scss/variables.module';
-@use '../../../scss/mixins.module';
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
 
 .gate {
 	position: relative;

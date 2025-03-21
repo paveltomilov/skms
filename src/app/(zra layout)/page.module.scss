@@ -1,9 +1,0 @@
-@use '../../scss/variables.module';
-
-.main {
-	min-height: calc(
-		100vh - (variables.$header-height + variables.$footer-height)
-	);
-	position: relative;
-	overflow-x: hidden;
-}
