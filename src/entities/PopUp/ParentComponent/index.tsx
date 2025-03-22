@@ -3,57 +3,30 @@
 import { useState } from 'react';
 import PopUp from '@/entities/PopUp';
 import styles from './styles.module.scss';
-import ButtonConfig from '@/shared/configs/ButtonConfig';
+import { PopupBtn } from '@/shared/types/popupBtn';
+import { customButtons } from '@/shared/configs/popup';
 
 const ParentComponent = () => {
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [additionalButtons, setAdditionalButtons] = useState<ButtonConfig[]>([]);
+	const [isPopupOpen, setIsPopupOpen] = useState(false);
+	const [additionalButtons, setAdditionalButtons] = useState<PopupBtn[]>([]);
 
-  // Кастомные кнопки для передачи в PopUp
-  const customButtons: ButtonConfig[] = [
-    {
-      id: 'custom1',
-      width: 238,
-      height: 35,
-      text: 'Кнопка 1 (Props)',
-      onClick: () => console.log('Custom action 1'),
-    },
-    {
-      id: 'custom2',
-      width: 238,
-      height: 35,
-      text: 'Кнопка 2 (Props)',
-      onClick: () => console.log('Custom action 2'),
-    },
-    {
-      id: 'custom3',
-      width: 238,
-      height: 35,
-      text: 'Кнопка 3 (Props)',
-      onClick: () => console.log('Custom action 2'),
-    },
-  ];
+	// Обработчик для открытия/закрытия PopUp
+	const handleTriggerClick = () => {
+		setAdditionalButtons(customButtons); // Передаем кастомные кнопки
+		setIsPopupOpen(prev => !prev); // Переключаем состояние PopUp
+	};
 
-  // Обработчик для открытия/закрытия PopUp
-  const handleTriggerClick = () => {
-    setAdditionalButtons(customButtons); // Передаем кастомные кнопки
-    setIsPopupOpen((prev) => !prev); // Переключаем состояние PopUp
-  };
+	return (
+		<>
+			{/* Кнопка-триггер для открытия/закрытия PopUp */}
+			<button className={styles.MockBtn} onClick={handleTriggerClick}>
+				{isPopupOpen ? 'Закрыть PopUp' : 'Открыть PopUp'}
+			</button>
 
-  return (
-    <div>
-      {/* Кнопка-триггер для открытия/закрытия PopUp */}
-      <button className={styles.MockBtn} onClick={handleTriggerClick}>
-        {isPopupOpen ? 'Закрыть PopUp' : 'Открыть PopUp'}
-      </button>
-
-      {/* Компонент PopUp */}
-      <PopUp
-        isOpen={isPopupOpen}
-        additionalButtons={additionalButtons}
-      />
-    </div>
-  );
+			{/* Компонент PopUp */}
+			<PopUp isOpen={isPopupOpen} additionalButtons={additionalButtons} />
+		</>
+	);
 };
 
 export default ParentComponent;
