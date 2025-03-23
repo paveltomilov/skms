@@ -1,2 +1,10 @@
 @use '@/shared/scss/mixins.module';
 @use '@/shared/scss/variables.module';
+
+.measurements {
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    // justify-content: space-between;
+    justify-content: flex-end;
+}
