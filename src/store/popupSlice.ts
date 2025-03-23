@@ -27,6 +27,6 @@ const sidebarSlice = createSlice({
 	},
 });
 
-export const { openPopup } = sidebarSlice.actions;
+export const { openPopup, closePopup } = sidebarSlice.actions;
 
 export default sidebarSlice.reducer;

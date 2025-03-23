@@ -8,7 +8,7 @@ export interface PopupBtn {
 
 export interface PopupContent {
 	id: string;
-	icon: number;
+	icon: number /* подумать как передавать иконки */;
 	title: string;
 	buttons?: PopupBtn[];
 }
