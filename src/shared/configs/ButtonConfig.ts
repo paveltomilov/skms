@@ -6,4 +6,4 @@ interface ButtonConfig {
     onClick?: () => void;
   }
 
-  export default ButtonConfig;
+export default ButtonConfig;
