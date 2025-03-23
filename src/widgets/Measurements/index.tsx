@@ -1,7 +1,7 @@
 'use client';
 import Multimetr from '@/entities/Multimetr';
 import styles from './styles.module.scss';
-import PopUp from '@/entities/Popup';
+import PopUp from '@/entities/PopUp';
 
 const Measurements = () => {
 	return (
