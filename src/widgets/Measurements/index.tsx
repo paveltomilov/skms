@@ -14,6 +14,7 @@ const Measurements = () => {
       <Multimetr />
     </div>
   );
+
 };
 
 export default Measurements;

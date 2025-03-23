@@ -1,4 +1,3 @@
-
 export interface PopupBtn {
 	id: string;
 	width: number;
