@@ -5,3 +5,10 @@ export interface PopupBtn {
 	text: string;
 	onClick?: () => void;
 }
+
+export interface PopupContent {
+	id: string;
+	icon: number;
+	title: string;
+	buttons?: PopupBtn[];
+}

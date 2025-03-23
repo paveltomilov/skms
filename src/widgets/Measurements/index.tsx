@@ -1,20 +1,15 @@
 'use client';
-
-// import { useState } from 'react';
-// import PopUp from '@/entities/PopUp';
-import Multimetr from '@/entities/Multimetr'; 
+import Multimetr from '@/entities/Multimetr';
 import styles from './styles.module.scss';
+import PopUp from '@/entities/Popup';
 
 const Measurements = () => {
-  // const [isPopUpOpen] = useState(false);
-
-  return (
-    <div className={styles.measurements}>
-      {/* <PopUp isOpen={isPopUpOpen} /> */}
-      <Multimetr />
-    </div>
-  );
-
+	return (
+		<div className={styles.measurements}>
+			<PopUp />
+			<Multimetr />
+		</div>
+	);
 };
 
 export default Measurements;

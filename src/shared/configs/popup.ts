@@ -1,4 +1,4 @@
-import { PopupBtn } from '../types/popupBtn';
+import { PopupBtn } from '../types/popup';
 
 export const defaultButtons: PopupBtn[] = [
 	{ id: 'btn1', width: 238, height: 35, text: 'Замерить напряжение' },

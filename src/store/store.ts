@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import gateReducer from './gateStateSlice';
 import buttonsReducer from './buttonsSlice';
 import sidebarReducer from './sidebarSlice';
+import popupReducer from './popupSlice';
 
 export const store = () => {
 	return configureStore({
@@ -9,6 +10,7 @@ export const store = () => {
 			buttonsReducer,
 			gateReducer,
 			sidebar: sidebarReducer,
+			popup: popupReducer,
 		},
 	});
 };
