@@ -1,4 +1,4 @@
-import { BigCross, Triangle } from '../../../shared/svg';
+import { BigCross, Triangle } from '../svg';
 import style from './Gate.module.scss';
 import { FC } from 'react';
 
