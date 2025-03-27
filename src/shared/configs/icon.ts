@@ -32,6 +32,13 @@ export const ICON_TRANSFORM = {
 
 export const ICON_COLOR = {
 	default: 'black',
-	white: 'white',
 	disabled: '#8A8A8A',
+	white: 'white',
+	magenta: '#E00671',
+	red: '#8F1313',
+	orange: '#FF7E22',
+	blue: '#110F93',
+	green: '#0AB700',
+	electric_green: '#0BF40E',
+	dark_green: '#005C00',
 };

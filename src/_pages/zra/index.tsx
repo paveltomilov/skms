@@ -5,6 +5,10 @@ import Sidebar from '@/widgets/Sidebar';
 import Header from '@/widgets/Header/Header';
 import Measurements from '@/widgets/Measurements';
 import Icon from '@/shared/UI/svg/Icon';
+import Arrow from '@/shared/UI/svg/Arrow';
+import Gate from '@/shared/UI/Gate/Gate';
+import { GATE_STATE_TYPE } from '@/shared/types/gate';
+import Triangle from '@/shared/UI/svg/Triangle';
 const Zra = () => {
 	return (
 		<>
@@ -41,7 +45,7 @@ const Zra = () => {
 						<Icon name="side" size="lg" />
 						<Icon name="micro" size="md" />
 						<Icon name="ellipseClose" />
-						<Icon name="close" />
+						<Icon name="close" strokeWidth={2} />
 						<Icon
 							name="curvedArrow"
 							size={{ width: 30, height: 20 }}
@@ -85,6 +89,33 @@ const Zra = () => {
 						/>
 						<Icon name="success" size="lg" />
 						<Icon name="error" size="lg" />
+						<Icon
+							name="power"
+							size={{ width: 10, height: 10 }}
+							color="magenta"
+						/>
+
+						<Arrow
+							name="filled"
+							color="magenta"
+							transform="rotate90"
+						/>
+						<Arrow name="filled" color="blue" />
+						<Arrow name="outlined" color="magenta" />
+						<Arrow name="outlined" color="orange" />
+						<Arrow name="chevron_color" color="magenta" />
+						<Arrow name="chevron_color" color="red" />
+						<Triangle />
+						<Gate state={GATE_STATE_TYPE.open} />
+						<Gate state={GATE_STATE_TYPE.open} power />
+						<Gate state={GATE_STATE_TYPE.close} />
+						<Gate state={GATE_STATE_TYPE.intermediate} />
+						<Gate state={GATE_STATE_TYPE.intermediate} disable />
+						<Gate state={GATE_STATE_TYPE.noPower} />
+						<Gate state={GATE_STATE_TYPE.toClose} />
+						<Gate state={GATE_STATE_TYPE.toOpen} />
+						<Gate state={GATE_STATE_TYPE.magenta} />
+						<Gate state={GATE_STATE_TYPE.magenta} power />
 					</div>
 				</section>
 			</main>
