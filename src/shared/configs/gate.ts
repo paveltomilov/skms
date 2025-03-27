@@ -107,3 +107,14 @@ export const GATE_STATE = {
 		},
 	},
 };
+
+export const GATE_POSITION = {
+	horizontal: {
+		left: 'rotateLeft90' as Transform,
+		right: 'rotate90' as Transform,
+	},
+	vertical: {
+		left: '' as Transform,
+		right: 'rotate180' as Transform,
+	},
+};

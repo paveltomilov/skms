@@ -1,7 +1,7 @@
 import style from './GateWindow.module.scss';
 import { FC } from 'react';
 import { useAppSelector } from '@/shared/hooks/store';
-import Gate from '@/shared/UI/Gate/Gate';
+import Gate from '@/shared/UI/Gate';
 
 const GateWindow: FC = () => {
 	const { state, value } = useAppSelector(state => state.gateReducer);

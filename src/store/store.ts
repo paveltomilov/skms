@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import gateReducer from './gateStateSlice';
+import gateReducer from './gateSlice';
 import buttonsReducer from './buttonsSlice';
 import sidebarReducer from './sidebarSlice';
 import popupReducer from './popupSlice';

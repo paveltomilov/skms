@@ -9,7 +9,7 @@ export interface GateState {
 
 // Инициализация состояния
 const initialState: GateState = {
-	state: GATE_STATE_TYPE.magenta,
+	state: GATE_STATE_TYPE.open,
 	value: 18.8,
 };
 

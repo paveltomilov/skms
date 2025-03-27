@@ -1,7 +1,7 @@
 'use client';
 import { FC, useEffect } from 'react';
 import style from './Header.module.scss';
-import { setGateState } from '@/store/gateStateSlice';
+import { setGateState } from '@/store/gateSlice';
 import Button from '@/shared/UI/Button';
 import { disableButton, enableButton } from '@/store/buttonsSlice';
 import { GATE_ACTIONS, DISABLED_BUTTONS_MAP } from '@/shared/configs/header';

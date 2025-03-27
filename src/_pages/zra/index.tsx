@@ -6,7 +6,7 @@ import Header from '@/widgets/Header/Header';
 import Measurements from '@/widgets/Measurements';
 import Icon from '@/shared/UI/svg/Icon';
 import Arrow from '@/shared/UI/svg/Arrow';
-import Gate from '@/shared/UI/Gate/Gate';
+import Gate from '@/shared/UI/Gate';
 import { GATE_STATE_TYPE } from '@/shared/types/gate';
 import Triangle from '@/shared/UI/svg/Triangle';
 const Zra = () => {
@@ -116,6 +116,21 @@ const Zra = () => {
 						<Gate state={GATE_STATE_TYPE.toOpen} />
 						<Gate state={GATE_STATE_TYPE.magenta} />
 						<Gate state={GATE_STATE_TYPE.magenta} power />
+						<Gate
+							state={GATE_STATE_TYPE.open}
+							position="vertical"
+							disable
+						/>
+						<Gate
+							state={GATE_STATE_TYPE.intermediate}
+							position="vertical"
+							power
+						/>
+						<Gate
+							state={GATE_STATE_TYPE.magenta}
+							position="vertical"
+							power
+						/>
 					</div>
 				</section>
 			</main>

@@ -1,27 +1,46 @@
 @use '@/shared/scss/mixins.module';
 @use '@/shared/scss/variables.module';
 
-.animation {
-	animation: variables.$blink;
-}
-
 .gate {
 	position: relative;
+	display: flex;
 	filter: drop-shadow(variables.$default-box-shadow);
 
 	& > :nth-child(2) {
 		margin-left: -1px;
 	}
 
+	&_vertical {
+		flex-direction: column;
+
+		& > :nth-child(2) {
+			margin-left: 0;
+		}
+	}
+
 	&__cross {
 		position: absolute;
-		left: 23%;
+		left: 22%;
 		top: -1px;
+
+		&_vertical {
+			left: -3%;
+			top: 8px;
+		}
 	}
 
 	&__power {
 		position: absolute;
 		left: 42%;
 		top: -1px;
+
+		&_vertical {
+			left: 0%;
+			top: 16px;
+		}
+	}
+
+	&__animation {
+		animation: variables.$blink;
 	}
 }
