@@ -271,5 +271,36 @@
             fill="currentColor" />
     </symbol>
 
+    <!-- тильда в кружочке -->
+
+    <symbol id="tilde" width="26" height="26" viewBox="0 0 26 26" fill="none">
+        <g clip-path="url(#clip0_23_4814)">
+            <circle cx="13" cy="13" r="12.5" fill="currentColor" stroke="black" />
+            <path
+                d="M5.35291 13.7647C5.35291 13.7647 6.49996 10.7059 9.55879 10.7059C12.6176 10.7059 13.3823 15.2941 16.8235 15.2941C20.2647 15.2941 21.0294 12.2353 21.0294 12.2353"
+                stroke="black" stroke-linecap="round" />
+        </g>
+        <defs>
+            <clipPath id="clip0_23_4814">
+                <rect width="26" height="26" fill="white" />
+            </clipPath>
+        </defs>
+    </symbol>
+
+    <!-- стрелка(угловая скобка) в кружочке -->
+    <symbol id="circle_chevron" width="30" height="30" viewBox="0 0 30 30" fill="none">
+        <circle cx="15" cy="15" r="14" stroke="currentColor" stroke-width="2" />
+        <path d="M25.6565 24L14.8711 3L4.09399 24" stroke="currentColor" stroke-width="2" />
+    </symbol>
+
+    <!-- стрелка обычная в кружочке -->
+    <symbol id="circle_arrow" width="36" height="36" viewBox="0 0 36 36" fill="none">
+        <path
+            d="M17.9999 1.50732C8.89176 1.50732 1.50732 8.89176 1.50732 17.9999C1.50732 27.1081 8.89176 34.4925 17.9999 34.4925C27.1081 34.4925 34.4925 27.1081 34.4925 17.9999C34.4925 8.89176 27.1081 1.50732 17.9999 1.50732ZM14.5152 20.8196V24.8098L4.31639 18.0053L14.5152 11.1901V15.1802H31.6835V20.825H14.5152V20.8196Z"
+            fill="currentColor" stroke="#231F20" stroke-miterlimit="10" />
+        <path
+            d="M14.5152 15.1803V11.1901L4.31641 18.0053L14.5152 24.8098V20.8197H31.6835V15.1803H14.5152Z"
+            fill="currentColor" stroke="#231F20" stroke-miterlimit="10" />
+    </symbol>
 
 </svg>

@@ -9,6 +9,9 @@ import Arrow from '@/shared/UI/svg/Arrow';
 import Gate from '@/shared/UI/Gate';
 import { GATE_STATE_TYPE } from '@/shared/types/gate';
 import Triangle from '@/shared/UI/svg/Triangle';
+import Tilde from '@/shared/UI/svg/Tilde';
+import Circle from '@/shared/UI/svg/Circle';
+import ArrowButton from '@/shared/UI/svg/ArrowButton';
 const Zra = () => {
 	return (
 		<>
@@ -27,6 +30,7 @@ const Zra = () => {
 							display: 'flex',
 							alignItems: 'flex-end',
 							gap: 5,
+							flexWrap: 'wrap',
 						}}
 					>
 						<Icon name="accept" size="xs" />
@@ -131,6 +135,19 @@ const Zra = () => {
 							position="vertical"
 							power
 						/>
+						<Tilde />
+						<Tilde disable />
+						<Tilde color="white" size="md" />
+						<Tilde color="white" size="md" disable />
+						<Circle />
+						<Circle color="magenta" transform="rotate45" />
+						<Circle color="red" transform="rotate90" />
+						<Circle color="electric_green" transform="rotate180" />
+						<Circle color="blue" transform="rotateLeft45" />
+						<ArrowButton color="white" disable />
+						<ArrowButton color="white" transform="rotate45" />
+						<ArrowButton transform="rotate90" />
+						<ArrowButton color="white" transform="rotate180" />
 					</div>
 				</section>
 			</main>
