@@ -4,7 +4,7 @@ import React from 'react';
 import styles from './styles.module.scss';
 import { toggleSidebar } from '@/store/sidebarSlice';
 import Button from '@/shared/UI/Button';
-import { Arrow } from '@/shared/UI/svg';
+import { Arrow } from '@/shared/UI/icons';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 
 const Sidebar = () => {

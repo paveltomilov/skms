@@ -4,14 +4,37 @@ import Footer from '@/widgets/Footer';
 import Sidebar from '@/widgets/Sidebar';
 import Header from '@/widgets/Header/Header';
 import Measurements from '@/widgets/Measurements';
-import Icon from '@/shared/UI/svg/Icon';
-import Arrow from '@/shared/UI/svg/Arrow';
+import Arrow from '@/shared/UI/icons/Arrow';
 import Gate from '@/shared/UI/Gate';
 import { GATE_STATE_TYPE } from '@/shared/types/gate';
-import Triangle from '@/shared/UI/svg/Triangle';
-import Tilde from '@/shared/UI/svg/Tilde';
-import Circle from '@/shared/UI/svg/Circle';
-import ArrowButton from '@/shared/UI/svg/ArrowButton';
+import Triangle from '@/shared/UI/icons/Triangle';
+import Tilde from '@/shared/UI/icons/Tilde';
+import Circle from '@/shared/UI/icons/Circle';
+import ArrowButton from '@/shared/UI/icons/ArrowButton';
+import Accept from '@/shared/UI/icons/Accept';
+import Exclamation from '@/shared/UI/icons/Exclamation';
+import Question from '@/shared/UI/icons/Question';
+import Search from '@/shared/UI/icons/Search';
+import Chevron from '@/shared/UI/icons/Chevron';
+import Side from '@/shared/UI/icons/Side';
+import Micro from '@/shared/UI/icons/Micro';
+import EllipseClose from '@/shared/UI/icons/EllipseClose';
+import Close from '@/shared/UI/icons/Close';
+import CurvedArrow from '@/shared/UI/icons/CurvedArrow';
+import Sharp from '@/shared/UI/icons/Sharp';
+import Filter from '@/shared/UI/icons/Filter';
+import ArrowPage from '@/shared/UI/icons/ArrowPage';
+import Home from '@/shared/UI/icons/Home';
+import Training from '@/shared/UI/icons/Training';
+import Ptk from '@/shared/UI/icons/Ptk';
+import Simulator from '@/shared/UI/icons/Simulator';
+import SchemeIcon from '@/shared/UI/icons/SchemeIcon';
+import Attention from '@/shared/UI/icons/Attention';
+import Feedback from '@/shared/UI/icons/Feedback';
+import Success from '@/shared/UI/icons/Success';
+import Error from '@/shared/UI/icons/Error';
+import Power from '@/shared/UI/icons/Power';
+import Status from '@/shared/UI/icons/Status';
 const Zra = () => {
 	return (
 		<>
@@ -33,82 +56,66 @@ const Zra = () => {
 							flexWrap: 'wrap',
 						}}
 					>
-						<Icon name="accept" size="xs" />
-						<Icon name="accept" size="xs" color="disabled" />
-						<Icon
-							name="exclamation"
-							size={{ width: 8, height: 13 }}
-						/>
-						<Icon
-							name="question"
-							size={{ width: 10, height: 14 }}
-						/>
-						<Icon name="search" size="xs" transform="mirror" />
-						<Icon name="chevron" size="xs" />
-						<Icon name="chevron" size="xs" color="disabled" />
-						<Icon name="side" size="lg" />
-						<Icon name="micro" size="md" />
-						<Icon name="ellipseClose" />
-						<Icon name="close" strokeWidth={2} />
-						<Icon
-							name="curvedArrow"
-							size={{ width: 30, height: 20 }}
-						/>
-						<Icon
-							name="curvedArrow"
-							size={{ width: 30, height: 20 }}
-							color="disabled"
-							transform="mirror"
-						/>
-						<Icon name="sharp" />
-						<Icon name="sharp" color="disabled" />
-						<Icon name="filter" />
-						<Icon name="arrow" />
-						<Icon
-							name="arrow"
-							transform="mirror"
-							color="disabled"
-						/>
-						<Icon name="home" />
-						<Icon name="training" />
-						<Icon name="ptk" />
-						<Icon name="simulator" />
-						<Icon name="scheme" />
-						<Icon
-							name="chevron"
+						<Accept />
+						<Accept size="sm" color="disabled" />
+						<Exclamation color="white_opacity" />
+						<Question size="sm" />
+						<Question color="white_opacity" />
+						<Search />
+						<Search size="sm" color="disabled" />
+						<Chevron />
+						<Chevron
 							size="sm"
-							transform="rotateLeft90"
+							color="disabled"
+							transform="rotate180"
 						/>
-						<Icon name="chevron" size="sm" transform="rotate90" />
-						<Icon name="attention" size="lg" />
-						<Icon name="attention" size="lg" color="disabled" />
-						<Icon
-							name="feedback"
-							size={{ width: 34, height: 28 }}
+						<Side transform="rotate180" />
+						<Side color="disabled" />
+						<Micro color="disabled" size="lg" />
+						<Micro />
+						<EllipseClose />
+						<EllipseClose color="disabled" size="lg" />
+						<Close />
+						<Close strokeWidth={1} color="red" size="lg" />
+						<Close
+							strokeWidth={1}
+							color="red"
+							size={{ width: 40, height: 40 }}
 						/>
-						<Icon
-							name="feedback"
-							color="white"
-							size={{ width: 34, height: 28 }}
-						/>
-						<Icon name="success" size="lg" />
-						<Icon name="error" size="lg" />
-						<Icon
-							name="power"
-							size={{ width: 10, height: 10 }}
-							color="magenta"
-						/>
+						<CurvedArrow />
+						<CurvedArrow color="disabled" transform="mirror" />
+						<Sharp />
+						<Sharp color="disabled" />
+						<Filter />
+						<Filter color="disabled" />
+						<ArrowPage />
+						<ArrowPage transform="rotate180" color="disabled" />
+						<Home />
+						<Home color="disabled" />
+						<Training />
+						<Training color="disabled" />
+						<Ptk />
+						<Ptk color="disabled" />
+						<Simulator />
+						<Simulator color="disabled" />
+						<SchemeIcon />
+						<SchemeIcon color="disabled" />
+						<Attention />
+						<Attention color="disabled" size="lg" />
+						<Feedback />
+						<Feedback color="white" />
+						<Success />
+						<Error />
+						<Power />
+						<Power color="magenta" transform="rotate180" />
+						<Power color="magenta" transform="rotateLeft90" />
 
-						<Arrow
-							name="filled"
-							color="magenta"
-							transform="rotate90"
-						/>
-						<Arrow name="filled" color="blue" />
-						<Arrow name="outlined" color="magenta" />
-						<Arrow name="outlined" color="orange" />
-						<Arrow name="chevron_color" color="magenta" />
-						<Arrow name="chevron_color" color="red" />
+						<Arrow color="magenta" transform="rotate90" />
+						<Arrow color="blue" />
+						<Arrow type="outlined" color="magenta" />
+						<Arrow type="outlined" color="orange" />
+						<Arrow type="chevron_color" color="magenta" />
+						<Arrow type="chevron_color" color="red" />
 						<Triangle />
 						<Gate state={GATE_STATE_TYPE.open} />
 						<Gate state={GATE_STATE_TYPE.open} power />
@@ -148,6 +155,9 @@ const Zra = () => {
 						<ArrowButton color="white" transform="rotate45" />
 						<ArrowButton transform="rotate90" />
 						<ArrowButton color="white" transform="rotate180" />
+						<Status />
+						<Status type="shortWave" color="magenta" />
+						<Status type="crash" color="electric_green" />
 					</div>
 				</section>
 			</main>

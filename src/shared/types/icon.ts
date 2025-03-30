@@ -1,53 +1,50 @@
-// типы для возможных назвваний иконок
-export type Name =
-	| 'accept'
-	| 'exclamation'
-	| 'question'
-	| 'search'
-	| 'chevron'
-	| 'side'
-	| 'micro'
-	| 'ellipseClose'
-	| 'close'
-	| 'curvedArrow'
-	| 'sharp'
-	| 'filter'
-	| 'arrow'
-	| 'home'
-	| 'training'
-	| 'ptk'
-	| 'simulator'
-	| 'scheme'
-	| 'attention'
-	| 'feedback'
-	| 'success'
-	| 'error'
-	| 'power';
+export interface IconSize {
+	xs: {
+		width: string;
+		height: string;
+		viewBox: string;
+	};
+	sm: {
+		width: string;
+		height: string;
+		viewBox: string;
+	};
+	md: {
+		width: string;
+		height: string;
+		viewBox: string;
+	};
+	lg: {
+		width: string;
+		height: string;
+		viewBox: string;
+	};
+}
 
-// типы для возможных размеров иконок
+export interface IconColor {
+	default: string;
+	disabled: string;
+	white: string;
+	white_opacity: string;
+	magenta: string;
+	red: string;
+	orange: string;
+	blue: string;
+	green: string;
+	electric_green: string;
+	dark_green: string;
+}
+
+export interface IconTransform {
+	mirror: string;
+	rotate45: string;
+	rotate90: string;
+	rotate180: string;
+	rotateLeft45: string;
+	rotateLeft90: string;
+}
+
 export interface OtherSizes {
 	width: number;
 	height: number;
 }
-
-export type Size = 'xs' | 'sm' | 'md' | 'lg' | OtherSizes;
-
-// типы для возможных цветов
-export type Color =
-	| 'default'
-	| 'disabled'
-	| 'white'
-	| 'magenta'
-	| 'red'
-	| 'green'
-	| 'electric_green'
-	| 'dark_green';
-
-// типы для возможных трансформаций
-export type Transform =
-	| 'mirror'
-	| 'rotate45'
-	| 'rotateLeft45'
-	| 'rotate90'
-	| 'rotateLeft90'
-	| 'rotate180';

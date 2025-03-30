@@ -1,7 +1,7 @@
 import { ICON_COLOR, ICON_SIZE } from '@/shared/configs/icon';
 import { FC } from 'react';
-import Icon from '../Icon';
 import styles from './styles.module.scss';
+import Close from '../Close';
 
 interface Props {
 	size?: 'sm' | 'md';
@@ -31,17 +31,16 @@ const Tilde: FC<Props> = ({
 				preserveAspectRatio="xMidYMid meet"
 			>
 				<use
-					xlinkHref={'/icons/sprite.svg#tilde'}
+					xlinkHref={'/svg/sprite.svg#tilde'}
 					width="100%"
 					height="100%"
 				/>
 			</svg>
 			{disable && (
-				<Icon
+				<Close
 					className={`${styles.tilde__cross} ${
 						isSmall && styles.tilde__cross_small
 					}`}
-					name="close"
 					size={crossSize}
 					color="red"
 					strokeWidth={1}

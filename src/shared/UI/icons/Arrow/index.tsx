@@ -1,30 +1,20 @@
 import { ICON_COLOR, ICON_TRANSFORM } from '@/shared/configs/icon';
+import { IconColor, IconTransform } from '@/shared/types/icon';
 import { FC } from 'react';
 
 interface Props {
-	name: 'filled' | 'outlined' | 'chevron_color';
-	color?:
-		| 'default'
-		| 'disabled'
-		| 'white'
-		| 'magenta'
-		| 'red'
-		| 'orange'
-		| 'blue'
-		| 'green'
-		| 'electric_green'
-		| 'dark_green';
-	transform?:
-		| 'rotate45'
-		| 'rotateLeft45'
-		| 'rotate90'
-		| 'rotateLeft90'
-		| 'rotate180';
+	type?: 'filled' | 'outlined' | 'chevron_color';
+	color?: keyof Omit<IconColor, 'disabled' | 'white' | 'white_opacity'>;
+	transform?: keyof Omit<IconTransform, 'mirror'>;
 }
 
-const Arrow: FC<Props> = ({ name, color = 'default', transform }) => {
+const Arrow: FC<Props> = ({
+	type = 'filled',
+	color = 'default',
+	transform,
+}) => {
 	const colors = ICON_COLOR[color];
-	const stroke = name === 'outlined' ? ICON_COLOR[color] : '';
+	const stroke = type === 'outlined' ? ICON_COLOR[color] : '';
 	const transforms = transform && ICON_TRANSFORM[transform];
 	return (
 		<svg
@@ -38,7 +28,7 @@ const Arrow: FC<Props> = ({ name, color = 'default', transform }) => {
 			preserveAspectRatio="xMidYMid meet"
 		>
 			<use
-				xlinkHref={`/icons/sprite.svg#${name}`}
+				xlinkHref={`/svg/sprite.svg#${type}`}
 				width="100%"
 				height="100%"
 			/>

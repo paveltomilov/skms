@@ -120,7 +120,7 @@
     </symbol>
 
     <!-- простая стрелка -->
-    <symbol id="arrow" width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <symbol id="arrow_page" width="20" height="20" viewBox="0 0 20 20" fill="none">
         <path fill-rule="evenodd" clip-rule="evenodd"
             d="M1.92013 9.28925L1.20203 9.99999L1.92013 10.7107L8.6725 17.3938L10.0794 15.9724L5.05551 11H18.798V8.99999H5.05551L10.0794 4.02762L8.6725 2.60614L1.92013 9.28925Z"
             fill="currentColor" />
@@ -301,6 +301,23 @@
         <path
             d="M14.5152 15.1803V11.1901L4.31641 18.0053L14.5152 24.8098V20.8197H31.6835V15.1803H14.5152Z"
             fill="currentColor" stroke="#231F20" stroke-miterlimit="10" />
+    </symbol>
+
+    <!-- статус -->
+    <symbol id="longWave" width="45" height="42" viewBox="0 0 45 42" fill="none">
+        <path d="M0 23H8.56863L22.2059 41V1L36.6372 23H45" stroke="currentColor" stroke-width="2"
+            stroke-linejoin="bevel" />
+    </symbol>
+
+    <symbol id="shortWave" width="26" height="44" viewBox="0 0 26 44" fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path d="M0.00244141 22H4.84558L13.0024 43V1L21.1544 22H25.9975" stroke="currentColor"
+            stroke-width="2" />
+    </symbol>
+
+    <symbol id="crash" width="42" height="42" viewBox="0 0 42 42" fill="none">
+        <path d="M21 1.41421L40.5858 21L21 40.5858L1.41421 21L21 1.41421Z" stroke="currentColor"
+            stroke-width="2" stroke-linejoin="round" />
     </symbol>
 
 </svg>

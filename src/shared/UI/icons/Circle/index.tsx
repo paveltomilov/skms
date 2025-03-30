@@ -21,7 +21,7 @@ const Circle: FC<Props> = ({ color = 'green', transform }) => {
 			preserveAspectRatio="xMidYMid meet"
 		>
 			<use
-				xlinkHref={'/icons/sprite.svg#circle_chevron'}
+				xlinkHref={'/svg/sprite.svg#circle_chevron'}
 				width="100%"
 				height="100%"
 			/>

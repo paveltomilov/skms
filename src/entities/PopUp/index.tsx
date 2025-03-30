@@ -3,7 +3,7 @@
 import { FC, useEffect } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
-import { SettingBtns } from '@/shared/UI/svg';
+import { SettingBtns } from '@/shared/UI/icons';
 import { defaultButtons } from '@/shared/configs/popup';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import { closePopup } from '@/store/popupSlice';

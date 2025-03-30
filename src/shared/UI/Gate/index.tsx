@@ -1,12 +1,13 @@
-import { GATE_STATE_TYPE } from '@/shared/types/gate';
-import Icon from '../svg/Icon';
+import { GateStates } from '@/shared/types/gate';
 import styles from './styles.module.scss';
 import { FC } from 'react';
-import Triangle from '../svg/Triangle';
+import Triangle from '../icons/Triangle';
 import { GATE_POSITION, GATE_STATE } from '@/shared/configs/gate';
+import Close from '../icons/Close';
+import Power from '../icons/Power';
 
 interface Props {
-	state: GATE_STATE_TYPE;
+	state: keyof GateStates;
 	disable?: boolean;
 	power?: boolean;
 	position?: 'horizontal' | 'vertical';
@@ -37,21 +38,18 @@ const Gate: FC<Props> = ({
 				className={states.right.animation ? styles.gate__animation : ''}
 			/>
 			{disable && (
-				<Icon
+				<Close
 					className={`${styles.gate__cross}
 		${isVertical && styles.gate__cross_vertical}`}
-					name="close"
 					size={{ width: 22, height: 22 }}
 					color="red"
 					strokeWidth={1}
 				/>
 			)}
 			{power && (
-				<Icon
+				<Power
 					className={`${styles.gate__power}
 		${isVertical && styles.gate__power_vertical}`}
-					name="power"
-					size={{ width: 10, height: 10 }}
 					transform={isVertical ? 'rotate180' : 'rotateLeft90'}
 					color={
 						states.left.color === 'magenta_white'

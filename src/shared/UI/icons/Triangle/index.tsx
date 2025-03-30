@@ -1,12 +1,12 @@
 import { TRIANGLE_COLOR } from '@/shared/configs/gate';
 import { ICON_TRANSFORM } from '@/shared/configs/icon';
-import { Color } from '@/shared/types/gate';
-import { Transform } from '@/shared/types/icon';
+import { TriangleColor } from '@/shared/types/gate';
+import { IconTransform } from '@/shared/types/icon';
 import { FC } from 'react';
 
 interface Props {
-	color?: Color;
-	transform?: Transform;
+	color?: keyof TriangleColor;
+	transform?: keyof Omit<IconTransform, 'mirror'>;
 	className?: string;
 }
 
@@ -25,7 +25,7 @@ const Triangle: FC<Props> = ({ color = 'green', transform, className }) => {
 			className={className && className}
 		>
 			<use
-				xlinkHref={'/icons/sprite.svg#triangle'}
+				xlinkHref={'/svg/sprite.svg#triangle'}
 				width="100%"
 				height="100%"
 			/>

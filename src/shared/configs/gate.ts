@@ -1,8 +1,8 @@
-import { Color } from '../types/gate';
-import { Transform } from '../types/icon';
+import { GatePosition, GateStates, TriangleColor } from '../types/gate';
+import { IconTransform } from '../types/icon';
 import { ICON_COLOR } from './icon';
 
-export const TRIANGLE_COLOR = {
+export const TRIANGLE_COLOR: TriangleColor = {
 	green: {
 		stroke: ICON_COLOR.dark_green,
 		fill: ICON_COLOR.electric_green,
@@ -21,100 +21,100 @@ export const TRIANGLE_COLOR = {
 	},
 };
 
-export const GATE_STATE = {
+export const GATE_STATE: GateStates = {
 	open: {
 		left: {
-			color: 'green' as Color,
-			transform: 'rotateLeft90' as Transform,
+			color: 'green' as keyof TriangleColor,
+			transform: 'rotateLeft90' as keyof Omit<IconTransform, 'mirror'>,
 			animation: false,
 		},
 		right: {
-			color: 'green' as Color,
-			transform: 'rotate90' as Transform,
+			color: 'green' as keyof TriangleColor,
+			transform: 'rotate90' as keyof Omit<IconTransform, 'mirror'>,
 			animation: false,
 		},
 	},
 	close: {
 		left: {
-			color: 'black_white' as Color,
-			transform: 'rotateLeft90' as Transform,
+			color: 'black_white' as keyof TriangleColor,
+			transform: 'rotateLeft90' as keyof Omit<IconTransform, 'mirror'>,
 			animation: false,
 		},
 		right: {
-			color: 'black_white' as Color,
-			transform: 'rotate90' as Transform,
+			color: 'black_white' as keyof TriangleColor,
+			transform: 'rotate90' as keyof Omit<IconTransform, 'mirror'>,
 			animation: false,
 		},
 	},
 	noPower: {
 		left: {
-			color: 'grey' as Color,
-			transform: 'rotateLeft90' as Transform,
+			color: 'grey' as keyof TriangleColor,
+			transform: 'rotateLeft90' as keyof Omit<IconTransform, 'mirror'>,
 			animation: false,
 		},
 		right: {
-			color: 'grey' as Color,
-			transform: 'rotate90' as Transform,
+			color: 'grey' as keyof TriangleColor,
+			transform: 'rotate90' as keyof Omit<IconTransform, 'mirror'>,
 			animation: false,
 		},
 	},
 	intermediate: {
 		left: {
-			color: 'black_white' as Color,
-			transform: 'rotateLeft90' as Transform,
+			color: 'black_white' as keyof TriangleColor,
+			transform: 'rotateLeft90' as keyof Omit<IconTransform, 'mirror'>,
 			animation: false,
 		},
 		right: {
-			color: 'green' as Color,
-			transform: 'rotate90' as Transform,
+			color: 'green' as keyof TriangleColor,
+			transform: 'rotate90' as keyof Omit<IconTransform, 'mirror'>,
 			animation: false,
 		},
 	},
 	toOpen: {
 		left: {
-			color: 'black_white' as Color,
-			transform: 'rotateLeft90' as Transform,
+			color: 'black_white' as keyof TriangleColor,
+			transform: 'rotateLeft90' as keyof Omit<IconTransform, 'mirror'>,
 			animation: false,
 		},
 		right: {
-			color: 'green' as Color,
-			transform: 'rotate90' as Transform,
+			color: 'green' as keyof TriangleColor,
+			transform: 'rotate90' as keyof Omit<IconTransform, 'mirror'>,
 			animation: true,
 		},
 	},
 	toClose: {
 		left: {
-			color: 'black_white' as Color,
-			transform: 'rotateLeft90' as Transform,
+			color: 'black_white' as keyof TriangleColor,
+			transform: 'rotateLeft90' as keyof Omit<IconTransform, 'mirror'>,
 			animation: true,
 		},
 		right: {
-			color: 'green' as Color,
-			transform: 'rotate90' as Transform,
+			color: 'green' as keyof TriangleColor,
+			transform: 'rotate90' as keyof Omit<IconTransform, 'mirror'>,
 			animation: false,
 		},
 	},
 	magenta: {
 		left: {
-			color: 'magenta_white' as Color,
-			transform: 'rotateLeft90' as Transform,
+			color: 'magenta_white' as keyof TriangleColor,
+			transform: 'rotateLeft90' as keyof Omit<IconTransform, 'mirror'>,
 			animation: false,
 		},
 		right: {
-			color: 'magenta_white' as Color,
-			transform: 'rotate90' as Transform,
+			color: 'magenta_white' as keyof TriangleColor,
+			transform: 'rotate90' as keyof Omit<IconTransform, 'mirror'>,
 			animation: false,
 		},
 	},
 };
 
-export const GATE_POSITION = {
+export const GATE_POSITION: GatePosition = {
 	horizontal: {
-		left: 'rotateLeft90' as Transform,
-		right: 'rotate90' as Transform,
+		left: 'rotateLeft90' as keyof Omit<IconTransform, 'mirror'>,
+		right: 'rotate90' as keyof Omit<IconTransform, 'mirror'>,
 	},
 	vertical: {
-		left: '' as Transform,
-		right: 'rotate180' as Transform,
+		left: '' as keyof Omit<IconTransform, 'mirror'>,
+		right: 'rotate180' as keyof Omit<IconTransform, 'mirror'>,
 	},
 };

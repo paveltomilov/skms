@@ -1,27 +1,29 @@
-export const ICON_SIZE = {
+import { IconColor, IconSize, IconTransform } from '../types/icon';
+
+export const ICON_SIZE: IconSize = {
 	xs: {
-		width: '16px',
-		height: '16px',
+		width: '16',
+		height: '16',
 		viewBox: '0 0 16 16',
 	},
 	sm: {
-		width: '20px',
-		height: '20px',
+		width: '20',
+		height: '20',
 		viewBox: '0 0 20 20',
 	},
 	md: {
-		width: '26px',
-		height: '26px',
+		width: '26',
+		height: '26',
 		viewBox: '0 0 26 26',
 	},
 	lg: {
-		width: '28px',
-		height: '28px',
+		width: '28',
+		height: '28',
 		viewBox: '0 0 28 28',
 	},
 };
 
-export const ICON_TRANSFORM = {
+export const ICON_TRANSFORM: IconTransform = {
 	mirror: 'rotate(180) scale(1 -1)',
 	rotate45: 'rotate(45)',
 	rotate90: 'rotate(90)',
@@ -30,10 +32,11 @@ export const ICON_TRANSFORM = {
 	rotateLeft90: 'rotate(-90)',
 };
 
-export const ICON_COLOR = {
+export const ICON_COLOR: IconColor = {
 	default: 'black',
 	disabled: '#8A8A8A',
 	white: 'white',
+	white_opacity: '#FFFFFFB2',
 	magenta: '#E00671',
 	red: '#8F1313',
 	orange: '#FF7E22',
@@ -41,4 +44,22 @@ export const ICON_COLOR = {
 	green: '#0AB700',
 	electric_green: '#0BF40E',
 	dark_green: '#005C00',
+};
+
+export const STATUS_ICON_SIZE = {
+	longWave: {
+		width: '45',
+		height: '42',
+		viewBox: '0 0 45 42',
+	},
+	shortWave: {
+		width: '26',
+		height: '44',
+		viewBox: '0 0 26 44',
+	},
+	crash: {
+		width: '42',
+		height: '42',
+		viewBox: '0 0 42 42',
+	},
 };

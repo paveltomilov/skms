@@ -1,14 +1,14 @@
 import { ICON_COLOR, ICON_TRANSFORM } from '@/shared/configs/icon';
 import { FC } from 'react';
-import Icon from '../Icon';
 import styles from './styles.module.scss';
-import { Transform } from '@/shared/types/icon';
+import { IconColor, IconSize, IconTransform } from '@/shared/types/icon';
+import Close from '../Close';
 
 interface Props {
-	size?: 'sm' | 'md';
-	color?: 'white' | 'green';
+	size?: keyof Pick<IconSize, 'sm' | 'md'>;
+	color?: keyof Pick<IconColor, 'white' | 'green'>;
 	disable?: boolean;
-	transform?: Transform;
+	transform?: keyof Omit<IconTransform, 'mirror'>;
 }
 
 const ArrowButton: FC<Props> = ({
@@ -30,15 +30,14 @@ const ArrowButton: FC<Props> = ({
 				preserveAspectRatio="xMidYMid meet"
 			>
 				<use
-					xlinkHref={'/icons/sprite.svg#circle_arrow'}
+					xlinkHref={'/svg/sprite.svg#circle_arrow'}
 					width="100%"
 					height="100%"
 				/>
 			</svg>
 			{disable && (
-				<Icon
+				<Close
 					className={styles.arrow__cross}
-					name="close"
 					size={{ width: 40, height: 40 }}
 					color="red"
 					strokeWidth={1}
