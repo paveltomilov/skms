@@ -10,12 +10,14 @@ interface Props {
 	type?: 'longWave' | 'shortWave' | 'crash';
 	color?: keyof Omit<IconColor, 'disabled' | 'white' | 'white_opacity'>;
 	transform?: keyof IconTransform;
+	className?: string;
 }
 
 const Status: FC<Props> = ({
 	type = 'longWave',
 	color = 'default',
 	transform,
+	className,
 }) => {
 	const sizes = STATUS_ICON_SIZE[type];
 	const colors = ICON_COLOR[color];
@@ -28,6 +30,7 @@ const Status: FC<Props> = ({
 			color={colors}
 			transform={transforms}
 			preserveAspectRatio="xMidYMid meet"
+			className={className && className}
 		>
 			<use
 				xlinkHref={`/svg/sprite.svg#${type}`}

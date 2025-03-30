@@ -10,6 +10,7 @@ interface Props {
 	state: keyof GateStates;
 	disable?: boolean;
 	power?: boolean;
+	shadow?: boolean;
 	position?: 'horizontal' | 'vertical';
 }
 
@@ -18,6 +19,7 @@ const Gate: FC<Props> = ({
 	position = 'horizontal',
 	disable = false,
 	power = false,
+	shadow = false,
 }) => {
 	const states = GATE_STATE[state];
 	const positions = GATE_POSITION[position];
@@ -25,7 +27,7 @@ const Gate: FC<Props> = ({
 	return (
 		<div
 			className={`${styles.gate}
-		${isVertical && styles.gate_vertical}`}
+		${isVertical && styles.gate_vertical} ${shadow && styles.gate_shadow}`}
 		>
 			<Triangle
 				color={states.left.color}

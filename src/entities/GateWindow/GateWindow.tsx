@@ -8,7 +8,7 @@ const GateWindow: FC = () => {
 
 	return (
 		<div className={style.window}>
-			<Gate state={state} />
+			<Gate state={state} shadow />
 			<div className={style.indication}>
 				<span className={style.value}>{value}</span>
 				<span className={style.measurements}>м3/ч</span>

@@ -1,13 +1,17 @@
 import { ICON_COLOR, ICON_TRANSFORM } from '@/shared/configs/icon';
-import { Transform } from '@/shared/types/icon';
+import { IconColor, IconTransform } from '@/shared/types/icon';
 import { FC } from 'react';
 
 interface Props {
-	color?: 'green' | 'magenta' | 'red' | 'electric_green' | 'blue';
-	transform?: Transform;
+	color?: keyof Pick<
+		IconColor,
+		'green' | 'magenta' | 'red' | 'electric_green' | 'blue'
+	>;
+	transform?: keyof Omit<IconTransform, 'mirror'>;
+	className?: string;
 }
 
-const Circle: FC<Props> = ({ color = 'green', transform }) => {
+const Circle: FC<Props> = ({ color = 'green', transform, className }) => {
 	const colors = ICON_COLOR[color];
 	const transforms = transform && ICON_TRANSFORM[transform];
 	return (
@@ -19,6 +23,7 @@ const Circle: FC<Props> = ({ color = 'green', transform }) => {
 			color={colors}
 			transform={transforms}
 			preserveAspectRatio="xMidYMid meet"
+			className={className && className}
 		>
 			<use
 				xlinkHref={'/svg/sprite.svg#circle_chevron'}

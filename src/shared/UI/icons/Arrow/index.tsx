@@ -6,12 +6,14 @@ interface Props {
 	type?: 'filled' | 'outlined' | 'chevron_color';
 	color?: keyof Omit<IconColor, 'disabled' | 'white' | 'white_opacity'>;
 	transform?: keyof Omit<IconTransform, 'mirror'>;
+	className?: string;
 }
 
 const Arrow: FC<Props> = ({
 	type = 'filled',
 	color = 'default',
 	transform,
+	className,
 }) => {
 	const colors = ICON_COLOR[color];
 	const stroke = type === 'outlined' ? ICON_COLOR[color] : '';
@@ -26,6 +28,7 @@ const Arrow: FC<Props> = ({
 			stroke={stroke}
 			transform={transforms}
 			preserveAspectRatio="xMidYMid meet"
+			className={className && className}
 		>
 			<use
 				xlinkHref={`/svg/sprite.svg#${type}`}

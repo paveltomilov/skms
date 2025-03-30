@@ -9,17 +9,19 @@ interface Props {
 	color?: keyof Pick<IconColor, 'white' | 'green'>;
 	disable?: boolean;
 	transform?: keyof Omit<IconTransform, 'mirror'>;
+	className?: string;
 }
 
 const ArrowButton: FC<Props> = ({
 	color = 'green',
 	disable = false,
 	transform,
+	className,
 }) => {
 	const colors = ICON_COLOR[color];
 	const transforms = transform && ICON_TRANSFORM[transform];
 	return (
-		<span className={styles.arrow}>
+		<span className={`${styles.arrow}  ${className && className}`}>
 			<svg
 				width="36"
 				height="36"

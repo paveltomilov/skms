@@ -4,7 +4,6 @@
 .gate {
 	position: relative;
 	display: flex;
-	filter: drop-shadow(variables.$default-box-shadow);
 
 	& > :nth-child(2) {
 		margin-left: -1px;
@@ -16,6 +15,10 @@
 		& > :nth-child(2) {
 			margin-left: 0;
 		}
+	}
+
+	&_shadow {
+		filter: drop-shadow(variables.$default-box-shadow);
 	}
 
 	&__cross {

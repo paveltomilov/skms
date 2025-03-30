@@ -35,6 +35,9 @@ import Success from '@/shared/UI/icons/Success';
 import Error from '@/shared/UI/icons/Error';
 import Power from '@/shared/UI/icons/Power';
 import Status from '@/shared/UI/icons/Status';
+import Rectangle from '@/shared/UI/icons/Rectangle';
+import Fire from '@/shared/UI/icons/Fire';
+import Pump from '@/shared/UI/icons/Pump';
 const Zra = () => {
 	return (
 		<>
@@ -117,7 +120,7 @@ const Zra = () => {
 						<Arrow type="chevron_color" color="magenta" />
 						<Arrow type="chevron_color" color="red" />
 						<Triangle />
-						<Gate state={GATE_STATE_TYPE.open} />
+						<Gate state={GATE_STATE_TYPE.open} shadow />
 						<Gate state={GATE_STATE_TYPE.open} power />
 						<Gate state={GATE_STATE_TYPE.close} />
 						<Gate state={GATE_STATE_TYPE.intermediate} />
@@ -157,7 +160,21 @@ const Zra = () => {
 						<ArrowButton color="white" transform="rotate180" />
 						<Status />
 						<Status type="shortWave" color="magenta" />
+						<Status
+							type="shortWave"
+							transform="rotate90"
+							color="blue"
+						/>
 						<Status type="crash" color="electric_green" />
+						<Rectangle />
+						<Rectangle color="white" outlined />
+						<Rectangle color="electric_green" outlined />
+						<Rectangle color="disabled" outlined />
+						<Fire />
+						<Pump />
+						<Pump index={2} />
+						<Pump index={5} transform="mirror" />
+						<Pump index={9} transform="mirror" />
 					</div>
 				</section>
 			</main>

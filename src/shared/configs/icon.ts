@@ -63,3 +63,27 @@ export const STATUS_ICON_SIZE = {
 		viewBox: '0 0 42 42',
 	},
 };
+
+export const RECTANGLE_ICON_SIZE = {
+	default: {
+		width: '37',
+		height: '25',
+		viewBox: '0 0 37 25',
+	},
+	outlined: {
+		width: '40',
+		height: '28',
+		viewBox: '0 0 40 28',
+	},
+};
+
+export const TILDE_CROSS_ICON_SIZE = {
+	small: {
+		width: 22,
+		height: 22,
+	},
+	big: {
+		width: 30,
+		height: 30,
+	},
+};

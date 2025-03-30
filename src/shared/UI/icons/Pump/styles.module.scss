@@ -1,0 +1,13 @@
+.pump {
+	position: relative;
+
+	&__number {
+		position: absolute;
+		z-index: 2;
+		left: 21px;
+		top: 8px;
+		&_transformed {
+			left: 12px;
+		}
+	}
+}
