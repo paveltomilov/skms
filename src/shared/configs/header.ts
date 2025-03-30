@@ -1,4 +1,4 @@
-import { GATE_STATE_TYPE } from '@/store/gateStateSlice';
+import { GATE_STATE_TYPE } from '../types/gate';
 
 export const GATE_ACTIONS = {
 	open: {

@@ -3,7 +3,12 @@
 import { FC } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
-import { SmallCross, CurvedArrow, EllipseClose, Micro } from '@/shared/svg';
+import {
+	SmallCross,
+	CurvedArrow,
+	EllipseClose,
+	Micro,
+} from '@/shared/UI/icons';
 
 const Footer: FC = () => {
 	return (

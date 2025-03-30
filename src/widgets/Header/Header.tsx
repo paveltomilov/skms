@@ -1,13 +1,10 @@
 'use client';
 import { FC, useEffect } from 'react';
 import style from './Header.module.scss';
-import { setGateState } from '@/store/gateStateSlice';
+import { setGateState } from '@/store/gateSlice';
 import Button from '@/shared/UI/Button';
 import { disableButton, enableButton } from '@/store/buttonsSlice';
-import {
-	GATE_ACTIONS,
-	DISABLED_BUTTONS_MAP,
-} from '@/shared/configs/headerConfig';
+import { GATE_ACTIONS, DISABLED_BUTTONS_MAP } from '@/shared/configs/header';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import GateWindow from '@/entities/GateWindow/GateWindow';
 
@@ -21,7 +18,11 @@ const Header: FC = () => {
 	const { closeBtn, openBtn, stopBtn } = buttonState;
 
 	useEffect(() => {
-		DISABLED_BUTTONS_MAP[gateState]?.forEach(btn => {
+		const disabledButtons =
+			DISABLED_BUTTONS_MAP[
+				gateState as keyof typeof DISABLED_BUTTONS_MAP
+			];
+		disabledButtons?.forEach(btn => {
 			dispatch(disableButton(btn));
 		});
 	}, [gateState, dispatch]);

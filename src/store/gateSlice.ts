@@ -1,14 +1,5 @@
+import { GATE_STATE_TYPE } from '@/shared/types/gate';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-// перечисление состояний задвижки
-export enum GATE_STATE_TYPE {
-	close = 'close',
-	toClose = 'toClose',
-	open = 'open',
-	toOpen = 'toOpen',
-	noPower = 'noPower',
-	intermediate = 'intermediate',
-}
 
 // Интерфейс для состояния
 export interface GateState {

@@ -1,0 +1,15 @@
+.arrow {
+	position: relative;
+
+	&__cross {
+		position: absolute;
+		z-index: 2;
+		left: -2px;
+		top: -2px;
+
+		&_small {
+			left: -1px;
+			top: -1px;
+		}
+	}
+}
