@@ -1,14 +1,14 @@
 import { ICON_COLOR, ICON_TRANSFORM } from '@/shared/configs/icon';
 import { FC } from 'react';
-import styles from './styles.module.scss';
-import { IconColor, IconSize, IconTransform } from '@/shared/types/icon';
-import Close from '../Close';
+import { IconColor, IconTransform } from '@/shared/types/icon';
 
 interface Props {
-	size?: keyof Pick<IconSize, 'sm' | 'md'>;
 	color?: keyof Pick<IconColor, 'white' | 'green'>;
 	disable?: boolean;
-	transform?: keyof Omit<IconTransform, 'mirror'>;
+	transform?: keyof Pick<
+		IconTransform,
+		'rotate90' | 'rotateLeft90' | 'rotate180'
+	>;
 	className?: string;
 }
 
@@ -21,31 +21,32 @@ const ArrowButton: FC<Props> = ({
 	const colors = ICON_COLOR[color];
 	const transforms = transform && ICON_TRANSFORM[transform];
 	return (
-		<span className={`${styles.arrow}  ${className && className}`}>
-			<svg
-				width="36"
-				height="36"
-				viewBox="0 0 36 36"
-				fill={colors}
-				color={colors}
-				transform={transforms}
-				preserveAspectRatio="xMidYMid meet"
-			>
-				<use
-					xlinkHref={'/svg/sprite.svg#circle_arrow'}
-					width="100%"
-					height="100%"
-				/>
-			</svg>
+		<svg
+			width="36"
+			height="36"
+			viewBox="0 0 36 36"
+			fill={colors}
+			color={colors}
+			transform={transforms}
+			preserveAspectRatio="xMidYMid meet"
+			className={className && className}
+		>
+			<use
+				xlinkHref={'/svg/sprite.svg#circle_arrow'}
+				width="100%"
+				height="100%"
+			/>
 			{disable && (
-				<Close
-					className={styles.arrow__cross}
-					size={{ width: 40, height: 40 }}
-					color="red"
-					strokeWidth={1}
-				/>
+				<>
+					<path d="M0 36L36 0" stroke="#DE1212" strokeWidth="2" />
+					<path
+						d="M1.43051e-06 -1.57361e-06L36 36"
+						stroke="#DE1212"
+						strokeWidth="2"
+					/>
+				</>
 			)}
-		</span>
+		</svg>
 	);
 };
 

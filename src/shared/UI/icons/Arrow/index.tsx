@@ -5,7 +5,10 @@ import { FC } from 'react';
 interface Props {
 	type?: 'filled' | 'outlined' | 'chevron_color';
 	color?: keyof Omit<IconColor, 'disabled' | 'white' | 'white_opacity'>;
-	transform?: keyof Omit<IconTransform, 'mirror'>;
+	transform?: keyof Pick<
+		IconTransform,
+		'rotate90' | 'rotateLeft90' | 'rotate180'
+	>;
 	className?: string;
 }
 

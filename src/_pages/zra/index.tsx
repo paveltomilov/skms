@@ -150,13 +150,10 @@ const Zra = () => {
 						<Tilde color="white" size="md" />
 						<Tilde color="white" size="md" disable />
 						<Circle />
-						<Circle color="magenta" transform="rotate45" />
 						<Circle color="red" transform="rotate90" />
 						<Circle color="electric_green" transform="rotate180" />
-						<Circle color="blue" transform="rotateLeft45" />
 						<ArrowButton color="white" disable />
-						<ArrowButton color="white" transform="rotate45" />
-						<ArrowButton transform="rotate90" />
+						<ArrowButton disable transform="rotate90" />
 						<ArrowButton color="white" transform="rotate180" />
 						<Status />
 						<Status type="shortWave" color="magenta" />
