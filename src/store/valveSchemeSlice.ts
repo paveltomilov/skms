@@ -70,24 +70,29 @@ type ControlComponent = {
 	wireContact: boolean;
 	malfunctions: Malfunction[];
 };
-type Button = ControlComponent; // Кнопки по структуре такие же, как и ControlComponent
 
-type Command = {
-	buttons?: Button[];
-} & ControlComponent;
-
-type CircuitComponent = {
-	id: number;
-	name: string;
-	resistance: number;
-	voltagePresent: number;
-	groundContact: boolean;
-	wireContact: boolean;
-	malfunctions: Malfunction[];
-	controlOpen?: ControlComponent[];
-	comands?: Command[];
-	controlClose?: (ControlComponent | Command)[];
+type Button = {
+	buttons: ControlComponent[];
 };
+
+type Command = Button[] | ControlComponent;
+
+type CircuitComponent =
+	| {
+			id: number;
+			name: string;
+			resistance: number;
+			voltagePresent: number;
+			groundContact: boolean;
+			wireContact: boolean;
+			malfunctions: Malfunction[];
+			controlOpen?: ControlComponent[];
+
+			controlClose?: (ControlComponent | Command)[];
+	  }
+	| {
+			comands?: Command[];
+	  };
 
 type ElectricalSystemState = {
 	powerCircuit: PowerCircuit[];
