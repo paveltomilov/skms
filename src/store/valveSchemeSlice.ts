@@ -1,12 +1,31 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-interface Malfunction {
+type Malfunction = {
 	id: number;
 	name: string;
 	active: boolean;
-}
+};
 
-interface ElectricalComponent {
+type PowerCircuitBase = {
+	id: number;
+	name: string;
+};
+
+type SimpleComponent = PowerCircuitBase & {
+	resistance: number;
+	voltagePresent: number;
+	groundContact: boolean;
+	wireContact: boolean;
+	malfunctions: { id: number; name: string; active: boolean }[];
+};
+
+type ComplexComponent = PowerCircuitBase & {
+	phases?: Phase[];
+	starters?: Starter[];
+};
+
+type PowerCircuit = SimpleComponent | ComplexComponent;
+
+type Phase = {
 	id: number;
 	name: string;
 	resistance: number;
@@ -14,78 +33,19 @@ interface ElectricalComponent {
 	groundContact: boolean;
 	wireContact: boolean;
 	malfunctions: Malfunction[];
-}
+};
 
-interface Phase extends ElectricalComponent {
-	// Дополнительные специфичные свойства для фаз
-}
-
-interface Starter extends ElectricalComponent {
-	// Дополнительные специфичные свойства для пускателей
-}
-
-interface PowerCircuit {
+type Starter = {
 	id: number;
 	name: string;
-	phases?: Phase[];
-	starters?: Starter[];
-}
+	resistance: number;
+	voltagePresent: number;
+	groundContact: boolean;
+	wireContact: boolean;
+	malfunctions: Malfunction[];
+};
 
-interface ControlButton extends ElectricalComponent {
-	// Дополнительные свойства для кнопок управления
-}
-
-interface Lamp extends ElectricalComponent {
-	// Дополнительные свойства для ламп
-}
-
-interface Branch {
-	openBranch?: ControlComponent[];
-	closeBranch?: ControlComponent[];
-}
-
-interface ControlComponent extends ElectricalComponent {
-	controlOpen?: {
-		id: number;
-		name: string;
-		resistance: number;
-		voltagePresent: number;
-		groundContact: boolean;
-		wireContact: boolean;
-		malfunctions: Malfunction[];
-		comands?: {
-			buttons?: ControlButton[];
-			id?: number;
-			name?: string;
-			resistance?: number;
-			voltagePresent?: number;
-			groundContact?: boolean;
-			wireContact?: boolean;
-			malfunctions?: Malfunction[];
-		}[];
-	}[];
-	controlClose?: {
-		id: number;
-		name: string;
-		resistance: number;
-		voltagePresent: number;
-		groundContact: boolean;
-		wireContact: boolean;
-		malfunctions: Malfunction[];
-		comands?: {
-			buttons?: ControlButton[];
-			id?: number;
-			name?: string;
-			resistance?: number;
-			voltagePresent?: number;
-			groundContact?: boolean;
-			wireContact?: boolean;
-			malfunctions?: Malfunction[];
-		}[];
-	}[];
-}
-
-interface ControlCircuit {
+type ControlCircuit = {
 	id: number;
 	name: string;
 	resistance: number;
@@ -94,12 +54,45 @@ interface ControlCircuit {
 	wireContact: boolean;
 	malfunctions: Malfunction[];
 	branches?: Branch[];
-}
+};
 
-interface ElectricalSystemState {
-	powerCircuit: (ElectricalComponent | PowerCircuit)[];
-	controlСircuit: (ControlCircuit | ControlComponent)[];
-}
+type Branch = {
+	openBranch?: CircuitComponent[];
+	closeBranch?: CircuitComponent[];
+};
+
+type ControlComponent = {
+	id: number;
+	name: string;
+	resistance: number;
+	voltagePresent: number;
+	groundContact: boolean;
+	wireContact: boolean;
+	malfunctions: Malfunction[];
+};
+type Button = ControlComponent; // Кнопки по структуре такие же, как и ControlComponent
+
+type Command = {
+	buttons?: Button[];
+} & ControlComponent;
+
+type CircuitComponent = {
+	id: number;
+	name: string;
+	resistance: number;
+	voltagePresent: number;
+	groundContact: boolean;
+	wireContact: boolean;
+	malfunctions: Malfunction[];
+	controlOpen?: ControlComponent[];
+	comands?: Command[];
+	controlClose?: (ControlComponent | Command)[];
+};
+
+type ElectricalSystemState = {
+	powerCircuit: PowerCircuit[];
+	controlCircuit: ControlCircuit[];
+};
 
 const initialState: ElectricalSystemState = {
 	powerCircuit: [
@@ -371,7 +364,7 @@ const initialState: ElectricalSystemState = {
 		},
 	],
 
-	controlСircuit: [
+	controlCircuit: [
 		{
 			id: 6,
 			name: 'Автомат питания цепей управления',
@@ -498,7 +491,7 @@ const initialState: ElectricalSystemState = {
 											buttons: [
 												{
 													id: 11,
-													name: 'Вставка NDO (команда открыть с ПТК)',
+													name: 'Вставка NDI (команда открыть с ПТК)',
 													resistance: 0,
 													voltagePresent: 0,
 													groundContact: false,
@@ -655,7 +648,7 @@ const initialState: ElectricalSystemState = {
 							controlClose: [
 								{
 									id: 18,
-									name: 'Вставка NDC (сигнал «не закрыто»)',
+									name: 'Вставка NDO (сигнал «не закрыто»)',
 									resistance: 0,
 									voltagePresent: 0,
 									groundContact: false,
@@ -679,7 +672,7 @@ const initialState: ElectricalSystemState = {
 											buttons: [
 												{
 													id: 19,
-													name: 'Вставка NDC (команда закрыть с ПТК)',
+													name: 'Вставка NDI (команда закрыть с ПТК)',
 													resistance: 0,
 													voltagePresent: 0,
 													groundContact: false,
