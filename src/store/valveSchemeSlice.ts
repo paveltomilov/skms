@@ -814,4 +814,4 @@ export const {
 } = faultsSlice.actions;
 
 // Экспорт редьюсера
-export default faultsSlice;
+export default faultsSlice.reducer;
