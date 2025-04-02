@@ -4,8 +4,8 @@ import React from 'react';
 import styles from './styles.module.scss';
 import { toggleSidebar } from '@/store/sidebarSlice';
 import Button from '@/shared/UI/Button';
-import { Arrow } from '@/shared/UI/icons';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
+import Chevron from '@/shared/UI/icons/Chevron';
 
 const Sidebar = () => {
 	const dispatch = useAppDispatch();
@@ -18,7 +18,7 @@ const Sidebar = () => {
 	return (
 		<>
 			<button onClick={handleToggleSidebar} className={styles.openButton}>
-				<Arrow className={styles.rotatedSvg} />
+				<Chevron transform="rotate90" />
 			</button>
 
 			<div
@@ -64,15 +64,12 @@ const Sidebar = () => {
 
 				<button
 					onClick={handleToggleSidebar}
-					className={`${styles.toggleButton} ${
-						isSidebarOpen && styles.visible
-					}`}
+					className={styles.closeButton}
 				>
-					<div className={styles.toggleButtonInner}>
-						<div className={styles.toggleButtonLeft}></div>
-						<Arrow className={styles.toggleButtonIcon} />
-						<div className={styles.toggleButtonRight}></div>
-					</div>
+					<Chevron
+						transform="rotateLeft90"
+						className={styles.toggleButtonIcon}
+					/>
 				</button>
 			</div>
 		</>

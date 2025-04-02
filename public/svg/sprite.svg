@@ -373,4 +373,15 @@
             fill="black" mask="url(#path-1-inside-1_23_4619)" />
         <circle cx="25" cy="16" r="9" fill="#0BE90C" />
     </symbol>
+
+
+    <!-- элементы схемы -->
+    <symbol id="yb08" width="74" height="35" viewBox="0 0 74 35" fill="none">
+        <path d="M73 0.5H1V34.5H73V0.5Z" stroke="currentColor" stroke-miterlimit="10" />
+        <path d="M53.6928 17.5H48.6807" stroke="currentColor" stroke-miterlimit="10" />
+        <path d="M20 17.5H25.9786L48.3739 7.5" stroke="currentColor" stroke-miterlimit="10" />
+        <path d="M20 8.5H1V26.5H20V8.5Z" fill="white" stroke="currentColor" stroke-miterlimit="10" />
+        <path d="M73 8.5H54V26.5H73V8.5Z" fill="white" stroke="currentColor" stroke-miterlimit="10" />
+    </symbol>
+
 </svg>

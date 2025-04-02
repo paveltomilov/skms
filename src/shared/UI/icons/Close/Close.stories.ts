@@ -10,8 +10,9 @@ const meta: Meta<typeof Close> = {
 	tags: ['autodocs'],
 	argTypes: {
 		size: {
-			description: 'Размеры иконки: sm - 20x20 px, lg - 28x28 px',
-			options: ['sm', 'lg'],
+			description:
+				'Размеры иконки: xs - 16x16 px, sm - 20x20 px, lg - 28x28 px',
+			options: ['xs', 'sm', 'lg'],
 			control: {
 				type: 'radio',
 			},

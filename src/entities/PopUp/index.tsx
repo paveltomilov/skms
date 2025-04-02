@@ -3,10 +3,10 @@
 import { FC, useEffect } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
-import { SettingBtns } from '@/shared/UI/icons';
 import { defaultButtons } from '@/shared/configs/popup';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import { closePopup } from '@/store/popupSlice';
+import Yb08 from '@/shared/UI/scheme-part/Yb08';
 
 const PopUp: FC = () => {
 	const dispatch = useAppDispatch();
@@ -28,7 +28,7 @@ const PopUp: FC = () => {
 
 	if (!isOpen || !content) return null;
 
-	const { id, /* icon,  */ title, buttons } = content;
+	const { id, /* icon, */ title, buttons } = content;
 
 	const displayButtons = buttons
 		? [...defaultButtons, ...buttons]
@@ -46,8 +46,8 @@ const PopUp: FC = () => {
 						</span>
 					</p>
 					<div className={styles.popup__window__element__wrapper}>
-						{/* {icon} подумать как передавать иконки */}
-						<SettingBtns />
+						{/* {icon} */}
+						<Yb08 />
 						<div
 							className={
 								styles.popup__window__element__wrapper__textWrapper
