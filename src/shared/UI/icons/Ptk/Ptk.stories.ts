@@ -1,21 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import Accept from '.';
+import Ptk from '.';
 
-const meta: Meta<typeof Accept> = {
-	title: 'Icons/Accept',
-	component: Accept,
+const meta: Meta<typeof Ptk> = {
+	title: 'Icons/Ptk',
+	component: Ptk,
 	parameters: {
 		layout: 'centered',
 	},
 	tags: ['autodocs'],
 	argTypes: {
-		size: {
-			description: 'Размеры иконки: xs - 16x16 px, sm - 20x20 px',
-			options: ['xs', 'sm'],
-			control: {
-				type: 'radio',
-			},
-		},
 		color: {
 			description: 'Цвета иконки: default - черный, disabled - серый',
 			options: ['default', 'disabled'],
@@ -33,13 +26,7 @@ const meta: Meta<typeof Accept> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Small: Story = {};
-
-export const Large: Story = {
-	args: {
-		size: 'sm',
-	},
-};
+export const Default: Story = {};
 
 export const Disabled: Story = {
 	args: {

@@ -1,5 +1,5 @@
-@use '@/shared/scss/mixins.module';
-@use '@/shared/scss/variables.module';
+@use '../../scss/variables.module';
+@use '../../scss/mixins.module';
 
 .button {
 	@include mixins.button;

@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import Accept from '.';
+import Question from '.';
 
-const meta: Meta<typeof Accept> = {
-	title: 'Icons/Accept',
-	component: Accept,
+const meta: Meta<typeof Question> = {
+	title: 'Icons/Question',
+	component: Question,
 	parameters: {
 		layout: 'centered',
 	},
@@ -17,8 +17,9 @@ const meta: Meta<typeof Accept> = {
 			},
 		},
 		color: {
-			description: 'Цвета иконки: default - черный, disabled - серый',
-			options: ['default', 'disabled'],
+			description:
+				'Цвета иконки: default - черный, disabled - серый, white_opacity - белый с прозрачностью',
+			options: ['default', 'disabled', 'white_opacity'],
 			control: {
 				type: 'radio',
 			},
@@ -44,5 +45,11 @@ export const Large: Story = {
 export const Disabled: Story = {
 	args: {
 		color: 'disabled',
+	},
+};
+
+export const White: Story = {
+	args: {
+		color: 'white_opacity',
 	},
 };

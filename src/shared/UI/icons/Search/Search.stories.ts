@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import Accept from '.';
+import Search from '.';
 
-const meta: Meta<typeof Accept> = {
-	title: 'Icons/Accept',
-	component: Accept,
+const meta: Meta<typeof Search> = {
+	title: 'Icons/Search',
+	component: Search,
 	parameters: {
 		layout: 'centered',
 	},

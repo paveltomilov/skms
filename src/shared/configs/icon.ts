@@ -24,12 +24,10 @@ export const ICON_SIZE: IconSize = {
 };
 
 export const ICON_TRANSFORM: IconTransform = {
-	mirror: 'rotate(180) scale(1 -1)',
-	rotate45: 'rotate(45)',
 	rotate90: 'rotate(90)',
-	rotate180: 'rotate(180)',
-	rotateLeft45: 'rotate(-45)',
 	rotateLeft90: 'rotate(-90)',
+	rotate180: 'rotate(180)',
+	mirror: 'rotate(180) scale(1 -1)',
 };
 
 export const ICON_COLOR: IconColor = {
@@ -74,16 +72,5 @@ export const RECTANGLE_ICON_SIZE = {
 		width: '40',
 		height: '28',
 		viewBox: '0 0 40 28',
-	},
-};
-
-export const TILDE_CROSS_ICON_SIZE = {
-	small: {
-		width: 22,
-		height: 22,
-	},
-	big: {
-		width: 30,
-		height: 30,
 	},
 };

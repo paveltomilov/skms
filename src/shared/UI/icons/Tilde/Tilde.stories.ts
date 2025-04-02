@@ -1,24 +1,24 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import Accept from '.';
+import Tilde from '.';
 
-const meta: Meta<typeof Accept> = {
-	title: 'Icons/Accept',
-	component: Accept,
+const meta: Meta<typeof Tilde> = {
+	title: 'Icons/Tilde',
+	component: Tilde,
 	parameters: {
 		layout: 'centered',
 	},
 	tags: ['autodocs'],
 	argTypes: {
 		size: {
-			description: 'Размеры иконки: xs - 16x16 px, sm - 20x20 px',
-			options: ['xs', 'sm'],
+			description: 'Размеры иконки: sm - 20x20 px, md - 26x26 px',
+			options: ['sm', 'md'],
 			control: {
 				type: 'radio',
 			},
 		},
 		color: {
-			description: 'Цвета иконки: default - черный, disabled - серый',
-			options: ['default', 'disabled'],
+			description: 'Цвета иконки: white - белый, green - зеленый',
+			options: ['white', 'green'],
 			control: {
 				type: 'radio',
 			},
@@ -37,12 +37,18 @@ export const Small: Story = {};
 
 export const Large: Story = {
 	args: {
-		size: 'sm',
+		size: 'md',
 	},
 };
 
 export const Disabled: Story = {
 	args: {
-		color: 'disabled',
+		disable: true,
+	},
+};
+
+export const White: Story = {
+	args: {
+		color: 'white',
 	},
 };

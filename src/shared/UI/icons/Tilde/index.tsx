@@ -1,11 +1,5 @@
-import {
-	ICON_COLOR,
-	ICON_SIZE,
-	TILDE_CROSS_ICON_SIZE,
-} from '@/shared/configs/icon';
+import { ICON_COLOR, ICON_SIZE } from '@/shared/configs/icon';
 import { FC } from 'react';
-import styles from './styles.module.scss';
-import Close from '../Close';
 
 interface Props {
 	size?: 'sm' | 'md';
@@ -23,34 +17,40 @@ const Tilde: FC<Props> = ({
 	const colors = ICON_COLOR[color];
 	const sizes = ICON_SIZE[size];
 	const isSmall = size === 'sm';
-	const crossSize = TILDE_CROSS_ICON_SIZE[isSmall ? 'small' : 'big'];
 	return (
-		<span className={`${styles.tilde} ${className && className}`}>
-			<svg
-				width={sizes.width}
-				height={sizes.height}
-				viewBox={sizes.viewBox}
-				fill={colors}
-				color={colors}
-				preserveAspectRatio="xMidYMid meet"
-			>
-				<use
-					xlinkHref={'/svg/sprite.svg#tilde'}
-					width="100%"
-					height="100%"
-				/>
-			</svg>
+		<svg
+			width={sizes.width}
+			height={sizes.height}
+			viewBox={sizes.viewBox}
+			fill={colors}
+			color={colors}
+			preserveAspectRatio="xMidYMid meet"
+			className={className && className}
+		>
+			<use
+				xlinkHref={'/svg/sprite.svg#tilde'}
+				width="100%"
+				height="100%"
+			/>
 			{disable && (
-				<Close
-					className={`${styles.tilde__cross} ${
-						isSmall && styles.tilde__cross_small
-					}`}
-					size={crossSize}
-					color="red"
-					strokeWidth={1}
-				/>
+				<>
+					<path
+						d={isSmall ? 'M0 20L20 0' : 'M0 26L26 0'}
+						stroke="#8F1313"
+						stroke-linecap="round"
+					/>
+					<path
+						d={
+							isSmall
+								? 'M0 -8.74228e-07L20 20'
+								: 'M-4.76837e-07 -1.1365e-06L26 26'
+						}
+						stroke="#8F1313"
+						stroke-linecap="round"
+					/>
+				</>
 			)}
-		</span>
+		</svg>
 	);
 };
 

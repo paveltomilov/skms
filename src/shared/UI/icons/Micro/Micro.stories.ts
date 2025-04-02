@@ -1,17 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import Accept from '.';
+import Micro from '.';
 
-const meta: Meta<typeof Accept> = {
-	title: 'Icons/Accept',
-	component: Accept,
+const meta: Meta<typeof Micro> = {
+	title: 'Icons/Micro',
+	component: Micro,
 	parameters: {
 		layout: 'centered',
 	},
 	tags: ['autodocs'],
 	argTypes: {
 		size: {
-			description: 'Размеры иконки: xs - 16x16 px, sm - 20x20 px',
-			options: ['xs', 'sm'],
+			description: 'Размеры иконки: sm - 20x20 px, lg - 28x28 px',
+			options: ['sm', 'lg'],
 			control: {
 				type: 'radio',
 			},
@@ -37,7 +37,7 @@ export const Small: Story = {};
 
 export const Large: Story = {
 	args: {
-		size: 'sm',
+		size: 'lg',
 	},
 };
 
