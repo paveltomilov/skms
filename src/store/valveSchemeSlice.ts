@@ -1,31 +1,24 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-type Malfunction = {
+// Базовый интерфейс для неисправностей
+interface Malfunction {
 	id: number;
 	name: string;
 	active: boolean;
-};
+}
 
-type PowerCircuitBase = {
-	id: number;
-	name: string;
-};
+// Базовый интерфейс для всех элементов схемы
+interface BaseElement {
+	id?: number;
+	name?: string;
+	resistance?: number;
+	voltagePresent?: number;
+	groundContact?: boolean;
+	wireContact?: boolean;
+	malfunctions?: Malfunction[];
+}
 
-type SimpleComponent = PowerCircuitBase & {
-	resistance: number;
-	voltagePresent: number;
-	groundContact: boolean;
-	wireContact: boolean;
-	malfunctions: { id: number; name: string; active: boolean }[];
-};
-
-type ComplexComponent = PowerCircuitBase & {
-	phases?: Phase[];
-	starters?: Starter[];
-};
-
-type PowerCircuit = SimpleComponent | ComplexComponent;
-
-type Phase = {
+// Интерфейс для обычного компонента
+interface CircuitComponent extends BaseElement {
 	id: number;
 	name: string;
 	resistance: number;
@@ -33,73 +26,24 @@ type Phase = {
 	groundContact: boolean;
 	wireContact: boolean;
 	malfunctions: Malfunction[];
-};
+}
 
-type Starter = {
-	id: number;
-	name: string;
-	resistance: number;
-	voltagePresent: number;
-	groundContact: boolean;
-	wireContact: boolean;
-	malfunctions: Malfunction[];
-};
+// Интерфейс для ветви (используем "branches" как в ваших данных)
+interface Branch extends BaseElement {
+	branches: Array<CircuitComponent | Branch>; // Обратите внимание на "branches" вместо "branches"
+}
 
-type ControlCircuit = {
-	id: number;
-	name: string;
-	resistance: number;
-	voltagePresent: number;
-	groundContact: boolean;
-	wireContact: boolean;
-	malfunctions: Malfunction[];
-	branches?: Branch[];
-};
+// Типы для цепей
+type PowerCircuitElement = CircuitComponent | Branch;
+type ControlCircuitElement = CircuitComponent | Branch;
 
-type Branch = {
-	openBranch?: CircuitComponent[];
-	closeBranch?: CircuitComponent[];
-};
+// Финальный интерфейс состояния
+interface InitialState {
+	powerCircuit: PowerCircuitElement[];
+	controlCircuit: ControlCircuitElement[];
+}
 
-type ControlComponent = {
-	id: number;
-	name: string;
-	resistance: number;
-	voltagePresent: number;
-	groundContact: boolean;
-	wireContact: boolean;
-	malfunctions: Malfunction[];
-};
-
-type Button = {
-	buttons: ControlComponent[];
-};
-
-type Command = Button[] | ControlComponent;
-
-type CircuitComponent =
-	| {
-			id: number;
-			name: string;
-			resistance: number;
-			voltagePresent: number;
-			groundContact: boolean;
-			wireContact: boolean;
-			malfunctions: Malfunction[];
-			controlOpen?: ControlComponent[];
-
-			controlClose?: (ControlComponent | Command)[];
-	  }
-	| {
-			comands?: Command[];
-	  };
-
-type ElectricalSystemState = {
-	powerCircuit: PowerCircuit[];
-	controlCircuit: ControlCircuit[];
-};
-
-const initialState: ElectricalSystemState = {
+const initialState: InitialState = {
 	powerCircuit: [
 		{
 			id: 1,
@@ -123,9 +67,7 @@ const initialState: ElectricalSystemState = {
 			],
 		},
 		{
-			id: 2,
-			name: 'Провода',
-			phases: [
+			branches: [
 				{
 					id: 21,
 					name: 'Фаза A',
@@ -207,9 +149,7 @@ const initialState: ElectricalSystemState = {
 			],
 		},
 		{
-			id: 3,
-			name: 'Пускатели',
-			starters: [
+			branches: [
 				{
 					id: 31,
 					name: 'Пускатель закрыть',
@@ -263,9 +203,7 @@ const initialState: ElectricalSystemState = {
 			],
 		},
 		{
-			id: 4,
-			name: 'Провода',
-			phases: [
+			branches: [
 				{
 					id: 41,
 					name: 'Фаза A',
@@ -416,7 +354,7 @@ const initialState: ElectricalSystemState = {
 		{
 			branches: [
 				{
-					openBranch: [
+					branches: [
 						{
 							id: 8,
 							name: 'Концевой выключатель открыто',
@@ -469,7 +407,7 @@ const initialState: ElectricalSystemState = {
 							],
 						},
 						{
-							controlOpen: [
+							branches: [
 								{
 									id: 10,
 									name: 'Вставка NDI (сигнал «не открыто»)',
@@ -491,9 +429,9 @@ const initialState: ElectricalSystemState = {
 									],
 								},
 								{
-									comands: [
+									branches: [
 										{
-											buttons: [
+											branches: [
 												{
 													id: 11,
 													name: 'Вставка NDI (команда открыть с ПТК)',
@@ -593,7 +531,7 @@ const initialState: ElectricalSystemState = {
 					],
 				},
 				{
-					closeBranch: [
+					branches: [
 						{
 							id: 16,
 							name: 'Концевой выключатель закрыто',
@@ -650,7 +588,7 @@ const initialState: ElectricalSystemState = {
 							],
 						},
 						{
-							controlClose: [
+							branches: [
 								{
 									id: 18,
 									name: 'Вставка NDO (сигнал «не закрыто»)',
@@ -672,9 +610,9 @@ const initialState: ElectricalSystemState = {
 									],
 								},
 								{
-									comands: [
+									branches: [
 										{
-											buttons: [
+											branches: [
 												{
 													id: 19,
 													name: 'Вставка NDI (команда закрыть с ПТК)',
