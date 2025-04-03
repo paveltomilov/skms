@@ -1,0 +1,54 @@
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
+
+.button {
+	@include mixins.button;
+	padding: 8px;
+
+	.text {
+		@include mixins.text(18px, 400, overflow);
+	}
+
+	.icon {
+		stroke: variables.$black-color;
+	}
+
+	&:disabled {
+		@include mixins.change-button(
+			_,
+			variables.$gray-disabled-color,
+			variables.$disabled-button-box-shadow,
+			not-allowed
+		);
+
+		.icon {
+			stroke: variables.$gray-disabled-color;
+		}
+	}
+	&:hover:enabled {
+		@include mixins.change-button(_, _, variables.$hover-button-box-shadow);
+	}
+
+	&:active:enabled {
+		@include mixins.change-button(
+			variables.$gray-disabled-color,
+			_,
+			variables.$pressed-button-box-shadow
+		);
+	}
+
+	&.success {
+		@include mixins.change-button(
+			variables.$success-color,
+			variables.$white-color,
+			variables.$success-button-box-shadow
+		);
+		&:hover {
+			@include mixins.change-button(
+				_,
+				_,
+				variables.$hover-button-box-shadow
+			);
+		}
+	}
+}

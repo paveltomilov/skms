@@ -1,0 +1,121 @@
+@use '@/shared/scss/variables.module';
+
+.footer {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding: 8px;
+	background-color: #c0c0c0;
+	gap: 12px;
+	border-top: 1px solid variables.$white-color;
+
+	&__leftPanel {
+		display: grid;
+		grid-template-columns: repeat(8, 1fr);
+		grid-template-rows: repeat(2, auto);
+		row-gap: 12px;
+		column-gap: 4px;
+	}
+
+	&__buttonText {
+		display: inline-block;
+		background-color: #fffe05;
+	}
+
+	&__centralPanel {
+		display: flex;
+		flex-direction: row;
+		gap: 12px;
+	}
+
+	&__centralGroup__left {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		justify-content: space-between;
+	}
+
+	&__arrow {
+		transform: scale(-1, 1);
+	}
+
+	&__closeButton {
+		padding: 2px !important;
+	}
+
+	&__centralGroup__middle {
+		display: flex;
+		gap: 8px;
+		justify-content: center;
+		align-items: center;
+	}
+
+	&__centralGroup__right {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		justify-content: space-between;
+	}
+
+	&__rightPanel {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+
+	&__toolsGroup {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 12px;
+	}
+
+	&__warning__wrapper {
+		width: 375px;
+		height: 24px;
+		border-top-width: 1px;
+		border-left-width: 1px;
+		padding: 4px 0;
+		box-shadow: 1px 1px 0px 0px #000000cc inset,
+			-1px -1px 0px 0px #ffffffcc inset;
+		background-color: transparent;
+	}
+
+	&__warning__text {
+		text-align: center;
+		font-weight: 400;
+		font-size: 14px;
+		color: #7b7b7b;
+	}
+
+	&__operatorPanel {
+		width: 262px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		padding: 8px;
+		background-color: #c0c0c0;
+		box-shadow: 1px 1px 0px 0px #ffffffcc inset,
+			-1px -1px 0px 0px #00000040 inset;
+	}
+
+	&__operator__wrapper {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 8px;
+	}
+
+	&__operator {
+		font-weight: 400;
+		font-size: 20px;
+		color: #000000;
+	}
+
+	&__operatorName {
+		font-weight: 700;
+		font-size: 18px;
+		color: #110f93;
+	}
+}

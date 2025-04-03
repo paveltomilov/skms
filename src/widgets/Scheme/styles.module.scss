@@ -1,0 +1,19 @@
+.wrapper {
+	display: flex;
+	align-items: center;
+	gap: 44px;
+	position: relative;
+}
+
+.mockButton {
+	position: absolute;
+	top: 369px;
+	left: 638px;
+	width: 69px;
+	height: 33px;
+	opacity: 0;
+
+	&:hover {
+		opacity: 0.5;
+	}
+}

@@ -1,0 +1,30 @@
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
+
+.main {
+	min-height: calc(
+		100vh - (variables.$header-height + variables.$footer-height)
+	);
+	position: relative;
+	overflow-x: hidden;
+}
+
+.page {
+	@include mixins.flex-center;
+	flex-direction: column;
+	padding: 12px 0;
+	margin: 0 auto;
+	max-width: 1600px;
+
+	&__title {
+		font-weight: 400;
+		font-size: 32px;
+		align-self: flex-start;
+		margin-bottom: 20px;
+	}
+
+	&__wrapper {
+		@include mixins.flex-center;
+		gap: 120px;
+	}
+}

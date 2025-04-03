@@ -1,0 +1,49 @@
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
+
+.gate {
+	position: relative;
+	display: flex;
+
+	& > :nth-child(2) {
+		margin-left: -1px;
+	}
+
+	&_vertical {
+		flex-direction: column;
+
+		& > :nth-child(2) {
+			margin-left: 0;
+		}
+	}
+
+	&_shadow {
+		filter: drop-shadow(variables.$default-box-shadow);
+	}
+
+	&__cross {
+		position: absolute;
+		left: 22%;
+		top: -1px;
+
+		&_vertical {
+			left: -3%;
+			top: 8px;
+		}
+	}
+
+	&__power {
+		position: absolute;
+		left: 42%;
+		top: -1px;
+
+		&_vertical {
+			left: 0%;
+			top: 16px;
+		}
+	}
+
+	&__animation {
+		animation: variables.$blink;
+	}
+}
