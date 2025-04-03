@@ -1,105 +1,6 @@
 @use '@/shared/scss/mixins.module';
 @use '@/shared/scss/variables.module';
 
-.sidebar {
-	position: absolute;
-	top: 0;
-	left: -126px;
-	padding: 60px 8px 8px;
-	height: 100%;
-	background: #c0c0c0;
-	border-right: 1px solid #8a8a8a;
-	transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-	z-index: 1;
-
-	&.open {
-		left: 0;
-	}
-
-	.buttonText span {
-		font-size: 14px;
-	}
-
-	.sidebarContent {
-		display: flex;
-		flex-direction: column;
-		row-gap: 12px;
-	}
-
-	.toggleButton {
-		position: absolute;
-		top: 50%;
-		right: -25px;
-		transform: translateY(-50%);
-		background: none;
-		border: none;
-		padding: 0;
-		cursor: pointer;
-		width: 25px;
-	}
-
-	.toggleButtonInner {
-		position: relative;
-		height: 90px;
-		background: transparent;
-		z-index: 2000;
-	}
-
-	.toggleButtonLeft {
-		position: absolute;
-		top: 10px;
-		left: 0;
-		width: 20px;
-		height: 50%;
-		background: #c0c0c0;
-		border-right: 1px solid #8a8a8a;
-		transform: skew(0deg, 30deg);
-		z-index: 3000;
-		transition: 0.2s ease-in;
-	}
-
-	.toggleButtonRight {
-		position: absolute;
-		bottom: 10px;
-		left: 0;
-		width: 20px;
-		height: 50%;
-		background: #c0c0c0;
-		border-right: 1px solid #8a8a8a;
-		border-bottom: 1px solid #8a8a8a;
-		transform: skew(0deg, -30deg);
-		z-index: 4000;
-		transition: 0.2s ease-in;
-	}
-
-	.toggleButtonIcon {
-		position: absolute;
-		top: 50%;
-		left: 30%;
-		transform: translate(-50%, -50%);
-		transition: transform 0.3s ease;
-		z-index: 5000;
-	}
-}
-
-.toggleButton:hover .toggleButtonLeft,
-.toggleButton:hover .toggleButtonRight {
-	background: #b0b0b0;
-}
-
-.toggleButton:hover .toggleButtonIcon {
-	transform: translate(-50%, -50%) scale(1.1);
-}
-
-.toggleButton:active .toggleButtonLeft,
-.toggleButton:active .toggleButtonRight {
-	background: #b0b0b0;
-}
-
-.toggleButton:active .toggleButtonIcon {
-	transform: translate(-50%, -50%) scale(0.9);
-}
-
 .openButton {
 	position: absolute;
 	top: 0;
@@ -120,6 +21,67 @@
 	}
 }
 
-.rotatedSvg {
-	transform: rotate(180deg);
+.sidebar {
+	position: absolute;
+	top: 0;
+	left: -146px;
+	padding: 60px 8px;
+	height: 100%;
+	background: #c0c0c0;
+	border-right: 1px solid #8a8a8a;
+	transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	z-index: 1;
+	display: flex;
+
+	&.open {
+		left: 0;
+	}
+
+	.buttonText span {
+		font-size: 14px;
+	}
+
+	.sidebarContent {
+		display: flex;
+		flex-direction: column;
+		row-gap: 12px;
+		margin-right: -20px;
+	}
+}
+
+.closeButton {
+	align-self: center;
+	right: -28px;
+	cursor: pointer;
+	padding: 0;
+	margin: 0;
+	background: linear-gradient(
+		variables.$primary-color,
+		variables.$gray-disabled-color
+	);
+	@include mixins.flex-center;
+	width: 20px;
+	height: 90px;
+	border: none;
+	border-right: 1px solid variables.$gray-disabled-color;
+	clip-path: polygon(0 0, 100% 10%, 100% 90%, 0 100%);
+	transition: background 0.2s;
+	position: relative;
+
+	&::before {
+		content: '';
+		width: 19px;
+		height: 88px;
+		background: #c0c0c0;
+		display: block;
+		position: absolute;
+		top: 1px;
+		left: 0px;
+		transition: background 0.2s;
+		clip-path: polygon(0 0, 100% 10%, 100% 90%, 0 100%);
+	}
+
+	&:hover::before {
+		background: #b0b0b0;
+	}
 }

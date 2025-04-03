@@ -1,5 +1,5 @@
-@use '@/shared/scss/mixins.module';
-@use '@/shared/scss/variables.module';
+@use '../../scss/variables.module';
+@use '../../scss/mixins.module';
 
 .button {
 	@include mixins.button;
@@ -9,10 +9,6 @@
 		@include mixins.text(18px, 400, overflow);
 	}
 
-	.icon {
-		stroke: variables.$black-color;
-	}
-
 	&:disabled {
 		@include mixins.change-button(
 			_,
@@ -20,10 +16,6 @@
 			variables.$disabled-button-box-shadow,
 			not-allowed
 		);
-
-		.icon {
-			stroke: variables.$gray-disabled-color;
-		}
 	}
 	&:hover:enabled {
 		@include mixins.change-button(_, _, variables.$hover-button-box-shadow);

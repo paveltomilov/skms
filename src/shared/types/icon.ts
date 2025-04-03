@@ -36,12 +36,10 @@ export interface IconColor {
 }
 
 export interface IconTransform {
-	mirror: string;
-	rotate45: string;
 	rotate90: string;
-	rotate180: string;
-	rotateLeft45: string;
 	rotateLeft90: string;
+	rotate180: string;
+	mirror: string;
 }
 
 export interface OtherSizes {
@@ -49,4 +47,4 @@ export interface OtherSizes {
 	height: number;
 }
 
-export type SingleDigitNumber = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+export type SchemePartType = 'yb08' | 'xb10' | 'cabinet' | 'lamp';

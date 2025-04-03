@@ -1,3 +1,5 @@
+import { SchemePartType } from './icon';
+
 export interface PopupBtn {
 	id: string;
 	width: number;
@@ -8,7 +10,7 @@ export interface PopupBtn {
 
 export interface PopupContent {
 	id: string;
-	icon: number /* подумать как передавать иконки */;
+	icon: SchemePartType;
 	title: string;
 	buttons?: PopupBtn[];
 }

@@ -65,7 +65,7 @@ const Button = ({
 					height={image.height}
 				/>
 			)}
-			{icon && <span className={styles.icon}>{icon}</span>}
+			{icon && icon}
 			{text && <span className={styles.text}>{text}</span>}
 		</button>
 	);

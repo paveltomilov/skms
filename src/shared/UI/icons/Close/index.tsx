@@ -3,7 +3,7 @@ import { IconColor, IconSize, OtherSizes } from '@/shared/types/icon';
 import { FC } from 'react';
 
 interface Props {
-	size?: keyof Pick<IconSize, 'sm' | 'lg'> | OtherSizes;
+	size?: keyof Pick<IconSize, 'xs' | 'sm' | 'lg'> | OtherSizes;
 	color?: keyof Pick<IconColor, 'default' | 'disabled' | 'red'>;
 	strokeWidth?: number;
 	className?: string;

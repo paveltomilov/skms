@@ -7,7 +7,10 @@ interface Props {
 		IconColor,
 		'green' | 'magenta' | 'red' | 'electric_green' | 'blue'
 	>;
-	transform?: keyof Omit<IconTransform, 'mirror'>;
+	transform?: keyof Pick<
+		IconTransform,
+		'rotate90' | 'rotateLeft90' | 'rotate180'
+	>;
 	className?: string;
 }
 
