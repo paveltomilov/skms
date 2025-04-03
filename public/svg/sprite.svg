@@ -384,4 +384,31 @@
         <path d="M73 8.5H54V26.5H73V8.5Z" fill="white" stroke="currentColor" stroke-miterlimit="10" />
     </symbol>
 
+
+    <symbol id="xb10" width="74" height="47" viewBox="0 0 74 47" fill="none">
+        <path d="M73 0.5H1V46.5H73V0.5Z" stroke="currentColor" stroke-miterlimit="10" />
+        <path d="M20 14.5H1V32.5H20V14.5Z" fill="white" stroke="currentColor" stroke-miterlimit="10" />
+        <path d="M73 14.5H54V32.5H73V14.5Z" fill="white" stroke="currentColor"
+            stroke-miterlimit="10" />
+        <path d="M51 6.5H23V40.5H51V6.5Z" fill="white" stroke="currentColor" stroke-miterlimit="10" />
+        <path d="M51 23.5022H54.0733" stroke="currentColor" stroke-miterlimit="10" />
+        <path d="M20 23.5H23.0778" stroke="currentColor" stroke-miterlimit="10" />
+        <path
+            d="M33.0039 9.89062H33.9414V14.7002C33.9414 15.234 33.8226 15.6784 33.585 16.0332C33.3473 16.388 33.0316 16.6549 32.6377 16.834C32.2471 17.0098 31.8223 17.0977 31.3633 17.0977C30.8815 17.0977 30.4453 17.0098 30.0547 16.834C29.6673 16.6549 29.3597 16.388 29.1318 16.0332C28.9072 15.6784 28.7949 15.234 28.7949 14.7002V9.89062H29.7275V14.7002C29.7275 15.0713 29.7959 15.3773 29.9326 15.6182C30.0693 15.859 30.2598 16.0381 30.5039 16.1553C30.7513 16.2725 31.0378 16.3311 31.3633 16.3311C31.6921 16.3311 31.9785 16.2725 32.2227 16.1553C32.4701 16.0381 32.6621 15.859 32.7988 15.6182C32.9355 15.3773 33.0039 15.0713 33.0039 14.7002V9.89062ZM38.4287 9.89062L35.4648 17.6104H34.6885L37.6572 9.89062H38.4287ZM40.0889 17L41.4707 9.89062H42.1738L40.7871 17H40.0889ZM42.0762 17L43.4629 9.89062H44.1611L42.7744 17H42.0762ZM44.7568 12.6006H39.6787V11.9219H44.7568V12.6006ZM44.3906 14.998H39.3076V14.3242H44.3906V14.998Z"
+            fill="currentColor" />
+    </symbol>
+
+    <symbol id="cabinet" width="26" height="43" viewBox="0 0 26 43" fill="none">
+        <path d="M25 1H1V42H25V1Z" fill="white" stroke="currentColor" stroke-miterlimit="10" />
+    </symbol>
+
+    <symbol id="lamp" width="32" height="31" viewBox="0 0 32 31" fill="none">
+        <path
+            d="M16 30.5C24.2843 30.5 31 23.7843 31 15.5C31 7.21573 24.2843 0.5 16 0.5C7.71573 0.5 1 7.21573 1 15.5C1 23.7843 7.71573 30.5 16 30.5Z"
+            fill="white" stroke="currentColor" stroke-miterlimit="10" />
+        <path d="M5.2207 25.9266L26.4266 4.7207" stroke="currentColor" stroke-miterlimit="10" />
+        <path d="M5.2207 4.7207L26.4266 25.9266" stroke="currentColor" stroke-miterlimit="10" />
+    </symbol>
+
+
 </svg>

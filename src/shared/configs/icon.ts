@@ -74,3 +74,26 @@ export const RECTANGLE_ICON_SIZE = {
 		viewBox: '0 0 40 28',
 	},
 };
+
+export const SCHEME_ICON_SIZE = {
+	yb08: {
+		width: '74',
+		height: '35',
+		viewBox: '0 0 74 35',
+	},
+	xb10: {
+		width: '74',
+		height: '47',
+		viewBox: '0 0 74 47',
+	},
+	cabinet: {
+		width: '26',
+		height: '43',
+		viewBox: '0 0 26 43',
+	},
+	lamp: {
+		width: '32',
+		height: '31',
+		viewBox: '0 0 32 31',
+	},
+};

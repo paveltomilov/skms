@@ -6,7 +6,7 @@ import Button from '@/shared/UI/Button';
 import { defaultButtons } from '@/shared/configs/popup';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import { closePopup } from '@/store/popupSlice';
-import Yb08 from '@/shared/UI/scheme-part/Yb08';
+import SchemePart from '@/shared/UI/icons/SchemePart';
 
 const PopUp: FC = () => {
 	const dispatch = useAppDispatch();
@@ -28,7 +28,7 @@ const PopUp: FC = () => {
 
 	if (!isOpen || !content) return null;
 
-	const { id, /* icon, */ title, buttons } = content;
+	const { id, icon, title, buttons } = content;
 
 	const displayButtons = buttons
 		? [...defaultButtons, ...buttons]
@@ -46,8 +46,7 @@ const PopUp: FC = () => {
 						</span>
 					</p>
 					<div className={styles.popup__window__element__wrapper}>
-						{/* {icon} */}
-						<Yb08 />
+						<SchemePart type={icon} shadow />
 						<div
 							className={
 								styles.popup__window__element__wrapper__textWrapper
