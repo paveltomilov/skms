@@ -14,15 +14,25 @@ pnpm dev
 bun dev
 ```
  "scripts": {
+   
     "dev": "next dev",
+
     "build": "next build",
+
     "start": "next start",
+
     "lint": "next lint",
+
     "prepare": "husky",
+
     "sb": "storybook dev -p 6006",
+
     "build-storybook": "storybook build",
+
     "test": "jest",
+
     "test:watch": "jest --watch"
+
   },
   
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
