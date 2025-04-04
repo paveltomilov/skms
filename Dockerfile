@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Устанавливаем зависимости
-RUN npm install -g 
+RUN npm install 
 
 # Копируем остальные файлы проекта в контейнер
 COPY . .
@@ -20,7 +20,7 @@ RUN npm run build
 FROM nginx:latest
 
 # Копируем собранные файлы в директорию, откуда nginx будет раздавать статические файлы
-COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /app/.next /usr/share/nginx/html
 
 # Копируем пользовательский конфигурационный файл nginx
 COPY .nginx/nginx.conf /etc/nginx/nginx.conf
