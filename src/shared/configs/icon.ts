@@ -24,12 +24,10 @@ export const ICON_SIZE: IconSize = {
 };
 
 export const ICON_TRANSFORM: IconTransform = {
-	mirror: 'rotate(180) scale(1 -1)',
-	rotate45: 'rotate(45)',
 	rotate90: 'rotate(90)',
-	rotate180: 'rotate(180)',
-	rotateLeft45: 'rotate(-45)',
 	rotateLeft90: 'rotate(-90)',
+	rotate180: 'rotate(180)',
+	mirror: 'rotate(180) scale(1 -1)',
 };
 
 export const ICON_COLOR: IconColor = {
@@ -77,13 +75,25 @@ export const RECTANGLE_ICON_SIZE = {
 	},
 };
 
-export const TILDE_CROSS_ICON_SIZE = {
-	small: {
-		width: 22,
-		height: 22,
+export const SCHEME_ICON_SIZE = {
+	yb08: {
+		width: '74',
+		height: '35',
+		viewBox: '0 0 74 35',
 	},
-	big: {
-		width: 30,
-		height: 30,
+	xb10: {
+		width: '74',
+		height: '47',
+		viewBox: '0 0 74 47',
+	},
+	cabinet: {
+		width: '26',
+		height: '43',
+		viewBox: '0 0 26 43',
+	},
+	lamp: {
+		width: '32',
+		height: '31',
+		viewBox: '0 0 32 31',
 	},
 };
