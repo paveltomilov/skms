@@ -709,6 +709,21 @@ const initialState: InitialState = {
 				],
 			],
 		},
+		{
+			id: 'controlCircuit.4',
+			name: 'Нейтраль',
+			resistance: 0,
+			voltagePresent: 0,
+			groundContact: false,
+			wireContact: false,
+			malfunctions: [
+				{
+					id: 'controlCircuit.4.1',
+					name: 'обрыв',
+					active: false,
+				},
+			],
+		},
 	],
 };
 
