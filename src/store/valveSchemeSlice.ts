@@ -33,7 +33,7 @@ interface InitialState {
 const initialState: InitialState = {
 	powerCircuit: [
 		{
-			id: 'p.1',
+			id: 'powerCircuit.1',
 			name: 'Вводной автомат',
 			resistance: 0,
 			voltagePresent: 220,
@@ -41,13 +41,17 @@ const initialState: InitialState = {
 			wireContact: false,
 			malfunctions: [
 				{
-					id: 'p.1.1',
+					id: 'powerCircuit.1.1',
 					name: 'Плохой контакт на клемме, нет одной фазы',
 					active: false,
 				},
-				{ id: 'p.1.2', name: 'Ложно выбивает', active: false },
 				{
-					id: 'p.1.3',
+					id: 'powerCircuit.1.2',
+					name: 'Ложно выбивает',
+					active: false,
+				},
+				{
+					id: 'powerCircuit.1.3',
 					name: 'Собирается механически, но нет коммутации',
 					active: false,
 				},
@@ -56,7 +60,7 @@ const initialState: InitialState = {
 		{
 			branches: [
 				{
-					id: 'p.2.1',
+					id: 'powerCircuit.2.1',
 					name: 'Фаза A',
 					resistance: 0,
 					voltagePresent: 220,
@@ -64,25 +68,29 @@ const initialState: InitialState = {
 					wireContact: false,
 					malfunctions: [
 						{
-							id: 'p.2.1.1',
+							id: 'powerCircuit.2.1.1',
 							name: 'Короткое замыкание с фазой C',
 							active: false,
 						},
 						{
-							id: 'p.2.1.2',
+							id: 'powerCircuit.2.1.2',
 							name: 'Короткое замыкание с фазой B',
 							active: false,
 						},
-						{ id: 'p.2.1.3', name: 'Обрыв', active: false },
 						{
-							id: 'p.2.1.4',
+							id: 'powerCircuit.2.1.3',
+							name: 'Обрыв',
+							active: false,
+						},
+						{
+							id: 'powerCircuit.2.1.4',
 							name: 'Короткое замыкание на землю',
 							active: false,
 						},
 					],
 				},
 				{
-					id: 'p.2.2',
+					id: 'powerCircuit.2.2',
 					name: 'Фаза B',
 					resistance: 0,
 					voltagePresent: 220,
@@ -90,25 +98,29 @@ const initialState: InitialState = {
 					wireContact: false,
 					malfunctions: [
 						{
-							id: 'p.2.2.1',
+							id: 'powerCircuit.2.2.1',
 							name: 'Короткое замыкание с фазой C',
 							active: false,
 						},
 						{
-							id: 'p.2.2.2',
+							id: 'powerCircuit.2.2.2',
 							name: 'Короткое замыкание с фазой A',
 							active: false,
 						},
-						{ id: 'p.2.2.3', name: 'Обрыв', active: false },
 						{
-							id: 'p.2.2.4',
+							id: 'powerCircuit.2.2.3',
+							name: 'Обрыв',
+							active: false,
+						},
+						{
+							id: 'powerCircuit.2.2.4',
 							name: 'Короткое замыкание на землю',
 							active: false,
 						},
 					],
 				},
 				{
-					id: 'p.2.3',
+					id: 'powerCircuit.2.3',
 					name: 'Фаза C',
 					resistance: 0,
 					voltagePresent: 220,
@@ -116,18 +128,22 @@ const initialState: InitialState = {
 					wireContact: false,
 					malfunctions: [
 						{
-							id: 'p.2.3.1',
+							id: 'powerCircuit.2.3.1',
 							name: 'Короткое замыкание с фазой A',
 							active: false,
 						},
 						{
-							id: 'p.2.3.2',
+							id: 'powerCircuit.2.3.2',
 							name: 'Короткое замыкание с фазой B',
 							active: false,
 						},
-						{ id: 'p.2.3.3', name: 'Обрыв', active: false },
 						{
-							id: 'p.2.3.4',
+							id: 'powerCircuit.2.3.3',
+							name: 'Обрыв',
+							active: false,
+						},
+						{
+							id: 'powerCircuit.2.3.4',
 							name: 'Короткое замыкание на землю',
 							active: false,
 						},
@@ -138,32 +154,7 @@ const initialState: InitialState = {
 		{
 			branches: [
 				{
-					id: 'p.3.1',
-					name: 'Пускатель закрыть',
-					resistance: 0,
-					voltagePresent: 0,
-					groundContact: false,
-					wireContact: false,
-					malfunctions: [
-						{
-							id: 'p.3.1.1',
-							name: 'Неисправна катушка, пускатель не подтягивается',
-							active: false,
-						},
-						{
-							id: 'p.3.1.2',
-							name: 'Нет контакта в контактной группе',
-							active: false,
-						},
-						{
-							id: 'p.3.1.3',
-							name: 'Залипший контакт в контактной группе',
-							active: false,
-						},
-					],
-				},
-				{
-					id: 'p.3.2',
+					id: 'powerCircuit.3.1',
 					name: 'Пускатель открыть',
 					resistance: 0,
 					voltagePresent: 0,
@@ -171,17 +162,42 @@ const initialState: InitialState = {
 					wireContact: false,
 					malfunctions: [
 						{
-							id: 'p.3.2.1',
+							id: 'powerCircuit.3.1.1',
 							name: 'Неисправна катушка, пускатель не подтягивается',
 							active: false,
 						},
 						{
-							id: 'p.3.2.2',
+							id: 'powerCircuit.3.1.2',
 							name: 'Нет контакта в контактной группе',
 							active: false,
 						},
 						{
-							id: 'p.3.2.3',
+							id: 'powerCircuit.3.1.3',
+							name: 'Залипший контакт в контактной группе',
+							active: false,
+						},
+					],
+				},
+				{
+					id: 'powerCircuit.3.2',
+					name: 'Пускатель закрыть',
+					resistance: 0,
+					voltagePresent: 0,
+					groundContact: false,
+					wireContact: false,
+					malfunctions: [
+						{
+							id: 'powerCircuit.3.2.1',
+							name: 'Неисправна катушка, пускатель не подтягивается',
+							active: false,
+						},
+						{
+							id: 'powerCircuit.3.2.2',
+							name: 'Нет контакта в контактной группе',
+							active: false,
+						},
+						{
+							id: 'powerCircuit.3.2.3',
 							name: 'Залипший контакт в контактной группе',
 							active: false,
 						},
@@ -192,7 +208,7 @@ const initialState: InitialState = {
 		{
 			branches: [
 				{
-					id: 'p.4.1',
+					id: 'powerCircuit.4.1',
 					name: 'Фаза A',
 					resistance: 0,
 					voltagePresent: 220,
@@ -200,25 +216,29 @@ const initialState: InitialState = {
 					wireContact: false,
 					malfunctions: [
 						{
-							id: 'p.4.1.1',
+							id: 'powerCircuit.4.1.1',
 							name: 'Короткое замыкание с фазой C',
 							active: false,
 						},
 						{
-							id: 'p.4.1.2',
+							id: 'powerCircuit.4.1.2',
 							name: 'Короткое замыкание с фазой B',
 							active: false,
 						},
-						{ id: 'p.4.1.3', name: 'Обрыв', active: false },
 						{
-							id: 'p.4.1.4',
+							id: 'powerCircuit.4.1.3',
+							name: 'Обрыв',
+							active: false,
+						},
+						{
+							id: 'powerCircuit.4.1.4',
 							name: 'Короткое замыкание на землю',
 							active: false,
 						},
 					],
 				},
 				{
-					id: 'p.4.2',
+					id: 'powerCircuit.4.2',
 					name: 'Фаза B',
 					resistance: 0,
 					voltagePresent: 220,
@@ -226,25 +246,29 @@ const initialState: InitialState = {
 					wireContact: false,
 					malfunctions: [
 						{
-							id: 'p.4.2.1',
+							id: 'powerCircuit.4.2.1',
 							name: 'Короткое замыкание с фазой C',
 							active: false,
 						},
 						{
-							id: 'p.4.2.2',
+							id: 'powerCircuit.4.2.2',
 							name: 'Короткое замыкание с фазой A',
 							active: false,
 						},
-						{ id: 'p.4.2.3', name: 'Обрыв', active: false },
 						{
-							id: 'p.4.2.4',
+							id: 'powerCircuit.4.2.3',
+							name: 'Обрыв',
+							active: false,
+						},
+						{
+							id: 'powerCircuit.4.2.4',
 							name: 'Короткое замыкание на землю',
 							active: false,
 						},
 					],
 				},
 				{
-					id: 'p.4.3',
+					id: 'powerCircuit.4.3',
 					name: 'Фаза C',
 					resistance: 0,
 					voltagePresent: 220,
@@ -252,18 +276,22 @@ const initialState: InitialState = {
 					wireContact: false,
 					malfunctions: [
 						{
-							id: 'p.4.3.1',
+							id: 'powerCircuit.4.3.1',
 							name: 'Короткое замыкание с фазой A',
 							active: false,
 						},
 						{
-							id: 'p.4.3.2',
+							id: 'powerCircuit.4.3.2',
 							name: 'Короткое замыкание с фазой B',
 							active: false,
 						},
-						{ id: 'p.4.3.3', name: 'Обрыв', active: false },
 						{
-							id: 'p.4.3.4',
+							id: 'powerCircuit.4.3.3',
+							name: 'Обрыв',
+							active: false,
+						},
+						{
+							id: 'powerCircuit.4.3.4',
 							name: 'Короткое замыкание на землю',
 							active: false,
 						},
@@ -272,21 +300,21 @@ const initialState: InitialState = {
 			],
 		},
 		{
-			id: 'p.5',
+			id: 'powerCircuit.5',
 			name: 'Электродвигатель задвижки',
 			resistance: 0,
 			voltagePresent: 0,
 			groundContact: false,
 			wireContact: false,
 			malfunctions: [
-				{ id: 'p.5.1', name: 'Обрыв фазы', active: false },
+				{ id: 'powerCircuit.5.1', name: 'Обрыв фазы', active: false },
 				{
-					id: 'p.5.2',
+					id: 'powerCircuit.5.2',
 					name: 'Короткое замыкание между фазами',
 					active: false,
 				},
 				{
-					id: 'p.5.3',
+					id: 'powerCircuit.5.3',
 					name: 'Короткое замыкание обмотки на землю',
 					active: false,
 				},
