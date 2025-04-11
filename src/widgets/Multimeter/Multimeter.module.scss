@@ -1,0 +1,117 @@
+// --- Базовый контейнер виджета ---
+.multimeterContainer {
+  position: relative;
+  width: 246px;
+  height: 331px;
+  user-select: none; 
+  background-color: #1F1F1F; 
+  box-shadow: 
+    /* Первая граница (ближе к краю) */
+    inset 0 1px 0 0 #D9D9D9,   
+    inset -1px 0 0 0 #1D1D1B,  
+    inset 1px 0 0 0 #D9D9D9,  
+    inset 0 -1px 0 0 #1D1D1B,  
+    
+    /* Вторая граница (смещенная на 1px внутрь) */
+    inset 0 2px 0 0 #ffffff,   
+    inset -2px 0 0 0 #D9D9D9,  
+    inset 2px 0 0 0 #ffffff,  
+    inset 0 -2px 0 0 #D9D9D9, 
+
+    /* 3-я тень (внешняя, отбрасываемая на фон) */
+    2px 0 5px 0 rgba(0, 0, 0, 0.3),
+    0 2px 5px -0 rgba(0, 0, 0, 0.3);
+  }
+
+// --- Стили для основного SVG ---
+.multimeterSvgBase {
+  display: block; // Убраны отступы по умолчанию
+  width: 100%;
+  height: 100%;
+  font-family: 'Arial', sans-serif; // Базовый шрифт (лучше задавать конкретнее)
+
+
+  // Группа с фоновыми линиями
+  // .backgroundLinesContainer {
+     // Стили для самих path берутся из SVG (stroke, stroke-width)
+     // Убедитесь, что у них есть fill="none"
+  // }
+
+  // --- Стили для ГЕНЕРИРУЕМЫХ элементов ---
+
+  // Точки индикаторов
+  .indicatorDot {
+    fill: #110F93; 
+  }
+
+  // Заголовки секций (DCV, ACV, ...)
+  // .sectionHeaders {} // Общий контейнер группы
+
+  .sectionLabel {
+    font-size: 6px; 
+    font-weight: bold;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    paint-order: stroke; 
+    stroke: #282828;  
+    stroke-width: 3px;   
+    stroke-linejoin: round;
+    pointer-events: none;
+
+    // Цвета заливки
+    &.whiteText { fill: #f0f0f0; }
+  }
+
+  // Метки диапазонов (200, 2k, 750, ...)
+  .rangeLabel {
+    font-size: 6px; 
+    font-weight: 400;
+    fill: #e0e0e0;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    paint-order: stroke;
+    stroke: #282828;
+    stroke-width: 2px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    pointer-events: none;
+
+
+    &.smallLabel {
+       font-size: 6px; // для промежуточных (hFE, Diode, ...)
+    }
+  }
+
+  // Фон под дисплей (прямоугольник в SVG)
+  .displayBackground {
+    fill: #C0C0C0;
+  }
+} 
+
+// --- Стили для оберток HTML-компонентов ---
+// Позиционируются поверх SVG
+.displayWrapper {
+  position: absolute;
+  top: 10px;     
+  left: 76px;  
+  width: 168px;  
+  height: 48px;  
+  box-sizing: border-box;
+  pointer-events: none; // Дисплей не интерактивен
+}
+
+.dialWrapper {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;  // Ширина ручки 
+  height: 120px; // Высота ручки 
+}
+
+.jacksWrapper {
+   position: absolute;
+   bottom: 15px; 
+   right: 7px;
+   display: flex;
+   justify-content: center;
+}

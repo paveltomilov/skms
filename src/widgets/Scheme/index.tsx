@@ -33,7 +33,7 @@ const Scheme: FC = () => {
 				onClick={() =>
 					handleOpenPopup({
 						id: 'YB08',
-						icon: 2 /*  подумать каким образом передавать иконки в компонент  */,
+						icon: 2,
 						title: 'Какое-то название',
 						buttons: [
 							{ id: 'btn4', width: 238, height: 35, text: 'ОК' },
