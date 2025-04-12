@@ -5,7 +5,10 @@ import { FC } from 'react';
 interface Props {
 	size?: keyof Pick<IconSize, 'xs' | 'sm'>;
 	color?: keyof Pick<IconColor, 'default' | 'disabled'>;
-	transform?: keyof Omit<IconTransform, 'mirror'>;
+	transform?: keyof Pick<
+		IconTransform,
+		'rotate90' | 'rotateLeft90' | 'rotate180'
+	>;
 	className?: string;
 }
 
