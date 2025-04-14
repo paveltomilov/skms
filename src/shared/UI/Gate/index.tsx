@@ -12,6 +12,7 @@ interface Props {
 	power?: boolean;
 	shadow?: boolean;
 	position?: 'horizontal' | 'vertical';
+	className?: string;
 }
 
 const Gate: FC<Props> = ({
@@ -20,13 +21,14 @@ const Gate: FC<Props> = ({
 	disable = false,
 	power = false,
 	shadow = false,
+	className,
 }) => {
 	const states = GATE_STATE[state];
 	const positions = GATE_POSITION[position];
 	const isVertical = position === 'vertical';
 	return (
 		<div
-			className={`${styles.gate}
+			className={`${styles.gate} ${className && className}
 		${isVertical && styles.gate_vertical} ${shadow && styles.gate_shadow}`}
 		>
 			<Triangle

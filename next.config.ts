@@ -15,7 +15,7 @@ const nextConfig: NextConfig = {
 	webpack(config) {
 		config.resolve.alias = {
 			...config.resolve.alias,
-			'@components': './src/components',
+			'@': './src',
 		};
 		// Grab the existing rule that handles SVG imports
 		const fileLoaderRule = config.module.rules.find((rule: any) =>

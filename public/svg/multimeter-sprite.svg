@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+
+  <defs>
+    <filter id="indicatorDotGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="1.5" result="outerBlur"/>
+      <feFlood floodColor="#D9D9D9" floodOpacity="0.2" result="outerGlowColor"/>
+      <feComposite in="outerGlowColor" in2="outerBlur" operator="in" result="coloredOuterBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredOuterBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <symbol id="multimeter-bg-lines" viewBox="0 0 485 210"
+    x="-3"
+    y="54"   
+    width="437" 
+    height="210">
+    <!-- path... -->
+    <path d="M123.026 171.646L127.779 190.593C129.493 197.364 124.182 197.364 116.95 197.364H109.05H68.3505C65.9626 197.364 63.868 195.83 62.8257 193.682C58.3718 184.501 47.9987 172.484 31.9319 172.484C23.7426 172.484 17.1068 172.484 12.0793 172.484C5.90374 172.484 0.902344 167.478 0.902344 161.302V127.198C0.902344 121.022 5.90861 116.016 12.0842 116.016H45.6296" stroke="#0AB700" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+    <path d="M44.791 111.543H12.0842C5.9086 111.543 0.902344 106.537 0.902344 100.361V12.3044C0.902344 6.12883 5.90861 1.12256 12.0842 1.12256H81.7796C86.8393 1.12256 91.2684 4.52005 92.5795 9.40685L99.5819 35.5066" stroke="white" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+    <path d="M126.418 35.5066L133.42 9.40685C134.732 4.52005 139.161 1.12256 144.22 1.12256H216.923C219.587 1.12256 220.741 4.49658 218.634 6.12815L159.404 51.9998" stroke="white" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+    <path d="M102.973 34.668L98.2212 14.6021C96.5272 7.44904 101.838 0.563477 109.05 0.563477H116.95C124.161 0.563477 129.472 7.44904 127.778 14.6021L123.026 34.668" stroke="#8F1313" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+    <path d="M161.361 53.9568L220.594 8.23332C222.432 6.81476 225.098 8.12467 225.098 10.4462V154.867C225.098 156.934 222.932 158.286 221.074 157.379L174.78 134.745" stroke="#0AB700" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+    <path d="M173.102 138.1L213.485 157.687C217.339 159.556 219.787 163.464 219.787 167.747V226.436 M161.082 152.916L197.576 177.821C200.629 179.904 202.455 183.361 202.455 187.057V221.125 M127.257 171.086L132.876 192.625C133.518 195.087 135.741 196.804 138.285 196.804H158.47C163.095 196.804 165.72 191.509 162.92 187.829L144.868 164.098" stroke="#8F1313" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+  </symbol>
+
+  <symbol id="multimeter-section-headers" viewBox="15 75 180 35"
+    fill="#C0C0C0" 
+    >
+    <text 
+      x="30" 
+      y="30"
+      font-family="Arial, sans-serif"
+      font-size="6"
+      font-weight="600"
+      fill="#FFFFFF"
+      text-anchor="middle"
+    >DCV</text>
+    <text 
+      x="165" 
+      y="30"
+      font-family="Arial, sans-serif"
+      font-size="6"
+      font-weight="600"
+      fill="#FFFFFF"
+      text-anchor="middle">ACV</text>
+    <text 
+      x="177" 
+      y="48"
+      font-family="Arial, sans-serif"
+      font-size="6"
+      font-weight="600"
+      fill="#FFFFFF"
+      text-anchor="middle">DCA</text>
+  </symbol>
+
+   <symbol id="multimeter-display-area" viewBox="0 10 205 46"
+      x="-2"
+      y="3"   
+      width="204" 
+      height="54" 
+      fill="#C0C0C0" >
+     <rect x="0" y="10" width="205" height="46" class="display-background" />
+     <rect x="0" y="10" width="205" height="1" fill="#000000" />
+     <rect x="204" y="10" width="1" height="46" fill="#ffffff" />
+     <rect x="0" y="55" width="205" height="1" fill="#ffffff" />
+     <rect x="0" y="10" width="1" height="45" fill="#000000" />
+   </symbol>
+
+</svg>

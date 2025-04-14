@@ -3,12 +3,10 @@
 import { FC } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
-import {
-	SmallCross,
-	CurvedArrow,
-	EllipseClose,
-	Micro,
-} from '@/shared/UI/icons';
+import Chevron from '@/shared/UI/icons/Chevron';
+import Close from '@/shared/UI/icons/Close';
+import EllipseClose from '@/shared/UI/icons/EllipseClose';
+import Micro from '@/shared/UI/icons/Micro';
 
 const Footer: FC = () => {
 	return (
@@ -63,14 +61,14 @@ const Footer: FC = () => {
 						width={88}
 						height={28}
 						aria-label="Левый контрол"
-						icon={<CurvedArrow />}
+						icon={<Chevron size="sm" transform="rotateLeft90" />}
 					/>
 					<Button
 						id="footer-right-control-button"
 						width={88}
 						height={28}
 						aria-label="Правый контрол"
-						icon={<CurvedArrow className={styles.footer__arrow} />}
+						icon={<Chevron size="sm" transform="rotate90" />}
 					/>
 				</div>
 				<div className={styles.footer__centralGroup__right}>
@@ -86,7 +84,8 @@ const Footer: FC = () => {
 						width={26}
 						height={26}
 						aria-label="Закрыть"
-						icon={<SmallCross />}
+						icon={<Close size="xs" />}
+						className={styles.footer__centralGroup__right_close}
 					/>
 				</div>
 			</div>

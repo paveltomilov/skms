@@ -1,0 +1,28 @@
+.display {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 5px 10px;  
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.value {
+  // !!! ВАЖНО: Подключить настоящий 7-сегментный шрифт через @font-face !!!
+  // Примеры: DSEG7 Classic (рекомендуется), Digital-7 Mono, etc.
+  // font-family: 'DSEG7 Classic', 'Courier New', monospace; // Замените Courier New на реальный шрифт
+  font-family: sans-serif; // ЗАГЛУШКА! Заменить!
+  font-size: 56px;
+  font-weight: 600;
+  font-weight: normal;  
+  color: #110F93;   
+  letter-spacing: 1.5px;
+  line-height: 100%;
+  white-space: nowrap;
+  &.error {
+    color: #d32f2f;
+    font-size: 26px; 
+  }
+}

@@ -1,0 +1,73 @@
+.multimeterContainer {
+  position: relative;
+  width: 246px;
+  height: 331px;
+  user-select: none;
+  background-color: #1F1F1F;
+  box-shadow: 
+    inset 0 1px 0 0 #D9D9D9,   
+    inset -1px 0 0 0 #1D1D1B,  
+    inset 1px 0 0 0 #D9D9D9,  
+    inset 0 -1px 0 0 #1D1D1B,  
+    inset 0 2px 0 0 #ffffff,   
+    inset -2px 0 0 0 #D9D9D9,  
+    inset 2px 0 0 0 #ffffff,  
+    inset 0 -2px 0 0 #D9D9D9, 
+    2px 0 5px 0 rgba(0, 0, 0, 0.3),
+    0 2px 5px -0 rgba(0, 0, 0, 0.3);
+}
+
+.multimeterSvgBase {
+  display: block; 
+  width: 100%;
+  height: 100%;
+  font-family: 'Arial', sans-serif; 
+
+  .indicatorDot {
+    fill: #110F93; 
+  }
+
+  .rangeLabel {
+    font-size: 6px; 
+    font-weight: 400;
+    fill: #e0e0e0;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    paint-order: stroke;
+    stroke: #282828;
+    stroke-width: 2px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    pointer-events: none;
+
+    &.smallLabel {
+       font-size: 6px;
+    }
+  }
+} 
+
+.displayWrapper {
+  position: absolute;
+  top: 11px;   
+  left: 74px; 
+  width: 168px; 
+  height: 48px; 
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.dialWrapper {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;  
+  height: 120px; 
+}
+
+.jacksWrapper {
+   position: absolute;
+   bottom: 10px; 
+   right: 8px;
+   display: flex;
+   justify-content: center;
+}
