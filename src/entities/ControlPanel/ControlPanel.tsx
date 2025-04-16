@@ -7,6 +7,7 @@ import { useAppDispatch } from '@/shared/hooks/store';
 import { setCurrentMode } from '@/store/multimeterSlice';
 import { useDebounce } from '@/shared/hooks/useDebounce';
 import ProbeWire from '@/shared/UI/icons/ProbeWire';
+import MultimeterArrow from '@/shared/UI/icons/MultimeterArrow';
 
 interface Props {
 	mode: MultimeterMode;
@@ -32,14 +33,12 @@ const ControlPanel: FC<Props> = ({ mode }) => {
 
 	return (
 		<div className={styles.panel}>
-			<svg
+			<MultimeterArrow
 				ref={knobRef}
 				onMouseDown={onMouseDown}
 				className={styles.panel__arrow}
-				transform={`rotate(${currentAngle})`}
-			>
-				<use xlinkHref={'/svg/sprite.svg#multimeter-arrow'} />
-			</svg>
+				angle={currentAngle}
+			/>
 			<ProbeWire className={styles.panel__blackWire} />
 			<ProbeWire color="grey" className={styles.panel__greyWire} />
 			<ProbeWire color="red" className={styles.panel__redWire} />

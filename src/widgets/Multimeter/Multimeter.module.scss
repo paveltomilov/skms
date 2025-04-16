@@ -10,4 +10,25 @@
 	display: flex;
 	flex-direction: column;
 	gap: 13px;
+	position: relative;
+
+	&__blackProbe {
+		position: absolute;
+		top: 80px;
+		left: -30px;
+
+		&:active {
+			transform: rotate(-15deg);
+		}
+	}
+
+	&__redProbe {
+		position: absolute;
+		top: 220px;
+		left: -30px;
+
+		&:active {
+			transform: rotate(-15deg);
+		}
+	}
 }

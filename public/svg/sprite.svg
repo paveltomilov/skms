@@ -593,6 +593,162 @@
                 <stop offset="1" stop-color="#6C0D0D" />
             </radialGradient>
         </defs>
+    </symbol>
+
+    <!-- щуп -->
+
+    <symbol id="probe-black" width="30" height="91" viewBox="0 0 30 91" fill="none">
+        <g filter="url(#filter0_ddddd_2196_14730)">
+            <path
+                d="M2 37L4 36L16 36L18 37L18 55L16 55L16 70L18 72L18 79L2 79L1 78L2 72L4 70L4 55L2 55L2 37Z"
+                fill="black" />
+            <path d="M7 14L12 14L13 15L16 36L4 36L7 14Z" fill="black" />
+            <rect x="8" y="1" width="2" height="50" fill="url(#paint0_linear_2196_14730)" />
+            <g filter="url(#filter1_i_2196_14730)">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M12 14L6 14L3 36L1 37L1 55L3 55L3 70L1 72L1 78L17 78L17 72L15 70L15 55L17 55L17 37L15 36L12 14Z"
+                    fill="#1F1F1F" />
+            </g>
+        </g>
+        <defs>
+            <filter id="filter0_ddddd_2196_14730" x="0" y="0" width="30" height="91"
+                filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feColorMatrix in="SourceAlpha" type="matrix"
+                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+                <feOffset />
+                <feGaussianBlur stdDeviation="0.5" />
+                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.34 0" />
+                <feBlend mode="normal" in2="BackgroundImageFix"
+                    result="effect1_dropShadow_2196_14730" />
+                <feColorMatrix in="SourceAlpha" type="matrix"
+                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+                <feOffset dx="1" dy="1" />
+                <feGaussianBlur stdDeviation="1" />
+                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.3 0" />
+                <feBlend mode="normal" in2="effect1_dropShadow_2196_14730"
+                    result="effect2_dropShadow_2196_14730" />
+                <feColorMatrix in="SourceAlpha" type="matrix"
+                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+                <feOffset dx="3" dy="2" />
+                <feGaussianBlur stdDeviation="1.5" />
+                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.18 0" />
+                <feBlend mode="normal" in2="effect2_dropShadow_2196_14730"
+                    result="effect3_dropShadow_2196_14730" />
+                <feColorMatrix in="SourceAlpha" type="matrix"
+                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+                <feOffset dx="6" dy="5" />
+                <feGaussianBlur stdDeviation="2" />
+                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0" />
+                <feBlend mode="normal" in2="effect3_dropShadow_2196_14730"
+                    result="effect4_dropShadow_2196_14730" />
+                <feColorMatrix in="SourceAlpha" type="matrix"
+                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+                <feOffset dx="8" dy="8" />
+                <feGaussianBlur stdDeviation="2" />
+                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.01 0" />
+                <feBlend mode="normal" in2="effect4_dropShadow_2196_14730"
+                    result="effect5_dropShadow_2196_14730" />
+                <feBlend mode="normal" in="SourceGraphic" in2="effect5_dropShadow_2196_14730"
+                    result="shape" />
+            </filter>
+            <filter id="filter1_i_2196_14730" x="1" y="14" width="16.5" height="64.5"
+                filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                <feColorMatrix in="SourceAlpha" type="matrix"
+                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+                <feOffset dx="1" dy="1" />
+                <feGaussianBlur stdDeviation="0.25" />
+                <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
+                <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0" />
+                <feBlend mode="soft-light" in2="shape" result="effect1_innerShadow_2196_14730" />
+            </filter>
+            <linearGradient id="paint0_linear_2196_14730" x1="8" y1="26" x2="10" y2="26"
+                gradientUnits="userSpaceOnUse">
+                <stop offset="0.105769" stop-color="#D9D9D9" />
+                <stop offset="0.355769" stop-color="white" />
+                <stop offset="0.701923" stop-color="#8A8A8A" />
+                <stop offset="1" stop-color="#D9D9D9" />
+            </linearGradient>
+        </defs>
+    </symbol>
+
+    <symbol id="probe-red" width="30" height="91" viewBox="0 0 30 91" fill="none">
+        <g filter="url(#filter0_ddddd_2196_14722)">
+            <path
+                d="M2 36.999L4 35.999L16 35.999L18 36.999L18 54.999L16 54.999L16 69.999L18 71.999L18 78.999L2 78.999L1 77.999L2 71.999L4 69.999L4 54.999L2 54.999L2 36.999Z"
+                fill="#5D0D0D" />
+            <path d="M7 13.999L12 13.999L13 14.999L16 35.999L4 35.999L7 13.999Z" fill="#5D0D0D" />
+            <rect x="8" y="0.999023" width="2" height="50" fill="url(#paint0_linear_2196_14722)" />
+            <g filter="url(#filter1_i_2196_14722)">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M12 13.999L6 13.999L3 35.999L1 36.999L1 54.999L3 54.999L3 69.999L1 71.999L1 77.999L17 77.999L17 71.999L15 69.999L15 54.999L17 54.999L17 36.999L15 35.999L12 13.999Z"
+                    fill="#8F1313" />
+            </g>
+        </g>
+        <defs>
+            <filter id="filter0_ddddd_2196_14722" x="0" y="-0.000976562" width="30" height="91"
+                filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feColorMatrix in="SourceAlpha" type="matrix"
+                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+                <feOffset />
+                <feGaussianBlur stdDeviation="0.5" />
+                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.34 0" />
+                <feBlend mode="normal" in2="BackgroundImageFix"
+                    result="effect1_dropShadow_2196_14722" />
+                <feColorMatrix in="SourceAlpha" type="matrix"
+                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+                <feOffset dx="1" dy="1" />
+                <feGaussianBlur stdDeviation="1" />
+                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.3 0" />
+                <feBlend mode="normal" in2="effect1_dropShadow_2196_14722"
+                    result="effect2_dropShadow_2196_14722" />
+                <feColorMatrix in="SourceAlpha" type="matrix"
+                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+                <feOffset dx="3" dy="2" />
+                <feGaussianBlur stdDeviation="1.5" />
+                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.18 0" />
+                <feBlend mode="normal" in2="effect2_dropShadow_2196_14722"
+                    result="effect3_dropShadow_2196_14722" />
+                <feColorMatrix in="SourceAlpha" type="matrix"
+                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+                <feOffset dx="6" dy="5" />
+                <feGaussianBlur stdDeviation="2" />
+                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0" />
+                <feBlend mode="normal" in2="effect3_dropShadow_2196_14722"
+                    result="effect4_dropShadow_2196_14722" />
+                <feColorMatrix in="SourceAlpha" type="matrix"
+                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+                <feOffset dx="8" dy="8" />
+                <feGaussianBlur stdDeviation="2" />
+                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.01 0" />
+                <feBlend mode="normal" in2="effect4_dropShadow_2196_14722"
+                    result="effect5_dropShadow_2196_14722" />
+                <feBlend mode="normal" in="SourceGraphic" in2="effect5_dropShadow_2196_14722"
+                    result="shape" />
+            </filter>
+            <filter id="filter1_i_2196_14722" x="1" y="13.999" width="16.5" height="64.5"
+                filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                <feColorMatrix in="SourceAlpha" type="matrix"
+                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+                <feOffset dx="1" dy="1" />
+                <feGaussianBlur stdDeviation="0.25" />
+                <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
+                <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0" />
+                <feBlend mode="soft-light" in2="shape" result="effect1_innerShadow_2196_14722" />
+            </filter>
+            <linearGradient id="paint0_linear_2196_14722" x1="8" y1="25.999" x2="10" y2="25.999"
+                gradientUnits="userSpaceOnUse">
+                <stop offset="0.105769" stop-color="#D9D9D9" />
+                <stop offset="0.355769" stop-color="white" />
+                <stop offset="0.701923" stop-color="#8A8A8A" />
+                <stop offset="1" stop-color="#D9D9D9" />
+            </linearGradient>
+        </defs>
 
     </symbol>
 

@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
 	MultimeterMode,
 	ProbeConnectionsState,
-	ProbeConnection,
+	/* ProbeConnection, */
 } from '@/shared/types/multimeter';
 
 interface MultimeterState {
@@ -26,7 +26,7 @@ const initialState: MultimeterState = {
 	},
 };
 
-interface SetProbeConnectionPayload {
+/* interface SetProbeConnectionPayload {
 	probeColor: 'red' | 'black';
 	connection: ProbeConnection;
 }
@@ -35,7 +35,7 @@ interface SetMeasurementPayload {
 	unit?: string | null;
 	isError?: boolean;
 	isOverload?: boolean;
-}
+} */
 
 export const multimeterSlice = createSlice({
 	name: 'multimeter',
@@ -44,35 +44,30 @@ export const multimeterSlice = createSlice({
 		setCurrentMode: (state, action: PayloadAction<MultimeterMode>) => {
 			state.currentMode = action.payload;
 		},
-		/**
-		 * Редьюсер для установки результата измерения (заглушка).
-		 */
+		/* 	
+		 // Редьюсер для установки результата измерения (заглушка).
 
 		setMeasurementResult: (
 			_state,
 			_action: PayloadAction<SetMeasurementPayload>,
 		) => {},
-		/**
-		 * Редьюсер для установки состояния ошибки (заглушка).
-		 */
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		setErrorState: (_state, _action: PayloadAction<string | null>) => {},
-		/**
-		 * Редьюсер для обновления подключения щупа (заглушка).
-		 */
+		 // Редьюсер для установки состояния ошибки (заглушка).
 
+		setErrorState: (_state, _action: PayloadAction<string | null>) => {},
+		
+		 //Редьюсер для обновления подключения щупа (заглушка).
 		setProbeConnection: (
 			_state,
 			_action: PayloadAction<SetProbeConnectionPayload>,
-		) => {},
+		) => {}, */
 	},
 });
 
 export const {
 	setCurrentMode,
-	setMeasurementResult,
+	/* setMeasurementResult,
 	setErrorState,
-	setProbeConnection,
+	setProbeConnection, */
 } = multimeterSlice.actions;
 
 export default multimeterSlice.reducer;
