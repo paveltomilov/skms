@@ -2,9 +2,8 @@ import { useCallback, useRef, useState } from 'react';
 
 /**
  * Хук управления стрелкой мультиметра.
- *
- * @template T — тип ключей режимов (например, 'OFF' | 'ACV_750' | ...)
- * @param knobRef - ссылка на стрелку/элемент, за который вращаем
+ * @template T - тип ключей режимов (например, 'OFF' | 'ACV_750' | ...)
+ * @param knobRef - ссылка на стрелку/элемент
  * @param modeAngles - объект: режим → угол
  * @param initialMode - начальный режим
  */
@@ -19,13 +18,19 @@ export function useMultimeterKnob<T extends string>(
 	);
 	const isDragging = useRef(false);
 
-	// Определяем ближайший режим к углу
+	// Находим ближайший режим к углу
 	const findClosestMode = useCallback(
 		(angle: number): T => {
 			return (Object.entries(modeAngles) as [T, number][]).reduce(
 				(closest, [mode, angleValue]) => {
-					const diff = Math.abs(angleValue - angle);
-					const closestDiff = Math.abs(modeAngles[closest] - angle);
+					const diff = Math.min(
+						Math.abs(angleValue - angle),
+						360 - Math.abs(angleValue - angle),
+					);
+					const closestDiff = Math.min(
+						Math.abs(modeAngles[closest] - angle),
+						360 - Math.abs(modeAngles[closest] - angle),
+					);
 					return diff < closestDiff ? mode : closest;
 				},
 				Object.keys(modeAngles)[0] as T,
@@ -33,6 +38,17 @@ export function useMultimeterKnob<T extends string>(
 		},
 		[modeAngles],
 	);
+
+	// Остановка перетаскивания
+	const stopDragging = useCallback(() => {
+		if (isDragging.current) {
+			isDragging.current = false;
+			window.removeEventListener('mousemove', handleMouseMove);
+			window.removeEventListener('mouseup', stopDragging);
+			window.removeEventListener('touchmove', handleMouseMove);
+			window.removeEventListener('touchend', stopDragging);
+		}
+	}, []);
 
 	// Обработка движения
 	const handleMouseMove = useCallback(
@@ -48,45 +64,23 @@ export function useMultimeterKnob<T extends string>(
 			const clientY =
 				'touches' in event ? event.touches[0].clientY : event.clientY;
 
-			// Прерываем если курсор вышел за пределы стрелки
-			if (
-				clientX < rect.left ||
-				clientX > rect.right ||
-				clientY < rect.top ||
-				clientY > rect.bottom
-			) {
-				stopDragging();
-				return;
-			}
-
+			// Вычисляем угол
 			const deltaX = clientX - centerX;
 			const deltaY = clientY - centerY;
 			let angleDeg = Math.atan2(deltaY, deltaX) * (180 / Math.PI) + 90;
 			angleDeg = (angleDeg + 360) % 360;
 
+			// Фиксируем к ближайшему режиму
 			const closestMode = findClosestMode(angleDeg);
-			const snappedAngle = modeAngles[closestMode];
-
 			setCurrentMode(closestMode);
-			setCurrentAngle(snappedAngle);
+			setCurrentAngle(modeAngles[closestMode]);
 
 			event.preventDefault();
 		},
 		[findClosestMode, modeAngles, knobRef],
 	);
 
-	// Остановка
-	const stopDragging = useCallback(() => {
-		if (isDragging.current) {
-			isDragging.current = false;
-			window.removeEventListener('mousemove', handleMouseMove);
-			window.removeEventListener('mouseup', stopDragging);
-			window.removeEventListener('touchmove', handleMouseMove);
-			window.removeEventListener('touchend', stopDragging);
-		}
-	}, [handleMouseMove]);
-
-	// Старт вращения
+	// Начало перетаскивания
 	const onMouseDown = useCallback(
 		(event: React.MouseEvent | React.TouchEvent) => {
 			event.preventDefault();
