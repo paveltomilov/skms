@@ -1,0 +1,40 @@
+.panel {
+	width: 100%;
+	height: 247px;
+	position: relative;
+	background-image: url(../../../public/svg/multimeter.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+
+	&__arrow {
+		position: absolute;
+		width: 133px;
+		height: 133px;
+		top: 35px;
+		left: 46px;
+		cursor: grab;
+
+		&:active {
+			cursor: grabbing;
+		}
+	}
+
+	&__blackWire {
+		position: absolute;
+		top: 220px;
+		left: 121.5px;
+	}
+
+	&__greyWire {
+		position: absolute;
+		top: 220px;
+		left: 158.5px;
+	}
+
+	&__redWire {
+		position: absolute;
+		top: 220px;
+		left: 195.5px;
+	}
+}

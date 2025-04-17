@@ -1,0 +1,34 @@
+@use '@/shared/scss/variables.module';
+
+.multimeter {
+	width: 250px;
+	height: 333px;
+	padding: 12px;
+	user-select: none;
+	background-color: variables.$B8-color;
+	box-shadow: variables.$realistic-drop-shadow;
+	display: flex;
+	flex-direction: column;
+	gap: 13px;
+	position: relative;
+
+	&__blackProbe {
+		position: absolute;
+		top: 80px;
+		left: -30px;
+
+		&:active {
+			transform: rotate(-15deg);
+		}
+	}
+
+	&__redProbe {
+		position: absolute;
+		top: 220px;
+		left: -30px;
+
+		&:active {
+			transform: rotate(-15deg);
+		}
+	}
+}

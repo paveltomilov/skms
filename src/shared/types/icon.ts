@@ -23,6 +23,7 @@ export interface IconSize {
 
 export interface IconColor {
 	default: string;
+	dark_grey: string;
 	disabled: string;
 	white: string;
 	white_opacity: string;

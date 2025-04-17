@@ -32,6 +32,7 @@ export const ICON_TRANSFORM: IconTransform = {
 
 export const ICON_COLOR: IconColor = {
 	default: 'black',
+	dark_grey: '#1F1F1F',
 	disabled: '#8A8A8A',
 	white: 'white',
 	white_opacity: '#FFFFFFB2',
