@@ -3,6 +3,7 @@ import gateReducer from './gateSlice';
 import buttonsReducer from './buttonsSlice';
 import sidebarReducer from './sidebarSlice';
 import popupReducer from './popupSlice';
+import multimeterReducer from './multimeterSlice'; 
 
 export const store = () => {
 	return configureStore({
@@ -11,11 +12,11 @@ export const store = () => {
 			gateReducer,
 			sidebar: sidebarReducer,
 			popup: popupReducer,
+			multimeter: multimeterReducer,
 		},
 	});
 };
 
-// Типизируем RootState и AppDispatch
 export type AppStore = ReturnType<typeof store>;
 export type RootState = ReturnType<AppStore['getState']>;
 export type AppDispatch = AppStore['dispatch'];
