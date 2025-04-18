@@ -4,6 +4,7 @@ import { Display } from '@/entities/Display/Display';
 import ControlPanel from '@/entities/ControlPanel/ControlPanel';
 import { useAppSelector } from '@/shared/hooks/store';
 import Probe from '@/shared/UI/icons/Probe';
+import ProbeHolder from '@/shared/UI/icons/ProbeHolder';
 
 const Multimeter: React.FC = () => {
 	const multimeterState = useAppSelector(state => state.multimeter);
@@ -11,8 +12,12 @@ const Multimeter: React.FC = () => {
 		<div className={styles.multimeter}>
 			<Display value={multimeterState.displayValue} />
 			<ControlPanel mode={multimeterState.currentMode} />
-			<Probe className={styles.multimeter__blackProbe} />
-			<Probe color="red" className={styles.multimeter__redProbe} />
+			<ProbeHolder className={styles.multimeter__blackProbeHolder}>
+				<Probe className={styles.multimeter__blackProbe} />
+			</ProbeHolder>
+			<ProbeHolder className={styles.multimeter__redProbeHolder}>
+				<Probe color="red" className={styles.multimeter__redProbe} />
+			</ProbeHolder>
 		</div>
 	);
 };

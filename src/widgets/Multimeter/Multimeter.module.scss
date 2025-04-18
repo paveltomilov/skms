@@ -1,7 +1,7 @@
 @use '@/shared/scss/variables.module';
 
 .multimeter {
-	width: 250px;
+	width: 245px;
 	height: 333px;
 	padding: 12px;
 	user-select: none;
@@ -12,23 +12,65 @@
 	gap: 13px;
 	position: relative;
 
+	&::before {
+		content: '';
+		width: 34px;
+		height: 15px;
+		background: variables.$B8-color;
+		display: block;
+		position: absolute;
+		top: 60px;
+		left: -34px;
+		z-index: 0;
+	}
+
+	&::after {
+		content: '';
+		width: 34px;
+		height: 15px;
+		background: variables.$B8-color;
+		display: block;
+		position: absolute;
+		top: 150px;
+		left: -34px;
+		z-index: 0;
+	}
+
+	&__blackProbeHolder {
+		position: absolute;
+		top: 59px;
+		left: -34px;
+		z-index: 2;
+	}
+
 	&__blackProbe {
 		position: absolute;
-		top: 80px;
-		left: -30px;
+		top: 5px;
+		left: -36px;
+		z-index: 1;
 
 		&:active {
 			transform: rotate(-15deg);
+			z-index: 3;
 		}
+	}
+
+	&__redProbeHolder {
+		position: absolute;
+		top: 150px;
+		left: -34px;
+		z-index: 2;
 	}
 
 	&__redProbe {
 		position: absolute;
-		top: 220px;
-		left: -30px;
+		top: 95px;
+		left: -36px;
+		z-index: 1;
 
 		&:active {
 			transform: rotate(-15deg);
+			z-index: 3;
 		}
 	}
 }
