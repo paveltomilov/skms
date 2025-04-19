@@ -12,12 +12,13 @@ const Probe: FC<Props> = ({ color = 'black', className }) => {
 			height={91}
 			viewBox="0 0 30 91"
 			preserveAspectRatio="xMidYMid meet"
+			shapeRendering="geometricPrecision"
 			className={className && className}
 		>
 			<use
 				width="100%"
 				height="100%"
-				xlinkHref={`/svg/sprite.svg#probe-${color}`}
+				xlinkHref={`/svg/multimeter.svg#probe-${color}`}
 			/>
 		</svg>
 	);

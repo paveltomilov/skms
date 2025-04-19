@@ -36,16 +36,22 @@
 		z-index: 0;
 	}
 
-	&__blackProbeHolder {
+	&__probeHolder {
 		position: absolute;
-		top: 59px;
 		left: -34px;
 		z-index: 2;
+
+		&_black {
+			top: 59px;
+		}
+
+		&_red {
+			top: 150px;
+		}
 	}
 
-	&__blackProbe {
+	&__probe {
 		position: absolute;
-		top: 5px;
 		left: -36px;
 		z-index: 1;
 
@@ -53,24 +59,13 @@
 			transform: rotate(-15deg);
 			z-index: 3;
 		}
-	}
 
-	&__redProbeHolder {
-		position: absolute;
-		top: 150px;
-		left: -34px;
-		z-index: 2;
-	}
+		&_black {
+			top: 5px;
+		}
 
-	&__redProbe {
-		position: absolute;
-		top: 95px;
-		left: -36px;
-		z-index: 1;
-
-		&:active {
-			transform: rotate(-15deg);
-			z-index: 3;
+		&_red {
+			top: 95px;
 		}
 	}
 }

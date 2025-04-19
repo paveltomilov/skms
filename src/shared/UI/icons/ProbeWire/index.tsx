@@ -17,7 +17,7 @@ const ProbeWire: FC<Props> = ({ color = 'black', className }) => {
 			<use
 				width="100%"
 				height="100%"
-				xlinkHref={`/svg/sprite.svg#probe-${color}-wire`}
+				xlinkHref={`/svg/multimeter.svg#probe-${color}-wire`}
 			/>
 		</svg>
 	);

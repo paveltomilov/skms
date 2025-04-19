@@ -8,6 +8,7 @@ import { setCurrentMode } from '@/store/multimeterSlice';
 import { useDebounce } from '@/shared/hooks/useDebounce';
 import ProbeWire from '@/shared/UI/icons/ProbeWire';
 import MultimeterArrow from '@/shared/UI/icons/MultimeterArrow';
+import Panel from '@/shared/UI/icons/Panel';
 
 interface Props {
 	mode: MultimeterMode;
@@ -32,17 +33,25 @@ const ControlPanel: FC<Props> = ({ mode }) => {
 	}, [activeMode, mode, dispatch]);
 
 	return (
-		<div className={styles.panel}>
+		<Panel className={styles.panel}>
 			<MultimeterArrow
 				ref={knobRef}
 				onMouseDown={onMouseDown}
 				className={styles.panel__arrow}
 				angle={currentAngle}
 			/>
-			<ProbeWire className={styles.panel__blackWire} />
-			<ProbeWire color="grey" className={styles.panel__greyWire} />
-			<ProbeWire color="red" className={styles.panel__redWire} />
-		</div>
+			<ProbeWire
+				className={`${styles.panel__wire} ${styles.panel__wire_black}`}
+			/>
+			<ProbeWire
+				color="grey"
+				className={`${styles.panel__wire} ${styles.panel__wire_grey}`}
+			/>
+			<ProbeWire
+				color="red"
+				className={`${styles.panel__wire} ${styles.panel__wire_red}`}
+			/>
+		</Panel>
 	);
 };
 export default ControlPanel;
