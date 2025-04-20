@@ -7,10 +7,7 @@ interface DisplayProps {
 
 export const Display: FC<DisplayProps> = ({ value }) => {
 	return (
-		<div
-			className={styles.display}
-			title={`Показание дисплея: ${value ?? ''}`}
-		>
+		<div className={styles.display}>
 			<span className={styles.display__value}>{value}</span>
 		</div>
 	);

@@ -44,16 +44,15 @@ export const multimeterSlice = createSlice({
 		setCurrentMode: (state, action: PayloadAction<MultimeterMode>) => {
 			state.currentMode = action.payload;
 		},
-		/* 	
-		 // Редьюсер для установки результата измерения (заглушка).
 
-		setMeasurementResult: (
-			_state,
-			_action: PayloadAction<SetMeasurementPayload>,
-		) => {},
-		 // Редьюсер для установки состояния ошибки (заглушка).
+		// Редьюсер для установки результата измерения (заглушка).
 
-		setErrorState: (_state, _action: PayloadAction<string | null>) => {},
+		setMeasurementResult: (state, action: PayloadAction<number>) => {
+			state.displayValue = action.payload;
+		},
+		// Редьюсер для установки состояния ошибки (заглушка).
+
+		/* 	setErrorState: (_state, _action: PayloadAction<string | null>) => {},
 		
 		 //Редьюсер для обновления подключения щупа (заглушка).
 		setProbeConnection: (
@@ -65,8 +64,8 @@ export const multimeterSlice = createSlice({
 
 export const {
 	setCurrentMode,
-	/* setMeasurementResult,
-	setErrorState,
+	setMeasurementResult,
+	/*setErrorState,
 	setProbeConnection, */
 } = multimeterSlice.actions;
 
