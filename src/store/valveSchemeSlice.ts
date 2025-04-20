@@ -33,291 +33,720 @@ interface InitialState {
 const initialState: InitialState = {
 	powerCircuit: [
 		{
-			id: 'p.1',
-			name: 'Вводной автомат',
-			resistance: 0,
-			voltage: 220,
-			groundContact: false,
-			wireContact: false,
-			malfunctions: [
-				{
-					id: 'p.1.1',
-					name: 'Плохой контакт на клемме, нет одной фазы',
-					active: false,
-				},
-				{
-					id: 'p.1.2',
-					name: 'Ложно выбивает',
-					active: false,
-				},
-				{
-					id: 'p.1.3',
-					name: 'Собирается механически, но нет коммутации',
-					active: false,
-				},
-			],
-		},
-		{
 			branches: [
-				{
-					id: 'p.2.1',
-					name: 'Фаза A',
-					resistance: 0,
-					voltage: 220,
-					groundContact: false,
-					wireContact: false,
-					malfunctions: [
-						{
-							id: 'p.2.1.1',
-							name: 'Короткое замыкание с фазой C',
-							active: false,
-						},
-						{
-							id: 'p.2.1.2',
-							name: 'Короткое замыкание с фазой B',
-							active: false,
-						},
-						{
-							id: 'p.2.1.3',
-							name: 'Обрыв',
-							active: false,
-						},
-						{
-							id: 'p.2.1.4',
-							name: 'Короткое замыкание на землю',
-							active: false,
-						},
-					],
-				},
-				{
-					id: 'p.2.2',
-					name: 'Фаза B',
-					resistance: 0,
-					voltage: 220,
-					groundContact: false,
-					wireContact: false,
-					malfunctions: [
-						{
-							id: 'p.2.2.1',
-							name: 'Короткое замыкание с фазой C',
-							active: false,
-						},
-						{
-							id: 'p.2.2.2',
-							name: 'Короткое замыкание с фазой A',
-							active: false,
-						},
-						{
-							id: 'p.2.2.3',
-							name: 'Обрыв',
-							active: false,
-						},
-						{
-							id: 'p.2.2.4',
-							name: 'Короткое замыкание на землю',
-							active: false,
-						},
-					],
-				},
-				{
-					id: 'p.2.3',
-					name: 'Фаза C',
-					resistance: 0,
-					voltage: 220,
-					groundContact: false,
-					wireContact: false,
-					malfunctions: [
-						{
-							id: 'p.2.3.1',
-							name: 'Короткое замыкание с фазой A',
-							active: false,
-						},
-						{
-							id: 'p.2.3.2',
-							name: 'Короткое замыкание с фазой B',
-							active: false,
-						},
-						{
-							id: 'p.2.3.3',
-							name: 'Обрыв',
-							active: false,
-						},
-						{
-							id: 'p.2.3.4',
-							name: 'Короткое замыкание на землю',
-							active: false,
-						},
-					],
-				},
-			],
-		},
-		{
-			branches: [
-				{
-					id: 'p.3.1',
-					name: 'Пускатель открыть',
-					resistance: 0,
-					voltage: 0,
-					groundContact: false,
-					wireContact: false,
-					malfunctions: [
-						{
-							id: 'p.3.1.1',
-							name: 'Неисправна катушка, пускатель не подтягивается',
-							active: false,
-						},
-						{
-							id: 'p.3.1.2',
-							name: 'Нет контакта в контактной группе',
-							active: false,
-						},
-						{
-							id: 'p.3.1.3',
-							name: 'Залипший контакт в контактной группе',
-							active: false,
-						},
-					],
-				},
-				{
-					id: 'p.3.2',
-					name: 'Пускатель закрыть',
-					resistance: 0,
-					voltage: 0,
-					groundContact: false,
-					wireContact: false,
-					malfunctions: [
-						{
-							id: 'p.3.2.1',
-							name: 'Неисправна катушка, пускатель не подтягивается',
-							active: false,
-						},
-						{
-							id: 'p.3.2.2',
-							name: 'Нет контакта в контактной группе',
-							active: false,
-						},
-						{
-							id: 'p.3.2.3',
-							name: 'Залипший контакт в контактной группе',
-							active: false,
-						},
-					],
-				},
-			],
-		},
-		{
-			branches: [
-				{
-					id: 'p.4.1',
-					name: 'Фаза A',
-					resistance: 0,
-					voltage: 220,
-					groundContact: false,
-					wireContact: false,
-					malfunctions: [
-						{
-							id: 'p.4.1.1',
-							name: 'Короткое замыкание с фазой C',
-							active: false,
-						},
-						{
-							id: 'p.4.1.2',
-							name: 'Короткое замыкание с фазой B',
-							active: false,
-						},
-						{
-							id: 'p.4.1.3',
-							name: 'Обрыв',
-							active: false,
-						},
-						{
-							id: 'p.4.1.4',
-							name: 'Короткое замыкание на землю',
-							active: false,
-						},
-					],
-				},
-				{
-					id: 'p.4.2',
-					name: 'Фаза B',
-					resistance: 0,
-					voltage: 220,
-					groundContact: false,
-					wireContact: false,
-					malfunctions: [
-						{
-							id: 'p.4.2.1',
-							name: 'Короткое замыкание с фазой C',
-							active: false,
-						},
-						{
-							id: 'p.4.2.2',
-							name: 'Короткое замыкание с фазой A',
-							active: false,
-						},
-						{
-							id: 'p.4.2.3',
-							name: 'Обрыв',
-							active: false,
-						},
-						{
-							id: 'p.4.2.4',
-							name: 'Короткое замыкание на землю',
-							active: false,
-						},
-					],
-				},
-				{
-					id: 'p.4.3',
-					name: 'Фаза C',
-					resistance: 0,
-					voltage: 220,
-					groundContact: false,
-					wireContact: false,
-					malfunctions: [
-						{
-							id: 'p.4.3.1',
-							name: 'Короткое замыкание с фазой A',
-							active: false,
-						},
-						{
-							id: 'p.4.3.2',
-							name: 'Короткое замыкание с фазой B',
-							active: false,
-						},
-						{
-							id: 'p.4.3.3',
-							name: 'Обрыв',
-							active: false,
-						},
-						{
-							id: 'p.4.3.4',
-							name: 'Короткое замыкание на землю',
-							active: false,
-						},
-					],
-				},
-			],
-		},
-		{
-			id: 'p.5',
-			name: 'Электродвигатель задвижки',
-			resistance: 0,
-			voltage: 0,
-			groundContact: false,
-			wireContact: false,
-			malfunctions: [
-				{ id: 'p.5.1', name: 'Обрыв фазы', active: false },
-				{
-					id: 'p.5.2',
-					name: 'Короткое замыкание между фазами',
-					active: false,
-				},
-				{
-					id: 'p.5.3',
-					name: 'Короткое замыкание обмотки на землю',
-					active: false,
-				},
+				[
+					{
+						id: 'p.1.1',
+						name: 'Фаза A до вводного автомата',
+						resistance: 0,
+						voltage: 220,
+						groundContact: false,
+						wireContact: false,
+						malfunctions: [
+							{
+								id: 'p.1.1.1',
+								name: 'Короткое замыкание с фазой C',
+								active: false,
+							},
+							{
+								id: 'p.1.1.2',
+								name: 'Короткое замыкание с фазой B',
+								active: false,
+							},
+							{
+								id: 'p.1.1.3',
+								name: 'Обрыв',
+								active: false,
+							},
+							{
+								id: 'p.1.1.4',
+								name: 'Короткое замыкание на землю',
+								active: false,
+							},
+							{
+								id: 'p.1.1.5',
+								name: 'Обрыв провода',
+								active: false,
+							},
+						],
+					},
+					{
+						id: 'p.2',
+						name: 'Контакты фазы А вводного автомата',
+						resistance: 0,
+						voltage: 220,
+						groundContact: false,
+						wireContact: false,
+						malfunctions: [
+							{
+								id: 'p.2.1',
+								name: 'Плохой контакт на клемме, нет одной фазы',
+								active: false,
+							},
+							{
+								id: 'p.2.2',
+								name: 'Ложно выбивает',
+								active: false,
+							},
+							{
+								id: 'p.2.3',
+								name: 'Собирается механически, но нет коммутации',
+								active: false,
+							},
+						],
+					},
+					{
+						id: 'p.3.1',
+						name: 'Фаза A от автомата до пускателей',
+						resistance: 0,
+						voltage: 220,
+						groundContact: false,
+						wireContact: false,
+						malfunctions: [
+							{
+								id: 'p.3.1.1',
+								name: 'Короткое замыкание с фазой C',
+								active: false,
+							},
+							{
+								id: 'p.3.1.2',
+								name: 'Короткое замыкание с фазой B',
+								active: false,
+							},
+							{
+								id: 'p.3.1.3',
+								name: 'Обрыв',
+								active: false,
+							},
+							{
+								id: 'p.3.1.4',
+								name: 'Короткое замыкание на землю',
+								active: false,
+							},
+						],
+					},
+					{
+						branches: [
+							[
+								{
+									id: 'p.4.1.1',
+									name: 'Пускатель открыть, контакты фазы А',
+									resistance: 0,
+									voltage: 0,
+									groundContact: false,
+									wireContact: false,
+									malfunctions: [
+										{
+											id: 'p.4.1.1.1',
+											name: 'Неисправна катушка, пускатель не подтягивается',
+											active: false,
+										},
+										{
+											id: 'p.4.1.1.2',
+											name: 'Нет контакта в контактной группе',
+											active: false,
+										},
+										{
+											id: 'p.4.1.1.3',
+											name: 'Залипший контакт в контактной группе',
+											active: false,
+										},
+									],
+								},
+								{
+									id: 'p.5.1',
+									name: 'Фаза A от пускателя до двигателя',
+									resistance: 0,
+									voltage: 220,
+									groundContact: false,
+									wireContact: false,
+									malfunctions: [
+										{
+											id: 'p.5.1.1',
+											name: 'Короткое замыкание с фазой C',
+											active: false,
+										},
+										{
+											id: 'p.5.1.2',
+											name: 'Короткое замыкание с фазой B',
+											active: false,
+										},
+										{
+											id: 'p.5.1.3',
+											name: 'Обрыв',
+											active: false,
+										},
+										{
+											id: 'p.5.1.4',
+											name: 'Короткое замыкание на землю',
+											active: false,
+										},
+									],
+								},
+								{
+									id: 'p.6.1',
+									name: 'Электродвигатель задвижки, обмотка фазы А',
+									resistance: 0,
+									voltage: 0,
+									groundContact: false,
+									wireContact: false,
+									malfunctions: [
+										{
+											id: 'p.6.1.1',
+											name: 'Обрыв фазы',
+											active: false,
+										},
+										{
+											id: 'p.6.1.2',
+											name: 'Короткое замыкание между фазами',
+											active: false,
+										},
+										{
+											id: 'p.6.1.3',
+											name: 'Короткое замыкание обмотки на землю',
+											active: false,
+										},
+									],
+								},
+							],
+							[
+								{
+									id: 'p.4.2.3',
+									name: 'Пускатель закрыть, контакты фазы С',
+									resistance: 0,
+									voltage: 0,
+									groundContact: false,
+									wireContact: false,
+									malfunctions: [
+										{
+											id: 'p.4.1.3.1',
+											name: 'Неисправна катушка, пускатель не подтягивается',
+											active: false,
+										},
+										{
+											id: 'p.4.1.3.2',
+											name: 'Нет контакта в контактной группе',
+											active: false,
+										},
+										{
+											id: 'p.4.1.3.3',
+											name: 'Залипший контакт в контактной группе',
+											active: false,
+										},
+									],
+								},
+								{
+									id: 'p.5.2',
+									name: 'Фаза С от пускателя до двигателя',
+									resistance: 0,
+									voltage: 220,
+									groundContact: false,
+									wireContact: false,
+									malfunctions: [
+										{
+											id: 'p.5.2.1',
+											name: 'Короткое замыкание с фазой C',
+											active: false,
+										},
+										{
+											id: 'p.5.2.2',
+											name: 'Короткое замыкание с фазой B',
+											active: false,
+										},
+										{
+											id: 'p.5.2.3',
+											name: 'Обрыв',
+											active: false,
+										},
+										{
+											id: 'p.5.2.4',
+											name: 'Короткое замыкание на землю',
+											active: false,
+										},
+									],
+								},
+								{
+									id: 'p.6.2',
+									name: 'Электродвигатель задвижки, обмотка фазы С',
+									resistance: 0,
+									voltage: 0,
+									groundContact: false,
+									wireContact: false,
+									malfunctions: [
+										{
+											id: 'p.6.2.1',
+											name: 'Обрыв фазы',
+											active: false,
+										},
+										{
+											id: 'p.6.2.2',
+											name: 'Короткое замыкание между фазами',
+											active: false,
+										},
+										{
+											id: 'p.6.2.3',
+											name: 'Короткое замыкание обмотки на землю',
+											active: false,
+										},
+									],
+								},
+							],
+						],
+					},
+				],
+				[
+					{
+						id: 'p.1.2',
+						name: 'Фаза B до вводного автомата',
+						resistance: 0,
+						voltage: 220,
+						groundContact: false,
+						wireContact: false,
+						malfunctions: [
+							{
+								id: 'p.1.2.1',
+								name: 'Короткое замыкание с фазой A',
+								active: false,
+							},
+							{
+								id: 'p.1.2.2',
+								name: 'Короткое замыкание с фазой C',
+								active: false,
+							},
+							{ id: 'p.1.2.3', name: 'Обрыв', active: false },
+							{
+								id: 'p.1.2.4',
+								name: 'Короткое замыкание на землю',
+								active: false,
+							},
+							{
+								id: 'p.1.2.5',
+								name: 'Обрыв провода',
+								active: false,
+							},
+						],
+					},
+					{
+						id: 'p.2.2',
+						name: 'Контакты фазы B вводного автомата',
+						resistance: 0,
+						voltage: 220,
+						groundContact: false,
+						wireContact: false,
+						malfunctions: [
+							{
+								id: 'p.2.2.1',
+								name: 'Плохой контакт на клемме',
+								active: false,
+							},
+							{
+								id: 'p.2.2.2',
+								name: 'Ложное срабатывание',
+								active: false,
+							},
+							{
+								id: 'p.2.2.3',
+								name: 'Нет коммутации',
+								active: false,
+							},
+						],
+					},
+					{
+						id: 'p.3.2',
+						name: 'Фаза B от автомата до пускателей',
+						resistance: 0,
+						voltage: 220,
+						groundContact: false,
+						wireContact: false,
+						malfunctions: [
+							{
+								id: 'p.3.2.1',
+								name: 'Короткое замыкание с фазой A',
+								active: false,
+							},
+							{
+								id: 'p.3.2.2',
+								name: 'Короткое замыкание с фазой C',
+								active: false,
+							},
+							{ id: 'p.3.2.3', name: 'Обрыв', active: false },
+							{
+								id: 'p.3.2.4',
+								name: 'Короткое замыкание на землю',
+								active: false,
+							},
+						],
+					},
+					{
+						branches: [
+							{
+								id: 'p.4.2.1',
+								name: 'Пускатель открыть, контакты фазы B',
+								resistance: 0,
+								voltage: 0,
+								groundContact: false,
+								wireContact: false,
+								malfunctions: [
+									{
+										id: 'p.4.2.1.1',
+										name: 'Неисправна катушка, пускатель не подтягивается',
+										active: false,
+									},
+									{
+										id: 'p.4.2.1.2',
+										name: 'Нет контакта в контактной группе',
+										active: false,
+									},
+									{
+										id: 'p.4.2.1.3',
+										name: 'Залипший контакт в контактной группе',
+										active: false,
+									},
+								],
+							},
+							{
+								id: 'p.4.2.2',
+								name: 'Пускатель закрыть, контакты фазы B',
+								resistance: 0,
+								voltage: 0,
+								groundContact: false,
+								wireContact: false,
+								malfunctions: [
+									{
+										id: 'p.4.2.2.1',
+										name: 'Неисправна катушка, пускатель не подтягивается',
+										active: false,
+									},
+									{
+										id: 'p.4.2.2.2',
+										name: 'Нет контакта в контактной группе',
+										active: false,
+									},
+									{
+										id: 'p.4.2.2.3',
+										name: 'Залипший контакт в контактной группе',
+										active: false,
+									},
+								],
+							},
+						],
+					},
+					{
+						id: 'p.5.2',
+						name: 'Фаза С от пускателя до двигателя',
+						resistance: 0,
+						voltage: 220,
+						groundContact: false,
+						wireContact: false,
+						malfunctions: [
+							{
+								id: 'p.5.1.1',
+								name: 'Короткое замыкание с фазой А',
+								active: false,
+							},
+							{
+								id: 'p.5.1.2',
+								name: 'Короткое замыкание с фазой B',
+								active: false,
+							},
+							{
+								id: 'p.5.1.3',
+								name: 'Обрыв',
+								active: false,
+							},
+							{
+								id: 'p.5.1.4',
+								name: 'Короткое замыкание на землю',
+								active: false,
+							},
+						],
+					},
+					{
+						id: 'p.6.2',
+						name: 'Электродвигатель задвижки, обмотка фазы В',
+						resistance: 0,
+						voltage: 0,
+						groundContact: false,
+						wireContact: false,
+						malfunctions: [
+							{
+								id: 'p.6.2.1',
+								name: 'Обрыв фазы',
+								active: false,
+							},
+							{
+								id: 'p.6.2.2',
+								name: 'Короткое замыкание между фазами',
+								active: false,
+							},
+							{
+								id: 'p.6.2.3',
+								name: 'Короткое замыкание обмотки на землю',
+								active: false,
+							},
+						],
+					},
+				],
+				[
+					{
+						id: 'p.1.3',
+						name: 'Фаза C до вводного автомата',
+						resistance: 0,
+						voltage: 220,
+						groundContact: false,
+						wireContact: false,
+						malfunctions: [
+							{
+								id: 'p.1.3.1',
+								name: 'Короткое замыкание с фазой A',
+								active: false,
+							},
+							{
+								id: 'p.1.3.2',
+								name: 'Короткое замыкание с фазой B',
+								active: false,
+							},
+							{
+								id: 'p.1.3.3',
+								name: 'Обрыв',
+								active: false,
+							},
+							{
+								id: 'p.1.3.4',
+								name: 'Короткое замыкание на землю',
+								active: false,
+							},
+							{
+								id: 'p.1.3.5',
+								name: 'Обрыв провода',
+								active: false,
+							},
+						],
+					},
+					{
+						id: 'p.2.3',
+						name: 'Контакты фазы C вводного автомата',
+						resistance: 0,
+						voltage: 220,
+						groundContact: false,
+						wireContact: false,
+						malfunctions: [
+							{
+								id: 'p.2.3.1',
+								name: 'Плохой контакт на клемме, нет фазы',
+								active: false,
+							},
+							{
+								id: 'p.2.3.2',
+								name: 'Ложно выбивает',
+								active: false,
+							},
+							{
+								id: 'p.2.3.3',
+								name: 'Механическая сборка есть, но нет коммутации',
+								active: false,
+							},
+						],
+					},
+					{
+						id: 'p.3.3',
+						name: 'Фаза C от автомата до пускателей',
+						resistance: 0,
+						voltage: 220,
+						groundContact: false,
+						wireContact: false,
+						malfunctions: [
+							{
+								id: 'p.3.3.1',
+								name: 'Короткое замыкание с фазой A',
+								active: false,
+							},
+							{
+								id: 'p.3.3.2',
+								name: 'Короткое замыкание с фазой B',
+								active: false,
+							},
+							{
+								id: 'p.3.3.3',
+								name: 'Обрыв',
+								active: false,
+							},
+							{
+								id: 'p.3.3.4',
+								name: 'Короткое замыкание на землю',
+								active: false,
+							},
+						],
+					},
+					{
+						branches: [
+							[
+								{
+									id: 'p.4.3.1',
+									name: 'Пускатель закрыть, контакты фазы C',
+									resistance: 0,
+									voltage: 0,
+									groundContact: false,
+									wireContact: false,
+									malfunctions: [
+										{
+											id: 'p.4.3.1.1',
+											name: 'Неисправна катушка, пускатель не срабатывает',
+											active: false,
+										},
+										{
+											id: 'p.4.3.1.2',
+											name: 'Нет контакта в группе',
+											active: false,
+										},
+										{
+											id: 'p.4.3.1.3',
+											name: 'Залипание контактов',
+											active: false,
+										},
+									],
+								},
+								{
+									id: 'p.5.3',
+									name: 'Фаза C от пускателя до двигателя',
+									resistance: 0,
+									voltage: 220,
+									groundContact: false,
+									wireContact: false,
+									malfunctions: [
+										{
+											id: 'p.5.3.1',
+											name: 'Короткое замыкание с фазой A',
+											active: false,
+										},
+										{
+											id: 'p.5.3.2',
+											name: 'Короткое замыкание с фазой B',
+											active: false,
+										},
+										{
+											id: 'p.5.3.3',
+											name: 'Обрыв',
+											active: false,
+										},
+										{
+											id: 'p.5.3.4',
+											name: 'Короткое замыкание на землю',
+											active: false,
+										},
+									],
+								},
+								{
+									id: 'p.6.3',
+									name: 'Электродвигатель задвижки, обмотка фазы C',
+									resistance: 0,
+									voltage: 0,
+									groundContact: false,
+									wireContact: false,
+									malfunctions: [
+										{
+											id: 'p.6.3.1',
+											name: 'Обрыв фазы',
+											active: false,
+										},
+										{
+											id: 'p.6.3.2',
+											name: 'Короткое замыкание между фазами',
+											active: false,
+										},
+										{
+											id: 'p.6.3.3',
+											name: 'Короткое замыкание обмотки на корпус',
+											active: false,
+										},
+									],
+								},
+							],
+							[
+								{
+									id: 'p.4.1.1',
+									name: 'Пускатель открыть, контакты фазы А',
+									resistance: 0,
+									voltage: 0,
+									groundContact: false,
+									wireContact: false,
+									malfunctions: [
+										{
+											id: 'p.4.1.1.1',
+											name: 'Неисправна катушка, пускатель не подтягивается',
+											active: false,
+										},
+										{
+											id: 'p.4.1.1.2',
+											name: 'Нет контакта в контактной группе',
+											active: false,
+										},
+										{
+											id: 'p.4.1.1.3',
+											name: 'Залипший контакт в контактной группе',
+											active: false,
+										},
+									],
+								},
+								{
+									id: 'p.5.1',
+									name: 'Фаза A от пускателя до двигателя',
+									resistance: 0,
+									voltage: 220,
+									groundContact: false,
+									wireContact: false,
+									malfunctions: [
+										{
+											id: 'p.5.1.1',
+											name: 'Короткое замыкание с фазой C',
+											active: false,
+										},
+										{
+											id: 'p.5.1.2',
+											name: 'Короткое замыкание с фазой B',
+											active: false,
+										},
+										{
+											id: 'p.5.1.3',
+											name: 'Обрыв',
+											active: false,
+										},
+										{
+											id: 'p.5.1.4',
+											name: 'Короткое замыкание на землю',
+											active: false,
+										},
+									],
+								},
+								{
+									id: 'p.6.1',
+									name: 'Электродвигатель задвижки, обмотка фазы А',
+									resistance: 0,
+									voltage: 0,
+									groundContact: false,
+									wireContact: false,
+									malfunctions: [
+										{
+											id: 'p.6.1.1',
+											name: 'Обрыв фазы',
+											active: false,
+										},
+										{
+											id: 'p.6.1.2',
+											name: 'Короткое замыкание между фазами',
+											active: false,
+										},
+										{
+											id: 'p.6.1.3',
+											name: 'Короткое замыкание обмотки на землю',
+											active: false,
+										},
+									],
+								},
+							],
+						],
+					},
+				],
 			],
 		},
 	],
