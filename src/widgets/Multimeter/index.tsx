@@ -12,11 +12,20 @@ const Multimeter: React.FC = () => {
 		<div className={styles.multimeter}>
 			<Display value={multimeterState.displayValue} />
 			<ControlPanel mode={multimeterState.currentMode} />
-			<ProbeHolder className={styles.multimeter__blackProbeHolder}>
-				<Probe className={styles.multimeter__blackProbe} />
+			<ProbeHolder
+				className={`${styles.multimeter__probeHolder} ${styles.multimeter__probeHolder_black}`}
+			>
+				<Probe
+					className={`${styles.multimeter__probe} ${styles.multimeter__probe_black}`}
+				/>
 			</ProbeHolder>
-			<ProbeHolder className={styles.multimeter__redProbeHolder}>
-				<Probe color="red" className={styles.multimeter__redProbe} />
+			<ProbeHolder
+				className={`${styles.multimeter__probeHolder} ${styles.multimeter__probeHolder_red}`}
+			>
+				<Probe
+					color="red"
+					className={`${styles.multimeter__probe} ${styles.multimeter__probe_red}`}
+				/>
 			</ProbeHolder>
 		</div>
 	);

@@ -4,11 +4,13 @@
 	width: 245px;
 	height: 333px;
 	padding: 12px;
+	box-sizing: border-box;
 	user-select: none;
 	background-color: variables.$B8-color;
 	box-shadow: variables.$realistic-drop-shadow;
 	display: flex;
 	flex-direction: column;
+	justify-content: space-between;
 	gap: 13px;
 	position: relative;
 
@@ -36,16 +38,24 @@
 		z-index: 0;
 	}
 
-	&__blackProbeHolder {
+	&__probeHolder {
 		position: absolute;
-		top: 59px;
 		left: -34px;
 		z-index: 2;
+
+		&_black {
+			top: 59px;
+		}
+
+		&_red {
+			top: 150px;
+		}
 	}
 
-	&__blackProbe {
+	&__probe {
 		position: absolute;
-		top: 5px;
+		width: 29px;
+		height: 90px;
 		left: -36px;
 		z-index: 1;
 
@@ -53,24 +63,13 @@
 			transform: rotate(-15deg);
 			z-index: 3;
 		}
-	}
 
-	&__redProbeHolder {
-		position: absolute;
-		top: 150px;
-		left: -34px;
-		z-index: 2;
-	}
+		&_black {
+			top: 5px;
+		}
 
-	&__redProbe {
-		position: absolute;
-		top: 95px;
-		left: -36px;
-		z-index: 1;
-
-		&:active {
-			transform: rotate(-15deg);
-			z-index: 3;
+		&_red {
+			top: 95px;
 		}
 	}
 }

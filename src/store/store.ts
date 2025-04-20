@@ -3,7 +3,7 @@ import gateReducer from './gateSlice';
 import buttonsReducer from './buttonsSlice';
 import sidebarReducer from './sidebarSlice';
 import popupReducer from './popupSlice';
-import multimeterReducer from './multimeterSlice'; 
+import multimeterReducer from './multimeterSlice';
 
 export const store = () => {
 	return configureStore({

@@ -1,36 +1,35 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useDebounce } from '@/shared/hooks/useDebounce';
+import { useAppDispatch } from '@/shared/hooks/store';
+import { setCurrentMode } from '@/store/multimeterSlice';
+import { MultimeterMode } from '../types/multimeter';
 
-/**
- * Хук управления стрелкой мультиметра.
- * @template T - тип ключей режимов (например, 'OFF' | 'ACV_750' | ...)
- * @param knobRef - ссылка на стрелку/элемент
- * @param modeAngles - объект: режим → угол
- * @param initialMode - начальный режим
- */
+//Управляет вращением стрелки и дебаунсом диспатча в store.
+
 export function useMultimeterKnob<T extends string>(
 	knobRef: React.RefObject<SVGSVGElement | null>,
 	modeAngles: Record<T, number>,
 	initialMode: T,
 ) {
-	const [currentMode, setCurrentMode] = useState<T>(initialMode);
-	const [currentAngle, setCurrentAngle] = useState(
-		modeAngles[initialMode] ?? 0,
-	);
+	const [currentMode, setCurrentModeLocal] = useState<T>(initialMode);
+	const [currentAngle, setCurrentAngle] = useState(modeAngles[initialMode]);
 	const isDragging = useRef(false);
+	const dispatch = useAppDispatch();
 
-	// Находим ближайший режим к углу
+	const debouncedMode = useDebounce(currentMode, 1000);
+
+	// Диспатчим debounced значение в store
+	useEffect(() => {
+		dispatch(setCurrentMode(debouncedMode as MultimeterMode));
+	}, [debouncedMode, dispatch]);
+
+	// Находим ближайший режим по углу
 	const findClosestMode = useCallback(
 		(angle: number): T => {
 			return (Object.entries(modeAngles) as [T, number][]).reduce(
-				(closest, [mode, angleValue]) => {
-					const diff = Math.min(
-						Math.abs(angleValue - angle),
-						360 - Math.abs(angleValue - angle),
-					);
-					const closestDiff = Math.min(
-						Math.abs(modeAngles[closest] - angle),
-						360 - Math.abs(modeAngles[closest] - angle),
-					);
+				(closest, [mode, angleVal]) => {
+					const diff = Math.abs(angleVal - angle);
+					const closestDiff = Math.abs(modeAngles[closest] - angle);
 					return diff < closestDiff ? mode : closest;
 				},
 				Object.keys(modeAngles)[0] as T,
@@ -39,18 +38,12 @@ export function useMultimeterKnob<T extends string>(
 		[modeAngles],
 	);
 
-	// Остановка перетаскивания
-	const stopDragging = useCallback(() => {
-		if (isDragging.current) {
-			isDragging.current = false;
-			window.removeEventListener('mousemove', handleMouseMove);
-			window.removeEventListener('mouseup', stopDragging);
-			window.removeEventListener('touchmove', handleMouseMove);
-			window.removeEventListener('touchend', stopDragging);
-		}
-	}, []);
+	useEffect(() => {
+		setCurrentModeLocal(initialMode);
+		setCurrentAngle(modeAngles[initialMode]);
+	}, [initialMode, modeAngles]);
 
-	// Обработка движения
+	// Обработка вращения
 	const handleMouseMove = useCallback(
 		(event: MouseEvent | TouchEvent) => {
 			if (!isDragging.current || !knobRef.current) return;
@@ -64,15 +57,13 @@ export function useMultimeterKnob<T extends string>(
 			const clientY =
 				'touches' in event ? event.touches[0].clientY : event.clientY;
 
-			// Вычисляем угол
 			const deltaX = clientX - centerX;
 			const deltaY = clientY - centerY;
-			let angleDeg = Math.atan2(deltaY, deltaX) * (180 / Math.PI) + 90;
-			angleDeg = (angleDeg + 360) % 360;
+			let angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI) + 90;
+			angle = (angle + 360) % 360;
 
-			// Фиксируем к ближайшему режиму
-			const closestMode = findClosestMode(angleDeg);
-			setCurrentMode(closestMode);
+			const closestMode = findClosestMode(angle);
+			setCurrentModeLocal(closestMode);
 			setCurrentAngle(modeAngles[closestMode]);
 
 			event.preventDefault();
@@ -80,10 +71,17 @@ export function useMultimeterKnob<T extends string>(
 		[findClosestMode, modeAngles, knobRef],
 	);
 
-	// Начало перетаскивания
+	const stopDragging = useCallback(() => {
+		isDragging.current = false;
+		window.removeEventListener('mousemove', handleMouseMove);
+		window.removeEventListener('mouseup', stopDragging);
+		window.removeEventListener('touchmove', handleMouseMove);
+		window.removeEventListener('touchend', stopDragging);
+	}, [handleMouseMove]);
+
 	const onMouseDown = useCallback(
-		(event: React.MouseEvent | React.TouchEvent) => {
-			event.preventDefault();
+		(e: React.MouseEvent | React.TouchEvent) => {
+			e.preventDefault();
 			isDragging.current = true;
 
 			window.addEventListener('mousemove', handleMouseMove);
@@ -97,8 +95,7 @@ export function useMultimeterKnob<T extends string>(
 	);
 
 	return {
-		currentMode, // текущий режим (ключ из modeAngles)
-		currentAngle, // угол поворота в градусах
-		onMouseDown, // обработчик для стрелки
+		currentAngle,
+		onMouseDown,
 	};
 }

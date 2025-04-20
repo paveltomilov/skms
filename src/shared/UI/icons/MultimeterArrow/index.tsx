@@ -17,7 +17,7 @@ const MultimeterArrow: FC<Props> = ({ ref, onMouseDown, angle, className }) => {
 			className={className && className}
 		>
 			<use
-				xlinkHref={'/svg/sprite.svg#multimeter-arrow'}
+				xlinkHref={'/svg/multimeter.svg#arrow'}
 				width="100%"
 				height="100%"
 			/>
