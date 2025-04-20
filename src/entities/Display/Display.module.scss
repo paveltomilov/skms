@@ -2,12 +2,11 @@
 
 .display {
 	height: 53px;
+	width: 100%;
 	display: flex;
 	align-items: center;
 	justify-content: flex-end;
 	padding: 5px;
-	overflow: hidden;
-	text-align: right;
 	background-color: variables.$secondary-color;
 	border-top: 1px solid variables.$black-color;
 	border-left: 1px solid variables.$black-color;
@@ -20,5 +19,8 @@
 		color: variables.$blue-color;
 		line-height: 100%;
 		white-space: nowrap;
+		overflow: hidden;
+		text-align: right;
+		width: 90%;
 	}
 }
