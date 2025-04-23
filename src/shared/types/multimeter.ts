@@ -1,114 +1,58 @@
-// Расширение .d.ts указывает, что этот файл содержит только объявления типов TypeScript,
-// без исполняемого JavaScript кода. Это стандартная конвенция.
-
-/**
- * Возможные режимы работы мультиметра.
- * Значения соответствуют меткам на шкале.
- * Комментарий описывает назначение типа.
- */
 export type MultimeterMode =
-// `export type` объявляет псевдоним типа (type alias) с именем `MultimeterMode` и экспортирует его.
-// Тип `MultimeterMode` определяется как объединение (union) строковых литералов.
-// Это означает, что переменная типа `MultimeterMode` может принимать ТОЛЬКО одно из этих конкретных строковых значений.
-  | 'OFF'       // Режим выключения.
-  | 'ACV_750' | 'ACV_200' // Режимы измерения переменного напряжения (до 750В, до 200В).
-  | 'DCA_200u' | 'DCA_2000u' | 'DCA_20m' | 'DCA_200m' | 'DCA_10A' // Режимы измерения постоянного тока (до 200мкА, ..., до 10А).
-  | 'HFE'       // Режим измерения коэффициента усиления транзисторов (hFE).
-  | 'DIODE'     // Режим проверки диодов (и часто используется для прозвонки).
-  | 'OHM_2000k' | 'OHM_200k' | 'OHM_20k' | 'OHM_2000' | 'OHM_200' // Режимы измерения сопротивления (до 2МОм, ..., до 200 Ом).
-  | 'DCV_1000' | 'DCV_200' | 'DCV_20' | 'DCV_2000m' | 'DCV_200m'; // Режимы измерения постоянного напряжения (до 1000В, ..., до 200мВ).
+  | 'OFF' 
+  | 'ACV_750' | 'ACV_200' 
+  | 'DCA_200u' | 'DCA_2000u' | 'DCA_20m' | 'DCA_200m' | 'DCA_10A' 
+  | 'HFE'      
+  | 'DIODE'   
+  | 'OHM_2000k' | 'OHM_200k' | 'OHM_20k' | 'OHM_2000' | 'OHM_200' 
+  | 'DCV_1000' | 'DCV_200' | 'DCV_20' | 'DCV_2000m' | 'DCV_200m'; 
 
-/**
- * Тип измерения (определяется по выбранному режиму).
- * Этот тип может использоваться внутри логики расчетов, чтобы понять,
- * какую физическую величину нужно вычислить, независимо от конкретного диапазона.
- */
 export type MeasurementType =
-  | 'VOLTAGE_DC'     // Измерение постоянного напряжения.
-  | 'VOLTAGE_AC'     // Измерение переменного напряжения.
-  | 'CURRENT_DC'     // Измерение постоянного тока.
-  // | 'CURRENT_AC' // Закомментировано - возможно, будет добавлено позже.
-  | 'RESISTANCE'     // Измерение сопротивления.
-  | 'CONTINUITY'     // Прозвонка цепи (логически связана с сопротивлением).
-  | 'DIODE_CHECK'    // Проверка диодов.
-  | 'TRANSISTOR_HFE' // Измерение HFE.
-  | 'OFF';           // Мультиметр выключен.
-/**
- * Интерфейс для позиции щупа (координаты x и y).
- * Используется для хранения координат "прилипания" щупа к точке.
- */
+  | 'VOLTAGE_DC'    
+  | 'VOLTAGE_AC'    
+  | 'CURRENT_DC'   
+  // | 'CURRENT_AC' 
+  | 'RESISTANCE'   
+  | 'CONTINUITY'    
+  | 'DIODE_CHECK'  
+  | 'TRANSISTOR_HFE' 
+  | 'OFF';         
+
 export interface ProbePosition {
   x: number;
   y: number;
 }
 
-/**
- * Состояние подключения одного щупа.
- * Описывает структуру объекта, хранящего информацию о том,
- * куда и к какому типу элемента подключен один щуп.
- */
 export interface ProbeConnection {
-// `export interface` объявляет и экспортирует интерфейс - "контракт" для объектов.
-  targetId: string | null; // Уникальный идентификатор (`string`) элемента, к которому подключен щуп
-                           // (например, ID разъема 'jack-com', или ID узла схемы 'node_123'),
-                           // или `null`, если щуп не подключен.
-  targetType: 'jack' | 'node' | null; // Тип элемента, к которому подключен щуп:
-                                       // 'jack' - разъем на мультиметре,
-                                       // 'node' - узел (точка подключения) на схеме,
-                                       // `null` - если щуп не подключен.
+  targetId: string | null;
+  targetType: 'jack' | 'node' | null;
 }
 
-/**
- * Состояние подключения обоих щупов.
- * Описывает структуру объекта, который содержит информацию
- * о подключении как красного, так и черного щупа.
- */
 export interface ProbeConnectionsState {
-  red: ProbeConnection;   // Состояние подключения красного щупа (использует тип ProbeConnection).
-  black: ProbeConnection; // Состояние подключения черного щупа (использует тип ProbeConnection).
+  red: ProbeConnection;   
+  black: ProbeConnection; 
 }
 
-/**
- * Основное состояние мультиметра (для Redux slice).
- * Описывает полную структуру данных для среза (slice) состояния
- * мультиметра в Redux. Используется в `initialState` и редьюсерах `multimeterSlice`.
- */
 export interface MultimeterState {
-  currentMode: MultimeterMode; // Текущий режим (использует ранее определенный тип `MultimeterMode`).
-  displayValue: string;        // Готовая строка для отображения на дисплее.
-  measurementResult: number | null; // Числовой результат последнего расчета или null.
-  measurementUnit: string | null;   // Единица измерения (например, 'V', 'kΩ') или null.
-  errorState: string | null;      // Строка с кодом ошибки (например, 'OVERLOAD') или null.
-  probeConnections: ProbeConnectionsState; // Состояние подключения щупов (использует тип `ProbeConnectionsState`).
-  // Закомментированные поля - примеры возможных будущих расширений состояния.
-  // isMeasuring: boolean;
-  // batteryLevel: number;
+  currentMode: MultimeterMode; 
+  displayValue: string;  
+  measurementResult: number | null;
+  measurementUnit: string | null;
+  errorState: string | null;  
+  probeConnections: ProbeConnectionsState; 
   probePositions: {
     red: ProbePosition | null;
     black: ProbePosition | null;
   };
 }
 
-/**
- * Типы ошибок, которые могут возникнуть при работе с мультиметром.
- * Определяет возможные строковые коды ошибок, которые могут быть установлены
- * в поле `errorState` или возвращены функциями проверок/расчетов.
- */
 export type MultimeterErrorType =
-  | 'WRONG_MODE_FOR_MEASUREMENT' // Неправильный режим для измеряемой величины.
-  | 'WRONG_JACKS_FOR_MODE'       // Неправильные разъемы для режима (особенно 10A).
-  | 'OVERLOAD'                   // Превышение диапазона измерения.
-  | 'FUSE_BLOWN'                 // Сгорел предохранитель (гипотетически).
-  | 'SHORT_CIRCUIT_DETECTED'     // Обнаружено КЗ из-за неправильного подключения.
-  | 'INVALID_CONNECTION'         // Неправильное подключение щупов для данного измерения.
-  | 'CALCULATION_ERROR';         // Ошибка в алгоритме расчета.
-  // Можно добавить свои коды ошибок по мере необходимости.
+  | 'WRONG_MODE_FOR_MEASUREMENT' 
+  | 'WRONG_JACKS_FOR_MODE'    
+  | 'OVERLOAD'          
+  | 'FUSE_BLOWN'      
+  | 'SHORT_CIRCUIT_DETECTED'    
+  | 'INVALID_CONNECTION'   
+  | 'CALCULATION_ERROR';      
 
-// Закомментированный пример интерфейса для будущей конфигурации.
-// export interface MultimeterConfig { ... }
-
-// Тип для карты углов поворота ручки (используется в MultimeterWidget и Dial)
-// Определяет тип объекта, где ключами являются режимы мультиметра (`MultimeterMode`),
-// а значениями - соответствующие им углы поворота (`number`).
-// `Record<Keys, Type>` - встроенный тип TypeScript для создания таких объектов.
 export type ModeAnglesMap = Record<MultimeterMode, number>;

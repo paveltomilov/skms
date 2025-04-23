@@ -1,3 +1,4 @@
+// Светв, как прочтешь удали комменты, перд стягиванием
 // Этот файл заменяет стандартную логику dnd-kit по определению пересечений (которая обычно смотрит на курсор 
 // или весь элемент).
 // Что он делает:
@@ -14,31 +15,25 @@
 
 import type { CollisionDetection, ClientRect } from '@dnd-kit/core';
 
-// --- Константы для кончика щупа ---
 const TIP_HEIGHT = 4;
 const TIP_WIDTH = 10;
 const TIP_OFFSET_X = 5;
 const TIP_OFFSET_Y = 0;
-// -------------------------------------
 
 export const probeTipCollisionDetection: CollisionDetection = ({
-    active, // Тип Active неявно используется сигнатурой CollisionDetection
-    droppableContainers, // Тип DroppableContainer[] неявно используется сигнатурой
+    active, 
+    droppableContainers, 
     droppableRects,
 }) => {
-    // Проверяем, что перетаскивается именно щуп
     if (active.data.current?.type !== 'probe') {
-        // Для не-щупов просто возвращаем пустой массив (нет коллизий с точками)
          return [];
     }
 
-    // Получаем текущее положение ПЕРЕТАСКИВАЕМОГО элемента (оверлея)
     const activeRect = active.rect.current.translated;
     if (!activeRect) {
         return [];
     }
 
-    // Вычисляем прямоугольник "активного кончика" щупа
     const probeTipRect: ClientRect = {
         width: TIP_WIDTH,
         height: TIP_HEIGHT,
@@ -50,8 +45,6 @@ export const probeTipCollisionDetection: CollisionDetection = ({
 
     const collisions = [];
 
-    // Проверяем пересечение "кончика" с каждой "точкой" (droppable)
-    // Переменная droppableContainer используется в цикле
     for (const droppableContainer of droppableContainers) {
         const droppableId = droppableContainer.id;
         const droppableRect = droppableRects.get(droppableId);
