@@ -1,5 +1,5 @@
 'use client';
-import Multimeter from '@/widgets/Multimeter';
+import Simulator from '@/widgets/Simulator/Simulator';
 import styles from './styles.module.scss';
 import PopUp from '@/entities/PopUp';
 
@@ -7,7 +7,7 @@ const Measurements = () => {
 	return (
 		<div className={styles.measurements}>
 			<PopUp />
-			<Multimeter />
+			<Simulator />
 		</div>
 	);
 };

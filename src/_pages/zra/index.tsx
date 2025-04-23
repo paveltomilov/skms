@@ -1,5 +1,4 @@
 import styles from './styles.module.scss';
-import Scheme from '@/widgets/Scheme';
 import Footer from '@/widgets/Footer';
 import Sidebar from '@/widgets/Sidebar';
 import Header from '@/widgets/Header/Header';
@@ -13,7 +12,6 @@ const Zra = () => {
 				<section className={styles.page}>
 					<h1 className={styles.page__title}>Тренажёр</h1>
 					<div className={styles.page__wrapper}>
-						<Scheme />
 						<Measurements />
 					</div>
 				</section>

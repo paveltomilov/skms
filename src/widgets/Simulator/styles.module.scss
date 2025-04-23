@@ -1,0 +1,24 @@
+.environmentWrapper { /* Этот класс должен быть на div с ref={environmentRef} */
+  position: relative; /* ОБЯЗАТЕЛЬНО */
+  width: 100%;
+  max-width: 1000px;
+  height: 100%;
+  margin: 0 auto;
+  border: 3px solid #0c649e;
+  background-color: #d6dbdd;
+  overflow: hidden;
+}
+
+.schemePlacement {
+  position: absolute;
+  top: 20px;
+  left: 20px; 
+}
+
+.multimeterPlacement {
+   position: absolute;
+   top: 20px; 
+   left: 530px; 
+   z-index: 1;
+ }
+

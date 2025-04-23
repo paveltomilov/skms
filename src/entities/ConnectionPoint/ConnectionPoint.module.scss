@@ -1,0 +1,52 @@
+.connectionPoint {
+  position: absolute; // Обязательно для позиционирования через style
+  width: 18px;        
+  height: 18px;
+  border-radius: 50%;
+  background-color: rgba(180, 180, 180, 0.6); 
+  border: 1px solid #777;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer; // Показываем, что точка интерактивна (хотя сама не ловит клик)
+  transition: background-color 0.15s ease, border-color 0.15s ease,  0.15s ease;
+  box-sizing: border-box;
+  // Важно: чтобы щуп мог "попасть" на точку, даже если он частично над ней
+  // pointer-events: none; // Сама точка не должна ловить события мыши, их ловит щуп
+
+
+}
+
+.connectionPoint.over .connectionDot {
+  background-color: #ffdd57; // Пример цвета подсветки
+  outline: 2px solid #ffae00;
+  transform: scale(1.2);
+}
+
+.connectionDot {
+  width: 6px;
+  height: 6px;
+  background-color: #444;
+  border-radius: 50%;
+  transition: background-color 0.15s ease;
+}
+
+.connectionPoint.over .connectionDot {
+  background-color: #fff; 
+}
+
+
+.connectionLabel {
+  position: absolute;
+  bottom: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px;
+  color: #333;
+  white-space: nowrap;
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 0px 3px;
+  border-radius: 2px;
+  pointer-events: none; // Подпись не должна мешать событиям
+}
+

@@ -2,7 +2,8 @@
 @use '@/shared/scss/variables.module';
 
 .measurements {
-    height: 80vh;
+    width: 1000px;
+    height: 800px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
