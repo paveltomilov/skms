@@ -1,12 +1,12 @@
 'use client';
 
-import Image from 'next/image';
 import styles from './styles.module.scss';
 import { FC } from 'react';
 import { useAppDispatch } from '@/shared/hooks/store';
 import { openPopup } from '@/store/popupSlice';
 import { PopupContent } from '@/shared/types/popup';
-import { Parts, Points } from '@/shared/configs/schemePart';
+import { CircuitElements, Points } from '@/shared/configs/schemePart';
+import { Point } from '@/entities/Point';
 
 const Scheme: FC = () => {
 	const dispatch = useAppDispatch();
@@ -16,24 +16,11 @@ const Scheme: FC = () => {
 	};
 
 	return (
-		<div className={styles.wrapper}>
-			<Image
-				src="/images/scheme.png"
-				alt="Схема"
-				width={1053.33}
-				height={693.6}
-			/>
-			<Image
-				src="/images/functional-scheme.png"
-				alt="Функциональность"
-				width={166}
-				height={504}
-			/>
-
-			{Parts.map((item) => (
+		<div className={styles.scheme}>
+			{CircuitElements.map(item => (
 				<button
 					key={item.id}
-					className={`${styles.mockButton}` + ` ${styles[item.id]}`}
+					className={`${styles.mockButton} ${styles[item.id]}`}
 					id={item.id}
 					onClick={() =>
 						handleOpenPopup({
@@ -72,11 +59,11 @@ const Scheme: FC = () => {
 			))}
 
 			{Points.map(item => (
-				<button
-				key={item.id}
-				className={`${styles.point}` + ` ${styles[item.id]}`}
-				id={item.id}
-			></button>
+				<Point
+					key={item.id}
+					className={`${styles[item.id]}`}
+					id={item.id}
+				></Point>
 			))}
 		</div>
 	);

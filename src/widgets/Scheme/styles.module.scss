@@ -1,94 +1,151 @@
-@use '@/shared/scss/mixins.module';
+@mixin part {
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
 
-.wrapper {
+	&:hover {
+		opacity: 0.5;
+	}
+}
+
+.scheme {
 	display: flex;
 	align-items: center;
 	gap: 44px;
 	position: relative;
+	background-image: url('../../../public/svg/scheme.svg');
+	width: 1258px;
+	height: 656px;
 }
 
 .mockButton {
-	@include mixins.part;
+	@include part;
 }
 
-.point {
-	@include mixins.point;
-}
-
-.YB08 {
-	top: 369px;
-	left: 638px;
-	width: 69px;
+.c\.3\.1\.3\.2\.1\.1 {
+	top: 190px;
+	left: 625px;
+	width: 73px;
 	height: 33px;
 }
 
-.XB10 {
-	top: 293px;
-	left: 762px;
-	width: 69px;
-	height: 45px;
+.c\.3\.2\.3\.2\.1\.1 {
+	top: 455px;
+	left: 617px;
+	width: 73px;
+	height: 33px;
 }
 
-.CABINET {
-	top: 366px;
-	left: 895px;
+.c\.3\.1\.3\.1 {
+	top: 116px;
+	left: 726px;
+	width: 73px;
+	height: 47px;
+}
+
+.c\.3\.2\.3\.1 {
+	top: 377px;
+	left: 744px;
+	width: 73px;
+	height: 47px;
+}
+
+.c\.3\.1\.3\.2\.3 {
+	top: 185px;
+	left: 879px;
 	width: 24px;
-	height: 38px;
+	height: 43px;
 }
 
-.LAMP {
-	top: 267px;
-	left: 660px;
+.c\.3\.2\.3\.2\.3 {
+	top: 450px;
+	left: 880px;
+	width: 24px;
+	height: 43px;
+}
+
+.c\.3\.2\.3\.3 {
+	top: 587px;
+	left: 684px;
 	width: 30px;
 	height: 30px;
-	border-radius: 50%
+	border-radius: 50%;
 }
 
-.engine {
-	top: 545px;
+.c\.3\.1\.3\.3 {
+	top: 300px;
+	left: 684px;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+}
+
+.p\.5 {
+	top: 555px;
 	left: 75px;
 	width: 95px;
-	height: 60px;
+	height: 90px;
 }
 
-.f01 {
-	top: 160px;
+.c\.1 {
+	top: 185px;
 	left: 215px;
 	width: 37px;
 	height: 35px;
 }
 
-.n322 {
-	top: 369px;
-	left: 807px;
+.c\.3\.2\.3\.2\.2 {
+	top: 455px;
+	left: 787px;
 	width: 44px;
 	height: 38px;
 }
 
-.p31 {
-	top: 310px;
+.c\.3\.1\.3\.2\.2 {
+	top: 190px;
+	left: 790px;
+	width: 44px;
+	height: 38px;
+}
+
+.p\.3\.1 {
+	top: 320px;
 	left: 50px;
 	width: 248px;
 	height: 71px;
 }
 
-.q01 {
-	top: 90px;
+.p\.1 {
+	top: 110px;
 	left: 50px;
 	width: 131px;
 	height: 85px;
 }
 
-.s01 {
-	top: 220px;
-	left: 650px;
+.c\.3\.2\.3\.2\.1\.2 {
+	top: 530px;
+	left: 675px;
 	width: 44px;
 	height: 37px;
 }
 
-.sq3 {
-	top: 369px;
-	left: 475px;
+.c\.3\.1\.3\.2\.1\.2 {
+	top: 245px;
+	left: 630px;
+	width: 44px;
+	height: 37px;
+}
+
+.c\.3\.1\.1 {
+	top: 185px;
+	left: 455px;
+	width: 48px;
+	height: 45px;
+}
+
+.c\.3\.2\.1 {
+	top: 448px;
+	left: 460px;
 	width: 48px;
 	height: 45px;
 }
@@ -110,105 +167,100 @@
 
 .p\.p\.2\.1 {
 	left: 68px;
-	top: 130px;
+	top: 171px;
 }
 
 .p\.p\.2\.2 {
 	left: 110px;
-	top: 130px;
+	top: 171px;
 }
 
 .p\.p\.2\.3 {
 	left: 152px;
-	top: 130px;
+	top: 171px;
 }
 
 .p\.c\.0 {
 	left: 68px;
-	top: 170px;
+	top: 195px;
 }
 
 .p\.c\.1 {
 	left: 300px;
-	top: 170px;
+	top: 195px;
 }
 
 .p\.c\.2 {
-	left: 361px;
-	top: 170px;
+	left: 352px;
+	top: 195px;
 }
 
 .p\.p\.3\.1 {
 	left: 68px;
-	top: 290px;
+	top: 310px;
 }
 
 .p\.p\.3\.2 {
 	left: 110px;
-	top: 260px;
+	top: 280px;
 }
 
 .p\.p\.3\.3 {
 	left: 152px;
-	top: 227px;
+	top: 247px;
 }
 
 .p\.p\.4\.1 {
 	left: 68px;
-	top: 428px;
+	top: 448px;
 }
 
 .p\.p\.4\.2 {
 	left: 110px;
-	top: 395px;
+	top: 415px;
 }
 
 .p\.p\.4\.3 {
 	left: 152px;
-	top: 365px;
+	top: 385px;
 }
 
 .p\.p\.5\.1 {
 	left: 68px;
-	top: 540px;
+	top: 560px;
 }
 
 .p\.p\.5\.2 {
 	left: 110px;
-	top: 540px;
+	top: 560px;
 }
 
 .p\.p\.5\.3 {
 	left: 152px;
-	top: 540px;
+	top: 560px;
 }
 
 .p\.c\.3\.2\.1 {
-	left: 593px;
-	top: 170px;
+	left: 573px;
+	top: 195px;
 }
 
 .p\.c\.3\.2\.2 {
-	left: 593px;
-	top: 375px;
+	left: 573px;
+	top: 458px;
 }
 
 .p\.c\.3\.2\.3\.2\.1 {
 	left: 775px;
-	top: 170px;
+	top: 195px;
 }
 
 .p\.c\.3\.2\.3\.2\.2 {
-	left: 763px;
-	top: 375px;
+	left: 746px;
+	top: 458px;
 }
 
 .p\.c\.n {
-	left: 945px;
-	top: 170px;
+	left: 930px;
+	top: 195px;
 }
-
-// .p\.c\.n {
-// 	left: ;
-// 	top: ;
-// }
