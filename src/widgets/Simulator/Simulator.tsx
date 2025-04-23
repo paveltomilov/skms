@@ -28,8 +28,8 @@ interface ActiveDragData {
 type MockNodeId = string;
 
 const DEFAULT_PROBE_POSITIONS: { red: { top: string; left: string; }, black: { top: string; left: string; } } = {
-	red: { top: '15%', left: '50%' },
-	black: { top: '3%', left: '50%' },
+	red: { top: '115px', left: '495px' },
+	black: { top: '25px', left: '495px' },
 };
 
 const PROBE_TIP_OFFSET_X = 12;
