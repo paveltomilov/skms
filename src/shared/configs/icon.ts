@@ -97,4 +97,39 @@ export const SCHEME_ICON_SIZE = {
 		height: '31',
 		viewBox: '0 0 32 31',
 	},
+	engine: {
+		width: '140',
+		height: '114',
+		viewBox: '0 0 140 114',
+	},
+	f01: {
+		width: '57',
+		height: '55',
+		viewBox: '0 0 57 55	',
+	},
+	n322: {
+		width: '64',
+		height: '58',
+		viewBox: '0 0 64 58',
+	},
+	p31: {
+		width: '268',
+		height: '92',
+		viewBox: '0 0 268 92',
+	},
+	q01: {
+		width: '151',
+		height: '105',
+		viewBox: '0 0 151 105',
+	},
+	s01: {
+		width: '64',
+		height: '57',
+		viewBox: '0 0 64 57',
+	},
+	sq3: {
+		width: '68',
+		height: '66',
+		viewBox: '0 0 68 66',
+	},
 };

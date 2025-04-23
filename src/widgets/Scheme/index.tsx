@@ -6,6 +6,7 @@ import { FC } from 'react';
 import { useAppDispatch } from '@/shared/hooks/store';
 import { openPopup } from '@/store/popupSlice';
 import { PopupContent } from '@/shared/types/popup';
+import { Parts, Points } from '@/shared/configs/schemePart';
 
 const Scheme: FC = () => {
 	const dispatch = useAppDispatch();
@@ -28,37 +29,55 @@ const Scheme: FC = () => {
 				width={166}
 				height={504}
 			/>
-			<button
-				className={styles.mockButton}
-				onClick={() =>
-					handleOpenPopup({
-						id: 'YB08',
-						icon: 'yb08',
-						title: 'Какое-то название',
-						buttons: [
-							{ id: 'btn4', width: 238, height: 35, text: 'ОК' },
-							{
-								id: 'btn5',
-								width: 238,
-								height: 35,
-								text: 'дополнительная кнопка',
-							},
-							{
-								id: 'btn6',
-								width: 238,
-								height: 35,
-								text: 'дополнительная кнопка',
-							},
-							{
-								id: 'btn7',
-								width: 238,
-								height: 35,
-								text: 'дополнительная кнопка',
-							},
-						],
-					})
-				}
+
+			{Parts.map((item) => (
+				<button
+					key={item.id}
+					className={`${styles.mockButton}` + ` ${styles[item.id]}`}
+					id={item.id}
+					onClick={() =>
+						handleOpenPopup({
+							id: item.id,
+							icon: item.icon,
+							title: item.title,
+							buttons: [
+								{
+									id: 'btn4',
+									width: 238,
+									height: 35,
+									text: 'ОК',
+								},
+								{
+									id: 'btn5',
+									width: 238,
+									height: 35,
+									text: 'дополнительная кнопка',
+								},
+								{
+									id: 'btn6',
+									width: 238,
+									height: 35,
+									text: 'дополнительная кнопка',
+								},
+								{
+									id: 'btn7',
+									width: 238,
+									height: 35,
+									text: 'дополнительная кнопка',
+								},
+							],
+						})
+					}
+				></button>
+			))}
+
+			{Points.map(item => (
+				<button
+				key={item.id}
+				className={`${styles.point}` + ` ${styles[item.id]}`}
+				id={item.id}
 			></button>
+			))}
 		</div>
 	);
 };

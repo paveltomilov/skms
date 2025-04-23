@@ -1,3 +1,5 @@
+@use '@/shared/scss/mixins.module';
+
 .wrapper {
 	display: flex;
 	align-items: center;
@@ -6,14 +8,207 @@
 }
 
 .mockButton {
-	position: absolute;
+	@include mixins.part;
+}
+
+.point {
+	@include mixins.point;
+}
+
+.YB08 {
 	top: 369px;
 	left: 638px;
 	width: 69px;
 	height: 33px;
-	opacity: 0;
-
-	&:hover {
-		opacity: 0.5;
-	}
 }
+
+.XB10 {
+	top: 293px;
+	left: 762px;
+	width: 69px;
+	height: 45px;
+}
+
+.CABINET {
+	top: 366px;
+	left: 895px;
+	width: 24px;
+	height: 38px;
+}
+
+.LAMP {
+	top: 267px;
+	left: 660px;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%
+}
+
+.engine {
+	top: 545px;
+	left: 75px;
+	width: 95px;
+	height: 60px;
+}
+
+.f01 {
+	top: 160px;
+	left: 215px;
+	width: 37px;
+	height: 35px;
+}
+
+.n322 {
+	top: 369px;
+	left: 807px;
+	width: 44px;
+	height: 38px;
+}
+
+.p31 {
+	top: 310px;
+	left: 50px;
+	width: 248px;
+	height: 71px;
+}
+
+.q01 {
+	top: 90px;
+	left: 50px;
+	width: 131px;
+	height: 85px;
+}
+
+.s01 {
+	top: 220px;
+	left: 650px;
+	width: 44px;
+	height: 37px;
+}
+
+.sq3 {
+	top: 369px;
+	left: 475px;
+	width: 48px;
+	height: 45px;
+}
+
+.p\.p\.0\.1 {
+	top: -10px;
+	left: 68px;
+}
+
+.p\.p\.0\.2 {
+	left: 110px;
+	top: 7px;
+}
+
+.p\.p\.0\.3 {
+	left: 152px;
+	top: 21px;
+}
+
+.p\.p\.2\.1 {
+	left: 68px;
+	top: 130px;
+}
+
+.p\.p\.2\.2 {
+	left: 110px;
+	top: 130px;
+}
+
+.p\.p\.2\.3 {
+	left: 152px;
+	top: 130px;
+}
+
+.p\.c\.0 {
+	left: 68px;
+	top: 170px;
+}
+
+.p\.c\.1 {
+	left: 300px;
+	top: 170px;
+}
+
+.p\.c\.2 {
+	left: 361px;
+	top: 170px;
+}
+
+.p\.p\.3\.1 {
+	left: 68px;
+	top: 290px;
+}
+
+.p\.p\.3\.2 {
+	left: 110px;
+	top: 260px;
+}
+
+.p\.p\.3\.3 {
+	left: 152px;
+	top: 227px;
+}
+
+.p\.p\.4\.1 {
+	left: 68px;
+	top: 428px;
+}
+
+.p\.p\.4\.2 {
+	left: 110px;
+	top: 395px;
+}
+
+.p\.p\.4\.3 {
+	left: 152px;
+	top: 365px;
+}
+
+.p\.p\.5\.1 {
+	left: 68px;
+	top: 540px;
+}
+
+.p\.p\.5\.2 {
+	left: 110px;
+	top: 540px;
+}
+
+.p\.p\.5\.3 {
+	left: 152px;
+	top: 540px;
+}
+
+.p\.c\.3\.2\.1 {
+	left: 593px;
+	top: 170px;
+}
+
+.p\.c\.3\.2\.2 {
+	left: 593px;
+	top: 375px;
+}
+
+.p\.c\.3\.2\.3\.2\.1 {
+	left: 775px;
+	top: 170px;
+}
+
+.p\.c\.3\.2\.3\.2\.2 {
+	left: 763px;
+	top: 375px;
+}
+
+.p\.c\.n {
+	left: 945px;
+	top: 170px;
+}
+
+// .p\.c\.n {
+// 	left: ;
+// 	top: ;
+// }

@@ -1,0 +1,27 @@
+.panel {
+  width: 100%;
+}
+.panel__arrow {
+  position: absolute;
+  width: 133px;
+  height: 133px;
+  top: 112px;
+  left: 56px;
+  cursor: grab;
+}
+.panel__arrow:active {
+  cursor: grabbing;
+}
+.panel__wire {
+  position: absolute;
+  top: 295px;
+}
+.panel__wire_black {
+  left: 128px;
+}
+.panel__wire_grey {
+  left: 167px;
+}
+.panel__wire_red {
+  left: 206px;
+}/*# sourceMappingURL=ControlPanel.module.css.map */
