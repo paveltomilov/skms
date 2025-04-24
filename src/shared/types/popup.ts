@@ -1,4 +1,4 @@
-import { SchemePartType } from './icon';
+import { SchemeIconType } from './scheme';
 
 export interface PopupBtn {
 	id: string;
@@ -10,7 +10,7 @@ export interface PopupBtn {
 
 export interface PopupContent {
 	id: string;
-	icon: SchemePartType;
+	icon: SchemeIconType;
 	title: string;
 	buttons?: PopupBtn[];
 }

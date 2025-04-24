@@ -1,12 +1,6 @@
-import { SchemePartType } from '../types/icon';
+import { ISchemeElement } from '../types/scheme';
 
-export interface ICircuitElement {
-	id: string;
-	icon: SchemePartType;
-	title: string;
-}
-
-export const CircuitElements: Array<ICircuitElement> = [
+export const SCHEME_ELEMENTS: ISchemeElement[] = [
 	{
 		title: 'Какое-то название',
 		icon: 'yb08',
@@ -99,7 +93,7 @@ export const CircuitElements: Array<ICircuitElement> = [
 	},
 ];
 
-export const Points = [
+export const SCHEME_POINTS = [
 	{ id: 'p.p.0.1' },
 	{ id: 'p.p.0.2' },
 	{ id: 'p.p.0.3' },

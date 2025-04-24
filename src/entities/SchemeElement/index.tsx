@@ -1,26 +1,34 @@
-import { ICircuitElement } from '@/shared/configs/schemePart';
+'use client';
+
 import styles from './styles.module.scss';
 import { FC } from 'react';
 import { useAppDispatch } from '@/shared/hooks/store';
 import { openPopup } from '@/store/popupSlice';
 import { PopupContent } from '@/shared/types/popup';
+import { ISchemeElement } from '@/shared/types/scheme';
 
-export const CircuitElementBtn: FC<ICircuitElement> = ({id, icon, title}) => {
-    const dispatch = useAppDispatch();
-    
-        const handleOpenPopup = (content: PopupContent | null = null) => {
-            dispatch(openPopup({ isOpen: true, content }));
-        };
+interface Prop {
+	element: ISchemeElement;
+}
+
+export const SchemeElement: FC<Prop> = ({ element }) => {
+	const { id, icon, title } = element;
+
+	const dispatch = useAppDispatch();
+
+	const handleOpenPopup = (content: PopupContent | null = null) => {
+		dispatch(openPopup({ isOpen: true, content }));
+	};
 
 	return (
 		<button
-			className={`${styles.mockButton} ${styles[id]}`}
+			className={`${styles.schemeElement} ${styles[id]}`}
 			id={id}
 			onClick={() =>
 				handleOpenPopup({
-					id: id,
-					icon: icon,
-					title: title,
+					id,
+					icon,
+					title,
 					buttons: [
 						{
 							id: 'btn4',

@@ -1,25 +1,21 @@
-'use client';
-
 import styles from './styles.module.scss';
 import { FC } from 'react';
-import { CircuitElements, Points } from '@/shared/configs/schemePart';
-import { Point } from '@/entities/Point';
-import { CircuitElementBtn } from '@/entities/CircuitElementBtn';
+import { SCHEME_ELEMENTS, SCHEME_POINTS } from '@/shared/configs/scheme';
+import { SchemeElement } from '@/entities/SchemeElement';
+import { SchemePoint } from '@/entities/Point';
 
 const Scheme: FC = () => {
 	return (
 		<div className={styles.scheme}>
-			{CircuitElements.map(item => (
-				<CircuitElementBtn key={item.id} id={item.id} icon={item.icon} title={item.title}/>
+			{SCHEME_ELEMENTS.map(item => (
+				<SchemeElement key={item.id} element={item} />
 			))}
 
-			{Points.map(item => (
-				<Point
-					key={item.id}
-					id={item.id}
-				></Point>
+			{SCHEME_POINTS.map(item => (
+				<SchemePoint key={item.id} id={item.id} />
 			))}
 		</div>
 	);
 };
+
 export default Scheme;
