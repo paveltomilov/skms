@@ -6,7 +6,7 @@ import Button from '@/shared/UI/Button';
 import { defaultButtons } from '@/shared/configs/popup';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import { closePopup } from '@/store/popupSlice';
-import SchemePart from '@/shared/UI/icons/SchemePart';
+import SchemeIcon from '@/shared/UI/icons/SchemeIcon';
 
 const PopUp: FC = () => {
 	const dispatch = useAppDispatch();
@@ -46,7 +46,7 @@ const PopUp: FC = () => {
 						</span>
 					</p>
 					<div className={styles.popup__window__element__wrapper}>
-						<SchemePart type={icon} shadow />
+						<SchemeIcon type={icon} shadow />
 						<div
 							className={
 								styles.popup__window__element__wrapper__textWrapper

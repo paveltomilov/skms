@@ -47,5 +47,3 @@ export interface OtherSizes {
 	width: number;
 	height: number;
 }
-
-export type SchemePartType = 'yb08' | 'xb10' | 'cabinet' | 'lamp';

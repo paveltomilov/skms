@@ -9,6 +9,14 @@ const meta: Meta<typeof SchemeIcon> = {
 	},
 	tags: ['autodocs'],
 	argTypes: {
+		type: {
+			description:
+				'Тип элемента схемы: (позже добавить осмысленные названия)',
+			options: ['yb08', 'xb10', 'cabinet', 'lamp'],
+			control: {
+				type: 'radio',
+			},
+		},
 		color: {
 			description: 'Цвета иконки: default - черный, disabled - серый',
 			options: ['default', 'disabled'],
@@ -26,10 +34,26 @@ const meta: Meta<typeof SchemeIcon> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
-
-export const Disabled: Story = {
+export const Yb08: Story = {
 	args: {
-		color: 'disabled',
+		type: 'yb08',
+	},
+};
+
+export const Xb10: Story = {
+	args: {
+		type: 'xb10',
+	},
+};
+
+export const Cabinet: Story = {
+	args: {
+		type: 'cabinet',
+	},
+};
+
+export const Lamp: Story = {
+	args: {
+		type: 'lamp',
 	},
 };

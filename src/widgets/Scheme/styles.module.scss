@@ -1,19 +1,6 @@
-.wrapper {
-	display: flex;
-	align-items: center;
-	gap: 44px;
+.scheme {
 	position: relative;
-}
-
-.mockButton {
-	position: absolute;
-	top: 369px;
-	left: 638px;
-	width: 69px;
-	height: 33px;
-	opacity: 0;
-
-	&:hover {
-		opacity: 0.5;
-	}
+	background-image: url('../../../public/svg/scheme.svg');
+	width: 1258px;
+	height: 656px;
 }
