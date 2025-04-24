@@ -34,7 +34,6 @@ export const ConnectionPoint: React.FC<ConnectionPointProps> = ({
       className={`${styles.connectionPoint} ${isOver ? styles.over : ''}`} 
       style={style}
       title={label || `Point ID: ${id}`} 
-      suppressHydrationWarning={true}
     >
       <div className={styles.connectionDot}></div>
       {label && <span className={styles.connectionLabel}>{label}</span>}
