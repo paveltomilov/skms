@@ -5,19 +5,8 @@ import type {
   ProbeConnectionsState,
   ProbeConnection,
   ProbePosition,
+  MultimeterState,
 } from '@/shared/types/multimeter';
-interface MultimeterState {
-  currentMode: MultimeterMode; 
-  displayValue: string; 
-  measurementResult: number | null;
-  measurementUnit: string | null; 
-  errorState: string | null; 
-  probeConnections: ProbeConnectionsState; 
-  probePositions: { 
-    red: ProbePosition | null;
-    black: ProbePosition | null;
-  };
-}
 
 const SUPPORTED_MODES: MultimeterMode[] = ['OFF', 'ACV_750', 'OHM_200'];
 
@@ -91,22 +80,6 @@ export const multimeterSlice = createSlice({
           state.displayValue = value;
         } 
       },
-
-      setErrorState: (state, action: PayloadAction<string | null>) => {
-        state.errorState = action.payload;
-        state.measurementResult = null;
-        state.measurementUnit = null;
-        if (action.payload !== null && state.currentMode !== 'OFF') {
-          state.displayValue = 'Err';
-        } else if (state.currentMode === 'OFF') {
-          state.displayValue = '';
-        } else if (SUPPORTED_MODES.includes(state.currentMode)) { 
-           if (state.currentMode === 'ACV_750') state.displayValue = '0.00';
-           else if (state.currentMode === 'OHM_200') state.displayValue = 'OL';
-        } else {
-          state.displayValue = '---'; 
-      }
-      },
   
       setProbeConnection: (state, action: PayloadAction<SetProbeConnectionPayload>) => {
         const { probeColor, connection } = action.payload;
@@ -127,7 +100,7 @@ export const multimeterSlice = createSlice({
 );
 
 export const {
-  setCurrentMode, setMeasurementResult, setErrorState, setProbeConnection, setProbePosition,
+  setCurrentMode, setMeasurementResult, setProbeConnection, setProbePosition,
 } = multimeterSlice.actions;
 
 export const selectCurrentMode = (state: RootState): MultimeterMode => state.multimeter.currentMode;

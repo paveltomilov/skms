@@ -32,7 +32,7 @@ export const ConnectionPoint: React.FC<ConnectionPointProps> = ({
       ref={setNodeRef}
       id={htmlId}     
       className={`${styles.connectionPoint} ${isOver ? styles.over : ''}`} 
-      style={{ ...style, zIndex: 1 }}
+      style={style}
       title={label || `Point ID: ${id}`} 
       suppressHydrationWarning={true}
     >
@@ -41,4 +41,3 @@ export const ConnectionPoint: React.FC<ConnectionPointProps> = ({
     </div>
   );
 };
-

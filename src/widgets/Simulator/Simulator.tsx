@@ -10,7 +10,7 @@ import { restrictToParentElement } from '@dnd-kit/modifiers';
 import Multimeter from '@/widgets/Multimeter';
 // import Scheme from '../Scheme';  // Импортируем схему, она будет в тренажере!
 import { Probe } from '@/entities/Probe';
-import { ConnectionPointList, PointData } from '@/entities/ConnectionPointList';
+import { ConnectionPointList } from '@/entities/ConnectionPointList';
 
 import { probeTipCollisionDetection } from '@/shared/lib/probeTipCollisionDetection';
 import { useAppDispatch } from '@/shared/hooks/store';
@@ -19,15 +19,18 @@ import {
 	setProbePosition
 } from '@/store/multimeterSlice';
 
+import { PointData } from '@/shared/types/multimeter';
+
 import styles from './styles.module.scss';
 
 interface ActiveDragData {
 	type: 'probe';
 	probeColor: 'red' | 'black';
 }
+
 type MockNodeId = string;
 
-const DEFAULT_PROBE_POSITIONS: { red: { top: string; left: string; }, black: { top: string; left: string; } } = {
+const DEFAULT_PROBE_POSITIONS = {
 	red: { top: '115px', left: '495px' },
 	black: { top: '25px', left: '495px' },
 };

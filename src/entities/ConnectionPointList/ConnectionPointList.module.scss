@@ -1,13 +1,11 @@
-// @import '../../../entities/ConnectionPoint/ConnectionPoint.module';
 
 .connectionListContainer {
   position: relative;
   width: 400px;
-  height: 350px; // Высота области для точек
+  height: 350px; 
   border: 1px dashed blue;
   background-color: #f8f8ff;
   overflow: hidden; 
-  // padding: 10px;
   box-sizing: border-box;
 
   h4 {

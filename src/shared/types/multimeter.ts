@@ -25,7 +25,7 @@ export interface ProbePosition {
 
 export interface ProbeConnection {
   targetId: string | null;
-  targetType: 'jack' | 'node' | null;
+  targetType: 'node' | null;
 }
 
 export interface ProbeConnectionsState {
@@ -56,3 +56,9 @@ export type MultimeterErrorType =
   | 'CALCULATION_ERROR';      
 
 export type ModeAnglesMap = Record<MultimeterMode, number>;
+
+export interface PointData {
+  id: string; 
+  label: string; 
+  position: { top: number | string; left: number | string };
+}

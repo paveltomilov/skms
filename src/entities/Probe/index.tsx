@@ -14,7 +14,7 @@ interface ProbeProps {
 
 export const Probe: React.FC<ProbeProps> = ({ id, color, style }) => {
     const { attributes, listeners, setNodeRef } = useDraggable({
-        id: id,
+        id,
         data: { 
             type: 'probe',
             probeColor: color,
@@ -23,7 +23,6 @@ export const Probe: React.FC<ProbeProps> = ({ id, color, style }) => {
 
     const combinedStyle: React.CSSProperties = {
         ...style, 
-        cursor: 'grab', 
     };
 
     return (
@@ -34,7 +33,6 @@ export const Probe: React.FC<ProbeProps> = ({ id, color, style }) => {
             style={combinedStyle} 
             {...listeners} 
             {...attributes} 
-            title={`Щуп ${color === 'red' ? 'красный' : 'черный'}`} 
             suppressHydrationWarning={true}
         >
             <ProbeIcon color={color} className={styles.probeSvg} />
