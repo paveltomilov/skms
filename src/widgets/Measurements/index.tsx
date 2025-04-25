@@ -1,4 +1,3 @@
-'use client';
 import Multimeter from '@/widgets/Multimeter';
 import styles from './styles.module.scss';
 import PopUp from '@/entities/PopUp';

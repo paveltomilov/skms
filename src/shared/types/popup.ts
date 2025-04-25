@@ -1,16 +1,8 @@
-import { SchemeIconType } from './scheme';
-
-export interface PopupBtn {
-	id: string;
-	width: number;
-	height: number;
-	text: string;
-	onClick?: () => void;
-}
+import { SchemeElementBtn, SchemeIconType } from './scheme';
 
 export interface PopupContent {
 	id: string;
 	icon: SchemeIconType;
 	title: string;
-	buttons?: PopupBtn[];
+	buttons?: SchemeElementBtn[];
 }
