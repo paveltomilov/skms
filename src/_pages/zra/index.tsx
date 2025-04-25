@@ -3,6 +3,7 @@ import Footer from '@/widgets/Footer';
 import Sidebar from '@/widgets/Sidebar';
 import Header from '@/widgets/Header/Header';
 import Measurements from '@/widgets/Measurements';
+
 const Zra = () => {
 	return (
 		<>
@@ -15,6 +16,7 @@ const Zra = () => {
 						<Measurements />
 					</div>
 				</section>
+				<Measurements />
 			</main>
 			<Footer />
 		</>
