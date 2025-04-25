@@ -12,7 +12,7 @@ interface Prop {
 }
 
 export const SchemeElement: FC<Prop> = ({ element }) => {
-	const { id, icon, title } = element;
+	const { id, icon, title, buttons } = element;
 
 	const dispatch = useAppDispatch();
 
@@ -29,32 +29,7 @@ export const SchemeElement: FC<Prop> = ({ element }) => {
 					id,
 					icon,
 					title,
-					buttons: [
-						{
-							id: 'btn4',
-							width: 238,
-							height: 35,
-							text: 'ОК',
-						},
-						{
-							id: 'btn5',
-							width: 238,
-							height: 35,
-							text: 'дополнительная кнопка',
-						},
-						{
-							id: 'btn6',
-							width: 238,
-							height: 35,
-							text: 'дополнительная кнопка',
-						},
-						{
-							id: 'btn7',
-							width: 238,
-							height: 35,
-							text: 'дополнительная кнопка',
-						},
-					],
+					buttons,
 				})
 			}
 		></button>

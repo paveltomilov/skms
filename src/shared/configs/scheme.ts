@@ -10,6 +10,16 @@ export const SCHEME_ELEMENTS: ISchemeElement[] = [
 		title: 'Какое-то название',
 		icon: 'yb08',
 		id: 'c.3.1.3.2.1.1',
+		buttons: [
+			{
+				id: 'btn4',
+				text: 'ОК',
+			},
+			{
+				id: 'btn5',
+				text: 'дополнительная кнопка',
+			},
+		],
 	},
 	{
 		title: 'Какое-то название',
@@ -25,6 +35,16 @@ export const SCHEME_ELEMENTS: ISchemeElement[] = [
 		title: 'Какое-то название',
 		icon: 'cabinet',
 		id: 'c.3.2.3.2.3',
+		buttons: [
+			{
+				id: 'btn6',
+				text: 'ОК',
+			},
+			{
+				id: 'btn7',
+				text: 'дополнительная кнопка',
+			},
+		],
 	},
 	{
 		title: 'Какое-то название',
@@ -35,6 +55,12 @@ export const SCHEME_ELEMENTS: ISchemeElement[] = [
 		title: 'Какое-то название',
 		icon: 'lamp',
 		id: 'c.3.1.3.3',
+		buttons: [
+			{
+				id: 'btn6',
+				text: 'lamp',
+			},
+		],
 	},
 	{
 		title: 'Какое-то название',

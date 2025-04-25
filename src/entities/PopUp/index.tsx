@@ -34,49 +34,32 @@ const PopUp: FC = () => {
 		? [...defaultButtons, ...buttons]
 		: defaultButtons;
 
+	// поменять на номальный обработчик
+	const handleClick = (text: string) => console.log(text);
+
 	return (
 		<div className={styles.popup}>
-			<div className={styles.popup__window}>
-				<div className={styles.popup__window__element}>
-					<p className={styles.popup__window__element__p}>
-						<span
-							className={styles.popup__window__element__p__span}
-						>
-							{id}
-						</span>
-					</p>
-					<div className={styles.popup__window__element__wrapper}>
-						<SchemeIcon type={icon} shadow />
-						<div
-							className={
-								styles.popup__window__element__wrapper__textWrapper
-							}
-						>
-							<p
-								className={
-									styles.popup__window__element__wrapper__textWrapper__text
-								}
-							>
-								{title}
-							</p>
-						</div>
-					</div>
+			<div className={styles.window}>
+				<div className={styles.window__icon}>
+					<span className={styles.window__icon_id}>{id}</span>
+					<SchemeIcon type={icon} shadow />
+				</div>
+				<div className={styles.window__box}>
+					<p className={styles.window__box_title}>{title}</p>
 				</div>
 			</div>
 
-			<div className={styles.popup__btns}>
-				{displayButtons.map(button => (
-					<Button
-						key={button.id}
-						id={button.id}
-						width={button.width}
-						height={button.height}
-						text={button.text}
-						className={styles.popup__btns__item}
-						onClick={button.onClick}
-					/>
-				))}
-			</div>
+			{displayButtons.map(button => (
+				<Button
+					key={button.id}
+					id={button.id}
+					width={245}
+					height={35}
+					text={button.text}
+					className={styles.popup__btn}
+					onClick={() => handleClick(button.text)}
+				/>
+			))}
 		</div>
 	);
 };

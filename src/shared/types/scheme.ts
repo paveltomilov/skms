@@ -11,8 +11,14 @@ export type SchemeIconType =
 	| 's01'
 	| 'sq3';
 
+export interface SchemeElementBtn {
+	id: string;
+	text: string;
+}
+
 export interface ISchemeElement {
 	id: string;
-	icon: SchemeIconType;
 	title: string;
+	icon: SchemeIconType;
+	buttons?: SchemeElementBtn[];
 }

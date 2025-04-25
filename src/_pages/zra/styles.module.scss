@@ -7,9 +7,10 @@
 	);
 	position: relative;
 	overflow-x: hidden;
+	display: flex;
 }
 
-.page {
+.simulator {
 	@include mixins.flex-center;
 	flex-direction: column;
 	padding: 12px 0;
@@ -21,10 +22,5 @@
 		font-size: 32px;
 		align-self: flex-start;
 		margin-bottom: 20px;
-	}
-
-	&__wrapper {
-		@include mixins.flex-center;
-		gap: 120px;
 	}
 }
