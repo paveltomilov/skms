@@ -1,9 +1,10 @@
-// Этот файл заменяет стандартную логику dnd-kit по определению пересечений (которая обычно смотрит на курсор 
-// или весь элемент).
+// Этот файл заменяет стандартную логику dnd-kit по определению пересечений 
+// (которая обычно смотрит на курсор или весь элемент).
+
 // Что он делает:
 // Когда тащите щуп, он берет его текущее положение и, с помощью констант 
-// (TIP_OFFSET_X/Y, TIP_WIDTH, TIP_HEIGHT), вычисляет маленький прямоугольник точно там, где должен быть 
-// кончик щупа.
+// (TIP_OFFSET_X/Y, TIP_WIDTH, TIP_HEIGHT), вычисляет маленький прямоугольник 
+// точно там, где должен быть кончик щупа.
 
 import type { CollisionDetection, ClientRect } from '@dnd-kit/core';
 
@@ -18,7 +19,7 @@ export const probeTipCollisionDetection: CollisionDetection = ({
     droppableRects,
 }) => {
     if (active.data.current?.type !== 'probe') {
-         return [];
+        return [];
     }
 
     const activeRect = active.rect.current.translated;

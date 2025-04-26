@@ -56,9 +56,3 @@ export type MultimeterErrorType =
   | 'CALCULATION_ERROR';      
 
 export type ModeAnglesMap = Record<MultimeterMode, number>;
-
-export interface PointData {
-  id: string; 
-  label: string; 
-  position: { top: number | string; left: number | string };
-}

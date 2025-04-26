@@ -5,20 +5,25 @@ import ControlPanel from '@/entities/ControlPanel/ControlPanel';
 import { useAppSelector } from '@/shared/hooks/store';
 import ProbeHolder from '@/shared/UI/icons/ProbeHolder';
 
-const Multimeter: React.FC = () => {
-	const multimeterState = useAppSelector(state => state.multimeter);
-	return (
-		<div className={styles.multimeter}>
-			<Display value={multimeterState.displayValue} />
-			<ControlPanel mode={multimeterState.currentMode} />
-			<ProbeHolder
-				className={`${styles.multimeter__probeHolder} ${styles.multimeter__probeHolder_black}`}
-			/>
-			<ProbeHolder
-				className={`${styles.multimeter__probeHolder} ${styles.multimeter__probeHolder_red}`}
-			/>
-		</div>
-	);
+interface MultimeterProps {
+  className?: string; 
+}
+
+export const Multimeter: React.FC<MultimeterProps> = ({ className = '' }) => {
+  const multimeterState = useAppSelector(state => state.multimeter);
+  
+  return (
+    <div className={`${styles.multimeter} ${className}`}> 
+      <Display value={multimeterState.displayValue} />
+      <ControlPanel mode={multimeterState.currentMode} />
+      <ProbeHolder
+        className={`${styles.multimeter__probeHolder} ${styles.multimeter__probeHolder_black}`}
+      />
+      <ProbeHolder
+        className={`${styles.multimeter__probeHolder} ${styles.multimeter__probeHolder_red}`}
+      />
+    </div>
+  );
 };
 
 export default Multimeter;

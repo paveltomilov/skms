@@ -2,9 +2,10 @@
 
 import React from 'react';
 import { ConnectionPoint } from '@/entities/ConnectionPoint';
-import styles from './ConnectionPointList.module.scss';
+import styles from './ConnectionPointList.module.scss'; 
 
-import { PointData } from '@/shared/types/multimeter';
+import { PointData } from '@/shared/types/simulator'; 
+
 interface ConnectionPointListProps {
   points: PointData[];
 }

@@ -13,7 +13,6 @@ const Zra = () => {
 				<section className={styles.page}>
 					<h1 className={styles.page__title}>Тренажёр</h1>
 					<div className={styles.page__wrapper}>
-						<Measurements />
 					</div>
 				</section>
 				<Measurements />
