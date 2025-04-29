@@ -1,12 +1,22 @@
-.probeContainer {
-    width: 30px;
-    height: 91px;
-    cursor: grab;
+.probe {
+	position: absolute;
+	cursor: grab;
+	width: 29px;
+	height: 90px;
+	left: -36px;
+	z-index: 1;
+
+	&:active {
+		transform: rotate(-15deg);
+		z-index: 3;
+		cursor: grabbing;
+	}
 }
 
-.probeSvg {
-    display: block;
-    width: 100%;
-    height: 100%;
-    pointer-events: none; 
+.black {
+	top: 5px;
+}
+
+.red {
+	top: 95px;
 }

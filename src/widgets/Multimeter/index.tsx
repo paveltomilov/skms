@@ -4,26 +4,26 @@ import { Display } from '@/entities/Display/Display';
 import ControlPanel from '@/entities/ControlPanel/ControlPanel';
 import { useAppSelector } from '@/shared/hooks/store';
 import ProbeHolder from '@/shared/UI/icons/ProbeHolder';
+import Probe from '@/entities/Probe';
 
-interface MultimeterProps {
-  className?: string; 
-}
-
-export const Multimeter: React.FC<MultimeterProps> = ({ className = '' }) => {
-  const multimeterState = useAppSelector(state => state.multimeter);
-  
-  return (
-    <div className={`${styles.multimeter} ${className}`}> 
-      <Display value={multimeterState.displayValue} />
-      <ControlPanel mode={multimeterState.currentMode} />
-      <ProbeHolder
-        className={`${styles.multimeter__probeHolder} ${styles.multimeter__probeHolder_black}`}
-      />
-      <ProbeHolder
-        className={`${styles.multimeter__probeHolder} ${styles.multimeter__probeHolder_red}`}
-      />
-    </div>
-  );
+const Multimeter: React.FC = () => {
+	const multimeterState = useAppSelector(state => state.multimeter);
+	return (
+		<div className={styles.multimeter}>
+			<Display value={multimeterState.displayValue} />
+			<ControlPanel mode={multimeterState.currentMode} />
+			<ProbeHolder
+				className={`${styles.multimeter__probeHolder} ${styles.multimeter__probeHolder_black}`}
+			>
+				<Probe color="black" />
+			</ProbeHolder>
+			<ProbeHolder
+				className={`${styles.multimeter__probeHolder} ${styles.multimeter__probeHolder_red}`}
+			>
+				<Probe color="red" />
+			</ProbeHolder>
+		</div>
+	);
 };
 
 export default Multimeter;

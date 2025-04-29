@@ -1,75 +1,70 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
-import {
-    DndContext,
-    DragEndEvent,
-    DragStartEvent,
-    UniqueIdentifier,
-    Active,
-    Over 
-} from '@dnd-kit/core';
+import React, { ReactNode } from 'react';
+import { DndContext, DragStartEvent } from '@dnd-kit/core';
+import { useAppDispatch } from '@/shared/hooks/store';
+import { setActiveProb } from '@/store/multimeterSlice';
+import { restrictToSchemeContainer } from '@/shared/lib/restrictToSchemeContainer';
+import { probeTipCollisionDetection } from '@/shared/lib/probeTipCollisionDetection';
 
-import Multimeter from '@/widgets/Multimeter';
-import { Probe } from '@/entities/Probe';
-import PopUp from '@/entities/PopUp';
-import { DragOverlayProbe } from '@/shared/features/DragOverlayProbe';
+interface Props {
+	children: ReactNode;
+}
 
-import { useProbeVisuals } from '@/shared/hooks/useProbeVisuals'; 
-import { useProbeDragHandler } from '@/shared/hooks/useProbeDragHandler';
-import { isProbeDragData } from '@/shared/lib/probeUtils'; 
-import { ActiveDragData } from '@/shared/types/simulator'; 
+export const Simulator: React.FC<Props> = ({ children }) => {
+	const dispatch = useAppDispatch();
+	/* const environmentRef = useRef<HTMLDivElement>(null);
+	const { sensors, collisionDetection, modifiers } = useDndConfig();
 
-import { useDndConfig } from '@/shared/hooks/useDndConfig';
-import Scheme from '@/widgets/Scheme';
+	const [activeDragId, setActiveDragId] = useState<UniqueIdentifier | null>(
+		null,
+	);
 
-import styles from './styles.module.scss';
+	const [currentActiveData, setCurrentActiveData] =
+		useState<ActiveDragData>(null);
 
-export const Simulator: React.FC = () => {
-    const environmentRef = useRef<HTMLDivElement>(null);
-    const { sensors, collisionDetection, modifiers } = useDndConfig();
+	const { getProbeStyle, updateProbeVisualPosition } =
+		useProbeVisuals(activeDragId);
 
-    const [activeDragId, setActiveDragId] = useState<UniqueIdentifier | null>(null);
-    const [currentActiveData, setCurrentActiveData] = useState<ActiveDragData>(null); 
+	const { handleProbeDragEnd } = useProbeDragHandler({
+		environmentRef,
+		onVisualPositionUpdate: updateProbeVisualPosition,
+	});
+ */
+	const handleDragStart = (event: DragStartEvent) => {
+		const { active } = event;
+		dispatch(setActiveProb(active.id));
 
-    const { getProbeStyle, updateProbeVisualPosition } = useProbeVisuals(activeDragId);
-    const { handleProbeDragEnd } = useProbeDragHandler({
-        environmentRef,
-        onVisualPositionUpdate: updateProbeVisualPosition,
-    });
-
-    const handleDragStart = (event: DragStartEvent) => {
-        const { active } = event;
-        setActiveDragId(active.id);
-
-        if (isProbeDragData(active.data.current)) {
+		/* if (isProbeDragData(active.data.current)) {
 			setCurrentActiveData(active.data.current);
-        } else {
+		} else {
 			setCurrentActiveData(null);
-            
-        }
-    }; 
+		} */
+	};
 
-    const handleDragEnd = (event: DragEndEvent) => {
-        const { active, over } = event;
+	const handleDragEnd = (/* event: DragEndEvent */) => {
+		dispatch(setActiveProb(null));
 
-        if (isProbeDragData(active.data.current)) {
-            handleProbeDragEnd(active as Active, over as Over | null);
-        }
+		/* const { active, over } = event;
 
-        setActiveDragId(null);
-        setCurrentActiveData(null);
-    };
+		if (isProbeDragData(active.data.current)) {
+			handleProbeDragEnd(active as Active, over as Over | null);
+		}
 
-    return (
-        <DndContext
-            sensors={sensors}
-            onDragStart={handleDragStart}
-            onDragEnd={handleDragEnd}
-            collisionDetection={collisionDetection}
-            modifiers={modifiers}
-        >
-            <div ref={environmentRef} className={styles.environmentWrapper}>
+		setActiveDragId(null);
+		setCurrentActiveData(null); */
+	};
+	return (
+		<DndContext
+			/* sensors={sensors}*/
+			collisionDetection={probeTipCollisionDetection}
+			onDragStart={handleDragStart}
+			onDragEnd={handleDragEnd}
+			/* добавить  onMouseLeave */
+			modifiers={[restrictToSchemeContainer]}
+		>
+			{children}
+			{/* <div ref={environmentRef} className={styles.environmentWrapper}>
                 <div className={styles.measurements}>
                     <PopUp />
                     <Multimeter />
@@ -79,10 +74,9 @@ export const Simulator: React.FC = () => {
                 </div>
                 <Probe id='probe-red' color='red' style={getProbeStyle('red')} />
                 <Probe id='probe-black' color='black' style={getProbeStyle('black')} />
-            </div>
-            <DragOverlayProbe activeId={activeDragId} data={currentActiveData} />
-        </DndContext>
-    );
+            </div>*/}
+		</DndContext>
+	);
 };
 
 export default Simulator;

@@ -2,43 +2,40 @@
 
 import React from 'react';
 import { useDraggable } from '@dnd-kit/core';
-import styles from './Probe.module.scss'; 
-import ProbeIcon from '@/shared/UI/icons/Probe'; 
+import { CSS } from '@dnd-kit/utilities';
+import styles from './Probe.module.scss';
+import ProbeIcon from '@/shared/UI/icons/Probe';
 
-import { ProbeColor } from '@/shared/types/simulator'; 
+import { ProbeColor } from '@/shared/types/simulator';
 import { DndItemType } from '@/shared/configs/simulator.constants';
 
 interface ProbeProps {
-	id: string;
 	color: ProbeColor;
-	style?: React.CSSProperties;
 }
 
-export const Probe: React.FC<ProbeProps> = ({ id, color, style }) => {
-	const { attributes, listeners, setNodeRef } = useDraggable({
-		id,
+export const Probe: React.FC<ProbeProps> = ({ color }) => {
+	const { attributes, listeners, setNodeRef, transform } = useDraggable({
+		id: color,
 		data: {
 			type: DndItemType.PROBE,
 			probeColor: color,
 		},
 	});
 
-	const combinedStyle: React.CSSProperties = {
-		...style,
-		touchAction: 'none',
+	const style = {
+		transform: CSS.Translate.toString(transform),
 	};
 
 	return (
 		<div
 			ref={setNodeRef}
-			id={id}
-			className={styles.probeContainer}
-			style={combinedStyle}
+			style={style}
+			className={`${styles.probe} ${styles[color]}`}
 			{...listeners}
 			{...attributes}
 			suppressHydrationWarning={true}
 		>
-			<ProbeIcon color={color} className={styles.probeSvg} />
+			<ProbeIcon color={color} />
 		</div>
 	);
 };

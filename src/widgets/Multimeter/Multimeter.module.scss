@@ -44,32 +44,11 @@
 		z-index: 2;
 
 		&_black {
-			top: 60px; 
+			top: 59px;
 		}
 
 		&_red {
 			top: 150px;
-		}
-	}
-
-	&__probe {
-		position: absolute;
-		width: 29px;
-		height: 90px;
-		left: -36px;
-		z-index: 1;
-
-		&:active {
-			transform: rotate(-15deg);
-			z-index: 3;
-		}
-
-		&_black {
-			top: 5px;
-		}
-
-		&_red {
-			top: 95px;
 		}
 	}
 }
