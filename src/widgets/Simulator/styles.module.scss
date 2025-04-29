@@ -8,7 +8,6 @@
   min-width: 1700px;
   min-height: 700px;
   margin: 20px auto;
-  background-color: rgb(183, 214, 204);
   overflow: hidden;
   box-sizing: border-box; 
 }
@@ -27,20 +26,21 @@
  }
 
 .measurements {
-	height: 600px;
-	width: 300px;
+	height: 700px;
+	width: 310px;
 	background: variables.$secondary-color;
 	display: flex;
 	flex-direction: column;
 	/* По умолчанию для одного элемента */
 	justify-content: flex-end;
   align-items: flex-end;
+  margin-left: auto;
 	box-shadow: variables.$default-button-box-shadow;
 	padding: 14px;
 
-	// &:has(> :nth-child(2)) {
-	// 	/* Когда больше одного элемента */
-	// 	justify-content: space-between;
-	// }
+	&:has(> :nth-child(2)) {
+		/* Когда больше одного элемента */
+		justify-content: space-between;
+	}
 }
 

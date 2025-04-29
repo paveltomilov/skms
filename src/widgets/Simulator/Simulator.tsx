@@ -70,11 +70,9 @@ export const Simulator: React.FC = () => {
             modifiers={modifiers}
         >
             <div ref={environmentRef} className={styles.environmentWrapper}>
-                <div className={styles.multimeterPlacement}>
                 <div className={styles.measurements}>
                     <PopUp />
                     <Multimeter />
-                </div>
                 </div>
                 <div className={styles.schemePlacement}>
                     <Scheme />

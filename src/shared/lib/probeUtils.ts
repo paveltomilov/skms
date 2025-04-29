@@ -25,11 +25,12 @@ export function isConnectionPointDropData(data: unknown): data is ConnectionPoin
     const potentialData = data as Record<string, unknown>;
 
     return (
-        potentialData.type === DndItemType.NODE &&
-        typeof potentialData.nodeId === 'string' &&
+        potentialData.type === DndItemType.NODE && 
+        typeof potentialData.nodeId === 'string' && 
         Array.isArray(potentialData.accepts)
     );
 }
+
 
 export function calculateConnectionPointPosition(
     targetNodeId: string,
@@ -39,7 +40,9 @@ export function calculateConnectionPointPosition(
         return null;
     }
 
-    const targetElement = environmentElement.querySelector<HTMLElement>(`#point-${targetNodeId}`);
+    const fullHtmlId = `scheme-point-${targetNodeId}`;
+
+    const targetElement = document.getElementById(fullHtmlId);
 
     if (targetElement) {
         try {
@@ -47,13 +50,13 @@ export function calculateConnectionPointPosition(
             const targetRect = targetElement.getBoundingClientRect();
 
             if (targetRect.width === 0 && targetRect.height === 0 && targetRect.x === 0 && targetRect.y === 0) {
-                return null;
             }
 
             const x = targetRect.left - envRect.left + targetRect.width / 2;
             const y = targetRect.top - envRect.top + targetRect.height / 2;
 
             return { x, y };
+
         } catch {
             return null;
         }
@@ -61,3 +64,4 @@ export function calculateConnectionPointPosition(
         return null;
     }
 }
+

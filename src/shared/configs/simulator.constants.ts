@@ -4,8 +4,8 @@ export const PROBE_TIP_OFFSETS = {
 };
 
 export const DEFAULT_PROBE_POSITIONS = {
-	red: { top: '115px', left: '495px' },
-	black: { top: '25px', left: '495px' },
+	red: { top: '447px', left: '1406px' },
+	black: { top: '357px', left: '1406px' },
 };
 
 export enum DndItemType {
