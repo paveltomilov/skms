@@ -1,12 +1,16 @@
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
+
+
 .environmentWrapper { /* Этот класс должен быть на div с ref={environmentRef} */
   position: relative; /* ОБЯЗАТЕЛЬНО */
   width: 100%;
-  max-width: 1000px;
-  height: 100%;
-  margin: 0 auto;
-  border: 3px solid #0c649e;
-  background-color: #d6dbdd;
+  min-width: 1700px;
+  min-height: 700px;
+  margin: 20px auto;
+  background-color: rgb(183, 214, 204);
   overflow: hidden;
+  box-sizing: border-box; 
 }
 
 .schemePlacement {
@@ -18,7 +22,25 @@
 .multimeterPlacement {
    position: absolute;
    top: 20px; 
-   left: 530px; 
+   right: 0px; 
    z-index: 1;
  }
+
+.measurements {
+	height: 600px;
+	width: 300px;
+	background: variables.$secondary-color;
+	display: flex;
+	flex-direction: column;
+	/* По умолчанию для одного элемента */
+	justify-content: flex-end;
+  align-items: flex-end;
+	box-shadow: variables.$default-button-box-shadow;
+	padding: 14px;
+
+	// &:has(> :nth-child(2)) {
+	// 	/* Когда больше одного элемента */
+	// 	justify-content: space-between;
+	// }
+}
 

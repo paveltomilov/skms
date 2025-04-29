@@ -10,10 +10,9 @@ import {
     Over 
 } from '@dnd-kit/core';
 
-// import { Scheme } from '@/widgets/Scheme';
 import Multimeter from '@/widgets/Multimeter';
 import { Probe } from '@/entities/Probe';
-import { ConnectionPointList } from '@/entities/ConnectionPointList';
+import PopUp from '@/entities/PopUp';
 import { DragOverlayProbe } from '@/shared/features/DragOverlayProbe';
 
 import { useProbeVisuals } from '@/shared/hooks/useProbeVisuals'; 
@@ -22,7 +21,7 @@ import { isProbeDragData } from '@/shared/lib/probeUtils';
 import { ActiveDragData } from '@/shared/types/simulator'; 
 
 import { useDndConfig } from '@/shared/hooks/useDndConfig';
-import { MOCK_CONNECTION_POINTS } from '@/__mocks__/simulator.mocks';
+import Scheme from '@/widgets/Scheme';
 
 import styles from './styles.module.scss';
 
@@ -47,8 +46,9 @@ export const Simulator: React.FC = () => {
 			setCurrentActiveData(active.data.current);
         } else {
 			setCurrentActiveData(null);
+            
         }
-    };
+    }; 
 
     const handleDragEnd = (event: DragEndEvent) => {
         const { active, over } = event;
@@ -71,17 +71,14 @@ export const Simulator: React.FC = () => {
         >
             <div ref={environmentRef} className={styles.environmentWrapper}>
                 <div className={styles.multimeterPlacement}>
-                    {/* <Scheme /> */}
+                <div className={styles.measurements}>
+                    <PopUp />
                     <Multimeter />
                 </div>
-                <div className={styles.schemePlacement}>
-                    {MOCK_CONNECTION_POINTS.length > 0 ? (
-                        <ConnectionPointList points={MOCK_CONNECTION_POINTS} />
-                    ) : (
-                        <div className={styles.loadingMessage}>Нет точек подключения</div>
-                    )}
                 </div>
-
+                <div className={styles.schemePlacement}>
+                    <Scheme />
+                </div>
                 <Probe id='probe-red' color='red' style={getProbeStyle('red')} />
                 <Probe id='probe-black' color='black' style={getProbeStyle('black')} />
             </div>

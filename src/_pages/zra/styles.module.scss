@@ -2,6 +2,7 @@
 @use '@/shared/scss/variables.module';
 
 .main {
+	width: 100%;
 	min-height: calc(
 		100vh - (variables.$header-height + variables.$footer-height)
 	);
@@ -10,12 +11,11 @@
 	display: flex;
 }
 
-.simulator {
+.page {
 	@include mixins.flex-center;
 	flex-direction: column;
 	padding: 12px 0;
-	margin: 0 auto;
-	max-width: 1600px;
+	margin-left: auto;
 
 	&__title {
 		font-weight: 400;
