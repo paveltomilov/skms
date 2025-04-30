@@ -38,7 +38,7 @@ const initialState: InitialState = {
 					{
 						id: 'p.1.1',
 						name: 'Фаза A до вводного автомата',
-						resistance: 0,
+						resistance: 0.1,
 						voltage: 220,
 						groundContact: false,
 						wireContact: false,
@@ -98,7 +98,7 @@ const initialState: InitialState = {
 					{
 						id: 'p.3.1',
 						name: 'Фаза A от автомата до пускателей',
-						resistance: 0,
+						resistance: 0.1,
 						voltage: 220,
 						groundContact: false,
 						wireContact: false,
@@ -131,7 +131,7 @@ const initialState: InitialState = {
 								{
 									id: 'p.4.1.1',
 									name: 'Пускатель открыть, контакты фазы А',
-									resistance: 0,
+									resistance: 1000000000,
 									voltage: 0,
 									groundContact: false,
 									wireContact: false,
@@ -156,8 +156,8 @@ const initialState: InitialState = {
 								{
 									id: 'p.5.1',
 									name: 'Фаза A от пускателя до двигателя',
-									resistance: 0,
-									voltage: 220,
+									resistance: 0.1,
+									voltage: 0,
 									groundContact: false,
 									wireContact: false,
 									malfunctions: [
@@ -186,7 +186,7 @@ const initialState: InitialState = {
 								{
 									id: 'p.6.1',
 									name: 'Электродвигатель задвижки, обмотка фазы А',
-									resistance: 0,
+									resistance: 4.1,
 									voltage: 0,
 									groundContact: false,
 									wireContact: false,
@@ -213,7 +213,7 @@ const initialState: InitialState = {
 								{
 									id: 'p.4.2.3',
 									name: 'Пускатель закрыть, контакты фазы С',
-									resistance: 0,
+									resistance: 1000000000,
 									voltage: 0,
 									groundContact: false,
 									wireContact: false,
@@ -238,8 +238,8 @@ const initialState: InitialState = {
 								{
 									id: 'p.5.2',
 									name: 'Фаза С от пускателя до двигателя',
-									resistance: 0,
-									voltage: 220,
+									resistance: 0.1,
+									voltage: 0,
 									groundContact: false,
 									wireContact: false,
 									malfunctions: [
@@ -268,7 +268,7 @@ const initialState: InitialState = {
 								{
 									id: 'p.6.2',
 									name: 'Электродвигатель задвижки, обмотка фазы С',
-									resistance: 0,
+									resistance: 4.1,
 									voltage: 0,
 									groundContact: false,
 									wireContact: false,
@@ -298,7 +298,7 @@ const initialState: InitialState = {
 					{
 						id: 'p.1.2',
 						name: 'Фаза B до вводного автомата',
-						resistance: 0,
+						resistance: 0.1,
 						voltage: 220,
 						groundContact: false,
 						wireContact: false,
@@ -354,7 +354,7 @@ const initialState: InitialState = {
 					{
 						id: 'p.3.2',
 						name: 'Фаза B от автомата до пускателей',
-						resistance: 0,
+						resistance: 0.1,
 						voltage: 220,
 						groundContact: false,
 						wireContact: false,
@@ -382,7 +382,7 @@ const initialState: InitialState = {
 							{
 								id: 'p.4.2.1',
 								name: 'Пускатель открыть, контакты фазы B',
-								resistance: 0,
+								resistance: 1000000000,
 								voltage: 0,
 								groundContact: false,
 								wireContact: false,
@@ -407,7 +407,7 @@ const initialState: InitialState = {
 							{
 								id: 'p.4.2.2',
 								name: 'Пускатель закрыть, контакты фазы B',
-								resistance: 0,
+								resistance: 1000000000,
 								voltage: 0,
 								groundContact: false,
 								wireContact: false,
@@ -434,8 +434,8 @@ const initialState: InitialState = {
 					{
 						id: 'p.5.2',
 						name: 'Фаза С от пускателя до двигателя',
-						resistance: 0,
-						voltage: 220,
+						resistance: 0.1,
+						voltage: 0,
 						groundContact: false,
 						wireContact: false,
 						malfunctions: [
@@ -464,7 +464,7 @@ const initialState: InitialState = {
 					{
 						id: 'p.6.2',
 						name: 'Электродвигатель задвижки, обмотка фазы В',
-						resistance: 0,
+						resistance: 4.1,
 						voltage: 0,
 						groundContact: false,
 						wireContact: false,
@@ -491,7 +491,7 @@ const initialState: InitialState = {
 					{
 						id: 'p.1.3',
 						name: 'Фаза C до вводного автомата',
-						resistance: 0,
+						resistance: 0.1,
 						voltage: 220,
 						groundContact: false,
 						wireContact: false,
@@ -551,7 +551,7 @@ const initialState: InitialState = {
 					{
 						id: 'p.3.3',
 						name: 'Фаза C от автомата до пускателей',
-						resistance: 0,
+						resistance: 0.1,
 						voltage: 220,
 						groundContact: false,
 						wireContact: false,
@@ -584,7 +584,7 @@ const initialState: InitialState = {
 								{
 									id: 'p.4.3.1',
 									name: 'Пускатель закрыть, контакты фазы C',
-									resistance: 0,
+									resistance: 1000000000,
 									voltage: 0,
 									groundContact: false,
 									wireContact: false,
@@ -609,8 +609,8 @@ const initialState: InitialState = {
 								{
 									id: 'p.5.3',
 									name: 'Фаза C от пускателя до двигателя',
-									resistance: 0,
-									voltage: 220,
+									resistance: 0.1,
+									voltage: 0,
 									groundContact: false,
 									wireContact: false,
 									malfunctions: [
@@ -639,7 +639,7 @@ const initialState: InitialState = {
 								{
 									id: 'p.6.3',
 									name: 'Электродвигатель задвижки, обмотка фазы C',
-									resistance: 0,
+									resistance: 4.1,
 									voltage: 0,
 									groundContact: false,
 									wireContact: false,
@@ -666,7 +666,7 @@ const initialState: InitialState = {
 								{
 									id: 'p.4.1.1',
 									name: 'Пускатель открыть, контакты фазы А',
-									resistance: 0,
+									resistance: 1000000000,
 									voltage: 0,
 									groundContact: false,
 									wireContact: false,
@@ -691,8 +691,8 @@ const initialState: InitialState = {
 								{
 									id: 'p.5.1',
 									name: 'Фаза A от пускателя до двигателя',
-									resistance: 0,
-									voltage: 220,
+									resistance: 0.1,
+									voltage: 0,
 									groundContact: false,
 									wireContact: false,
 									malfunctions: [
@@ -721,7 +721,7 @@ const initialState: InitialState = {
 								{
 									id: 'p.6.1',
 									name: 'Электродвигатель задвижки, обмотка фазы А',
-									resistance: 0,
+									resistance: 4.1,
 									voltage: 0,
 									groundContact: false,
 									wireContact: false,
@@ -755,7 +755,7 @@ const initialState: InitialState = {
 			id: 'c.1',
 			name: 'Автомат питания цепей управления',
 			resistance: 0,
-			voltage: 0,
+			voltage: 220,
 			groundContact: false,
 			wireContact: false,
 			malfunctions: [
@@ -779,8 +779,8 @@ const initialState: InitialState = {
 		{
 			id: 'c.2',
 			name: 'Фаза А',
-			resistance: 0,
-			voltage: 0,
+			resistance: 0.1,
+			voltage: 220,
 			groundContact: false,
 			wireContact: false,
 			malfunctions: [
@@ -814,7 +814,7 @@ const initialState: InitialState = {
 						id: 'c.3.1.1',
 						name: 'Концевой выключатель открыто',
 						resistance: 0,
-						voltage: 0,
+						voltage: 220,
 						groundContact: false,
 						wireContact: false,
 						malfunctions: [
@@ -838,8 +838,8 @@ const initialState: InitialState = {
 					{
 						id: 'c.3.1.2',
 						name: 'Провод концевого выключателя открыто до клемника КРУЗА-П',
-						resistance: 0,
-						voltage: 0,
+						resistance: 0.1,
+						voltage: 220,
 						groundContact: false,
 						wireContact: false,
 						malfunctions: [
@@ -871,7 +871,7 @@ const initialState: InitialState = {
 								id: 'c.3.1.3.1',
 								name: 'Вставка NDI (сигнал «не открыто»)',
 								resistance: 0,
-								voltage: 0,
+								voltage: 220,
 								groundContact: false,
 								wireContact: false,
 								malfunctions: [
@@ -893,7 +893,7 @@ const initialState: InitialState = {
 										{
 											id: 'c.3.1.3.2.1.1',
 											name: 'Вставка NDI (команда открыть с ПТК)',
-											resistance: 0,
+											resistance: 1000000000,
 											voltage: 0,
 											groundContact: false,
 											wireContact: false,
@@ -913,7 +913,7 @@ const initialState: InitialState = {
 										{
 											id: 'c.3.1.3.2.1.2',
 											name: 'Кнопка КРУЗА-П (команда открыть с КРУЗА-П)',
-											resistance: 0,
+											resistance: 1000000000,
 											voltage: 0,
 											groundContact: false,
 											wireContact: false,
@@ -955,7 +955,7 @@ const initialState: InitialState = {
 								{
 									id: 'c.3.1.3.2.3',
 									name: 'Катушка пускателя открыть',
-									resistance: 0,
+									resistance: 6400,
 									voltage: 0,
 									groundContact: false,
 									wireContact: false,
@@ -971,7 +971,7 @@ const initialState: InitialState = {
 							{
 								id: 'c.3.1.3.3',
 								name: 'Лампа в КРУЗА-П закрыто',
-								resistance: 0,
+								resistance: 4800,
 								voltage: 0,
 								groundContact: false,
 								wireContact: false,
@@ -992,7 +992,7 @@ const initialState: InitialState = {
 						id: 'c.3.2.1',
 						name: 'Концевой выключатель закрыто',
 						resistance: 0,
-						voltage: 0,
+						voltage: 220,
 						groundContact: false,
 						wireContact: false,
 						malfunctions: [
@@ -1016,8 +1016,8 @@ const initialState: InitialState = {
 					{
 						id: 'c.3.2.2',
 						name: 'Провод концевого выключателя закрыто до клемника КРУЗА-П',
-						resistance: 0,
-						voltage: 0,
+						resistance: 0.1,
+						voltage: 220,
 						groundContact: false,
 						wireContact: false,
 						malfunctions: [
@@ -1049,7 +1049,7 @@ const initialState: InitialState = {
 								id: 'c.3.2.3.1',
 								name: 'Вставка NDI (сигнал «не закрыто»)',
 								resistance: 0,
-								voltage: 0,
+								voltage: 220,
 								groundContact: false,
 								wireContact: false,
 								malfunctions: [
@@ -1071,7 +1071,7 @@ const initialState: InitialState = {
 										{
 											id: 'c.3.2.3.2.1.1',
 											name: 'Вставка NDI (команда закрыть с ПТК)',
-											resistance: 0,
+											resistance: 1000000000,
 											voltage: 0,
 											groundContact: false,
 											wireContact: false,
@@ -1091,7 +1091,7 @@ const initialState: InitialState = {
 										{
 											id: 'c.3.2.3.2.1.2',
 											name: 'Кнопка КРУЗА-П (команда закрыть с КРУЗА-П)',
-											resistance: 0,
+											resistance: 1000000000,
 											voltage: 0,
 											groundContact: false,
 											wireContact: false,
@@ -1133,7 +1133,7 @@ const initialState: InitialState = {
 								{
 									id: 'c.3.2.3.2.3',
 									name: 'Катушка пускателя закрыть',
-									resistance: 0,
+									resistance: 6400,
 									voltage: 0,
 									groundContact: false,
 									wireContact: false,
@@ -1149,7 +1149,7 @@ const initialState: InitialState = {
 							{
 								id: 'c.3.2.3.3',
 								name: 'Лампа в КРУЗА-П открыто',
-								resistance: 0,
+								resistance: 4800,
 								voltage: 0,
 								groundContact: false,
 								wireContact: false,
@@ -1180,6 +1180,105 @@ const initialState: InitialState = {
 					active: false,
 				},
 			],
+		},
+	],
+};
+
+const measuringPoints = {
+	powerPoints: [
+		{
+			id: 'p.p.0.1',
+			name: 'Фаза А до вводного автомата',
+		},
+		{
+			id: 'p.p.0.2',
+			name: 'Фаза B до вводного автомата',
+		},
+		{
+			id: 'p.p.0.3',
+			name: 'Фаза C до вводного автомата',
+		},
+		{
+			id: 'p.p.2.1',
+			name: 'Фаза А после вводного автомата',
+		},
+		{
+			id: 'p.p.2.2',
+			name: 'Фаза B после вводного автомата',
+		},
+		{
+			id: 'p.p.2.3',
+			name: 'Фаза C после вводного автомата',
+		},
+		{
+			id: 'p.p.3.1',
+			name: 'Фаза А перед пускателем',
+		},
+		{
+			id: 'p.p.3.2',
+			name: 'Фаза B перед пускателем',
+		},
+		{
+			id: 'p.p.3.3',
+			name: 'Фаза C перед пускателем',
+		},
+		{
+			id: 'p.p.4.1',
+			name: 'Фаза А после пускателя',
+		},
+		{
+			id: 'p.p.4.2',
+			name: 'Фаза B после пускателя',
+		},
+		{
+			id: 'p.p.4.3',
+			name: 'Фаза C после пускателя',
+		},
+		{
+			id: 'p.p.5.1',
+			name: 'Фаза А двигателя',
+		},
+		{
+			id: 'p.p.5.2',
+			name: 'Фаза B двигателя',
+		},
+		{
+			id: 'p.p.5.3',
+			name: 'Фаза C двигателя',
+		},
+	],
+	circuitPoints: [
+		{
+			id: 'p.c.0',
+			name: 'Фаза А от вводного автомата',
+		},
+		{
+			id: 'p.c.1',
+			name: 'Фаза от автомата питания цепей управления',
+		},
+		{
+			id: 'p.c.2',
+			name: 'Фаза цепей управления перед концевыми выключателями',
+		},
+		{
+			id: 'p.c.3.2.1',
+			name: 'Фаза цепей управления после концевого выключателя открыто',
+		},
+		{
+			id: 'p.c.3.2.2',
+			name: 'Фаза цепей управления после концевого выключателя закрыто',
+		},
+		{
+			id: 'p.c.3.2.3.2.1',
+			name: 'Фаза цепей управления после комынды открыть',
+		},
+		{
+			id: 'p.c.3.2.3.2.2',
+			name: 'Фаза цепей управления после комынды закрыть',
+		},
+		{
+			id: 'p.c.n',
+			name: 'Нейтраль',
 		},
 	],
 };
