@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 // Описание неисправности
 interface Malfunction {
 	id: string;
@@ -1189,7 +1189,81 @@ const faultsSlice = createSlice({
 	initialState,
 	reducers: {
 		// Активация неисправности
-		activateFault() {},
+		activateFault(
+			state: InitialState,
+			action: PayloadAction<{ id: string }>,
+		) {
+			const { id } = action.payload;
+
+			const findAndActivate = (
+				elements: CircuitElement[],
+			): CircuitElement[] => {
+				return elements.map((element: CircuitElement) => {
+					if (element.malfunctions) {
+						const updatedMalfunctions = element.malfunctions.map(
+							(malfunction: Malfunction) =>
+								malfunction.id === id
+									? { ...malfunction, active: true }
+									: malfunction,
+						);
+
+						if (
+							updatedMalfunctions.some(
+								(malfunction: Malfunction) =>
+									malfunction.id === id && malfunction.active,
+							)
+						) {
+							return {
+								...element,
+								malfunctions: updatedMalfunctions,
+							};
+						}
+					}
+
+					if ('branches' in element && element.branches) {
+						const updatedBranches = element.branches.map(
+							(branch: CircuitElement[]) =>
+								findAndActivate(branch),
+						);
+
+						const foundInBranches = updatedBranches.some(branch =>
+							branch.some(
+								element =>
+									element.id === id ||
+									(element.malfunctions &&
+										element.malfunctions.some(
+											malfunction =>
+												malfunction.id === id &&
+												malfunction.active,
+										)),
+							),
+						);
+
+						if (foundInBranches) {
+							return { ...element, branches: updatedBranches };
+						}
+					}
+
+					return { ...element };
+				});
+			};
+
+			if (id.startsWith('c')) {
+				return {
+					...state,
+					controlCircuit: findAndActivate(state.controlCircuit),
+				};
+			}
+
+			if (id.startsWith('p')) {
+				return {
+					...state,
+					powerCircuit: findAndActivate(state.powerCircuit),
+				};
+			}
+
+			return state;
+		},
 		// Деактивация неисправности
 		deactivateFault() {},
 
