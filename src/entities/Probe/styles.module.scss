@@ -5,12 +5,12 @@
 	height: 90px;
 	left: -36px;
 	z-index: 1;
+}
 
-	&:active {
-		transform: rotate(-15deg);
-		z-index: 3;
-		cursor: grabbing;
-	}
+.dragging {
+	transform: rotate(-15deg);
+	z-index: 3;
+	cursor: grabbing;
 }
 
 .black {

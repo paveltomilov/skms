@@ -18,28 +18,33 @@ export const Probe: React.FC<ProbeProps> = ({ color }) => {
 		state => state.multimeter.probeConnections[color],
 	);
 
-	const { attributes, listeners, setNodeRef, transform } = useDraggable({
-		id: color,
-		data: {
-			color,
-			type: 'probe',
-		},
-	});
+	const { attributes, listeners, setNodeRef, transform, isDragging } =
+		useDraggable({
+			id: color,
+			data: {
+				color,
+				type: 'probe',
+			},
+		});
 
 	const style = point
 		? {
-				left: `${SCHEME_POINTS[point].x + 2}px`,
-				top: `${SCHEME_POINTS[point].y + 11}px`,
+				left: `${SCHEME_POINTS[point].x + 3}px`, // + 3 чтобы щуп был по центру точки
+				top: `${SCHEME_POINTS[point].y + 11}px`, // + 11 чтобы щуп был по центру точки
 		  }
 		: {
-				transform: CSS.Translate.toString(transform),
+				transform: `${CSS.Translate.toString(
+					transform,
+				)} rotate(-15deg)`,
 		  };
 
 	return (
 		<div
 			ref={setNodeRef}
 			style={style}
-			className={`${styles.probe} ${styles[color]}`}
+			className={`${styles.probe} ${styles[color]} ${
+				isDragging && styles.dragging
+			}`}
 			{...listeners}
 			{...attributes}
 			suppressHydrationWarning={true}
