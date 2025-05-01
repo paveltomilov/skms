@@ -2,9 +2,19 @@
 @use '@/shared/scss/variables.module';
 
 .measurements {
-    height: 80vh;
-    display: flex;
-    flex-direction: column;
-    // justify-content: space-between;
-    justify-content: flex-end;
+	min-height: 100%;
+	width: 270px;
+	background: variables.$secondary-color;
+	display: flex;
+	flex-direction: column;
+	/* По умолчанию для одного элемента */
+	justify-content: flex-end;
+	align-items: center;
+	box-shadow: variables.$default-button-box-shadow;
+	padding: 14px;
+
+	&:has(> :nth-child(2)) {
+		/* Когда больше одного элемента */
+		justify-content: space-between;
+	}
 }

@@ -30,7 +30,7 @@ const eslintConfig = [
 			'coverage',
 			'*.scss',
 			'*.css',
-			'**/stories/**',
+			'**/*.stories.*',
 			'node_modules/',
 			'dist/',
 			'*.config.ts',

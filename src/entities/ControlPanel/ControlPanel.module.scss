@@ -1,0 +1,33 @@
+.panel {
+	width: 100%;
+
+	&__arrow {
+		position: absolute;
+		width: 133px;
+		height: 133px;
+		top: 112px;
+		left: 56px;
+		cursor: grab;
+
+		&:active {
+			cursor: grabbing;
+		}
+	}
+
+	&__wire {
+		position: absolute;
+		top: 295px;
+
+		&_black {
+			left: 128px;
+		}
+
+		&_grey {
+			left: 167px;
+		}
+
+		&_red {
+			left: 206px;
+		}
+	}
+}

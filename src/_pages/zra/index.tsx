@@ -10,13 +10,11 @@ const Zra = () => {
 			<Header />
 			<main className={styles.main}>
 				<Sidebar />
-				<section className={styles.page}>
-					<h1 className={styles.page__title}>Тренажёр</h1>
-					<div className={styles.page__wrapper}>
-						<Scheme />
-						<Measurements />
-					</div>
+				<section className={styles.simulator}>
+					<h1 className={styles.simulator__title}>Тренажёр</h1>
+					<Scheme />
 				</section>
+				<Measurements />
 			</main>
 			<Footer />
 		</>

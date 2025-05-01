@@ -1,0 +1,26 @@
+@use '@/shared/scss/variables.module';
+
+.display {
+	height: 53px;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	padding: 5px;
+	background-color: variables.$secondary-color;
+	border-top: 1px solid variables.$black-color;
+	border-left: 1px solid variables.$black-color;
+	border-right: 1px solid variables.$white-color;
+	border-bottom: 1px solid variables.$white-color;
+	box-shadow: variables.$window-box-shadow;
+
+	&__value {
+		font-size: 56px;
+		color: variables.$blue-color;
+		line-height: 100%;
+		white-space: nowrap;
+		overflow: hidden;
+		text-align: right;
+		width: 90%;
+	}
+}

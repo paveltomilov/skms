@@ -23,6 +23,7 @@ export interface IconSize {
 
 export interface IconColor {
 	default: string;
+	dark_grey: string;
 	disabled: string;
 	white: string;
 	white_opacity: string;
@@ -46,5 +47,3 @@ export interface OtherSizes {
 	width: number;
 	height: number;
 }
-
-export type SchemePartType = 'yb08' | 'xb10' | 'cabinet' | 'lamp';
