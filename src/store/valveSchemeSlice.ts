@@ -61,7 +61,7 @@ const initialState: InitialState = {
 				],
 			},
 			{
-				id: 'p.2',
+				id: 'p.2.1',
 				name: 'Контакты фазы А вводного автомата',
 				resistance: 0,
 				voltage: 220,
@@ -417,7 +417,6 @@ const initialState: InitialState = {
 					],
 				},
 			],
-
 			{
 				id: 'p.5.2',
 				name: 'Фаза С от пускателя до двигателя',
