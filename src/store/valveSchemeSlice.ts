@@ -760,7 +760,7 @@ const initialState: InitialState = {
 		},
 		{
 			id: 'c.2',
-			name: 'Фаза А',
+			name: 'провод фазы после автомата',
 			resistance: 0.1,
 			voltage: 220,
 			groundContact: false,
@@ -1242,6 +1242,10 @@ const measuringPoints = {
 		{
 			id: 'p.p.5.3',
 			name: 'Фаза C двигателя',
+		},
+		{
+			id: 'p.p.n',
+			name: 'Нейтраль',
 		},
 	],
 	circuitPoints: [
