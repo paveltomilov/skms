@@ -1,41 +1,39 @@
 'use client';
 
 import styles from './styles.module.scss';
-import { FC, useEffect, useRef } from 'react';
+import { FC } from 'react';
 import { SCHEME_ELEMENTS, SCHEME_POINTS } from '@/shared/configs/scheme';
 import { SchemeElement } from '@/entities/SchemeElement';
 import { SchemePoint } from '@/entities/SchemePoint';
-import { useAppDispatch } from '@/shared/hooks/store';
-import { setSchemeSize } from '@/store/multimeterSlice';
+import { useAppSelector } from '@/shared/hooks/store';
+import Probe from '@/entities/Probe';
+import { ProbeColor } from '@/shared/types/multimeter';
 
 const Scheme: FC = () => {
-	const dispatch = useAppDispatch();
-	const schemeRef = useRef<HTMLDivElement>(null);
+	const activeProbe = useAppSelector(
+		state => state.multimeter.activeProb,
+	) as ProbeColor;
 
-	useEffect(() => {
-		if (schemeRef.current) {
-			const { width, height, left, top } =
-				schemeRef.current.getBoundingClientRect();
-			dispatch(
-				setSchemeSize({
-					width,
-					height,
-					left,
-					top,
-				}),
-			);
-		}
-	}, [dispatch]);
+	const probeConnections = useAppSelector(
+		state => state.multimeter.probeConnections,
+	);
 
 	return (
-		<div ref={schemeRef} className={styles.scheme}>
+		<div className={styles.scheme}>
 			{SCHEME_ELEMENTS.map(item => (
 				<SchemeElement key={item.id} element={item} />
 			))}
 
-			{SCHEME_POINTS.map(item => (
-				<SchemePoint key={item.id} id={item.id} />
+			{Object.entries(SCHEME_POINTS).map(([id, position]) => (
+				<SchemePoint key={id} id={id} position={position} />
 			))}
+
+			{/* если щуп перетаскивается, его рендерит схема */}
+			{activeProbe && <Probe color={activeProbe} />}
+
+			{/* если щуп прикреплен к схеме, его рендерит схема */}
+			{probeConnections['black'] && <Probe color="black" />}
+			{probeConnections['red'] && <Probe color="red" />}
 		</div>
 	);
 };

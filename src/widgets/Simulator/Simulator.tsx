@@ -1,11 +1,16 @@
 'use client';
 
 import React, { ReactNode } from 'react';
-import { DndContext, DragStartEvent } from '@dnd-kit/core';
-import { useAppDispatch } from '@/shared/hooks/store';
-import { setActiveProb } from '@/store/multimeterSlice';
-import { restrictToSchemeContainer } from '@/shared/lib/restrictToSchemeContainer';
+import { DndContext, DragEndEvent, DragStartEvent } from '@dnd-kit/core';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
+import {
+	attachProbe,
+	detachProbe,
+	setActiveProb,
+} from '@/store/multimeterSlice';
 import { probeTipCollisionDetection } from '@/shared/lib/probeTipCollisionDetection';
+import { restrictToParentElement } from '@dnd-kit/modifiers';
+import { ProbeColor } from '@/shared/types/multimeter';
 
 interface Props {
 	children: ReactNode;
@@ -13,68 +18,51 @@ interface Props {
 
 export const Simulator: React.FC<Props> = ({ children }) => {
 	const dispatch = useAppDispatch();
-	/* const environmentRef = useRef<HTMLDivElement>(null);
-	const { sensors, collisionDetection, modifiers } = useDndConfig();
 
-	const [activeDragId, setActiveDragId] = useState<UniqueIdentifier | null>(
-		null,
+	const probeConnections = useAppSelector(
+		state => state.multimeter.probeConnections,
 	);
 
-	const [currentActiveData, setCurrentActiveData] =
-		useState<ActiveDragData>(null);
+	const handleDragStart = ({ active }: DragStartEvent) => {
+		const probeColor = active.id as 'red' | 'black';
+		dispatch(setActiveProb(probeColor));
+		dispatch(detachProbe(probeColor));
+	};
 
-	const { getProbeStyle, updateProbeVisualPosition } =
-		useProbeVisuals(activeDragId);
+	const handleDragEnd = ({ active, over }: DragEndEvent) => {
+		const probeColor = active.id as ProbeColor;
+		if (over && over.data.current?.type === 'point') {
+			const pointId = over.id;
 
-	const { handleProbeDragEnd } = useProbeDragHandler({
-		environmentRef,
-		onVisualPositionUpdate: updateProbeVisualPosition,
-	});
- */
-	const handleDragStart = (event: DragStartEvent) => {
-		const { active } = event;
-		dispatch(setActiveProb(active.id));
+			// Проверяем, не занята ли точка другим щупом
+			const isPointOccupied =
+				Object.values(probeConnections).includes(pointId);
 
-		/* if (isProbeDragData(active.data.current)) {
-			setCurrentActiveData(active.data.current);
+			if (!isPointOccupied) {
+				// Если если точка не занята - прикрепляем
+				dispatch(
+					attachProbe({
+						probeColor,
+						pointId,
+					}),
+				);
+			}
 		} else {
-			setCurrentActiveData(null);
-		} */
-	};
-
-	const handleDragEnd = (/* event: DragEndEvent */) => {
-		dispatch(setActiveProb(null));
-
-		/* const { active, over } = event;
-
-		if (isProbeDragData(active.data.current)) {
-			handleProbeDragEnd(active as Active, over as Over | null);
+			// Если щуп отпустили не над точкой - открепляем
+			dispatch(detachProbe(probeColor));
 		}
-
-		setActiveDragId(null);
-		setCurrentActiveData(null); */
+		dispatch(setActiveProb(null));
 	};
+
 	return (
 		<DndContext
-			/* sensors={sensors}*/
 			collisionDetection={probeTipCollisionDetection}
 			onDragStart={handleDragStart}
 			onDragEnd={handleDragEnd}
 			/* добавить  onMouseLeave */
-			modifiers={[restrictToSchemeContainer]}
+			modifiers={[restrictToParentElement]}
 		>
 			{children}
-			{/* <div ref={environmentRef} className={styles.environmentWrapper}>
-                <div className={styles.measurements}>
-                    <PopUp />
-                    <Multimeter />
-                </div>
-                <div className={styles.schemePlacement}>
-                    <Scheme />
-                </div>
-                <Probe id='probe-red' color='red' style={getProbeStyle('red')} />
-                <Probe id='probe-black' color='black' style={getProbeStyle('black')} />
-            </div>*/}
 		</DndContext>
 	);
 };

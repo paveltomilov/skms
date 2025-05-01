@@ -1,4 +1,4 @@
-import { ISchemeElement } from '../types/scheme';
+import { IPoint, ISchemeElement } from '../types/scheme';
 
 export const SCHEME_ELEMENTS: ISchemeElement[] = [
 	{
@@ -119,28 +119,28 @@ export const SCHEME_ELEMENTS: ISchemeElement[] = [
 	},
 ];
 
-export const SCHEME_POINTS = [
-	{ id: 'p.p.0.1' },
-	{ id: 'p.p.0.2' },
-	{ id: 'p.p.0.3' },
-	{ id: 'p.p.2.1' },
-	{ id: 'p.p.2.2' },
-	{ id: 'p.p.2.3' },
-	{ id: 'p.c.0' },
-	{ id: 'p.c.1' },
-	{ id: 'p.c.2' },
-	{ id: 'p.p.3.1' },
-	{ id: 'p.p.3.2' },
-	{ id: 'p.p.3.3' },
-	{ id: 'p.p.4.1' },
-	{ id: 'p.p.4.2' },
-	{ id: 'p.p.4.3' },
-	{ id: 'p.p.5.1' },
-	{ id: 'p.p.5.2' },
-	{ id: 'p.p.5.3' },
-	{ id: 'p.c.3.2.1' },
-	{ id: 'p.c.3.2.2' },
-	{ id: 'p.c.3.2.3.2.1' },
-	{ id: 'p.c.3.2.3.2.2' },
-	{ id: 'p.c.n' },
-];
+export const SCHEME_POINTS: Record<string, IPoint> = {
+	'p.p.0.1': { x: 68, y: -10 },
+	'p.p.0.2': { x: 110, y: 7 },
+	'p.p.0.3': { x: 152, y: 21 },
+	'p.p.2.1': { x: 68, y: 171 },
+	'p.p.2.2': { x: 110, y: 171 },
+	'p.p.2.3': { x: 152, y: 171 },
+	'p.c.0': { x: 68, y: 195 },
+	'p.c.1': { x: 300, y: 195 },
+	'p.c.2': { x: 352, y: 195 },
+	'p.p.3.1': { x: 68, y: 310 },
+	'p.p.3.2': { x: 110, y: 280 },
+	'p.p.3.3': { x: 152, y: 247 },
+	'p.p.4.1': { x: 152, y: 247 },
+	'p.p.4.2': { x: 110, y: 415 },
+	'p.p.4.3': { x: 152, y: 385 },
+	'p.p.5.1': { x: 68, y: 560 },
+	'p.p.5.2': { x: 110, y: 560 },
+	'p.p.5.3': { x: 152, y: 560 },
+	'p.c.3.2.1': { x: 573, y: 195 },
+	'p.c.3.2.2': { x: 573, y: 458 },
+	'p.c.3.2.3.2.1': { x: 775, y: 195 },
+	'p.c.3.2.3.2.2': { x: 746, y: 458 },
+	'p.c.n': { x: 930, y: 195 },
+};

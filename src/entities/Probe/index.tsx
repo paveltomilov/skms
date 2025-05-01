@@ -3,28 +3,37 @@
 import React from 'react';
 import { useDraggable } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
-import styles from './Probe.module.scss';
+import styles from './styles.module.scss';
 import ProbeIcon from '@/shared/UI/icons/Probe';
-
-import { ProbeColor } from '@/shared/types/simulator';
-import { DndItemType } from '@/shared/configs/simulator.constants';
+import { useAppSelector } from '@/shared/hooks/store';
+import { SCHEME_POINTS } from '@/shared/configs/scheme';
+import { ProbeColor } from '@/shared/types/multimeter';
 
 interface ProbeProps {
 	color: ProbeColor;
 }
 
 export const Probe: React.FC<ProbeProps> = ({ color }) => {
+	const point = useAppSelector(
+		state => state.multimeter.probeConnections[color],
+	);
+
 	const { attributes, listeners, setNodeRef, transform } = useDraggable({
 		id: color,
 		data: {
-			type: DndItemType.PROBE,
-			probeColor: color,
+			color,
+			type: 'probe',
 		},
 	});
 
-	const style = {
-		transform: CSS.Translate.toString(transform),
-	};
+	const style = point
+		? {
+				left: `${SCHEME_POINTS[point].x + 2}px`,
+				top: `${SCHEME_POINTS[point].y + 11}px`,
+		  }
+		: {
+				transform: CSS.Translate.toString(transform),
+		  };
 
 	return (
 		<div

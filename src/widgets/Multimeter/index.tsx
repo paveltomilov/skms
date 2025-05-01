@@ -8,6 +8,11 @@ import Probe from '@/entities/Probe';
 
 const Multimeter: React.FC = () => {
 	const multimeterState = useAppSelector(state => state.multimeter);
+	const activeProbe = useAppSelector(state => state.multimeter.activeProb);
+	const probeConnections = useAppSelector(
+		state => state.multimeter.probeConnections,
+	);
+
 	return (
 		<div className={styles.multimeter}>
 			<Display value={multimeterState.displayValue} />
@@ -15,12 +20,18 @@ const Multimeter: React.FC = () => {
 			<ProbeHolder
 				className={`${styles.multimeter__probeHolder} ${styles.multimeter__probeHolder_black}`}
 			>
-				<Probe color="black" />
+				{/* если щуп не перетаскивается и не прикреплен к схеме, он рендерится мультиметром */}
+				{activeProbe !== 'black' && !probeConnections['black'] && (
+					<Probe color="black" />
+				)}
 			</ProbeHolder>
 			<ProbeHolder
 				className={`${styles.multimeter__probeHolder} ${styles.multimeter__probeHolder_red}`}
 			>
-				<Probe color="red" />
+				{/* если щуп не перетаскивается и не прикреплен к схеме, он рендерится мультиметром */}
+				{activeProbe !== 'red' && !probeConnections['red'] && (
+					<Probe color="red" />
+				)}
 			</ProbeHolder>
 		</div>
 	);

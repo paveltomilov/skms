@@ -22,61 +22,16 @@ export type MultimeterMode =
 	| 'DCV_2000m'
 	| 'DCV_200m';
 
-export type MeasurementType =
-	| 'VOLTAGE_DC'
-	| 'VOLTAGE_AC'
-	| 'CURRENT_DC'
-	// | 'CURRENT_AC'
-	| 'RESISTANCE'
-	| 'CONTINUITY'
-	| 'DIODE_CHECK'
-	| 'TRANSISTOR_HFE'
-	| 'OFF';
-
-export interface ProbePosition {
-	x: number;
-	y: number;
-}
-
 export interface ProbeConnection {
-	targetId: string | null;
-	targetType: 'node' | null;
-}
-
-export interface ProbeConnectionsState {
-	red: ProbeConnection;
-	black: ProbeConnection;
-}
-
-export interface SchemeSize {
-	width: number;
-	height: number;
-	left: number;
-	top: number;
+	red: UniqueIdentifier | null;
+	black: UniqueIdentifier | null;
 }
 
 export interface MultimeterState {
 	currentMode: MultimeterMode;
 	displayValue: string;
-	measurementResult: number | null;
-	measurementUnit: string | null;
-	errorState: string | null;
-	probeConnections: ProbeConnectionsState;
-	probePositions: {
-		red: ProbePosition | null;
-		black: ProbePosition | null;
-	};
+	probeConnections: ProbeConnection;
 	activeProb: UniqueIdentifier | null;
-	schemeSize: SchemeSize | null;
 }
 
-export type MultimeterErrorType =
-	| 'WRONG_MODE_FOR_MEASUREMENT'
-	| 'WRONG_JACKS_FOR_MODE'
-	| 'OVERLOAD'
-	| 'FUSE_BLOWN'
-	| 'SHORT_CIRCUIT_DETECTED'
-	| 'INVALID_CONNECTION'
-	| 'CALCULATION_ERROR';
-
-export type ModeAnglesMap = Record<MultimeterMode, number>;
+export type ProbeColor = 'red' | 'black';

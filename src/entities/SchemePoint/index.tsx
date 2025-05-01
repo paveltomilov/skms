@@ -3,35 +3,31 @@
 import React from 'react';
 import { useDroppable } from '@dnd-kit/core';
 import styles from './styles.module.scss';
-import {
-	DndItemType,
-	ACCEPTABLE_NODE_TYPES,
-} from '@/shared/configs/simulator.constants';
+import { IPoint } from '@/shared/types/scheme';
 
-interface SchemePointProps {
+interface Props {
 	id: string;
+	position: IPoint;
 }
 
-export const SchemePoint: React.FC<SchemePointProps> = ({ id }) => {
+export const SchemePoint: React.FC<Props> = ({ id, position }) => {
 	const { setNodeRef, isOver } = useDroppable({
-		id: id,
+		id,
 		data: {
-			type: DndItemType.NODE,
-			nodeId: id,
-			accepts: ACCEPTABLE_NODE_TYPES,
+			id,
+			type: 'point',
+			accepts: 'probe',
 		},
 	});
 
-	const pointClassName = `${styles.schemePoint} ${styles[id]} ${
-		isOver && styles.over
-	}`;
-	/* const htmlId = `scheme-point-${id}`; */
+	const pointClassName = `${styles.schemePoint} ${isOver && styles.over}`;
 
 	return (
 		<div
-			ref={setNodeRef} // ref для dnd-kit
-			/* id={htmlId}  */ // id для HTML
-			className={pointClassName} // классы CSS
+			ref={setNodeRef}
+			id={id}
+			className={pointClassName}
+			style={{ left: `${position.x}px`, top: `${position.y}px` }}
 		></div>
 	);
 };
