@@ -1256,6 +1256,7 @@ const measuringPoints = {
 		},
 	],
 };
+console.log(measuringPoints);
 
 const faultsSlice = createSlice({
 	name: 'faults',
