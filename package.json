@@ -14,7 +14,9 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
-    "@reduxjs/toolkit": "^2.6.1",
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/modifiers": "^9.0.0",
+    "@reduxjs/toolkit": "^2.5.1",
     "next": "15.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

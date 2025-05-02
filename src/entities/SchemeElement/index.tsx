@@ -2,7 +2,7 @@
 
 import styles from './styles.module.scss';
 import { FC } from 'react';
-import { useAppDispatch } from '@/shared/hooks/store';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import { openPopup } from '@/store/popupSlice';
 import { PopupContent } from '@/shared/types/popup';
 import { ISchemeElement } from '@/shared/types/scheme';
@@ -13,7 +13,7 @@ interface Prop {
 
 export const SchemeElement: FC<Prop> = ({ element }) => {
 	const { id, icon, title, buttons } = element;
-
+	const activeProb = useAppSelector(state => state.multimeter.activeProb);
 	const dispatch = useAppDispatch();
 
 	const handleOpenPopup = (content: PopupContent | null = null) => {
@@ -22,7 +22,9 @@ export const SchemeElement: FC<Prop> = ({ element }) => {
 
 	return (
 		<button
-			className={`${styles.schemeElement} ${styles[id]}`}
+			className={`${styles.schemeElement} ${styles[id]} ${
+				!activeProb && styles.hover
+			}`}
 			id={id}
 			onClick={() =>
 				handleOpenPopup({

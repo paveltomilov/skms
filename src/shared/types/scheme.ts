@@ -22,3 +22,8 @@ export interface ISchemeElement {
 	icon: SchemeIconType;
 	buttons?: SchemeElementBtn[];
 }
+
+export interface IPoint {
+	x: number;
+	y: number;
+}

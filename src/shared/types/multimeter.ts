@@ -1,3 +1,5 @@
+import { UniqueIdentifier } from '@dnd-kit/core';
+
 export type MultimeterMode =
 	| 'OFF'
 	| 'ACV_750'
@@ -21,20 +23,15 @@ export type MultimeterMode =
 	| 'DCV_200m';
 
 export interface ProbeConnection {
-	targetId: string | null;
-	targetType: 'jack' | 'node' | null;
+	red: UniqueIdentifier | null;
+	black: UniqueIdentifier | null;
 }
 
-export interface ProbeConnectionsState {
-	red: ProbeConnection;
-	black: ProbeConnection;
+export interface MultimeterState {
+	currentMode: MultimeterMode;
+	displayValue: string;
+	probeConnections: ProbeConnection;
+	activeProb: UniqueIdentifier | null;
 }
 
-export type MultimeterErrorType =
-	| 'WRONG_MODE_FOR_MEASUREMENT'
-	| 'WRONG_JACKS_FOR_MODE'
-	| 'OVERLOAD'
-	| 'FUSE_BLOWN'
-	| 'SHORT_CIRCUIT_DETECTED'
-	| 'INVALID_CONNECTION'
-	| 'CALCULATION_ERROR';
+export type ProbeColor = 'red' | 'black';

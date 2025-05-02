@@ -1,8 +1,8 @@
-import { FC, ReactNode } from 'react';
+import { FC } from 'react';
 interface Props {
 	className?: string;
-	children: ReactNode;
-}
+	children?: React.ReactNode; 
+  }
 
 const ProbeHolder: FC<Props> = ({ className, children }) => {
 	return (
