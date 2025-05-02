@@ -1,0 +1,21 @@
+.probe {
+	position: absolute;
+	cursor: grab;
+	width: 29px;
+	height: 90px;
+	left: -36px;
+	z-index: 1;
+}
+
+.dragging {
+	z-index: 3;
+	cursor: grabbing;
+}
+
+.black {
+	top: 5px;
+}
+
+.red {
+	top: 95px;
+}
