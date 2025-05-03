@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+
 interface Malfunction {
 	id: string;
 	name: string;
@@ -1057,195 +1058,30 @@ const initialState: InitialState = {
 	],
 };
 
-const measuringPoints = {
-	powerPoints: [
-		{
-			id: 'p.p.0.1',
-			name: 'Фаза А до вводного автомата',
-		},
-		{
-			id: 'p.p.0.2',
-			name: 'Фаза B до вводного автомата',
-		},
-		{
-			id: 'p.p.0.3',
-			name: 'Фаза C до вводного автомата',
-		},
-		{
-			id: 'p.p.1.1',
-			name: 'Фаза А перед автоматом',
-		},
-		{
-			id: 'p.p.1.2',
-			name: 'Фаза В перед Ввтоматом',
-		},
-		{
-			id: 'p.p.1.3',
-			name: 'Фаза С перед автоматом',
-		},
-		{
-			id: 'p.p.2.1',
-			name: 'Фаза A от автомата до пускателей',
-		},
-		{
-			id: 'p.p.2.2',
-			name: 'Фаза В от автомата до пускателей',
-		},
-		{
-			id: 'p.p.2.3',
-			name: 'Фаза С от автомата до пускателей',
-		},
-		{
-			id: 'p.p.3.1.1',
-			name: 'Приходящая на пускатель открыто фаза A',
-		},
-		{
-			id: 'p.p.3.1.2',
-			name: 'Приходящая на пускатель открыто фаза В',
-		},
-		{
-			id: 'p.p.3.1.3',
-			name: 'Приходящая на пускатель открыто фаза С',
-		},
-		{
-			id: 'p.p.3.2.1',
-			name: 'Приходящая на пускатель закрыто фаза А',
-		},
-		{
-			id: 'p.p.3.2.2',
-			name: 'Приходящая на пускатель закрыто фаза B',
-		},
-		{
-			id: 'p.p.3.2.3',
-			name: 'Приходящая на пускатель закрыто фаза С',
-		},
-		{
-			id: 'p.p.4.1.1',
-			name: 'Уходящая от пускателя открыто фаза A',
-		},
-		{
-			id: 'p.p.4.1.2',
-			name: 'Уходящая от пускателя открыто фаза В',
-		},
-		{
-			id: 'p.p.4.1.3',
-			name: 'Уходящая от пускателя открыто фаза С',
-		},
-		{
-			id: 'p.p.4.2.1',
-			name: 'Уходящая от пускателя закрыто фаза A',
-		},
-		{
-			id: 'p.p.4.2.2',
-			name: 'Уходящая от пускателя закрыто фаза В',
-		},
-		{
-			id: 'p.p.4.2.3',
-			name: 'Уходящая от пускателя закрыто фаза С',
-		},
-		{
-			id: 'p.p.5.1',
-			name: 'Начало обмотки Фазы А',
-		},
-		{
-			id: 'p.p.5.2',
-			name: 'Начало обмотки Фазы В',
-		},
-		{
-			id: 'p.p.5.3',
-			name: 'Начало обмотки Фазы С',
-		},
-		{
-			id: 'p.p.n',
-			name: 'Нейтраль',
-		},
-	],
-	circuitPoints: [
-		{
-			id: 'p.c.0',
-			name: 'Фаза A от автомата в цепи контроля',
-		},
-		{
-			id: 'p.c.1',
-			name: 'Фаза на выходе автомата',
-		},
-		{
-			id: 'p.c.2',
-			name: 'Фаза питающая ветки управления',
-		},
-		{
-			id: 'p.c.3.1.1',
-			name: 'Выход фазы с концевого выключателя открыто',
-		},
-		{
-			id: 'p.c.3.1.2',
-			name: 'Клемник КРУЗА-П',
-		},
-		{
-			id: 'p.c.3.1.3.2',
-			name: 'Клемник КРУЗА-П',
-		},
-		{
-			id: 'p.с.3.1.3.2.2',
-			name: 'Управляющая фаза команды открыт',
-		},
-		{
-			id: 'p.c.3.2.1',
-			name: 'Выход фазы с концевого выключателя открыто',
-		},
-		{
-			id: 'p.c.3.2.2',
-			name: 'Клемник КРУЗА-П',
-		},
-		{
-			id: 'p.c.3.2.3.2',
-			name: 'Клемник КРУЗА-П',
-		},
-		{
-			id: 'p.с.3.2.3.2.2',
-			name: 'Управляющая фаза команды открыт',
-		},
-		{
-			id: 'p.c.n',
-			name: 'Нейтраль',
-		},
-	],
-};
-
-console.log(measuringPoints);
-
-const faultsSlice = createSlice({
-	name: 'faults',
+const circuitSlice = createSlice({
+	name: 'circuit',
 	initialState,
 	reducers: {
 		// Активация неисправности
-		activateFault() {},
+		activateMalfunction() {},
 		// Деактивация неисправности
-		deactivateFault() {},
+		deactivateMalfunction() {},
 
 		// Изменение сопротивления
 		setResistance() {},
 
 		// Изменение напряжения
 		setvoltage() {},
-
-		// Изменение контакта с землёй
-		setGroundContact() {},
-
-		// Изменение контакта с проводом
-		setWireContact() {},
 	},
 });
 
 // Экспорт экшенов
 export const {
-	activateFault,
-	deactivateFault,
+	activateMalfunction,
+	deactivateMalfunction,
 	setResistance,
 	setvoltage,
-	setGroundContact,
-	setWireContact,
-} = faultsSlice.actions;
+} = circuitSlice.actions;
 
 // Экспорт редьюсера
-export default faultsSlice.reducer;
+export default circuitSlice.reducer;

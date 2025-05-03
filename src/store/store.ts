@@ -4,6 +4,7 @@ import buttonsReducer from './buttonsSlice';
 import sidebarReducer from './sidebarSlice';
 import popupReducer from './popupSlice';
 import multimeterReducer from './multimeterSlice';
+import circuitReducer from './circuitSlice';
 
 export const store = () => {
 	return configureStore({
@@ -13,6 +14,7 @@ export const store = () => {
 			sidebar: sidebarReducer,
 			popup: popupReducer,
 			multimeter: multimeterReducer,
+			circuit: circuitReducer,
 		},
 	});
 };
