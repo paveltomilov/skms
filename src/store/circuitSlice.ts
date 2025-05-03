@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { findElementByID } from '@/shared/utils/scheme';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface Malfunction {
 	id: string;
@@ -6,7 +7,7 @@ interface Malfunction {
 	active: boolean;
 }
 
-interface CircuitElement {
+export interface CircuitElement {
 	id: string;
 	name: string;
 	resistance: number;
@@ -14,14 +15,14 @@ interface CircuitElement {
 	malfunctions: Malfunction[];
 }
 
-type CircuitBranch = CircuitElement | CircuitElement[] | CircuitBranch[];
+export type CircuitBranch = CircuitElement | CircuitElement[] | CircuitBranch[];
 
-interface InitialState {
+export interface InitialSchemeState {
 	powerCircuit: CircuitBranch[][];
 	controlCircuit: CircuitBranch[];
 }
 
-const initialState: InitialState = {
+const initialState: InitialSchemeState = {
 	powerCircuit: [
 		[
 			{
@@ -1064,11 +1065,21 @@ const circuitSlice = createSlice({
 	reducers: {
 		// Активация неисправности
 		activateMalfunction() {},
+
 		// Деактивация неисправности
 		deactivateMalfunction() {},
 
 		// Изменение сопротивления
-		setResistance() {},
+		setResistance(
+			state,
+			action: PayloadAction<{ id: string; value: number }>,
+		) {
+			const { id, value } = action.payload;
+			const element = findElementByID(id, state);
+			if (element) {
+				element.resistance = value;
+			}
+		},
 
 		// Изменение напряжения
 		setvoltage() {},
