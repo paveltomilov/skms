@@ -15,7 +15,8 @@ export interface CircuitElement {
 	malfunctions: Malfunction[];
 }
 
-export type CircuitBranch = CircuitElement | CircuitElement[] | CircuitBranch[];
+type CircuitBranch = CircuitElement | CircuitGroup;
+interface CircuitGroup extends Array<CircuitBranch> {}
 
 export interface InitialSchemeState {
 	powerCircuit: CircuitBranch[][];
@@ -1082,7 +1083,16 @@ const circuitSlice = createSlice({
 		},
 
 		// Изменение напряжения
-		setvoltage() {},
+		setVoltage(
+			state,
+			action: PayloadAction<{ id: string; value: number }>,
+		) {
+			const { id, value } = action.payload;
+			const element = findElementByID(id, state);
+			if (element) {
+				element.voltage = value;
+			}
+		},
 	},
 });
 
@@ -1091,7 +1101,7 @@ export const {
 	activateMalfunction,
 	deactivateMalfunction,
 	setResistance,
-	setvoltage,
+	setVoltage,
 } = circuitSlice.actions;
 
 // Экспорт редьюсера
