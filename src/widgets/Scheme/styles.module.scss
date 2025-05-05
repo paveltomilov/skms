@@ -1,6 +1,11 @@
 .scheme {
 	position: relative;
+	padding-right: 170px;
+	box-sizing: content-box;
 	background-image: url('../../../public/svg/scheme.svg');
+	background-size: contain;
+	background-repeat: no-repeat;
 	width: 1258px;
 	height: 656px;
+	overflow: hidden;
 }

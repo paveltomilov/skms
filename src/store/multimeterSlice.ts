@@ -1,41 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import {
+import type {
 	MultimeterMode,
-	ProbeConnectionsState,
-	/* ProbeConnection, */
+	MultimeterState,
+	ProbeColor,
 } from '@/shared/types/multimeter';
-
-interface MultimeterState {
-	currentMode: MultimeterMode;
-	displayValue: number | null;
-	measurementResult: number | null;
-	measurementUnit: string | null;
-	errorState: string | null;
-	probeConnections: ProbeConnectionsState;
-}
+import { UniqueIdentifier } from '@dnd-kit/core';
 
 const initialState: MultimeterState = {
 	currentMode: 'OFF',
-	displayValue: null,
-	measurementResult: null,
-	measurementUnit: null,
-	errorState: null,
-	probeConnections: {
-		red: { targetId: null, targetType: null },
-		black: { targetId: null, targetType: null },
-	},
+	displayValue: '',
+	probeConnections: { red: null, black: null },
+	activeProb: null,
 };
 
-/* interface SetProbeConnectionPayload {
+interface AttachProbePayload {
 	probeColor: 'red' | 'black';
-	connection: ProbeConnection;
+	pointId: UniqueIdentifier | null;
 }
-interface SetMeasurementPayload {
-	value: number | string | null;
-	unit?: string | null;
-	isError?: boolean;
-	isOverload?: boolean;
-} */
 
 export const multimeterSlice = createSlice({
 	name: 'multimeter',
@@ -45,28 +26,26 @@ export const multimeterSlice = createSlice({
 			state.currentMode = action.payload;
 		},
 
-		// Редьюсер для установки результата измерения (заглушка).
-
-		setMeasurementResult: (state, action: PayloadAction<number>) => {
-			state.displayValue = action.payload;
+		attachProbe: (state, action: PayloadAction<AttachProbePayload>) => {
+			const { probeColor, pointId } = action.payload;
+			state.probeConnections[probeColor] = pointId;
 		},
-		// Редьюсер для установки состояния ошибки (заглушка).
 
-		/* 	setErrorState: (_state, _action: PayloadAction<string | null>) => {},
-		
-		 //Редьюсер для обновления подключения щупа (заглушка).
-		setProbeConnection: (
-			_state,
-			_action: PayloadAction<SetProbeConnectionPayload>,
-		) => {}, */
+		detachProbe: (state, action: PayloadAction<ProbeColor>) => {
+			const probeColor = action.payload;
+			state.probeConnections[probeColor] = null;
+		},
+
+		setActiveProb: (
+			state,
+			action: PayloadAction<UniqueIdentifier | null>,
+		) => {
+			state.activeProb = action.payload;
+		},
 	},
 });
 
-export const {
-	setCurrentMode,
-	setMeasurementResult,
-	/*setErrorState,
-	setProbeConnection, */
-} = multimeterSlice.actions;
+export const { setCurrentMode, attachProbe, detachProbe, setActiveProb } =
+	multimeterSlice.actions;
 
 export default multimeterSlice.reducer;
