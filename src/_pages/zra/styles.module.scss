@@ -8,18 +8,18 @@
 	position: relative;
 	overflow-x: hidden;
 	display: flex;
+	justify-content: space-between;
 }
 
 .simulator {
 	display: flex;
 	flex-direction: column;
-	padding: 12px 0;
-	margin-left: 200px;
+	margin: 12px 0;
+	margin-left: auto;
 
 	&__title {
 		font-weight: 400;
 		font-size: 32px;
 		align-self: flex-start;
-		margin-bottom: 20px;
 	}
 }
