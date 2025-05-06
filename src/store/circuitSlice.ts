@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { findElementByID } from '@/shared/utils/sheme';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface Malfunction {
 	id: string;
@@ -6,7 +7,7 @@ interface Malfunction {
 	active: boolean;
 }
 
-interface CircuitElement {
+export interface CircuitElement {
 	id: string;
 	name: string;
 	resistance: number;
@@ -17,12 +18,12 @@ interface CircuitElement {
 type CircuitBranch = CircuitElement | CircuitGroup;
 interface CircuitGroup extends Array<CircuitBranch> {}
 
-interface InitialState {
+export interface InitialState {
 	powerCircuit: CircuitBranch[][];
 	controlCircuit: CircuitBranch[];
 }
 
-const initialState: InitialState = {
+export const initialState: InitialState = {
 	powerCircuit: [
 		[
 			{
@@ -1064,9 +1065,34 @@ const circuitSlice = createSlice({
 	initialState,
 	reducers: {
 		// Активация неисправности
-		activateMalfunction() {},
+		activateMalfunction(
+			state: InitialState,
+			action: PayloadAction<{ id: string }>,
+		) {
+			const { id } = action.payload; // id неисправности
+			const elementId = id.slice(0, -2); // id для поиска элемента
+			const element = findElementByID(elementId, state);
+			const malfunction = +id.slice(-1) - 1;
+			
+			if (element) {
+				element.malfunctions[malfunction].active = true;
+			}	
+		},
+
 		// Деактивация неисправности
-		deactivateMalfunction() {},
+		deactivateMalfunction(
+			state: InitialState,
+			action: PayloadAction<{ id: string }>,
+		) {
+			const { id } = action.payload; // id неисправности
+			const elementId = id.slice(0, -2); // id для поиска элемента
+			const element = findElementByID(elementId, state);
+			const malfunction = +id.slice(-1) - 1;
+			
+			if (element) {
+				element.malfunctions[malfunction].active = false;
+			}
+		},
 
 		// Изменение сопротивления
 		setResistance() {},
