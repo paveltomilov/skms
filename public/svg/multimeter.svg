@@ -530,7 +530,7 @@
   </symbol>
 
   <!-- щупы -->
-  <symbol id="probe-black" width="30" height="91" viewBox="0 0 30 91" fill="none">
+  <symbol id="probe-black" width="17" height="78" viewBox="0 0 17 78" fill="none">
     <g filter="url(#filter0_ddddd_2196_14730)">
       <path
         d="M2 37L4 36L16 36L18 37L18 55L16 55L16 70L18 72L18 79L2 79L1 78L2 72L4 70L4 55L2 55L2 37Z"
@@ -544,7 +544,7 @@
       </g>
     </g>
     <defs>
-      <filter id="filter0_ddddd_2196_14730" x="0" y="0" width="30" height="91"
+      <filter id="filter0_ddddd_2196_14730" x="0" y="0" width="17" height="78"
         filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
         <feFlood flood-opacity="0" result="BackgroundImageFix" />
         <feColorMatrix in="SourceAlpha" type="matrix"
@@ -607,7 +607,7 @@
     </defs>
   </symbol>
 
-  <symbol id="probe-red" width="30" height="91" viewBox="0 0 30 91" fill="none">
+  <symbol id="probe-red" width="17" height="78" viewBox="0 0 17 78" fill="none">
     <g filter="url(#filter0_ddddd_2196_14722)">
       <path
         d="M2 36.999L4 35.999L16 35.999L18 36.999L18 54.999L16 54.999L16 69.999L18 71.999L18 78.999L2 78.999L1 77.999L2 71.999L4 69.999L4 54.999L2 54.999L2 36.999Z"
@@ -621,7 +621,7 @@
       </g>
     </g>
     <defs>
-      <filter id="filter0_ddddd_2196_14722" x="0" y="-0.000976562" width="30" height="91"
+      <filter id="filter0_ddddd_2196_14722" x="0" y="-0.000976562" width="17" height="78"
         filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
         <feFlood flood-opacity="0" result="BackgroundImageFix" />
         <feColorMatrix in="SourceAlpha" type="matrix"
