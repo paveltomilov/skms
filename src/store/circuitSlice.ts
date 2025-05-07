@@ -1086,3 +1086,6 @@ export const {
 
 // Экспорт редьюсера
 export default circuitSlice.reducer;
+
+
+
