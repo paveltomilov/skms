@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { findElementByID } from '@/shared/utils/scheme';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface Malfunction {
 	id: string;
@@ -1105,14 +1106,33 @@ const circuitSlice = createSlice({
 	reducers: {
 		// Активация неисправности
 		activateMalfunction() {},
+
 		// Деактивация неисправности
 		deactivateMalfunction() {},
 
 		// Изменение сопротивления
-		setResistance() {},
+		setResistance(
+			state,
+			action: PayloadAction<{ id: string; value: number }>,
+		) {
+			const { id, value } = action.payload;
+			const element = findElementByID(id, state);
+			if (element) {
+				element.resistance = value;
+			}
+		},
 
 		// Изменение напряжения
-		setvoltage() {},
+		setVoltage(
+			state,
+			action: PayloadAction<{ id: string; value: number }>,
+		) {
+			const { id, value } = action.payload;
+			const element = findElementByID(id, state);
+			if (element) {
+				element.voltage = value;
+			}
+		},
 	},
 });
 
@@ -1121,7 +1141,7 @@ export const {
 	activateMalfunction,
 	deactivateMalfunction,
 	setResistance,
-	setvoltage,
+	setVoltage,
 } = circuitSlice.actions;
 
 // Экспорт редьюсера
