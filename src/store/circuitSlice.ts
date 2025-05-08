@@ -1,7 +1,7 @@
 import { findElementByID } from '@/shared/utils/scheme';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface Malfunction {
+export interface Malfunction {
 	id: string;
 	name: string;
 	active: boolean;
@@ -16,8 +16,8 @@ export interface CircuitElement {
 	malfunctions: Malfunction[];
 }
 
-type CircuitBranch = CircuitElement | CircuitGroup;
-interface CircuitGroup extends Array<CircuitBranch> {}
+export type CircuitBranch = CircuitElement | CircuitGroup;
+export interface CircuitGroup extends Array<CircuitBranch> {}
 
 export interface InitialSchemeState {
 	powerCircuit: CircuitBranch[][];
