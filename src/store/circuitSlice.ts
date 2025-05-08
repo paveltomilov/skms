@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-interface Malfunction {
+export interface Malfunction {
 	id: string;
 	name: string;
 	active: boolean;
 }
 
-interface CircuitElement {
+export interface CircuitElement {
 	id: string;
 	name: string;
 	resistance: number;
@@ -14,8 +14,8 @@ interface CircuitElement {
 	malfunctions: Malfunction[];
 }
 
-type CircuitBranch = CircuitElement | CircuitGroup;
-interface CircuitGroup extends Array<CircuitBranch> {}
+export type CircuitBranch = CircuitElement | CircuitGroup;
+export interface CircuitGroup extends Array<CircuitBranch> {}
 
 interface InitialState {
 	powerCircuit: CircuitBranch[][];
