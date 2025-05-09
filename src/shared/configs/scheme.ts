@@ -168,3 +168,12 @@ export const SCHEME_POINTS: Record<string, IPoint> = {
 	'p.c.3.2.3.2.1': { x: 766, y: 480 },
 	'p.c.3.2.3.2.2': { x: 847, y: 480 },
 };
+
+// Значения сопротивлений
+export const HIGH_RESISTANCE = 1_000_000_000;
+export const BASE_RESISTANCE = {
+	'c.3.2.3.2.1.1': 0,
+	'c.3.1.3.2.1.1': 0,
+	'c.3.2.3.2.1.2': 0,
+	'c.3.1.3.2.1.2': 0,
+};
