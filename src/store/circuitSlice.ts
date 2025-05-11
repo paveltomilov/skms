@@ -1,6 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { findElementByID } from '@/shared/utils/scheme';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface Malfunction {
+export interface Malfunction {
 	id: string;
 	name: string;
 	active: boolean;
@@ -15,8 +16,8 @@ export interface CircuitElement {
 	malfunctions: Malfunction[];
 }
 
-type CircuitBranch = CircuitElement | CircuitGroup;
-interface CircuitGroup extends Array<CircuitBranch> {}
+export type CircuitBranch = CircuitElement | CircuitGroup;
+export interface CircuitGroup extends Array<CircuitBranch> {}
 
 export interface InitialSchemeState {
 	powerCircuit: CircuitBranch[][];
@@ -307,7 +308,7 @@ const initialState: InitialSchemeState = {
 			},
 			{
 				id: 'p.2.2',
-				name: 'Сухой контакт  фазы С автомата',
+				name: 'Сухой контакт  фазы В автомата',
 				resistance: 0,
 				baseResistance: 0,
 				voltage: 220,
@@ -356,24 +357,24 @@ const initialState: InitialSchemeState = {
 			},
 			[
 				{
-					id: 'p.4.2.1',
+					id: 'p.4.1.2',
 					name: 'Контакты пускателя открыть фаза В',
 					resistance: 1000000000,
 					baseResistance: 0,
 					voltage: 0,
 					malfunctions: [
 						{
-							id: 'p.4.2.1.1',
+							id: 'p.4.1.2.1',
 							name: 'Неисправна катушка, пускатель не подтягивается',
 							active: false,
 						},
 						{
-							id: 'p.4.2.1.2',
+							id: 'p.4.1.2.2',
 							name: 'Нет контакта в контактной группе',
 							active: false,
 						},
 						{
-							id: 'p.4.2.1.3',
+							id: 'p.4.1.2.3',
 							name: 'Залипший контакт в контактной группе',
 							active: false,
 						},
@@ -881,7 +882,7 @@ const initialState: InitialSchemeState = {
 						],
 						{
 							id: 'c.3.1.3.2.2',
-							name: 'Блокировка включения пускателя на открыте',
+							name: 'Блокировка включения пускателя на открытие',
 							resistance: 0,
 							baseResistance: 0,
 							voltage: 0,
@@ -1104,15 +1105,58 @@ const circuitSlice = createSlice({
 	initialState,
 	reducers: {
 		// Активация неисправности
-		activateMalfunction() {},
+		activateMalfunction(
+			state: InitialSchemeState,
+			action: PayloadAction<{ id: string }>,
+		) {
+			const { id } = action.payload; // id неисправности
+			const elementId = id.slice(0, -2); // id для поиска элемента
+			const malfunction = +id.slice(-1) - 1; // индекс искомой неисправности в массиве malfunction
+			const element = findElementByID(elementId, state);
+
+			if (element) {
+				element.malfunctions[malfunction].active = true;
+			}
+		},
+
 		// Деактивация неисправности
-		deactivateMalfunction() {},
+		deactivateMalfunction(
+			state: InitialSchemeState,
+			action: PayloadAction<{ id: string }>,
+		) {
+			const { id } = action.payload; // id неисправности
+			const elementId = id.slice(0, -2); // id для поиска элемента
+			const malfunction = +id.slice(-1) - 1; // индекс искомой неисправности в массиве malfunction
+			const element = findElementByID(elementId, state);
+
+			if (element) {
+				element.malfunctions[malfunction].active = false;
+			}
+		},
 
 		// Изменение сопротивления
-		setResistance() {},
+		setResistance(
+			state,
+			action: PayloadAction<{ id: string; value: number }>,
+		) {
+			const { id, value } = action.payload;
+			const element = findElementByID(id, state);
+			if (element) {
+				element.resistance = value;
+			}
+		},
 
 		// Изменение напряжения
-		setvoltage() {},
+		setVoltage(
+			state,
+			action: PayloadAction<{ id: string; value: number }>,
+		) {
+			const { id, value } = action.payload;
+			const element = findElementByID(id, state);
+			if (element) {
+				element.voltage = value;
+			}
+		},
 	},
 });
 
@@ -1121,7 +1165,7 @@ export const {
 	activateMalfunction,
 	deactivateMalfunction,
 	setResistance,
-	setvoltage,
+	setVoltage,
 } = circuitSlice.actions;
 
 // Экспорт редьюсера
