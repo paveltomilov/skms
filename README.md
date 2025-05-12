@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Skill Management System
 
-## Getting Started
+Интерфейс веб-приложения, позволяющее имитировать функционирование автоматизированного рабочего места машиниста 
+на программно-техническом комплексе
 
-First, run the development server:
+## Установка и запуск
+
+1. **Клонирование репозитория:**
+
+   Клонируйте репозиторий на свою машину:
+   ```bash
+   git clone https://gitlab.guild-of-developers.ru/l2/skillsystem/frontend.git
+   cd <папка_проекта>
+
+2. **Настройка переменных окружения:**
+
+   В корне проекта находится файл .env.example, который содержит шаблон переменных окружения, используемых проектом. Для
+   правильной работы платформы в корне проекта создайте файл .env на основе .env.example и настройте его, заполнив нужные значения.
+
+3. **Запуск в Docker:** 
+
+   Запустите контейнеры с пересборкой образов:
+   ```
+   docker-compose up -d --build
+
+**Доступ к приложению**
+
+   После запуска приложение будет доступно по адресу:
+   ```
+   API: http://127.0.0.1:3000/ (порт возможно изменится)
+   ```
+   
+ **Остановка контейнера**
+
+   Чтобы остановить контейнеры, выполните:
+   ```
+   docker-compose down
+   ```
+    
+4. **Настройка виртуального окружения локально без Docker:**
+
+Установите зависимости:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+    npm install 
+   ```
+Запустите сервер:
+   ```bash
+  npm run dev
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Для запуска сторибук
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+    npm run sb 
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Для запуска тестов
 
-## Learn More
+```bash
+    npm run test 
+   ```
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Документация для Frontend разработчиков
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+[проведение код ревью](https://docs.google.com/document/d/19JU-Y9FXi_RTufERvckXiAwASfAuXN-llD6swcd8xAs/edit?usp=drive_link)
 
-## Deploy on Vercel
+[GIT FLOW](https://docs.google.com/document/d/18o2wA3tGDt80-be8OvAjvuYV_8QyJVkupyv1znXLE3I/edit?usp=drive_link)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+[Организация структуры папок и файлов](https://docs.google.com/document/d/1hmFT94A0qgcsDe4OMW-Ce18Ee17tQiJjQ7zaCU1sQW4/edit?usp=drive_link)
