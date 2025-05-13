@@ -13,11 +13,14 @@
  git clone https://gitlab.guild-of-developers.ru/l2/skillsystem/frontend.git
    cd <папка_проекта>
 ```
-     Перейдите на ветку develop:
-    
-  ` git checkout develop`
-   
+   Перейдите на ветку develop:
 
+   ```
+git checkout develop
+   
+```
+
+   
 2. **Настройка переменных окружения:**
 
    В корне проекта находится файл .env.example, который содержит шаблон переменных окружения, используемых проектом. Для
