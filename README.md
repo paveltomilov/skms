@@ -8,14 +8,14 @@
 1. **Клонирование репозитория:**
 
    Клонируйте репозиторий на свою машину:
-   ```bash
-   git clone https://gitlab.guild-of-developers.ru/l2/skillsystem/frontend.git
+  
+  ```
+ git clone https://gitlab.guild-of-developers.ru/l2/skillsystem/frontend.git
    cd <папка_проекта>
 ```
-
-   Перейдите на ветку develop:
+     Перейдите на ветку develop:
     
-   git checkout develop
+  ` git checkout develop`
    
 
 2. **Настройка переменных окружения:**
