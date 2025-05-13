@@ -14,7 +14,7 @@
 
 
    Перейдите на ветку develop:
-   ```bash 
+   ``` 
    git checkout develop
    
 
