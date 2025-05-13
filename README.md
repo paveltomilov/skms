@@ -13,7 +13,7 @@
     git clone https://gitlab.guild-of-developers.ru/l2/skillsystem/frontend.git
     cd <папка_проекта>
 ```
-    Перейдите на ветку develop:
+   Перейдите на ветку develop:
 
    ```
    git checkout develop
