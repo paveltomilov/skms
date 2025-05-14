@@ -196,24 +196,24 @@ const initialState: InitialSchemeState = {
 				],
 				[
 					{
-						id: 'p.4.2.3',
+						id: 'p.4.2.1',
 						name: 'Контакты пускателя закрыть фаза С',
 						resistance: 1000000000,
 						baseResistance: 0,
 						voltage: 0,
 						malfunctions: [
 							{
-								id: 'p.4.2.3.1',
+								id: 'p.4.2.1.1',
 								name: 'Неисправна катушка, пускатель не подтягивается',
 								active: false,
 							},
 							{
-								id: 'p.4.2.3.2',
+								id: 'p.4.2.1.2',
 								name: 'Нет контакта в контактной группе',
 								active: false,
 							},
 							{
-								id: 'p.4.2.3.3',
+								id: 'p.4.2.1.3',
 								name: 'Залипший контакт в контактной группе',
 								active: false,
 							},
@@ -629,24 +629,24 @@ const initialState: InitialSchemeState = {
 				],
 				[
 					{
-						id: 'p.4.2.1',
+						id: 'p.4.2.3',
 						name: 'Контакты пускателя закрыть фаза A ',
 						resistance: 1000000000,
 						baseResistance: 0,
 						voltage: 0,
 						malfunctions: [
 							{
-								id: 'p.4.2.1.1',
+								id: 'p.4.2.3.1',
 								name: 'Неисправна катушка, пускатель не подтягивается',
 								active: false,
 							},
 							{
-								id: 'p.4.2.1.2',
+								id: 'p.4.2.3.2',
 								name: 'Нет контакта в контактной группе',
 								active: false,
 							},
 							{
-								id: 'p.4.2.1.3',
+								id: 'p.4.2.3.3',
 								name: 'Залипший контакт в контактной группе',
 								active: false,
 							},
