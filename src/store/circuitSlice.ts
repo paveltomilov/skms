@@ -66,17 +66,17 @@ const initialState: InitialSchemeState = {
 				voltage: 220,
 				malfunctions: [
 					{
-						id: 'p.2.1',
+						id: 'p.2.1.1',
 						name: 'Плохой контакт на клемме, нет одной фазы',
 						active: false,
 					},
 					{
-						id: 'p.2.2',
+						id: 'p.2.1.2',
 						name: 'Ложно выбивает',
 						active: false,
 					},
 					{
-						id: 'p.2.3',
+						id: 'p.2.1.3',
 						name: 'Собирается механически, но нет коммутации',
 						active: false,
 					},
@@ -189,74 +189,74 @@ const initialState: InitialSchemeState = {
 				],
 				[
 					{
-						id: 'p.4.2.3',
+						id: 'p.4.2.1',
 						name: 'Контакты пускателя закрыть фаза С',
 						resistance: 1000000000,
 						voltage: 0,
 						malfunctions: [
 							{
-								id: 'p.4.1.3.1',
+								id: 'p.4.2.1.1',
 								name: 'Неисправна катушка, пускатель не подтягивается',
 								active: false,
 							},
 							{
-								id: 'p.4.1.3.2',
+								id: 'p.4.2.1.2',
 								name: 'Нет контакта в контактной группе',
 								active: false,
 							},
 							{
-								id: 'p.4.1.3.3',
+								id: 'p.4.2.1.3',
 								name: 'Залипший контакт в контактной группе',
 								active: false,
 							},
 						],
 					},
 					{
-						id: 'p.5.2',
+						id: 'p.5.3',
 						name: 'Фаза С от пускателя до двигателя',
 						resistance: 0.1,
 						voltage: 0,
 						malfunctions: [
 							{
-								id: 'p.5.2.1',
+								id: 'p.5.3.1',
 								name: 'Короткое замыкание с фазой C',
 								active: false,
 							},
 							{
-								id: 'p.5.2.2',
+								id: 'p.5.3.2',
 								name: 'Короткое замыкание с фазой B',
 								active: false,
 							},
 							{
-								id: 'p.5.2.3',
+								id: 'p.5.3.3',
 								name: 'Обрыв',
 								active: false,
 							},
 							{
-								id: 'p.5.2.4',
+								id: 'p.5.3.4',
 								name: 'Короткое замыкание на землю',
 								active: false,
 							},
 						],
 					},
 					{
-						id: 'p.6.2',
+						id: 'p.6.3',
 						name: 'Электродвигатель задвижки, обмотка фазы С',
 						resistance: 4.1,
 						voltage: 0,
 						malfunctions: [
 							{
-								id: 'p.6.2.1',
+								id: 'p.6.3.1',
 								name: 'Обрыв фазы',
 								active: false,
 							},
 							{
-								id: 'p.6.2.2',
+								id: 'p.6.3.2',
 								name: 'Короткое замыкание между фазами',
 								active: false,
 							},
 							{
-								id: 'p.6.2.3',
+								id: 'p.6.3.3',
 								name: 'Короткое замыкание обмотки на землю',
 								active: false,
 							},
@@ -297,7 +297,7 @@ const initialState: InitialSchemeState = {
 			},
 			{
 				id: 'p.2.2',
-				name: 'Сухой контакт  фазы С автомата',
+				name: 'Сухой контакт  фазы В автомата',
 				resistance: 0,
 				voltage: 220,
 				malfunctions: [
@@ -344,23 +344,23 @@ const initialState: InitialSchemeState = {
 			},
 			[
 				{
-					id: 'p.4.2.1',
+					id: 'p.4.1.2',
 					name: 'Контакты пускателя открыть фаза В',
 					resistance: 1000000000,
 					voltage: 0,
 					malfunctions: [
 						{
-							id: 'p.4.2.1.1',
+							id: 'p.4.1.2.1',
 							name: 'Неисправна катушка, пускатель не подтягивается',
 							active: false,
 						},
 						{
-							id: 'p.4.2.1.2',
+							id: 'p.4.1.2.2',
 							name: 'Нет контакта в контактной группе',
 							active: false,
 						},
 						{
-							id: 'p.4.2.1.3',
+							id: 'p.4.1.2.3',
 							name: 'Залипший контакт в контактной группе',
 							active: false,
 						},
@@ -397,29 +397,29 @@ const initialState: InitialSchemeState = {
 				voltage: 0,
 				malfunctions: [
 					{
-						id: 'p.5.1.1',
+						id: 'p.5.2.1',
 						name: 'Короткое замыкание с фазой А',
 						active: false,
 					},
 					{
-						id: 'p.5.1.2',
+						id: 'p.5.2.2',
 						name: 'Короткое замыкание с фазой B',
 						active: false,
 					},
 					{
-						id: 'p.5.1.3',
+						id: 'p.5.2.3',
 						name: 'Обрыв',
 						active: false,
 					},
 					{
-						id: 'p.5.1.4',
+						id: 'p.5.2.4',
 						name: 'Короткое замыкание на землю',
 						active: false,
 					},
 				],
 			},
 			{
-				id: 'p.6.2', // TODO: fix id
+				id: 'p.6.2',
 				name: 'Электродвигатель задвижки, обмотка фазы В',
 				resistance: 4.1,
 				voltage: 0,
@@ -530,23 +530,23 @@ const initialState: InitialSchemeState = {
 			[
 				[
 					{
-						id: 'p.4.3.1',
+						id: 'p.4.1.3',
 						name: 'Контакты пускателя открыть фаза С',
 						resistance: 1000000000,
 						voltage: 0,
 						malfunctions: [
 							{
-								id: 'p.4.3.1.1',
+								id: 'p.4.1.3.1',
 								name: 'Неисправна катушка, пускатель не срабатывает',
 								active: false,
 							},
 							{
-								id: 'p.4.3.1.2',
+								id: 'p.4.1.3.2',
 								name: 'Нет контакта в группе',
 								active: false,
 							},
 							{
-								id: 'p.4.3.1.3',
+								id: 'p.4.1.3.3',
 								name: 'Залипание контактов',
 								active: false,
 							},
@@ -606,30 +606,30 @@ const initialState: InitialSchemeState = {
 				],
 				[
 					{
-						id: 'p.4.1.1', // TODO: fix id
+						id: 'p.4.2.3',
 						name: 'Контакты пускателя закрыть фаза A ',
 						resistance: 1000000000,
 						voltage: 0,
 						malfunctions: [
 							{
-								id: 'p.4.1.1.1',
+								id: 'p.4.2.3.1',
 								name: 'Неисправна катушка, пускатель не подтягивается',
 								active: false,
 							},
 							{
-								id: 'p.4.1.1.2',
+								id: 'p.4.2.3.2',
 								name: 'Нет контакта в контактной группе',
 								active: false,
 							},
 							{
-								id: 'p.4.1.1.3',
+								id: 'p.4.2.3.3',
 								name: 'Залипший контакт в контактной группе',
 								active: false,
 							},
 						],
 					},
 					{
-						id: 'p.5.1', // TODO: fix id
+						id: 'p.5.1',
 						name: 'Фаза A от пускателя до двигателя',
 						resistance: 0.1,
 						voltage: 0,
@@ -657,7 +657,7 @@ const initialState: InitialSchemeState = {
 						],
 					},
 					{
-						id: 'p.6.1', // TODO: fix id
+						id: 'p.6.1',
 						name: 'Электродвигатель задвижки, обмотка фазы А',
 						resistance: 4.1,
 						voltage: 0,
@@ -849,7 +849,7 @@ const initialState: InitialSchemeState = {
 						],
 						{
 							id: 'c.3.1.3.2.2',
-							name: 'Блокировка включения пускателя на открыте',
+							name: 'Блокировка включения пускателя на открытие',
 							resistance: 0,
 							voltage: 0,
 							malfunctions: [
