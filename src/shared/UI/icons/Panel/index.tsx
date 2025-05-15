@@ -10,8 +10,8 @@ const Panel: FC<Props> = ({ className, children }) => {
 		<>
 			<svg
 				width={226}
-				height={251}
-				viewBox="0 0 226 251"
+				height={228}
+				viewBox="0 0 226 228"
 				preserveAspectRatio="xMidYMid meet"
 				className={className && className}
 			>
