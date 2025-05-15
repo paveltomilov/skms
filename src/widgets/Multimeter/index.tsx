@@ -1,6 +1,6 @@
 'use client';
 import styles from './styles.module.scss';
-import { Display } from '@/entities/Display/Display';
+import { Display } from '@/entities/Display';
 import ControlPanel from '@/entities/ControlPanel';
 import { useAppSelector } from '@/shared/hooks/store';
 import ProbeHolder from '@/shared/UI/icons/ProbeHolder';
