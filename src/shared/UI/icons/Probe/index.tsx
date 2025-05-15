@@ -13,6 +13,7 @@ const Probe: FC<Props> = ({ color = 'black', className }) => {
 			viewBox="0 0 17 78"
 			preserveAspectRatio="xMidYMid meet"
 			shapeRendering="geometricPrecision"
+			filter="drop-shadow(2px 2px 2px #00000057)"
 			className={className && className}
 		>
 			<use
