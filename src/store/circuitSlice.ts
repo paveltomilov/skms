@@ -391,7 +391,7 @@ const initialState: InitialSchemeState = {
 				},
 			],
 			{
-				id: 'p.5.2', // TODO: fix id
+				id: 'p.5.2',
 				name: 'Фаза В от пускателя до двигателя',
 				resistance: 0.1,
 				voltage: 0,
