@@ -24,7 +24,7 @@ export interface InitialSchemeState {
 	controlCircuit: CircuitBranch[];
 }
 
-const initialState: InitialSchemeState = {
+export const initialState: InitialSchemeState = {
 	powerCircuit: [
 		[
 			{
