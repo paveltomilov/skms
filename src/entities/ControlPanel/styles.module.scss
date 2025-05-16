@@ -1,13 +1,20 @@
 .panel {
 	width: 100%;
 
+	&__background {
+		position: absolute;
+		top: 5px;
+		left: 0;
+	}
+
 	&__arrow {
 		position: absolute;
 		width: 133px;
 		height: 133px;
-		top: 112px;
+		top: 107px;
 		left: 56px;
 		cursor: grab;
+		z-index: 2;
 
 		&:active {
 			cursor: grabbing;

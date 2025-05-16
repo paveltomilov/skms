@@ -1,7 +1,7 @@
 'use client';
-import styles from './Multimeter.module.scss';
-import { Display } from '@/entities/Display/Display';
-import ControlPanel from '@/entities/ControlPanel/ControlPanel';
+import styles from './styles.module.scss';
+import { Display } from '@/entities/Display';
+import ControlPanel from '@/entities/ControlPanel';
 import { useAppSelector } from '@/shared/hooks/store';
 import ProbeHolder from '@/shared/UI/icons/ProbeHolder';
 import Probe from '@/entities/Probe';
