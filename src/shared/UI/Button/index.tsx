@@ -19,10 +19,12 @@ interface ButtonProps {
 	icon?: ReactNode;
 	disabled?: boolean;
 	success?: boolean;
-	onClick?: () => void;
 	className?: string;
 	ariaLabel?: string;
 	style?: CSSProperties;
+	onClick?: () => void;
+	onMouseDown?: () => void;
+	onMouseUp?: () => void;
 }
 
 const Button = ({
@@ -34,10 +36,12 @@ const Button = ({
 	icon,
 	disabled = false,
 	success = false,
-	onClick,
 	className,
 	ariaLabel,
 	style,
+	onClick,
+	onMouseDown,
+	onMouseUp,
 }: ButtonProps) => {
 	const isActive = useAppSelector(
 		state => state.buttonsReducer.activeButtons[id] || false,
@@ -53,9 +57,11 @@ const Button = ({
 				height: `${height}px`,
 				...style,
 			}}
-			onClick={onClick}
 			disabled={disabled}
 			aria-label={ariaLabel}
+			onClick={onClick}
+			onMouseDown={onMouseDown}
+			onMouseUp={onMouseUp}
 		>
 			{image && (
 				<Image

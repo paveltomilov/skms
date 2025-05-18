@@ -11,7 +11,6 @@ export interface CircuitElement {
 	id: string;
 	name: string;
 	resistance: number;
-	baseResistance: number;
 	voltage: number;
 	malfunctions: Malfunction[];
 }
@@ -24,14 +23,13 @@ export interface InitialSchemeState {
 	controlCircuit: CircuitBranch[];
 }
 
-const initialState: InitialSchemeState = {
+export const initialState: InitialSchemeState = {
 	powerCircuit: [
 		[
 			{
 				id: 'p.1.1',
 				name: 'Провод от фазы А до автомата',
 				resistance: 0.1,
-				baseResistance: 0.1,
 				voltage: 220,
 				malfunctions: [
 					{
@@ -65,7 +63,6 @@ const initialState: InitialSchemeState = {
 				id: 'p.2.1',
 				name: 'Сухой контакт фазы А автомата',
 				resistance: 0,
-				baseResistance: 0,
 				voltage: 220,
 				malfunctions: [
 					{
@@ -89,7 +86,6 @@ const initialState: InitialSchemeState = {
 				id: 'p.3.1',
 				name: 'Провод фазы A от автомата до пускателей',
 				resistance: 0.1,
-				baseResistance: 0.1,
 				voltage: 220,
 				malfunctions: [
 					{
@@ -120,7 +116,6 @@ const initialState: InitialSchemeState = {
 						id: 'p.4.1.1',
 						name: 'Контакты пускателя открыть фаза A',
 						resistance: 1000000000,
-						baseResistance: 0,
 						voltage: 0,
 						malfunctions: [
 							{
@@ -144,7 +139,6 @@ const initialState: InitialSchemeState = {
 						id: 'p.5.1',
 						name: 'Фаза A от пускателя до двигателя',
 						resistance: 0.1,
-						baseResistance: 0.1,
 						voltage: 0,
 						malfunctions: [
 							{
@@ -173,7 +167,6 @@ const initialState: InitialSchemeState = {
 						id: 'p.6.1',
 						name: 'Электродвигатель задвижки, обмотка фазы А',
 						resistance: 4.1,
-						baseResistance: 4.1,
 						voltage: 0,
 						malfunctions: [
 							{
@@ -199,7 +192,6 @@ const initialState: InitialSchemeState = {
 						id: 'p.4.2.1',
 						name: 'Контакты пускателя закрыть фаза С',
 						resistance: 1000000000,
-						baseResistance: 0,
 						voltage: 0,
 						malfunctions: [
 							{
@@ -223,7 +215,6 @@ const initialState: InitialSchemeState = {
 						id: 'p.5.3',
 						name: 'Фаза С от пускателя до двигателя',
 						resistance: 0.1,
-						baseResistance: 0.1,
 						voltage: 0,
 						malfunctions: [
 							{
@@ -252,7 +243,6 @@ const initialState: InitialSchemeState = {
 						id: 'p.6.3',
 						name: 'Электродвигатель задвижки, обмотка фазы С',
 						resistance: 4.1,
-						baseResistance: 4.1,
 						voltage: 0,
 						malfunctions: [
 							{
@@ -280,7 +270,6 @@ const initialState: InitialSchemeState = {
 				id: 'p.1.2',
 				name: 'Провод от фазы В до автомата',
 				resistance: 0.1,
-				baseResistance: 0.1,
 				voltage: 220,
 				malfunctions: [
 					{
@@ -310,7 +299,6 @@ const initialState: InitialSchemeState = {
 				id: 'p.2.2',
 				name: 'Сухой контакт  фазы В автомата',
 				resistance: 0,
-				baseResistance: 0,
 				voltage: 220,
 				malfunctions: [
 					{
@@ -334,7 +322,6 @@ const initialState: InitialSchemeState = {
 				id: 'p.3.2',
 				name: 'Провод фазы B от автомата до пускателей',
 				resistance: 0.1,
-				baseResistance: 0.1,
 				voltage: 220,
 				malfunctions: [
 					{
@@ -360,7 +347,6 @@ const initialState: InitialSchemeState = {
 					id: 'p.4.1.2',
 					name: 'Контакты пускателя открыть фаза В',
 					resistance: 1000000000,
-					baseResistance: 0,
 					voltage: 0,
 					malfunctions: [
 						{
@@ -384,7 +370,6 @@ const initialState: InitialSchemeState = {
 					id: 'p.4.2.2',
 					name: 'Контакты пускателя закрыть фаза В',
 					resistance: 1000000000,
-					baseResistance: 0,
 					voltage: 0,
 					malfunctions: [
 						{
@@ -409,7 +394,6 @@ const initialState: InitialSchemeState = {
 				id: 'p.5.2',
 				name: 'Фаза В от пускателя до двигателя',
 				resistance: 0.1,
-				baseResistance: 0.1,
 				voltage: 0,
 				malfunctions: [
 					{
@@ -438,7 +422,6 @@ const initialState: InitialSchemeState = {
 				id: 'p.6.2',
 				name: 'Электродвигатель задвижки, обмотка фазы В',
 				resistance: 4.1,
-				baseResistance: 4.1,
 				voltage: 0,
 				malfunctions: [
 					{
@@ -464,7 +447,6 @@ const initialState: InitialSchemeState = {
 				id: 'p.1.3',
 				name: 'Провод от фазы С до автомата',
 				resistance: 0.1,
-				baseResistance: 0.1,
 				voltage: 220,
 				malfunctions: [
 					{
@@ -498,7 +480,6 @@ const initialState: InitialSchemeState = {
 				id: 'p.2.3',
 				name: 'Сухой контакт  фазы С автомата',
 				resistance: 0,
-				baseResistance: 0,
 				voltage: 220,
 				malfunctions: [
 					{
@@ -522,7 +503,6 @@ const initialState: InitialSchemeState = {
 				id: 'p.3.3',
 				name: 'Провод фазы C от автомата до пускателей',
 				resistance: 0.1,
-				baseResistance: 0.1,
 				voltage: 220,
 				malfunctions: [
 					{
@@ -553,7 +533,6 @@ const initialState: InitialSchemeState = {
 						id: 'p.4.1.3',
 						name: 'Контакты пускателя открыть фаза С',
 						resistance: 1000000000,
-						baseResistance: 0,
 						voltage: 0,
 						malfunctions: [
 							{
@@ -577,7 +556,6 @@ const initialState: InitialSchemeState = {
 						id: 'p.5.3',
 						name: 'Фаза С от пускателя до двигателя',
 						resistance: 0.1,
-						baseResistance: 0.1,
 						voltage: 0,
 						malfunctions: [
 							{
@@ -606,7 +584,6 @@ const initialState: InitialSchemeState = {
 						id: 'p.6.3',
 						name: 'Электродвигатель задвижки, обмотка фазы C',
 						resistance: 4.1,
-						baseResistance: 4.1,
 						voltage: 0,
 						malfunctions: [
 							{
@@ -632,7 +609,6 @@ const initialState: InitialSchemeState = {
 						id: 'p.4.2.3',
 						name: 'Контакты пускателя закрыть фаза A ',
 						resistance: 1000000000,
-						baseResistance: 0,
 						voltage: 0,
 						malfunctions: [
 							{
@@ -656,7 +632,6 @@ const initialState: InitialSchemeState = {
 						id: 'p.5.1',
 						name: 'Фаза A от пускателя до двигателя',
 						resistance: 0.1,
-						baseResistance: 0.1,
 						voltage: 0,
 						malfunctions: [
 							{
@@ -685,7 +660,6 @@ const initialState: InitialSchemeState = {
 						id: 'p.6.1',
 						name: 'Электродвигатель задвижки, обмотка фазы А',
 						resistance: 4.1,
-						baseResistance: 4.1,
 						voltage: 0,
 						malfunctions: [
 							{
@@ -714,7 +688,6 @@ const initialState: InitialSchemeState = {
 			id: 'c.1',
 			name: 'Автомат питания цепей управления',
 			resistance: 0,
-			baseResistance: 0,
 			voltage: 220,
 			malfunctions: [
 				{
@@ -738,7 +711,6 @@ const initialState: InitialSchemeState = {
 			id: 'c.2',
 			name: 'Провод фазы после автомата',
 			resistance: 0.1,
-			baseResistance: 0.1,
 			voltage: 220,
 			malfunctions: [
 				{
@@ -770,7 +742,6 @@ const initialState: InitialSchemeState = {
 					id: 'c.3.1.1',
 					name: 'Концевой выключатель открыто',
 					resistance: 0,
-					baseResistance: 0,
 					voltage: 220,
 					malfunctions: [
 						{
@@ -794,7 +765,6 @@ const initialState: InitialSchemeState = {
 					id: 'c.3.1.2',
 					name: 'Провод концевого выключателя открыто до клемника КРУЗА-П',
 					resistance: 0.1,
-					baseResistance: 0.1,
 					voltage: 220,
 					malfunctions: [
 						{
@@ -824,7 +794,6 @@ const initialState: InitialSchemeState = {
 						id: 'c.3.1.3.1',
 						name: 'Вставка NDI (сигнал «не открыто»)',
 						resistance: 0,
-						baseResistance: 0,
 						voltage: 220,
 						malfunctions: [
 							{
@@ -845,7 +814,6 @@ const initialState: InitialSchemeState = {
 								id: 'c.3.1.3.2.1.1',
 								name: 'Вставка NDI (команда открыть с ПТК)',
 								resistance: 1000000000,
-								baseResistance: 0,
 								voltage: 0,
 								malfunctions: [
 									{
@@ -864,7 +832,6 @@ const initialState: InitialSchemeState = {
 								id: 'c.3.1.3.2.1.2',
 								name: 'Кнопка КРУЗА-П (команда открыть с КРУЗА-П)',
 								resistance: 1000000000,
-								baseResistance: 0,
 								voltage: 0,
 								malfunctions: [
 									{
@@ -884,7 +851,6 @@ const initialState: InitialSchemeState = {
 							id: 'c.3.1.3.2.2',
 							name: 'Блокировка включения пускателя на открытие',
 							resistance: 0,
-							baseResistance: 0,
 							voltage: 0,
 							malfunctions: [
 								{
@@ -903,7 +869,6 @@ const initialState: InitialSchemeState = {
 							id: 'c.3.1.3.2.3',
 							name: 'Катушка пускателя открыть',
 							resistance: 6400,
-							baseResistance: 6400,
 							voltage: 0,
 							malfunctions: [
 								{
@@ -918,7 +883,6 @@ const initialState: InitialSchemeState = {
 						id: 'c.3.1.3.3',
 						name: 'Лампа в КРУЗА-П закрыто',
 						resistance: 4800,
-						baseResistance: 4800,
 						voltage: 0,
 						malfunctions: [
 							{
@@ -936,7 +900,6 @@ const initialState: InitialSchemeState = {
 					id: 'c.3.2.1',
 					name: 'Концевой выключатель закрыто',
 					resistance: 0,
-					baseResistance: 0,
 					voltage: 220,
 					malfunctions: [
 						{
@@ -960,7 +923,6 @@ const initialState: InitialSchemeState = {
 					id: 'c.3.2.2',
 					name: 'Провод концевого выключателя закрыто до клемника КРУЗА-П',
 					resistance: 0.1,
-					baseResistance: 0.1,
 					voltage: 220,
 					malfunctions: [
 						{
@@ -990,7 +952,6 @@ const initialState: InitialSchemeState = {
 						id: 'c.3.2.3.1',
 						name: 'Вставка NDI (сигнал «не закрыто»)',
 						resistance: 0,
-						baseResistance: 0,
 						voltage: 220,
 						malfunctions: [
 							{
@@ -1011,7 +972,6 @@ const initialState: InitialSchemeState = {
 								id: 'c.3.2.3.2.1.1',
 								name: 'Вставка NDI (команда закрыть с ПТК)',
 								resistance: 1000000000,
-								baseResistance: 0,
 								voltage: 0,
 								malfunctions: [
 									{
@@ -1030,7 +990,6 @@ const initialState: InitialSchemeState = {
 								id: 'c.3.2.3.2.1.2',
 								name: 'Кнопка КРУЗА-П (команда закрыть с КРУЗА-П)',
 								resistance: 1000000000,
-								baseResistance: 0,
 								voltage: 0,
 								malfunctions: [
 									{
@@ -1050,7 +1009,6 @@ const initialState: InitialSchemeState = {
 							id: 'c.3.2.3.2.2',
 							name: 'Блокировка включения пускателя на закрыть',
 							resistance: 0,
-							baseResistance: 0,
 							voltage: 0,
 							malfunctions: [
 								{
@@ -1069,7 +1027,6 @@ const initialState: InitialSchemeState = {
 							id: 'c.3.2.3.2.3',
 							name: 'Катушка пускателя закрыть',
 							resistance: 6400,
-							baseResistance: 6400,
 							voltage: 0,
 							malfunctions: [
 								{
@@ -1084,7 +1041,6 @@ const initialState: InitialSchemeState = {
 						id: 'c.3.2.3.3',
 						name: 'Лампа в КРУЗА-П открыто',
 						resistance: 4800,
-						baseResistance: 4880,
 						voltage: 0,
 						malfunctions: [
 							{
