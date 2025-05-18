@@ -2,7 +2,7 @@ import styles from './styles.module.scss';
 import Scheme from '@/widgets/Scheme';
 import Footer from '@/widgets/Footer';
 import Sidebar from '@/widgets/Sidebar';
-import Header from '@/widgets/Header/Header';
+import Header from '@/widgets/Header';
 import Measurements from '@/widgets/Measurements';
 import Simulator from '@/widgets/Simulator/Simulator';
 const Zra = () => {
