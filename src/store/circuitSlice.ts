@@ -1,3 +1,11 @@
+import {
+	OPEN_FROM_KRUZAP_ID,
+	LIMIT_SWITCH_CLOSE_ID,
+	LIMIT_SWITCH_OPEN_ID,
+	CLOSE_FROM_KRUZAP_ID,
+	OPEN_FROM_PTK_ID,
+	CLOSE_FROM_PTK_ID,
+} from '@/shared/configs/scheme';
 import { findElementByID } from '@/shared/utils/scheme';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
@@ -739,7 +747,7 @@ export const initialState: InitialSchemeState = {
 			[
 				//ветка открыть
 				{
-					id: 'c.3.1.1',
+					id: LIMIT_SWITCH_OPEN_ID,
 					name: 'Концевой выключатель открыто',
 					resistance: 0,
 					voltage: 220,
@@ -811,7 +819,7 @@ export const initialState: InitialSchemeState = {
 					[
 						[
 							{
-								id: 'c.3.1.3.2.1.1',
+								id: OPEN_FROM_PTK_ID,
 								name: 'Вставка NDI (команда открыть с ПТК)',
 								resistance: 1000000000,
 								voltage: 0,
@@ -829,7 +837,7 @@ export const initialState: InitialSchemeState = {
 								],
 							},
 							{
-								id: 'c.3.1.3.2.1.2',
+								id: OPEN_FROM_KRUZAP_ID,
 								name: 'Кнопка КРУЗА-П (команда открыть с КРУЗА-П)',
 								resistance: 1000000000,
 								voltage: 0,
@@ -897,7 +905,7 @@ export const initialState: InitialSchemeState = {
 			[
 				//ветка закрыть
 				{
-					id: 'c.3.2.1',
+					id: LIMIT_SWITCH_CLOSE_ID,
 					name: 'Концевой выключатель закрыто',
 					resistance: 0,
 					voltage: 220,
@@ -969,7 +977,7 @@ export const initialState: InitialSchemeState = {
 					[
 						[
 							{
-								id: 'c.3.2.3.2.1.1',
+								id: CLOSE_FROM_PTK_ID,
 								name: 'Вставка NDI (команда закрыть с ПТК)',
 								resistance: 1000000000,
 								voltage: 0,
@@ -987,7 +995,7 @@ export const initialState: InitialSchemeState = {
 								],
 							},
 							{
-								id: 'c.3.2.3.2.1.2',
+								id: CLOSE_FROM_KRUZAP_ID,
 								name: 'Кнопка КРУЗА-П (команда закрыть с КРУЗА-П)',
 								resistance: 1000000000,
 								voltage: 0,

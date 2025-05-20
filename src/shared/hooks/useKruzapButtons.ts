@@ -1,4 +1,11 @@
-import { BASE_RESISTANCE, HIGH_RESISTANCE } from '../configs/scheme';
+import {
+	BASE_RESISTANCE,
+	CLOSE_FROM_KRUZAP_ID,
+	OPEN_FROM_KRUZAP_ID,
+	HIGH_RESISTANCE,
+	LIMIT_SWITCH_CLOSE_ID,
+	LIMIT_SWITCH_OPEN_ID,
+} from '../configs/scheme';
 import { findElementByID } from '../utils/scheme';
 import { useAppDispatch, useAppSelector } from './store';
 import { setResistance } from '@/store/circuitSlice';
@@ -8,13 +15,13 @@ export const useKruzapButtons = () => {
 
 	// получаем элемент схемы, от которого зависит состояние кнопки закрыть крузап
 	const closeButtonElement = findElementByID(
-		'c.3.2.1',
+		LIMIT_SWITCH_CLOSE_ID,
 		useAppSelector(state => state.circuit),
 	);
 
 	// получаем элемент схемы, от которого зависит состояние кнопки открыть крузап
 	const openButtonElement = findElementByID(
-		'c.3.1.1',
+		LIMIT_SWITCH_OPEN_ID,
 		useAppSelector(state => state.circuit),
 	);
 
@@ -22,11 +29,12 @@ export const useKruzapButtons = () => {
 	const closeDisabled = closeButtonElement.resistance === HIGH_RESISTANCE;
 	const openDisabled = openButtonElement.resistance === HIGH_RESISTANCE;
 
-	const handleButton = (
+	const handleKruzapButton = (
 		button: 'close' | 'open',
 		action: 'onMouseDown' | 'onMouseUp',
 	) => {
-		const id = button === 'close' ? 'c.3.2.3.2.1.2' : 'c.3.1.3.2.1.2';
+		const id =
+			button === 'close' ? CLOSE_FROM_KRUZAP_ID : OPEN_FROM_KRUZAP_ID;
 		const value =
 			action === 'onMouseDown' ? BASE_RESISTANCE[id] : HIGH_RESISTANCE;
 
@@ -37,5 +45,5 @@ export const useKruzapButtons = () => {
 			}),
 		);
 	};
-	return { handleButton, closeDisabled, openDisabled };
+	return { handleKruzapButton, closeDisabled, openDisabled };
 };
