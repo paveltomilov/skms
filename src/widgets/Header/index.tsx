@@ -3,14 +3,18 @@ import { FC } from 'react';
 import style from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import GateWindow from '@/entities/GateWindow/GateWindow';
-import { useKruzapButtons } from '@/shared/hooks/useKruzapButtons';
-import { usePtkButtons } from '@/shared/hooks/usePtkButtons';
+import { useHeaderButtons } from '@/shared/hooks/useHeaderButtons';
 
 const Header: FC = () => {
-	const { handleKruzapButton, closeDisabled, openDisabled } =
-		useKruzapButtons();
-	const { handlePtkButton, stopPtkDisabled, openActive, closeActive } =
-		usePtkButtons();
+	const {
+		handleKruzapButton,
+		handlePtkButton,
+		closeDisabled,
+		openDisabled,
+		stopDisabled,
+		closeActive,
+		openActive,
+	} = useHeaderButtons();
 
 	return (
 		<header className={style.header}>
@@ -33,7 +37,7 @@ const Header: FC = () => {
 						height={38}
 						id="stopPtkBtn"
 						text="Стоп"
-						disabled={stopPtkDisabled}
+						disabled={stopDisabled}
 						onClick={() => handlePtkButton('stop')}
 					/>
 					<Button
