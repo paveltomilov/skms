@@ -9,13 +9,8 @@ import { usePtkButtons } from '@/shared/hooks/usePtkButtons';
 const Header: FC = () => {
 	const { handleKruzapButton, closeDisabled, openDisabled } =
 		useKruzapButtons();
-	const {
-		handlePtkButton,
-		handleStopButton,
-		stopPtkDisabled,
-		openActive,
-		closeActive,
-	} = usePtkButtons();
+	const { handlePtkButton, stopPtkDisabled, openActive, closeActive } =
+		usePtkButtons();
 
 	return (
 		<header className={style.header}>
@@ -39,7 +34,7 @@ const Header: FC = () => {
 						id="stopPtkBtn"
 						text="Стоп"
 						disabled={stopPtkDisabled}
-						onClick={() => handleStopButton()}
+						onClick={() => handlePtkButton('stop')}
 					/>
 					<Button
 						width={106}

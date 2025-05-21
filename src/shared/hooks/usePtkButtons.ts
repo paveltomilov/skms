@@ -23,7 +23,7 @@ export const usePtkButtons = () => {
 		useAppSelector(state => state.circuit),
 	);
 
-	//если у этих элементов базовое сопротивление (близко или равно 0), то кнопка активна (нажата)
+	//если у этих элементов базовое сопротивление (~ 0), то кнопка активна (нажата)
 	const openActive =
 		openFromPtkElement.resistance === BASE_RESISTANCE[OPEN_FROM_PTK_ID];
 	const closeActive =
@@ -32,36 +32,57 @@ export const usePtkButtons = () => {
 	//кнопка стоп дизэйблена когда не нажаты кнопки открыть и закрыть птк
 	const stopPtkDisabled = !openActive && !closeActive;
 
-	const handlePtkButton = (button: 'close' | 'open') => {
-		const id = button === 'close' ? CLOSE_FROM_PTK_ID : OPEN_FROM_PTK_ID;
+	const handlePtkButton = (button: 'close' | 'open' | 'stop') => {
+		switch (button) {
+			case 'open':
+				dispatch(
+					setResistance({
+						id: OPEN_FROM_PTK_ID,
+						value: BASE_RESISTANCE[OPEN_FROM_PTK_ID],
+					}),
+				);
+				dispatch(
+					setResistance({
+						id: CLOSE_FROM_PTK_ID,
+						value: HIGH_RESISTANCE,
+					}),
+				);
+				break;
 
-		dispatch(
-			setResistance({
-				id,
-				value: BASE_RESISTANCE[id],
-			}),
-		);
-	};
+			case 'close':
+				dispatch(
+					setResistance({
+						id: CLOSE_FROM_PTK_ID,
+						value: BASE_RESISTANCE[CLOSE_FROM_PTK_ID],
+					}),
+				);
+				dispatch(
+					setResistance({
+						id: OPEN_FROM_PTK_ID,
+						value: HIGH_RESISTANCE,
+					}),
+				);
+				break;
 
-	const handleStopButton = () => {
-		dispatch(
-			setResistance({
-				id: OPEN_FROM_PTK_ID,
-				value: HIGH_RESISTANCE,
-			}),
-		);
-
-		dispatch(
-			setResistance({
-				id: CLOSE_FROM_PTK_ID,
-				value: HIGH_RESISTANCE,
-			}),
-		);
+			case 'stop':
+				dispatch(
+					setResistance({
+						id: OPEN_FROM_PTK_ID,
+						value: HIGH_RESISTANCE,
+					}),
+				);
+				dispatch(
+					setResistance({
+						id: CLOSE_FROM_PTK_ID,
+						value: HIGH_RESISTANCE,
+					}),
+				);
+				break;
+		}
 	};
 
 	return {
 		handlePtkButton,
-		handleStopButton,
 		stopPtkDisabled,
 		openActive,
 		closeActive,
