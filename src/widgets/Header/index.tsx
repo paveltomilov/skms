@@ -9,11 +9,14 @@ const Header: FC = () => {
 	const {
 		handleKruzapButton,
 		handlePtkButton,
-		closeDisabled,
-		openDisabled,
-		stopDisabled,
-		closeActive,
-		openActive,
+		stopGateMovement,
+		closeKruzapDisabled,
+		openKruzapDisabled,
+		closePtkDisabled,
+		openPtkDisabled,
+		stopPtkDisabled,
+		closePtkActive,
+		openPtkActive,
 	} = useHeaderButtons();
 
 	return (
@@ -28,8 +31,8 @@ const Header: FC = () => {
 						height={38}
 						id="closePtkBtn"
 						text="Закрыть"
-						disabled={closeDisabled}
-						active={closeActive}
+						disabled={closePtkDisabled}
+						active={closePtkActive}
 						onClick={() => handlePtkButton('close')}
 					/>
 					<Button
@@ -37,16 +40,16 @@ const Header: FC = () => {
 						height={38}
 						id="stopPtkBtn"
 						text="Стоп"
-						disabled={stopDisabled}
-						onClick={() => handlePtkButton('stop')}
+						disabled={stopPtkDisabled}
+						onClick={() => stopGateMovement()}
 					/>
 					<Button
 						width={106}
 						height={38}
 						id="openPtkBtn"
 						text="Открыть"
-						disabled={openDisabled}
-						active={openActive}
+						disabled={openPtkDisabled}
+						active={openPtkActive}
 						onClick={() => handlePtkButton('open')}
 					/>
 				</div>
@@ -59,7 +62,7 @@ const Header: FC = () => {
 						height={38}
 						id="closeKruzapBtn"
 						text="Закрыть"
-						disabled={closeDisabled}
+						disabled={closeKruzapDisabled}
 						onMouseDown={() =>
 							handleKruzapButton('close', 'onMouseDown')
 						}
@@ -72,7 +75,7 @@ const Header: FC = () => {
 						height={38}
 						id="openKruzapBtn"
 						text="Открыть"
-						disabled={openDisabled}
+						disabled={openKruzapDisabled}
 						onMouseDown={() =>
 							handleKruzapButton('open', 'onMouseDown')
 						}

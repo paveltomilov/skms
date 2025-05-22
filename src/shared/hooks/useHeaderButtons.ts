@@ -1,3 +1,4 @@
+import { setGatePosition } from '@/store/gateSlice';
 import {
 	BASE_RESISTANCE,
 	CLOSE_FROM_KRUZAP_ID,
@@ -11,25 +12,28 @@ import {
 import { findElementByID } from '../utils/scheme';
 import { useAppDispatch, useAppSelector } from './store';
 import { setResistance } from '@/store/circuitSlice';
+import { PTK_BUTTONS_CONFIG } from '../configs/header';
+import { useRef } from 'react';
 
 export const useHeaderButtons = () => {
 	const dispatch = useAppDispatch();
 
 	// получаем элемент схемы, от которого зависит disabled состояние кнопки открыть крузап и птк
-	const openButtonElement = findElementByID(
+	const limitSwitchOpenElement = findElementByID(
 		LIMIT_SWITCH_OPEN_ID,
 		useAppSelector(state => state.circuit),
 	);
 
 	// получаем элемент схемы, от которого зависит disabled состояние кнопки закрыть крузап и птк
-	const closeButtonElement = findElementByID(
+	const limitSwitchCloseElement = findElementByID(
 		LIMIT_SWITCH_CLOSE_ID,
 		useAppSelector(state => state.circuit),
 	);
 
 	//если у этих элементов сопротивление 1 млрд, то кнопки открыть/закрыть крузап и птк disabled
-	const closeDisabled = closeButtonElement.resistance === HIGH_RESISTANCE;
-	const openDisabled = openButtonElement.resistance === HIGH_RESISTANCE;
+	const openDisabled = limitSwitchOpenElement.resistance === HIGH_RESISTANCE;
+	const closeDisabled =
+		limitSwitchCloseElement.resistance === HIGH_RESISTANCE;
 
 	// получаем элемент схемы, от которого зависит active (нажатое) состояние кнопки открыть птк
 	const openFromPtkElement = findElementByID(
@@ -44,13 +48,17 @@ export const useHeaderButtons = () => {
 	);
 
 	//если у этих элементов базовое сопротивление (~ 0), то кнопки открыть/закрыть птк active (нажата)
-	const openActive =
+	const openPtkActive =
 		openFromPtkElement.resistance === BASE_RESISTANCE[OPEN_FROM_PTK_ID];
-	const closeActive =
+	const closePtkActive =
 		closeFromPtkElement.resistance === BASE_RESISTANCE[CLOSE_FROM_PTK_ID];
 
+	// у кнопок птк когда сопротивление 1млрд то она дизейбл
+	const openPtkDisabled = openFromPtkElement.resistance === HIGH_RESISTANCE;
+	const closePtkDisabled = closeFromPtkElement.resistance === HIGH_RESISTANCE;
+
 	//кнопка стоп дизэйблена когда не нажаты кнопки открыть и закрыть птк
-	const stopDisabled = !openActive && !closeActive;
+	const stopPtkDisabled = !openPtkActive && !closePtkActive;
 
 	const handleKruzapButton = (
 		button: 'close' | 'open',
@@ -69,38 +77,79 @@ export const useHeaderButtons = () => {
 		);
 	};
 
-	const handlePtkButton = (button: 'close' | 'open' | 'stop') => {
-		const config = {
-			open: [
-				{
-					id: OPEN_FROM_PTK_ID,
-					value: BASE_RESISTANCE[OPEN_FROM_PTK_ID],
-				},
-				{ id: CLOSE_FROM_PTK_ID, value: HIGH_RESISTANCE },
-			],
-			close: [
-				{
-					id: CLOSE_FROM_PTK_ID,
-					value: BASE_RESISTANCE[CLOSE_FROM_PTK_ID],
-				},
-				{ id: OPEN_FROM_PTK_ID, value: HIGH_RESISTANCE },
-			],
-			stop: [
-				{ id: OPEN_FROM_PTK_ID, value: HIGH_RESISTANCE },
-				{ id: CLOSE_FROM_PTK_ID, value: HIGH_RESISTANCE },
-			],
-		};
+	// получаем положение задвижки из стора
+	const gatePosition = useRef(useAppSelector(state => state.gate.position));
+	const gateIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
-		config[button].forEach(action => dispatch(setResistance(action)));
+	// Функция для остановки движения ворот
+	const stopGateMovement = () => {
+		// обновляем сопротивления, которые меняются сразу после нажатия на кнопку стоп
+		PTK_BUTTONS_CONFIG.stop.forEach(action => {
+			dispatch(setResistance(action));
+		});
+
+		if (gateIntervalRef.current) {
+			clearInterval(gateIntervalRef.current);
+			gateIntervalRef.current = null;
+			dispatch(setGatePosition(gatePosition.current)); // Диспатчим текущее положение при остановке
+
+			// удалить после аппрува
+			console.log(`Gate stopped at position: ${gatePosition.current}%`);
+		}
+	};
+
+	const handlePtkButton = (button: 'close' | 'open') => {
+		// обновляем сопротивления, которые меняются сразу после нажатия на кнопку открыть/закрыть
+		PTK_BUTTONS_CONFIG[button].forEach(action => {
+			dispatch(setResistance(action));
+		});
+
+		// Очищаем предыдущий интервал
+		if (gateIntervalRef.current) {
+			clearInterval(gateIntervalRef.current);
+			gateIntervalRef.current = null;
+		}
+
+		// Запускаем новый интервал
+		gateIntervalRef.current = setInterval(() => {
+			// Обновляем положение
+			if (button === 'open') {
+				gatePosition.current += 1;
+
+				if (gatePosition.current >= 100) {
+					gatePosition.current = 100;
+					stopGateMovement();
+
+					PTK_BUTTONS_CONFIG.opening.forEach(action => {
+						dispatch(setResistance(action));
+					});
+				}
+			} else if (button === 'close') {
+				gatePosition.current -= 1;
+				if (gatePosition.current <= 0) {
+					gatePosition.current = 0;
+					stopGateMovement();
+
+					PTK_BUTTONS_CONFIG.closing.forEach(action => {
+						dispatch(setResistance(action));
+					});
+				}
+			}
+			// удалить после аппрува
+			console.log(`Gate position: ${gatePosition.current}%`);
+		}, 100);
 	};
 
 	return {
 		handleKruzapButton,
 		handlePtkButton,
-		closeDisabled,
-		openDisabled,
-		stopDisabled,
-		closeActive,
-		openActive,
+		stopGateMovement,
+		openKruzapDisabled: openDisabled,
+		closeKruzapDisabled: closeDisabled,
+		openPtkDisabled: openDisabled || (openPtkDisabled && closePtkActive),
+		closePtkDisabled: closeDisabled || (closePtkDisabled && openPtkActive),
+		stopPtkDisabled,
+		openPtkActive,
+		closePtkActive,
 	};
 };

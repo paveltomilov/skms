@@ -5,12 +5,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export interface GateState {
 	state: GATE_STATE_TYPE;
 	value: number;
+	position: number;
 }
 
 // Инициализация состояния
 const initialState: GateState = {
 	state: GATE_STATE_TYPE.open,
 	value: 18.8,
+	position: 0,
 };
 
 const gateStateSlice = createSlice({
@@ -22,9 +24,12 @@ const gateStateSlice = createSlice({
 			state.state = action.payload.state;
 			state.value = action.payload.value;
 		},
+		setGatePosition: (state, action: PayloadAction<number>) => {
+			state.position = action.payload;
+		},
 	},
 });
 
-export const { setGateState } = gateStateSlice.actions;
+export const { setGateState, setGatePosition } = gateStateSlice.actions;
 
 export default gateStateSlice.reducer;

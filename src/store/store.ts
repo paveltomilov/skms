@@ -10,7 +10,7 @@ export const store = () => {
 	return configureStore({
 		reducer: {
 			buttonsReducer,
-			gateReducer,
+			gate: gateReducer,
 			sidebar: sidebarReducer,
 			popup: popupReducer,
 			multimeter: multimeterReducer,
