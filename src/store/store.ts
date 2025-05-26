@@ -5,6 +5,7 @@ import sidebarReducer from './sidebarSlice';
 import popupReducer from './popupSlice';
 import multimeterReducer from './multimeterSlice';
 import circuitReducer from './circuitSlice';
+import pointsReducer from './pointsSlice';
 
 export const store = () => {
 	return configureStore({
@@ -15,6 +16,7 @@ export const store = () => {
 			popup: popupReducer,
 			multimeter: multimeterReducer,
 			circuit: circuitReducer,
+			points: pointsReducer,
 		},
 	});
 };
