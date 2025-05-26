@@ -79,18 +79,20 @@ export const useHeaderButtons = () => {
 
 	// получаем положение задвижки из стора
 	const gatePosition = useRef(useAppSelector(state => state.gate.position));
-	const gateIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
-	// Функция для остановки движения ворот
+	// создаем интервал в глобальной ОВ, чтобы к нему можно было обращаться и изменять в функциях stopGateMovement и handlePtkButton
+	const gateInterval = useRef<NodeJS.Timeout | null>(null);
+
+	// Функция для остановки движения задвижки
 	const stopGateMovement = () => {
 		// обновляем сопротивления, которые меняются сразу после нажатия на кнопку стоп
 		PTK_BUTTONS_CONFIG.stop.forEach(action => {
 			dispatch(setResistance(action));
 		});
 
-		if (gateIntervalRef.current) {
-			clearInterval(gateIntervalRef.current);
-			gateIntervalRef.current = null;
+		if (gateInterval.current) {
+			clearInterval(gateInterval.current);
+			gateInterval.current = null;
 			dispatch(setGatePosition(gatePosition.current)); // Диспатчим текущее положение при остановке
 
 			// удалить после аппрува
@@ -105,13 +107,13 @@ export const useHeaderButtons = () => {
 		});
 
 		// Очищаем предыдущий интервал
-		if (gateIntervalRef.current) {
-			clearInterval(gateIntervalRef.current);
-			gateIntervalRef.current = null;
+		if (gateInterval.current) {
+			clearInterval(gateInterval.current);
+			gateInterval.current = null;
 		}
 
 		// Запускаем новый интервал
-		gateIntervalRef.current = setInterval(() => {
+		gateInterval.current = setInterval(() => {
 			// Обновляем положение
 			if (button === 'open') {
 				gatePosition.current += 1;

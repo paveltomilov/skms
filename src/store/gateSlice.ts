@@ -12,7 +12,7 @@ export interface GateState {
 const initialState: GateState = {
 	state: GATE_STATE_TYPE.open,
 	value: 18.8,
-	position: 0,
+	position: 0, // 0% - задвижка закрыта
 };
 
 const gateStateSlice = createSlice({
