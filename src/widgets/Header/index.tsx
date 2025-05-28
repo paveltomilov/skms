@@ -7,8 +7,7 @@ import { useHeaderButtons } from '@/shared/hooks/useHeaderButtons';
 
 const Header: FC = () => {
 	const {
-		handleKruzapButton,
-		handlePtkButton,
+		handleButton,
 		stopGateMovement,
 		closeKruzapDisabled,
 		openKruzapDisabled,
@@ -33,7 +32,7 @@ const Header: FC = () => {
 						text="Закрыть"
 						disabled={closePtkDisabled}
 						active={closePtkActive}
-						onClick={() => handlePtkButton('close')}
+						onClick={() => handleButton('ptk', 'close')}
 					/>
 					<Button
 						width={70}
@@ -41,7 +40,7 @@ const Header: FC = () => {
 						id="stopPtkBtn"
 						text="Стоп"
 						disabled={stopPtkDisabled}
-						onClick={() => stopGateMovement()}
+						onClick={() => stopGateMovement('ptk')}
 					/>
 					<Button
 						width={106}
@@ -50,7 +49,7 @@ const Header: FC = () => {
 						text="Открыть"
 						disabled={openPtkDisabled}
 						active={openPtkActive}
-						onClick={() => handlePtkButton('open')}
+						onClick={() => handleButton('ptk', 'open')}
 					/>
 				</div>
 
@@ -63,12 +62,8 @@ const Header: FC = () => {
 						id="closeKruzapBtn"
 						text="Закрыть"
 						disabled={closeKruzapDisabled}
-						onMouseDown={() =>
-							handleKruzapButton('close', 'onMouseDown')
-						}
-						onMouseUp={() =>
-							handleKruzapButton('close', 'onMouseUp')
-						}
+						onMouseDown={() => handleButton('kruzap', 'close')}
+						onMouseUp={() => stopGateMovement('kruzap')}
 					/>
 					<Button
 						width={106}
@@ -76,12 +71,8 @@ const Header: FC = () => {
 						id="openKruzapBtn"
 						text="Открыть"
 						disabled={openKruzapDisabled}
-						onMouseDown={() =>
-							handleKruzapButton('open', 'onMouseDown')
-						}
-						onMouseUp={() =>
-							handleKruzapButton('open', 'onMouseUp')
-						}
+						onMouseDown={() => handleButton('kruzap', 'open')}
+						onMouseUp={() => stopGateMovement('kruzap')}
 					/>
 					<span className={style.name}>Круза-п</span>
 				</div>

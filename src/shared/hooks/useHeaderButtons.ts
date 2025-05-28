@@ -1,8 +1,6 @@
 import { setGatePosition } from '@/store/gateSlice';
 import {
 	BASE_RESISTANCE,
-	CLOSE_FROM_KRUZAP_ID,
-	OPEN_FROM_KRUZAP_ID,
 	HIGH_RESISTANCE,
 	LIMIT_SWITCH_CLOSE_ID,
 	LIMIT_SWITCH_OPEN_ID,
@@ -12,7 +10,7 @@ import {
 import { findElementByID } from '../utils/scheme';
 import { useAppDispatch, useAppSelector } from './store';
 import { setResistance } from '@/store/circuitSlice';
-import { PTK_BUTTONS_CONFIG } from '../configs/header';
+import { KRUZAP_BUTTONS_CONFIG, PTK_BUTTONS_CONFIG } from '../configs/header';
 import { useRef } from 'react';
 
 export const useHeaderButtons = () => {
@@ -60,33 +58,19 @@ export const useHeaderButtons = () => {
 	//кнопка стоп дизэйблена когда не нажаты кнопки открыть и закрыть птк
 	const stopPtkDisabled = !openPtkActive && !closePtkActive;
 
-	const handleKruzapButton = (
-		button: 'close' | 'open',
-		action: 'onMouseDown' | 'onMouseUp',
-	) => {
-		const id =
-			button === 'close' ? CLOSE_FROM_KRUZAP_ID : OPEN_FROM_KRUZAP_ID;
-		const value =
-			action === 'onMouseDown' ? BASE_RESISTANCE[id] : HIGH_RESISTANCE;
-
-		dispatch(
-			setResistance({
-				id,
-				value,
-			}),
-		);
-	};
-
 	// получаем положение задвижки из стора
 	const gatePosition = useRef(useAppSelector(state => state.gate.position));
 
-	// создаем интервал в глобальной ОВ, чтобы к нему можно было обращаться и изменять в функциях stopGateMovement и handlePtkButton
+	// создаем интервал в глобальной ОВ, чтобы к нему можно было обращаться и изменять в функциях stopGateMovement и handleButton
 	const gateInterval = useRef<NodeJS.Timeout | null>(null);
 
 	// Функция для остановки движения задвижки
-	const stopGateMovement = () => {
+	const stopGateMovement = (type: 'ptk' | 'kruzap') => {
+		const config =
+			type === 'ptk' ? PTK_BUTTONS_CONFIG : KRUZAP_BUTTONS_CONFIG;
+
 		// обновляем сопротивления, которые меняются сразу после нажатия на кнопку стоп
-		PTK_BUTTONS_CONFIG.stop.forEach(action => {
+		config.stop.forEach(action => {
 			dispatch(setResistance(action));
 		});
 
@@ -100,9 +84,12 @@ export const useHeaderButtons = () => {
 		}
 	};
 
-	const handlePtkButton = (button: 'close' | 'open') => {
+	const handleButton = (type: 'ptk' | 'kruzap', button: 'close' | 'open') => {
+		const config =
+			type === 'ptk' ? PTK_BUTTONS_CONFIG : KRUZAP_BUTTONS_CONFIG;
+
 		// обновляем сопротивления, которые меняются сразу после нажатия на кнопку открыть/закрыть
-		PTK_BUTTONS_CONFIG[button].forEach(action => {
+		config[button].forEach(action => {
 			dispatch(setResistance(action));
 		});
 
@@ -120,9 +107,9 @@ export const useHeaderButtons = () => {
 
 				if (gatePosition.current >= 100) {
 					gatePosition.current = 100;
-					stopGateMovement();
+					stopGateMovement(type);
 
-					PTK_BUTTONS_CONFIG.opening.forEach(action => {
+					config.opening.forEach(action => {
 						dispatch(setResistance(action));
 					});
 				}
@@ -130,9 +117,9 @@ export const useHeaderButtons = () => {
 				gatePosition.current -= 1;
 				if (gatePosition.current <= 0) {
 					gatePosition.current = 0;
-					stopGateMovement();
+					stopGateMovement(type);
 
-					PTK_BUTTONS_CONFIG.closing.forEach(action => {
+					config.closing.forEach(action => {
 						dispatch(setResistance(action));
 					});
 				}
@@ -143,8 +130,7 @@ export const useHeaderButtons = () => {
 	};
 
 	return {
-		handleKruzapButton,
-		handlePtkButton,
+		handleButton,
 		stopGateMovement,
 		openKruzapDisabled: openDisabled,
 		closeKruzapDisabled: closeDisabled,
