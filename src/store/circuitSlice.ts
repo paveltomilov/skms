@@ -1,3 +1,4 @@
+import { HIGH_RESISTANCE } from '@/shared/configs/scheme';
 import { findElementByID } from '@/shared/utils/scheme';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
@@ -817,7 +818,7 @@ export const initialState: InitialSchemeState = {
 						{
 							id: 'c.3.1.3.2.2',
 							name: 'Блокировка включения пускателя на открытие',
-							resistance: 0,
+							resistance: HIGH_RESISTANCE,
 							malfunctions: [
 								{
 									id: 'c.3.1.3.2.2.1',
@@ -834,7 +835,7 @@ export const initialState: InitialSchemeState = {
 						{
 							id: 'c.3.1.3.2.3',
 							name: 'Катушка пускателя открыть',
-							resistance: 6400,
+							resistance: HIGH_RESISTANCE,
 							malfunctions: [
 								{
 									id: 'c.3.1.3.2.3.1',
@@ -967,7 +968,7 @@ export const initialState: InitialSchemeState = {
 						{
 							id: 'c.3.2.3.2.2',
 							name: 'Блокировка включения пускателя на закрыть',
-							resistance: 0,
+							resistance: HIGH_RESISTANCE,
 							malfunctions: [
 								{
 									id: 'c.3.2.3.2.2.1',
@@ -984,7 +985,7 @@ export const initialState: InitialSchemeState = {
 						{
 							id: 'c.3.2.3.2.3',
 							name: 'Катушка пускателя закрыть',
-							resistance: 6400,
+							resistance: HIGH_RESISTANCE,
 							malfunctions: [
 								{
 									id: 'c.3.2.3.2.3.1',
