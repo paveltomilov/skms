@@ -15,8 +15,9 @@ interface Prop {
 
 export const SchemeElement: FC<Prop> = ({ element }) => {
 	const { id, icon, title, buttons } = element;
-	const activeProb = useAppSelector(state => state.multimeter.activeProb);
 	const dispatch = useAppDispatch();
+
+	const activeProb = useAppSelector(state => state.multimeter.activeProb);
 
 	const handleOpenPopup = (content: PopupContent | null = null) => {
 		dispatch(openPopup({ isOpen: true, content }));

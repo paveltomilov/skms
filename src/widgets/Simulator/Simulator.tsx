@@ -59,7 +59,6 @@ export const Simulator: React.FC<Props> = ({ children }) => {
 			collisionDetection={probeTipCollisionDetection}
 			onDragStart={handleDragStart}
 			onDragEnd={handleDragEnd}
-			/* добавить  onMouseLeave */
 			modifiers={[restrictToParentElement]}
 		>
 			{children}

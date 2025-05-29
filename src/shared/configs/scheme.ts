@@ -1,16 +1,24 @@
 import { IPoint, ISchemeElement } from '../types/scheme';
 
+// id элементов схемы
+export const LIMIT_SWITCH_OPEN_ID = 'c.3.1.1';
+export const LIMIT_SWITCH_CLOSE_ID = 'c.3.2.1';
+export const OPEN_FROM_KRUZAP_ID = 'c.3.1.3.2.1.2';
+export const CLOSE_FROM_KRUZAP_ID = 'c.3.2.3.2.1.2';
+export const OPEN_FROM_PTK_ID = 'c.3.1.3.2.1.1';
+export const CLOSE_FROM_PTK_ID = 'c.3.2.3.2.1.1';
+
 // Элементы схемы
 export const SCHEME_ELEMENTS: ISchemeElement[] = [
 	{
 		title: 'Какое-то название',
 		icon: 'yb08',
-		id: 'c.3.2.3.2.1.1',
+		id: CLOSE_FROM_PTK_ID,
 	},
 	{
 		title: 'Какое-то название',
 		icon: 'yb08',
-		id: 'c.3.1.3.2.1.1',
+		id: OPEN_FROM_PTK_ID,
 		buttons: [
 			{
 				id: 'btn4',
@@ -101,22 +109,22 @@ export const SCHEME_ELEMENTS: ISchemeElement[] = [
 	{
 		title: 'Какое-то название',
 		icon: 's01',
-		id: 'c.3.1.3.2.1.2',
+		id: OPEN_FROM_KRUZAP_ID,
 	},
 	{
 		title: 'Какое-то название',
 		icon: 's01',
-		id: 'c.3.2.3.2.1.2',
+		id: CLOSE_FROM_KRUZAP_ID,
 	},
 	{
 		title: 'Какое-то название',
 		icon: 'sq3',
-		id: 'c.3.2.1',
+		id: LIMIT_SWITCH_CLOSE_ID,
 	},
 	{
 		title: 'Какое-то название',
 		icon: 'sq3',
-		id: 'c.3.1.1',
+		id: LIMIT_SWITCH_OPEN_ID,
 	},
 ];
 
@@ -198,19 +206,19 @@ export const BASE_RESISTANCE = {
 	'p.6.3': 4.1,
 	'c.1': 0,
 	'c.2': 0.1,
-	'c.3.1.1': 0,
+	[LIMIT_SWITCH_OPEN_ID]: 0,
 	'c.3.1.2': 0.1,
 	'c.3.1.3.1': 0,
-	'c.3.1.3.2.1.1': 0,
-	'c.3.1.3.2.1.2': 0,
+	[OPEN_FROM_PTK_ID]: 0,
+	[OPEN_FROM_KRUZAP_ID]: 0,
 	'c.3.1.3.2.2': 0,
 	'c.3.1.3.2.3': 6420,
 	'c.3.1.3.3': 4800,
-	'c.3.2.1': 0,
+	[LIMIT_SWITCH_CLOSE_ID]: 0,
 	'c.3.2.2': 0.1,
 	'c.3.2.3.1': 0,
-	'c.3.2.3.2.1.1': 0,
-	'c.3.2.3.2.1.2': 0,
+	[CLOSE_FROM_PTK_ID]: 0,
+	[CLOSE_FROM_KRUZAP_ID]: 0,
 	'c.3.2.3.2.2': 0,
 	'c.3.2.3.2.3': 6400,
 	'c.3.2.3.3': 4800,
