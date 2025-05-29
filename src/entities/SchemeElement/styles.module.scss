@@ -1,11 +1,19 @@
-.schemeElement {
+.element {
 	position: absolute;
-	opacity: 0;
+	opacity: 0.3;
 	cursor: pointer;
-}
 
-.hover:hover {
-	opacity: 0.5;
+	&_hover:hover {
+		opacity: 0.5;
+	}
+
+	&__highResistance {
+		outline: 3px solid blue;
+	}
+
+	&__baseResistance {
+		outline: 3px solid red;
+	}
 }
 
 .c\.3\.1\.3\.2\.1\.1 {

@@ -5,7 +5,6 @@ import {
 	CLOSE_FROM_KRUZAP_ID,
 	OPEN_FROM_PTK_ID,
 	CLOSE_FROM_PTK_ID,
-	HIGH_RESISTANCE,
 } from '@/shared/configs/scheme';
 import { findElementByID } from '@/shared/utils/scheme';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
@@ -872,7 +871,7 @@ export const initialState: InitialSchemeState = {
 				{
 					id: LIMIT_SWITCH_CLOSE_ID,
 					name: 'Концевой выключатель закрыто',
-					resistance: HIGH_RESISTANCE,
+					resistance: 0,
 					malfunctions: [
 						{
 							id: 'c.3.2.1.1',
