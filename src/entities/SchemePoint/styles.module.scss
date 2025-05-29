@@ -12,16 +12,7 @@
 	&_over {
 		opacity: 1;
 		background-color: #e44c4c;
-		// Другие эффекты, например, тень или увеличение:
 		box-shadow: 0 0 4px 1px #e76c6c;
 		transform: scale(0.4);
-	}
-
-	&__active {
-		outline: 3px solid red;
-	}
-
-	&__inactive {
-		outline: 3px solid blue;
 	}
 }

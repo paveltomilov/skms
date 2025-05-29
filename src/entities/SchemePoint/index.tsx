@@ -4,7 +4,6 @@ import React from 'react';
 import { useDroppable } from '@dnd-kit/core';
 import styles from './styles.module.scss';
 import { IPoint } from '@/shared/types/scheme';
-import { useAppSelector } from '@/shared/hooks/store';
 
 interface Props {
 	id: string;
@@ -20,17 +19,11 @@ export const SchemePoint: React.FC<Props> = ({ id, position }) => {
 			accepts: 'probe',
 		},
 	});
-
-	// для визуализации состояния точек
-	const schemePoint = useAppSelector(state => state.points[id]);
-
 	return (
 		<div
 			ref={setNodeRef}
 			id={id}
-			className={`${styles.point} ${isOver && styles.point_over} ${
-				schemePoint ? styles.point__active : styles.point__inactive
-			}`}
+			className={`${styles.point} ${isOver && styles.point_over}`}
 			style={{ left: `${position.x}px`, top: `${position.y}px` }}
 		></div>
 	);

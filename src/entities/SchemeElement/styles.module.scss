@@ -1,12 +1,13 @@
 .element {
 	position: absolute;
-	opacity: 0.3;
+	opacity: 0.6; // исходное 0
 	cursor: pointer;
 
 	&_hover:hover {
 		opacity: 0.5;
 	}
 
+	// для визуализации (убрать когда не понадобится)
 	&__highResistance {
 		outline: 3px solid blue;
 	}
