@@ -6,16 +6,8 @@ import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import { openPopup } from '@/store/popupSlice';
 import { PopupContent } from '@/shared/types/popup';
 import { ISchemeElement } from '@/shared/types/scheme';
+import { HIGH_RESISTANCE } from '@/shared/configs/scheme';
 import { findElementByID } from '@/shared/utils/scheme';
-import {
-	CLOSE_FROM_KRUZAP_ID,
-	CLOSE_FROM_PTK_ID,
-	HIGH_RESISTANCE,
-	LIMIT_SWITCH_CLOSE_ID,
-	LIMIT_SWITCH_OPEN_ID,
-	OPEN_FROM_KRUZAP_ID,
-	OPEN_FROM_PTK_ID,
-} from '@/shared/configs/scheme';
 
 interface Prop {
 	element: ISchemeElement;
@@ -37,25 +29,19 @@ export const SchemeElement: FC<Prop> = ({ element }) => {
 		useAppSelector(state => state.circuit),
 	);
 
-	// элементы которые должны меняться в текущей задаче (для того чтобы не отвлекали другие элементы)
-	const taskElements =
-		schemeElement?.id === LIMIT_SWITCH_OPEN_ID ||
-		schemeElement?.id === LIMIT_SWITCH_CLOSE_ID ||
-		schemeElement?.id === OPEN_FROM_KRUZAP_ID ||
-		schemeElement?.id === CLOSE_FROM_KRUZAP_ID ||
-		schemeElement?.id === OPEN_FROM_PTK_ID ||
-		schemeElement?.id === CLOSE_FROM_PTK_ID;
+	const resistance = schemeElement?.resistance === HIGH_RESISTANCE;
 
-	const highResistance = schemeElement?.resistance === HIGH_RESISTANCE;
+	const elementClassName = `${styles.element} ${styles[id]} ${
+		!activeProb && styles.element_hover
+	} ${
+		resistance
+			? styles.element__highResistance
+			: styles.element__baseResistance
+	}`;
 
 	return (
 		<button
-			className={`${styles.element} ${styles[id]} ${
-				!activeProb && styles.element_hover
-			} ${
-				highResistance && taskElements && styles.element__highResistance
-			}
-					${!highResistance && taskElements && styles.element__baseResistance}`}
+			className={elementClassName}
 			id={id}
 			onClick={() =>
 				handleOpenPopup({
