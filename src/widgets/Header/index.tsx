@@ -10,7 +10,7 @@ const Header: FC = () => {
 	const { handleButton, closeDisabled, openDisabled } = useKruzapButtons();
 
 	const { sendMessage } = useWebSocket(
-		'ws://127.0.0.1:8000/ws/simulation/student/',
+		`ws://127.0.0.1:8000/ws/simulation/student/?token=${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`,
 	);
 
 	const handleStart = () => {
