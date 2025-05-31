@@ -4,23 +4,9 @@ import style from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import GateWindow from '@/entities/GateWindow/GateWindow';
 import { useKruzapButtons } from '@/shared/hooks/useKruzapButtons';
-import { useWebSocket } from '@/shared/hooks/useWebSocket';
 
 const Header: FC = () => {
 	const { handleButton, closeDisabled, openDisabled } = useKruzapButtons();
-
-	const { sendMessage } = useWebSocket(
-		`ws://127.0.0.1:8000/ws/simulation/student/?token=${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`,
-	);
-
-	const handleStart = () => {
-		sendMessage({
-			type: 'start_simulation',
-			studentId: '12345',
-		});
-	};
-
-	handleStart();
 
 	return (
 		<header className={style.header}>

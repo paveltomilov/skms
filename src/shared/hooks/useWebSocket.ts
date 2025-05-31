@@ -33,15 +33,6 @@ export const useWebSocket = (url: string) => {
     wsRef.current.addEventListener('error', handleError);
     wsRef.current.addEventListener('close', handleClose);
 
-    return () => {
-      if (wsRef.current) {
-        wsRef.current.removeEventListener('open', handleOpen);
-        wsRef.current.removeEventListener('message', handleMessage);
-        wsRef.current.removeEventListener('error', handleError);
-        wsRef.current.removeEventListener('close', handleClose);
-        wsRef.current.close();
-      }
-    };
   }, [url]);
 
   const sendMessage = (message: object) => {
@@ -52,3 +43,18 @@ export const useWebSocket = (url: string) => {
 
   return { sendMessage };
 };
+
+// Пример вызова хука, sendMessage выызывается для отправки данных на ws по симуляции
+
+	// const { sendMessage } = useWebSocket(
+	// 	`ws://127.0.0.1:8000/ws/simulation/student/?token=${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`,
+	// );
+
+	// const handleStart = () => {
+	// 	sendMessage({
+	// 		type: 'start_simulation',
+	// 		studentId: '12345',
+	// 	});
+	// };
+
+	// handleStart();
