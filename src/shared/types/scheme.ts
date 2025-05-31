@@ -27,3 +27,23 @@ export interface IPoint {
 	x: number;
 	y: number;
 }
+
+interface Malfunction {
+	id: string;
+	name: string;
+	active: boolean;
+}
+
+interface CircuitElement {
+	id: string;
+	name: string;
+	resistance: number;
+	malfunctions: Malfunction[];
+}
+
+type CircuitBranch = CircuitElement | CircuitElement[] | CircuitBranch[];
+
+export interface InitialState {
+	powerCircuit: CircuitBranch[][];
+	controlCircuit: CircuitBranch[];
+}
