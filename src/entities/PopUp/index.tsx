@@ -7,7 +7,6 @@ import { defaultButtons } from '@/shared/configs/popup';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import { closePopup } from '@/store/popupSlice';
 import SchemeIcon from '@/shared/UI/icons/SchemeIcon';
-import { setResistance, setVoltage } from '@/store/circuitSlice';
 
 const PopUp: FC = () => {
 	const dispatch = useAppDispatch();
@@ -36,19 +35,6 @@ const PopUp: FC = () => {
 		? [...defaultButtons, ...buttons]
 		: defaultButtons;
 
-	// временные обработчики для проверки диспатчатся ли экшкны
-	const handleChangeResistance = () => {
-		// пока принимает захардкоженые значения (позже будут передаваться определенные значения в зависимости от действий пользователей)
-		const mockResistanceValue = 5;
-		dispatch(setResistance({ id, value: mockResistanceValue }));
-	};
-
-	const handleChangeVoltage = () => {
-		// пока принимает захардкоженые значения (позже будут передаваться определенные значения в зависимости от действий пользователей)
-		const mockVoltageValue = 220;
-		dispatch(setVoltage({ id, value: mockVoltageValue }));
-	};
-
 	return (
 		<div className={styles.popup}>
 			<div className={styles.window}>
@@ -71,22 +57,6 @@ const PopUp: FC = () => {
 					className={styles.popup__btn}
 				/>
 			))}
-			<Button
-				id={id}
-				width={245}
-				height={35}
-				text="изменить сопротивление"
-				className={styles.popup__btn}
-				onClick={handleChangeResistance}
-			/>
-			<Button
-				id={id}
-				width={245}
-				height={35}
-				text="изменить напряжение"
-				className={styles.popup__btn}
-				onClick={handleChangeVoltage}
-			/>
 		</div>
 	);
 };
