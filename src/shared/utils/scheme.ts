@@ -1,6 +1,6 @@
-import { CircuitElement, InitialSchemeState } from '@/store/circuitSlice';
+import { CircuitElement, InitialState } from '@/shared/types/scheme';
 
-export const findElementByID = (id: string, state: InitialSchemeState) => {
+export const findElementByID = (id: string, state: InitialState) => {
 	// получаем их id массив без точек
 	const path = id.split('.');
 

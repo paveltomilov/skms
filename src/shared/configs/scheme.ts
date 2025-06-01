@@ -1331,7 +1331,7 @@ export const BASE_RESISTANCE = {
 };
 
 // оставляем  id  и состояние из  SCHEME_POINTS
-function extractStates(SCHEME_POINTS: any) {
+function extractStates(SCHEME_POINTS: Record<string, IPoint>) {
 	const result: Record<string, boolean> = {};
 
 	for (const key in SCHEME_POINTS) {

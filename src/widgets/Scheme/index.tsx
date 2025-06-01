@@ -18,7 +18,13 @@ const Scheme: FC = () => {
 		state => state.multimeter.probeConnections,
 	);
 
-	useEffect(() => {}, []);
+	const scheme = useAppSelector(state => state.circuit);
+
+	const points = useAppSelector(state => state.points);
+
+	useEffect(() => {
+		console.log(points);
+	}, [scheme]);
 
 	return (
 		<div className={styles.scheme}>

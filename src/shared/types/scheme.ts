@@ -35,7 +35,7 @@ interface Malfunction {
 	active: boolean;
 }
 
-interface CircuitElement {
+export interface CircuitElement {
 	id: string;
 	name: string;
 	resistance: number;
