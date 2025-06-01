@@ -749,7 +749,45 @@ const powerCircuit = [
 		],
 	],
 ];
-
+export const BASE_RESISTANCE = {
+	'p.1.1': 0.1,
+	'p.1.2': 0,
+	'p.1.3': 0.1,
+	'p.1.4.1.1': 0,
+	'p.1.4.1.2': 0.1,
+	'p.1.4.1.3': 4100,
+	'p.2.1': 0.1,
+	'p.2.2': 0,
+	'p.2.3': 0.1,
+	'p.2.4.1': 0,
+	'p.2.4.2': 0,
+	'p.2.5': 0.1,
+	'p.2.6': 4100,
+	'p.3.1': 0.1,
+	'p.3.2': 0,
+	'p.3.3': 0.1,
+	'p.3.4.1': 0,
+	'p.3.4.1.2': 0.1,
+	'p.3.4.1.3': 4100,
+	'c.1': 0,
+	'c.2': 0.1,
+	[LIMIT_SWITCH_OPEN_ID]: 0,
+	'c.3.1.2': 0.1,
+	'c.3.1.3.1': 0,
+	[OPEN_FROM_PTK_ID]: 0,
+	[OPEN_FROM_KRUZAP_ID]: 0,
+	'c.3.1.3.2.2': 0,
+	'c.3.1.3.2.3': 6400,
+	'c.3.1.3.3': 4800,
+	[LIMIT_SWITCH_CLOSE_ID]: 0,
+	'c.3.2.2': 0.1,
+	'c.3.2.3.1': 0,
+	[CLOSE_FROM_PTK_ID]: 0,
+	[CLOSE_FROM_KRUZAP_ID]: 0,
+	'c.3.2.3.2.2': 0,
+	'c.3.2.3.2.3': 6400,
+	'c.3.2.3.3': 4800,
+};
 const controlCircuit = [
 	{
 		id: 'c.1',
@@ -910,7 +948,7 @@ const controlCircuit = [
 					{
 						id: 'c.3.1.3.2.2',
 						name: 'Блокировка включения пускателя на открытие',
-						resistance: HIGH_RESISTANCE,
+						resistance: BASE_RESISTANCE['c.3.1.3.2.2'],
 						malfunctions: [
 							{
 								id: 'c.3.1.3.2.2.1',
@@ -927,7 +965,7 @@ const controlCircuit = [
 					{
 						id: 'c.3.1.3.2.3',
 						name: 'Катушка пускателя открыть',
-						resistance: HIGH_RESISTANCE,
+						resistance: BASE_RESISTANCE['c.3.1.3.2.3'],
 						malfunctions: [
 							{
 								id: 'c.3.1.3.2.3.1',
@@ -1060,7 +1098,7 @@ const controlCircuit = [
 					{
 						id: 'c.3.2.3.2.2',
 						name: 'Блокировка включения пускателя на закрыть',
-						resistance: HIGH_RESISTANCE,
+						resistance: BASE_RESISTANCE['c.3.1.3.2.2'],
 						malfunctions: [
 							{
 								id: 'c.3.2.3.2.2.1',
@@ -1077,7 +1115,7 @@ const controlCircuit = [
 					{
 						id: 'c.3.2.3.2.3',
 						name: 'Катушка пускателя закрыть',
-						resistance: HIGH_RESISTANCE,
+						resistance: BASE_RESISTANCE['c.3.1.3.2.3'],
 						malfunctions: [
 							{
 								id: 'c.3.2.3.2.3.1',
@@ -1289,46 +1327,6 @@ export const initialSchemState: InitialState = {
 // ];
 
 // Значение сопротивления элементов схемы в нормальном состоянии
-
-export const BASE_RESISTANCE = {
-	'p.1.1': 0.1,
-	'p.1.2': 0,
-	'p.1.3': 0.1,
-	'p.1.4.1.1': 0,
-	'p.1.4.1.2': 0.1,
-	'p.1.4.1.3': 4100,
-	'p.2.1': 0.1,
-	'p.2.2': 0,
-	'p.2.3': 0.1,
-	'p.2.4.1': 0,
-	'p.2.4.2': 0,
-	'p.2.5': 0.1,
-	'p.2.6': 4100,
-	'p.3.1': 0.1,
-	'p.3.2': 0,
-	'p.3.3': 0.1,
-	'p.3.4.1': 0,
-	'p.3.4.1.2': 0.1,
-	'p.3.4.1.3': 4100,
-	'c.1': 0,
-	'c.2': 0.1,
-	[LIMIT_SWITCH_OPEN_ID]: 0,
-	'c.3.1.2': 0.1,
-	'c.3.1.3.1': 0,
-	[OPEN_FROM_PTK_ID]: 0,
-	[OPEN_FROM_KRUZAP_ID]: 0,
-	'c.3.1.3.2.2': 0,
-	'c.3.1.3.2.3': 6420,
-	'c.3.1.3.3': 4800,
-	[LIMIT_SWITCH_CLOSE_ID]: 0,
-	'c.3.2.2': 0.1,
-	'c.3.2.3.1': 0,
-	[CLOSE_FROM_PTK_ID]: 0,
-	[CLOSE_FROM_KRUZAP_ID]: 0,
-	'c.3.2.3.2.2': 0,
-	'c.3.2.3.2.3': 6400,
-	'c.3.2.3.3': 4800,
-};
 
 // оставляем  id  и состояние из  SCHEME_POINTS
 function extractStates(SCHEME_POINTS: Record<string, IPoint>) {

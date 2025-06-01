@@ -5,11 +5,12 @@ import { FC, useEffect } from 'react';
 import { SCHEME_ELEMENTS, SCHEME_POINTS } from '@/shared/configs/scheme';
 import { SchemeElement } from '@/entities/SchemeElement';
 import { SchemePoint } from '@/entities/SchemePoint';
-import { useAppSelector } from '@/shared/hooks/store';
+import { useAppSelector, useAppDispatch } from '@/shared/hooks/store';
 import Probe from '@/entities/Probe';
 import { ProbeColor } from '@/shared/types/multimeter';
-import { setVoltagePoints } from '@/shared/utils/scheme';
-import { InitialState, IPoint } from '@/shared/types/scheme';
+import { setNewVoltagePoints } from '@/shared/utils/scheme';
+import { InitialState } from '@/shared/types/scheme';
+import { setVoltagePoints } from '@/store/pointsSlice';
 const Scheme: FC = () => {
 	const activeProbe = useAppSelector(
 		state => state.multimeter.activeProb,
@@ -22,8 +23,14 @@ const Scheme: FC = () => {
 		state => state.points,
 	);
 	const scheme: InitialState = useAppSelector(state => state.circuit);
+	const dispatch = useAppDispatch();
+	
+	function dispatched(payload: Record<string, boolean>) {
+		dispatch(setVoltagePoints(payload));
+	}
+
 	useEffect(() => {
-		setVoltagePoints(scheme, points);
+		setNewVoltagePoints(scheme, points, dispatched);
 	}, [scheme]);
 
 	return (
