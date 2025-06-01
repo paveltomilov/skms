@@ -8,7 +8,8 @@ import { SchemePoint } from '@/entities/SchemePoint';
 import { useAppSelector } from '@/shared/hooks/store';
 import Probe from '@/entities/Probe';
 import { ProbeColor } from '@/shared/types/multimeter';
-
+import { setVoltagePoints } from '@/shared/utils/scheme';
+import { InitialState, IPoint } from '@/shared/types/scheme';
 const Scheme: FC = () => {
 	const activeProbe = useAppSelector(
 		state => state.multimeter.activeProb,
@@ -17,13 +18,12 @@ const Scheme: FC = () => {
 	const probeConnections = useAppSelector(
 		state => state.multimeter.probeConnections,
 	);
-
-	const scheme = useAppSelector(state => state.circuit);
-
-	const points = useAppSelector(state => state.points);
-
+	const points: Record<string, boolean> = useAppSelector(
+		state => state.points,
+	);
+	const scheme: InitialState = useAppSelector(state => state.circuit);
 	useEffect(() => {
-		console.log(points);
+		setVoltagePoints(scheme, points);
 	}, [scheme]);
 
 	return (

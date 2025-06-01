@@ -1,4 +1,5 @@
 import { CircuitElement, InitialState } from '@/shared/types/scheme';
+import { useAppSelector } from '@/shared/hooks/store';
 
 export const findElementByID = (id: string, state: InitialState) => {
 	// получаем их id массив без точек
@@ -22,3 +23,31 @@ export const findElementByID = (id: string, state: InitialState) => {
 	}
 	return res as CircuitElement;
 };
+
+export function setVoltagePoints(
+	scheme: InitialState,
+	points: Record<string, boolean>,
+) {
+	let pointsAcc = JSON.parse(JSON.stringify(points));
+	let element = scheme.controlCircuit[0] as CircuitElement; // Принудительно говорим TypeScript'у, что это CircuitElement
+
+	if (pointsAcc['p.c.0'] === true && element.resistance < 1000000) {
+		pointsAcc['p.c.1'] = true;
+	} else {
+		pointsAcc['p.c.1'] = false;
+	}
+	element = scheme.controlCircuit[1] as CircuitElement;
+
+	if (pointsAcc['p.c.1'] === true && element.resistance < 1000000) {
+		pointsAcc['p.c.2'] = true;
+	} else {
+		pointsAcc['p.c.2'] = false;
+	}
+	element = scheme.controlCircuit[3] as CircuitElement;
+
+	if (pointsAcc['p.c.2'] === true && element.resistance < 1000000) {
+		pointsAcc['p.c.3'] = true;
+	} else {
+		pointsAcc['p.c.3'] = false;
+	}
+}
