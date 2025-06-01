@@ -4,7 +4,7 @@ import { useAppSelector } from '@/shared/hooks/store';
 import Gate from '@/shared/UI/Gate';
 
 const GateWindow: FC = () => {
-	const { state, value } = useAppSelector(state => state.gateReducer);
+	const { state, value } = useAppSelector(state => state.gate);
 
 	return (
 		<div className={style.window}>

@@ -49,6 +49,7 @@ const eslintConfig = [
 			'@typescript-eslint/no-explicit-any': 'error', // Запрещает использование any
 			'@typescript-eslint/no-unsafe-argument': 'error', // Запрет на передачу аргументов с типом unknown в функции
 			'@typescript-eslint/no-unsafe-assignment': 'error', // Запрет на присвоение значения с типом unknown переменным
+			'@typescript-eslint/no-empty-object-type': 'warn', // чтобы можно было писать пустые интерфейсы как в interface CircuitGroup extends Array<CircuitBranch> {}
 		},
 	}),
 ];

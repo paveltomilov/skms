@@ -2,7 +2,7 @@
 import { CSSProperties, ReactNode } from 'react';
 import styles from './styles.module.scss';
 import Image from 'next/image';
-import { useAppSelector } from '@/shared/hooks/store';
+/* import { useAppSelector } from '@/shared/hooks/store'; */
 
 interface ImageProps {
 	src: string;
@@ -18,11 +18,14 @@ interface ButtonProps {
 	image?: ImageProps;
 	icon?: ReactNode;
 	disabled?: boolean;
+	active?: boolean;
 	success?: boolean;
-	onClick?: () => void;
 	className?: string;
 	ariaLabel?: string;
 	style?: CSSProperties;
+	onClick?: () => void;
+	onMouseDown?: () => void;
+	onMouseUp?: () => void;
 }
 
 const Button = ({
@@ -33,34 +36,40 @@ const Button = ({
 	image,
 	icon,
 	disabled = false,
+	active = false,
 	success = false,
-	onClick,
 	className,
 	ariaLabel,
 	style,
+	onClick,
+	onMouseDown,
+	onMouseUp,
 }: ButtonProps) => {
-	const isActive = useAppSelector(
+	// уточнить необходимость сохранять состояние кнопок в редакс, если что удалить
+	/* const isActive = useAppSelector(
 		state => state.buttonsReducer.activeButtons[id] || false,
-	);
+	); */
 
 	return (
 		<button
 			className={`${styles.button} ${className && className}
-				${isActive && !disabled && styles.active}
+				${active && styles.active}
 			${success && styles.success}`}
 			style={{
 				width: `${width}px`,
 				height: `${height}px`,
 				...style,
 			}}
-			onClick={onClick}
 			disabled={disabled}
 			aria-label={ariaLabel}
+			onClick={onClick}
+			onMouseDown={onMouseDown}
+			onMouseUp={onMouseUp}
 		>
 			{image && (
 				<Image
 					src={image.src}
-					alt="Button icon"
+					alt={id}
 					width={image.width}
 					height={image.height}
 				/>

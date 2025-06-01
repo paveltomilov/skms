@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import styles from './Display.module.scss';
+import styles from './styles.module.scss';
 
 interface DisplayProps {
 	value: string | number | null | undefined;

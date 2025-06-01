@@ -12,6 +12,7 @@ const PopUp: FC = () => {
 	const dispatch = useAppDispatch();
 	const { content, isOpen } = useAppSelector(state => state.popup);
 
+	// для закрытия попапа клавишей esc
 	useEffect(() => {
 		const handleEscClose = (e: KeyboardEvent) => {
 			if (e.key === 'Escape') {
@@ -34,9 +35,6 @@ const PopUp: FC = () => {
 		? [...defaultButtons, ...buttons]
 		: defaultButtons;
 
-	// поменять на номальный обработчик
-	const handleClick = (text: string) => console.log(text);
-
 	return (
 		<div className={styles.popup}>
 			<div className={styles.window}>
@@ -57,7 +55,6 @@ const PopUp: FC = () => {
 					height={35}
 					text={button.text}
 					className={styles.popup__btn}
-					onClick={() => handleClick(button.text)}
 				/>
 			))}
 		</div>

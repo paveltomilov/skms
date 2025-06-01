@@ -29,6 +29,14 @@
 		);
 	}
 
+	&.active {
+		@include mixins.change-button(
+			variables.$gray-disabled-color,
+			_,
+			variables.$pressed-button-box-shadow
+		);
+	}
+
 	&.success {
 		@include mixins.change-button(
 			variables.$success-color,

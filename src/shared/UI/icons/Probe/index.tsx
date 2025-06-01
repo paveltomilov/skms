@@ -8,11 +8,12 @@ interface Props {
 const Probe: FC<Props> = ({ color = 'black', className }) => {
 	return (
 		<svg
-			width={30}
-			height={91}
-			viewBox="0 0 30 91"
+			width={17}
+			height={78}
+			viewBox="0 0 17 78"
 			preserveAspectRatio="xMidYMid meet"
 			shapeRendering="geometricPrecision"
+			filter="drop-shadow(2px 2px 2px #00000057)"
 			className={className && className}
 		>
 			<use

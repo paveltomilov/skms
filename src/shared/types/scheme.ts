@@ -41,7 +41,8 @@ interface CircuitElement {
 	malfunctions: Malfunction[];
 }
 
-type CircuitBranch = CircuitElement | CircuitElement[] | CircuitBranch[];
+export type CircuitBranch = CircuitElement | CircuitGroup;
+export interface CircuitGroup extends Array<CircuitBranch> {}
 
 export interface InitialState {
 	powerCircuit: CircuitBranch[][];
