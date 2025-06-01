@@ -40,7 +40,7 @@ export function setNewVoltagePoints(
 	scheme: InitialState,
 	points: Record<string, boolean>,
 	setVoltagePoints: (points: Record<string, boolean>) => void,
-): void {
+): Record<string, boolean> {
 	const pointsAcc = JSON.parse(JSON.stringify(points)) as Record<
 		string,
 		boolean
@@ -87,4 +87,5 @@ export function setNewVoltagePoints(
 	);
 
 	setVoltagePoints(pointsAcc);
+	return pointsAcc;
 }

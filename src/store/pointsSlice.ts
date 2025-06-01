@@ -11,7 +11,6 @@ const pointsSlice = createSlice({
 			action: PayloadAction<typeof pointsState>,
 		) => {
 			// Полностью заменяем состояние новым значением
-			console.log(action.payload);
 			return action.payload;
 		},
 	},

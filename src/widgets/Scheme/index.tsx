@@ -24,13 +24,14 @@ const Scheme: FC = () => {
 	);
 	const scheme: InitialState = useAppSelector(state => state.circuit);
 	const dispatch = useAppDispatch();
-	
+
 	function dispatched(payload: Record<string, boolean>) {
 		dispatch(setVoltagePoints(payload));
 	}
 
 	useEffect(() => {
-		setNewVoltagePoints(scheme, points, dispatched);
+		const pointsVoltage = setNewVoltagePoints(scheme, points, dispatched);
+		console.log(pointsVoltage);
 	}, [scheme]);
 
 	return (
