@@ -26,6 +26,7 @@ export interface ISchemeElement {
 export interface IPoint {
 	x: number;
 	y: number;
+	state: boolean;
 }
 
 interface Malfunction {

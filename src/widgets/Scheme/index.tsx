@@ -1,7 +1,7 @@
 'use client';
 
 import styles from './styles.module.scss';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { SCHEME_ELEMENTS, SCHEME_POINTS } from '@/shared/configs/scheme';
 import { SchemeElement } from '@/entities/SchemeElement';
 import { SchemePoint } from '@/entities/SchemePoint';
@@ -17,6 +17,8 @@ const Scheme: FC = () => {
 	const probeConnections = useAppSelector(
 		state => state.multimeter.probeConnections,
 	);
+
+	useEffect(() => {}, []);
 
 	return (
 		<div className={styles.scheme}>
