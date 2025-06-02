@@ -45,3 +45,15 @@
 		overflow: hidden;
 	}
 }
+
+@mixin change-input(
+  $bg-color: variables.$primary-color,
+  $text-color: variables.$black-color,
+  $box-shadow: variables.$default-input-box-shadow,
+  $cursor: pointer
+) {
+  background-color: $bg-color;
+  color: $text-color;
+  box-shadow: $box-shadow;
+  cursor: $cursor;
+}
