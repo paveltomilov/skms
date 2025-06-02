@@ -1104,7 +1104,7 @@ const controlCircuit = [
 	],
 ];
 
-export const initialSchemState: InitialState = {
+export const initialSchemeState: InitialState = {
 	powerCircuit: powerCircuit,
 	controlCircuit: controlCircuit,
 };

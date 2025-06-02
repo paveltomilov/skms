@@ -1,4 +1,4 @@
-import { initialSchemState as initialState } from '../shared/configs/scheme';
+import { initialSchemeState as initialState } from '../shared/configs/scheme';
 import { findElementByID } from '@/shared/utils/scheme';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { InitialState } from '@/shared/types/scheme';
