@@ -7,7 +7,7 @@ import {
 	CLOSE_FROM_PTK_ID,
 	HIGH_RESISTANCE,
 } from '@/shared/configs/scheme';
-import { findElementByID } from '@/shared/utils/scheme';
+import { findElementByID } from '@/shared/utils/findElementByID/scheme';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface Malfunction {

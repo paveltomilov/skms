@@ -1,9 +1,8 @@
 import '@testing-library/jest-dom';
-import { findElementByID } from '../scheme';
 import { initialState } from '@/store/circuitSlice';
+import { findElementByID } from './scheme';
 
 describe('test function findElementById', () => {
-
 	// it('should accept ids starting with "p"', () => {
 	// 	const result = findElementByID('p.2.1', initialState);
 	// 	expect(result.id).toBe('p.2.1' );
