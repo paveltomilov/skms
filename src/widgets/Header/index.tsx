@@ -3,10 +3,20 @@ import { FC } from 'react';
 import style from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import GateWindow from '@/entities/GateWindow/GateWindow';
-import { useKruzapButtons } from '@/shared/hooks/useKruzapButtons';
+import { useHeaderButtons } from '@/shared/hooks/useHeaderButtons';
 
 const Header: FC = () => {
-	const { handleButton, closeDisabled, openDisabled } = useKruzapButtons();
+	const {
+		handleButton,
+		stopGateMovement,
+		closeKruzapDisabled,
+		openKruzapDisabled,
+		closePtkDisabled,
+		openPtkDisabled,
+		stopPtkDisabled,
+		closePtkActive,
+		openPtkActive,
+	} = useHeaderButtons();
 
 	return (
 		<header className={style.header}>
@@ -20,18 +30,26 @@ const Header: FC = () => {
 						height={38}
 						id="closePtkBtn"
 						text="Закрыть"
+						disabled={closePtkDisabled}
+						active={closePtkActive}
+						onClick={() => handleButton('ptk', 'close')}
 					/>
 					<Button
 						width={70}
 						height={38}
 						id="stopPtkBtn"
 						text="Стоп"
+						disabled={stopPtkDisabled}
+						onClick={() => stopGateMovement('ptk')}
 					/>
 					<Button
 						width={106}
 						height={38}
 						id="openPtkBtn"
 						text="Открыть"
+						disabled={openPtkDisabled}
+						active={openPtkActive}
+						onClick={() => handleButton('ptk', 'open')}
 					/>
 				</div>
 
@@ -43,18 +61,18 @@ const Header: FC = () => {
 						height={38}
 						id="closeKruzapBtn"
 						text="Закрыть"
-						disabled={closeDisabled}
-						onMouseDown={() => handleButton('close', 'onMouseDown')}
-						onMouseUp={() => handleButton('close', 'onMouseUp')}
+						disabled={closeKruzapDisabled}
+						onMouseDown={() => handleButton('kruzap', 'close')}
+						onMouseUp={() => stopGateMovement('kruzap')}
 					/>
 					<Button
 						width={106}
 						height={38}
 						id="openKruzapBtn"
 						text="Открыть"
-						disabled={openDisabled}
-						onMouseDown={() => handleButton('open', 'onMouseDown')}
-						onMouseUp={() => handleButton('open', 'onMouseUp')}
+						disabled={openKruzapDisabled}
+						onMouseDown={() => handleButton('kruzap', 'open')}
+						onMouseUp={() => stopGateMovement('kruzap')}
 					/>
 					<span className={style.name}>Круза-п</span>
 				</div>

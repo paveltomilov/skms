@@ -5,16 +5,18 @@ import sidebarReducer from './sidebarSlice';
 import popupReducer from './popupSlice';
 import multimeterReducer from './multimeterSlice';
 import circuitReducer from './circuitSlice';
+import pointsReducer from './pointsSlice';
 
 export const store = () => {
 	return configureStore({
 		reducer: {
 			buttonsReducer,
-			gateReducer,
+			gate: gateReducer,
 			sidebar: sidebarReducer,
 			popup: popupReducer,
 			multimeter: multimeterReducer,
 			circuit: circuitReducer,
+			points: pointsReducer,
 		},
 	});
 };

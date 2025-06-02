@@ -1,19 +1,26 @@
 @use '@/shared/scss/variables.module';
 
-.schemePoint {
+.point {
 	position: absolute;
 	border-radius: 50%;
 	width: 24px;
 	height: 24px;
 	transition: opacity 0.2s ease, background-color 0.2s ease,
 		box-shadow 0.2s ease, transform 0.2s ease;
-}
 
-// Стиль для подсветки точки, когда над ней перетаскивается щуп
-.over {
-	opacity: 1;
-	background-color: #e44c4c;
-	// Другие эффекты, например, тень или увеличение:
-	box-shadow: 0 0 4px 1px #e76c6c;
-	transform: scale(0.4);
+	// Стиль для подсветки точки, когда над ней перетаскивается щуп
+	&_over {
+		opacity: 1;
+		background-color: #e44c4c;
+		box-shadow: 0 0 4px 1px #e76c6c;
+		transform: scale(0.4);
+	}
+
+	&__active {
+		outline: 2px solid red;
+	}
+
+	&__inactive {
+		outline: 2px solid blue;
+	}
 }
