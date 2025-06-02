@@ -1,7 +1,6 @@
-import { CircuitElement, InitialState } from '@/shared/types/scheme';
-import { useAppSelector } from '@/shared/hooks/store';
+import { CircuitElement, InitialStateScheme } from '@/shared/types/scheme';
 
-export const findElementByID = (id: string, state: InitialState) => {
+export const findElementByID = (id: string, state: InitialStateScheme) => {
 	// получаем их id массив без точек
 	const path = id.split('.');
 
@@ -24,30 +23,69 @@ export const findElementByID = (id: string, state: InitialState) => {
 	return res as CircuitElement;
 };
 
-export function setVoltagePoints(
-	scheme: InitialState,
+function calcPoint(
+	idPreviousPoint: boolean,
+	scheme: InitialStateScheme,
+	idElement: string,
+): boolean {
+	const element = findElementByID(idElement, scheme);
+	if (idPreviousPoint === true && element.resistance < 1000000) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+export function setNewVoltagePoints(
+	scheme: InitialStateScheme,
 	points: Record<string, boolean>,
-) {
-	let pointsAcc = JSON.parse(JSON.stringify(points));
-	let element = scheme.controlCircuit[0] as CircuitElement; // Принудительно говорим TypeScript'у, что это CircuitElement
+	setVoltagePoints: (points: Record<string, boolean>) => void,
+): Record<string, boolean> {
+	const pointsAcc = JSON.parse(JSON.stringify(points)) as Record<
+		string,
+		boolean
+	>;
 
-	if (pointsAcc['p.c.0'] === true && element.resistance < 1000000) {
-		pointsAcc['p.c.1'] = true;
-	} else {
-		pointsAcc['p.c.1'] = false;
-	}
-	element = scheme.controlCircuit[1] as CircuitElement;
+	pointsAcc['p.c.1'] = calcPoint(pointsAcc['p.c.0'], scheme, 'c.1');
 
-	if (pointsAcc['p.c.1'] === true && element.resistance < 1000000) {
-		pointsAcc['p.c.2'] = true;
-	} else {
-		pointsAcc['p.c.2'] = false;
-	}
-	element = scheme.controlCircuit[3] as CircuitElement;
+	pointsAcc['p.c.2'] = calcPoint(pointsAcc['p.c.1'], scheme, 'c.2');
 
-	if (pointsAcc['p.c.2'] === true && element.resistance < 1000000) {
-		pointsAcc['p.c.3'] = true;
-	} else {
-		pointsAcc['p.c.3'] = false;
-	}
+	pointsAcc['p.с.3.1.1'] = calcPoint(pointsAcc['p.c.2'], scheme, 'c.3.1.1');
+
+	pointsAcc['p.с.3.1.2'] = calcPoint(
+		pointsAcc['p.с.3.1.1'],
+		scheme,
+		'c.3.1.2',
+	);
+
+	pointsAcc['p.с.3.1.3.2.1'] =
+		calcPoint(pointsAcc['p.с.3.1.2'], scheme, 'c.3.1.3.2.1.1') ||
+		calcPoint(pointsAcc['p.с.3.1.2'], scheme, 'c.3.1.3.2.1.2');
+
+	pointsAcc['p.с.3.1.3.2.2'] = calcPoint(
+		pointsAcc['p.с.3.1.3.2.1'],
+		scheme,
+		'c.3.1.3.2.2',
+	);
+
+	pointsAcc['p.с.3.2.1'] = calcPoint(pointsAcc['p.c.2'], scheme, 'c.3.2.1');
+
+	pointsAcc['p.с.3.2.2'] = calcPoint(
+		pointsAcc['p.с.3.2.1'],
+		scheme,
+		'c.3.2.2',
+	);
+
+	pointsAcc['p.с.3.2.3.2.1'] =
+		calcPoint(pointsAcc['p.с.3.2.2'], scheme, 'c.3.2.3.2.1.1') ||
+		calcPoint(pointsAcc['p.с.3.2.2'], scheme, 'c.3.2.3.2.1.2');
+
+	pointsAcc['p.с.3.2.3.2.2'] = calcPoint(
+		pointsAcc['p.с.3.2.3.2.1'],
+		scheme,
+		'c.3.2.3.2.2',
+	);
+
+	setVoltagePoints(pointsAcc);
+	return pointsAcc;
 }

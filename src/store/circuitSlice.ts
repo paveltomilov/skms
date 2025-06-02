@@ -1,14 +1,16 @@
-import { initialSchemeState as initialState } from '../shared/configs/scheme';
 import { findElementByID } from '@/shared/utils/scheme';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { InitialState } from '@/shared/types/scheme';
+import { InitialStateScheme } from '@/shared/types/scheme';
+import { initialSchemeState } from '../shared/configs/scheme';
+
+const initialState: InitialStateScheme = initialSchemeState;
 const circuitSlice = createSlice({
 	name: 'circuit',
 	initialState,
 	reducers: {
 		// Активация неисправности
 		activateMalfunction(
-			state: InitialState,
+			state: InitialStateScheme,
 			action: PayloadAction<{ id: string }>,
 		) {
 			const { id } = action.payload;
@@ -32,7 +34,7 @@ const circuitSlice = createSlice({
 
 		// Деактивация неисправности (аналогично активации)
 		deactivateMalfunction(
-			state: InitialState,
+			state: InitialStateScheme,
 			action: PayloadAction<{ id: string }>,
 		) {
 			const { id } = action.payload;
@@ -52,7 +54,7 @@ const circuitSlice = createSlice({
 
 		// Изменение сопротивления
 		setResistance(
-			state: InitialState,
+			state: InitialStateScheme,
 			action: PayloadAction<{ id: string; value: number }>,
 		) {
 			const { id, value } = action.payload;
