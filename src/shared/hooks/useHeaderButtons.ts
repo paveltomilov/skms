@@ -79,8 +79,9 @@ export const useHeaderButtons = () => {
 			gateInterval.current = null;
 			dispatch(setGatePosition(gatePosition.current)); // Диспатчим текущее положение при остановке
 
-			// удалить после аппрува
-			console.log(`Gate stopped at position: ${gatePosition.current}%`);
+			console.log(
+				`Задвижка остановилась в положении: ${gatePosition.current}%`,
+			);
 		}
 	};
 
@@ -115,6 +116,7 @@ export const useHeaderButtons = () => {
 				}
 			} else if (button === 'close') {
 				gatePosition.current -= 1;
+
 				if (gatePosition.current <= 0) {
 					gatePosition.current = 0;
 					stopGateMovement(type);
@@ -124,8 +126,8 @@ export const useHeaderButtons = () => {
 					});
 				}
 			}
-			// удалить после аппрува
-			console.log(`Gate position: ${gatePosition.current}%`);
+
+			console.log(`Положение задвижки: ${gatePosition.current}%`);
 		}, 100);
 	};
 
