@@ -79,7 +79,7 @@ export const SCHEME_ELEMENTS: ISchemeElement[] = [
 	{
 		title: 'Какое-то название',
 		icon: 'engine',
-		id: 'p.5',
+		id: 'p.2.6',
 	},
 	{
 		title: 'Какое-то название',

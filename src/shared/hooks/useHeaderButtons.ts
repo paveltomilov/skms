@@ -7,7 +7,7 @@ import {
 	OPEN_FROM_PTK_ID,
 	CLOSE_FROM_PTK_ID,
 } from '../configs/scheme';
-import { findElementByID } from '../utils/scheme';
+import { findElementByID } from '../utils/findElementByID/scheme';
 import { useAppDispatch, useAppSelector } from './store';
 import { setResistance } from '@/store/circuitSlice';
 import { KRUZAP_BUTTONS_CONFIG, PTK_BUTTONS_CONFIG } from '../configs/header';
