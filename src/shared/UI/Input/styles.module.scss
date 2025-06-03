@@ -4,7 +4,6 @@
 .input {
   @include mixins.flex-center;
   padding: 12px 16px;
-  border: 2px solid variables.$black-color;
   transition: all variables.$transition-time ease;
   font-size: 16px;
   outline: none;
@@ -25,57 +24,52 @@
     height: 49px;
   }
 
-  &__default {
-    background-color: variables.$white-color;
+  &.error {
+    border: 2px solid variables.$red-color;
+    padding-left: 12px;
+  }
+
+  &.default {
+    background: variables.$white-color;
     color: variables.$black-color;
-    border-color: variables.$black-color;
+    border: 1px solid variables.$gray-disabled-color;
+
     &:hover:not(:disabled) {
       background-color: variables.$primary-color;
     }
+
     &.subscribe {
-      border: 1px solid #8A8A8A;
+      border: 1px solid variables.$gray-disabled-color;
     }
   }
-  &__disable {
-    background-color: variables.$gray-disabled-color;
-    color: variables.$secondary-color;
-    border-color: variables.$gray-disabled-color;
-    cursor: not-allowed;
+
+  &.disable {
+    border: 2px solid variables.$red-color;
+
     &:hover {
-      box-shadow: 0px 0px 0px 6px rgba(138, 138, 138, 1);
-      border: 1px solid rgba(138, 138, 138, 1)
+      box-shadow: 0px 0px 0px 6px variables.$gray-disabled-color;
+      border: 1px solid variables.$gray-disabled-color;
     }
   }
 
-  &__error {
-    background-color: variables.$error-button;
+  &.success {
+    border: 2px solid variables.$success-color;
     color: variables.$white-color;
-    border-color: variables.$red-color;
-
-    &:hover:not(:disabled) {
-      box-shadow: 0 0 5px variables.$red-color;
-    }
-  }
-
-  &__success {
-    background-color: variables.$success-color;
-    color: variables.$white-color;
-    border-color: variables.$dark-green-color;
 
     &:hover:not(:disabled) {
       box-shadow: 0 0 5px variables.$dark-green-color;
     }
 
-    padding-left: 20px;
+    padding-left: 12px;
   }
 
-  &__attention {
-    background-color: variables.$yellow-color;
+  &.attention {
     color: variables.$black-color;
-    border-color: variables.$yellow-color;
+    border: 1px solid variables.$gray-disabled-color;
+    box-shadow: -1px -1px 0px 1px rgba(255, 126, 34, 1);
 
     &:hover:not(:disabled) {
-      box-shadow: 0 0 5px variables.$yellow-color;
+      box-shadow: 0 0 5px rgba(255, 126, 34, 1);
     }
   }
 
@@ -92,18 +86,36 @@
   left: 12px;
   width: 30px;
   height: 30px;
-  opacity: 1;
-  mix-blend-mode: color;
   pointer-events: none;
 }
 
 .successText {
   margin-top: 4px;
-  width: 171px;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 100%;
+  @include mixins.text(12, 400);
   color: variables.$success-color;
   user-select: none;
+}
+
+.login {
+  padding: 18px 16px;
+  color: variables.$black-color;
+  @include mixins.text(20, 500);
+  line-height: 100%;
+}
+
+.errorText {
+  color: variables.$red-color;
+  @include mixins.text(12, 400);
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  pointer-events: none;
 }
