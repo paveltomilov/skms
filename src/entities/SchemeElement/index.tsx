@@ -7,7 +7,7 @@ import { openPopup } from '@/store/popupSlice';
 import { PopupContent } from '@/shared/types/popup';
 import { ISchemeElement } from '@/shared/types/scheme';
 import { HIGH_RESISTANCE } from '@/shared/configs/scheme';
-import { findElementByID } from '@/shared/utils/scheme';
+import { findElementByID } from '@/shared/utils/findElementByID/scheme';
 
 interface Prop {
 	element: ISchemeElement;
