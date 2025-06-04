@@ -19,9 +19,7 @@ const Scheme: FC = () => {
 	const probeConnections = useAppSelector(
 		state => state.multimeter.probeConnections,
 	);
-	const points: Record<string, boolean> = useAppSelector(
-		state => state.points,
-	);
+	const points = useAppSelector(state => state.points);
 	const scheme: InitialState = useAppSelector(state => state.circuit);
 	const dispatch = useAppDispatch();
 
