@@ -1,13 +1,13 @@
 import { FC, Suspense } from 'react';
-import ZraPage from '@/_pages/zra';
 import Loading from '../loading';
+import RecoveryPage from '@/_pages/recovery';
 
-const Zra: FC = () => {
+const Recovery: FC = () => {
 	return (
 		<Suspense fallback={<Loading />}>
-			<ZraPage />
+			<RecoveryPage />
 		</Suspense>
 	);
 };
 
-export default Zra;
+export default Recovery;
