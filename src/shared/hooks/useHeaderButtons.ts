@@ -7,40 +7,37 @@ import {
 	OPEN_FROM_PTK_ID,
 	CLOSE_FROM_PTK_ID,
 } from '../configs/scheme';
-import { findElementByID } from '../utils/findElementByID/scheme';
+import { CircuitElement } from '@/shared/types/scheme'; // Убедитесь, что CircuitElement импортирован
+
+import { findElementByID } from '../utils/scheme';
 import { useAppDispatch, useAppSelector } from './store';
 import { setResistance } from '@/store/circuitSlice';
 import { KRUZAP_BUTTONS_CONFIG, PTK_BUTTONS_CONFIG } from '../configs/header';
 import { useRef } from 'react';
-
 export const useHeaderButtons = () => {
 	const dispatch = useAppDispatch();
 
-	// получаем элемент схемы, от которого зависит disabled состояние кнопки открыть крузап и птк
-	const limitSwitchOpenElement = findElementByID(
+	// Явно указываем тип для элементов схемы
+	const limitSwitchOpenElement: CircuitElement = findElementByID(
 		LIMIT_SWITCH_OPEN_ID,
 		useAppSelector(state => state.circuit),
 	);
 
-	// получаем элемент схемы, от которого зависит disabled состояние кнопки закрыть крузап и птк
-	const limitSwitchCloseElement = findElementByID(
+	const limitSwitchCloseElement: CircuitElement = findElementByID(
 		LIMIT_SWITCH_CLOSE_ID,
 		useAppSelector(state => state.circuit),
 	);
 
-	//если у этих элементов сопротивление 1 млрд, то кнопки открыть/закрыть крузап и птк disabled
 	const openDisabled = limitSwitchOpenElement.resistance === HIGH_RESISTANCE;
 	const closeDisabled =
 		limitSwitchCloseElement.resistance === HIGH_RESISTANCE;
 
-	// получаем элемент схемы, от которого зависит active (нажатое) состояние кнопки открыть птк
-	const openFromPtkElement = findElementByID(
+	const openFromPtkElement: CircuitElement = findElementByID(
 		OPEN_FROM_PTK_ID,
 		useAppSelector(state => state.circuit),
 	);
 
-	// получаем элемент схемы, от которого зависит active (нажатое) состояние кнопки закрыть птк
-	const closeFromPtkElement = findElementByID(
+	const closeFromPtkElement: CircuitElement = findElementByID(
 		CLOSE_FROM_PTK_ID,
 		useAppSelector(state => state.circuit),
 	);
