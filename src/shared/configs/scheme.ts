@@ -78,11 +78,11 @@ export const SCHEME_ELEMENTS: ISchemeElement[] = [
 		icon: 'lamp',
 		id: 'c.3.2.3.3',
 	},
-	{
-		title: 'Какое-то название',
-		icon: 'engine',
-		id: 'p.5',
-	},
+	// {
+	// 	title: 'Какое-то название',
+	// 	icon: 'engine',
+	// 	id: 'p.5',
+	// },
 	{
 		title: 'Какое-то название',
 		icon: 'f01',
