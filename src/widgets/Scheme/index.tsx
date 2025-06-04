@@ -8,7 +8,8 @@ import { SchemePoint } from '@/entities/SchemePoint';
 import { useAppSelector } from '@/shared/hooks/store';
 import Probe from '@/entities/Probe';
 import { ProbeColor } from '@/shared/types/multimeter';
-
+//import { setNewVoltagePoints } from '@/shared/utils/scheme';
+//import { InitialStateScheme } from '@/shared/types/scheme';
 const Scheme: FC = () => {
 	const activeProbe = useAppSelector(
 		state => state.multimeter.activeProb,
@@ -17,6 +18,15 @@ const Scheme: FC = () => {
 	const probeConnections = useAppSelector(
 		state => state.multimeter.probeConnections,
 	);
+
+	//уберётся при следующем МР
+	// const points: Record<string, boolean> = useAppSelector(
+	// 	state => state.points,
+	// );
+	// const scheme: InitialStateScheme = useAppSelector(state => state.circuit);
+	// useEffect(() => {
+	// 	setNewVoltagePoints(scheme, points);
+	// }, [scheme]);
 
 	return (
 		<div className={styles.scheme}>

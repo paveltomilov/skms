@@ -26,4 +26,26 @@ export interface ISchemeElement {
 export interface IPoint {
 	x: number;
 	y: number;
+	state: boolean;
+}
+
+interface Malfunction {
+	id: string;
+	name: string;
+	active: boolean;
+}
+
+export interface CircuitElement {
+	id: string;
+	name: string;
+	resistance: number;
+	malfunctions: Malfunction[];
+}
+
+export type CircuitBranch = CircuitElement | CircuitGroup;
+export interface CircuitGroup extends Array<CircuitBranch> {}
+
+export interface InitialStateScheme {
+	powerCircuit: CircuitBranch[][];
+	controlCircuit: CircuitBranch[];
 }
