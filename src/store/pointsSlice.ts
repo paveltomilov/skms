@@ -6,8 +6,12 @@ const pointsSlice = createSlice({
 	initialState: pointsState,
 
 	reducers: {
-		setVoltagePoints: (state, action: PayloadAction<string>) => {
-			state[action.payload] = false;
+		setVoltagePoints: (
+			state,
+			action: PayloadAction<typeof pointsState>,
+		) => {
+			// Полностью заменяем состояние новым значением
+			return action.payload;
 		},
 	},
 });

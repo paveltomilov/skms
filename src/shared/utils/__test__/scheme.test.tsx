@@ -1,12 +1,12 @@
 import '@testing-library/jest-dom';
-import { initialStateScheme } from '@/shared/configs/scheme';
 import { findElementByID } from '../scheme';
+import { initialStateScheme } from '@/shared/configs/scheme';
 
 describe('test function findElementById', () => {
-	// it('should accept ids starting with "p"', () => {
-	// 	const result = findElementByID('p.2.1', initialStateScheme);
-	// 	expect(result.id).toBe('p.2.1' );
-	// });
+	it('should accept ids starting with "p"', () => {
+		const result = findElementByID('p.2.1', initialStateScheme);
+		expect(result.id).toBe('p.2.1');
+	});
 
 	it('should accept ids starting with "c"', () => {
 		const result = findElementByID('c.1', initialStateScheme);
