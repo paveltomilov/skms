@@ -4,6 +4,7 @@ import style from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import GateWindow from '@/entities/GateWindow/GateWindow';
 import { useHeaderButtons } from '@/shared/hooks/useHeaderButtons';
+import { Checkbox } from '@/shared/UI/Checkbox';
 
 const Header: FC = () => {
 	const {
@@ -21,6 +22,7 @@ const Header: FC = () => {
 	return (
 		<header className={style.header}>
 			<div className={style.wrapper}>
+				<Checkbox id='gege' value='fefef' name='feefef'/>
 				<span className={style.defense}>Работа защит</span>
 
 				<div className={style.part}>
