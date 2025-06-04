@@ -10,9 +10,8 @@ const Login = () => {
 				margin: '50px',
 			}}
 		>
-			<h1>вход</h1>
+			<h1>вход/регистрация</h1>
 			<Link href={'/recovery'}>забыли пароль?</Link>
-			<Link href={'/register'}>зарегистрироваться!</Link>
 			<Link href={'/'}>в тренажер!</Link>
 		</main>
 	);
