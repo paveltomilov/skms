@@ -9,7 +9,7 @@ import { useAppSelector, useAppDispatch } from '@/shared/hooks/store';
 import Probe from '@/entities/Probe';
 import { ProbeColor } from '@/shared/types/multimeter';
 import { setNewVoltagePoints } from '@/shared/utils/scheme';
-import { InitialState } from '@/shared/types/scheme';
+import { InitialStateScheme } from '@/shared/types/scheme';
 import { setVoltagePoints } from '@/store/pointsSlice';
 const Scheme: FC = () => {
 	const activeProbe = useAppSelector(
@@ -20,7 +20,7 @@ const Scheme: FC = () => {
 		state => state.multimeter.probeConnections,
 	);
 	const points = useAppSelector(state => state.points);
-	const scheme: InitialState = useAppSelector(state => state.circuit);
+	const scheme: InitialStateScheme = useAppSelector(state => state.circuit);
 	const dispatch = useAppDispatch();
 
 	function dispatched(payload: Record<string, boolean>) {

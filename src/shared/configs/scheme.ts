@@ -1,4 +1,4 @@
-import { IPoint, ISchemeElement, InitialState } from '../types/scheme';
+import { IPoint, ISchemeElement, InitialStateScheme } from '../types/scheme';
 
 // id элементов схемы
 export const LIMIT_SWITCH_OPEN_ID = 'c.3.1.1';
@@ -1142,7 +1142,7 @@ const controlCircuit = [
 	],
 ];
 
-export const initialSchemState: InitialState = {
+export const initialStateScheme: InitialStateScheme = {
 	powerCircuit: powerCircuit,
 	controlCircuit: controlCircuit,
 };

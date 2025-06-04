@@ -1,6 +1,6 @@
-import { CircuitElement, InitialState } from '@/shared/types/scheme';
+import { CircuitElement, InitialStateScheme } from '@/shared/types/scheme';
 
-export const findElementByID = (id: string, state: InitialState) => {
+export const findElementByID = (id: string, state: InitialStateScheme) => {
 	// проверяем что id соответсвует корректной длине
 	if (id.length < 3 || id.length > 14) {
 		throw new Error('id has wrong length');
@@ -44,7 +44,7 @@ export const findElementByID = (id: string, state: InitialState) => {
 
 function calcPoint(
 	idPreviousPoint: boolean,
-	scheme: InitialState,
+	scheme: InitialStateScheme,
 	idElement: string,
 ): boolean {
 	const element = findElementByID(idElement, scheme);
@@ -56,7 +56,7 @@ function calcPoint(
 }
 
 export function setNewVoltagePoints(
-	scheme: InitialState,
+	scheme: InitialStateScheme,
 	points: Record<string, boolean>,
 	setVoltagePoints: (points: Record<string, boolean>) => void,
 ): Record<string, boolean> {

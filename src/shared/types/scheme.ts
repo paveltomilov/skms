@@ -45,7 +45,7 @@ export interface CircuitElement {
 export type CircuitBranch = CircuitElement | CircuitGroup;
 export interface CircuitGroup extends Array<CircuitBranch> {}
 
-export interface InitialState {
+export interface InitialStateScheme {
 	powerCircuit: CircuitBranch[][];
 	controlCircuit: CircuitBranch[];
 }
