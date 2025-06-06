@@ -1,28 +1,17 @@
 import React, { FC, InputHTMLAttributes } from 'react';
 import classNames from 'classnames';
-import s from './styles.module.scss';
+import styles from './styles.module.scss';
 import Success from '../icons/Success';
 import Error from '../icons/Error';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  status?: 'success' | 'error' | 'default' | 'disable' | 'attention' | 'hover';
-  type?: 'minimum' | 'average' | 'maximum';
+  status?: 'success' | 'error' | 'default' | 'disabled' | 'warn' | 'hover' | 'code';
+  type?: 'minimum' | 'average' | 'maximum' | 'code';
   placeholder?: string;
+  message?: React.ReactNode; // пропс для сообщения
 }
 
-type MessageStatus = 'success' | 'error' | 'attention';
 type IconStatus = 'success' | 'error';
-
-const messages: Record<MessageStatus, React.ReactNode> = {
-  success: (
-    <>
-      <div className={s.successText}>Регистрация прошла успешно</div>
-      <div className={s.successText}>Пароль подтвержден</div>
-    </>
-  ),
-  error: <div className={s.errorText}>E-mail адрес введен неверно</div>,
-  attention: <div className={s.attentionText}>E-mail адрес введен неверно</div>,
-};
 
 const icons: Record<IconStatus, FC<React.SVGProps<SVGSVGElement>>> = {
   success: Success,
@@ -32,41 +21,51 @@ const icons: Record<IconStatus, FC<React.SVGProps<SVGSVGElement>>> = {
 const Input: FC<InputProps> = ({
   status = 'default',
   type = 'average',
-  placeholder = 'Логин',
+  placeholder,
+  message = null, // изначально в null
   ...props
 }) => {
-  // иконка для текущего статуса
-  const Icon = (status in icons) ? icons[status as IconStatus] : undefined;
+  // Определяем иконку по статусу
+  const Icon = (status in icons) ? icons[status as IconStatus] : null;
 
   const inputClass = classNames(
-    s.input,
-    s[type],
+    styles.input,
+    styles[type],
     {
-      [s.inputSuccess]: status === 'success',
-      [s.error]: status === 'error',
-      [s.disable]: status === 'disable',
-      [s.attention]: status === 'attention',
-      [s.hover]: status === 'hover',
+        [styles.success]: status === 'success',
+        [styles.error]: status === 'error',
+        [styles.disabled]: status === 'disabled',
+        [styles.warn]: status === 'warn',
+        [styles.hover]: status === 'hover',
     }
   );
 
-  // Проверка для текущего статуса
-  const message = (status in messages) ? messages[status as MessageStatus] : null;
-
   return (
-    <div className={s.inputContainer}>
-      <div className={s.inputWrapper}>
+    <div className={styles.inputContainer}>
+      <div className={styles.inputWrapper}>
         <input
           {...props}
           className={inputClass}
-          disabled={status === 'disable'}
+          disabled={status === 'disabled'}
           placeholder={placeholder}
         />
-        {Icon && <Icon className={s.icon} />}
+        {Icon && <Icon className={styles.icon} />}
       </div>
-      {message}
+      {message && (
+        <div
+          className={
+            status === 'success' ? styles.successText :
+            status === 'error' ? styles.errorText :
+            status === 'warn' ? styles.warnText :
+            undefined
+          }
+        >
+          {message}
+        </div>
+      )}
     </div>
   );
 };
 
 export default Input;
+

@@ -11,17 +11,17 @@ const meta: Meta<typeof Input> = {
   argTypes: {
     status: {
       description: 'Статус инпута',
-      options: ['error', 'success', 'default', 'disable', 'attention', 'hover'],
+      options: ['error', 'success', 'default', 'disabled', 'warn', 'hover'],
       control: { type: 'radio' },
     },
     type: {
       description: 'Размер инпута',
-      options: ['minimum', 'maximum', 'average'],
+      options: ['minimum', 'maximum', 'average', 'code'],
       control: { type: 'radio' },
     },
-    subscribe: {
-      description: 'Флаг подписки',
-      control: { type: 'boolean' },
+    message: {
+      description: 'Сообщение под инпутом',
+      control: { type: 'text' },
     },
   },
 };
@@ -31,26 +31,29 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: { status: 'default', type: 'average', subscribe: false },
+  args: { status: 'default', type: 'average', message: '' },
 };
 
 export const Success: Story = {
-  args: { status: 'success', type: 'average', subscribe: false },
+  args: { status: 'success', type: 'average', message: 'Регистрация прошла успешно' },
 };
 
 export const Error: Story = {
-  args: { status: 'error', type: 'average', subscribe: false },
+  args: { status: 'error', type: 'average', message: 'E-mail адрес введен неверно' },
 };
 
-export const Attention: Story = {
-  args: { status: 'attention', type: 'average', subscribe: false },
+export const Warn: Story = {
+  args: { status: 'warn', type: 'average', message: 'Проверьте введённые данные' },
 };
 
 export const Disabled: Story = {
-  args: { status: 'disable', type: 'average', subscribe: false },
+  args: { status: 'disabled', type: 'average', message: '' },
 };
 
 export const Hover: Story = {
-  args: { status: 'hover', type: 'average', subscribe: false },
+  args: { status: 'hover', type: 'average', message: '' },
 };
 
+export const Code: Story = {
+  args: { status: 'code', type: 'average', message: 'Неверный код' },
+};
