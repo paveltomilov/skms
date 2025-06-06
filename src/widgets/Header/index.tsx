@@ -4,6 +4,8 @@ import style from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import GateWindow from '@/entities/GateWindow/GateWindow';
 import { useHeaderButtons } from '@/shared/hooks/useHeaderButtons';
+import { useSession, /* signIn , */ signOut } from 'next-auth/react';
+import Link from 'next/link';
 
 const Header: FC = () => {
 	const {
@@ -18,10 +20,22 @@ const Header: FC = () => {
 		openPtkActive,
 	} = useHeaderButtons();
 
+	const session = useSession();
+
+	console.log(session);
+
 	return (
 		<header className={style.header}>
 			<div className={style.wrapper}>
 				<span className={style.defense}>Работа защит</span>
+
+				{session.data ? (
+					<button onClick={() => signOut({ callbackUrl: '/login' })}>
+						выйти
+					</button>
+				) : (
+					<Link href={'/login'}>войти</Link>
+				)}
 
 				<div className={style.part}>
 					<span className={style.name}>птк</span>
