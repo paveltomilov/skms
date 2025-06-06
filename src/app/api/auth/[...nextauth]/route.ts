@@ -1,7 +1,7 @@
 import NextAuth, { User, type AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
-export const authOptions: AuthOptions = {
+const authOptions: AuthOptions = {
 	providers: [
 		CredentialsProvider({
 			credentials: {
@@ -58,8 +58,6 @@ export const authOptions: AuthOptions = {
 	},
 };
 
-// из-за того что NextAuth - возвращает any, выключаю линтер на следующей строке
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-const handler = NextAuth(authOptions);
+const handler = NextAuth(authOptions) as never;
 
 export { handler as GET, handler as POST };

@@ -8,7 +8,7 @@ import { UniqueIdentifier } from '@dnd-kit/core';
 
 const initialState: MultimeterState = {
 	currentMode: 'OFF',
-	displayValue: '',
+	displayValue: null,
 	probeConnections: { red: null, black: null },
 	activeProb: null,
 };
@@ -42,10 +42,18 @@ export const multimeterSlice = createSlice({
 		) => {
 			state.activeProb = action.payload;
 		},
+		setMeasurementResult: (state, action: PayloadAction<number | null>) => {
+			state.displayValue = action.payload;
+		},
 	},
 });
 
-export const { setCurrentMode, attachProbe, detachProbe, setActiveProb } =
-	multimeterSlice.actions;
+export const {
+	setCurrentMode,
+	attachProbe,
+	detachProbe,
+	setActiveProb,
+	setMeasurementResult,
+} = multimeterSlice.actions;
 
 export default multimeterSlice.reducer;
