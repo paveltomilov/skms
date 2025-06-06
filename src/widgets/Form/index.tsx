@@ -48,6 +48,7 @@ const Form = () => {
 			<input
 				type="password"
 				name="password"
+				placeholder="password"
 				required
 				onChange={handleChange}
 				value={password}

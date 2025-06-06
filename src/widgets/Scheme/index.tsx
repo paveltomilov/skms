@@ -11,6 +11,8 @@ import { ProbeColor } from '@/shared/types/multimeter';
 import { setNewVoltagePoints } from '@/shared/utils/scheme';
 import { InitialStateScheme } from '@/shared/types/scheme';
 import { setVoltagePoints } from '@/store/pointsSlice';
+import { useWebSocket } from '@/shared/hooks/useWebSocket';
+
 const Scheme: FC = () => {
 	const activeProbe = useAppSelector(
 		state => state.multimeter.activeProb,
@@ -19,6 +21,7 @@ const Scheme: FC = () => {
 	const probeConnections = useAppSelector(
 		state => state.multimeter.probeConnections,
 	);
+
 	const points = useAppSelector(state => state.points);
 	const scheme: InitialStateScheme = useAppSelector(state => state.circuit);
 	const dispatch = useAppDispatch();
@@ -31,6 +34,13 @@ const Scheme: FC = () => {
 		const pointsVoltage = setNewVoltagePoints(scheme, points, dispatched);
 		console.log(pointsVoltage);
 	}, [scheme]);
+
+	const { sendMessage } = useWebSocket();
+
+	sendMessage({
+		type: 'start_simulation',
+		studentId: '12345',
+	});
 
 	return (
 		<div className={styles.scheme}>

@@ -35,7 +35,6 @@ export const authOptions: AuthOptions = {
 					},
 				);
 				const user = (await res.json()) as User;
-				console.log(user);
 				if (user) {
 					return user;
 				} else {
@@ -47,20 +46,20 @@ export const authOptions: AuthOptions = {
 	pages: {
 		signIn: '/login',
 	},
-	/* callbacks: {
+	callbacks: {
 		async jwt({ token, user }) {
 			return { ...token, ...user };
 		},
 		async session({ session, token }) {
-			session.user = token;
+			// eslint-disable-next-line
+			session.user = token as any;
 			return session;
 		},
-	}, */
+	},
 };
 
+// из-за того что NextAuth - возвращает any, выключаю линтер на следующей строке
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
-
-/* export default NextAuth(authOptions); */
