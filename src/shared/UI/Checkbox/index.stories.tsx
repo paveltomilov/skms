@@ -57,7 +57,7 @@ export const DisabledChecked: Story = {
 };
 
 export const Small: Story = {
-	args: { id: 'small', name: 'small', size: 'sm' },
+	args: { id: 'small', name: 'small', size: 'sm'},
 };
 
 export const Large: Story = {
@@ -65,5 +65,13 @@ export const Large: Story = {
 		id: 'large',
 		name: 'large',
 		size: 'lg',
+	},
+};
+
+export const WithText: Story = {
+	args: {
+		id: 'text',
+		name: 'text',
+		text: 'Запомнить',
 	},
 };

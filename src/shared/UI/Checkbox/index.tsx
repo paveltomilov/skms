@@ -9,15 +9,18 @@ interface CheckboxProps {
 	name: string,
 	disabled?: boolean;
 	checked?: boolean;
+	text?: string;
 }
 
-export const Checkbox: FC<CheckboxProps> = ({id,name, disabled, checked,size = 'lg'}) => {
+export const Checkbox: FC<CheckboxProps> = ({id,name, disabled, checked,size = 'lg',text}) => {
 	const sizes = CHECKBOX_SIZE[size];
+
 	return (
 		<div className={style.checkbox}>
 			<input className={style.input} type="checkbox" id={id} name={name} disabled={disabled} checked={checked}/>
 			<label  className={style.label} htmlFor={id} style={{'--width': `${sizes.width}px`, '--height': `${sizes.height}px`} as React.CSSProperties}>
-				<Accept />
+				<Accept size={sizes.iconSize}/>
+				<p className={style.text}>{text}</p>
             </label>
 		</div>
 	);
