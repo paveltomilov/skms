@@ -32,16 +32,15 @@ const Input: FC<InputProps> = ({
     styles.input,
     styles[type],
     {
-        [styles.success]: status === 'success',
-        [styles.error]: status === 'error',
-        [styles.disabled]: status === 'disabled',
-        [styles.warn]: status === 'warn',
-        [styles.hover]: status === 'hover',
+      [styles.success]: status === 'success',
+      [styles.error]: status === 'error',
+      [styles.disabled]: status === 'disabled',
+      [styles.warn]: status === 'warn',
+      [styles.hover]: status === 'hover',
     }
   );
 
   return (
-    <div className={styles.inputContainer}>
       <div className={styles.inputWrapper}>
         <input
           {...props}
@@ -50,20 +49,10 @@ const Input: FC<InputProps> = ({
           placeholder={placeholder}
         />
         {Icon && <Icon className={styles.icon} />}
+        {message && (
+          <span className={styles.message}>{message}</span>
+        )}
       </div>
-      {message && (
-        <div
-          className={
-            status === 'success' ? styles.successText :
-            status === 'error' ? styles.errorText :
-            status === 'warn' ? styles.warnText :
-            undefined
-          }
-        >
-          {message}
-        </div>
-      )}
-    </div>
   );
 };
 
