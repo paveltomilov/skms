@@ -1,13 +1,13 @@
-@use '../../scss/_variables.module.scss';
-@use '../../scss/_mixins.module.scss';
+@use '../../scss/_variables.module.scss' as variables;
+@use '../../scss/_mixins.module.scss' as mixins;
 
 .input {
-  @include flex-center;
+  @include mixins.flex-center;
   padding: 12px 16px;
-  transition: all $transition-time ease;
+  transition: all variables.$transition-time ease;
   position: relative;
   &:hover {
-    border: 1px solid $gray-disabled-color;
+    border: 1px solid variables.$gray-disabled-color;
   }
 
   &.minimum {
@@ -15,38 +15,38 @@
     height: 48px;
 
     &:hover {
-      box-shadow: 0px 1px 4px 0px $gray-disabled-color;
+      box-shadow: 0px 1px 4px 0px variables.$gray-disabled-color;
 
-      border-bottom: 2px solid $gray-disabled-color;
+      border-bottom: 2px solid variables.$gray-disabled-color;
     }
 
     &.error {
-      border-bottom: 2px solid $red-color;
+      border-bottom: 2px solid variables.$red-color;
       padding-left: 12px;
     }
 
     &.default {
-      background: $white-color;
-      color: $black-color;
-      border-bottom: 2px solid $black-color;
+      background: variables.$white-color;
+      color: variables.$black-color;
+      border-bottom: 2px solid variables.$black-color;
       &.subscribe {
-        border: 1px solid $gray-disabled-color;
+        border: 1px solid variables.$gray-disabled-color;
       }
     }
 
     &.disabled {
-      border: 2px solid $red-color;
+      border: 2px solid variables.$red-color;
     }
 
     &.success {
-      border-bottom: 2px solid $success-color;
+      border-bottom: 2px solid variables.$success-color;
       padding-left: 12px;
     }
 
     &.warn {
-      color: $black-color;
-      border-bottom: 1px solid $gray-disabled-color;
-      box-shadow: -1px -1px 0px 1px $warn-button;
+      color: variables.$black-color;
+      border-bottom: 1px solid variables.$gray-disabled-color;
+      box-shadow: -1px -1px 0px 1px variables.$warn-button;
     }
   }
 
@@ -61,54 +61,54 @@
   }
 
   &.error {
-    border: 2px solid $red-color;
+    border: 2px solid variables.$red-color;
     padding-left: 12px;
   }
 
   &.default {
-    background: $white-color;
-    color: $black-color;
-    border: 1px solid $gray-disabled-color;
+    background: variables.$white-color;
+    color: variables.$black-color;
+    border: 1px solid variables.$gray-disabled-color;
     &.subscribe {
-      border: 1px solid $gray-disabled-color;
+      border: 1px solid variables.$gray-disabled-color;
     }
   }
 
   &.disabled {
-    border: 2px solid $red-color;
+    border: 2px solid variables.$red-color;
   }
 
   &.success {
-    border: 2px solid $success-color;
+    border: 2px solid variables.$success-color;
     padding-left: 12px;
   }
 
   &.warn {
-    color: $black-color;
-    border: 1px solid $gray-disabled-color;
-    box-shadow: -1px -1px 0px 1px $warn-button;
+    color: variables.$black-color;
+    border: 1px solid variables.$gray-disabled-color;
+    box-shadow: -1px -1px 0px 1px variables.$warn-button;
   }
 
   &.code {
     width: 193px;
     height: 55px;
     position: relative;
-    box-shadow: inset 1px 1px 4px $input-box-shadow;
+    box-shadow: inset 1px 1px 4px variables.$input-box-shadow;
     @include mixins.text(38, 500);
 
     &.error {
-      background: $secondary-color;
-      color: $red-color;
+      background: variables.$secondary-color;
+      color: variables.$red-color;
     }
 
     &.disabled {
-      background: $gray-disabled-color;
-      color: $white-color;
+      background: variables.$gray-disabled-color;
+      color: variables.$white-color;
     }
 
     &.default {
-      background: $secondary-color;
-      box-shadow: inset 1px 1px 4px $input-box-shadow;
+      background: variables.$secondary-color;
+      box-shadow: inset 1px 1px 4px variables.$input-box-shadow;
       width: 101px;
       height: 27px;
     }
@@ -127,25 +127,25 @@
 .successText {
   margin-top: 4px;
   @include mixins.text(12, 400);
-  color: $success-color;
+  color: variables.$success-color;
   align-items: center;
 }
 
 .login {
   padding: 18px 16px;
-  color: $black-color;
+  color: variables.$black-color;
   @include mixins.text(20, 500);
   line-height: 100%;
 }
 
 .errorText {
-  color: $red-color;
+  color: variables.$red-color;
   @include mixins.text(12, 400);
   align-items: center;
 }
 
 .warnText {
-  color: $warn-button;
+  color: variables.$warn-button;
   @include mixins.text(12, 400);
   align-items: center;
 }
