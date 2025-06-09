@@ -80,6 +80,6 @@
 
 [проведение код ревью](https://docs.google.com/document/d/19JU-Y9FXi_RTufERvckXiAwASfAuXN-llD6swcd8xAs/edit?usp=drive_link)
 
-[GIT FLOW](https://docs.google.com/document/d/18o2wA3tGDt80-be8OvAjvuYV_8QyJVkupyv1znXLE3I/edit?usp=drive_link)
+[Критерии приемки задач для фронтенд-разработки](https://docs.google.com/document/d/18o2wA3tGDt80-be8OvAjvuYV_8QyJVkupyv1znXLE3I/edit?usp=drive_link)
 
 [Организация структуры папок и файлов](https://docs.google.com/document/d/1hmFT94A0qgcsDe4OMW-Ce18Ee17tQiJjQ7zaCU1sQW4/edit?usp=drive_link)
