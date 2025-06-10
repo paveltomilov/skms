@@ -9,7 +9,7 @@ import {
 } from '../configs/scheme';
 import { CircuitElement } from '@/shared/types/scheme'; // Убедитесь, что CircuitElement импортирован
 
-import { findElementByID } from '../utils/scheme';
+import { findElementByID } from '../utils/findElementByID/scheme';
 import { useAppDispatch, useAppSelector } from './store';
 import { setResistance } from '@/store/circuitSlice';
 import { KRUZAP_BUTTONS_CONFIG, PTK_BUTTONS_CONFIG } from '../configs/header';

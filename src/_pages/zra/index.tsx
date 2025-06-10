@@ -5,6 +5,7 @@ import Sidebar from '@/widgets/Sidebar';
 import Header from '@/widgets/Header';
 import Measurements from '@/widgets/Measurements';
 import Simulator from '@/widgets/Simulator/Simulator';
+import Switch from '@/shared/UI/Switch';
 
 const Zra = () => {
 	return (
@@ -12,10 +13,12 @@ const Zra = () => {
 			<Header />
 			<main className={styles.main}>
 				<Sidebar />
+
 				<Simulator>
 					<section className={styles.simulator}>
 						<h1 className={styles.simulator__title}>Тренажёр</h1>
 						<Scheme />
+						<Switch />
 					</section>
 					<Measurements />
 				</Simulator>

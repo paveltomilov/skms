@@ -8,7 +8,7 @@ import { SchemePoint } from '@/entities/SchemePoint';
 import { useAppSelector, useAppDispatch } from '@/shared/hooks/store';
 import Probe from '@/entities/Probe';
 import { ProbeColor } from '@/shared/types/multimeter';
-import { setNewVoltagePoints } from '@/shared/utils/scheme';
+import { setNewVoltagePoints } from '@/shared/utils/findElementByID/scheme';
 import { InitialStateScheme } from '@/shared/types/scheme';
 import { setVoltagePoints } from '@/store/pointsSlice';
 import { useWebSocket } from '@/shared/hooks/useWebSocket';
