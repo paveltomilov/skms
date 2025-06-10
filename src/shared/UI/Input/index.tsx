@@ -27,7 +27,7 @@ const Input: FC<InputProps> = ({
 }) => {
   // Определяем иконку по статусу
   const Icon = (status in icons) ? icons[status as IconStatus] : null;
-  const showIcon = type !== 'maximum' && Icon;
+  const showIcon = type === 'maximum' && Icon;
 
   const inputClass = classNames(
     styles.input,
@@ -37,6 +37,7 @@ const Input: FC<InputProps> = ({
       [styles.error]: status === 'error',
       [styles.disabled]: status === 'disabled',
       [styles.warn]: status === 'warn',
+      [styles.default]: status === 'default'
     }
   );
 
