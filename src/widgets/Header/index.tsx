@@ -4,8 +4,12 @@ import style from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import GateWindow from '@/entities/GateWindow/GateWindow';
 import { useHeaderButtons } from '@/shared/hooks/useHeaderButtons';
+import { useSession, signOut } from 'next-auth/react';
+import Link from 'next/link';
 
 const Header: FC = () => {
+	const session = useSession();
+
 	const {
 		handleButton,
 		stopGateMovement,
@@ -22,6 +26,15 @@ const Header: FC = () => {
 		<header className={style.header}>
 			<div className={style.wrapper}>
 				<span className={style.defense}>Работа защит</span>
+
+				{/* временно пока не появится в макете кнопка для выхода */}
+				{session.data?.user ? (
+					<button onClick={() => signOut({ callbackUrl: '/login' })}>
+						выйти
+					</button>
+				) : (
+					<Link href={'/login'}>войти</Link>
+				)}
 
 				<div className={style.part}>
 					<span className={style.name}>птк</span>
