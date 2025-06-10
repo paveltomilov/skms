@@ -11,12 +11,12 @@ const meta: Meta<typeof Input> = {
   argTypes: {
     status: {
       description: 'Статус инпута',
-      options: ['error', 'success', 'default', 'disabled', 'warn', 'hover'],
+      options: ['error', 'success', 'default', 'disabled', 'warn'],
       control: { type: 'radio' },
     },
     type: {
       description: 'Размер инпута',
-      options: ['minimum', 'maximum', 'average', 'code'],
+      options: [ 'maximum', 'average', 'minimum', 'code'],
       control: { type: 'radio' },
     },
     message: {
@@ -48,10 +48,6 @@ export const Warn: Story = {
 
 export const Disabled: Story = {
   args: { status: 'disabled', type: 'average', message: '' },
-};
-
-export const Hover: Story = {
-  args: { status: 'hover', type: 'average', message: '' },
 };
 
 export const Code: Story = {

@@ -5,7 +5,7 @@ import Success from '../icons/Success';
 import Error from '../icons/Error';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  status?: 'success' | 'error' | 'default' | 'disabled' | 'warn' | 'hover' | 'code';
+  status?: 'success' | 'error' | 'default' | 'disabled' | 'warn' | 'code';
   type?: 'minimum' | 'average' | 'maximum' | 'code';
   placeholder?: string;
   message?: React.ReactNode; // пропс для сообщения
@@ -27,6 +27,7 @@ const Input: FC<InputProps> = ({
 }) => {
   // Определяем иконку по статусу
   const Icon = (status in icons) ? icons[status as IconStatus] : null;
+  const showIcon = type !== 'maximum' && Icon;
 
   const inputClass = classNames(
     styles.input,
@@ -36,7 +37,6 @@ const Input: FC<InputProps> = ({
       [styles.error]: status === 'error',
       [styles.disabled]: status === 'disabled',
       [styles.warn]: status === 'warn',
-      [styles.hover]: status === 'hover',
     }
   );
 
@@ -48,7 +48,7 @@ const Input: FC<InputProps> = ({
           disabled={status === 'disabled'}
           placeholder={placeholder}
         />
-        {Icon && <Icon className={styles.icon} />}
+        {showIcon && <Icon className={styles.icon} />}
         {message && (
           <span className={styles.message}>{message}</span>
         )}
