@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import Lamp from '.';
 
 const meta: Meta<typeof Lamp> = {
-	title: 'Icons/Lamp',
+	title: 'Icons/LampSucess',
 	component: Lamp,
 	parameters: {
 		layout: 'centered',
@@ -19,4 +19,4 @@ const meta: Meta<typeof Lamp> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Sucess: Story = {};
