@@ -56,8 +56,8 @@ export function useSwitchingSwitch(
 			handleRef.current.style.transform = `translateY(${newY}px)`;
 
 			// Определяем текущий режим на основе положения
-			const threshold = switchRect.height / 2;
-			const newMode = newY < threshold ? 'on' : 'off';
+			const mid = switchRect.height / 2;
+			const newMode = newY < mid ? 'on' : 'off';
 
 			if (newMode !== currentMode) {
 				setCurrentMode(newMode);

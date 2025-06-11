@@ -11,7 +11,6 @@ const Switch = () => {
 
 	// логика перемещения свича внутри кастомного хука
 	const { currentMode, onMouseDown } = useSwitchingSwitch(handleRef, mode);
-
 	return (
 		<div className={styles.switch}>
 			<div
