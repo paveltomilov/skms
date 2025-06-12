@@ -7,7 +7,7 @@ interface Props {
 	className?: string;
 }
 
-const MultimeterArrow: FC<Props> = ({ ref, onMouseDown, angle, className }) => {
+const SwitchHandle: FC<Props> = ({ ref, onMouseDown, angle, className }) => {
 	return (
 		<svg
 			ref={ref}
@@ -17,7 +17,7 @@ const MultimeterArrow: FC<Props> = ({ ref, onMouseDown, angle, className }) => {
 			className={className && className}
 		>
 			<use
-				xlinkHref={'/svg/multimeter.svg#arrow'}
+				xlinkHref={'/svg/sprite.svg#switch'}
 				width="100%"
 				height="100%"
 			/>
@@ -25,4 +25,4 @@ const MultimeterArrow: FC<Props> = ({ ref, onMouseDown, angle, className }) => {
 	);
 };
 
-export default MultimeterArrow;
+export default SwitchHandle;

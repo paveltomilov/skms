@@ -3,6 +3,7 @@ import gateReducer from './gateSlice';
 import buttonsReducer from './buttonsSlice';
 import sidebarReducer from './sidebarSlice';
 import popupReducer from './popupSlice';
+import modalReducer from './modalSlice';
 import multimeterReducer from './multimeterSlice';
 import circuitReducer from './circuitSlice';
 import pointsReducer from './pointsSlice';
@@ -14,6 +15,7 @@ export const store = () => {
 			gate: gateReducer,
 			sidebar: sidebarReducer,
 			popup: popupReducer,
+			modal: modalReducer,
 			multimeter: multimeterReducer,
 			circuit: circuitReducer,
 			points: pointsReducer,

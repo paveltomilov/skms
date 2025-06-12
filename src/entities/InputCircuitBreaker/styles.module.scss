@@ -1,0 +1,21 @@
+.element {
+	position: absolute;
+	background: transparent;
+	top: 130px;
+	left: 70px;
+	width: 131px;
+	height: 85px;
+	cursor: pointer;
+
+	&_hover:hover {
+		opacity: 0.5;
+	}
+
+	&__highResistance {
+		outline: 2px solid blue;
+	}
+
+	&__baseResistance {
+		outline: 2px solid red;
+	}
+}

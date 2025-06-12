@@ -7,7 +7,7 @@ import { getInputCircuitBreakerState } from '@/shared/utils/getInputCircuitBreak
 import {
 	BASE_RESISTANCE,
 	HIGH_RESISTANCE,
-	INPUT_CIRCUIT_BREAKER,
+	INPUT_CIRCUIT_BREAKER_ID,
 } from '@/shared/configs/scheme';
 import { Provider } from 'react-redux';
 import type { Decorator } from '@storybook/react';
@@ -37,7 +37,7 @@ const meta: Meta<typeof Switch> = {
 
 				useEffect(() => {
 					if (state === 'on' && state !== mode) {
-						for (const id of INPUT_CIRCUIT_BREAKER) {
+						for (const id of INPUT_CIRCUIT_BREAKER_ID) {
 							mockStore.dispatch(
 								setResistance({
 									id,
@@ -46,7 +46,7 @@ const meta: Meta<typeof Switch> = {
 							);
 						}
 					} else if (state === 'off' && state !== mode) {
-						for (const id of INPUT_CIRCUIT_BREAKER) {
+						for (const id of INPUT_CIRCUIT_BREAKER_ID) {
 							mockStore.dispatch(
 								setResistance({
 									id,

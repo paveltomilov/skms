@@ -11,9 +11,12 @@ import { ProbeColor } from '@/shared/types/multimeter';
 import { setNewVoltagePoints } from '@/shared/utils/findElementByID/scheme';
 import { InitialStateScheme } from '@/shared/types/scheme';
 import { setVoltagePoints } from '@/store/pointsSlice';
-import { useWebSocket } from '@/shared/hooks/useWebSocket';
+import { InputCircuitBreaker } from '@/entities/InputCircuitBreaker';
+import { Automatic } from '../Automatic';
+import ModalWrapper from '../ModalWrapper';
 
 const Scheme: FC = () => {
+	// для рендера щупов
 	const activeProbe = useAppSelector(
 		state => state.multimeter.activeProb,
 	) as ProbeColor;
@@ -22,6 +25,7 @@ const Scheme: FC = () => {
 		state => state.multimeter.probeConnections,
 	);
 
+	// для состояния точек
 	const points = useAppSelector(state => state.points);
 	const scheme: InitialStateScheme = useAppSelector(state => state.circuit);
 	const dispatch = useAppDispatch();
@@ -35,12 +39,7 @@ const Scheme: FC = () => {
 		console.log(pointsVoltage);
 	}, [scheme]);
 
-	const { sendMessage } = useWebSocket();
-
-	sendMessage({
-		type: 'start_simulation',
-		studentId: '12345',
-	});
+	const isOpenModal = useAppSelector(state => state.modal.isOpen);
 
 	return (
 		<div className={styles.scheme}>
@@ -48,9 +47,17 @@ const Scheme: FC = () => {
 				<SchemeElement key={item.id} element={item} />
 			))}
 
+			<InputCircuitBreaker />
+
 			{Object.entries(SCHEME_POINTS).map(([id, position]) => (
 				<SchemePoint key={id} id={id} position={position} />
 			))}
+
+			{isOpenModal && (
+				<ModalWrapper>
+					<Automatic />
+				</ModalWrapper>
+			)}
 
 			{/* если щуп перетаскивается, его рендерит схема */}
 			{activeProbe && <Probe color={activeProbe} />}

@@ -1,38 +1,19 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { useDebounce } from '@/shared/hooks/useDebounce';
-import { useAppDispatch } from '@/shared/hooks/store';
-import { setResistance } from '@/store/circuitSlice';
-import {
-	BASE_RESISTANCE,
-	HIGH_RESISTANCE,
-	INPUT_CIRCUIT_BREAKER,
-} from '../configs/scheme';
+import { useCallback, useRef, useState } from 'react';
 
-type SwitchMode = 'on' | 'off';
+export type SwitchMode = 'on' | 'off';
 
-export function useSwitchingSwitch(
+export function useSwitchingTumbler(
 	handleRef: React.RefObject<HTMLDivElement | null>,
 	initialMode: SwitchMode,
 ) {
 	const [currentMode, setCurrentMode] = useState<SwitchMode>(initialMode);
 
 	const isDragging = useRef(false);
-	const dispatch = useAppDispatch();
-
-	const debouncedMode = useDebounce(currentMode, 1000);
-
-	// Диспатчим debounced значение в store
-	useEffect(() => {
-		for (const id of INPUT_CIRCUIT_BREAKER) {
-			const resistance =
-				debouncedMode === 'on' ? BASE_RESISTANCE[id] : HIGH_RESISTANCE;
-			dispatch(setResistance({ id, value: resistance }));
-		}
-	}, [debouncedMode, dispatch]);
 
 	// Обработка перетаскивания
 	const handleMouseMove = useCallback(
 		(event: MouseEvent) => {
+			event.preventDefault();
 			if (!isDragging.current || !handleRef.current) return;
 
 			const switchElement = handleRef.current.parentElement;
@@ -56,14 +37,12 @@ export function useSwitchingSwitch(
 			handleRef.current.style.transform = `translateY(${newY}px)`;
 
 			// Определяем текущий режим на основе положения
-			const mid = switchRect.height / 2;
-			const newMode = newY < mid ? 'on' : 'off';
+			const threshold = switchRect.height / 2;
+			const newMode = newY < threshold ? 'on' : 'off';
 
 			if (newMode !== currentMode) {
 				setCurrentMode(newMode);
 			}
-
-			event.preventDefault();
 		},
 		[currentMode, handleRef],
 	);

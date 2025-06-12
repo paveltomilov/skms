@@ -1,4 +1,6 @@
-.switch {
+@use '@/shared/scss/variables.module';
+
+.tumbler {
 	width: 52px;
 	height: 24px;
 	position: relative;
@@ -51,6 +53,40 @@
 				#5c5c5c 51.55%
 			);
 			transform: translateY(24px);
+		}
+	}
+}
+
+.box {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	background-color: variables.$primary-color;
+	box-shadow: variables.$pop-up-box-shadow;
+	width: 88px;
+	height: 156px;
+	padding: 8px;
+
+	&__title {
+		padding: 4px;
+		width: 100%;
+		height: 27px;
+		background-color: variables.$primary-color;
+		box-shadow: 6px 6px 3px -5px variables.$gray-disabled-color inset;
+		border-top: 1px solid variables.$black-color;
+		border-left: 1px solid variables.$black-color;
+		border-right: 1px solid variables.$gray-disabled-color;
+		border-bottom: 1px solid variables.$white-color;
+
+		&_text {
+			font-weight: 700;
+			font-size: 12px;
+			text-align: center;
+
+			&_off {
+				color: variables.$gray-disabled-color;
+			}
 		}
 	}
 }

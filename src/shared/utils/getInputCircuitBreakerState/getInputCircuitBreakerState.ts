@@ -1,6 +1,6 @@
 import {
 	HIGH_RESISTANCE,
-	INPUT_CIRCUIT_BREAKER,
+	INPUT_CIRCUIT_BREAKER_ID,
 } from '@/shared/configs/scheme';
 import { useAppSelector } from '@/shared/hooks/store';
 import { findElementByID } from '../findElementByID/scheme';
@@ -8,7 +8,7 @@ import { findElementByID } from '../findElementByID/scheme';
 // функция для получения состояния вводного автомата
 export const getInputCircuitBreakerState = (): 'on' | 'off' => {
 	// получаем из стора элементы (контакты), из которых состоит автомат
-	const inputCircuitBreakerElements = INPUT_CIRCUIT_BREAKER.map(id =>
+	const inputCircuitBreakerElements = INPUT_CIRCUIT_BREAKER_ID.map(id =>
 		findElementByID(
 			id,
 			useAppSelector(state => state.circuit),

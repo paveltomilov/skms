@@ -9,40 +9,40 @@ export const CLOSE_FROM_KRUZAP_ID = 'c.3.2.3.2.1.2';
 export const OPEN_FROM_PTK_ID = 'c.3.1.3.2.1.1';
 export const CLOSE_FROM_PTK_ID = 'c.3.2.3.2.1.1';
 
-export const INPUT_CIRCUIT_BREAKER_PHASE_A = 'p.1.2';
-export const INPUT_CIRCUIT_BREAKER_PHASE_B = 'p.2.2';
-export const INPUT_CIRCUIT_BREAKER_PHASE_C = 'p.3.2';
-export const INPUT_CIRCUIT_BREAKER = [
-	INPUT_CIRCUIT_BREAKER_PHASE_A,
-	INPUT_CIRCUIT_BREAKER_PHASE_B,
-	INPUT_CIRCUIT_BREAKER_PHASE_C,
+export const INPUT_CIRCUIT_BREAKER_ID_PHASE_A_ID = 'p.1.2';
+export const INPUT_CIRCUIT_BREAKER_ID_PHASE_B_ID = 'p.2.2';
+export const INPUT_CIRCUIT_BREAKER_ID_PHASE_C_ID = 'p.3.2';
+export const INPUT_CIRCUIT_BREAKER_ID = [
+	INPUT_CIRCUIT_BREAKER_ID_PHASE_A_ID,
+	INPUT_CIRCUIT_BREAKER_ID_PHASE_B_ID,
+	INPUT_CIRCUIT_BREAKER_ID_PHASE_C_ID,
 ]; //вводной автомат состоит из 3 элементов
-export const CONTROL_CIRCUIT_BREAKER = 'c.1'; // автомат питания цепей управления
+export const CONTROL_CIRCUIT_BREAKER_ID = 'c.1'; // автомат питания цепей управления
 
 // Значение сопротивления при обрыве или при размыкании цепи
 export const HIGH_RESISTANCE = 1_000_000_000;
 
 export const BASE_RESISTANCE: Record<string, number> = {
 	'p.1.1': 0.1,
-	[INPUT_CIRCUIT_BREAKER_PHASE_A]: 0,
+	[INPUT_CIRCUIT_BREAKER_ID_PHASE_A_ID]: 0,
 	'p.1.3': 0.1,
 	'p.1.4.1.1': 0,
 	'p.1.4.1.2': 0.1,
 	'p.1.4.1.3': 4100,
 	'p.2.1': 0.1,
-	[INPUT_CIRCUIT_BREAKER_PHASE_B]: 0,
+	[INPUT_CIRCUIT_BREAKER_ID_PHASE_B_ID]: 0,
 	'p.2.3': 0.1,
 	'p.2.4.1': 0,
 	'p.2.4.2': 0,
 	'p.2.5': 0.1,
 	'p.2.6': 4100,
 	'p.3.1': 0.1,
-	[INPUT_CIRCUIT_BREAKER_PHASE_C]: 0,
+	[INPUT_CIRCUIT_BREAKER_ID_PHASE_C_ID]: 0,
 	'p.3.3': 0.1,
 	'p.3.4.1': 0,
 	'p.3.4.1.2': 0.1,
 	'p.3.4.1.3': 4100,
-	[CONTROL_CIRCUIT_BREAKER]: 0,
+	[CONTROL_CIRCUIT_BREAKER_ID]: 0,
 	'c.2': 0.1,
 	[LIMIT_SWITCH_OPEN_ID]: 0,
 	'c.3.1.2': 0.1,
@@ -130,15 +130,10 @@ export const SCHEME_ELEMENTS: ISchemeElement[] = [
 		icon: 'lamp',
 		id: 'c.3.2.3.3',
 	},
-	// {
-	// 	title: 'Какое-то название',
-	// 	icon: 'engine',
-	// 	id: 'p.5',
-	// },
 	{
 		title: 'Какое-то название',
 		icon: 'f01',
-		id: CONTROL_CIRCUIT_BREAKER,
+		id: CONTROL_CIRCUIT_BREAKER_ID,
 	},
 	{
 		title: 'Какое-то название',
@@ -154,11 +149,6 @@ export const SCHEME_ELEMENTS: ISchemeElement[] = [
 		title: 'Какое-то название',
 		icon: 'p31',
 		id: 'p.3.1',
-	},
-	{
-		title: 'Какое-то название',
-		icon: 'q01',
-		id: 'p.1',
 	},
 	{
 		title: 'Какое-то название',
@@ -262,7 +252,7 @@ const powerCircuit = [
 			],
 		},
 		{
-			id: INPUT_CIRCUIT_BREAKER_PHASE_A,
+			id: INPUT_CIRCUIT_BREAKER_ID_PHASE_A_ID,
 			name: 'Сухой контакт фазы А автомата',
 			resistance: 0,
 			malfunctions: [
@@ -469,7 +459,7 @@ const powerCircuit = [
 			],
 		},
 		{
-			id: INPUT_CIRCUIT_BREAKER_PHASE_B,
+			id: INPUT_CIRCUIT_BREAKER_ID_PHASE_B_ID,
 			name: 'Сухой контакт фазы С автомата',
 			resistance: 0,
 			malfunctions: [
@@ -619,7 +609,7 @@ const powerCircuit = [
 			],
 		},
 		{
-			id: INPUT_CIRCUIT_BREAKER_PHASE_C,
+			id: INPUT_CIRCUIT_BREAKER_ID_PHASE_C_ID,
 			name: 'Сухой контакт фазы С автомата',
 			resistance: 0,
 			malfunctions: [
@@ -804,7 +794,7 @@ const powerCircuit = [
 
 const controlCircuit = [
 	{
-		id: CONTROL_CIRCUIT_BREAKER,
+		id: CONTROL_CIRCUIT_BREAKER_ID,
 		name: 'Автомат питания цепей управления',
 		resistance: 0,
 		malfunctions: [
