@@ -45,6 +45,8 @@ export function useSwitchingKnob<T extends string>(
 
 			const closestMode = findClosestMode(angle);
 
+			console.log(closestMode);
+
 			if (closestMode !== currentMode) {
 				setCurrentMode(closestMode);
 			}

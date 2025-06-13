@@ -24,19 +24,19 @@
 
 	&__text {
 		font-weight: 700;
-		font-size: 14px;
+		font-size: 16px;
 		position: absolute;
-		top: 30px;
-		left: 10px;
-		z-index: 5;
+		top: 28px;
+		left: 5px;
+		z-index: 2;
 	}
 
 	&__text.on {
-		background: #00000033;
+		color: #00000033;
 	}
 
 	&__text.off {
-		background: #0000004d;
+		color: #0000004d;
 	}
 }
 

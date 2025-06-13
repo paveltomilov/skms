@@ -12,9 +12,11 @@ import {
 	HIGH_RESISTANCE,
 } from '@/shared/configs/scheme';
 import { getInputCircuitBreakerState } from '@/shared/utils/getInputCircuitBreakerState/getInputCircuitBreakerState';
+import { useGateControlButtons } from '@/shared/hooks/useGateControlButtons';
 
 export const Automatic: FC = () => {
-	const gatePosition = useAppSelector(store => store.gate.position);
+	const { handleButton, stopGateMovement, openOn, closeOn } =
+		useGateControlButtons();
 
 	const controlCircuitBreaker = findElementByID(
 		CONTROL_CIRCUIT_BREAKER_ID,
@@ -27,16 +29,21 @@ export const Automatic: FC = () => {
 	const tumblerMode = getInputCircuitBreakerState();
 
 	const isAssembled = switcherMode === 'on' && tumblerMode === 'on';
+
 	return (
 		<div className={styles.automatic}>
 			<div className={styles.automatic__buttons}>
 				<AutomatButton
-					state={!isAssembled || gatePosition === 0 ? 'off' : 'on'}
+					state={isAssembled && closeOn ? 'on' : 'off'}
 					type="open"
+					onMouseDown={() => handleButton('kruzap', 'open')}
+					onMouseUp={() => stopGateMovement('kruzap')}
 				/>
 				<AutomatButton
-					state={!isAssembled || gatePosition === 100 ? 'off' : 'on'}
+					state={isAssembled && openOn ? 'on' : 'off'}
 					type="close"
+					onMouseDown={() => handleButton('kruzap', 'close')}
+					onMouseUp={() => stopGateMovement('kruzap')}
 				/>
 			</div>
 			<Switcher />
