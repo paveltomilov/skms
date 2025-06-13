@@ -23,10 +23,10 @@ export const Automatic: FC = () => {
 		useAppSelector(state => state.circuit),
 	);
 
-	const switcherMode =
-		controlCircuitBreaker.resistance === HIGH_RESISTANCE ? 'off' : 'on';
+	const switcherMode = getInputCircuitBreakerState();
 
-	const tumblerMode = getInputCircuitBreakerState();
+	const tumblerMode =
+		controlCircuitBreaker.resistance === HIGH_RESISTANCE ? 'off' : 'on';
 
 	const isAssembled = switcherMode === 'on' && tumblerMode === 'on';
 
@@ -36,18 +36,20 @@ export const Automatic: FC = () => {
 				<AutomatButton
 					state={isAssembled && closeOn ? 'on' : 'off'}
 					type="open"
+					disabled={!isAssembled}
 					onMouseDown={() => handleButton('kruzap', 'open')}
 					onMouseUp={() => stopGateMovement('kruzap')}
 				/>
 				<AutomatButton
 					state={isAssembled && openOn ? 'on' : 'off'}
 					type="close"
+					disabled={!isAssembled}
 					onMouseDown={() => handleButton('kruzap', 'close')}
 					onMouseUp={() => stopGateMovement('kruzap')}
 				/>
 			</div>
-			<Switcher />
-			<Tumbler />
+			<Switcher mode={switcherMode} />
+			<Tumbler mode={tumblerMode} />
 		</div>
 	);
 };

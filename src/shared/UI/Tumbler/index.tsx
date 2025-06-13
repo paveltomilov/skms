@@ -1,21 +1,23 @@
 'use client';
 import styles from './styles.module.scss';
-import { useEffect, useRef } from 'react';
-import { getInputCircuitBreakerState } from '@/shared/utils/getInputCircuitBreakerState/getInputCircuitBreakerState';
+import { FC, useEffect, useRef } from 'react';
 import { useSwitchingTumbler } from '@/shared/hooks/useSwitchingTumbler';
 import {
 	BASE_RESISTANCE,
+	CONTROL_CIRCUIT_BREAKER_ID,
 	HIGH_RESISTANCE,
-	INPUT_CIRCUIT_BREAKER_ID,
 } from '@/shared/configs/scheme';
 import { useDebounce } from '@/shared/hooks/useDebounce';
 import { useAppDispatch } from '@/shared/hooks/store';
 import { setResistance } from '@/store/circuitSlice';
+import { SwitchMode } from '@/shared/types/switch';
 
-const Tumbler = () => {
+interface Props {
+	mode: SwitchMode;
+}
+
+const Tumbler: FC<Props> = ({ mode }) => {
 	const handleRef = useRef<HTMLDivElement | null>(null);
-
-	const mode = getInputCircuitBreakerState();
 
 	// логика перемещения тумблера внутри кастомного хука
 	const { currentMode, onMouseDown } = useSwitchingTumbler(handleRef, mode);
@@ -26,11 +28,16 @@ const Tumbler = () => {
 
 	// Диспатчим debounced значение в store
 	useEffect(() => {
-		for (const id of INPUT_CIRCUIT_BREAKER_ID) {
-			const resistance =
-				debouncedMode === 'on' ? BASE_RESISTANCE[id] : HIGH_RESISTANCE;
-			dispatch(setResistance({ id, value: resistance }));
-		}
+		const resistance =
+			debouncedMode === 'on'
+				? BASE_RESISTANCE[CONTROL_CIRCUIT_BREAKER_ID]
+				: HIGH_RESISTANCE;
+		dispatch(
+			setResistance({
+				id: CONTROL_CIRCUIT_BREAKER_ID,
+				value: resistance,
+			}),
+		);
 	}, [debouncedMode, dispatch]);
 
 	return (

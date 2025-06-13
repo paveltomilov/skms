@@ -4,6 +4,7 @@ import { FC } from 'react';
 interface Props {
 	state: 'on' | 'off';
 	type: 'open' | 'close';
+	disabled?: boolean;
 	onMouseDown?: () => void;
 	onMouseUp?: () => void;
 }
@@ -11,6 +12,7 @@ interface Props {
 export const AutomatButton: FC<Props> = ({
 	state,
 	type,
+	disabled = false,
 	onMouseDown,
 	onMouseUp,
 }) => {
@@ -24,6 +26,7 @@ export const AutomatButton: FC<Props> = ({
 	return (
 		<button
 			className={`${styles.button} ${styles[type]} ${styles[state]}`}
+			disabled={disabled}
 			onMouseDown={onMouseDown}
 			onMouseUp={onMouseUp}
 		>

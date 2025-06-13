@@ -1,6 +1,5 @@
 import { useCallback, useRef, useState } from 'react';
-
-export type SwitchMode = 'on' | 'off';
+import { SwitchMode } from '../types/switch';
 
 export function useSwitchingTumbler(
 	handleRef: React.RefObject<HTMLDivElement | null>,
