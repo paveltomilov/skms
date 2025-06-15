@@ -3,12 +3,12 @@ import { FC, RefObject } from 'react';
 interface Props {
 	ref: RefObject<SVGSVGElement | null>;
 	onMouseDown: (event: React.MouseEvent) => void;
-	onMouseUp: (event: React.MouseEvent) => void;
+	onMouseUp?: (event: React.MouseEvent) => void;
 	angle: number;
 	className?: string;
 }
 
-const MultimeterArrow: FC<Props> = ({
+const SwitchHandle: FC<Props> = ({
 	ref,
 	onMouseDown,
 	onMouseUp,
@@ -25,7 +25,7 @@ const MultimeterArrow: FC<Props> = ({
 			className={className && className}
 		>
 			<use
-				xlinkHref={'/svg/multimeter.svg#arrow'}
+				xlinkHref={'/svg/switcher.svg#handle'}
 				width="100%"
 				height="100%"
 			/>
@@ -33,4 +33,4 @@ const MultimeterArrow: FC<Props> = ({
 	);
 };
 
-export default MultimeterArrow;
+export default SwitchHandle;

@@ -3,9 +3,9 @@ import { FC } from 'react';
 import style from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import GateWindow from '@/entities/GateWindow/GateWindow';
-import { useHeaderButtons } from '@/shared/hooks/useHeaderButtons';
 import { useSession, signOut } from 'next-auth/react';
 import Link from 'next/link';
+import { useGateControlButtons } from '@/shared/hooks/useGateControlButtons';
 
 const Header: FC = () => {
 	const session = useSession();
@@ -20,7 +20,7 @@ const Header: FC = () => {
 		stopPtkDisabled,
 		closePtkActive,
 		openPtkActive,
-	} = useHeaderButtons();
+	} = useGateControlButtons();
 
 	return (
 		<header className={style.header}>

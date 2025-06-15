@@ -1,4 +1,4 @@
-export const ARROW_ANGLES = {
+export const MULTIMETER_ANGLES = {
 	OFF: 0,
 	ACV_750: 18,
 	ACV_200: 36,
@@ -19,4 +19,14 @@ export const ARROW_ANGLES = {
 	DCV_20: 306,
 	DCV_200: 324,
 	DCV_1000: 342,
+};
+
+export const SWITCHER_ANGLES = {
+	on: 0,
+	off: 270,
+};
+
+export const TUMBLER_POSITIONS = {
+	on: -12,
+	off: 24,
 };

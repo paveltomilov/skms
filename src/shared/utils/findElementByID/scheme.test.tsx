@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { initialStateScheme } from '@/shared/configs/scheme';
-import { findElementByID } from '../scheme';
+import { findElementByID } from './scheme';
 
 describe('test function findElementById', () => {
 	// it('should accept ids starting with "p"', () => {
