@@ -50,14 +50,12 @@ export function useRotateKnob<T extends string>(
 		[modeAngles],
 	);
 
+	// Обработка перетаскивания
 	const handleMouseMove = useCallback(
 		(e: MouseEvent) => {
 			if (!isDragging.current) return;
 
-			const clientX = e.clientX;
-			const clientY = e.clientY;
-
-			const rawAngle = calculateAngle(clientX, clientY);
+			const rawAngle = calculateAngle(e.clientX, e.clientY);
 			if (rawAngle === null) return;
 
 			const snapped = getClosestModeWithinTolerance(rawAngle);

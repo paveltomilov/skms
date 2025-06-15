@@ -25,3 +25,8 @@ export const SWITCHER_ANGLES = {
 	on: 0,
 	off: 270,
 };
+
+export const TUMBLER_POSITIONS = {
+	on: -12,
+	off: 24,
+};
