@@ -7,6 +7,9 @@
   transition: all variables.$transition-time ease;
   position: relative;
   background: variables.$white-color;
+  margin-top: 18px;
+  margin-bottom: 8px;
+
   &:focus {
     outline: none;
   }
@@ -22,7 +25,7 @@
     box-shadow: 0px 0px 0px 2px variables.$white-color;
 
     &.error {
-      box-shadow: -1px -1px 0px 1px variables.$error-button;
+      box-shadow: -1px -1px 0px 1px variables.$error-input;
       border: 1px solid variables.$gray-disabled-color;
     }
 
@@ -33,7 +36,7 @@
 
       &.subscribe {
         border: 1px solid variables.$gray-disabled-color;
-        box-shadow: -1px -1px 0px 1px variables.$success-color;
+        box-shadow: -1px -1px 0px 1px variables.$success-input;
       }
     }
 
@@ -44,13 +47,13 @@
 
     &.success {
       border: 1px solid variables.$gray-disabled-color;
-      box-shadow: -1px -1px 0px 1px variables.$success-color;
+      box-shadow: -1px -1px 0px 1px variables.$success-input;
     }
 
     &.warn {
       color: variables.$black-color;
       border: 1px solid variables.$gray-disabled-color;
-      box-shadow: -1px -1px 0px 1px variables.$warn-button;
+      box-shadow: -1px -1px 0px 1px variables.$warn-input;
     }
   }
 
@@ -59,7 +62,7 @@
     height: 52px;
 
     &.error {
-      border: 2px solid variables.$error-button;
+      border: 2px solid variables.$error-input;
       padding-left: 12px;
     }
 
@@ -75,7 +78,7 @@
     }
 
     &.success {
-      border: 2px solid variables.$success-color;
+      border: 2px solid variables.$success-input;
       padding-left: 12px;
     }
   }
@@ -91,7 +94,7 @@
     }
 
     &.error {
-      border-bottom: 2px solid variables.$error-button;
+      border-bottom: 2px solid variables.$error-input;
     }
 
     &.default {
@@ -106,32 +109,37 @@
     }
 
     &.success {
-      border-bottom: 2px solid variables.$success-color;
+      border-bottom: 2px solid variables.$success-input;
     }
   }
 
   &.code {
     width: 193px;
     height: 55px;
-    position: relative;
-    box-shadow: inset 1px 1px 4px variables.$input-box-shadow;
+    box-shadow: variables.$code-box-shadow;
+    background: variables.$secondary-color;
+    border-bottom-style: dashed;
     @include mixins.text(38, 500);
 
-    &.error {
+    &:focus {
+      border-bottom-style: none;
+    }
+
+    &:hover {
+      box-shadow:  variables.$code-box-shadow;
       background: variables.$secondary-color;
-      color: variables.$error-button;
+      box-shadow: 0px 0px 0px 4px variables.$gray-disabled-color;
+    }
+    &.error {
+      border-bottom-color: variables.$error-input;
     }
 
     &.disabled {
-      background: variables.$gray-disabled-color;
-      color: variables.$white-color;
+      border-bottom-color: variables.$gray-disabled-color;
     }
 
     &.default {
-      background: variables.$secondary-color;
-      box-shadow: inset 1px 1px 4px variables.$input-box-shadow;
-      width: 101px;
-      height: 27px;
+      border-bottom-color: variables.$black-color;
     }
   }
 }
@@ -145,30 +153,14 @@
   pointer-events: none;
 }
 
-.successText {
-  margin-top: 4px;
-  @include mixins.text(12, 400);
-  color: variables.$success-color;
-  align-items: center;
-}
 
 .login {
-  padding: 18px 16px;
+  margin-left: 16px;
+  margin-bottom: 6px;
   color: variables.$black-color;
   @include mixins.text(20, 500);
-  line-height: 100%;
-}
+  user-select: none;
 
-.errorText {
-  color: variables.$error-button;
-  @include mixins.text(12, 400);
-  align-items: center;
-}
-
-.warnText {
-  color: variables.$warn-button;
-  @include mixins.text(12, 400);
-  align-items: center;
 }
 
 .inputWrapper {
@@ -179,16 +171,32 @@
 
 .icon {
   position: absolute;
-  top: 50%;
+  top: 48px;
   right: 12px;
-  transform: translateY(-50%);
   pointer-events: none;
 }
 
 .iconLamp {
   position: absolute;
-  top: 50%;
+  top: 45px;
   right: -50px;
-  transform: translateY(-50%);
   pointer-events: none;
+}
+
+.messageText {
+  margin-left: 16px;
+  @include mixins.text(12, 400);
+  align-items: center;
+}
+
+.messageText--success {
+  color: variables.$success-input;
+}
+
+.messageText--error {
+  color: variables.$error-input;
+}
+
+.messageText--warn {
+  color: variables.$warn-input;
 }

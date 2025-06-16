@@ -61,6 +61,11 @@ const Input: FC<InputProps> = ({
 
   return (
     <div className={styles.inputWrapper}>
+      {type !== 'code' && (
+        <label className={styles.login}>
+          Логин
+        </label>
+      )}
       <input
         {...props}
         className={inputClass}
@@ -68,7 +73,18 @@ const Input: FC<InputProps> = ({
         placeholder={placeholder}
       />
       {IconToRender && type !== 'code' && <IconToRender className={iconClass} />}
-      {message && <span className={styles.message}>{message}</span>}
+      {message && (
+          <span
+            className={classNames(styles.messageText, {
+              [styles['messageText--success']]: status === 'success',
+              [styles['messageText--error']]: status === 'error',
+              [styles['messageText--warn']]: status === 'warn',
+              }
+            )}
+          >
+            {message}
+          </span>
+      )}
     </div>
   );
 };
