@@ -9,7 +9,7 @@ import LampWarn from '../icons/LampWarn';
 import LampDefault from '../icons/LampDefault';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  status?: 'success' | 'error' | 'default' | 'disabled' | 'warn' | 'code';
+  status?: 'success' | 'error' | 'default' | 'disabled' | 'warn';
   type?: 'minimum' | 'average' | 'maximum' | 'code';
   placeholder?: string;
   message?: React.ReactNode;
@@ -53,6 +53,13 @@ const Input: FC<InputProps> = ({
     }
   );
 
+  const messageClass = classNames(styles.messageText, {
+    [styles['messageText--success']]: status === 'success',
+    [styles['messageText--error']]: status === 'error',
+    [styles['messageText--warn']]: status === 'warn',
+    }
+  );
+
   // Определяем, какую иконку отображать на основе type
 
   const IconToRender = type === 'maximum' && Lamp ? Lamp : (Icon || null);
@@ -75,12 +82,7 @@ const Input: FC<InputProps> = ({
       {IconToRender && type !== 'code' && <IconToRender className={iconClass} />}
       {message && (
           <span
-            className={classNames(styles.messageText, {
-              [styles['messageText--success']]: status === 'success',
-              [styles['messageText--error']]: status === 'error',
-              [styles['messageText--warn']]: status === 'warn',
-              }
-            )}
+            className={messageClass}
           >
             {message}
           </span>

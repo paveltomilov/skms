@@ -118,11 +118,10 @@
     height: 55px;
     box-shadow: variables.$code-box-shadow;
     background: variables.$secondary-color;
-    border-bottom-style: dashed;
-    @include mixins.text(38, 500);
+    @include mixins.text(38px, 500);
 
     &:focus {
-      border-bottom-style: none;
+      border: none;
     }
 
     &:hover {
@@ -131,15 +130,19 @@
       box-shadow: 0px 0px 0px 4px variables.$gray-disabled-color;
     }
     &.error {
-      border-bottom-color: variables.$error-input;
+      border: 2px solid variables.$error-input;
+    }
+
+    &.success {
+      border: 2px solid variables.$success-input;
     }
 
     &.disabled {
-      border-bottom-color: variables.$gray-disabled-color;
+      border: 2px solid variables.$gray-disabled-color;
     }
 
     &.default {
-      border-bottom-color: variables.$black-color;
+      border: 2px solid variables.$black-color;
     }
   }
 }

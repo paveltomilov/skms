@@ -51,5 +51,5 @@ export const Disabled: Story = {
 };
 
 export const Code: Story = {
-  args: { status: 'code', type: 'average', message: 'Неверный код' },
+  args: { status: 'error', type: 'code', message: 'Неверный код' },
 };
