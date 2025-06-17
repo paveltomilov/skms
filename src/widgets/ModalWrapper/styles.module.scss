@@ -1,0 +1,24 @@
+@use '@/shared/scss/variables.module';
+
+.modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 5;
+	backdrop-filter: blur(4px);
+
+	&__content {
+		background: #c0c0c0;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		padding: 15px 20px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		box-shadow: variables.$pop-up-box-shadow,
+			variables.$realistic-drop-shadow;
+	}
+}

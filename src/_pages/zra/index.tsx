@@ -5,6 +5,7 @@ import Sidebar from '@/widgets/Sidebar';
 import Header from '@/widgets/Header';
 import Measurements from '@/widgets/Measurements';
 import Simulator from '@/widgets/Simulator/Simulator';
+
 const Zra = () => {
 	return (
 		<>
