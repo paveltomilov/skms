@@ -6,6 +6,12 @@
 	align-items: center;
 	justify-content: center;
 }
+//центрирование по space-beetween
+@mixin flex-space-between {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
 
 // изменяемая часть кнопок
 @mixin change-button(

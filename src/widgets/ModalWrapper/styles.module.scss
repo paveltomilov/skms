@@ -1,0 +1,71 @@
+@use '../../shared/scss/_variables.module.scss' as variables;
+@use '../../shared/scss/_mixins.module.scss' as mixins;
+
+.overlay {
+	position: fixed;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.5);
+	@include mixins.flex-center;
+	z-index: 1000;
+}
+
+.modal {
+	width: 522px;
+	height: 447px;
+	background: variables.$secondary-color;
+}
+
+.header {
+	@include mixins.flex-space-between;
+	width: 522px;
+	height: 26px;
+	padding: 4px 8px;
+	background: linear-gradient(90deg, variables.$gray-disabled-color 0%, variables.$white-color 100%);
+}
+
+.field {
+	width: 442px;
+	height: 173px;
+}
+
+.headerText {
+	@include mixins.text(14px, 700);
+	color: variables.$white-color;
+}
+
+.text {
+	margin: 54px 40px 40px 40px;
+	width: 442px;
+	height: 74px;
+	@include mixins.text(20px, 400);
+	color: variables.$black-color;
+	line-height: 150%;
+}
+
+.button {
+	width: 20px;
+	height: 20px;
+	background: variables.$primary-color;
+	box-shadow: 0.69px 0.69px 0px 0px variables.$primary-color inset;
+	padding: 0px;
+}
+
+.textTimer {
+	margin: 24px 40px 28px 40px;
+	padding-left: 85px;
+}
+
+.buttonChandge {
+	margin: 28px 126px  80px 126px;
+}
+
+.input {
+	margin: 0 160px;
+	padding: 0;
+}
+
+// Класс блюра кроме header/footer/sidebar
+.blurBackground {
+	filter: blur(5px);
+	transition: filter 0.3s ease;
+  }

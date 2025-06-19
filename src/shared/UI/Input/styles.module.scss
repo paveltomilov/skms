@@ -131,10 +131,12 @@
     }
     &.error {
       border: 2px solid variables.$error-input;
+      color: variables.$error-input;
     }
 
     &.success {
       border: 2px solid variables.$success-input;
+      color: variables.$success-input;
     }
 
     &.disabled {
@@ -143,6 +145,7 @@
 
     &.default {
       border: 2px solid variables.$black-color;
+      color: variables.$black-color;
     }
   }
 }
@@ -188,7 +191,7 @@
 
 .messageText {
   margin-left: 16px;
-  @include mixins.text(12, 400);
+  @include mixins.text(12px, 400);
   align-items: center;
 }
 
