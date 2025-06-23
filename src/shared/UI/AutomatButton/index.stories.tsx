@@ -63,12 +63,19 @@ const DemoBtn = ({state = 'off', type = 'close'}) => {
                           onMouseDown={demoOnMouseDown}/>;
 };
 
+export const Demo: Story = {
+    args: {
+        id: 'demo-automat-button',
+        name: 'demo',
+    },
+    render: () => <DemoBtn/>,
+};
+
 export const Default: Story = {
     args: {
         id: 'default-automat-button',
         name: 'default',
     },
-    render: () => <DemoBtn/>,
 };
 
 export const Opened: Story = {
@@ -86,3 +93,13 @@ export const Closed: Story = {
     },
     render: () => <DemoBtn state='off' type='close'/>,
 };
+
+export const Inactive: Story = {
+    args: {
+        id: 'inactive-automat-button',
+        name: 'inactive',
+        state: 'off',
+        type: 'close',
+        disabled: true,
+    },
+}
