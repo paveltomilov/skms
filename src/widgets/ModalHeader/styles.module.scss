@@ -3,16 +3,16 @@
 
 .headerSize {
   @include mixins.flex-space-between;
-  width: var(--header-width, 522px);
+  width: var(--header-width, 520px);
   height: var(--header-height, 26px);
   padding: 4px 8px;
   background: linear-gradient(90deg, variables.$gray-disabled-color 0%, variables.$white-color 100%);
 }
 
 .header {
-	width: calc(var(--header-width)	- 2px);
+	width: calc(var(--header-width, 520px) + 2px);
 	background: variables.$secondary-color;
-	padding: 1px 2px;
+	padding: 1px 0 0 2px;
 }
 .headerText {
   @include mixins.text(14px, 700);
