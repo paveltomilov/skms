@@ -7,39 +7,42 @@ import {
 	OPEN_FROM_PTK_ID,
 	CLOSE_FROM_PTK_ID,
 } from '../configs/scheme';
-import { findElementByID } from '../utils/scheme';
+import { findElementByID } from '../utils/findElementByID/scheme';
 import { useAppDispatch, useAppSelector } from './store';
 import { setResistance } from '@/store/circuitSlice';
 import { KRUZAP_BUTTONS_CONFIG, PTK_BUTTONS_CONFIG } from '../configs/header';
 import { useRef } from 'react';
 
-export const useHeaderButtons = () => {
+export const useGateControlButtons = () => {
 	const dispatch = useAppDispatch();
 
-	// получаем элемент схемы, от которого зависит disabled состояние кнопки открыть крузап и птк
+	// Явно указываем тип для элементов схемы
 	const limitSwitchOpenElement = findElementByID(
 		LIMIT_SWITCH_OPEN_ID,
 		useAppSelector(state => state.circuit),
 	);
 
-	// получаем элемент схемы, от которого зависит disabled состояние кнопки закрыть крузап и птк
 	const limitSwitchCloseElement = findElementByID(
 		LIMIT_SWITCH_CLOSE_ID,
 		useAppSelector(state => state.circuit),
 	);
 
-	//если у этих элементов сопротивление 1 млрд, то кнопки открыть/закрыть крузап и птк disabled
 	const openDisabled = limitSwitchOpenElement.resistance === HIGH_RESISTANCE;
 	const closeDisabled =
 		limitSwitchCloseElement.resistance === HIGH_RESISTANCE;
 
-	// получаем элемент схемы, от которого зависит active (нажатое) состояние кнопки открыть птк
+	const openOn =
+		limitSwitchCloseElement.resistance ===
+		BASE_RESISTANCE[LIMIT_SWITCH_CLOSE_ID];
+	const closeOn =
+		limitSwitchOpenElement.resistance ===
+		BASE_RESISTANCE[LIMIT_SWITCH_OPEN_ID];
+
 	const openFromPtkElement = findElementByID(
 		OPEN_FROM_PTK_ID,
 		useAppSelector(state => state.circuit),
 	);
 
-	// получаем элемент схемы, от которого зависит active (нажатое) состояние кнопки закрыть птк
 	const closeFromPtkElement = findElementByID(
 		CLOSE_FROM_PTK_ID,
 		useAppSelector(state => state.circuit),
@@ -79,8 +82,9 @@ export const useHeaderButtons = () => {
 			gateInterval.current = null;
 			dispatch(setGatePosition(gatePosition.current)); // Диспатчим текущее положение при остановке
 
-			// удалить после аппрува
-			console.log(`Gate stopped at position: ${gatePosition.current}%`);
+			console.log(
+				`Задвижка остановилась в положении: ${gatePosition.current}%`,
+			);
 		}
 	};
 
@@ -115,6 +119,7 @@ export const useHeaderButtons = () => {
 				}
 			} else if (button === 'close') {
 				gatePosition.current -= 1;
+
 				if (gatePosition.current <= 0) {
 					gatePosition.current = 0;
 					stopGateMovement(type);
@@ -124,19 +129,25 @@ export const useHeaderButtons = () => {
 					});
 				}
 			}
-			// удалить после аппрува
-			console.log(`Gate position: ${gatePosition.current}%`);
+
+			console.log(`Положение задвижки: ${gatePosition.current}%`);
 		}, 100);
 	};
 
 	return {
 		handleButton,
 		stopGateMovement,
+		// когда кнопки крузап в хедере Disabled
 		openKruzapDisabled: openDisabled,
 		closeKruzapDisabled: closeDisabled,
+		// когда кнопки на автомате в модалке включены
+		openOn: openOn,
+		closeOn: closeOn,
+		// когда кнопки птк в хедере Disabled
 		openPtkDisabled: openDisabled || (openPtkDisabled && closePtkActive),
 		closePtkDisabled: closeDisabled || (closePtkDisabled && openPtkActive),
 		stopPtkDisabled,
+		// когда кнопки птк в хедере нажаты
 		openPtkActive,
 		closePtkActive,
 	};

@@ -1,0 +1,19 @@
+.loader {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 121px;
+	height: 130px;
+	animation: 1s cubic-bezier(0.23, 1, 0.32, 1) infinite rotate;
+	z-index: 3;
+}
+
+@keyframes rotate {
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(360deg);
+	}
+}

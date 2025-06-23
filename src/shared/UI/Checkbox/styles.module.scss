@@ -1,0 +1,68 @@
+@use '@/shared/scss/variables.module';
+
+.checkbox {
+    position: relative;
+    padding-left: 30px;
+}
+
+.input {
+    appearance: none;
+
+    &:checked+.label::before {
+        background: variables.$white-color;
+
+
+    }
+
+    &:checked+.label {
+        svg {
+            display: block;
+        }
+    }
+
+    &:disabled+.label {
+        svg {
+            color: variables.$gray-disabled-color;
+        }
+    }
+
+    &:disabled+.label::before {
+        background: variables.$primary-color;
+        border: 1px solid variables.$secondary-color;
+        box-shadow: 0px 0px 0px 1px variables.$gray-disabled-color;
+    }
+
+}
+
+.label {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    &::before {
+        content: "";
+        width: var(--width);
+        height: var(--height);
+        position: absolute;
+        background: variables.$secondary-color;
+        cursor: pointer;
+        border-top: 1px solid variables.$black-color;
+        border-left: 1px solid variables.$black-color;
+        border-right: 1px solid variables.$white-color;
+        border-bottom: 1px solid variables.$white-color;
+        left: -30px;
+        box-shadow: variables.$checkbox-before-box-shadow2;
+    }
+
+    &:hover::before {
+        box-shadow: variables.$checkbox-before-box-shadow2, variables.$checkbox-before-box-shadow;
+    }
+
+    svg {
+        cursor: pointer;
+        position: absolute;
+        display: none;
+        transform: translate3d(12%, 5%, 0);
+        left: -30px;
+    }
+}

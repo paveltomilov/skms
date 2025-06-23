@@ -1,5 +1,4 @@
 'use client';
-
 import Button from '@/shared/UI/Button';
 import Input from '@/shared/UI/Input';
 import { FC, useEffect } from 'react';
@@ -67,6 +66,5 @@ const ModalWrapper: FC<ModalProps & {onClose: () => void; isBlur?: boolean }> = 
 	</div>
   );
 };
-
 
 export default ModalWrapper;

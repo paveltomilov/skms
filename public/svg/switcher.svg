@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+
+  <!--  переключатель -->
+  <symbol id="switch" width="178" height="165" viewBox="0 0 178 165" fill="none">
+    <path
+      d="M100.695 6.04688V6.58594C100.695 7.45052 100.578 8.22656 100.344 8.91406C100.109 9.60156 99.7786 10.1875 99.3516 10.6719C98.9245 11.151 98.4141 11.5182 97.8203 11.7734C97.2318 12.0286 96.5781 12.1562 95.8594 12.1562C95.1458 12.1562 94.4922 12.0286 93.8984 11.7734C93.3099 11.5182 92.7995 11.151 92.3672 10.6719C91.9349 10.1875 91.599 9.60156 91.3594 8.91406C91.125 8.22656 91.0078 7.45052 91.0078 6.58594V6.04688C91.0078 5.17708 91.125 4.40104 91.3594 3.71875C91.5938 3.03125 91.9245 2.44531 92.3516 1.96094C92.7839 1.47656 93.2943 1.10677 93.8828 0.851562C94.4766 0.596354 95.1302 0.46875 95.8438 0.46875C96.5625 0.46875 97.2161 0.596354 97.8047 0.851562C98.3984 1.10677 98.9089 1.47656 99.3359 1.96094C99.7682 2.44531 100.102 3.03125 100.336 3.71875C100.576 4.40104 100.695 5.17708 100.695 6.04688ZM98.3281 6.58594V6.03125C98.3281 5.42708 98.2734 4.89583 98.1641 4.4375C98.0547 3.97917 97.8932 3.59375 97.6797 3.28125C97.4661 2.96875 97.2057 2.73438 96.8984 2.57812C96.5911 2.41667 96.2396 2.33594 95.8438 2.33594C95.4479 2.33594 95.0964 2.41667 94.7891 2.57812C94.487 2.73438 94.2292 2.96875 94.0156 3.28125C93.8073 3.59375 93.6484 3.97917 93.5391 4.4375C93.4297 4.89583 93.375 5.42708 93.375 6.03125V6.58594C93.375 7.1849 93.4297 7.71615 93.5391 8.17969C93.6484 8.63802 93.8099 9.02604 94.0234 9.34375C94.237 9.65625 94.4974 9.89323 94.8047 10.0547C95.112 10.2161 95.4635 10.2969 95.8594 10.2969C96.2552 10.2969 96.6068 10.2161 96.9141 10.0547C97.2214 9.89323 97.4792 9.65625 97.6875 9.34375C97.8958 9.02604 98.0547 8.63802 98.1641 8.17969C98.2734 7.71615 98.3281 7.1849 98.3281 6.58594ZM111.641 0.625V12H109.297L104.727 4.375V12H102.383V0.625H104.727L109.305 8.25781V0.625H111.641Z"
+      fill="white" />
+    <path
+      d="M10.7656 84.0469V84.5859C10.7656 85.4505 10.6484 86.2266 10.4141 86.9141C10.1797 87.6016 9.84896 88.1875 9.42188 88.6719C8.99479 89.151 8.48438 89.5182 7.89062 89.7734C7.30208 90.0286 6.64844 90.1562 5.92969 90.1562C5.21615 90.1562 4.5625 90.0286 3.96875 89.7734C3.38021 89.5182 2.86979 89.151 2.4375 88.6719C2.00521 88.1875 1.66927 87.6016 1.42969 86.9141C1.19531 86.2266 1.07812 85.4505 1.07812 84.5859V84.0469C1.07812 83.1771 1.19531 82.401 1.42969 81.7188C1.66406 81.0312 1.99479 80.4453 2.42188 79.9609C2.85417 79.4766 3.36458 79.1068 3.95312 78.8516C4.54688 78.5964 5.20052 78.4688 5.91406 78.4688C6.63281 78.4688 7.28646 78.5964 7.875 78.8516C8.46875 79.1068 8.97917 79.4766 9.40625 79.9609C9.83854 80.4453 10.1719 81.0312 10.4062 81.7188C10.6458 82.401 10.7656 83.1771 10.7656 84.0469ZM8.39844 84.5859V84.0312C8.39844 83.4271 8.34375 82.8958 8.23438 82.4375C8.125 81.9792 7.96354 81.5938 7.75 81.2812C7.53646 80.9688 7.27604 80.7344 6.96875 80.5781C6.66146 80.4167 6.3099 80.3359 5.91406 80.3359C5.51823 80.3359 5.16667 80.4167 4.85938 80.5781C4.55729 80.7344 4.29948 80.9688 4.08594 81.2812C3.8776 81.5938 3.71875 81.9792 3.60938 82.4375C3.5 82.8958 3.44531 83.4271 3.44531 84.0312V84.5859C3.44531 85.1849 3.5 85.7161 3.60938 86.1797C3.71875 86.638 3.88021 87.026 4.09375 87.3438C4.30729 87.6562 4.56771 87.8932 4.875 88.0547C5.18229 88.2161 5.53385 88.2969 5.92969 88.2969C6.32552 88.2969 6.67708 88.2161 6.98438 88.0547C7.29167 87.8932 7.54948 87.6562 7.75781 87.3438C7.96615 87.026 8.125 86.638 8.23438 86.1797C8.34375 85.7161 8.39844 85.1849 8.39844 84.5859ZM14.7969 78.625V90H12.4531V78.625H14.7969ZM19.3281 83.4844V85.3125H14.1562V83.4844H19.3281ZM19.875 78.625V80.4609H14.1562V78.625H19.875ZM23.5781 78.625V90H21.2344V78.625H23.5781ZM28.1094 83.4844V85.3125H22.9375V83.4844H28.1094ZM28.6562 78.625V80.4609H22.9375V78.625H28.6562Z"
+      fill="white" />
+    <circle cx="102.5" cy="85.5" r="63.5" fill="black" />
+    <g filter="url(#filter0_ii_2900_18445)">
+      <circle cx="102.5" cy="85.5" r="61.5" fill="url(#paint0_radial_2900_18445)" />
+    </g>
+    <mask id="mask0_2900_18445" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="41" y="24"
+      width="123" height="123">
+      <circle cx="102.5" cy="85.5" r="61.5" fill="url(#paint1_radial_2900_18445)" />
+    </mask>
+    <path
+      d="M83.7188 8.49204C68.5551 11.4817 54.6014 18.8536 43.5859 29.6948C32.5703 40.536 24.9768 54.3703 21.7457 69.4844"
+      stroke="white" stroke-width="4" stroke-linecap="round" stroke-dasharray="12 12" />
+    <defs>
+      <filter id="filter0_ii_2900_18445" x="39" y="22" width="125" height="125"
+        filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+        <feColorMatrix in="SourceAlpha" type="matrix"
+          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+        <feOffset dx="-2" dy="-2" />
+        <feGaussianBlur stdDeviation="2" />
+        <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
+        <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.1 0" />
+        <feBlend mode="normal" in2="shape" result="effect1_innerShadow_2900_18445" />
+        <feColorMatrix in="SourceAlpha" type="matrix"
+          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+        <feOffset dx="-2" dy="-2" />
+        <feGaussianBlur stdDeviation="1.1" />
+        <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
+        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0" />
+        <feBlend mode="normal" in2="effect1_innerShadow_2900_18445"
+          result="effect2_innerShadow_2900_18445" />
+      </filter>
+      <filter id="filter2_d_2900_18445" x="37" y="75" width="137" height="27"
+        filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feColorMatrix in="SourceAlpha" type="matrix"
+          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+        <feOffset dx="4" dy="4" />
+        <feGaussianBlur stdDeviation="1.5" />
+        <feComposite in2="hardAlpha" operator="out" />
+        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.37 0" />
+        <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_2900_18445" />
+        <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_2900_18445" result="shape" />
+      </filter>
+      <radialGradient id="paint0_radial_2900_18445" cx="0" cy="0" r="1"
+        gradientUnits="userSpaceOnUse"
+        gradientTransform="translate(102.5 85.5) rotate(90) scale(61.5)">
+        <stop offset="0.956731" stop-color="#1F1F1F" />
+        <stop offset="1" stop-color="#666666" />
+      </radialGradient>
+      <radialGradient id="paint1_radial_2900_18445" cx="0" cy="0" r="1"
+        gradientUnits="userSpaceOnUse"
+        gradientTransform="translate(102.5 85.5) rotate(90) scale(61.5)">
+        <stop offset="0.956731" stop-color="#12113F" />
+        <stop offset="1" stop-color="#666666" />
+      </radialGradient>
+      <radialGradient id="paint2_radial_2900_18445" cx="0" cy="0" r="1"
+        gradientUnits="userSpaceOnUse"
+        gradientTransform="translate(132.59 85.0127) rotate(90) scale(61.1514 30.5752)">
+        <stop offset="0.956731" stop-color="#12113F" />
+        <stop offset="1" stop-color="#666666" />
+      </radialGradient>
+    </defs>
+  </symbol>
+
+  <!--  ручка переключателя -->
+  <symbol id="handle" width="20" height="130" viewBox="0 0 20 130" fill="none">
+    <g>
+      <rect x="0.5" y="0.500122" width="20" height="130" rx="1" fill="#1F1F1F" />
+    </g>
+    <rect x="9" y="0.500122" width="3" height="20" fill="white" />
+    <g clip-path="url(#clip0_2949_7172)">
+      <g filter="url(#filter1_f_2949_7172)">
+        <path
+          d="M17.6632 130.145L2.48242 128.5L2.48243 -0.000976475L0.482428 -0.000976562L0.500215 130.5L20.5002 130.5L17.6632 130.145Z"
+          fill="white" fill-opacity="0.2" />
+      </g>
+    </g>
+    <defs>
+      <filter id="filter1_f_2949_7172" x="-1.21758" y="-1.70098" width="23.4178"
+        height="133.901"
+        filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+        <feGaussianBlur stdDeviation="0.85" result="effect1_foregroundBlur_2949_7172" />
+      </filter>
+      <clipPath id="clip0_2949_7172">
+        <rect x="0.5" y="0.500122" width="20" height="130" rx="1" fill="white" />
+      </clipPath>
+    </defs>
+  </symbol>
+</svg>
