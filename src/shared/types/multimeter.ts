@@ -29,7 +29,7 @@ export interface ProbeConnection {
 
 export interface MultimeterState {
 	currentMode: MultimeterMode;
-	displayValue: number | null;
+	displayValue: string;
 	probeConnections: ProbeConnection;
 	activeProb: UniqueIdentifier | null;
 }

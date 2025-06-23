@@ -2,24 +2,16 @@ import { FC, RefObject } from 'react';
 
 interface Props {
 	ref: RefObject<SVGSVGElement | null>;
-	onMouseDown: (event: React.MouseEvent) => void;
-	onMouseUp: (event: React.MouseEvent) => void;
+	onMouseDown: (event: React.MouseEvent | React.TouchEvent) => void;
 	angle: number;
 	className?: string;
 }
 
-const MultimeterArrow: FC<Props> = ({
-	ref,
-	onMouseDown,
-	onMouseUp,
-	angle,
-	className,
-}) => {
+const MultimeterArrow: FC<Props> = ({ ref, onMouseDown, angle, className }) => {
 	return (
 		<svg
 			ref={ref}
 			onMouseDown={onMouseDown}
-			onMouseUp={onMouseUp}
 			transform={`rotate(${angle})`}
 			preserveAspectRatio="xMidYMid meet"
 			className={className && className}

@@ -1,4 +1,3 @@
-
 @use '../../shared/scss/_variables.module.scss' as variables;
 @use '../../shared/scss/_mixins.module.scss' as mixins;
 
@@ -62,4 +61,4 @@
 .blurBackground {
 	filter: blur(5px);
 	transition: filter 0.3s ease;
-}
+  }

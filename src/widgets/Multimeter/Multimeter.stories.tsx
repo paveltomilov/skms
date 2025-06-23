@@ -17,7 +17,7 @@ const mockStore = configureStore({
 });
 
 interface Prop {
-	displayValue: number | null;
+	displayValue: number;
 	currentMode: MultimeterMode;
 }
 
