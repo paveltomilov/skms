@@ -4,7 +4,7 @@ import Button from '@/shared/UI/Button';
 import Input from '@/shared/UI/Input';
 import { FC, useEffect } from 'react';
 import styles from './styles.module.scss';
-import Close from '@/shared/UI/icons/Close';
+import ModalHeader from '../ModalHeader';
 
 interface ModalProps  {
 	header?: string
@@ -49,12 +49,12 @@ const ModalWrapper: FC<ModalProps & {onClose: () => void; isBlur?: boolean }> = 
 	return (
 	<div className={styles.overlay} onClick={onOverlayClick}>
       <div className={styles.modal} onClick={e => e.stopPropagation()}>
-        <div className={styles.header}>
-          <p className={styles.headerText}>{header}</p>
-          <button className={styles.button} aria-label='Close' onClick={onClose}>
-            <Close size={'xs'} />
-          </button>
-        </div>
+	  <ModalHeader
+          title={header}
+          onClose={onClose}
+          headerWidthPx={517}
+          headerHeightPx={26}
+        />
         <p className={styles.text}>
           Введите полученный код из 6 символов, которые мы отправили на указанный <br /> Вами e-mail
         </p>

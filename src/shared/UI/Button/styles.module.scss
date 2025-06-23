@@ -29,7 +29,7 @@
 		);
 	}
 
-<<<<<<< Updated upstream
+
 	&.active {
 		@include mixins.change-button(
 			variables.$gray-disabled-color,
@@ -38,10 +38,7 @@
 		);
 	}
 
-	&.success {
-=======
 	 &.success {
->>>>>>> Stashed changes
 		@include mixins.change-button(
 			variables.$success-color,
 			variables.$white-color,

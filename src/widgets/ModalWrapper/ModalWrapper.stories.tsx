@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import ModalWrapper from '.';
 import type { Meta, StoryObj } from '@storybook/react';
+import React from 'react';
+import ModalHeader from '.';
 
 interface ModalProps {
   header?: string;
@@ -11,7 +11,7 @@ interface ModalProps {
 
 const meta: Meta<ModalProps> = {
   title: 'Components/ModalWrapper',
-  component: ModalWrapper,
+  component: ModalHeader,
   argTypes: {
     header: { control: 'text' },
     second: { control: { type: 'number', min: 0, max: 120, step: 1 } },
@@ -27,7 +27,7 @@ export const Default: StoryObj<ModalProps> = {
     header: 'ПКДВ-2',
     second: 59,
     isBlur: true,
-    onClose: () => {},
+    onClose: () =>  alert('Закрыто'),
   },
   render: (args) => {
     const [seconds, setSeconds] = React.useState(args.second ?? 59);
@@ -38,6 +38,6 @@ export const Default: StoryObj<ModalProps> = {
       return () => clearTimeout(timer);
     }, [seconds]);
 
-    return <ModalWrapper {...args} second={seconds} />;
+    return <ModalHeader {...args} second={seconds} />;
   },
 };

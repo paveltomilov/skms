@@ -13,14 +13,7 @@
 	width: 522px;
 	height: 447px;
 	background: variables.$secondary-color;
-}
-
-.header {
-	@include mixins.flex-space-between;
-	width: 522px;
-	height: 26px;
-	padding: 4px 8px;
-	background: linear-gradient(90deg, variables.$gray-disabled-color 0%, variables.$white-color 100%);
+	padding: 1px 2px;
 }
 
 .field {

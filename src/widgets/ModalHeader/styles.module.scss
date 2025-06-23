@@ -1,0 +1,27 @@
+@use '../../shared/scss/_variables.module.scss' as variables;
+@use '../../shared/scss/_mixins.module.scss' as mixins;
+
+.headerSize {
+  @include mixins.flex-space-between;
+  width: var(--header-width, 522px);
+  height: var(--header-height, 26px);
+  padding: 4px 8px;
+  background: linear-gradient(90deg, variables.$gray-disabled-color 0%, variables.$white-color 100%);
+}
+
+.header {
+	width: calc(var(--header-width)	- 2px);
+	background: variables.$secondary-color;
+	padding: 1px 2px;
+}
+.headerText {
+  @include mixins.text(14px, 700);
+  color: variables.$white-color;
+}
+
+.buttonModal {
+  width: var(--buttonSize, 20px);
+  height: var(--buttonSize, 20px);
+  background: variables.$primary-color;
+  padding: 0px;
+}
