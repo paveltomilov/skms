@@ -2,7 +2,6 @@ import {Meta, type StoryObj} from "@storybook/react";
 import {AutomatButton} from "./index";
 import {useState} from "react";
 
-
 const meta: Meta<typeof AutomatButton> = {
     title: 'UI/AutomatButton',
     component: AutomatButton,
