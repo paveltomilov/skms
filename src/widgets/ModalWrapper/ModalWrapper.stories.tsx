@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import ModalHeader from '.';
+import ModalWrapper from '.';
 
 interface ModalProps {
   header?: string;
@@ -11,7 +11,7 @@ interface ModalProps {
 
 const meta: Meta<ModalProps> = {
   title: 'Components/ModalWrapper',
-  component: ModalHeader,
+  component: ModalWrapper,
   argTypes: {
     header: { control: 'text' },
     second: { control: { type: 'number', min: 0, max: 120, step: 1 } },
@@ -38,6 +38,10 @@ export const Default: StoryObj<ModalProps> = {
       return () => clearTimeout(timer);
     }, [seconds]);
 
-    return <ModalHeader {...args} second={seconds} />;
+    return (
+      <div id="blur-container" style={{ position: 'relative' }}>
+        <ModalWrapper {...args} second={seconds} />
+      </div>
+    );
   },
 };
