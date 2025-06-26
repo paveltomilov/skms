@@ -2,7 +2,6 @@ import {Meta, type StoryObj} from "@storybook/react";
 import Button from "@/shared/UI/Button";
 import Micro from "@/shared/UI/icons/Micro";
 import {useState} from "react";
-import {AutomatButton} from "@/shared/UI/AutomatButton";
 
 const meta: Meta<typeof Button> = {
     title: 'UI/Button',
