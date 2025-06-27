@@ -10,7 +10,7 @@ const meta: Meta<typeof Power> = {
     tags: ['autodocs'],
     argTypes: {
         color: {
-            description: 'Цает',
+            description: 'Цвет заливки',
             options: ['default', 'magenta'],
             control: {
                 type: 'radio',
