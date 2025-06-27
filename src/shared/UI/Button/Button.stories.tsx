@@ -11,12 +11,24 @@ const meta: Meta<typeof Button> = {
     },
     tags: ['autodocs'],
     argTypes: {
-        id: {},
-        width: {},
-        height: {},
-        text: {},
-        image: {},
-        icon: {},
+        id: {
+            description: "Вроде как, это id, но используется как alt",
+        },
+        width: {
+            description: "Ширина компонента",
+        },
+        height: {
+            description: "Высота компонента",
+        },
+        text: {
+            description: "Текст поверх кнопки (передаётся в виде узла)",
+        },
+        image: {
+            description: "Объект для установки изображения поверх кнопки",
+        },
+        icon: {
+            description: "Компонент с иконкой",
+        },
         disabled: {
             options: [true, false],
         },
@@ -26,12 +38,24 @@ const meta: Meta<typeof Button> = {
         success: {
             options: [true, false],
         },
-        className: {},
-        ariaLabel: {},
-        style: {},
-        onClick: {},
-        onMouseDown: {},
-        onMouseUp: {},
+        className: {
+            description: 'Имена классов'
+        },
+        ariaLabel: {
+            description: 'Метка',
+        },
+        style: {
+            description: 'Стили',
+        },
+        onClick: {
+            description: 'Функция при клике по клавише',
+        },
+        onMouseDown: {
+            description: 'Функция при нажатии клавиши',
+        },
+        onMouseUp: {
+            description: 'Функция при отпуске клавиши',
+        },
     },
 };
 
@@ -92,7 +116,7 @@ export const WithText: Story = {
         id: 'text-button',
         width: 150,
         height: 50,
-        text: 'simple text',
+        text: <p>simple text</p>,
     },
 };
 
