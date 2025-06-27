@@ -57,6 +57,7 @@ export const Default: Story = {
     args: {
         id: 'default-switch',
         name: 'default',
+        className: 'styles.switcher__handle',
     },
 };
 
@@ -64,6 +65,7 @@ export const Angle330Switch: Story = {
     args: {
         id: 'angle330-switch',
         name: 'default',
+        className: 'styles.switcher__handle',
         angle: 330,
     },
 };

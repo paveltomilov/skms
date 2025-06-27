@@ -26,5 +26,6 @@ export const Default: Story = {
     args: {
         id: 'default-switch',
         name: 'default',
+        className: 'styles.switcher',
     },
 };
