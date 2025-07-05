@@ -32,7 +32,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const DemoSwitchHandle = () => {
+const DemoSwitchHandle = () => {
     const switchRef = useRef(null);
     const [angle, setAngle] = useState(0);
 
@@ -45,20 +45,20 @@ export const DemoSwitchHandle = () => {
                          angle={angle}/>;
 };
 
-export const Demo: Story = {
-    args: {
-        id: 'demo-switch',
-        name: 'demo',
-    },
-    render: () => <DemoSwitchHandle/>,
-};
-
 export const Default: Story = {
     args: {
         id: 'default-switch',
         name: 'default',
         className: 'styles.switcher__handle',
     },
+};
+
+export const Demo: Story = {
+    args: {
+        id: 'demo-switch',
+        name: 'demo',
+    },
+    render: () => <DemoSwitchHandle/>,
 };
 
 export const Angle330Switch: Story = {

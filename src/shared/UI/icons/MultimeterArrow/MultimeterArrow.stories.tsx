@@ -50,20 +50,20 @@ const DemoArrow = () => {
                             angle={actualAngle}/>
 };
 
-export const Demo: Story = {
-    args: {
-        id: 'demo-multimeter-arrow',
-        name: 'demo',
-    },
-    render: () => <DemoArrow/>,
-};
-
 export const Default: Story = {
     args: {
         id: 'default-multimeter-arrow',
         name: 'default',
         angle: 0,
     },
+};
+
+export const Demo: Story = {
+    args: {
+        id: 'demo-multimeter-arrow',
+        name: 'demo',
+    },
+    render: () => <DemoArrow/>,
 };
 
 export const Angle90: Story = {

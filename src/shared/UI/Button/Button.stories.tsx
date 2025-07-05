@@ -87,18 +87,18 @@ const DemoBtn = () => {
                    onClick={onClick} onMouseUp={onMouseUp} onMouseDown={onMouseDown}/>;
 };
 
-export const Demo: Story = {
-    args: {
-        name: 'demo',
-    },
-    render: () => <DemoBtn />
-};
-
 export const Default: Story = {
     args: {
         name: 'default',
         id: 'default-button',
     },
+};
+
+export const Demo: Story = {
+    args: {
+        name: 'demo',
+    },
+    render: () => <DemoBtn />
 };
 
 export const RequiredOptions: Story = {
