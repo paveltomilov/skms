@@ -3,7 +3,6 @@ import Switcher from './index';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import circuitReducer from '@/store/circuitSlice';
-import { SwitchMode } from '@/shared/types/switch';
 
 const mockStore = configureStore({
 	reducer: {
