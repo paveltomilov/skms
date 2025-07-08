@@ -30,7 +30,7 @@ const meta: Meta<typeof Switcher> = {
 	tags: ['autodocs'],
 	argTypes: {
 		mode: {
-			description: 'Варианты переключения',
+			description: 'Режимы переключателя: on - вкл, off - выкл',
 			options: ['on', 'off'],
 			control: {
 				type: 'radio',
@@ -48,23 +48,30 @@ type CoverProps = {
 };
 
 /** Обёртка для позиционирования компонента */
-const PositionContainer = ({ children }: CoverProps) => <div style={{
-	display: 'flex',
-	justifyContent: 'space-between',
-	alignItems: 'center',
-	position: 'relative',
-	padding: '19px 0 0 111px',
-}}>{children}</div>;
+const PositionContainer = ({ children }: CoverProps) => (
+	<div
+		style={{
+			display: 'flex',
+			justifyContent: 'space-between',
+			alignItems: 'center',
+			position: 'relative',
+			padding: '19px 0 0 111px',
+		}}
+	>
+		{children}
+	</div>
+);
 
 export const Default: Story = {
 	args: {
 		id: 'default-switcher',
 		name: 'default',
 	},
-	render: (args) =>
+	render: args => (
 		<PositionContainer>
 			<Switcher mode={args.mode} />
-		</PositionContainer>,
+		</PositionContainer>
+	),
 };
 
 export const OnSwitcher: Story = {
@@ -73,10 +80,11 @@ export const OnSwitcher: Story = {
 		name: 'default',
 		mode: 'on',
 	},
-	render: (args) =>
+	render: args => (
 		<PositionContainer>
 			<Switcher mode={args.mode} />
-		</PositionContainer>,
+		</PositionContainer>
+	),
 };
 
 export const OffSwitcher: Story = {
@@ -85,8 +93,9 @@ export const OffSwitcher: Story = {
 		name: 'default',
 		mode: 'off',
 	},
-	render: (args) =>
+	render: args => (
 		<PositionContainer>
 			<Switcher mode={args.mode} />
-		</PositionContainer>,
+		</PositionContainer>
+	),
 };
