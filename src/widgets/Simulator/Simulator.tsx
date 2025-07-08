@@ -11,6 +11,7 @@ import {
 import { probeTipCollisionDetection } from '@/shared/lib/probeTipCollisionDetection';
 import { restrictToParentElement } from '@dnd-kit/modifiers';
 import { ProbeColor } from '@/shared/types/multimeter';
+import { useWebSocket } from '@/shared/hooks/useWebSocket';
 
 interface Props {
 	children: ReactNode;
@@ -53,6 +54,14 @@ export const Simulator: React.FC<Props> = ({ children }) => {
 		}
 		dispatch(setActiveProb(null));
 	};
+
+	// подключение к вебсокету
+	const { sendMessage } = useWebSocket();
+
+	sendMessage({
+		type: 'start_simulation',
+		studentId: '12345',
+	});
 
 	return (
 		<DndContext

@@ -3,34 +3,37 @@ import React from 'react';
 import ModalWrapper from '.';
 
 interface ModalProps {
-  header?: string;
-  second?: number;
-  onClose: () => void;
-  isBlur?: boolean;
+	header?: string;
+	second?: number;
+	onClose: () => void;
+	isBlur?: boolean;
+	isOpen: boolean;
 }
 
 const meta: Meta<ModalProps> = {
-  title: 'Components/ModalWrapper',
-  component: ModalWrapper,
-  argTypes: {
-    header: { control: 'text' },
-    second: { control: { type: 'number', min: 0, max: 120, step: 1 } },
-    isBlur: { control: 'boolean' },
-    onClose: { action: 'closed' },
-  },
+	title: 'Components/ModalWrapper',
+	component: ModalWrapper,
+	argTypes: {
+		isOpen: { control: 'boolean' },
+		header: { control: 'text' },
+		second: { control: { type: 'number', min: 0, max: 120, step: 1 } },
+		isBlur: { control: 'boolean' },
+		onClose: { action: 'closed' },
+	},
 };
 
 export default meta;
 
 export const Default: StoryObj<ModalProps> = {
-  args: {
-    header: 'ПКДВ-2',
-    second: 59,
-    isBlur: true,
-    onClose: () =>  alert('Закрыто'),
-  },
-  render: (args) => {
-    const [seconds, setSeconds] = React.useState(args.second ?? 59);
+	args: {
+		header: 'ПКДВ-2',
+		second: 59,
+		isBlur: true, // включаем блюр по умолчанию для проверки
+		onClose: () => alert('Закрыто'),
+		isOpen: true,
+	},
+	render: args => {
+		const [seconds, setSeconds] = React.useState(args.second ?? 59);
 
     React.useEffect(() => {
       if (seconds <= 0) return;
@@ -38,10 +41,35 @@ export const Default: StoryObj<ModalProps> = {
       return () => clearTimeout(timer);
     }, [seconds]);
 
-    return (
-      <div id="blur-container" style={{ position: 'relative' }}>
-        <ModalWrapper {...args} second={seconds} />
-      </div>
-    );
-  },
+		return (
+			<>
+				<div
+					id="blur-container"
+					style={{
+						position: 'fixed',
+						inset: 0,
+						width: '100vw',
+						height: '100vh',
+						zIndex: 999,
+						backgroundColor: args.isBlur
+							? '#00000080'
+							: 'transparent',
+						filter: args.isBlur ? 'blur(5px)' : 'none',
+						WebkitBackdropFilter: args.isBlur
+							? 'blur(5px)'
+							: 'none',
+						transition:
+							'filter 0.3s ease, background-color 0.3s ease',
+						pointerEvents: args.isBlur ? 'auto' : 'none',
+					}}
+				/>
+				<ModalWrapper
+					modalSize={{ width: '520px', height: '447px' }}
+					{...args}
+					second={seconds}
+					isOpen={true}
+				/>
+			</>
+		);
+	},
 };

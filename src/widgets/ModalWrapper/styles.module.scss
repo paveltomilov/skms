@@ -4,21 +4,41 @@
 .overlay {
 	position: fixed;
 	inset: 0;
-	background: variables.$backgroundModal;
-	@include mixins.flex-center;
+	backdrop-filter: blur(4px);
 	z-index: 1000;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
-
 .modal {
-	width: 522px;
-	height: 447px;
+	width: var(--modal-width, auto);
+	height: var(--modal-height, auto);
 	background: variables.$secondary-color;
-	padding: 1px 2px;
+	padding: 1px 0 0 2px;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	z-index: 1010;
 }
 
-.field {
-	width: 442px;
-	height: 173px;
+.headerWrapper {
+	@include mixins.flex-space-between;
+	width: calc(var(--modal-width, auto) - 4px);
+	height: var(--headerHeight, 34px);
+	padding: 4px 8px;
+	background: linear-gradient(
+		90deg,
+		variables.$gray-disabled-color 0%,
+		variables.$white-color 100%
+	);
+}
+
+.buttonHeader {
+	padding: 0;
+}
+
+.header {
+	padding: 1px 0 0 2px;
 }
 
 .headerText {
@@ -52,18 +72,15 @@
 	margin: 28px 126px 80px 126px;
 }
 
-.input {
-	margin: 0 160px;
-	padding: 0;
+/* Блюр контейнера */
+.blurBackground {
+	backdrop-filter: blur(15px);
+	z-index: 999;
 }
 
-// Класс блюра кроме header/footer/sidebar
-.blurBackground {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100vw;
-	height: 100vh;
-	filter: blur(5px);
-	transition: filter 0.3s ease;
+/* Не блюрить header, footer, sidebar */
+#header,
+#footer,
+#sidebar {
+	backdrop-filter: none !important;
 }

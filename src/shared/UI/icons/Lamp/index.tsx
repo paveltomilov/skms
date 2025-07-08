@@ -20,4 +20,3 @@ const Lamp: FC<Props> = ({ className, variant = 'default' }) => {
 };
 
 export default Lamp;
-

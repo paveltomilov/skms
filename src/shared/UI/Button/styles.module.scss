@@ -22,35 +22,26 @@
     @include mixins.change-button(_, _, variables.$hover-button-box-shadow);
   }
 
-  &:active:enabled {
-    @include mixins.change-button(
-                    variables.$gray-disabled-color,
-                    _,
-                    variables.$pressed-button-box-shadow
-    );
-  }
+	&.active {
+		@include mixins.change-button(
+			variables.$gray-disabled-color,
+			_,
+			variables.$pressed-button-box-shadow
+		);
+	}
 
-  &.active {
-    @include mixins.change-button(
-                    variables.$gray-disabled-color,
-                    _,
-                    variables.$pressed-button-box-shadow
-    );
-  }
-
-  &.success {
-    @include mixins.change-button(
-                    variables.$success-color,
-                    variables.$white-color,
-                    variables.$success-button-box-shadow
-    );
-
-    &:hover {
-      @include mixins.change-button(
-                      _,
-                      _,
-                      variables.$hover-button-box-shadow
-      );
-    }
-  }
+	&.success {
+		@include mixins.change-button(
+			variables.$success-color,
+			variables.$white-color,
+			variables.$success-button-box-shadow
+		);
+		&:hover {
+			@include mixins.change-button(
+				_,
+				_,
+				variables.$hover-button-box-shadow
+			);
+		}
+	}
 }
