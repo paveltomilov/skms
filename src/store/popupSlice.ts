@@ -11,7 +11,7 @@ const initialState: PopupState = {
 	content: null,
 };
 
-const sidebarSlice = createSlice({
+const popupSlice = createSlice({
 	name: 'popup',
 	initialState,
 	reducers: {
@@ -27,6 +27,6 @@ const sidebarSlice = createSlice({
 	},
 });
 
-export const { openPopup, closePopup } = sidebarSlice.actions;
+export const { openPopup, closePopup } = popupSlice.actions;
 
-export default sidebarSlice.reducer;
+export default popupSlice.reducer;

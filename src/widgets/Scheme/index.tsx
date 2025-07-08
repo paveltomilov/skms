@@ -14,6 +14,7 @@ import { setVoltagePoints } from '@/store/pointsSlice';
 import { InputCircuitBreaker } from '@/entities/InputCircuitBreaker';
 import { Automatic } from '../Automatic';
 import ModalWrapper from '../ModalWrapper';
+import { PopupGateControl } from '../PopupGateControl';
 
 const Scheme: FC = () => {
 	// для рендера щупов
@@ -41,6 +42,8 @@ const Scheme: FC = () => {
 
 	const isOpenModal = useAppSelector(state => state.modal.isOpen);
 
+	const isOpenPopup = useAppSelector(state => state.popup.isOpen);
+
 	return (
 		<div className={styles.scheme}>
 			{SCHEME_ELEMENTS.map(item => (
@@ -56,6 +59,12 @@ const Scheme: FC = () => {
 			{isOpenModal && (
 				<ModalWrapper>
 					<Automatic />
+				</ModalWrapper>
+			)}
+
+			{isOpenPopup && (
+				<ModalWrapper>
+					<PopupGateControl />
 				</ModalWrapper>
 			)}
 
