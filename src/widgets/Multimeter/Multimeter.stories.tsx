@@ -28,37 +28,38 @@ const meta: Meta<typeof Multimeter> = {
 		layout: 'centered',
 	},
 	tags: ['autodocs'],
+
 	decorators: [
 		(Story, { args }) => {
-			const { displayValue, currentMode } = args as Prop;
-
-			const StoreUpdater: React.FC = () => {
-				const state = useAppSelector(state => state.multimeter);
+			const StoreUpdater: React.FC<Prop> = ({
+				displayValue,
+				currentMode,
+			}) => {
+				const dispatch = mockStore.dispatch;
 
 				useEffect(() => {
-					if (state.displayValue !== displayValue) {
-						mockStore.dispatch(setMeasurementResult(displayValue));
-					}
+					dispatch(setCurrentMode(currentMode));
+				}, [currentMode, dispatch]);
 
-					if (state.currentMode !== currentMode) {
-						mockStore.dispatch(setCurrentMode(currentMode));
-					}
-				}, [displayValue, currentMode]);
+				useEffect(() => {
+					dispatch(setMeasurementResult(displayValue));
+				}, [displayValue, dispatch]);
 
 				return <Story />;
 			};
 
 			return (
 				<Provider store={mockStore}>
-					<StoreUpdater />
+					<StoreUpdater {...(args as Prop)} />
 				</Provider>
 			);
 		},
 	],
+
 	argTypes: {
 		displayValue: {
 			control: 'text',
-			defaultValue: '0.00',
+			defaultValue: null,
 			description: 'Результаты измерения выводятся на дисплей',
 		},
 		currentMode: {
