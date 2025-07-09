@@ -59,17 +59,6 @@ body {
 	font-weight: variables.$font-weight-regular;
 }
 
-/* Выставляем основные настройки по-умолчанию для main */
-main {
-	min-height: calc(
-		100vh - (variables.$header-height + variables.$footer-height)
-	);
-	position: relative;
-	overflow-x: hidden;
-	display: flex;
-	justify-content: space-between;
-}
-
 /* Удаляем стандартную стилизацию для всех ul и il, у которых есть атрибут class*/
 ul[class],
 ol[class] {

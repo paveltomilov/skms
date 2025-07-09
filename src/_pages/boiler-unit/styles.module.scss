@@ -3,9 +3,7 @@
 
 .section {
 	display: flex;
-	flex-direction: column;
-	margin: 12px 0;
-	margin-left: auto;
+	margin: 12px auto;
 
 	&__title {
 		font-weight: 400;
