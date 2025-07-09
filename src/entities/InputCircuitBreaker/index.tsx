@@ -21,7 +21,7 @@ export const InputCircuitBreaker: FC = () => {
 	}`;
 
 	const handleOpenModal = () => {
-		dispatch(openModal());
+		dispatch(openModal('automatic'));
 	};
 
 	return (

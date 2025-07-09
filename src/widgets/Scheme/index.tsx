@@ -14,6 +14,7 @@ import { setVoltagePoints } from '@/store/pointsSlice';
 import { InputCircuitBreaker } from '@/entities/InputCircuitBreaker';
 import { Automatic } from '../Automatic';
 import ModalWrapper from '../ModalWrapper';
+import { PopupGateControl } from '../PopupGateControl';
 
 const Scheme: FC = () => {
 	// для рендера щупов
@@ -39,7 +40,7 @@ const Scheme: FC = () => {
 		console.log(pointsVoltage);
 	}, [scheme]);
 
-	const isOpenModal = useAppSelector(state => state.modal.isOpen);
+	const { activeModal } = useAppSelector(state => state.modal);
 
 	return (
 		<div className={styles.scheme}>
@@ -53,18 +54,24 @@ const Scheme: FC = () => {
 				<SchemePoint key={id} id={id} position={position} />
 			))}
 
-			{isOpenModal && (
-				<ModalWrapper>
-					<Automatic />
-				</ModalWrapper>
-			)}
-
 			{/* если щуп перетаскивается, его рендерит схема */}
 			{activeProbe && <Probe color={activeProbe} />}
 
 			{/* если щуп прикреплен к схеме, его рендерит схема */}
 			{probeConnections['black'] && <Probe color="black" />}
 			{probeConnections['red'] && <Probe color="red" />}
+
+			{activeModal === 'automatic' && (
+				<ModalWrapper>
+					<Automatic />
+				</ModalWrapper>
+			)}
+
+			{activeModal === 'gateControl' && (
+				<ModalWrapper>
+					<PopupGateControl />
+				</ModalWrapper>
+			)}
 		</div>
 	);
 };

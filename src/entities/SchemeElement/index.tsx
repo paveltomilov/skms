@@ -24,7 +24,7 @@ export const SchemeElement: FC<Prop> = ({ element }) => {
 
 	const handleOpenPopup = () => {
 		if (id === CONTROL_CIRCUIT_BREAKER_ID) {
-			dispatch(openModal());
+			dispatch(openModal('automatic'));
 		} else {
 			dispatch(openPopup({ isOpen: true, content: element }));
 		}
