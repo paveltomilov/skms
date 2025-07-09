@@ -7,7 +7,7 @@ export interface ModalState {
 }
 
 const initialState: ModalState = {
-	activeModal: 'gateControl',
+	activeModal: null,
 };
 
 const modalSlice = createSlice({

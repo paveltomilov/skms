@@ -1,13 +1,13 @@
 import { FC, Suspense } from 'react';
+import BoilerUnitPage from '@/_pages/boiler-unit';
 import Loading from '../loading';
-import RecoveryPage from '@/_pages/recovery';
 
-const Recovery: FC = () => {
+const Ptk: FC = () => {
 	return (
 		<Suspense fallback={<Loading />}>
-			<RecoveryPage />
+			<BoilerUnitPage />
 		</Suspense>
 	);
 };
 
-export default Recovery;
+export default Ptk;

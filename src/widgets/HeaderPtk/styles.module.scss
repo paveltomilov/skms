@@ -1,0 +1,17 @@
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
+
+.header {
+	max-height: variables.$header-height;
+
+	.wrapper {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 6.5px 8px;
+		background: variables.$secondary-color;
+		position: relative;
+		border-bottom: 1px solid variables.$gray-disabled-color;
+		max-height: inherit;
+	}
+}
