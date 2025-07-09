@@ -7,7 +7,7 @@ export interface PopupState {
 }
 
 const initialState: PopupState = {
-	isOpen: false,
+	isOpen: true,
 	content: null,
 };
 

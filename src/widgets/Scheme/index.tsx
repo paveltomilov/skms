@@ -40,9 +40,7 @@ const Scheme: FC = () => {
 		console.log(pointsVoltage);
 	}, [scheme]);
 
-	const isOpenModal = useAppSelector(state => state.modal.isOpen);
-
-	const isOpenPopup = useAppSelector(state => state.popup.isOpen);
+	const { activeModal } = useAppSelector(state => state.modal);
 
 	return (
 		<div className={styles.scheme}>
@@ -56,24 +54,24 @@ const Scheme: FC = () => {
 				<SchemePoint key={id} id={id} position={position} />
 			))}
 
-			{isOpenModal && (
-				<ModalWrapper>
-					<Automatic />
-				</ModalWrapper>
-			)}
-
-			{isOpenPopup && (
-				<ModalWrapper>
-					<PopupGateControl />
-				</ModalWrapper>
-			)}
-
 			{/* если щуп перетаскивается, его рендерит схема */}
 			{activeProbe && <Probe color={activeProbe} />}
 
 			{/* если щуп прикреплен к схеме, его рендерит схема */}
 			{probeConnections['black'] && <Probe color="black" />}
 			{probeConnections['red'] && <Probe color="red" />}
+
+			{activeModal === 'automatic' && (
+				<ModalWrapper>
+					<Automatic />
+				</ModalWrapper>
+			)}
+
+			{activeModal === 'gateControl' && (
+				<ModalWrapper>
+					<PopupGateControl />
+				</ModalWrapper>
+			)}
 		</div>
 	);
 };
