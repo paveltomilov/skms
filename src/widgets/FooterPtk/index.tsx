@@ -3,37 +3,42 @@
 import { FC } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
-import Chevron from '@/shared/UI/icons/Chevron';
 import Close from '@/shared/UI/icons/Close';
 import EllipseClose from '@/shared/UI/icons/EllipseClose';
 import Micro from '@/shared/UI/icons/Micro';
+import ArrowChange from '@/shared/UI/icons/ArrowChange';
 
-const Footer: FC = () => {
+const FooterPtk: FC = () => {
 	return (
 		<footer className={styles.footer} aria-label="Панель управления">
 			<nav
 				className={styles.footer__leftPanel}
 				aria-label="Кнопки управления"
 			>
-				{Array.from({ length: 16 }).map((_, i) => (
+				<Button
+					id={'footer-button-КА'}
+					width={88}
+					height={28}
+					aria-label={'Кнопка КА'}
+					text="КА"
+					href="/ptk"
+				/>
+				<Button
+					id={'footer-button-ТА'}
+					width={88}
+					height={28}
+					aria-label={'Кнопка ТА'}
+					text="ТА"
+					href="/ptk/turbine"
+				/>
+				{Array.from({ length: 14 }).map((_, i) => (
 					<Button
 						key={i}
 						id={`footer-button-${i}`}
 						width={88}
 						height={28}
 						aria-label={`Кнопка ${i}`}
-						disabled={i > 1}
-						text={
-							i === 0 ? (
-								<span className={styles.footer__buttonText}>
-									КА
-								</span>
-							) : i === 1 ? (
-								<span className={styles.footer__buttonText}>
-									ТА
-								</span>
-							) : undefined
-						}
+						disabled
 					/>
 				))}
 			</nav>
@@ -61,14 +66,14 @@ const Footer: FC = () => {
 						width={88}
 						height={28}
 						aria-label="Левый контрол"
-						icon={<Chevron size="sm" transform="rotateLeft90" />}
+						icon={<ArrowChange />}
 					/>
 					<Button
 						id="footer-right-control-button"
 						width={88}
 						height={28}
 						aria-label="Правый контрол"
-						icon={<Chevron size="sm" transform="rotate90" />}
+						icon={<ArrowChange transform="mirror" />}
 					/>
 				</div>
 				<div className={styles.footer__centralGroup__right}>
@@ -138,4 +143,4 @@ const Footer: FC = () => {
 	);
 };
 
-export default Footer;
+export default FooterPtk;

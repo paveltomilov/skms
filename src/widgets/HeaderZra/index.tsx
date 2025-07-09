@@ -7,7 +7,7 @@ import { useSession, signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { useGateControlButtons } from '@/shared/hooks/useGateControlButtons';
 
-const Header: FC = () => {
+const HeaderZra: FC = () => {
 	const session = useSession();
 
 	const {
@@ -94,4 +94,4 @@ const Header: FC = () => {
 	);
 };
 
-export default Header;
+export default HeaderZra;

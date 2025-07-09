@@ -1,19 +1,14 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './styles.module.scss';
-import { toggleSidebar } from '@/store/sidebarSlice';
 import Button from '@/shared/UI/Button';
-import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import Chevron from '@/shared/UI/icons/Chevron';
 
 const Sidebar = () => {
-	const dispatch = useAppDispatch();
-	const isSidebarOpen = useAppSelector(state => state.sidebar.isOpen);
+	const [isOpen, setIsOpen] = useState(false);
 
-	const handleToggleSidebar = () => {
-		dispatch(toggleSidebar());
-	};
+	const handleToggleSidebar = () => setIsOpen(!isOpen);
 
 	return (
 		<>
@@ -21,17 +16,12 @@ const Sidebar = () => {
 				<Chevron transform="rotate90" />
 			</button>
 
-			<div
-				className={`${styles.sidebar} ${isSidebarOpen && styles.open}`}
-			>
+			<div className={`${styles.sidebar} ${isOpen && styles.open}`}>
 				<div className={styles.sidebarContent}>
 					<Button
 						id="main-button"
 						width={90}
 						height={34}
-						onClick={() => {
-							console.log('Кнопка Главная нажата');
-						}}
 						aria-label="Главная"
 						text="Главная"
 						className={styles.buttonText}
@@ -41,9 +31,6 @@ const Sidebar = () => {
 						id="scheme-button"
 						width={90}
 						height={34}
-						onClick={() => {
-							console.log('Кнопка Схема нажата');
-						}}
 						aria-label="Схема"
 						text="Схема"
 						className={styles.buttonText}
@@ -53,12 +40,29 @@ const Sidebar = () => {
 						id="training-button"
 						width={90}
 						height={34}
-						onClick={() => {
-							console.log('Кнопка Обучение нажата');
-						}}
 						aria-label="Обучение"
 						text="Обучение"
 						className={styles.buttonText}
+					/>
+
+					<Button
+						id="simulation-button"
+						width={90}
+						height={34}
+						aria-label="Тренажер"
+						text="Тренажер"
+						className={styles.buttonText}
+						href="/"
+					/>
+
+					<Button
+						id="ptk-button"
+						width={90}
+						height={34}
+						aria-label="ПТК"
+						text="ПТК"
+						className={styles.buttonText}
+						href="/ptk"
 					/>
 				</div>
 

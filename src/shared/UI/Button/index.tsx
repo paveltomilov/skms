@@ -2,6 +2,7 @@
 import { CSSProperties, ReactNode } from 'react';
 import styles from './styles.module.scss';
 import Image from 'next/image';
+import Link from 'next/link';
 /* import { useAppSelector } from '@/shared/hooks/store'; */
 
 interface ImageProps {
@@ -11,6 +12,7 @@ interface ImageProps {
 }
 
 interface ButtonProps {
+	href?: string;
 	id: string;
 	width: number;
 	height: number;
@@ -29,6 +31,7 @@ interface ButtonProps {
 }
 
 const Button = ({
+	href,
 	id,
 	width,
 	height,
@@ -50,10 +53,34 @@ const Button = ({
 		state => state.buttonsReducer.activeButtons[id] || false,
 	); */
 
-	return (
+	return href ? (
+		<Link
+			href={href}
+			className={`${styles.button} ${className && className}
+			${active && styles.active}
+			${success && styles.success}`}
+			style={{
+				width: `${width}px`,
+				height: `${height}px`,
+				...style,
+			}}
+			aria-label={ariaLabel}
+		>
+			{image && (
+				<Image
+					src={image.src}
+					alt={id}
+					width={image.width}
+					height={image.height}
+				/>
+			)}
+			{icon && icon}
+			{text && <span className={styles.button_text}>{text}</span>}
+		</Link>
+	) : (
 		<button
 			className={`${styles.button} ${className && className}
-				${active && styles.active}
+			${active && styles.active}
 			${success && styles.success}`}
 			style={{
 				width: `${width}px`,
@@ -75,7 +102,7 @@ const Button = ({
 				/>
 			)}
 			{icon && icon}
-			{text && <span className={styles.text}>{text}</span>}
+			{text && <span className={styles.button_text}>{text}</span>}
 		</button>
 	);
 };
