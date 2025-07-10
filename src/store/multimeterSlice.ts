@@ -5,6 +5,7 @@ import type {
 	ProbeColor,
 } from '@/shared/types/multimeter';
 import { UniqueIdentifier } from '@dnd-kit/core';
+import {setDisplayVoltageAction} from '@/store/actions/multimiter/setDisplayVoltageAction';
 
 const initialState: MultimeterState = {
 	currentMode: 'OFF',
@@ -45,6 +46,8 @@ export const multimeterSlice = createSlice({
 		setMeasurementResult: (state, action: PayloadAction<number | null>) => {
 			state.displayValue = action.payload;
 		},
+		/** Установка значения напряжения на дисплей */
+		setDisplayVoltage: setDisplayVoltageAction,
 	},
 });
 
@@ -54,6 +57,7 @@ export const {
 	detachProbe,
 	setActiveProb,
 	setMeasurementResult,
+	setDisplayVoltage,
 } = multimeterSlice.actions;
 
 export default multimeterSlice.reducer;
