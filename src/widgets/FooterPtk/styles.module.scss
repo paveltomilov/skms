@@ -2,10 +2,9 @@
 
 .footer {
 	display: flex;
-	flex-direction: row;
 	justify-content: space-between;
 	padding: 8px;
-	background-color: #c0c0c0;
+	background-color: variables.$secondary-color;
 	gap: 12px;
 	border-top: 1px solid variables.$white-color;
 

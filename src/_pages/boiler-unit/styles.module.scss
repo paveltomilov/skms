@@ -1,0 +1,13 @@
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
+
+.section {
+	display: flex;
+	margin: 12px auto;
+
+	&__title {
+		font-weight: 400;
+		font-size: 32px;
+		align-self: flex-start;
+	}
+}

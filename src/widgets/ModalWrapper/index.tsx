@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import Button from '@/shared/UI/Button';
 import Input from '@/shared/UI/Input';
 import styles from './styles.module.scss';
@@ -38,47 +38,42 @@ const ModalWrapper: FC<ModalProps> = ({
 	iconHeightPx = 20,
 	children,
 }) => {
-	const [clickedInside, setClickedInside] = useState(false);
-
-	// Блокировка скролла при открытом модальном окне
+	// Блокировка скролла с динамической компенсацией ширины скроллбара
 	useEffect(() => {
 		if (isOpen) {
-			document.body.style.overflow = 'hidden';
+			const scrollBarWidth =
+				window.innerWidth - document.documentElement.clientWidth;
+			document.body.classList.add('modal-open');
+			if (scrollBarWidth > 0) {
+				document.body.style.paddingRight = `${scrollBarWidth}px`;
+			}
 		} else {
-			document.body.style.overflow = '';
+			document.body.classList.remove('modal-open');
+			document.body.style.paddingRight = '';
 		}
+
 		return () => {
-			document.body.style.overflow = '';
+			document.body.classList.remove('modal-open');
+			document.body.style.paddingRight = '';
 		};
 	}, [isOpen]);
 
 	if (!isOpen) return null;
 
 	const style = {
-		'--modal-width': modalSize?.width || 'auto',
-		'--modal-height': modalSize?.height || 'auto',
-		'--headerHeight': modalSize?.headerHeight || '34px',
+		'--modal-width': modalSize.width || 'auto',
+		'--modal-height': modalSize.height || 'auto',
+		'--headerHeight': modalSize.headerHeight || '34px',
 	} as React.CSSProperties;
-
-	const handleMouseDown = () => setClickedInside(true);
-	const handleMouseUp = () => setClickedInside(false);
-
-	// Закрытие по клику на оверлей (если клик был вне модального окна)
-	const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
-		if (!clickedInside && e.target === e.currentTarget) {
-			onClose();
-		}
-	};
 
 	return (
 		<div
 			className={`${styles.overlay} ${
 				isBlur ? styles.blurBackground : ''
 			}`}
-			onClick={handleOverlayClick}
-			onMouseDown={handleMouseDown}
-			onMouseUp={handleMouseUp}
 			style={style}
+			role="dialog"
+			aria-modal="true"
 		>
 			<div className={styles.modal} onClick={e => e.stopPropagation()}>
 				<div className={styles.header}>

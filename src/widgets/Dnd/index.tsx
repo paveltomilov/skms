@@ -17,7 +17,7 @@ interface Props {
 	children: ReactNode;
 }
 
-export const Simulator: React.FC<Props> = ({ children }) => {
+export const Dnd: React.FC<Props> = ({ children }) => {
 	const dispatch = useAppDispatch();
 
 	const probeConnections = useAppSelector(
@@ -75,4 +75,4 @@ export const Simulator: React.FC<Props> = ({ children }) => {
 	);
 };
 
-export default Simulator;
+export default Dnd;

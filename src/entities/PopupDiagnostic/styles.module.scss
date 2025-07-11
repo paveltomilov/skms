@@ -1,0 +1,129 @@
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
+
+.popupDiagnostic {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding: 2px;
+  width: 100%;
+  max-width: 1016px;
+  transform: translate(-50%, -50%);
+  background-color: variables.$primary-color;
+  box-shadow: variables.$pop-up-box-shadow;
+  z-index: 2;
+
+  &_top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    padding-left: 6px;
+    padding-right: 6px;
+    border-top: 1px solid variables.$white-color;
+    border-left: 1px solid variables.$white-color;
+    border-right: 1px solid variables.$white-color;
+    height: 42px;
+    background: linear-gradient(90deg, #8A8A8A 0%, #FFFFFF 100%);
+
+    &__text {
+      @include mixins.text(14px, 700);
+      color: variables.$white-color;
+      cursor: default;
+    }
+  }
+
+  &_center {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px 75px;
+    margin-bottom: 8px;
+
+    &_item {
+      display: flex;
+      align-items: center;
+      padding-left: 6px;
+      @include mixins.text(18px, 400);
+      cursor: default;
+
+      &__square {
+        position: relative;
+        margin-right: 20px;
+        border-top: 1px solid variables.$black-color;
+        border-left: 1px solid variables.$black-color;
+        border-right: 1px solid variables.$secondary-color;
+        border-bottom: 1px solid variables.$secondary-color;
+        width: 100%;
+        max-width: 28px;
+        height: 28px;
+
+        &::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: calc(100% - 2px);
+          height: calc(100% - 2px);
+          transform: translate(-50%, -50%);
+          background-color: transparent;
+        }
+
+        &[data-state="true"] {
+          &::before {
+            background-color: variables.$success-input;
+          }
+        }
+
+        &[data-state="false"] {
+          &::before {
+            background-color: variables.$error-input;
+          }
+        }
+      }
+    }
+  }
+
+  &_bottom {
+    display: flex;
+    gap: 25px;
+    margin-bottom: 8px;
+    padding-left: 6px;
+    padding-right: 6px;
+
+    &__name {
+      border-top: 2px solid variables.$gray-disabled-color;
+      border-left: 2px solid variables.$gray-disabled-color;
+      border-right: 2px solid variables.$white-color;
+      border-bottom: 2px solid variables.$white-color;
+      padding: 9px;
+      width: 100%;
+      max-width: 281px;
+      @include mixins.text(18px, 400);
+      text-align: left;
+
+    }
+  }
+}
+
+.closeButton {
+  position: relative;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 2px;
+    background: variables.$black-color;
+  }
+
+  &::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  &::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+}

@@ -1,0 +1,51 @@
+@use '@/shared/scss/variables.module';
+
+.footer {
+	display: flex;
+	justify-content: space-between;
+	padding: 8px;
+	background-color: #c0c0c0;
+	gap: 12px;
+	border-top: 1px solid variables.$white-color;
+
+	&__buttons {
+		margin-left: calc(
+			50% - 92px
+		); // 92 - это половина ширины контейнера с кнопками
+		display: flex;
+		gap: 8px;
+		justify-content: center;
+		align-items: center;
+	}
+
+	&__operatorPanel {
+		width: 262px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		padding: 8px;
+		background-color: #c0c0c0;
+		box-shadow: 1px 1px 0px 0px #ffffffcc inset,
+			-1px -1px 0px 0px #00000040 inset;
+	}
+
+	&__operator__wrapper {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 8px;
+	}
+
+	&__operator {
+		font-weight: 400;
+		font-size: 20px;
+		color: #000000;
+	}
+
+	&__operatorName {
+		font-weight: 700;
+		font-size: 18px;
+		color: #110f93;
+	}
+}

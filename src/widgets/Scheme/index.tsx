@@ -12,10 +12,11 @@ import { setNewVoltagePoints } from '@/shared/utils/findElementByID/scheme';
 import { InitialStateScheme } from '@/shared/types/scheme';
 import { setVoltagePoints } from '@/store/pointsSlice';
 import { InputCircuitBreaker } from '@/entities/InputCircuitBreaker';
-
-import ModalWrapper from '../ModalWrapper';
-import { closeModal } from '@/store/modalSlice';
 import { Automatic } from '../Automatic';
+import ModalWrapper from '../ModalWrapper';
+import { PopupGateControl } from '../PopupGateControl';
+import PopupDiagnostic from '@/entities/PopupDiagnostic';
+import { closeModal } from '@/store/modalSlice';
 
 const Scheme: FC = () => {
 	// для рендера щупов
@@ -41,7 +42,7 @@ const Scheme: FC = () => {
 		console.log(pointsVoltage);
 	}, [scheme]);
 
-	const isOpenModal = useAppSelector(state => state.modal.isOpen);
+	const { activeModal } = useAppSelector(state => state.modal);
 
 	return (
 		<div className={styles.scheme}>
@@ -55,21 +56,27 @@ const Scheme: FC = () => {
 				<SchemePoint key={id} id={id} position={position} />
 			))}
 
-			{isOpenModal && (
-				<ModalWrapper
-					isOpen={true}
-					onClose={() => dispatch(closeModal())}
-				>
-					<Automatic />
-				</ModalWrapper>
-			)}
-
 			{/* если щуп перетаскивается, его рендерит схема */}
 			{activeProbe && <Probe color={activeProbe} />}
 
 			{/* если щуп прикреплен к схеме, его рендерит схема */}
 			{probeConnections['black'] && <Probe color="black" />}
 			{probeConnections['red'] && <Probe color="red" />}
+
+			{activeModal === 'automatic' && (
+				<ModalWrapper isOpen={true}
+				onClose={() => dispatch(closeModal())}>
+					<Automatic />
+				</ModalWrapper>
+			)}
+
+			{activeModal === 'gateControl' && (
+				<ModalWrapper isOpen={true}
+				onClose={() => dispatch(closeModal())}>
+					<PopupGateControl />
+				</ModalWrapper>
+			)}
+			{activeModal === 'diagnostic' && <PopupDiagnostic />}
 		</div>
 	);
 };
