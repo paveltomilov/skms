@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type Modals = 'automatic' | 'gateControl'; // добавить названия модалок
+type Modals = 'automatic' | 'gateControl' | 'diagnostic'; // добавить названия модалок
 
 export interface ModalState {
 	activeModal: null | Modals;

@@ -8,8 +8,8 @@
 }
 
 /* Убираем внутренние отступы */
-ul[class],
-ol[class] {
+ul,
+ol {
 	padding: 0;
 }
 
@@ -20,8 +20,8 @@ h2,
 h3,
 h4,
 p,
-ul[class],
-ol[class],
+ul,
+ol,
 li,
 figure,
 figcaption,
@@ -53,7 +53,7 @@ body {
 	background: variables.$primary-color;
 	color: variables.$black-color;
 
-	font-family: var(--font-family);
+	font-family: var(--font-family), serif;
 	line-height: var(--font-line-height);
 	letter-spacing: var(--font-letter-spacing);
 	font-weight: variables.$font-weight-regular;
