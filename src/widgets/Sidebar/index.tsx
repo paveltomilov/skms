@@ -1,23 +1,14 @@
 'use client';
 
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import Chevron from '@/shared/UI/icons/Chevron';
-import {openModal} from '@/store/modalSlice';
-import {useAppSelector} from '@/shared/hooks/store';
-import PopupDiagnostic from '@/entities/PopupDiagnostic';
-import {useDispatch} from 'react-redux';
 
 const Sidebar = () => {
-	const dispatch = useDispatch();
 	const [isOpen, setIsOpen] = useState(false);
 
 	const handleToggleSidebar = () => setIsOpen(!isOpen);
-	const { activeModal } = useAppSelector(state => state.modal);
-	const handleOpenDiagnosticPopup = () => {
-		dispatch(openModal('diagnostic'));
-	};
 
 	return (
 		<>
@@ -73,15 +64,6 @@ const Sidebar = () => {
 						className={styles.buttonText}
 						href="/ptk"
 					/>
-					<Button
-						id="diagnostic-button"
-						width={90}
-						height={34}
-						onClick={handleOpenDiagnosticPopup}
-						aria-label="Диагностика"
-						text="Диагностика"
-						className={styles.buttonText}
-					/>
 				</div>
 
 				<button
@@ -94,11 +76,6 @@ const Sidebar = () => {
 					/>
 				</button>
 			</div>
-			{activeModal === 'diagnostic' && (
-
-					<PopupDiagnostic />
-
-			)}
 		</>
 	);
 };

@@ -15,6 +15,7 @@ import { InputCircuitBreaker } from '@/entities/InputCircuitBreaker';
 import { Automatic } from '../Automatic';
 import ModalWrapper from '../ModalWrapper';
 import { PopupGateControl } from '../PopupGateControl';
+import PopupDiagnostic from '@/entities/PopupDiagnostic';
 
 const Scheme: FC = () => {
 	// для рендера щупов
@@ -72,6 +73,7 @@ const Scheme: FC = () => {
 					<PopupGateControl />
 				</ModalWrapper>
 			)}
+			{activeModal === 'diagnostic' && <PopupDiagnostic />}
 		</div>
 	);
 };
