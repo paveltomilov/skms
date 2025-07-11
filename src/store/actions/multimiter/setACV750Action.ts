@@ -16,8 +16,9 @@ export const setACV750Action = (
     if (typeof red.state === 'undefined' || typeof black.state === 'undefined') {
         state.displayValue = 0;
     } else if ((red.isNeutral && black.state) || (black.isNeutral && red.state)) {
+        //TODO Нейтраль вообще точно нужно учитывать?
         state.displayValue = 220;
     } else {
-        state.displayValue = 0;
+        state.displayValue = black.state === red.state ? 0 : 220;
     }
 };
