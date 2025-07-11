@@ -1,66 +1,67 @@
 'use client';
 import styles from './styles.module.scss';
-import { Display } from '@/entities/Display';
+import {Display} from '@/entities/Display';
 import ControlPanel from '@/entities/ControlPanel';
 import {useAppDispatch, useAppSelector} from '@/shared/hooks/store';
 import ProbeHolder from '@/shared/UI/icons/ProbeHolder';
 import Probe from '@/entities/Probe';
 import {useEffect} from 'react';
-import {setDisplayVoltage} from '@/store/multimeterSlice';
+import {ProbStateProps} from '@/shared/types/probs';
+import {getMultimeterAction} from '@/widgets/Multimeter/getMultimeterAction';
 
 const Multimeter: React.FC = () => {
-	const dispatch = useAppDispatch();
-	const multimeterState = useAppSelector(state => state.multimeter);
-	const activeProbe = useAppSelector(state => state.multimeter.activeProb);
-	const currentMode = useAppSelector(state => state.multimeter.currentMode);
-	const probeConnections = useAppSelector(
-		state => state.multimeter.probeConnections,
-	);
+    const dispatch = useAppDispatch();
+    const multimeterState = useAppSelector(state => state.multimeter);
+    const activeProbe = useAppSelector(state => state.multimeter.activeProb);
+    const currentMode = useAppSelector(state => state.multimeter.currentMode);
+    const probeConnections = useAppSelector(
+        state => state.multimeter.probeConnections,
+    );
 
-	//Состояния напряжения на точках измерения
-	const probeActiveState: {red: boolean|undefined, black: boolean|undefined} = useAppSelector(
-		state => {
-			const redPoint = state.multimeter.probeConnections.red;
-			const blackPoint = state.multimeter.probeConnections.black;
-			const redIsActive = state.points[redPoint as string];
-			const blackIsActive = state.points[blackPoint as string];
-			return {red: redIsActive, black: blackIsActive};
-		}
-	);
+    //Состояния напряжения на точках измерения
+    const probeState: { red: ProbStateProps, black: ProbStateProps } = useAppSelector(
+        state => {
+            const redPoint = state.multimeter.probeConnections.red;
+            const blackPoint = state.multimeter.probeConnections.black;
+            const redIsActive = state.points[redPoint as string];
+            const blackIsActive = state.points[blackPoint as string];
+            return {
+                red: {isNeutral: redPoint === 'p.c.n', state: redIsActive},
+                black: {isNeutral: blackPoint === 'p.c.n', state: blackIsActive}
+            };
+        }
+    );
 
-	//Отслеживание изменения напряжения на щупах
-	useEffect(() => {
-		dispatch(setDisplayVoltage(probeActiveState));
-	}, [probeActiveState]);
+    //Экшен для текущего режима мультиметра
+    const modeAction = getMultimeterAction(currentMode);
 
-	//Отслеживание переключения режима вольтметра
-	useEffect(() => {
-		//TODO добавить null к displayValue при выключении
-		//TODO Реализовать режимы вольтметра
-	}, [currentMode]);
+    //Отслеживание изменения напряжения на щупах
+    useEffect(() => {
+        dispatch(modeAction(probeState));
+    }, [probeState, modeAction]);
 
-	return (
-		<div className={styles.multimeter}>
-			<Display value={multimeterState.displayValue} />
-			<ControlPanel mode={multimeterState.currentMode} />
-			<ProbeHolder
-				className={`${styles.multimeter__probeHolder} ${styles.multimeter__probeHolder_black}`}
-			>
-				{/* если щуп не перетаскивается и не прикреплен к схеме, он рендерится мультиметром */}
-				{activeProbe !== 'black' && !probeConnections['black'] && (
-					<Probe color="black" />
-				)}
-			</ProbeHolder>
-			<ProbeHolder
-				className={`${styles.multimeter__probeHolder} ${styles.multimeter__probeHolder_red}`}
-			>
-				{/* если щуп не перетаскивается и не прикреплен к схеме, он рендерится мультиметром */}
-				{activeProbe !== 'red' && !probeConnections['red'] && (
-					<Probe color="red" />
-				)}
-			</ProbeHolder>
-		</div>
-	);
+    return (
+        <div className={styles.multimeter}>
+            <Display value={multimeterState.displayValue}/>
+            <ControlPanel mode={multimeterState.currentMode}/>
+            <ProbeHolder
+                className={`${styles.multimeter__probeHolder} ${styles.multimeter__probeHolder_black}`}
+            >
+                {/* если щуп не перетаскивается и не прикреплен к схеме, он рендерится мультиметром */}
+                {activeProbe !== 'black' && !probeConnections['black'] && (
+                    <Probe color="black"/>
+                )}
+            </ProbeHolder>
+            <ProbeHolder
+                className={`${styles.multimeter__probeHolder} ${styles.multimeter__probeHolder_red}`}
+            >
+                {/* если щуп не перетаскивается и не прикреплен к схеме, он рендерится мультиметром */}
+                {activeProbe !== 'red' && !probeConnections['red'] && (
+                    <Probe color="red"/>
+                )}
+            </ProbeHolder>
+        </div>
+    );
 };
 
 export default Multimeter;
