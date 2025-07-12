@@ -6,8 +6,8 @@ import {useAppDispatch, useAppSelector} from '@/shared/hooks/store';
 import ProbeHolder from '@/shared/UI/icons/ProbeHolder';
 import Probe from '@/entities/Probe';
 import {useEffect} from 'react';
-import {ProbStateProps} from '@/shared/types/probs';
 import {getMultimeterAction} from '@/widgets/Multimeter/getMultimeterAction';
+import {MultimeterModePropPayload} from '@/store/multimeterSlice';
 
 const Multimeter: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -19,7 +19,7 @@ const Multimeter: React.FC = () => {
     );
 
     //Состояния напряжения на точках измерения
-    const probeState: { red: ProbStateProps, black: ProbStateProps } = useAppSelector(
+    const probeState: MultimeterModePropPayload = useAppSelector(
         state => {
             const redPoint = state.multimeter.probeConnections.red;
             const blackPoint = state.multimeter.probeConnections.black;

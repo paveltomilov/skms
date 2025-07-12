@@ -8,10 +8,12 @@ import multimeterReducer, {
 import { Provider } from 'react-redux';
 import { MultimeterMode } from '@/shared/types/multimeter';
 import { useEffect } from 'react';
+import pointsReducer from '@/store/pointsSlice';
 
 const mockStore = configureStore({
 	reducer: {
 		multimeter: multimeterReducer,
+		points: pointsReducer,
 	},
 });
 
