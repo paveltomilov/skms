@@ -61,8 +61,8 @@ const ModalWrapper: FC<ModalProps> = ({
 	if (!isOpen) return null;
 
 	const style = {
-		'--modal-width': modalSize.width || 'auto',
-		'--modal-height': modalSize.height || 'auto',
+		'--modal-width': modalSize.width ?? undefined,
+		'--modal-height': modalSize.height ?? undefined,
 		'--headerHeight': modalSize.headerHeight || '34px',
 	} as React.CSSProperties;
 
