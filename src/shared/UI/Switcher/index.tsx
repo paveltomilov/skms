@@ -12,7 +12,6 @@ import { SWITCHER_ANGLES } from '@/shared/configs/knob';
 import { setResistance } from '@/store/circuitSlice';
 import { SwitchMode } from '@/shared/types/switch';
 import { useRotateKnob } from '@/shared/hooks/useRotateKnob';
-import Switch from '../icons/Switch';
 
 interface Props {
 	mode: SwitchMode;
@@ -41,7 +40,7 @@ const Switcher: FC<Props> = ({ mode }) => {
 	}, [getSelectedMode, dispatch]);
 
 	return (
-		<Switch className={styles.switcher}>
+		<div className={styles.switcher}>
 			<SwitchHandle
 				ref={handleRef}
 				onMouseDown={onMouseDown}
@@ -49,7 +48,7 @@ const Switcher: FC<Props> = ({ mode }) => {
 				className={styles.switcher__handle}
 				angle={angle}
 			/>
-		</Switch>
+		</div>
 	);
 };
 

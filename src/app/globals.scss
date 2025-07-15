@@ -98,3 +98,8 @@ select {
 		scroll-behavior: auto !important;
 	}
 }
+
+body.modal-open {
+	overflow: hidden;
+	padding-right: 15px;
+}

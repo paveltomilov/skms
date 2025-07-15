@@ -17,6 +17,7 @@
 		position: relative;
 		border-bottom: 1px solid variables.$gray-disabled-color;
 		max-height: inherit;
+		z-index: 1020;
 
 		.defense {
 			padding: 5px 15px;

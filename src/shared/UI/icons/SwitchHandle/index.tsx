@@ -25,7 +25,7 @@ const SwitchHandle: FC<Props> = ({
 			className={className && className}
 		>
 			<use
-				xlinkHref={'/svg/switcher.svg#handle'}
+				xlinkHref={'/svg/sprite.svg#handle'}
 				width="100%"
 				height="100%"
 			/>

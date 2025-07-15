@@ -16,6 +16,7 @@ import { Automatic } from '../Automatic';
 import ModalWrapper from '../ModalWrapper';
 import { PopupGateControl } from '../PopupGateControl';
 import PopupDiagnostic from '@/entities/PopupDiagnostic';
+import { closeModal } from '@/store/modalSlice';
 
 const Scheme: FC = () => {
 	// для рендера щупов
@@ -41,7 +42,9 @@ const Scheme: FC = () => {
 		console.log(pointsVoltage);
 	}, [scheme]);
 
-	const { activeModal } = useAppSelector(state => state.modal);
+	const { automatic, gateControl, diagnostic } = useAppSelector(
+		state => state.modal,
+	);
 
 	return (
 		<div className={styles.scheme}>
@@ -62,18 +65,32 @@ const Scheme: FC = () => {
 			{probeConnections['black'] && <Probe color="black" />}
 			{probeConnections['red'] && <Probe color="red" />}
 
-			{activeModal === 'automatic' && (
-				<ModalWrapper>
+			{automatic && (
+				<ModalWrapper
+					title="Автомат"
+					isBlur
+					onClose={() => dispatch(closeModal('automatic'))}
+				>
 					<Automatic />
 				</ModalWrapper>
 			)}
 
-			{activeModal === 'gateControl' && (
-				<ModalWrapper>
+			{gateControl && (
+				<ModalWrapper
+					title="ПКДВ-2"
+					onClose={() => dispatch(closeModal('gateControl'))}
+				>
 					<PopupGateControl />
 				</ModalWrapper>
 			)}
-			{activeModal === 'diagnostic' && <PopupDiagnostic />}
+			{diagnostic && (
+				<ModalWrapper
+					title="ПКДВ-2"
+					onClose={() => dispatch(closeModal('diagnostic'))}
+				>
+					<PopupDiagnostic />
+				</ModalWrapper>
+			)}
 		</div>
 	);
 };
