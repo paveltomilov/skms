@@ -11,7 +11,7 @@ export interface ModalState {
 const initialState: ModalState = {
 	automatic: false,
 	gateControl: false,
-	diagnostic: true,
+	diagnostic: false,
 };
 
 const modalSlice = createSlice({
