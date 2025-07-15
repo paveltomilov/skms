@@ -42,7 +42,9 @@ const Scheme: FC = () => {
 		console.log(pointsVoltage);
 	}, [scheme]);
 
-	const { activeModal } = useAppSelector(state => state.modal);
+	const { automatic, gateControl, diagnostic } = useAppSelector(
+		state => state.modal,
+	);
 
 	return (
 		<div className={styles.scheme}>
@@ -63,20 +65,32 @@ const Scheme: FC = () => {
 			{probeConnections['black'] && <Probe color="black" />}
 			{probeConnections['red'] && <Probe color="red" />}
 
-			{activeModal === 'automatic' && (
-				<ModalWrapper isOpen={true}
-				onClose={() => dispatch(closeModal())}>
+			{automatic && (
+				<ModalWrapper
+					title="Автомат"
+					isBlur
+					onClose={() => dispatch(closeModal('automatic'))}
+				>
 					<Automatic />
 				</ModalWrapper>
 			)}
 
-			{activeModal === 'gateControl' && (
-				<ModalWrapper isOpen={true}
-				onClose={() => dispatch(closeModal())}>
+			{gateControl && (
+				<ModalWrapper
+					title="ПКДВ-2"
+					onClose={() => dispatch(closeModal('gateControl'))}
+				>
 					<PopupGateControl />
 				</ModalWrapper>
 			)}
-			{activeModal === 'diagnostic' && <PopupDiagnostic />}
+			{diagnostic && (
+				<ModalWrapper
+					title="ПКДВ-2"
+					onClose={() => dispatch(closeModal('diagnostic'))}
+				>
+					<PopupDiagnostic />
+				</ModalWrapper>
+			)}
 		</div>
 	);
 };

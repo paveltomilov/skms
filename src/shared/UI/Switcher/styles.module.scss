@@ -1,14 +1,15 @@
 .switcher {
 	width: 178px;
 	height: 165px;
+	background-image: url('../../../../public/svg/switcher.svg');
 	position: relative;
 
 	&__handle {
 		position: absolute;
 		width: 20px;
 		height: 130px;
-		top: 72px;
-		left: 203px;
+		top: 20px;
+		left: 94px;
 		cursor: grab;
 		border-radius: 2px;
 		box-shadow: 0px 5px 2px 0px rgba(10, 16, 21, 0.2);
