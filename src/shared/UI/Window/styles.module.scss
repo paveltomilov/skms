@@ -57,5 +57,9 @@
             left: 74px;
             line-height: 18px;
         }
+
+        &_white {
+            color: variables.$white-color;
+        }
     }
 }

@@ -8,6 +8,7 @@ interface Props {
     textBottom?: string;
     textLeft?: string;
     textRight?: string;
+    colorText?: 'black'|'white';
     className?: string;
 }
 
@@ -18,6 +19,7 @@ const Window: FC<Props> = ({
     textBottom,
     textLeft,
     textRight,
+    colorText = 'black',
     className,
 }) => {
 
@@ -26,12 +28,14 @@ const Window: FC<Props> = ({
         (color === 'yellow') ? `${styles.field_yellow}`:
         `${styles.field_white}`;
 
+    const textColor = (colorText === 'white') ? `${styles.text_white}`:'';
+
     return (
         <div className={`${styles.window} ${className && className}`}>
             <div className={`${styles.field} ${fieldColor}`}>
                 {value && <span>{value}</span>}
             </div>
-            <div className={styles.text}>
+            <div className={`${styles.text} ${textColor}`}>
                 {textTop && <div className={styles.text_top}>{textTop}</div>}
                 {textBottom && <div className={styles.text_bottom}>{textBottom}</div>}
                 {textLeft && <div className={styles.text_left}>{textLeft}</div>}
