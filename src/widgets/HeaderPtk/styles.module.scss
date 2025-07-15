@@ -6,28 +6,28 @@
 
 	.wrapper {
 		height: 100%;
+		max-height: inherit;
+		position: relative;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		padding: 6.5px 8px;
 		background: variables.$secondary-color;
-		position: relative;
 		border-bottom: 1px solid variables.$gray-disabled-color;
-		max-height: inherit;
 
 		.windows {
 			width: 289px;
 			height: 40px;
 			display: flex;
-			align-self: stretch;
 			justify-content: space-between;
+			align-self: stretch;
 
 			&_ptk {
 				width: 92px;
-				background-color: variables.$success-input;
 				font-size: 24px;
 				line-height: 40px;
 				text-align: center;
+				background-color: variables.$success-input;
 				text-transform: uppercase;
 				box-shadow: 1.46px 1.46px 0px 0px variables.$black-color inset,
 					-1.46px -1.46px 0px 0px rgba(255, 255, 255, 0.5) inset;
@@ -48,15 +48,15 @@
 			}
 
 			&_kpm {
+				box-sizing: border-box;
 				width: 57px;
-				background-color: variables.$success-input;
 				color: variables.$white-color;
 				font-size: 24px;
 				line-height: 40px;
 				text-align: center;
 				text-transform: uppercase;
+				background-color: variables.$success-input;
 				border: 1px solid variables.$black-color;
-				box-sizing: border-box;
 			}
 		}
 
@@ -79,15 +79,14 @@
 		.datetime {
 			width: 358px;
 			font-size: 28px;
-
 		}
 
 		.readings {
 			width: 368px;
 			height: 40px;
+			padding-left: 4px;
 			font-size: 34px;
 			line-height: 40px;
-			padding-left: 4px;
 			box-shadow: -1.46px -1.46px 0px 0px variables.$black-color inset,
 			1.46px 1.46px 0px 0px variables.$secondary-color inset,
 			-2.92px -2.92px #D9D9D9 inset,

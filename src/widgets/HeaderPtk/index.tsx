@@ -17,7 +17,7 @@ const HeaderPtk: FC = () => {
 	useEffect(() => {
 		const id = setInterval(() => {
 			setDateTime(new Date());
-		});
+		}, 1000);
 		return () => {
 			clearInterval(id);
 		};

@@ -24,9 +24,9 @@ const Window: FC<Props> = ({
 }) => {
 
     const fieldColor =
-        (color === 'blue') ? `${styles.field_blue}` :
-        (color === 'yellow') ? `${styles.field_yellow}`:
-        `${styles.field_white}`;
+        (color === 'blue') ? styles.field_blue :
+        (color === 'yellow') ? styles.field_yellow:
+        styles.field_white;
 
     const textColor = (colorText === 'white') ? `${styles.text_white}`:'';
 
