@@ -46,7 +46,6 @@ const PopupDiagnostic: FC = () => {
 					Какой-то Name
 				</span>
 				<Button
-					id="reset-diagnostic"
 					width={206}
 					height={38}
 					aria-label="Сброс диагностики"
@@ -54,7 +53,6 @@ const PopupDiagnostic: FC = () => {
 					className={styles.popupDiagnostic_bottom_btn}
 				/>
 				<Button
-					id="sk-diagnostic"
 					width={69}
 					height={38}
 					aria-label="Ф.Ск"
@@ -62,7 +60,6 @@ const PopupDiagnostic: FC = () => {
 					className={styles.popupDiagnostic_bottom_btn}
 				/>
 				<Button
-					id="log-diagnostic"
 					width={97}
 					height={38}
 					aria-label="Журнал"
@@ -71,7 +68,6 @@ const PopupDiagnostic: FC = () => {
 					className={styles.popupDiagnostic_bottom_btn}
 				/>
 				<Button
-					id="control-diagnostic"
 					width={243}
 					height={38}
 					aria-label="Разрешить управление"

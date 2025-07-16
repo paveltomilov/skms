@@ -41,7 +41,6 @@ const HeaderZra: FC = () => {
 					<Button
 						width={105}
 						height={38}
-						id="closePtkBtn"
 						text="Закрыть"
 						disabled={closePtkDisabled}
 						active={closePtkActive}
@@ -50,7 +49,6 @@ const HeaderZra: FC = () => {
 					<Button
 						width={70}
 						height={38}
-						id="stopPtkBtn"
 						text="Стоп"
 						disabled={stopPtkDisabled}
 						onClick={() => stopGateMovement('ptk')}
@@ -58,7 +56,6 @@ const HeaderZra: FC = () => {
 					<Button
 						width={106}
 						height={38}
-						id="openPtkBtn"
 						text="Открыть"
 						disabled={openPtkDisabled}
 						active={openPtkActive}
@@ -72,7 +69,6 @@ const HeaderZra: FC = () => {
 					<Button
 						width={105}
 						height={38}
-						id="closeKruzapBtn"
 						text="Закрыть"
 						disabled={closeKruzapDisabled}
 						onMouseDown={() => handleButton('kruzap', 'close')}
@@ -81,7 +77,6 @@ const HeaderZra: FC = () => {
 					<Button
 						width={106}
 						height={38}
-						id="openKruzapBtn"
 						text="Открыть"
 						disabled={openKruzapDisabled}
 						onMouseDown={() => handleButton('kruzap', 'open')}

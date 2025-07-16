@@ -26,7 +26,6 @@ const ModalWrapper: FC<ModalProps> = ({
 				<div className={styles.modal__header}>
 					<span className={styles.modal__header_title}>{title}</span>
 					<Button
-						id="diagnostic-close"
 						width={26}
 						height={26}
 						onClick={onClose}

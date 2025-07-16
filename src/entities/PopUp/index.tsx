@@ -50,7 +50,6 @@ const PopUp: FC = () => {
 			{displayButtons.map(button => (
 				<Button
 					key={button.id}
-					id={button.id}
 					width={245}
 					height={35}
 					text={button.text}

@@ -16,7 +16,6 @@ export const PopupGateControl: FC = () => {
 					className={styles.popup__button}
 					width={132}
 					height={38}
-					id="openDiagnostic"
 					text="Откр Диагн"
 					onClick={() => console.log('Нажата кнопка Откр Диагн')}
 				/>
@@ -32,7 +31,6 @@ export const PopupGateControl: FC = () => {
 					className={styles.popup__button}
 					width={105}
 					height={38}
-					id="openGate"
 					text="Открыть"
 					onClick={() => console.log('Нажата кнопка Открыть')}
 				/>
@@ -40,7 +38,6 @@ export const PopupGateControl: FC = () => {
 					className={styles.popup__button}
 					width={76}
 					height={38}
-					id="stopGate"
 					text="Стоп"
 					onClick={() => console.log('Нажата кнопка Стоп')}
 				/>
@@ -48,7 +45,6 @@ export const PopupGateControl: FC = () => {
 					className={styles.popup__button}
 					width={98}
 					height={38}
-					id="closeGate"
 					text="Закрыть"
 					onClick={() => console.log('Нажата кнопка Закрыть')}
 				/>
