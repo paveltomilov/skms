@@ -1,10 +1,10 @@
 import styles from './styles.module.scss';
-import classNames from 'classnames';
+import cn from 'classnames';
 import { FC } from 'react';
 
 interface Props {
-	color?: 'blue' | 'yellow' | 'white';
-	value?: string;
+	color: 'blue' | 'yellow' | 'white';
+	value: string;
 	textTop?: string;
 	textBottom?: string;
 	textLeft?: string;
@@ -23,28 +23,34 @@ const Window: FC<Props> = ({
 	colorText = 'black',
 	className,
 }) => {
-	const fieldColor = classNames(styles.field, {
+	const fieldColor = cn(styles.field, className && className, {
 		[styles.field_blue]: color === 'blue',
 		[styles.field_yellow]: color === 'yellow',
 		[styles.field_white]: color === 'white',
 	});
 
-	const textColor = colorText === 'white' ? `${styles.text_white}` : '';
+	const text = cn(styles.text, {
+		[styles.text_white]: colorText === 'white',
+	});
 
 	return (
-		<div className={`${styles.window} ${className && className}`}>
+		<>
 			<div className={fieldColor}>{value && <span>{value}</span>}</div>
-			<div className={`${styles.text} ${textColor}`}>
-				{textTop && <div className={styles.text_top}>{textTop}</div>}
-				{textBottom && (
-					<div className={styles.text_bottom}>{textBottom}</div>
-				)}
-				{textLeft && <div className={styles.text_left}>{textLeft}</div>}
-				{textRight && (
-					<div className={styles.text_right}>{textRight}</div>
-				)}
-			</div>
-		</div>
+			{textTop && (
+				<span className={cn(text, styles.text_top)}>{textTop}</span>
+			)}
+			{textBottom && (
+				<span className={cn(text, styles.text_bottom)}>
+					{textBottom}
+				</span>
+			)}
+			{textLeft && (
+				<span className={cn(text, styles.text_left)}>{textLeft}</span>
+			)}
+			{textRight && (
+				<span className={cn(text, styles.text_right)}>{textRight}</span>
+			)}
+		</>
 	);
 };
 

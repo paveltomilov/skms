@@ -1,66 +1,56 @@
 @use '@/shared/scss/variables.module';
 
-.window {
-    width: 96px;
-    height: 46px;
-    position: relative;
+.field {
+	position: relative;
+	width: 48px;
+	height: 18px;
+	line-height: 18px;
+	padding: 1px;
+	margin: 3px;
 
-    .field {
-        width: 48px;
-        height: 18px;
-        position: absolute;
-        top: 14px;
-        left: 24px;
-        line-height: 18px;
+	&_blue {
+		background-color: variables.$cyan-color;
+		border: 1px solid variables.$black-color;
+	}
 
-        &_blue {
-            background-color: variables.$cyan-color;
-            border: 1px solid variables.$black-color;
-        }
+	&_yellow {
+		background-color: variables.$yellow-color;
+		border: 1px solid variables.$black-color;
+	}
 
-        &_yellow {
-            background-color: variables.$yellow-color;
-            border: 1px solid variables.$black-color;
-        }
+	&_white {
+		box-shadow: 0px 0px 0px 1px variables.$red-color;
+		background-color: variables.$white-color;
+	}
+}
 
-        &_white {
-            box-shadow: 0px 0px 0px 1px variables.$red-color;
-        }
-    }
+.text {
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 14px;
+	position: absolute;
 
-    .text {
-        font-size: 14px;
-        font-weight: bold;
-        line-height: 14px;
+	&_top {
+		left: 13px;
+		top: -5px;
+	}
 
-        &_top {
-            position: absolute;
-            left: 24px;
-        }
+	&_bottom {
+		left: 13px;
+		top: 32px;
+	}
 
-        &_bottom {
-            position: absolute;
-            left: 24px;
-            bottom: 0;
-        }
+	&_left {
+		left: -30px;
+		top: 13px;
+	}
 
-        &_left {
-            position: absolute;
-            top: 14px;
-            line-height: 18px;
-            font-weight: bold;
+	&_right {
+		left: 63px;
+		top: 13px;
+	}
 
-        }
-
-        &_right {
-            position: absolute;
-            top: 14px;
-            left: 74px;
-            line-height: 18px;
-        }
-
-        &_white {
-            color: variables.$white-color;
-        }
-    }
+	&_white {
+		color: variables.$white-color;
+	}
 }
