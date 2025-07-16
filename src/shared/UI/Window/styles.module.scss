@@ -1,0 +1,56 @@
+@use '@/shared/scss/variables.module';
+
+.field {
+	position: relative;
+	width: 48px;
+	height: 18px;
+	line-height: 18px;
+	padding: 1px;
+	margin: 3px;
+
+	&_blue {
+		background-color: variables.$cyan-color;
+		border: 1px solid variables.$black-color;
+	}
+
+	&_yellow {
+		background-color: variables.$yellow-color;
+		border: 1px solid variables.$black-color;
+	}
+
+	&_white {
+		box-shadow: 0px 0px 0px 1px variables.$red-color;
+		background-color: variables.$white-color;
+	}
+}
+
+.text {
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 14px;
+	position: absolute;
+
+	&_top {
+		left: 13px;
+		top: -5px;
+	}
+
+	&_bottom {
+		left: 13px;
+		top: 32px;
+	}
+
+	&_left {
+		left: -30px;
+		top: 13px;
+	}
+
+	&_right {
+		left: 63px;
+		top: 13px;
+	}
+
+	&_white {
+		color: variables.$white-color;
+	}
+}
