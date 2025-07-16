@@ -1,28 +1,20 @@
 'use client';
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import Window from '@/shared/UI/Window';
+import { useDate } from '@/shared/hooks/useDate';
 
 const HeaderPtk: FC = () => {
-
 	// для вывода показаний частоты и мощности
 
 	const readings = {
-		'freq': 49.96,
-		'pwr': 120.9
+		freq: 49.96,
+		pwr: 120.9,
 	};
 
-	const [dateTime, setDateTime] = useState(new Date());
-	useEffect(() => {
-		const id = setInterval(() => {
-			setDateTime(new Date());
-		}, 1000);
-		return () => {
-			clearInterval(id);
-		};
-	}, []);
-
+	const { formattedDate, formattedTime, dateTimeDate, dateTimeTime } =
+		useDate();
 
 	return (
 		<header className={styles.header}>
@@ -32,12 +24,7 @@ const HeaderPtk: FC = () => {
 					<div className={styles.windows_defense}>Pабота защит</div>
 					<div className={styles.windows_kpm}>КРМ</div>
 				</div>
-				<Window
-				color = 'yellow'
-				value='-4'
-				textRight='°C'
-				/>
-
+				<Window color="yellow" value="-4" textRight="°C" />
 				<div className={styles.buttons}>
 					<Button
 						className={styles.button}
@@ -45,7 +32,9 @@ const HeaderPtk: FC = () => {
 						height={32}
 						id="menu"
 						text="Гл. меню"
-						onClick={() => console.log('Нажата кнопка Главное меню')}
+						onClick={() =>
+							console.log('Нажата кнопка Главное меню')
+						}
 					/>
 					<Button
 						className={styles.button}
@@ -72,13 +61,17 @@ const HeaderPtk: FC = () => {
 					text="?"
 					onClick={() => console.log('Нажата кнопка ?')}
 				/>
-				<div className={styles.datetime}>{dateTime.toLocaleDateString('ru-RU',
-					{
-						year: 'numeric',
-						month: 'long',
-						day: 'numeric',
-					})} {dateTime.toLocaleTimeString('ru-RU')}</div>
-				<div className={styles.readings}>{readings.freq}Гц {readings.pwr}МВт</div>
+				<div suppressHydrationWarning className={styles.datetime}>
+					<time dateTime={dateTimeDate} suppressHydrationWarning>
+						{formattedDate}
+					</time>{' '}
+					<time dateTime={dateTimeTime} suppressHydrationWarning>
+						{formattedTime}
+					</time>
+				</div>
+				<div className={styles.readings}>
+					{readings.freq}Гц {readings.pwr}МВт
+				</div>
 			</div>
 		</header>
 	);
