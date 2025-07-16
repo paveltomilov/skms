@@ -31,23 +31,23 @@
 	position: absolute;
 
 	&_top {
-		left: 13px;
-		top: -5px;
+		left: 0;
+		top: -19px;
 	}
 
 	&_bottom {
-		left: 13px;
-		top: 32px;
+		left: 0;
+		top: 18px;
 	}
 
 	&_left {
-		left: -30px;
-		top: 13px;
+		right: 48px;
+		top: 3px;
 	}
 
 	&_right {
-		left: 63px;
-		top: 13px;
+		left: 50px;
+		top: 3px;
 	}
 
 	&_white {
