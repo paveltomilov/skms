@@ -34,8 +34,8 @@ const Window: FC<Props> = ({
 	});
 
 	return (
-		<>
-			<div className={fieldColor}>{value && <span>{value}</span>}</div>
+		<div className={fieldColor}>
+			{value && <span>{value}</span>}
 			{textTop && (
 				<span className={cn(text, styles.text_top)}>{textTop}</span>
 			)}
@@ -50,7 +50,7 @@ const Window: FC<Props> = ({
 			{textRight && (
 				<span className={cn(text, styles.text_right)}>{textRight}</span>
 			)}
-		</>
+		</div>
 	);
 };
 

@@ -30,7 +30,6 @@ const HeaderPtk: FC = () => {
 						className={styles.button}
 						width={140}
 						height={32}
-						id="menu"
 						text="Гл. меню"
 						onClick={() =>
 							console.log('Нажата кнопка Главное меню')
@@ -40,7 +39,6 @@ const HeaderPtk: FC = () => {
 						className={styles.button}
 						width={140}
 						height={32}
-						id="signals"
 						text="Сигналы"
 						onClick={() => console.log('Нажата кнопка Сигналы')}
 					/>
@@ -48,7 +46,6 @@ const HeaderPtk: FC = () => {
 						className={styles.button}
 						width={140}
 						height={32}
-						id="graphs"
 						text="Графики"
 						onClick={() => console.log('Нажата кнопка Графики')}
 					/>
@@ -57,7 +54,6 @@ const HeaderPtk: FC = () => {
 					className={styles.button}
 					width={32}
 					height={32}
-					id="?"
 					text="?"
 					onClick={() => console.log('Нажата кнопка ?')}
 				/>

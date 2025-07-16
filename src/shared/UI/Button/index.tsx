@@ -3,7 +3,6 @@ import { CSSProperties, ReactNode } from 'react';
 import styles from './styles.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
-/* import { useAppSelector } from '@/shared/hooks/store'; */
 
 interface ImageProps {
 	src: string;
@@ -13,7 +12,6 @@ interface ImageProps {
 
 interface ButtonProps {
 	href?: string;
-	id: string;
 	width: number;
 	height: number;
 	text?: ReactNode;
@@ -32,7 +30,6 @@ interface ButtonProps {
 
 const Button = ({
 	href,
-	id,
 	width,
 	height,
 	text,
@@ -48,11 +45,6 @@ const Button = ({
 	onMouseDown,
 	onMouseUp,
 }: ButtonProps) => {
-	// уточнить необходимость сохранять состояние кнопок в редакс, если что удалить
-	/* const isActive = useAppSelector(
-		state => state.buttonsReducer.activeButtons[id] || false,
-	); */
-
 	return href ? (
 		<Link
 			href={href}
@@ -69,7 +61,7 @@ const Button = ({
 			{image && (
 				<Image
 					src={image.src}
-					alt={id}
+					alt="btn image"
 					width={image.width}
 					height={image.height}
 				/>
@@ -96,7 +88,7 @@ const Button = ({
 			{image && (
 				<Image
 					src={image.src}
-					alt={id}
+					alt="btn image"
 					width={image.width}
 					height={image.height}
 				/>

@@ -19,7 +19,6 @@ const Sidebar = () => {
 			<div className={`${styles.sidebar} ${isOpen && styles.open}`}>
 				<div className={styles.sidebarContent}>
 					<Button
-						id="main-button"
 						width={90}
 						height={34}
 						aria-label="Главная"
@@ -28,7 +27,6 @@ const Sidebar = () => {
 					/>
 
 					<Button
-						id="scheme-button"
 						width={90}
 						height={34}
 						aria-label="Схема"
@@ -37,7 +35,6 @@ const Sidebar = () => {
 					/>
 
 					<Button
-						id="training-button"
 						width={90}
 						height={34}
 						aria-label="Обучение"
@@ -46,7 +43,6 @@ const Sidebar = () => {
 					/>
 
 					<Button
-						id="simulation-button"
 						width={90}
 						height={34}
 						aria-label="Тренажер"
@@ -56,7 +52,6 @@ const Sidebar = () => {
 					/>
 
 					<Button
-						id="ptk-button"
 						width={90}
 						height={34}
 						aria-label="ПТК"
