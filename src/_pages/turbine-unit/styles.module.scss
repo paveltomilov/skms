@@ -3,11 +3,25 @@
 
 .section {
 	display: flex;
+	flex-direction: column;
+	gap: 10px;
 	margin: 12px auto;
 
 	&__title {
 		font-weight: 400;
 		font-size: 32px;
 		align-self: flex-start;
+	}
+
+	&__content {
+		position: relative;
+		width: 1391px;
+		height: 716px;
+		padding: 6px 110px 11px 53px;
+		box-sizing: content-box;
+		background-image: url('../../../public/svg/turbine-unit.svg');
+		background-origin: content-box;
+		background-repeat: no-repeat;
+		overflow: hidden;
 	}
 }
