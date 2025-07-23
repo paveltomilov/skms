@@ -4,8 +4,7 @@
 .section {
 	display: flex;
 	flex-direction: column;
-	gap: 10px;
-	margin: 12px auto;
+	margin: 16px auto 12px 158px;
 
 	&__title {
 		font-weight: 400;
@@ -15,9 +14,9 @@
 
 	&__content {
 		position: relative;
-		width: 1391px;
-		height: 716px;
-		padding: 6px 110px 11px 53px;
+		width: 1647px;
+		height: 725px;
+		padding: 9px 35px 0 54px;
 		box-sizing: content-box;
 		background-image: url('../../../public/svg/turbine-unit.svg');
 		background-origin: content-box;
