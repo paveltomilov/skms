@@ -17,6 +17,9 @@ import ModalWrapper from '../ModalWrapper';
 import { PopupGateControl } from '../PopupGateControl';
 import PopupDiagnostic from '@/entities/PopupDiagnostic';
 import { closeModal } from '@/store/modalSlice';
+import Tooltip from '@/shared/UI/Tooltip';
+import { closeTooltip, openTooltip } from '@/store/tooltipSlice';
+import { getTooltipState } from '@/shared/utils/getTooltipState/getTooltipState';
 
 const Scheme: FC = () => {
 	// для рендера щупов
@@ -46,6 +49,35 @@ const Scheme: FC = () => {
 		state => state.modal,
 	);
 
+	//для вывода tooltip
+
+	const tooltip = useAppSelector(state => state.tooltip);
+
+	const handleTooltipOpen = (e: React.MouseEvent<HTMLDivElement> | undefined) => {
+		if (e) {
+			const target: DOMRect = (e.target as HTMLElement).getBoundingClientRect();
+
+			//получение координат тултипа и данных о положении носика
+			// размеры тултипа надо  вынести в конфиги?
+
+			const tooltipState = getTooltipState(180, 70, target);
+
+			dispatch(openTooltip({
+				isOpen: true,
+				positionX: tooltipState.positionX,
+				positionY: tooltipState.positionY,
+				direction: tooltipState.direction,
+				side: tooltipState.side,
+				content: 'Текст со всплываюей подсказкой о способе взаимодействия  с элементом'
+			}
+			));
+		};
+	};
+
+	const handleTooltipClose = () => {
+		dispatch(closeTooltip());
+	};
+
 	return (
 		<div className={styles.scheme}>
 			{SCHEME_ELEMENTS.map(item => (
@@ -55,7 +87,9 @@ const Scheme: FC = () => {
 			<InputCircuitBreaker />
 
 			{Object.entries(SCHEME_POINTS).map(([id, position]) => (
-				<SchemePoint key={id} id={id} position={position} />
+				<SchemePoint key={id} id={id} position={position}
+					handleTooltipOpen={handleTooltipOpen}
+					handleTooltipClose={handleTooltipClose} />
 			))}
 
 			{/* если щуп перетаскивается, его рендерит схема */}
@@ -91,6 +125,16 @@ const Scheme: FC = () => {
 					<PopupDiagnostic />
 				</ModalWrapper>
 			)}
+
+			{tooltip.isOpen &&
+				<Tooltip
+					positionX={tooltip.positionX}
+					positionY={tooltip.positionY}
+					direction={tooltip.direction}
+					side={tooltip.side}
+					content={tooltip.content}
+				/>
+			}
 		</div>
 	);
 };

@@ -9,9 +9,11 @@ import { useAppSelector } from '@/shared/hooks/store';
 interface Props {
 	id: string;
 	position: IPoint;
-}
+	handleTooltipOpen:(React.MouseEventHandler<HTMLDivElement> | undefined);
+	handleTooltipClose:(React.MouseEventHandler<HTMLDivElement> | undefined);
+};
 
-export const SchemePoint: React.FC<Props> = ({ id, position }) => {
+export const SchemePoint: React.FC<Props> = ({ id, position, handleTooltipOpen,handleTooltipClose }) => {
 	const { setNodeRef, isOver } = useDroppable({
 		id,
 		data: {
@@ -34,6 +36,8 @@ export const SchemePoint: React.FC<Props> = ({ id, position }) => {
 			id={id}
 			className={pointClassName}
 			style={{ left: `${position.x}px`, top: `${position.y}px` }}
+			onMouseEnter={handleTooltipOpen}
+			onMouseLeave={handleTooltipClose}
 		></div>
 	);
 };

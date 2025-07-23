@@ -1,0 +1,229 @@
+@use '@/shared/scss/variables.module';
+
+.tooltip {
+    position: fixed;
+    font-size: 11px;
+    line-height: 100%;
+    box-shadow: variables.$realistic-drop-shadow;
+    z-index: 5;
+
+    &__window {
+        width: 180px;
+        height: 61px;
+        position: relative;
+        box-sizing: border-box;
+        border: 1px solid variables.$gray-disabled-color;
+        background-color: variables.$white-color;
+        z-index: 6;
+    }
+
+    &__text {
+        width: 178px;
+        top: 1px;
+        position: absolute;
+        left: 1px;
+        padding: 8px;
+        text-align: center;
+        background-color: variables.$white-color;
+        z-index: 9;
+    }
+
+    &__arrow[data-direction=top][data-side=center] {
+        content: '';
+        position: absolute;
+        top: -6px;
+        left: calc(50% - 6px);
+        border: 6px solid variables.$gray-disabled-color;
+        rotate: 45deg;
+        box-shadow: variables.$realistic-drop-shadow;
+        z-index: 7;
+    }
+
+    &__arrow[data-direction=top][data-side=center]::before {
+        content: '';
+        position: absolute;
+        top: -5px;
+        left: -5px;
+        border: 10px solid variables.$white-color;
+    }
+
+    &__arrow[data-direction=bottom][data-side=center] {
+        content: '';
+        position: absolute;
+        bottom: -6px;
+        left: calc(50% - 6px);
+        border: 6px solid variables.$gray-disabled-color;
+        rotate: 45deg;
+        box-shadow: variables.$realistic-drop-shadow;
+        z-index: 7;
+    }
+
+    &__arrow[data-direction=bottom][data-side=center]::before {
+        content: '';
+        position: absolute;
+        top: -15px;
+        left: -15px;
+        border: 10px solid variables.$white-color;
+    }
+
+    &__arrow[data-direction=top][data-side=left] {
+        position: absolute;
+        content: '';
+        width: 8.5px;
+        height: 10.5px;
+        left: 0;
+        top: -8.5px;
+        overflow: hidden;
+    }
+
+    &__arrow[data-direction=top][data-side=left]:after {
+        content: '';
+        position: absolute;
+        top: 3px;
+        left: -6px;
+        border: 6px solid variables.$gray-disabled-color;
+        rotate: 45deg;
+        box-shadow: variables.$realistic-drop-shadow;
+        z-index: 7;
+    }
+
+    &__arrow[data-direction=top][data-side=left]::before {
+        content: '';
+        position: absolute;
+        top: 3px;
+        left: 1px;
+        border: 10px solid transparent;
+        border-left: 10px solid variables.$white-color;
+        z-index: 8;
+    }
+
+    &__arrow[data-direction=top][data-side=right] {
+        position: absolute;
+        width: 8.5px;
+        height: 10.5px;
+        right: 0;
+        top: -8.5px;
+        overflow: hidden;
+    }
+
+    &__arrow[data-direction=top][data-side=right]:after {
+        content: '';
+        position: absolute;
+        top: 3px;
+        right: -6px;
+        border: 6px solid variables.$gray-disabled-color;
+        rotate: 45deg;
+        box-shadow: variables.$realistic-drop-shadow;
+        z-index: 7;
+    }
+
+    &__arrow[data-direction=top][data-side=right]::before {
+        content: '';
+        position: absolute;
+        top: 3px;
+        right: 1px;
+        border: 10px solid transparent;
+        border-right: 10px solid variables.$white-color;
+        z-index: 8;
+    }
+
+    &__arrow[data-direction=bottom][data-side=left] {
+        position: absolute;
+        width: 12px;
+        height: 20.5px;
+        left: 0;
+        bottom: -18.5px;
+        overflow: hidden;
+    }
+
+    &__arrow[data-direction=bottom][data-side=left]:after {
+        content: '';
+        position: absolute;
+        top: -4px;
+        left: -6px;
+        border: 6px solid variables.$gray-disabled-color;
+        rotate: 45deg;
+        box-shadow: variables.$realistic-drop-shadow;
+        z-index: 7;
+    }
+
+    &__arrow[data-direction=bottom][data-side=left]::before {
+        content: '';
+        position: absolute;
+        bottom: 12.5px;
+        left: 1px;
+        border: 10px solid transparent;
+        border-left: 10px solid variables.$white-color;
+        z-index: 8;
+    }
+
+    &__arrow[data-direction=bottom][data-side=right] {
+        position: absolute;
+        width: 12px;
+        height: 20.5px;
+        right: 0;
+        bottom: -18.5px;
+        overflow: hidden;
+    }
+
+    &__arrow[data-direction=bottom][data-side=right]:after {
+        content: '';
+        position: absolute;
+        top: -4px;
+        right: -6px;
+        border: 6px solid variables.$gray-disabled-color;
+        rotate: 45deg;
+        box-shadow: variables.$realistic-drop-shadow;
+        z-index: 7;
+    }
+
+    &__arrow[data-direction=bottom][data-side=right]::before {
+        content: '';
+        position: absolute;
+        bottom: 12.5px;
+        right: 1px;
+        border: 10px solid transparent;
+        border-right: 10px solid variables.$white-color;
+        z-index: 8;
+    }
+
+    &__arrow__shadow[data-direction=top][data-side=left] {
+        width: 1px;
+        height: 7px;
+        position: absolute;
+        left: 0;
+        top: -7px;
+        box-shadow: variables.$realistic-drop-shadow;
+        z-index: 6;
+    }
+
+    &__arrow__shadow[data-direction=top][data-side=right] {
+        width: 1px;
+        height: 7px;
+        position: absolute;
+        right: 0;
+        top: -7px;
+        box-shadow: variables.$realistic-drop-shadow;
+        z-index: 66;
+    }
+
+    &__arrow__shadow[data-direction=bottom][data-side=left] {
+        width: 1px;
+        height: 7px;
+        position: absolute;
+        left: 0;
+        bottom: -7.5px;
+        box-shadow: variables.$realistic-drop-shadow;
+        z-index: 6;
+    }
+
+    &__arrow__shadow[data-direction=bottom][data-side=right] {
+        width: 1px;
+        height: 7px;
+        position: absolute;
+        right: 0;
+        bottom: -7.5px;
+        box-shadow: variables.$realistic-drop-shadow;
+        z-index: 6;
+    }
+}
