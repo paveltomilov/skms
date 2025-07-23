@@ -4,8 +4,8 @@
 .section {
 	display: flex;
 	flex-direction: column;
-	gap: 10px;
-	margin: 12px auto;
+	align-items: center;
+	margin: 16px auto 12px 140px;
 
 	&__title {
 		font-weight: 400;
@@ -15,9 +15,9 @@
 
 	&__content {
 		position: relative;
-		width: 1377px;
-		height: 720px;
-		padding: 21px 52px 20px 180px;
+		width: 1456px;
+		height: 724px;
+		padding: 0px 76px 20px 168px;
 		box-sizing: content-box;
 		background-image: url('../../../public/svg/boiler-unit.svg');
 		background-origin: content-box;
