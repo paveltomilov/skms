@@ -3,11 +3,25 @@
 
 .section {
 	display: flex;
-	margin: 12px auto;
+	flex-direction: column;
+	align-items: center;
+	margin: 16px auto 12px 140px;
 
 	&__title {
 		font-weight: 400;
 		font-size: 32px;
 		align-self: flex-start;
+	}
+
+	&__content {
+		position: relative;
+		width: 1456px;
+		height: 724px;
+		padding: 0px 76px 20px 168px;
+		box-sizing: content-box;
+		background-image: url('../../../public/svg/boiler-unit.svg');
+		background-origin: content-box;
+		background-repeat: no-repeat;
+		overflow: hidden;
 	}
 }

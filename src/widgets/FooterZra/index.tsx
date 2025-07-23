@@ -10,14 +10,12 @@ const FooterZra: FC = () => {
 		<footer className={styles.footer}>
 			<div className={styles.footer__buttons}>
 				<Button
-					id="footer-left-control-button"
 					width={88}
 					height={28}
 					aria-label="Левый контрол"
 					icon={<ArrowChange />}
 				/>
 				<Button
-					id="footer-right-control-button"
 					width={88}
 					height={28}
 					aria-label="Правый контрол"
@@ -27,7 +25,6 @@ const FooterZra: FC = () => {
 
 			<div className={styles.footer__operatorPanel}>
 				<Button
-					id="footer-operator-button"
 					width={44}
 					height={44}
 					image={{

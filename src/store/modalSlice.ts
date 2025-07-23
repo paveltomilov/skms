@@ -1,24 +1,28 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type Modals = 'automatic' | 'gateControl'; // добавить названия модалок
+type Modals = 'automatic' | 'gateControl' | 'diagnostic'; // добавить названия модалок
 
 export interface ModalState {
-	activeModal: null | Modals;
+	automatic: boolean;
+	gateControl: boolean;
+	diagnostic: boolean;
 }
 
 const initialState: ModalState = {
-	activeModal: null,
+	automatic: false,
+	gateControl: false,
+	diagnostic: false,
 };
 
 const modalSlice = createSlice({
 	name: 'modal',
 	initialState,
 	reducers: {
-		openModal(state, action: PayloadAction<Modals>) {
-			state.activeModal = action.payload;
+		openModal(state, { payload }: PayloadAction<Modals>) {
+			state[payload] = true;
 		},
-		closeModal(state) {
-			state.activeModal = null;
+		closeModal(state, { payload }: PayloadAction<Modals>) {
+			state[payload] = false;
 		},
 	},
 });

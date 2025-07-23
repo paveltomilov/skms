@@ -1,12 +1,10 @@
 import classNames from 'classnames';
 import React, { FC, InputHTMLAttributes } from 'react';
 import Error from '../icons/Error';
-import LampError from '../icons/LampError';
-import LampSucess from '../icons/LampSucess';
 import Success from '../icons/Success';
 import styles from './styles.module.scss';
-import LampWarn from '../icons/LampWarn';
-import LampDefault from '../icons/LampDefault';
+import Lamp from '../icons/Lamp';
+
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   status?: 'success' | 'error' | 'default' | 'disabled' | 'warn';
@@ -19,11 +17,11 @@ type LampStatus = 'success' | 'error' | 'warn' | 'default' | 'disabled';
 type IconStatus = 'success' | 'error';
 
 const lamp: Record<LampStatus, FC<React.SVGProps<SVGSVGElement>>> = {
-  success: LampSucess,
-  error: LampError,
-  warn: LampWarn,
-  default: LampDefault,
-  disabled: LampDefault,
+  success: (props) => <Lamp variant="success" {...props} />,
+  error: (props) => <Lamp variant="error" {...props} />,
+  warn: (props) => <Lamp variant="warn" {...props} />,
+  default: (props) => <Lamp variant="default" {...props} />,
+  disabled: (props) => <Lamp variant="default" {...props} />
 };
 
 const icons: Record<IconStatus, FC<React.SVGProps<SVGSVGElement>>> = {

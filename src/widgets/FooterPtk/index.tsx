@@ -16,7 +16,6 @@ const FooterPtk: FC = () => {
 				aria-label="Кнопки управления"
 			>
 				<Button
-					id={'footer-button-КА'}
 					width={88}
 					height={28}
 					aria-label={'Кнопка КА'}
@@ -24,7 +23,6 @@ const FooterPtk: FC = () => {
 					href="/ptk"
 				/>
 				<Button
-					id={'footer-button-ТА'}
 					width={88}
 					height={28}
 					aria-label={'Кнопка ТА'}
@@ -34,7 +32,6 @@ const FooterPtk: FC = () => {
 				{Array.from({ length: 14 }).map((_, i) => (
 					<Button
 						key={i}
-						id={`footer-button-${i}`}
 						width={88}
 						height={28}
 						aria-label={`Кнопка ${i}`}
@@ -46,14 +43,12 @@ const FooterPtk: FC = () => {
 			<div className={styles.footer__centralPanel}>
 				<div className={styles.footer__centralGroup__left}>
 					<Button
-						id="footer-control-button-c"
 						width={26}
 						height={26}
 						aria-label="Кнопка С"
 						text="С"
 					/>
 					<Button
-						id="footer-control-button-z"
 						width={26}
 						height={26}
 						aria-label="Кнопка З"
@@ -62,14 +57,12 @@ const FooterPtk: FC = () => {
 				</div>
 				<div className={styles.footer__centralGroup__middle}>
 					<Button
-						id="footer-left-control-button"
 						width={88}
 						height={28}
 						aria-label="Левый контрол"
 						icon={<ArrowChange />}
 					/>
 					<Button
-						id="footer-right-control-button"
 						width={88}
 						height={28}
 						aria-label="Правый контрол"
@@ -78,14 +71,12 @@ const FooterPtk: FC = () => {
 				</div>
 				<div className={styles.footer__centralGroup__right}>
 					<Button
-						id="footer-block-1-button"
 						width={88}
 						height={26}
 						aria-label="Блок 1"
 						text="Бл1"
 					/>
 					<Button
-						id="footer-close-button"
 						width={26}
 						height={26}
 						aria-label="Закрыть"
@@ -98,14 +89,12 @@ const FooterPtk: FC = () => {
 			<div className={styles.footer__rightPanel}>
 				<div className={styles.footer__toolsGroup}>
 					<Button
-						id="footer-tool-1-button"
 						width={88}
 						height={28}
 						aria-label="Инструмент 1"
 						icon={<EllipseClose />}
 					/>
 					<Button
-						id="footer-tool-2-button"
 						width={88}
 						height={28}
 						aria-label="Инструмент 2"
@@ -121,7 +110,6 @@ const FooterPtk: FC = () => {
 
 			<div className={styles.footer__operatorPanel}>
 				<Button
-					id="footer-operator-button"
 					width={44}
 					height={44}
 					image={{

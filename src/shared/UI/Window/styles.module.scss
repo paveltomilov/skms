@@ -1,0 +1,61 @@
+@use '@/shared/scss/variables.module';
+
+.window {
+	display: grid;
+	grid-template-areas:
+		'top top top'
+		'left center right'
+		'bottom bottom bottom';
+	align-items: center;
+	justify-items: center;
+	gap: 3px;
+
+	&__field {
+		grid-area: center;
+		width: 48px;
+		height: 18px;
+		line-height: 18px;
+		padding: 1px;
+
+		&_blue {
+			background-color: variables.$cyan-color;
+			border: 1px solid variables.$black-color;
+		}
+
+		&_yellow {
+			background-color: variables.$yellow-color;
+			border: 1px solid variables.$black-color;
+		}
+
+		&_white {
+			box-shadow: 0px 0px 0px 1px variables.$red-color;
+			background-color: variables.$white-color;
+		}
+	}
+
+	&__text {
+		font-size: 14px;
+		font-weight: bold;
+		line-height: 14px;
+
+		&_top {
+			grid-area: top;
+		}
+
+		&_bottom {
+			grid-area: bottom;
+		}
+
+		&_left {
+			grid-area: left;
+		}
+
+		&_right {
+			grid-area: right;
+		}
+
+		&_white {
+			color: variables.$white-color;
+		}
+	}
+}

@@ -1,27 +1,38 @@
-'use client';
-
-import { useAppDispatch } from '@/shared/hooks/store';
-import { closeModal } from '@/store/modalSlice';
+import { FC } from 'react';
+import Button from '@/shared/UI/Button';
 import styles from './styles.module.scss';
-import { FC, ReactNode } from 'react';
+import Close from '@/shared/UI/icons/Close';
 
-interface Props {
-	children: ReactNode;
+interface ModalProps {
+	title: string;
+	children: React.ReactNode;
+	className?: string;
+	onClose: () => void;
+	isBlur?: boolean;
 }
 
-const ModalWrapper: FC<Props> = ({ children }) => {
-	const dispatch = useAppDispatch();
-
-	const handleClose = () => {
-		dispatch(closeModal());
-	};
-
+const ModalWrapper: FC<ModalProps> = ({
+	title,
+	onClose,
+	isBlur = false,
+	children,
+}) => {
 	return (
-		<div className={styles.modal} onClick={handleClose}>
+		<div className={`${styles.modal} ${isBlur && styles.modal_isBlur}`}>
 			<div
-				className={styles.modal__content}
+				className={styles.modal__wrapper}
 				onClick={e => e.stopPropagation()}
 			>
+				<div className={styles.modal__header}>
+					<span className={styles.modal__header_title}>{title}</span>
+					<Button
+						width={26}
+						height={26}
+						onClick={onClose}
+						aria-label="Закрыть"
+						icon={<Close size="sm" />}
+					/>
+				</div>
 				{children}
 			</div>
 		</div>

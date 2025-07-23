@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import Input from '.';
-
 const meta: Meta<typeof Input> = {
   title: 'Input',
   component: Input,
@@ -25,31 +24,23 @@ const meta: Meta<typeof Input> = {
     },
   },
 };
-
 export default meta;
-
 type Story = StoryObj<typeof meta>;
-
 export const Default: Story = {
   args: { status: 'default', type: 'average', message: '' },
 };
-
 export const Success: Story = {
   args: { status: 'success', type: 'average', message: 'Регистрация прошла успешно' },
 };
-
 export const Error: Story = {
   args: { status: 'error', type: 'average', message: 'E-mail адрес введен неверно' },
 };
-
 export const Warn: Story = {
   args: { status: 'warn', type: 'average', message: 'Проверьте введённые данные' },
 };
-
 export const Disabled: Story = {
   args: { status: 'disabled', type: 'average', message: '' },
 };
-
 export const Code: Story = {
   args: { status: 'error', type: 'code', message: 'Неверный код' },
 };
