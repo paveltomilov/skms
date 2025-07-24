@@ -31,6 +31,10 @@ const meta: Meta<typeof WindowRectCard> = {
 			description: 'Значение в окошке',
 			control: { type: 'number' },
 		},
+		minValue: {
+			description: 'Минимальное значение в окошке',
+			control: { type: 'number' },
+		},
 		maxValue: {
 			description: 'Максимальное значение в окошке',
 			control: { type: 'number' },
@@ -49,7 +53,6 @@ export const Yellow: Story = {
 	args: {
 		color: 'yellow',
 		value: 70,
-		maxValue: 100,
 		title: 'ПВД-7',
 	},
 };
@@ -58,7 +61,6 @@ export const Large: Story = {
 	args: {
 		color: 'red',
 		value: 20,
-		maxValue: 100,
 		title: 'ПВД-7',
 		size: 'lg',
 	},
