@@ -1,67 +1,79 @@
 'use client';
 import styles from './styles.module.scss';
-import {Display} from '@/entities/Display';
+import { Display } from '@/entities/Display';
 import ControlPanel from '@/entities/ControlPanel';
-import {useAppDispatch, useAppSelector} from '@/shared/hooks/store';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import ProbeHolder from '@/shared/UI/icons/ProbeHolder';
 import Probe from '@/entities/Probe';
-import {useEffect} from 'react';
-import {getMultimeterAction} from '@/widgets/Multimeter/getMultimeterAction';
-import {MultimeterModePropPayload} from '@/store/multimeterSlice';
+import { useEffect } from 'react';
+import { getMultimeterAction } from '@/store/actions/multimiter/getMultimeterAction';
+import { MultimeterModePropPayload } from '@/store/multimeterSlice';
+import {
+	CONTROL_CIRCUIT_NEUTRAL_ID,
+	POWER_CIRCUIT_NEUTRAL_ID,
+} from '@/shared/configs/scheme';
 
 const Multimeter: React.FC = () => {
-    const dispatch = useAppDispatch();
-    const multimeterState = useAppSelector(state => state.multimeter);
-    const activeProbe = useAppSelector(state => state.multimeter.activeProb);
-    const currentMode = useAppSelector(state => state.multimeter.currentMode);
-    const probeConnections = useAppSelector(
-        state => state.multimeter.probeConnections,
-    );
+	const dispatch = useAppDispatch();
 
-    //Состояния напряжения на точках измерения
-    const probeState: MultimeterModePropPayload = useAppSelector(
-        state => {
-            const redPoint = state.multimeter.probeConnections.red;
-            const blackPoint = state.multimeter.probeConnections.black;
-            const redIsActive = state.points[redPoint as string];
-            const blackIsActive = state.points[blackPoint as string];
-            return {
-                red: {isNeutral: redPoint === 'p.c.n', state: redIsActive},
-                black: {isNeutral: blackPoint === 'p.c.n', state: blackIsActive}
-            };
-        }
-    );
+	const { currentMode, displayValue, activeProb, probeConnections } =
+		useAppSelector(state => state.multimeter);
 
-    //Экшен для текущего режима мультиметра
-    const modeAction = getMultimeterAction(currentMode);
+	const redProbe = probeConnections.red;
+	const blackProbe = probeConnections.black;
 
-    //Отслеживание изменения напряжения на щупах
-    useEffect(() => {
-        dispatch(modeAction(probeState));
-    }, [probeState, modeAction]);
+	const redIsPowerPoint = useAppSelector(
+		state => state.points[redProbe as string],
+	);
+	const blackIsPowerPoint = useAppSelector(
+		state => state.points[blackProbe as string],
+	);
 
-    return (
-        <div className={styles.multimeter}>
-            <Display value={multimeterState.displayValue}/>
-            <ControlPanel mode={multimeterState.currentMode}/>
-            <ProbeHolder
-                className={`${styles.multimeter__probeHolder} ${styles.multimeter__probeHolder_black}`}
-            >
-                {/* если щуп не перетаскивается и не прикреплен к схеме, он рендерится мультиметром */}
-                {activeProbe !== 'black' && !probeConnections['black'] && (
-                    <Probe color="black"/>
-                )}
-            </ProbeHolder>
-            <ProbeHolder
-                className={`${styles.multimeter__probeHolder} ${styles.multimeter__probeHolder_red}`}
-            >
-                {/* если щуп не перетаскивается и не прикреплен к схеме, он рендерится мультиметром */}
-                {activeProbe !== 'red' && !probeConnections['red'] && (
-                    <Probe color="red"/>
-                )}
-            </ProbeHolder>
-        </div>
-    );
+	const probeState: MultimeterModePropPayload = {
+		red: {
+			isNeutral:
+				redProbe === POWER_CIRCUIT_NEUTRAL_ID ||
+				redProbe === CONTROL_CIRCUIT_NEUTRAL_ID,
+			isPower: redIsPowerPoint,
+		},
+		black: {
+			isNeutral:
+				blackProbe === POWER_CIRCUIT_NEUTRAL_ID ||
+				blackProbe === CONTROL_CIRCUIT_NEUTRAL_ID,
+			isPower: blackIsPowerPoint,
+		},
+	};
+
+	//Экшен для текущего режима мультиметра
+	const modeAction = getMultimeterAction(currentMode);
+
+	//Отслеживание изменения напряжения на щупах
+	useEffect(() => {
+		dispatch(modeAction(probeState));
+	}, [probeState, modeAction]);
+
+	return (
+		<div className={styles.multimeter}>
+			<Display value={displayValue} />
+			<ControlPanel mode={currentMode} />
+			<ProbeHolder
+				className={`${styles.multimeter__probeHolder} ${styles.multimeter__probeHolder_black}`}
+			>
+				{/* если щуп не перетаскивается и не прикреплен к схеме, он рендерится мультиметром */}
+				{activeProb !== 'black' && !probeConnections['black'] && (
+					<Probe color="black" />
+				)}
+			</ProbeHolder>
+			<ProbeHolder
+				className={`${styles.multimeter__probeHolder} ${styles.multimeter__probeHolder_red}`}
+			>
+				{/* если щуп не перетаскивается и не прикреплен к схеме, он рендерится мультиметром */}
+				{activeProb !== 'red' && !probeConnections['red'] && (
+					<Probe color="red" />
+				)}
+			</ProbeHolder>
+		</div>
+	);
 };
 
 export default Multimeter;
