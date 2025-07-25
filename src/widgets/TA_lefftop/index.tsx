@@ -62,7 +62,6 @@ const TAlefftop: FC = () => {
 						color={'blue'}
 						value={0.38}
 						textRight="мм"
-						// className={styles.windowMediumBottom__four}
 					/>
 					<Window color={'blue'} value={2999} textBottom="об/мин" />
 					<p className={styles.windowMediumBottom__p2}>ЦВД</p>
