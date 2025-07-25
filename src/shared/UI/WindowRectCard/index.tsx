@@ -9,6 +9,7 @@ interface Props {
 	size?: 'sm' | 'lg';
 	title: string;
 	value: number;
+	minValue: number;
 	maxValue: number;
 	className?: string;
 }
@@ -16,14 +17,15 @@ interface Props {
 const WindowRectCard: FC<Props> = ({
 	color,
 	value,
-	maxValue,
+	minValue = 0,
+	maxValue = 100,
 	title,
 	size = 'sm',
 	className,
 }) => {
 	// Создаём градиент, где заполненная часть - это цвет, а остальное - прозрачное
 	const backgroundStyle = {
-		background: getTubFill(color, value, maxValue),
+		background: getTubFill(color, value, minValue, maxValue),
 	};
 
 	const window = cn(styles.window, className && className, {
