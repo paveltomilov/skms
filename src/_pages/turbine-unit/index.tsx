@@ -1,10 +1,12 @@
+import TAlefftop from '@/widgets/TA_lefftop';
 import styles from './styles.module.scss';
 
 const TurbineUnitPage = () => {
 	return (
 		<section className={styles.section}>
-			<h1 className={styles.section__title}>ТА - Турбоагрегат</h1>
-			<div className={styles.section__content}></div>
+			<div className={styles.section__content}>
+				<TAlefftop/>
+			</div>
 		</section>
 	);
 };
