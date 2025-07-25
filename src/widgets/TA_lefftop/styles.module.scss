@@ -1,132 +1,133 @@
-@use '@/shared/scss/mixins.module' as mixins;
-@use '@/shared/scss/variables.module' as variables;
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
 
 .container {
-  position: relative;
-  width: 493px;
-  height: 250px;
-  top: -33px;
-  left: -53px;
+	button {
+		margin-left: 305px;
+		@include mixins.text(20px, 400);
+	}
+	&__title {
+		@include mixins.flex-space-between;
+		width: 390px;
+	}
 
-  &__title {
-    @include mixins.flex-space-between;
-    width: 390px;
-  }
+	h1 {
+		@include mixins.text(32px, 400);
+	}
 
-  h1 {
-    @include mixins.text(32px, 400);
-  }
-
-  &__p1 {
-    width: 28px;
-    margin-top: 12px;
-    margin-left: 19px;
-  }
+	&__p1 {
+		width: 28px;
+		margin-top: 8px;
+		margin-left: 19px;
+	}
 }
 
 .windowTop {
-  display: flex;
-  flex-direction: column;
-  @include mixins.text(14px, 700);
-  margin-left: 394px;
-  margin-top: -32px;
-  width: 71px;
-  height: 44px;
+	display: flex;
+	flex-direction: column;
+	@include mixins.text(14px, 700);
+	margin-left: 394px;
+	margin-top: -32px;
+	width: 71px;
+	height: 44px;
 
-  &__right {
-    margin-right: 2px;
-  }
+	&__right {
+		margin-right: 2px;
+	}
 }
 
 .windowMedium {
-  display: flex;
-  flex-direction: column;
-  @include mixins.text(14px, 700);
+	display: flex;
+	flex-direction: column;
+	@include mixins.text(14px, 700);
 
-  &__p2 {
-    width: 105px;
+	&__p2 {
+		width: 105px;
 
-    &__B {
-      @include mixins.text(16px, 700);
-      margin-left: 77px;
-    }
-  }
+		&__B {
+			@include mixins.text(16px, 700);
+			margin-left: 77px;
+		}
+	}
 
-  &__p3 {
-    @include mixins.text(12px, 400);
-  }
+	&__p3 {
+		@include mixins.text(12px, 400);
+	}
 
-  &__p4 {
-    @include mixins.text(12px, 500);
-    margin-top: 19px;
-  }
+	&__p4 {
+		@include mixins.text(12px, 500);
+		margin-top: 19px;
+	}
 
-  &__left {
-    width: 77px;
-    height: 0;
-    margin: -41px 0 0 125px;
-  }
+	&__left {
+		width: 77px;
+		height: 0;
+		margin: -41px 0 0 125px;
+	}
 
-  &__right {
-    width: 69px;
-    height: 0;
-    margin: -55px 0 0 271px;
-  }
+	&__right {
+		width: 69px;
+		height: 0;
+		margin: -55px 0 0 271px;
+		&__p {
+			@include mixins.text(12px, 500);
+			margin: -10px 0 0 106px;
+		}
+	}
 }
 
 .gate {
-  width: 36px;
-  top: 13px;
-  left: 235px;
-  position: relative;
+	width: 36px;
+	top: 13px;
+	left: 235px;
+	position: relative;
 }
 
 .windowMediumBottom {
-  display: flex;
-  flex-direction: column;
-  height: 10px;
-  width: 68px;
+	display: flex;
+	flex-direction: column;
+	height: 10px;
+	width: 68px;
 
-  &__p1 {
-    @include mixins.text(14px, 700);
-    margin: 53px 0 0 0;
-    width: 68px;
-  }
+	&__p1 {
+		@include mixins.text(14px, 700);
+		margin: 53px 0 0 0;
+		width: 68px;
+	}
 
-  &__one {
-    margin: -5px 0 0 119px;
-  }
+	&__one {
+		margin: -8px 1px -3px 119px;
+	}
 
-  &__two {
-    margin: -15px -1px 0 218px;
-  }
+	&__two {
+		margin: -15px -1px 0 218px;
+	}
 
-  &__three {
-    margin: 3px 0 0 65px;
-  }
+	&__three {
+		margin: 3px 0 0 65px;
+	}
 
-  &__four {
-    margin: -23px 0 0 388px;
-  }
+	&__four {
+		margin: -23px 0 0 388px;
+	}
 
-  &__p2 {
-    @include mixins.text(16px, 700);
-    margin: -33px -133px 0 -431px;
-    color: variables.$white-color;
-  }
+	&__p2 {
+		@include mixins.text(16px, 700);
+		margin: -28px -133px 0 -431px;
+		color: variables.$white-color;
+	}
 }
 
 .windowBottom {
-  margin: 173px 0 0 16px;
-  height: 0;
+	margin: 176px 0 0 16px;
 
-  &__right {
-    display: flex;
-    flex-direction: row;
-    margin: -34px 0 0 104px;
+	&__right {
+		display: flex;
+		flex-direction: row;
+		margin: -34px 0 0 104px;
 
-    &__bottom {
-      margin: -11px 0 0 15px;
-    }
-  }
+		&__bottom {
+			margin: -11px 0 0 15px;
+		}
+	}
 }

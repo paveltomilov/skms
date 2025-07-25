@@ -8,7 +8,6 @@ const TAlefftop: FC = () => {
 	return (
 		<div className={styles.container}>
 			<div className={styles.container__title}>
-				<h1>ТА - Турбоагрегат</h1>
 				<Button width={88} height={28} text={'КА'} />
 			</div>
 			<p className={styles.container__p1}>ГПП</p>
@@ -39,6 +38,7 @@ const TAlefftop: FC = () => {
 			<div className={styles.windowMedium__right}>
 				<Window color={'blue'} value={13.0} textRight="МПа" />
 				<Window color={'blue'} value={540} textRight="°С" />
+				<p className={styles.windowMedium__right__p}>СКВД-2</p>
 			</div>
 			<div className={styles.windowMediumBottom}>
 				<p className={styles.windowMediumBottom__p1}>ХПП</p>

@@ -24,6 +24,10 @@ const meta: Meta<typeof WindowCircleCard> = {
 			description: 'Значение в нижнем окошке',
 			control: { type: 'number' },
 		},
+		minValue: {
+			description: 'Минимальное значение в окошке',
+			control: { type: 'number' },
+		},
 		maxValue: {
 			description: 'Максимальное значение в окошке',
 			control: { type: 'number' },
@@ -43,7 +47,6 @@ export const Yellow: Story = {
 		color: 'yellow',
 		value1: 10,
 		value2: 70,
-		maxValue: 100,
 	},
 };
 
@@ -52,6 +55,5 @@ export const Blue: Story = {
 		color: 'blue',
 		value1: 10,
 		value2: 70,
-		maxValue: 100,
 	},
 };
