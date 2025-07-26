@@ -1,6 +1,6 @@
 import { FC, Suspense } from 'react';
 import BoilerUnitPage from '@/_pages/boiler-unit';
-import Loading from '../loading';
+import Loading from '../../loading';
 
 const Ptk: FC = () => {
 	return (
