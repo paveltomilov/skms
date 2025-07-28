@@ -1,0 +1,139 @@
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
+
+.container {
+	display: flex;
+	@include mixins.text(14px, 400);
+	&__p1__A {
+		@include mixins.text(16px, 700);
+		margin: 17px 0 0 -4px;
+	}
+	&__p2 {
+		@include mixins.text(12px, 400);
+		margin: 36px 0 0 23px;
+	}
+	&__p3 {
+		@include mixins.text(12px, 500);
+		margin: 47px 0px 0 -4px;
+	}
+	&__window__left {
+		margin: 9px 0 0 30px;
+	}
+	&__window__right {
+		width: 70px;
+		padding: 9px 0 0 1px;
+	}
+
+	&__window__right__p {
+		@include mixins.text(12px, 500);
+		margin: 5px 0 0 37px;
+	}
+	&__window__mid__p {
+		@include mixins.text(12px, 500);
+		margin: 5px 0 0 37px;
+	}
+}
+
+.gate {
+	top: 22px;
+	left: 32px;
+}
+
+.container__two {
+	display: flex;
+	margin: -18px 0px 0 18px;
+	&__p {
+		@include mixins.text(14px, 700);
+		margin-top: 17px;
+	}
+	&__window {
+		width: 70px;
+		margin-left: 348px;
+		@include mixins.text(14px, 400);
+	}
+}
+
+.container__three {
+	@include mixins.flex-space-between;
+	width: 200px;
+	margin: -5px 0px 0px 93px;
+	&__p {
+		@include mixins.text(12px, 400);
+	}
+	button {
+		margin: -8px 2px 9px -4px;
+	}
+}
+
+.container__four {
+	display: flex;
+	@include mixins.text(14px, 400);
+	width: 465px;
+	height: auto;
+	&__window {
+		width: 75px;
+		margin: 18px 0 0 100px;
+		height: 117px;
+		&__w {
+			flex-direction: row;
+		}
+		&__p {
+			@include mixins.text(12px, 500);
+			margin: -14px 0 0 -52px;
+		}
+		&__gate {
+			top: 12px;
+			left: 36px;
+		}
+	}
+	&__p {
+		@include mixins.text(14px, 700);
+		margin: 71px 0 0 1px;
+	}
+	&__window__one {
+		&__windows {
+			display: flex;
+			flex-direction: column;
+			width: 70px;
+			margin: 0px 0 0 -4px;
+		}
+	}
+	&__window__one {
+		align-self: flex-end;
+		width: 70px;
+		margin: 0px -9px -1px 8px;
+		height: 85px;
+	}
+	&__window__two {
+		width: 67px;
+		padding: 42px 0 0 26px;
+		&__gate {
+			background-color: variables.$white-color;
+			border: 1px solid variables.$black-color;
+		}
+	}
+	button {
+		width: 88px;
+		margin: 16px -80px 14px 1px;
+	}
+	&__window__three {
+		padding: 19px 0 0 30px;
+		&__p2 {
+			margin: 0px 0 0 -90px;
+		}
+		&__w {
+			margin-top: 43px;
+		}
+		&__p3 {
+			@include mixins.text(14px, 700);
+			width: 46px;
+			height: 26px;
+			margin: 8px 0 0 18px;
+			border: 1px solid variables.$black-color;
+			padding: 6px 0 0 3px;
+		}
+	}
+}
+
+// padding: 0 0 0 0;
+// margin: 0 0 0 0;
