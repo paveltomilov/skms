@@ -1,4 +1,3 @@
-import TAlefftop from '@/widgets/TA_lefftop';
 import styles from './styles.module.scss';
 
 const TurbineUnitPage = () => {
@@ -6,7 +5,7 @@ const TurbineUnitPage = () => {
 		<section className={styles.section}>
 			<h1 className={styles.section__title}>ТА - Турбоагрегат</h1>
 			<div className={styles.section__content}>
-				<div className={styles.section__content_left_top}><TAlefftop/></div>
+				<div className={styles.section__content_left_top}></div>
 				<div className={styles.section__content_left_mid}></div>
 				<div className={styles.section__content_left_down}></div>
 
