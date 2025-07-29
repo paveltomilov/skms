@@ -10,17 +10,17 @@ const TAleftmid: FC = () => {
 	return (
 		<>
 			<div className={styles.container}>
-				<p className={classNames(styles['container__p2'])}>
+				<h2 className={classNames(styles['container__p2'])}>
 					Свежий пар
-				</p>
-				<p
+				</h2>
+				<h3
 					className={classNames(
 						styles['container__p1'],
 						styles['container__p1--modifierA'],
 					)}
 				>
 					А
-				</p>
+				</h3>
 
 				<div
 					className={classNames(
@@ -34,7 +34,7 @@ const TAleftmid: FC = () => {
 
 				<Gate state="open" className={styles.gate} />
 
-				<p className={styles['container__p3']}>ГП3-А</p>
+				<h4 className={styles['container__p3']}>ГП3-А</h4>
 
 				<div
 					className={classNames(
@@ -48,14 +48,14 @@ const TAleftmid: FC = () => {
 				<p className={styles['container__window-p']}>СКВД-1</p>
 			</div>
 			<div className={styles.containerTwo}>
-				<p className={styles['containerTwo__p']}>ХПП</p>
+				<h3 className={styles['containerTwo__p']}>ХПП</h3>
 				<div className={styles['containerTwo__window']}>
 					<Window color="blue" value={239.7} textRight="МПа" />
 					<Window color="blue" value={544} textRight="°С" />
 				</div>
 			</div>
 			<div className={styles.containerThree}>
-				<p className={styles['containerThree__p']}>в котел</p>
+				<h4 className={styles['containerThree__p']}>в котел</h4>
 				<Button width={88} height={28} text="ПИТ" />
 			</div>
 
@@ -74,7 +74,7 @@ const TAleftmid: FC = () => {
 					<p className={styles['containerFour__window-p']}>1ПВ-5</p>
 				</div>
 
-				<p className={styles['containerFour__p']}>КСН</p>
+				<h4 className={styles['containerFour__p']}>КСН</h4>
 				<Button width={88} height={28} text="РОУ" />
 
 				<div className={styles['containerFour__windowOne']}>
@@ -91,17 +91,15 @@ const TAleftmid: FC = () => {
 				</div>
 
 				<div className={styles['containerFour__windowThree']}>
-					<p className={styles['containerFour__windowThree-p2']}>
+					<h5 className={styles['containerFour__windowThree-p2']}>
 						IV отб.
-					</p>
-
+					</h5>
 					<div className={styles['containerFour__windowThree-w']}>
 						<Window color="blue" value={0.35} textRight="МПа" />
 					</div>
-
-					<p className={styles['containerFour__windowThree-p3']}>
+					<h5 className={styles['containerFour__windowThree-p3']}>
 						ДПВ
-					</p>
+					</h5>
 				</div>
 			</div>
 		</>
