@@ -1,0 +1,147 @@
+@use '../../shared/scss/_variables.module.scss';
+@use '../../shared/scss/_mixins.module.scss';
+
+.text {
+	display: flex;
+	align-self: flex-end;
+	width: 629px;
+	height: 121px;
+	margin: 24px 28px 25px 8px;
+	color: variables.$black-color;
+	background: variables.$white-color;
+	line-height: 100%;
+	padding: 8px;
+}
+
+.commandCenter {
+	width: 116px;
+	height: 424px;
+	background: variables.$white-color;
+	border: 1px solid variables.$black-color;
+}
+
+.commandBlockCenter {
+	width: 100px;
+	height: 46px;
+	margin: 8px;
+	padding: 8px 0;
+	place-items: center center;
+
+	&:first-child {
+		margin-top: 0;
+		padding-top: 8px;
+		padding-right: 33px;
+	}
+
+	&:nth-child(2),
+	&:nth-child(6) {
+		padding-top: 22px;
+		padding-left: 66px;
+	}
+
+	&:nth-child(4),
+	&:nth-child(5) {
+		padding-top: 22px;
+		padding-left: 59px;
+	}
+
+	&:nth-child(3),
+	&:nth-child(7) {
+		padding-top: 22px;
+		padding-left: 69px;
+	}
+	&:last-child {
+		margin-top: 0px;
+		padding-top: 8px;
+		padding-right: 6px;
+	}
+}
+
+.container {
+	display: flex;
+	align-items: end;
+	width: 645px;
+	height: 424px;
+	margin: 0 8px 52px;
+}
+
+.leftCommand {
+	padding-left: 66px;
+}
+
+.blocknephritis {
+	width: 232px;
+	height: 46px;
+	border: 1px solid variables.$nephritis-color;
+	background: variables.$white-color;
+	padding: 8px;
+}
+
+.commandRight {
+	display: flex;
+	flex-direction: column;
+	row-gap: 8px;
+}
+
+.commandRight > *:nth-last-child(2) {
+	margin-bottom: 54px;
+}
+
+.leftCommandRight {
+	padding-left: 164px;
+}
+
+.rightCommandRight {
+	padding-right: 101px;
+}
+
+.block {
+	width: 232px;
+	height: 46px;
+	border: 1px solid variables.$blue-color;
+	background: variables.$white-color;
+	padding: 8px;
+}
+
+.left {
+	padding-left: 107px;
+}
+
+.right {
+	padding-right: 49px;
+}
+
+.spanDecoretion {
+	place-self: end start;
+	width: 28px;
+	border: 2px solid variables.$black-color;
+	margin-bottom: 22px;
+}
+
+.spanBlue {
+	display: flex;
+	flex-direction: column;
+	width: 22px;
+	height: auto;
+	row-gap: 50px;
+
+	p {
+		width: 22px;
+		border: 2px solid variables.$blue-color;
+	}
+
+	p:nth-child(1),
+	p:nth-child(2),
+	p:nth-child(6) {
+		width: 7px;
+	}
+
+	p:last-child {
+		margin-bottom: 22px;
+	}
+}
+
+.divStylesNone {
+	width: 232px;
+	height: 46px;
+}
