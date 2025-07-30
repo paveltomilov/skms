@@ -3,13 +3,16 @@ import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import Window from '@/shared/UI/Window';
 import Gate from '@/shared/UI/Gate';
+import cn from 'classnames';
 
-const TAlefftop: FC = () => {
+interface Props {
+	className?: string;
+}
+
+const TALeftTop: FC<Props> = ({ className }) => {
 	return (
-		<div className={styles.container}>
-			<div className={styles.container__title}>
-				<Button width={88} height={28} text={'КА'} />
-			</div>
+		<div className={cn(className, styles.container)}>
+			<Button width={88} height={28} text={'КА'} />
 			<p className={styles.container__p1}>ГПП</p>
 			<div className={styles.windowTop}>
 				<Window
@@ -58,11 +61,7 @@ const TAlefftop: FC = () => {
 					/>
 				</div>
 				<div className={styles.windowMediumBottom__four}>
-					<Window
-						color={'blue'}
-						value={0.38}
-						textRight="мм"
-					/>
+					<Window color={'blue'} value={0.38} textRight="мм" />
 					<Window color={'blue'} value={2999} textBottom="об/мин" />
 					<p className={styles.windowMediumBottom__p2}>ЦВД</p>
 				</div>
@@ -80,4 +79,4 @@ const TAlefftop: FC = () => {
 	);
 };
 
-export default TAlefftop;
+export default TALeftTop;

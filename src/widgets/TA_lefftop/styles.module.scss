@@ -6,14 +6,6 @@
 		margin-left: 305px;
 		@include mixins.text(20px, 400);
 	}
-	&__title {
-		@include mixins.flex-space-between;
-		width: 390px;
-	}
-
-	h1 {
-		@include mixins.text(32px, 400);
-	}
 
 	&__p1 {
 		width: 28px;
