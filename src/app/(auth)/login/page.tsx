@@ -4,6 +4,11 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import axios from 'axios';
 
+interface AuthResponse {
+	access: string;
+	refresh: string;
+}
+
 export default function LoginPage() {
 	const router = useRouter();
 	const [username, setUsername] = useState('');
@@ -12,7 +17,7 @@ export default function LoginPage() {
 
 	const handleLogin = async () => {
 		try {
-			const response = await axios.post(
+			const response = await axios.post<AuthResponse>(
 				'http://localhost:8000/api/auth/',
 				{ username, password },
 				{
