@@ -101,7 +101,7 @@ const Form: FC<FormProps> = ({toggleRegisterMode, activateModalSuccess}) => {
                 router.push('/');
             } else {
                 // ошибки от сервера setServerErrors
-                console.log(res);
+                // console.log(res);
             }
         }
     };

@@ -77,10 +77,8 @@ export function getDone(
         return false;
     }
 
-    if (validationStatus[field] === 2) {
-        return false;
-    }
-    return true;
+    return validationStatus[field] !== 2;
+
 }
 
 /**
