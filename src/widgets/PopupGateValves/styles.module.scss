@@ -1,7 +1,7 @@
-@use '../../shared/scss/_variables.module.scss';
-@use '../../shared/scss/_mixins.module.scss';
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
 
-.text {
+.header {
 	display: flex;
 	align-self: flex-end;
 	width: 629px;
@@ -11,6 +11,9 @@
 	background: variables.$white-color;
 	line-height: 100%;
 	padding: 8px;
+	&__text {
+		@include mixins.text(16px, 400, overflow);
+	}
 }
 
 .commandCenter {
@@ -26,6 +29,7 @@
 	margin: 8px;
 	padding: 8px 0;
 	place-items: center center;
+	list-style: none;
 
 	&:first-child {
 		margin-top: 0;
@@ -50,23 +54,28 @@
 		padding-top: 22px;
 		padding-left: 69px;
 	}
-	&:last-child {
-		margin-top: 0px;
-		padding-top: 8px;
-		padding-right: 6px;
+	&:nth-child(8),
+	&:nth-child(9) {
+		margin-bottom: 0 0 0 0;
 	}
+	// &:last-child {
+	// 	margin: 0 0 0 0;
+	// 	margin-top: 0px;
+	// 	padding-top: 8px;
+	// 	padding-right: 6px;
+	// }
 }
 
 .container {
 	display: flex;
-	align-items: end;
+	align-items: flex-end;
 	width: 645px;
 	height: 424px;
 	margin: 0 8px 52px;
 }
 
 .leftCommand {
-	padding-left: 66px;
+	padding-left: 61px;
 }
 
 .blocknephritis {

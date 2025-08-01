@@ -8,22 +8,28 @@ interface CommandItem {
 
 interface DataProps {
 	title: string;
-	blockData: {
-		id: string;
-		number: string;
-	}[];
+	blockData: { id: string; number: string }[];
 	commands: string[];
 	status: string;
 	commandItems: CommandItem[];
 	decorativeCount: number;
-	decorativeMaxIndices: number[]; // индексы элементов, которые нужно выделить
+	decorativeMaxIndices: number[];
 	commandButtons: { left: string; right: string }[];
 }
 
 const data: DataProps = {
 	title: '3 ДВ на тр-де рециркуляции пит воды из барабана',
 	blockData: [{ id: 'H1H2AD10AA001ZU03', number: '222222222222' }],
-	commands: ['cmd_im2', 'auto', 'dist', 'open', 'close', 'stop', 'pos'],
+	commands: [
+		'cmd_im2',
+		'auto',
+		'dist',
+		'open',
+		'close',
+		'stop',
+		'pos',
+		'status',
+	],
 	status: 'reset',
 	commandItems: [
 		{ left: 'duOpen.234234', right: 'FALSE' },
@@ -53,13 +59,13 @@ const PopupGateValves: FC = () => {
 	} = data;
 
 	return (
-		<div className={styles.content}>
-			{/* Заголовок или описание */}
-			<p className={styles.text}>
-				<span className={styles.textSpan}>{title}</span>
-			</p>
+		<>
+			{/* Заголовок */}
+			<header className={styles.header}>
+				<h2 className={styles.header__text}>{title}</h2>
+			</header>
 
-			<div className={styles.container}>
+			<section className={styles.container}>
 				{/* Первый блок данных */}
 				{blockData.map(block => (
 					<div key={block.id} className={styles.blocknephritis}>
@@ -68,53 +74,60 @@ const PopupGateValves: FC = () => {
 					</div>
 				))}
 
-				{/* Разделитель */}
-				<p className={styles.spanDecoretion}></p>
+				<hr className={styles.spanDecoretion} />
 
 				{/* Центр команд */}
-				<div className={styles.commandCenter}>
-					{commands.map(cmd => (
-						<p key={cmd} className={styles.commandBlockCenter}>
-							{cmd}
-						</p>
-					))}
-					{/* Статус */}
-					<div className={styles.commandBlockCenter}>
-						<p className={styles.right}>status</p>
-						<p className={styles.leftCommand}>{status}</p>
-					</div>
-				</div>
+				<section className={styles.commandCenter}>
+					<ul>
+						{commands.map(cmd => (
+							<li key={cmd} className={styles.commandBlockCenter}>
+								{cmd === 'status' ? (
+									<>
+										<span className={styles.right}>
+											status
+										</span>
+										<br />
+										<span className={styles.leftCommand}>
+											{status}
+										</span>
+									</>
+								) : (
+									cmd
+								)}
+							</li>
+						))}
+					</ul>
+				</section>
 
 				{/* Вихревые декоративные элементы */}
-				<div className={styles.spanBlue}>
+				<section className={styles.spanBlue}>
 					{[...Array(decorativeCount).keys()].map(i => (
-						<p
+						<span
 							key={i}
-							className={[
-								styles['spanMinDocoration'],
+							className={`${styles.spanMinDocoration} ${
 								decorativeMaxIndices.includes(i)
-									? styles['spanMaxDocoration']
-									: styles['spanMinDocoration'],
-							].join(' ')}
-						></p>
+									? styles.spanMaxDocoration
+									: ''
+							}`}
+						/>
 					))}
-				</div>
+				</section>
 
 				{/* Блок командных элементов */}
-				<div className={styles.commandRight}>
+				<dl className={styles.commandRight}>
 					{commandItems.map((item, index) => (
 						<div key={index} className={styles.block}>
-							<p className={styles.rightCommandRight}>
+							<dt className={styles.rightCommandRight}>
 								{item.left}
-							</p>
-							<p className={styles.leftCommandRight}>
+							</dt>
+							<dd className={styles.leftCommandRight}>
 								{item.right}
-							</p>
+							</dd>
 						</div>
 					))}
-				</div>
-			</div>
-		</div>
+				</dl>
+			</section>
+		</>
 	);
 };
 
