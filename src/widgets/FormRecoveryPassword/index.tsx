@@ -47,7 +47,7 @@ const FormRecoveryPassword:FC<FormRecoveryProps> = ({setStep}) => {
             }, 1000);
             return () => clearTimeout(timer);
         }
-    }, [submitSuccess, dispatch]);
+    }, [submitSuccess, dispatch, setStep]);
 
     return (
         <form className={styles.recoveryPasswordForm} onSubmit={onSubmit} noValidate>

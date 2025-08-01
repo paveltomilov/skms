@@ -8,9 +8,9 @@ export const useRecoveryCode = (initialCount = 60) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const timerIdRef = useRef<NodeJS.Timeout | null>(null);
 
-    const focusInput = () => {
+    const focusInput = useCallback(() => {
         inputRef.current?.focus();
-    };
+    },[]);
 
     const isComplete = code.every(ch => ch !== '_' && /\d/.test(ch));
 

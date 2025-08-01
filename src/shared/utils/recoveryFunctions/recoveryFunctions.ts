@@ -39,7 +39,7 @@ export function getIndicator(
     if (validationStatus[field] === 1) return 1;
     if (validationStatus[field] === 2) return 2;
     return 3;
-};
+}
 
 /**
  * Проверяет, считается ли поле "завершённым" (done)
