@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import Window from '@/shared/UI/Window';
 import Gate from '@/shared/UI/Gate';
-import classNames from 'classnames';
+import cn from 'classnames';
 import Rectangle from '@/shared/UI/icons/Rectangle';
 
 
@@ -14,13 +14,13 @@ interface Props {
 const TAleftmid: FC<Props> = ({ className })=> {
 	return (
 		<> 
-		<div className={classNames(className)}>
+		<div className={cn(className)}>
 			<div className={styles.container}>
-				<h2 className={classNames(styles['container__p2'])}>
+				<h2 className={cn(styles['container__p2'])}>
 					Свежий пар
 				</h2>
 				<h3
-					className={classNames(
+					className={cn(
 						styles['container__p1'],
 						styles['container__p1--modifierA'],
 					)}
@@ -29,7 +29,7 @@ const TAleftmid: FC<Props> = ({ className })=> {
 				</h3>
 
 				<div
-					className={classNames(
+					className={cn(
 						styles['container__window'],
 						styles['container__window--left'],
 					)}
@@ -43,7 +43,7 @@ const TAleftmid: FC<Props> = ({ className })=> {
 				<h4 className={styles['container__p3']}>ГП3-А</h4>
 
 				<div
-					className={classNames(
+					className={cn(
 						styles['container__window'],
 						styles['container__window--right'],
 					)}
