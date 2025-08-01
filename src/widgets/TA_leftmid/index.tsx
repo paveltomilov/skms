@@ -6,9 +6,15 @@ import Gate from '@/shared/UI/Gate';
 import classNames from 'classnames';
 import Rectangle from '@/shared/UI/icons/Rectangle';
 
-const TAleftmid: FC = () => {
+
+interface Props {
+	className?: string;
+}
+
+const TAleftmid: FC<Props> = ({ className })=> {
 	return (
-		<>
+		<> 
+		<div className={classNames(className)}>
 			<div className={styles.container}>
 				<h2 className={classNames(styles['container__p2'])}>
 					Свежий пар
@@ -83,7 +89,7 @@ const TAleftmid: FC = () => {
 				</div>
 
 				<div className={styles['containerFour__windowTwo']}>
-					<Window color="blue" value={0} textRight="°С" />
+					<Window color="blue" value={0} textRight="%" />
 					<Rectangle
 						color="white"
 						className={styles['containerFour__windowTwo-rectangle']}
@@ -101,6 +107,7 @@ const TAleftmid: FC = () => {
 						ДПВ
 					</h5>
 				</div>
+			</div>
 			</div>
 		</>
 	);

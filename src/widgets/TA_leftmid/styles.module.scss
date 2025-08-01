@@ -37,7 +37,7 @@
 
 .gate {
 	top: 22px;
-	left: 32px;
+	left: 38px;
 }
 
 .containerTwo {
@@ -82,8 +82,8 @@
 		height: 117px;
 
 		&-gate {
-			top: 14px;
-			left: 39px;
+			top: 24px;
+			left: 33px;
 		}
 
 		&-p {
@@ -100,7 +100,7 @@
 	&__windowOne {
 		align-self: flex-end;
 		width: 70px;
-		margin: 0 -9px -1px 8px;
+		margin: 0 -15px -3px 12px;
 		height: 85px;
 
 		&__windows {
@@ -132,6 +132,7 @@
 			display: flex;
 			flex-direction: row;
 			margin-top: 43px;
+			margin-right: 4px;
 		}
 
 		&-p3 {
