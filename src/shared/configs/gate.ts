@@ -1,4 +1,9 @@
-import { GatePosition, GateStates, TriangleColor } from '../types/gate';
+import {
+	GATE_STATE_TYPE,
+	GatePosition,
+	GateStates,
+	TriangleColor,
+} from '../types/gate';
 import { IconTransform } from '../types/icon';
 import { ICON_COLOR } from './icon';
 
@@ -47,6 +52,18 @@ export const GATE_STATE: GateStates = {
 		},
 	},
 	noPower: {
+		left: {
+			color: 'grey' as keyof TriangleColor,
+			transform: 'rotateLeft90' as keyof Omit<IconTransform, 'mirror'>,
+			animation: false,
+		},
+		right: {
+			color: 'grey' as keyof TriangleColor,
+			transform: 'rotate90' as keyof Omit<IconTransform, 'mirror'>,
+			animation: false,
+		},
+	},
+	automatDisassembled: {
 		left: {
 			color: 'grey' as keyof TriangleColor,
 			transform: 'rotateLeft90' as keyof Omit<IconTransform, 'mirror'>,
@@ -118,3 +135,15 @@ export const GATE_POSITION: GatePosition = {
 		right: 'rotate180' as keyof Omit<IconTransform, 'mirror'>,
 	},
 };
+
+export const GATES = [
+	{ name: 'ГП3-Б', id: 'g1', state: GATE_STATE_TYPE.open },
+	{ name: 'ГП3-А', id: 'g2', state: GATE_STATE_TYPE.open },
+	{ name: '1ПВ-5', id: 'g3', state: GATE_STATE_TYPE.open },
+	{ name: '1Кпсг2-3', id: 'g4', state: GATE_STATE_TYPE.open },
+	{ name: '1Кпсг1-3', id: 'g5', state: GATE_STATE_TYPE.open },
+	{ name: '1ПВ-4', id: 'g6', state: GATE_STATE_TYPE.open },
+	{ name: '1ПЭНА-2', id: 'g7', state: GATE_STATE_TYPE.open },
+	{ name: '1ПЭНБ-2', id: 'g8', state: GATE_STATE_TYPE.open },
+	{ name: '1ПЭНВ-2', id: 'g9', state: GATE_STATE_TYPE.open },
+];

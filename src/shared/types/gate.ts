@@ -8,6 +8,7 @@ export enum GATE_STATE_TYPE {
 	toOpen = 'toOpen',
 	noPower = 'noPower',
 	intermediate = 'intermediate',
+	automatDisassembled = 'automatDisassembled', // состояние когда какой то автомат разобран
 
 	// поменять название когда станет известно состояние(придумано для UI kit)
 	magenta = 'magenta',
@@ -49,6 +50,7 @@ export interface GateStates {
 	open: GateState;
 	close: GateState;
 	noPower: GateState;
+	automatDisassembled: GateState;
 	intermediate: GateState;
 	toOpen: GateState;
 	toClose: GateState;
