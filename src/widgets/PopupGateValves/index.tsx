@@ -69,7 +69,7 @@ const PopupGateValves: FC = () => {
 				{/* Первый блок данных */}
 				{blockData.map(block => (
 					<div key={block.id} className={styles.blocknephritis}>
-						<p className={styles.right}>{block.id}</p>
+						<p className={styles.right}>{block.id} </p>
 						<p className={styles.left}>{block.number}</p>
 					</div>
 				))}
@@ -100,18 +100,18 @@ const PopupGateValves: FC = () => {
 				</section>
 
 				{/* Вихревые декоративные элементы */}
-				<section className={styles.spanBlue}>
+				<div className={styles.hrBlue}>
 					{[...Array(decorativeCount).keys()].map(i => (
-						<span
+						<hr
 							key={i}
-							className={`${styles.spanMinDocoration} ${
+							className={[
 								decorativeMaxIndices.includes(i)
-									? styles.spanMaxDocoration
-									: ''
-							}`}
+									? styles.hrMaxDecoration
+									: styles.hrMinDecoration,
+							].join(' ')}
 						/>
 					))}
-				</section>
+				</div>
 
 				{/* Блок командных элементов */}
 				<dl className={styles.commandRight}>

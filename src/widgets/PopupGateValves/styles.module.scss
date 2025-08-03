@@ -58,12 +58,6 @@
 	&:nth-child(9) {
 		margin-bottom: 0 0 0 0;
 	}
-	// &:last-child {
-	// 	margin: 0 0 0 0;
-	// 	margin-top: 0px;
-	// 	padding-top: 8px;
-	// 	padding-right: 6px;
-	// }
 }
 
 .container {
@@ -123,33 +117,32 @@
 .spanDecoretion {
 	place-self: end start;
 	width: 28px;
-	border: 2px solid variables.$black-color;
-	margin-bottom: 22px;
+	border: 1px solid variables.$black-color;
+	margin: 0 0 20px 0;
 }
 
-.spanBlue {
+.hrBlue {
 	display: flex;
 	flex-direction: column;
 	width: 22px;
 	height: auto;
-	row-gap: 50px;
-
-	p {
-		width: 22px;
-		border: 2px solid variables.$blue-color;
-	}
-
-	p:nth-child(1),
-	p:nth-child(2),
-	p:nth-child(6) {
-		width: 7px;
-	}
-
-	p:last-child {
-		margin-bottom: 22px;
+	row-gap: 52px;
+	margin-bottom: 20px;
+	hr:nth-child(6) {
+		border: 1px solid variables.$black-color;
 	}
 }
+.hrMaxDecoration {
+	width: 22px;
+	border: 1px solid variables.$blue-color;
+	margin: 0;
+}
 
+.hrMinDecoration {
+	width: 7px;
+	margin: 0;
+	border: 1px solid variables.$blue-color;
+}
 .divStylesNone {
 	width: 232px;
 	height: 46px;
