@@ -5,7 +5,6 @@ import modalReducer from './modalSlice';
 import multimeterReducer from './multimeterSlice';
 import circuitReducer from './circuitSlice';
 import pointsReducer from './pointsSlice';
-import tooltipReduser from './tooltipSlice';
 
 export const store = () => {
 	return configureStore({
@@ -13,7 +12,6 @@ export const store = () => {
 			gate: gateReducer,
 			popup: popupReducer,
 			modal: modalReducer,
-			tooltip: tooltipReduser,
 			multimeter: multimeterReducer,
 			circuit: circuitReducer,
 			points: pointsReducer,
