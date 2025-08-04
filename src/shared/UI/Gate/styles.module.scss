@@ -16,6 +16,39 @@
 		}
 	}
 
+	&__wrapper {
+		display: inline-grid;
+		grid-template-areas:
+			'top top top'
+			'left center right'
+			'bottom bottom bottom';
+		align-items: center;
+		justify-items: center;
+		gap: 3px;
+	}
+
+	&__text {
+		font-size: 14px;
+		font-weight: bold;
+		line-height: 14px;
+
+		&_top {
+			grid-area: top;
+		}
+
+		&_bottom {
+			grid-area: bottom;
+		}
+
+		&_left {
+			grid-area: left;
+		}
+
+		&_right {
+			grid-area: right;
+		}
+	}
+
 	&_shadow {
 		filter: drop-shadow(variables.$default-box-shadow);
 	}
