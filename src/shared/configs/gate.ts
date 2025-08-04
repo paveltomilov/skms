@@ -136,14 +136,15 @@ export const GATE_POSITION: GatePosition = {
 	},
 };
 
-export const GATES = [
-	{ name: 'ГП3-Б', id: 'g1', state: GATE_STATE_TYPE.open },
-	{ name: 'ГП3-А', id: 'g2', state: GATE_STATE_TYPE.open },
-	{ name: '1ПВ-5', id: 'g3', state: GATE_STATE_TYPE.open },
-	{ name: '1Кпсг2-3', id: 'g4', state: GATE_STATE_TYPE.open },
-	{ name: '1Кпсг1-3', id: 'g5', state: GATE_STATE_TYPE.open },
-	{ name: '1ПВ-4', id: 'g6', state: GATE_STATE_TYPE.open },
-	{ name: '1ПЭНА-2', id: 'g7', state: GATE_STATE_TYPE.open },
-	{ name: '1ПЭНБ-2', id: 'g8', state: GATE_STATE_TYPE.open },
-	{ name: '1ПЭНВ-2', id: 'g9', state: GATE_STATE_TYPE.open },
-];
+export const GATES = {
+	g1: { name: 'ГП3-Б', state: GATE_STATE_TYPE.open },
+	g2: { name: 'ГП3-А', state: GATE_STATE_TYPE.open },
+	g3: { name: '1ПВ-5', state: GATE_STATE_TYPE.open },
+	g4: { name: '1Кпсг2-3', state: GATE_STATE_TYPE.open },
+	g5: { name: '1Кпсг1-3', state: GATE_STATE_TYPE.open },
+	g6: { name: '1ПВ-4', state: GATE_STATE_TYPE.open },
+	g7: { name: '1ПВ-21', state: GATE_STATE_TYPE.close },
+	g8: { name: '1ПЭНА-2', state: GATE_STATE_TYPE.open },
+	g9: { name: '1ПЭНБ-2', state: GATE_STATE_TYPE.open },
+	g10: { name: '1ПЭНВ-2', state: GATE_STATE_TYPE.open },
+};

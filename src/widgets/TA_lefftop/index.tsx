@@ -4,12 +4,15 @@ import Button from '@/shared/UI/Button';
 import Window from '@/shared/UI/Window';
 import Gate from '@/shared/UI/Gate';
 import cn from 'classnames';
+import { GATES } from '@/shared/configs/gate';
 
 interface Props {
 	className?: string;
 }
 
 const TALeftTop: FC<Props> = ({ className }) => {
+	const { name, state } = GATES.g1;
+
 	return (
 		<div className={cn(className, styles.container)}>
 			<Button width={88} height={28} text={'КА'} />
@@ -36,8 +39,7 @@ const TALeftTop: FC<Props> = ({ className }) => {
 				<Window color={'blue'} value={238.6} textRight="т/ч" />
 				<Window color={'blue'} value={539} textRight="°С" />
 			</div>
-			<Gate state={'open'} className={styles.gate} />
-			<p className={styles.windowMedium__p4}>ГП3-Б</p>
+			<Gate state={state} textBottom={name} className={styles.gate} />
 			<div className={styles.windowMedium__right}>
 				<Window color={'blue'} value={13.0} textRight="МПа" />
 				<Window color={'blue'} value={540} textRight="°С" />
