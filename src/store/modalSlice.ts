@@ -13,7 +13,7 @@ const initialState: ModalState = {
 	automatic: false,
 	gateControl: false,
 	diagnostic: false,
-	gateValves: true,
+	gateValves: false,
 };
 
 const modalSlice = createSlice({
