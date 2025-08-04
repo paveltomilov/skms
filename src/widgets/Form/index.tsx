@@ -2,94 +2,48 @@
 
 import Button from '@/shared/UI/Button';
 import styles from './styles.module.scss';
-import {useForm} from '@/shared/hooks/useForm';
 import {signIn} from 'next-auth/react';
 import {useRouter} from 'next/navigation';
-import {Dispatch, FC, FormEventHandler, SetStateAction, useEffect, useMemo, useState} from 'react';
+import {FC, FormEventHandler} from 'react';
 import LoginInput from '../../shared/UI/LoginInput';
 import Link from 'next/link';
-import {config, initialState, LoginFormData, ValidationStatus} from '@/shared/configs/login';
-import {
-    checkFormValidity,
-    computeValidationStatus,
-    getDone,
-    getIndicator,
-} from '@/shared/utils/loginFunctions/loginFunctions';
+import {getDone, getIndicator,} from '@/shared/utils/loginFunctions/loginFunctions';
+import {useLoginForm} from '@/shared/hooks/useLoginForn';
 
 
 interface FormProps {
     toggleRegisterMode?: boolean
-    activateModalSuccess?: Dispatch<SetStateAction<boolean>>
+    activateModalSuccess?: (value: boolean) => void
 }
 
 const Form: FC<FormProps> = ({toggleRegisterMode, activateModalSuccess}) => {
     const router = useRouter();
-    const {values, handleChange, resetValues} = useForm<LoginFormData>(initialState);
-    const [validationStatus, setValidationStatus] = useState<ValidationStatus>({
-        login: 0,
-        email: 0,
-        password: 0,
-    });
-    const [serverErrors, setServerErrors] = useState<Record<keyof LoginFormData, boolean>>({
-        login: false,
-        email: false,
-        password: false,
-    });
-    const [isValid, setIsValid] = useState<boolean>(false);
-    const activeFields = useMemo<(keyof LoginFormData)[]>(() => {
-        return toggleRegisterMode
-            ? ['login', 'password', 'email']
-            : ['login', 'password'];
-    }, [toggleRegisterMode]);
-
-    const configMap = useMemo(() => {
-        const map: Record<string, typeof config[number]> = {};
-        config.forEach(c => {
-            map[c.name] = c;
-        });
-        return map;
-    }, []);
-
-    // Сброс формы и ошибок при изменении toggleRegisterMode
-    useEffect(() => {
-        resetValues(initialState);
-        setServerErrors({
-            login: false,
-            email: false,
-            password: false,
-        });
-    }, [toggleRegisterMode, resetValues]);
-
-    // Обновляем validationStatus при изменении values
-    useEffect(() => {
-        const newValidationStatus = computeValidationStatus(values);
-        setValidationStatus(newValidationStatus);
-        setIsValid(checkFormValidity(values, newValidationStatus, serverErrors, activeFields));
-    }, [values, serverErrors, activeFields]);
-
-    const validateForm = (): boolean => {
-        const newValidationStatus = computeValidationStatus(values);
-        setValidationStatus(newValidationStatus);
-
-        const hasLocalErrors: boolean = Object.values(newValidationStatus).some(level => level === 1);
-        const hasServerErrors: boolean = Object.values(serverErrors).some(Boolean);
-        return !hasLocalErrors && !hasServerErrors;
-    };
+    const {
+        values,
+        validationStatus,
+        serverErrors,
+        isValid,
+        activeFields,
+        configMap,
+        handleChange,
+        resetServerErrors,
+        // setServerErrors,
+        validateForm,
+    } = useLoginForm({ toggleRegisterMode });
+    
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
         event.preventDefault();
 
-        setServerErrors({
-            login: false,
-            email: false,
-            password: false,
-        });
+        resetServerErrors();
 
         if (!validateForm()) return;
+
         if (toggleRegisterMode) {
             if (activateModalSuccess) {
                 activateModalSuccess(true);
             }
+            // Можно добавить логику регистрации
         } else {
             const res = await signIn('credentials', {
                 username: values.login,
@@ -100,8 +54,8 @@ const Form: FC<FormProps> = ({toggleRegisterMode, activateModalSuccess}) => {
             if (res && !res.error) {
                 router.push('/');
             } else {
-                // ошибки от сервера setServerErrors
-                // console.log(res);
+                // Обработка ошибок сервера, например:
+                // setServerErrors({ login: true, email: false, password: true });
             }
         }
     };

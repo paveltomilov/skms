@@ -1,7 +1,8 @@
-import {ValidationLevel} from '@/shared/configs/login';
-import {InputProps} from '@/shared/UI/LoginInput';
 
-export type ValidationStatusRecovery = Record<keyof RecoveryFormData, ValidationLevel>
+import {RecoveryFormData} from '@/shared/types/recovery';
+import {ValidationLevel} from '@/shared/types/login';
+import {InputProps} from '@/shared/types/inputLogin';
+
 
 type Recovery = (InputProps & {
     validate?: (state: RecoveryFormData) => ValidationLevel;
@@ -53,9 +54,3 @@ export const initialStateRecovery: RecoveryFormData = {
     password: '',
     confirm_password: '',
 };
-
-export type RecoveryFormData = {
-    email: string;
-    password: string;
-    confirm_password: string;
-}

@@ -1,4 +1,5 @@
-import {configRecovery, RecoveryFormData, ValidationStatusRecovery} from '@/shared/configs/recovery';
+import {configRecovery} from '@/shared/configs/recovery';
+import {RecoveryFormData, ValidationStatusRecovery} from '@/shared/types/recovery';
 
 
 /**

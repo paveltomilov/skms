@@ -2,17 +2,17 @@ import styles from './style.module.scss';
 import {FC} from 'react';
 import FormRecoveryPassword from '@/widgets/FormRecoveryPassword';
 import Button from '@/shared/UI/Button';
-import {useAppDispatch} from '@/shared/hooks/store';
-import {closeModal} from '@/store/modalSlice';
 
 type PopupRecoveryProps = {
     setSteps?: (value: 1 | 2 | 3) => void;
+    isOpen?: (value: boolean) => void,
 }
 
-const PopupRecoveryPassword:FC<PopupRecoveryProps> = ({setSteps}) => {
-    const dispatch = useAppDispatch();
+const PopupRecoveryPassword:FC<PopupRecoveryProps> = ({setSteps, isOpen}) => {
     const handleClosePopupRecoveryPassword = () => {
-        dispatch(closeModal('recoveryPassword'));
+        if (isOpen) {
+            isOpen(false);
+        }
     };
 
     return (
@@ -32,7 +32,7 @@ const PopupRecoveryPassword:FC<PopupRecoveryProps> = ({setSteps}) => {
             <p className={styles.popupRecoveryPassword__description}>
                 Введите полученный код из&nbsp;6&nbsp;символов, которые мы&nbsp;отправили на&nbsp;указанный Вами e-mail
             </p>
-            <FormRecoveryPassword setStep={setSteps}/>
+            <FormRecoveryPassword setStep={setSteps} isOpenPopup={isOpen}/>
         </div>
     );
 };

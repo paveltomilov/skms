@@ -1,4 +1,5 @@
-import {config, LoginFormData, ValidationStatus} from '@/shared/configs/login';
+import {config} from '@/shared/configs/login';
+import {LoginFormData, ValidationStatus} from '@/shared/types/login';
 
 /**
  * Вычисляет статус валидации для всех полей формы

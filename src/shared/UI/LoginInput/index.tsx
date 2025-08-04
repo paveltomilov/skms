@@ -1,15 +1,7 @@
 import styles from './styles.module.scss';
-import {FC, JSX} from 'react';
+import {FC} from 'react';
+import {InputProps} from '@/shared/types/inputLogin';
 
-export type InputProps = {
-    errorMessage?: string;
-    warnMessage?: string;
-    error?: boolean;
-    warn?: boolean;
-    label?: string;
-    indicator?: number;
-    done?: boolean;
-} & JSX.IntrinsicElements['input']
 
 export const LoginInput: FC<InputProps> = (props) => {
     const {

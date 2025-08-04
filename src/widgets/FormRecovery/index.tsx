@@ -1,114 +1,49 @@
 'use client';
 
 import styles from './style.module.scss';
-import {FC, FormEventHandler, useEffect, useMemo, useState} from 'react';
+import {FC, FormEventHandler} from 'react';
 import LoginInput from '@/shared/UI/LoginInput';
 import Button from '@/shared/UI/Button';
-import {useForm} from '@/shared/hooks/useForm';
-import {
-    configRecovery,
-    initialStateRecovery,
-    RecoveryFormData,
-    ValidationStatusRecovery
-} from '@/shared/configs/recovery';
-import {
-    checkFormValidity,
-    computeValidationStatus,
-    getDone,
-    getIndicator
-} from '@/shared/utils/recoveryFunctions/recoveryFunctions';
-import {useAppDispatch} from '@/shared/hooks/store';
-import {openModal} from '@/store/modalSlice';
+import {getDone, getIndicator} from '@/shared/utils/recoveryFunctions/recoveryFunctions';
+import {useRecoveryForm} from '@/shared/hooks/useRecoveryForm';
 
 type FormRecoveryProps = {
     steps?: number,
     setSteps?: (value: 1 | 2 | 3) => void,
+    isOpen?: (value: boolean) => void,
 }
 
-const FormRecovery: FC<FormRecoveryProps> = ({steps, setSteps}) => {
-    const dispatch = useAppDispatch();
+const FormRecovery: FC<FormRecoveryProps> = ({steps, setSteps, isOpen}) => {
+    const {
+        values,
+        handleChange,
+        validationStatus,
+        serverErrors,
+        isValid,
+        activeFields,
+        configMap,
+        validateForm,
+        resetServerErrors,
+        // setServerErrors,
+    } = useRecoveryForm({ steps });
+
     const handleOpenPopupRecoveryPassword = () => {
-        if (steps === 1) {
-            dispatch(openModal('recoveryPassword'));
+        if (isOpen && steps === 1) {
+            isOpen(true);
         }
-    };
-    const {values, handleChange, resetValues} = useForm<RecoveryFormData>(initialStateRecovery);
-    const [validationStatus, setValidationStatus] = useState<ValidationStatusRecovery>({
-        email: 0,
-        password: 0,
-        confirm_password: 0,
-    });
-    const [serverErrors, setServerErrors] = useState<Record<keyof RecoveryFormData, boolean>>({
-        email: false,
-        password: false,
-        confirm_password: false,
-    });
-    const [isValid, setIsValid] = useState<boolean>(false);
-    const activeFields = useMemo<(keyof RecoveryFormData)[]>(() => {
-        return steps === 2
-            ? ['password', 'confirm_password']
-            : ['email'];
-    }, [steps]);
-    const configMap = useMemo(() => {
-        const map: Record<string, typeof configRecovery[number]> = {};
-        configRecovery.forEach(c => {
-            map[c.name] = c;
-        });
-        return map;
-    }, []);
-
-    // Сброс формы и ошибок при изменении toggleRegisterMode
-    useEffect(() => {
-        resetValues(initialStateRecovery);
-        setServerErrors({
-            email: false,
-            password: false,
-            confirm_password: false,
-        });
-    }, [steps, resetValues]);
-
-    // Обновляем validationStatus при изменении values
-    useEffect(() => {
-        const newValidationStatus = computeValidationStatus(values);
-        setValidationStatus(newValidationStatus);
-        setIsValid(checkFormValidity(values, newValidationStatus, serverErrors, activeFields));
-    }, [values, serverErrors, activeFields]);
-
-    const validateForm = (): boolean => {
-        const newValidationStatus = computeValidationStatus(values);
-        setValidationStatus(newValidationStatus);
-
-        const hasLocalErrors: boolean = Object.values(newValidationStatus).some(level => level === 1);
-        const hasServerErrors: boolean = Object.values(serverErrors).some(Boolean);
-        return !hasLocalErrors && !hasServerErrors;
     };
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
         event.preventDefault();
-
-        setServerErrors({
-            email: false,
-            password: false,
-            confirm_password: false,
-        });
+        resetServerErrors();
 
         if (!validateForm()) return;
+
         if (steps === 2) {
             if (setSteps) {
                 setSteps(3);
             }
-            // const res = await signIn('credentials', {
-            //     username: values.login,
-            //     password: values.password,
-            //     redirect: false,
-            // });
-            //
-            // if (res && !res.error) {
-            //     router.push('/login');
-            // } else {
-            //     // ошибки от сервера setServerErrors
-            //     console.log(res);
-            // }
+            // Реализация отправки данных на сервер и обработка ошибок
         }
     };
 

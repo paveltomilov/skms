@@ -3,22 +3,18 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 type Modals =
 	'automatic' |
 	'gateControl' |
-	'diagnostic' |
-	'recoveryPassword'
-	; // добавить названия модалок
+	'diagnostic'; // добавить названия модалок
 
 export interface ModalState {
 	automatic: boolean;
 	gateControl: boolean;
 	diagnostic: boolean;
-	recoveryPassword: boolean;
 }
 
 const initialState: ModalState = {
 	automatic: false,
 	gateControl: false,
 	diagnostic: false,
-	recoveryPassword: false,
 };
 
 const modalSlice = createSlice({

@@ -1,7 +1,6 @@
-import {InputProps} from '../UI/LoginInput';
 
-export type ValidationLevel = 0 | 1 | 2 | 3;
-export type ValidationStatus = Record<keyof LoginFormData, ValidationLevel>;
+import {LoginFormData, ValidationLevel} from '@/shared/types/login';
+import {InputProps} from '@/shared/types/inputLogin';
 
 
 type Login = (InputProps & {
@@ -56,11 +55,3 @@ export const initialState: LoginFormData = {
     password: '',
     email: '',
 };
-
-export type LoginFormData = {
-    login: string;
-    password: string;
-    email: string;
-}
-
-

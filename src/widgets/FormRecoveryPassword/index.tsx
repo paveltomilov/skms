@@ -2,18 +2,16 @@
 
 import styles from './style.module.scss';
 import Button from '@/shared/UI/Button';
-import {useAppDispatch} from '@/shared/hooks/store';
-import {closeModal} from '@/store/modalSlice';
 import {ChangeEvent, FC, FormEvent, useCallback, useEffect, useState} from 'react';
 import {useRecoveryCode} from '@/shared/hooks/useRecoveryCode';
 import {CodeDisplay} from '@/entities/CodeDisplay';
 
 type FormRecoveryProps = {
     setStep?: (value: 1 | 2 | 3) => void;
+    isOpenPopup?: (value: boolean) => void;
 }
 
-const FormRecoveryPassword:FC<FormRecoveryProps> = ({setStep}) => {
-    const dispatch = useAppDispatch();
+const FormRecoveryPassword:FC<FormRecoveryProps> = ({setStep, isOpenPopup}) => {
     const {
         code,
         validationStatus,
@@ -40,14 +38,16 @@ const FormRecoveryPassword:FC<FormRecoveryProps> = ({setStep}) => {
     useEffect(() => {
         if (submitSuccess) {
             const timer = setTimeout(() => {
-                dispatch(closeModal('recoveryPassword'));
+                if (isOpenPopup) {
+                    isOpenPopup(false);
+                }
                 if (setStep) {
                     setStep(2);
                 }
             }, 1000);
             return () => clearTimeout(timer);
         }
-    }, [submitSuccess, dispatch, setStep]);
+    }, [submitSuccess, setStep]);
 
     return (
         <form className={styles.recoveryPasswordForm} onSubmit={onSubmit} noValidate>
