@@ -1,0 +1,149 @@
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
+
+.header {
+	display: flex;
+	align-self: flex-end;
+	width: 629px;
+	height: 121px;
+	margin: 24px 28px 25px 8px;
+	color: variables.$black-color;
+	background: variables.$white-color;
+	line-height: 100%;
+	padding: 8px;
+	&__text {
+		@include mixins.text(16px, 400, overflow);
+	}
+}
+
+.commandCenter {
+	width: 116px;
+	height: 424px;
+	background: variables.$white-color;
+	border: 1px solid variables.$black-color;
+}
+
+.commandBlockCenter {
+	width: 100px;
+	height: 46px;
+	margin: 8px;
+	padding: 8px 0;
+	place-items: center center;
+	list-style: none;
+
+	&:first-child {
+		margin-top: 0;
+		padding-top: 8px;
+		padding-right: 33px;
+	}
+
+	&:nth-child(2),
+	&:nth-child(6) {
+		padding-top: 22px;
+		padding-left: 66px;
+	}
+
+	&:nth-child(4),
+	&:nth-child(5) {
+		padding-top: 22px;
+		padding-left: 59px;
+	}
+
+	&:nth-child(3),
+	&:nth-child(7) {
+		padding-top: 22px;
+		padding-left: 69px;
+	}
+	&:nth-child(8),
+	&:nth-child(9) {
+		margin-bottom: 0 0 0 0;
+	}
+}
+
+.container {
+	display: flex;
+	align-items: flex-end;
+	width: 645px;
+	height: 424px;
+	margin: 0 8px 52px;
+}
+
+.leftCommand {
+	padding-left: 61px;
+}
+
+.blocknephritis {
+	width: 232px;
+	height: 46px;
+	border: 1px solid variables.$nephritis-color;
+	background: variables.$white-color;
+	padding: 8px;
+}
+
+.commandRight {
+	display: flex;
+	flex-direction: column;
+	row-gap: 8px;
+}
+
+.commandRight > *:nth-last-child(2) {
+	margin-bottom: 54px;
+}
+
+.leftCommandRight {
+	padding-left: 164px;
+}
+
+.rightCommandRight {
+	padding-right: 101px;
+}
+
+.block {
+	width: 232px;
+	height: 46px;
+	border: 1px solid variables.$blue-color;
+	background: variables.$white-color;
+	padding: 8px;
+}
+
+.left {
+	padding-left: 107px;
+}
+
+.right {
+	padding-right: 49px;
+}
+
+.spanDecoretion {
+	place-self: end start;
+	width: 28px;
+	border: 1px solid variables.$black-color;
+	margin: 0 0 20px 0;
+}
+
+.hrBlue {
+	display: flex;
+	flex-direction: column;
+	width: 22px;
+	height: auto;
+	row-gap: 52px;
+	margin-bottom: 20px;
+	hr:nth-child(6) {
+		border: 1px solid variables.$black-color;
+	}
+}
+.hrMaxDecoration {
+	width: 22px;
+	border: 1px solid variables.$blue-color;
+	margin: 0;
+}
+
+.hrMinDecoration {
+	width: 7px;
+	margin: 0;
+	border: 1px solid variables.$blue-color;
+}
+.divStylesNone {
+	width: 232px;
+	height: 46px;
+}

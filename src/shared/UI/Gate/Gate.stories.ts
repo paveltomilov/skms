@@ -25,6 +25,22 @@ const meta: Meta<typeof Gate> = {
 				type: 'radio',
 			},
 		},
+		textTop: {
+			description: 'Текст сверху задвижки',
+			control: { type: 'text' },
+		},
+		textBottom: {
+			description: 'Текст снизу задвижки',
+			control: { type: 'text' },
+		},
+		textLeft: {
+			description: 'Текст слева задвижки',
+			control: { type: 'text' },
+		},
+		textRight: {
+			description: 'Текст справа задвижки',
+			control: { type: 'text' },
+		},
 		className: {
 			description:
 				'Для передачи дополнительных стилей (для позиционирования)',
