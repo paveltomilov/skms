@@ -1,0 +1,28 @@
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
+
+.codeDisplay {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 25px;
+  padding: 15px 20px;
+  width: 100%;
+  border-top: 2px solid variables.$gray-disabled-color;
+  border-left: 2px solid variables.$gray-disabled-color;
+  border-right: 2px solid variables.$white-color;
+  border-bottom: 2px solid variables.$white-color;
+  max-width: 193px;
+  height: 55px;
+  @include mixins.text(38px, 500);
+  color: variables.$black-color;
+  background-color: transparent;
+  transition: variables.$transition;
+
+  &[data-error='false'], {
+    color: variables.$error-button;
+  }
+  &[data-error='true'], {
+    color: variables.$success-color;
+  }
+}

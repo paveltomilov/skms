@@ -1,19 +1,21 @@
-import { useState } from 'react';
+import {useCallback, useState} from 'react';
 
-type InputType = {
-    [key: string]: string;
-};
-
-export function useForm(inputValues: InputType) {
-    const [values, setValues] = useState(inputValues);
+export function useForm<T>(inputValues: T) {
+    const [values, setValues] = useState<T>(inputValues);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value, name } = e.target;
-        setValues({ ...values, [name]: value });
+        setValues(prev => ({ ...prev, [name]: value }));
     };
+
+    const resetValues = useCallback((newValues: T) => {
+        setValues(newValues);
+    }, []);
+
     return {
         values,
         handleChange,
         setValues,
+        resetValues,
     };
 }

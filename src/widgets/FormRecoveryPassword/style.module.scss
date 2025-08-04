@@ -1,0 +1,58 @@
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
+
+.recoveryPasswordForm {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__input {
+    position: absolute; /* Скрываем реальный input */
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    pointer-events: none;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &__error {
+    position: absolute;
+    left: 50%;
+    top: 60px;
+    display: none;
+    @include mixins.text(12px, 400);
+    color: variables.$error-button;
+    transform: translateX(-50%);
+
+    &[data-error='false'], {
+      display: block;
+    }
+  }
+
+  &__text {
+    margin-bottom: 30px;
+    @include mixins.text(16px, 400);
+    text-align: left;
+    color: variables.$gray-disabled-color;
+  }
+
+  &__recend {
+    margin-bottom: 30px;
+    border: none;
+    @include mixins.text(16px, 400);
+    background-color: transparent;
+    cursor: pointer;
+  }
+
+  &__button {
+    span {
+      @include mixins.text(32px, 400);
+      line-height: 1;
+    }
+  }
+}
