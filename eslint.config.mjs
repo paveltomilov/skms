@@ -33,7 +33,7 @@ const eslintConfig = [
 			'**/*.stories.*',
 			'node_modules/',
 			'dist/',
-			'*.config.ts',
+			'*.login.ts',
 			'*.mjs',
 			'*.d.ts',
 		],
