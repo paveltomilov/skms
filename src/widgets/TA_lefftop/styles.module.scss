@@ -9,7 +9,7 @@
 
 	&__p1 {
 		width: 28px;
-		margin-top: 8px;
+		margin-top: 12px;
 		margin-left: 19px;
 	}
 }
@@ -60,7 +60,7 @@
 	&__right {
 		width: 69px;
 		height: 0;
-		margin: -55px 0 0 271px;
+		margin: -43px 0 0 271px;
 		&__p {
 			@include mixins.text(12px, 500);
 			margin: -10px 0 0 106px;
@@ -100,7 +100,7 @@
 	}
 
 	&__four {
-		margin: -23px 0 0 388px;
+		margin: -22px 0 0 388px;
 	}
 
 	&__p2 {
