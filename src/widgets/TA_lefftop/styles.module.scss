@@ -17,8 +17,8 @@
 .windowTop {
 	display: flex;
 	flex-direction: column;
-	margin-left: 394px;
-	margin-top: -32px;
+	margin-left: 396px;
+	margin-top: -35px;
 	width: 71px;
 	height: 44px;
 
@@ -37,12 +37,13 @@
 
 		&__B {
 			@include mixins.text(16px, 700);
-			margin-left: 77px;
+			margin-left: 86px;
 		}
 	}
 
 	&__p3 {
 		@include mixins.text(12px, 400);
+		margin-left: 23px;
 	}
 
 	&__p4 {
@@ -59,7 +60,7 @@
 	&__right {
 		width: 69px;
 		height: 0;
-		margin: -43px 0 0 271px;
+		margin: -36px 0 0 271px;
 		&__p {
 			@include mixins.text(12px, 500);
 			margin: -10px 0 0 106px;
@@ -82,7 +83,7 @@
 
 	&__p1 {
 		@include mixins.text(14px, 700);
-		margin: 53px 0 0 0;
+		margin: 52px 0 0 19px;
 		width: 68px;
 	}
 
@@ -104,7 +105,7 @@
 
 	&__p2 {
 		@include mixins.text(16px, 700);
-		margin: -28px -133px 0 -431px;
+		margin: -27px 0 0 -166px;
 		color: variables.$white-color;
 	}
 }
