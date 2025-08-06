@@ -35,7 +35,9 @@ const Window: FC<Props> = ({
 
 	return (
 		<div className={styles.window}>
-			<div className={fieldColor}>{value && <span>{value}</span>}</div>
+			<div className={fieldColor}>
+				{value && <span className={styles.window__value}>{value}</span>}
+			</div>
 			{textTop && (
 				<span className={cn(text, styles.window__text_top)}>
 					{textTop}

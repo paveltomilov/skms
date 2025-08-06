@@ -6,6 +6,7 @@ import Gate from '@/shared/UI/Gate';
 import cn from 'classnames';
 import Rectangle from '@/shared/UI/icons/Rectangle';
 import { GATES } from '@/shared/configs/gate';
+import { WINDOWS } from '@/shared/configs/window';
 
 interface Props {
 	className?: string;
@@ -35,8 +36,16 @@ const TAleftmid: FC<Props> = ({ className }) => {
 							styles['container__window--left'],
 						)}
 					>
-						<Window color="blue" value={239.7} textRight="т/ч" />
-						<Window color="blue" value={544} textRight="°С" />
+						<Window
+							color="blue"
+							value={WINDOWS.w14.currentValue}
+							textRight={WINDOWS.w14.unitsMeasurement}
+						/>
+						<Window
+							color="blue"
+							value={WINDOWS.w16.currentValue}
+							textRight={WINDOWS.w16.unitsMeasurement}
+						/>
 					</div>
 
 					<Gate
@@ -51,16 +60,32 @@ const TAleftmid: FC<Props> = ({ className }) => {
 							styles['container__window--right'],
 						)}
 					>
-						<Window color="blue" value={13} textRight="МПа" />
-						<Window color="blue" value={544} textRight="°С" />
+						<Window
+							color="blue"
+							value={WINDOWS.w15.currentValue}
+							textRight={WINDOWS.w15.unitsMeasurement}
+						/>
+						<Window
+							color="blue"
+							value={WINDOWS.w17.currentValue}
+							textRight={WINDOWS.w17.unitsMeasurement}
+						/>
 					</div>
 					<p className={styles['container__window-p']}>СКВД-1</p>
 				</div>
 				<div className={styles.containerTwo}>
 					<h3 className={styles['containerTwo__p']}>ХПП</h3>
 					<div className={styles['containerTwo__window']}>
-						<Window color="blue" value={239.7} textRight="МПа" />
-						<Window color="blue" value={544} textRight="°С" />
+						<Window
+							color="blue"
+							value={WINDOWS.w18.currentValue}
+							textRight={WINDOWS.w18.unitsMeasurement}
+						/>
+						<Window
+							color="blue"
+							value={WINDOWS.w19.currentValue}
+							textRight={WINDOWS.w19.unitsMeasurement}
+						/>
 					</div>
 				</div>
 				<div className={styles.containerThree}>
@@ -70,9 +95,21 @@ const TAleftmid: FC<Props> = ({ className }) => {
 
 				<div className={styles.containerFour}>
 					<div className={styles['containerFour__window']}>
-						<Window color="blue" value={489.0} textRight="т/ч" />
-						<Window color="blue" value={18.3} textRight="МПа" />
-						<Window color="blue" value={544} textRight="°С" />
+						<Window
+							color="blue"
+							value={WINDOWS.w20.currentValue}
+							textRight={WINDOWS.w20.unitsMeasurement}
+						/>
+						<Window
+							color="blue"
+							value={WINDOWS.w21.currentValue}
+							textRight={WINDOWS.w21.unitsMeasurement}
+						/>
+						<Window
+							color="blue"
+							value={WINDOWS.w23.currentValue}
+							textRight={WINDOWS.w23.unitsMeasurement}
+						/>
 
 						<Gate
 							position="vertical"
@@ -86,12 +123,24 @@ const TAleftmid: FC<Props> = ({ className }) => {
 					<Button width={88} height={28} text="РОУ" />
 
 					<div className={styles['containerFour__windowOne']}>
-						<Window color="blue" value={1.05} textRight="МПа" />
-						<Window color="blue" value={242} textRight="°С" />
+						<Window
+							color="blue"
+							value={WINDOWS.w24.currentValue}
+							textRight={WINDOWS.w24.unitsMeasurement}
+						/>
+						<Window
+							color="blue"
+							value={WINDOWS.w25.currentValue}
+							textRight={WINDOWS.w25.unitsMeasurement}
+						/>
 					</div>
 
 					<div className={styles['containerFour__windowTwo']}>
-						<Window color="blue" value={0} textRight="%" />
+						<Window
+							color="blue"
+							value={WINDOWS.w22.currentValue}
+							textRight={WINDOWS.w22.unitsMeasurement}
+						/>
 						<Rectangle
 							color="white"
 							className={
@@ -105,7 +154,11 @@ const TAleftmid: FC<Props> = ({ className }) => {
 							IV отб.
 						</h5>
 						<div className={styles['containerFour__windowThree-w']}>
-							<Window color="blue" value={0.35} textRight="МПа" />
+							<Window
+								color="blue"
+								value={WINDOWS.w26.currentValue}
+								textRight={WINDOWS.w26.unitsMeasurement}
+							/>
 						</div>
 						<h5 className={styles['containerFour__windowThree-p3']}>
 							ДПВ
