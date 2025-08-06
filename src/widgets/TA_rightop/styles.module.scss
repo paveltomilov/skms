@@ -1,0 +1,50 @@
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
+
+.container {
+	display: flex;
+	justify-content: end;
+	align-items: end;
+	flex-direction: row;
+	gap: 6px;
+}
+
+.blockCND {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 3px 24px;
+
+	& p {
+		color: white;
+		@include mixins.text(16px, 700);
+		margin-top: 14px;
+	}
+
+	&__center {
+		grid-column: span 2;
+		margin: 6px auto 0;
+	}
+}
+
+.blockGenerator {
+	@include mixins.flex-space-between;
+	padding: 10px;
+	gap: 10px;
+
+	&__left {
+		display: flex;
+		flex-direction: column;
+		gap: 9px;
+		align-items: center;
+	}
+
+	& p {
+		color: black;
+		@include mixins.text(16px, 700);
+		margin-bottom: 26px;
+	}
+
+	&__windowAmper {
+		margin-bottom: 30px;
+	}
+}
