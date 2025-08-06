@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import ArrowButton from '.';
+import Actuator from '.';
 
-const meta: Meta<typeof ArrowButton> = {
-	title: 'ArrowButton',
-	component: ArrowButton,
+const meta: Meta<typeof Actuator> = {
+	title: 'Actuator',
+	component: Actuator,
 	parameters: {
 		layout: 'centered',
 	},
@@ -18,7 +18,7 @@ const meta: Meta<typeof ArrowButton> = {
 			},
 		},
 		disable: {
-			description: 'Запрет управления',
+			description: 'Запрет управления (красный крест)',
 			control: { type: 'boolean' },
 		},
 		transform: {
