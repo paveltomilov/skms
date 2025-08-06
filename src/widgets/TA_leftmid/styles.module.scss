@@ -1,0 +1,141 @@
+@use '@/shared/scss/mixins.module' as mixins;
+@use '@/shared/scss/variables.module' as vars;
+
+.container {
+	display: flex;
+	@include mixins.text(14px, 400);
+
+	&__p1 {
+		@include mixins.text(16px, 700);
+		margin: 17px 0 0 -4px;
+	}
+
+	&__p2 {
+		@include mixins.text(12px, 400);
+		margin: 36px 0 0 23px;
+	}
+
+	&__window {
+		margin: 9px 0 0 30px;
+
+		&--right {
+			width: 55px;
+			margin: 9px 12px 0px 1px;
+		}
+	}
+
+	&__window-p {
+		@include mixins.text(12px, 500);
+		margin: 6px 0 0 41px;
+	}
+}
+
+.gate {
+	margin: 25px 0px 0px 31px;
+}
+
+.containerTwo {
+	display: flex;
+	margin: -18px 0 0 18px;
+	@include mixins.text(14px, 400);
+
+	&__p {
+		@include mixins.text(14px, 700);
+		margin-top: 17px;
+	}
+
+	&__window {
+		width: 70px;
+		margin-left: 348px;
+
+		@include mixins.text(14px, 400);
+	}
+}
+
+.containerThree {
+	@include mixins.flex-space-between;
+	width: 200px;
+	margin: -5px 0 0 93px;
+
+	&__p {
+		@include mixins.text(12px, 400);
+	}
+
+	button {
+		margin: -5px -2px 10px -3px;
+	}
+}
+
+.containerFour {
+	display: flex;
+	@include mixins.text(14px, 400);
+	width: 465px;
+	&__window {
+		width: 75px;
+		margin: 18px 0 0 100px;
+		height: 117px;
+
+		&-gate {
+			margin-top: 13px;
+			margin-left: 4px;
+		}
+	}
+
+	&__p {
+		@include mixins.text(14px, 700);
+		margin: 71px 0 0 1px;
+	}
+
+	&__windowOne {
+		align-self: flex-end;
+		width: 70px;
+		margin: 0 -15px -3px 12px;
+		height: 85px;
+
+		&__windows {
+			display: flex;
+			flex-direction: column;
+			width: 70px;
+			margin: 0 0 0 -4px;
+		}
+	}
+
+	&__windowTwo {
+		width: 67px;
+		padding: 42px 0 0 26px;
+
+		&-rectangle {
+			margin-left: 6px;
+		}
+	}
+
+	&__windowThree {
+		padding: 19px 0 0 30px;
+
+		&-p2 {
+			margin: 0 0 0 -21px;
+			@include mixins.text(14px, 700);
+		}
+
+		&-w {
+			display: flex;
+			flex-direction: row;
+			margin-top: 43px;
+			margin-right: 4px;
+		}
+
+		&-p3 {
+			@include mixins.text(14px, 700);
+			width: 46px;
+			height: 26px;
+			margin: 8px 0 0 22px;
+			border: 1px solid vars.$black-color;
+			padding: 5px 0 0 8px;
+		}
+	}
+
+	button {
+		width: 88px;
+		margin: 16px -80px 14px 1px;
+	}
+}
