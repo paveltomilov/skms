@@ -1,0 +1,62 @@
+@use '@/shared/scss/variables.module';
+
+.arrow {
+	display: inline-grid;
+	grid-template-areas:
+		'top top top'
+		'left center right'
+		'bottom bottom bottom';
+	align-items: center;
+	justify-items: center;
+
+	&__icon {
+		grid-area: center;
+		position: relative;
+	}
+
+	&__text {
+		font-size: 14px;
+		font-weight: bold;
+		line-height: 14px;
+
+		&_top {
+			grid-area: top;
+
+			&_left {
+				position: absolute;
+				top: -3px;
+				right: 45px;
+			}
+
+			&_right {
+				position: absolute;
+				top: -3px;
+				left: 45px;
+			}
+		}
+
+		&_bottom {
+			grid-area: bottom;
+
+			&_left {
+				position: absolute;
+				bottom: 3px;
+				right: 45px;
+			}
+
+			&_right {
+				position: absolute;
+				bottom: 3px;
+				left: 45px;
+			}
+		}
+
+		&_left {
+			grid-area: left;
+		}
+
+		&_right {
+			grid-area: right;
+		}
+	}
+}
