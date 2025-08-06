@@ -137,14 +137,24 @@ export const GATE_POSITION: GatePosition = {
 };
 
 export const GATES = {
+	// TA
+	// left_top
 	g1: { name: 'ГП3-Б', state: GATE_STATE_TYPE.open },
+
+	// left_mid
 	g2: { name: 'ГП3-А', state: GATE_STATE_TYPE.open },
 	g3: { name: '1ПВ-5', state: GATE_STATE_TYPE.open },
-	g4: { name: '1Кпсг2-3', state: GATE_STATE_TYPE.open },
-	g5: { name: '1Кпсг1-3', state: GATE_STATE_TYPE.open },
+
+	// left_down
 	g6: { name: '1ПВ-4', state: GATE_STATE_TYPE.open },
 	g7: { name: '1ПВ-21', state: GATE_STATE_TYPE.close },
 	g8: { name: '1ПЭНА-2', state: GATE_STATE_TYPE.open },
+
+	//mid_mid
+	g4: { name: '1Кпсг2-3', state: GATE_STATE_TYPE.open },
+	g5: { name: '1Кпсг1-3', state: GATE_STATE_TYPE.open },
+
+	// mid_down
 	g9: { name: '1ПЭНБ-2', state: GATE_STATE_TYPE.open },
 	g10: { name: '1ПЭНВ-2', state: GATE_STATE_TYPE.open },
 };
