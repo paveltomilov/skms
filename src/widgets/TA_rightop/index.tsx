@@ -57,7 +57,7 @@ const TARrightTop: FC<Props> = ({ className }) => {
 					<Tilde size="md" />
 					<p>Генератор</p>
 				</div>
-				<div className={styles.blockGenerator__windowAmper}>
+				<div className={styles.blockGenerator__right}>
 					<Window
 						color="blue"
 						value={WINDOWS.w71.currentValue}
