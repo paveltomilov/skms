@@ -1,6 +1,7 @@
 import TALeftMid from '@/widgets/TA_leftmid';
 import styles from './styles.module.scss';
 import TALeftTop from '@/widgets/TA_lefftop';
+import TALeftDown from '@/widgets/TA_leftdown';
 
 const TurbineUnitPage = () => {
 	return (
@@ -9,7 +10,8 @@ const TurbineUnitPage = () => {
 			<div className={styles.section__content}>
 				<TALeftTop className={styles.section__content_left_top} />
 				<TALeftMid className={styles.section__content_left_mid}/>
-				<div className={styles.section__content_left_down}></div>
+				<TALeftDown className={styles.section__content_left_down}/>
+				{/* <div className={styles.section__content_left_down}></div> */}
 
 				<div className={styles.section__content_mid_top}></div>
 				<div className={styles.section__content_mid_mid}></div>
