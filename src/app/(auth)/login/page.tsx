@@ -1,12 +1,13 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { checkAuth } from '@/shared/lib/auth';
 
-interface AuthResponse {
-	access: string;
-	refresh: string;
+interface LoginResponse {
+	access?: string;
+	refresh?: string;
 }
 
 export default function LoginPage() {
@@ -14,47 +15,59 @@ export default function LoginPage() {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
+	const [checking, setChecking] = useState(true);
+
+	useEffect(() => {
+		async function verify() {
+			const { valid } = await checkAuth();
+			if (valid) {
+				router.push('/ptk');
+			} else {
+				setChecking(false);
+			}
+		}
+		verify();
+	}, [router]);
 
 	const handleLogin = async () => {
 		try {
-			const response = await axios.post<AuthResponse>(
+			const response = await axios.post<LoginResponse>(
 				'http://localhost:8000/api/auth/',
 				{ username, password },
 				{
 					headers: { 'Content-Type': 'application/json' },
-					//withCredentials: true,
+					// withCredentials: true,
 				},
 			);
 
 			const { access, refresh } = response.data;
 
 			if (access && refresh) {
-				localStorage.setItem('accessToken', access);
-				localStorage.setItem('refreshToken', refresh);
-
-				router.push('/ptk');
+				if (typeof access === 'string' && typeof refresh === 'string') {
+					localStorage.setItem('accessToken', access);
+					localStorage.setItem('refreshToken', refresh);
+					router.push('/ptk');
+				} else {
+					setError('Ошибка авторизации: неверный формат токенов');
+				}
 			} else {
 				setError('Ошибка авторизации: токены не получены');
 			}
 		} catch (err: unknown) {
-			// Приводим err к типу AxiosError, если возможно
 			if (axios.isAxiosError(err)) {
-				// Можно безопасно обращаться к err.response?.status
 				if (err.response?.status === 401) {
 					setError('Неверный логин или пароль');
 				} else {
 					setError('Ошибка подключения к серверу');
 				}
 			} else {
-				// Если это не AxiosError — неизвестная ошибка
 				setError('Произошла неизвестная ошибка');
 			}
-
-			// Можно убрать или оставить, отключив правило eslint
-			// eslint-disable-next-line no-console
 			console.error('Ошибка входа:', err);
 		}
 	};
+
+	if (checking) return <p>Проверка авторизации...</p>;
 
 	return (
 		<div>
@@ -70,7 +83,7 @@ export default function LoginPage() {
 				placeholder="Пароль"
 			/>
 			<button onClick={handleLogin}>Войти</button>
-			{error && <p>{error}</p>}
+			{error && <p style={{ color: 'red' }}>{error}</p>}
 		</div>
 	);
 }
