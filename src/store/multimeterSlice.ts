@@ -3,8 +3,10 @@ import type {
 	MultimeterMode,
 	MultimeterState,
 	ProbeColor,
+	ProbStateProps,
 } from '@/shared/types/multimeter';
 import { UniqueIdentifier } from '@dnd-kit/core';
+import { setACV750Action } from '@/store/actions/multimiter/setACV750Action';
 
 const initialState: MultimeterState = {
 	currentMode: 'OFF',
@@ -16,6 +18,11 @@ const initialState: MultimeterState = {
 interface AttachProbePayload {
 	probeColor: 'red' | 'black';
 	pointId: UniqueIdentifier | null;
+}
+
+export interface MultimeterModePropPayload {
+	red: ProbStateProps;
+	black: ProbStateProps;
 }
 
 export const multimeterSlice = createSlice({
@@ -42,8 +49,23 @@ export const multimeterSlice = createSlice({
 		) => {
 			state.activeProb = action.payload;
 		},
+
 		setMeasurementResult: (state, action: PayloadAction<number | null>) => {
 			state.displayValue = action.payload;
+		},
+
+		/** Выключение питания мультиметра */
+		powerOff: state => {
+			state.displayValue = null;
+		},
+
+		/** Установка значения напряжения на дисплей */
+		setACV750: (state, action: PayloadAction<MultimeterModePropPayload>) =>
+			setACV750Action(state, action),
+
+		/** TODO убрать заглушку после реализации всех экшенов режимов мультиметра */
+		stubMode: state => {
+			state.displayValue = 404;
 		},
 	},
 });
@@ -54,6 +76,9 @@ export const {
 	detachProbe,
 	setActiveProb,
 	setMeasurementResult,
+	powerOff,
+	setACV750,
+	stubMode,
 } = multimeterSlice.actions;
 
 export default multimeterSlice.reducer;

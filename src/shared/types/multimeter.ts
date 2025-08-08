@@ -27,6 +27,12 @@ export interface ProbeConnection {
 	black: UniqueIdentifier | null;
 }
 
+/** Состояние щупа */
+export interface ProbStateProps {
+	isNeutral: boolean;
+	isPower: boolean;
+}
+
 export interface MultimeterState {
 	currentMode: MultimeterMode;
 	displayValue: number | null;

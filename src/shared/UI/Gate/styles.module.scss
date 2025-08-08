@@ -1,8 +1,10 @@
 @use '@/shared/scss/variables.module';
+@use '@/shared/scss/mixins.module';
 
 .gate {
 	position: relative;
 	display: flex;
+	grid-area: center;
 
 	& > :nth-child(2) {
 		margin-left: -1px;
@@ -13,6 +15,36 @@
 
 		& > :nth-child(2) {
 			margin-left: 0;
+		}
+	}
+
+	&__wrapper {
+		display: inline-grid;
+		grid-template-areas:
+			'top top top'
+			'left center right'
+			'bottom bottom bottom';
+		align-items: center;
+		justify-items: center;
+	}
+
+	&__text {
+		@include mixins.text(12px, 500);
+
+		&_top {
+			grid-area: top;
+		}
+
+		&_bottom {
+			grid-area: bottom;
+		}
+
+		&_left {
+			grid-area: left;
+		}
+
+		&_right {
+			grid-area: right;
 		}
 	}
 

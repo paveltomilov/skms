@@ -4,7 +4,7 @@ import { FC } from 'react';
 
 interface Props {
 	color: 'blue' | 'yellow' | 'white';
-	value: string;
+	value: number;
 	textTop?: string;
 	textBottom?: string;
 	textLeft?: string;
@@ -23,32 +23,40 @@ const Window: FC<Props> = ({
 	colorText = 'black',
 	className,
 }) => {
-	const fieldColor = cn(styles.field, className && className, {
-		[styles.field_blue]: color === 'blue',
-		[styles.field_yellow]: color === 'yellow',
-		[styles.field_white]: color === 'white',
+	const fieldColor = cn(styles.window__field, className && className, {
+		[styles.window__field_blue]: color === 'blue',
+		[styles.window__field_yellow]: color === 'yellow',
+		[styles.window__field_white]: color === 'white',
 	});
 
-	const text = cn(styles.text, {
-		[styles.text_white]: colorText === 'white',
+	const text = cn(styles.window__text, {
+		[styles.window__text_white]: colorText === 'white',
 	});
 
 	return (
-		<div className={fieldColor}>
-			{value && <span>{value}</span>}
+		<div className={styles.window}>
+			<div className={fieldColor}>
+				{value && <span className={styles.window__value}>{value}</span>}
+			</div>
 			{textTop && (
-				<span className={cn(text, styles.text_top)}>{textTop}</span>
+				<span className={cn(text, styles.window__text_top)}>
+					{textTop}
+				</span>
 			)}
 			{textBottom && (
-				<span className={cn(text, styles.text_bottom)}>
+				<span className={cn(text, styles.window__text_bottom)}>
 					{textBottom}
 				</span>
 			)}
 			{textLeft && (
-				<span className={cn(text, styles.text_left)}>{textLeft}</span>
+				<span className={cn(text, styles.window__text_left)}>
+					{textLeft}
+				</span>
 			)}
 			{textRight && (
-				<span className={cn(text, styles.text_right)}>{textRight}</span>
+				<span className={cn(text, styles.window__text_right)}>
+					{textRight}
+				</span>
 			)}
 		</div>
 	);

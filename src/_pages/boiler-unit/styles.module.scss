@@ -4,8 +4,11 @@
 .section {
 	display: flex;
 	flex-direction: column;
-	gap: 10px;
-	margin: 12px auto;
+	align-items: center;
+	margin: 16px auto 12px 140px;
+	background-image: url('../../../public/svg/boiler-unit.svg');
+	background-position: 170px 40px;
+	background-repeat: no-repeat;
 
 	&__title {
 		font-weight: 400;
@@ -14,14 +17,58 @@
 	}
 
 	&__content {
-		position: relative;
-		width: 1377px;
-		height: 720px;
-		padding: 21px 52px 20px 180px;
-		box-sizing: content-box;
-		background-image: url('../../../public/svg/boiler-unit.svg');
-		background-origin: content-box;
-		background-repeat: no-repeat;
-		overflow: hidden;
+		width: 1700px;
+		height: 770px;
+		display: grid;
+		grid-template-columns: 514px 615px 1fr;
+		grid-template-rows: 220px 85px 190px 40px 1fr;
+		grid-template-areas:
+			'left_top mid_top right_top'
+			'left_top mid_mid right_mid'
+			'left_mid mid_mid right_mid'
+			'left_down mid_down right_down'
+			'left_down mid_down right_down';
+		border: 1px red solid;
+
+		// временно, чтобы видить границы
+		& > div {
+			border: 1px red solid;
+		}
+
+		&_left_top {
+			grid-area: left_top;
+		}
+
+		&_left_mid {
+			grid-area: left_mid;
+		}
+
+		&_left_down {
+			grid-area: left_down;
+		}
+
+		&_mid_top {
+			grid-area: mid_top;
+		}
+
+		&_mid_mid {
+			grid-area: mid_mid;
+		}
+
+		&_mid_down {
+			grid-area: mid_down;
+		}
+
+		&_right_top {
+			grid-area: right_top;
+		}
+
+		&_right_mid {
+			grid-area: right_mid;
+		}
+
+		&_right_down {
+			grid-area: right_down;
+		}
 	}
 }

@@ -172,6 +172,11 @@ export const SCHEME_ELEMENTS: ISchemeElement[] = [
 	},
 ];
 
+// id точек схемы
+
+export const CONTROL_CIRCUIT_NEUTRAL_ID = 'p.c.n'; // нейтраль цепи управления
+export const POWER_CIRCUIT_NEUTRAL_ID = 'p.p.n'; // нейтраль силовой цепи
+
 // Точки для подключения щупов на схеме
 export const SCHEME_POINTS: Record<string, IPoint> = {
 	'p.p.1.0': { x: 87, y: 12, state: true },
@@ -204,7 +209,7 @@ export const SCHEME_POINTS: Record<string, IPoint> = {
 	'p.p.2.5': { x: 128, y: 578, state: false },
 	'p.p.3.4.1.2': { x: 171, y: 578, state: false },
 
-	'p.p.n': { x: 129, y: 647, state: false },
+	[POWER_CIRCUIT_NEUTRAL_ID]: { x: 129, y: 647, state: false },
 
 	'p.c.0': { x: 86, y: 217, state: true },
 	'p.c.1': { x: 320, y: 215, state: true },
@@ -220,7 +225,7 @@ export const SCHEME_POINTS: Record<string, IPoint> = {
 	'p.с.3.2.3.2.1': { x: 766, y: 480, state: false },
 	'p.с.3.2.3.2.2': { x: 847, y: 480, state: false },
 
-	'p.c.n': { x: 947, y: 215, state: false },
+	[CONTROL_CIRCUIT_NEUTRAL_ID]: { x: 947, y: 215, state: false },
 };
 
 export const pointsState = extractStates(SCHEME_POINTS);

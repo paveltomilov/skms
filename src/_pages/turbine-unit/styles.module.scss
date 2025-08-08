@@ -4,8 +4,10 @@
 .section {
 	display: flex;
 	flex-direction: column;
-	gap: 10px;
-	margin: 12px auto;
+	margin: 16px auto 12px 160px;
+	background-image: url('../../../public/svg/turbine-unit.svg');
+	background-position: 55px 50px;
+	background-repeat: no-repeat;
 
 	&__title {
 		font-weight: 400;
@@ -14,14 +16,60 @@
 	}
 
 	&__content {
-		position: relative;
-		width: 1391px;
-		height: 716px;
-		padding: 6px 110px 11px 53px;
-		box-sizing: content-box;
-		background-image: url('../../../public/svg/turbine-unit.svg');
-		background-origin: content-box;
-		background-repeat: no-repeat;
-		overflow: hidden;
+		width: 1682px;
+		height: 770px;
+		display: grid;
+		grid-template-columns: 480px 606px 116px 1fr;
+		grid-template-rows: 259px 255px 25px 40px 1fr;
+		grid-template-areas:
+			'left_top mid_top mid_top right_top'
+			'left_mid mid_mid mid_mid right_mid'
+			'left_down mid_mid mid_mid right_mid'
+			'left_down mid_down right_down right_down'
+			'left_down mid_down right_down right_down';
+
+		// временно, чтобы видить границы
+		border: 1px red solid;
+
+		// временно, чтобы видить границы
+		& > div {
+			border: 1px red solid;
+		}
+
+		&_left_top {
+			grid-area: left_top;
+		}
+
+		&_left_mid {
+			grid-area: left_mid;
+		}
+
+		&_left_down {
+			grid-area: left_down;
+		}
+
+		&_mid_top {
+			grid-area: mid_top;
+		}
+
+		&_mid_mid {
+			grid-area: mid_mid;
+		}
+
+		&_mid_down {
+			grid-area: mid_down;
+		}
+
+		&_right_top {
+			grid-area: right_top;
+		}
+
+		&_right_mid {
+			grid-area: right_mid;
+		}
+
+		&_right_down {
+			grid-area: right_down;
+		}
 	}
 }
