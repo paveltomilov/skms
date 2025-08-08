@@ -151,8 +151,8 @@ export const GATES = {
 	g8: { name: '1ПЭНА-2', state: GATE_STATE_TYPE.open },
 
 	//mid_mid
-	g4: { name: '1Кпсг2-3', state: GATE_STATE_TYPE.open },
-	g5: { name: '1Кпсг1-3', state: GATE_STATE_TYPE.open },
+	g4: { name: '1Кпсг2–3', state: GATE_STATE_TYPE.open },
+	g5: { name: '1Кпсг1–3', state: GATE_STATE_TYPE.open },
 
 	// mid_down
 	g9: { name: '1ПЭНБ-2', state: GATE_STATE_TYPE.open },

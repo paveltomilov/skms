@@ -22,7 +22,7 @@ interface Props {
 	className?: string;
 }
 
-const ArrowButton: FC<Props> = ({
+const Actuator: FC<Props> = ({
 	state = 'on',
 	disable = false,
 	transform,
@@ -143,4 +143,4 @@ const ArrowButton: FC<Props> = ({
 	);
 };
 
-export default ArrowButton;
+export default Actuator;
