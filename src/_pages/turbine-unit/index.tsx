@@ -1,6 +1,7 @@
 import TALeftMid from '@/widgets/TA_leftmid';
 import styles from './styles.module.scss';
 import TALeftTop from '@/widgets/TA_lefftop';
+import TARightMid from '@/widgets/TA_rightmid';
 
 const TurbineUnitPage = () => {
 	return (
@@ -16,7 +17,7 @@ const TurbineUnitPage = () => {
 				<div className={styles.section__content_mid_down}></div>
 
 				<div className={styles.section__content_right_top}></div>
-				<div className={styles.section__content_right_mid}></div>
+				<TARightMid className={styles.section__content_right_mid}/>
 				<div className={styles.section__content_right_down}></div>
 			</div>
 		</section>
