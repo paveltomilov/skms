@@ -9,7 +9,7 @@ interface Props {
 	className?: string;
 }
 
-const TARrightTop: FC<Props> = ({ className }) => {
+const TARightTop: FC<Props> = ({ className }) => {
 	return (
 		<div className={cn(className, styles.container)}>
 			<div className={styles.blockCND}>
@@ -38,7 +38,7 @@ const TARrightTop: FC<Props> = ({ className }) => {
 					textRight={WINDOWS.w73.unitsMeasurement}
 					colorText="white"
 				/>
-				<div className={styles.blockCND__center}>
+				<div className={cn(styles.blockCND__center, styles.blockCND__kPa)}>
 					<Window
 						color="blue"
 						value={WINDOWS.w74.currentValue}
@@ -69,4 +69,4 @@ const TARrightTop: FC<Props> = ({ className }) => {
 	);
 };
 
-export default TARrightTop;
+export default TARightTop;
