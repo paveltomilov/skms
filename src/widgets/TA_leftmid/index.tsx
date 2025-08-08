@@ -5,17 +5,15 @@ import Window from '@/shared/UI/Window';
 import Gate from '@/shared/UI/Gate';
 import cn from 'classnames';
 import Rectangle from '@/shared/UI/icons/Rectangle';
-import { GATES } from '@/shared/configs/gate';
 import { WINDOWS } from '@/shared/configs/window';
+import { useAppSelector } from '@/shared/hooks/store';
 
 interface Props {
 	className?: string;
 }
 
 const TAleftmid: FC<Props> = ({ className }) => {
-	const { name: nameG2, state: stateG2 } = GATES.g2;
-	const { name: nameG3, state: stateG3 } = GATES.g3;
-
+	const { g2, g3 } = useAppSelector(state => state.gate);
 	return (
 		<>
 			<div className={cn(className)}>
@@ -49,8 +47,8 @@ const TAleftmid: FC<Props> = ({ className }) => {
 					</div>
 
 					<Gate
-						state={stateG2}
-						textBottom={nameG2}
+						state={g2.states}
+						textBottom={g2.name}
 						className={styles.gate}
 					/>
 
@@ -113,8 +111,8 @@ const TAleftmid: FC<Props> = ({ className }) => {
 
 						<Gate
 							position="vertical"
-							state={stateG3}
-							textLeft={nameG3}
+							state={g3.states}
+							textLeft={g3.name}
 							className={styles['containerFour__window-gate']}
 						/>
 					</div>

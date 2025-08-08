@@ -1,31 +1,25 @@
+import { GATES } from '@/shared/configs/gate';
 import { GATE_STATE_TYPE } from '@/shared/types/gate';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-// Интерфейс для состояния
-export interface GateState {
-	state: GATE_STATE_TYPE;
-	value: number;
-	position: number;
-}
-
-// Инициализация состояния
-const initialState: GateState = {
-	state: GATE_STATE_TYPE.open,
-	value: 18.8,
-	position: 50, // 50% - промежуточное положение задвижки
-};
-
 const gateStateSlice = createSlice({
 	name: 'gate',
-	initialState,
+	initialState: GATES,
 
 	reducers: {
-		setGateState: (state, action: PayloadAction<GateState>) => {
-			state.state = action.payload.state;
-			state.value = action.payload.value;
+		setGateState: (
+			state,
+			action: PayloadAction<{ id: string; states: GATE_STATE_TYPE }>,
+		) => {
+			const { id, states } = action.payload;
+			state[id].states = states;
 		},
-		setGatePosition: (state, action: PayloadAction<number>) => {
-			state.position = action.payload;
+		setGatePosition: (
+			state,
+			action: PayloadAction<{ id: string; position: number }>,
+		) => {
+			const { id, position } = action.payload;
+			state[id].position = position;
 		},
 	},
 });

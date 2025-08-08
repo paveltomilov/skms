@@ -4,14 +4,16 @@ import Button from '@/shared/UI/Button';
 import Window from '@/shared/UI/Window';
 import Gate from '@/shared/UI/Gate';
 import cn from 'classnames';
-import { GATES } from '@/shared/configs/gate';
 import { WINDOWS } from '@/shared/configs/window';
+import { useAppSelector } from '@/shared/hooks/store';
 
 interface Props {
 	className?: string;
 }
 
 const TALeftTop: FC<Props> = ({ className }) => {
+	const { g1 } = useAppSelector(state => state.gate);
+
 	return (
 		<div className={cn(className, styles.container)}>
 			<Button width={88} height={28} text={'КА'} />
@@ -47,8 +49,8 @@ const TALeftTop: FC<Props> = ({ className }) => {
 				/>
 			</div>
 			<Gate
-				state={GATES.g1.state}
-				textBottom={GATES.g1.name}
+				state={g1.states}
+				textBottom={g1.name}
 				className={styles.gate}
 			/>
 			<div className={styles.windowMedium__right}>

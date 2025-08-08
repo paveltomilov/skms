@@ -6,12 +6,19 @@ export enum GATE_STATE_TYPE {
 	toClose = 'toClose',
 	open = 'open',
 	toOpen = 'toOpen',
-	noPower = 'noPower',
 	intermediate = 'intermediate',
+
+	noPower = 'noPower',
 	automatDisassembled = 'automatDisassembled', // состояние когда какой то автомат разобран
 
 	// поменять название когда станет известно состояние(придумано для UI kit)
 	magenta = 'magenta',
+}
+
+export interface IGate {
+	name: string;
+	states: GATE_STATE_TYPE;
+	position: number;
 }
 
 export interface TriangleColor {
