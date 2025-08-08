@@ -1,4 +1,6 @@
-export const ACTUATORS = {
+import { IActuator } from '../types/actuators';
+
+export const ACTUATORS: Record<string, IActuator> = {
 	// left_down
 	a1: { name: 'ПЭН-1А', state: 'off' },
 

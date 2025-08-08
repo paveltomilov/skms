@@ -7,7 +7,8 @@ import cn from 'classnames';
 import WindowRectCard from '@/shared/UI/WindowRectCard';
 import { WINDOWS } from '@/shared/configs/window';
 import { GATES } from '@/shared/configs/gate';
-import ArrowButton from '@/shared/UI/Actuator';
+import Actuator from '@/shared/UI/Actuator';
+import { ACTUATORS } from '@/shared/configs/actuator';
 
 interface Props {
 	className?: string;
@@ -88,15 +89,15 @@ const TAMidMId: FC<Props> = ({ className }) => {
 						/>
 					</div>
 					<div className={styles.middleSection__arrowButtons}>
-						<ArrowButton
+						<Actuator
 							transform="rotateLeft90"
-							state={'off'}
-							textBottom="КНБ-1В"
+							state={ACTUATORS.a2.state}
+							textBottomRight={ACTUATORS.a2.name}
 						/>
-						<ArrowButton
+						<Actuator
 							transform="rotateLeft90"
-							state={'off'}
-							textBottom="КНБ-1Г"
+							state={ACTUATORS.a3.state}
+							textBottomRight={ACTUATORS.a3.name}
 						/>
 					</div>
 				</section>
@@ -116,14 +117,15 @@ const TAMidMId: FC<Props> = ({ className }) => {
 						title={WINDOWS.w48.unitsMeasurement}
 					/>
 					<div className={styles.rightMiddleSection__arrowButtons}>
-						<ArrowButton
+						<Actuator
 							transform="rotateLeft90"
-							textBottom="КНБ-1А"
+							state={ACTUATORS.a4.state}
+							textBottomRight={ACTUATORS.a5.name}
 						/>
-						<ArrowButton
+						<Actuator
 							transform="rotateLeft90"
-							state={'off'}
-							textBottom="КНБ-1Б"
+							state={ACTUATORS.a5.state}
+							textBottomRight={ACTUATORS.a5.name}
 						/>
 					</div>
 				</section>
@@ -189,7 +191,7 @@ const TAMidMId: FC<Props> = ({ className }) => {
 
 				<Gate
 					state={GATES.g4.state}
-					textTop={GATES.g4.name}
+					textTopLeft={GATES.g4.name}
 					position="vertical"
 				/>
 
@@ -211,7 +213,7 @@ const TAMidMId: FC<Props> = ({ className }) => {
 
 				<Gate
 					state={GATES.g5.state}
-					textTop={GATES.g5.name}
+					textTopLeft={GATES.g5.name}
 					position="vertical"
 				/>
 
