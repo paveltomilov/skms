@@ -25,7 +25,7 @@ const TARrightTop: FC<Props> = ({ className }) => {
 					textRight={WINDOWS.w69.unitsMeasurement}
 					colorText="white"
 				/>
-				<p className={styles.blockCND__center}>ЦНД</p>
+				<span className={cn(className, styles.blockCND__text, styles.blockCND__center)}>ЦНД</span>
 				<Window
 					color="blue"
 					value={WINDOWS.w72.currentValue}
@@ -55,7 +55,7 @@ const TARrightTop: FC<Props> = ({ className }) => {
 						textRight={WINDOWS.w70.unitsMeasurement}
 					/>
 					<Tilde size="md" />
-					<p>Генератор</p>
+					<span className={styles.blockGenerator__text}>Генератор</span>
 				</div>
 				<div className={styles.blockGenerator__right}>
 					<Window
