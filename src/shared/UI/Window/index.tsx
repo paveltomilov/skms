@@ -23,7 +23,7 @@ const Window: FC<Props> = ({
 	colorText = 'black',
 	className,
 }) => {
-	const fieldColor = cn(styles.window__field, className && className, {
+	const fieldColor = cn(styles.window__field, {
 		[styles.window__field_blue]: color === 'blue',
 		[styles.window__field_yellow]: color === 'yellow',
 		[styles.window__field_white]: color === 'white',
@@ -34,8 +34,10 @@ const Window: FC<Props> = ({
 	});
 
 	return (
-		<div className={styles.window}>
-			<div className={fieldColor}>{value && <span>{value}</span>}</div>
+		<div className={`${styles.window} ${className && className}`}>
+			<div className={fieldColor}>
+				{value && <span className={styles.window__value}>{value}</span>}
+			</div>
 			{textTop && (
 				<span className={cn(text, styles.window__text_top)}>
 					{textTop}

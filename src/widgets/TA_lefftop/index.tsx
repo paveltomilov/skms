@@ -94,7 +94,7 @@ const TALeftTop: FC<Props> = ({ className }) => {
 					<Window
 						color="blue"
 						value={WINDOWS.w11.currentValue}
-						textRight={WINDOWS.w11.unitsMeasurement}
+						textBottom={WINDOWS.w11.unitsMeasurement}
 					/>
 					<p className={styles.windowMediumBottom__p2}>ЦВД</p>
 				</div>
