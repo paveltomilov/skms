@@ -6,14 +6,15 @@
 	align-items: center;
 	justify-content: center;
 	border: 1px solid variables.$black-color;
+	padding: 5px;
 
 	&_short {
-		width: 84px;
+		min-width: 84px;
 		height: 56px;
 	}
 
 	&_long {
-		width: 137px;
+		min-width: 137px;
 		height: 48px;
 	}
 

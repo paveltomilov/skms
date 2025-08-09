@@ -1,3 +1,56 @@
 .container {
   display: flex;
+  flex-direction: column;
+  gap: 41px 0;
+}
+
+.flexRow {
+  display: flex;
+  flex-direction: row;
+}
+
+.windowsTop {
+  padding-left: 33px;
+}
+
+.windowsBottom {
+  display: flex;
+  flex-direction: row;
+  padding-left: 39px;
+  gap: 26px;
+}
+.windowsBottom__pump {
+  width: 103px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 5px;
+}
+.windowsBottom__actuator {
+  display: flex;
+  flex-direction: row;
+  padding: 2px 0 0 6px;
+  margin-bottom: 16px;
+}
+.windowsBottom__gate {
+  margin-right: 10px;
+}
+.windowsBottom__info {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: flex-end;
+  padding-left: 14px;
+}
+.windowsBottom__frame {
+  width: 150px;
+  height: 62px;
+  border: 1px solid black;
+  display: grid;
+  gap: 0 8px;
+  padding: 2px;
+  grid-template-columns: 1fr auto;
+}
+.windowsBottom__attention {
+  margin: 0 auto;
 }/*# sourceMappingURL=styles.module.css.map */
