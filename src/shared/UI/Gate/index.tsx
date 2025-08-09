@@ -14,7 +14,11 @@ interface Props {
 	shadow?: boolean;
 	position?: 'horizontal' | 'vertical';
 	textTop?: string;
+	textTopLeft?: string;
+	textTopRight?: string;
 	textBottom?: string;
+	textBottomLeft?: string;
+	textBottomRight?: string;
 	textLeft?: string;
 	textRight?: string;
 	className?: string;
@@ -27,7 +31,11 @@ const Gate: FC<Props> = ({
 	power = false,
 	shadow = false,
 	textTop,
+	textTopLeft,
+	textTopRight,
 	textBottom,
+	textBottomLeft,
+	textBottomRight,
 	textLeft,
 	textRight,
 	className,
@@ -82,11 +90,51 @@ const Gate: FC<Props> = ({
 					{textTop}
 				</span>
 			)}
+			{textTopLeft && (
+				<span
+					className={cn(
+						styles.gate__text,
+						styles.gate__text_top_left,
+					)}
+				>
+					{textTopLeft}
+				</span>
+			)}
+			{textTopRight && (
+				<span
+					className={cn(
+						styles.gate__text,
+						styles.gate__text_top_right,
+					)}
+				>
+					{textTopRight}
+				</span>
+			)}
 			{textBottom && (
 				<span
 					className={cn(styles.gate__text, styles.gate__text_bottom)}
 				>
 					{textBottom}
+				</span>
+			)}
+			{textBottomLeft && (
+				<span
+					className={cn(
+						styles.gate__text,
+						styles.gate__text_bottom_left,
+					)}
+				>
+					{textBottomLeft}
+				</span>
+			)}
+			{textBottomRight && (
+				<span
+					className={cn(
+						styles.gate__text,
+						styles.gate__text_bottom_right,
+					)}
+				>
+					{textBottomRight}
 				</span>
 			)}
 			{textLeft && (

@@ -8,14 +8,14 @@
 		'bottom bottom bottom';
 	align-items: center;
 	justify-items: center;
+	position: relative;
 
 	&__icon {
 		grid-area: center;
-		position: relative;
 	}
 
 	&__text {
-		font-size: 14px;
+		font-size: 13px;
 		font-weight: bold;
 		line-height: 14px;
 
@@ -24,14 +24,14 @@
 
 			&_left {
 				position: absolute;
-				top: -3px;
-				right: 45px;
+				top: -20px;
+				right: 36px;
 			}
 
 			&_right {
 				position: absolute;
-				top: -3px;
-				left: 45px;
+				top: -20px;
+				left: 23px;
 			}
 		}
 
@@ -40,14 +40,14 @@
 
 			&_left {
 				position: absolute;
-				bottom: 3px;
-				right: 45px;
+				bottom: -20px;
+				right: 36px;
 			}
 
 			&_right {
 				position: absolute;
-				bottom: 3px;
-				left: 45px;
+				bottom: -20px;
+				left: 23px;
 			}
 		}
 
