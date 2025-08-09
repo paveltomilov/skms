@@ -3,6 +3,7 @@ import styles from './styles.module.scss';
 import TALeftTop from '@/widgets/TA_lefftop';
 import TARightTop from '@/widgets/TA_rightop';
 import TAMidMId from '@/widgets/TA_midmid';
+import TALeftDown from '@/widgets/TA_leftdown';
 
 const TurbineUnitPage = () => {
 	return (
@@ -10,9 +11,9 @@ const TurbineUnitPage = () => {
 			<h1 className={styles.section__title}>ТА - Турбоагрегат</h1>
 			<div className={styles.section__content}>
 				<TALeftTop className={styles.section__content_left_top} />
-				<TALeftMid className={styles.section__content_left_mid}/>
-				<TALeftDown className={styles.section__content_left_down}/>
-				
+				<TALeftMid className={styles.section__content_left_mid} />
+				<TALeftDown className={styles.section__content_left_down} />
+
 				<div className={styles.section__content_mid_top}></div>
 				<TAMidMId className={styles.section__content_mid_mid} />
 				<div className={styles.section__content_mid_down}></div>
