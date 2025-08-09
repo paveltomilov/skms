@@ -79,8 +79,9 @@ const TAMidMId: FC<Props> = ({ className }) => {
 							color="yellow"
 							maxValue={WINDOWS.w46.maxValue}
 							minValue={WINDOWS.w46.minValue}
-							value={WINDOWS.w46.currentValue}
-							title={WINDOWS.w46.unitsMeasurement}
+							currentValue={WINDOWS.w46.currentValue}
+							unitsMeasurement={WINDOWS.w46.unitsMeasurement}
+							title={WINDOWS.w46.title}
 						/>
 						<Window
 							color="blue"
@@ -113,8 +114,9 @@ const TAMidMId: FC<Props> = ({ className }) => {
 						color="blue"
 						maxValue={WINDOWS.w48.maxValue}
 						minValue={WINDOWS.w48.minValue}
-						value={WINDOWS.w48.currentValue}
-						title={WINDOWS.w48.unitsMeasurement}
+						currentValue={WINDOWS.w48.currentValue}
+						unitsMeasurement={WINDOWS.w48.unitsMeasurement}
+						title={WINDOWS.w48.title}
 					/>
 					<div className={styles.rightMiddleSection__arrowButtons}>
 						<Actuator
@@ -184,8 +186,9 @@ const TAMidMId: FC<Props> = ({ className }) => {
 						color="yellow"
 						maxValue={WINDOWS.w58.maxValue}
 						minValue={WINDOWS.w58.minValue}
-						value={WINDOWS.w58.currentValue}
-						title={WINDOWS.w58.unitsMeasurement}
+						currentValue={WINDOWS.w58.currentValue}
+						unitsMeasurement={WINDOWS.w58.unitsMeasurement}
+						title={WINDOWS.w58.title}
 					/>
 				</section>
 
@@ -206,8 +209,9 @@ const TAMidMId: FC<Props> = ({ className }) => {
 						color="blue"
 						maxValue={WINDOWS.w59.maxValue}
 						minValue={WINDOWS.w59.minValue}
-						value={WINDOWS.w59.currentValue}
-						title={WINDOWS.w59.unitsMeasurement}
+						currentValue={WINDOWS.w59.currentValue}
+						unitsMeasurement={WINDOWS.w59.unitsMeasurement}
+						title={WINDOWS.w59.title}
 					/>
 				</section>
 
@@ -228,8 +232,9 @@ const TAMidMId: FC<Props> = ({ className }) => {
 						color="blue"
 						maxValue={WINDOWS.w60.maxValue}
 						minValue={WINDOWS.w60.minValue}
-						value={WINDOWS.w60.currentValue}
-						title={WINDOWS.w60.unitsMeasurement}
+						currentValue={WINDOWS.w60.currentValue}
+						unitsMeasurement={WINDOWS.w60.unitsMeasurement}
+						title={WINDOWS.w60.title}
 					/>
 				</section>
 			</section>
