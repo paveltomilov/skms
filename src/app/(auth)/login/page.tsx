@@ -27,12 +27,12 @@ export default function LoginPage() {
 	useEffect(() => {
 		verifyAuth();
 	}, [verifyAuth]);
-
+	console.log(urlBase);
 	const handleLogin = async () => {
 		try {
 			const {
 				data: { access, refresh },
-			} = await axios.post<LoginResponse>(`${urlBase}auth/`, form, {
+			} = await axios.post<LoginResponse>(`${urlBase}/auth/`, form, {
 				headers: { 'Content-Type': 'application/json' },
 			});
 
