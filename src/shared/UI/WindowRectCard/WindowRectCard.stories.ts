@@ -27,7 +27,11 @@ const meta: Meta<typeof WindowRectCard> = {
 			description: 'Название емкости',
 			control: { type: 'text' },
 		},
-		value: {
+		unitsMeasurement: {
+			description: 'единицы измерения',
+			control: { type: 'text' },
+		},
+		currentValue: {
 			description: 'Значение в окошке',
 			control: { type: 'number' },
 		},
@@ -52,7 +56,7 @@ type Story = StoryObj<typeof meta>;
 export const Yellow: Story = {
 	args: {
 		color: 'yellow',
-		value: 70,
+		currentValue: 70,
 		title: 'ПВД-7',
 	},
 };
@@ -60,7 +64,7 @@ export const Yellow: Story = {
 export const Large: Story = {
 	args: {
 		color: 'red',
-		value: 20,
+		currentValue: 20,
 		title: 'ПВД-7',
 		size: 'lg',
 	},
