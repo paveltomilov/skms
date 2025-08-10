@@ -1,0 +1,54 @@
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
+
+.container {
+	display: flex;
+	justify-content: flex-end;
+	align-items: flex-end;
+	flex-direction: row;
+	gap: 6px;
+}
+
+.blockCND {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 0 24px;
+
+	&__text {
+		color: white;
+		@include mixins.text(16px, 700);
+		padding-top: 18px;
+	}
+
+	&__center {
+		grid-column: span 2;
+		margin: 0 auto 0;
+	}
+
+	&__kPa {
+		padding: 9px 0 0 16px;
+	}
+}
+
+.blockGenerator {
+	@include mixins.flex-space-between;
+	padding: 10px;
+	gap: 10px;
+
+	&__left {
+		display: flex;
+		flex-direction: column;
+		gap: 9px;
+		align-items: center;
+	}
+
+	&__text {
+		color: black;
+		@include mixins.text(16px, 700);
+		margin-bottom: 26px;
+	}
+
+	&__right {
+		margin-bottom: 30px;
+	}
+}

@@ -29,8 +29,24 @@ const meta: Meta<typeof Gate> = {
 			description: 'Текст сверху задвижки',
 			control: { type: 'text' },
 		},
+		textTopLeft: {
+			description: 'Текст в верхнем левом углу задвижки',
+			control: { type: 'text' },
+		},
+		textTopRight: {
+			description: 'Текст в верхнем правом углу задвижки',
+			control: { type: 'text' },
+		},
 		textBottom: {
 			description: 'Текст снизу задвижки',
+			control: { type: 'text' },
+		},
+		textBottomLeft: {
+			description: 'Текст в нижнем левом углу задвижки',
+			control: { type: 'text' },
+		},
+		textBottomRight: {
+			description: 'Текст в нижнем правом углу задвижки',
 			control: { type: 'text' },
 		},
 		textLeft: {

@@ -164,6 +164,7 @@ export const WINDOWS = {
 		minValue: 0,
 		maxValue: 1000,
 		unitsMeasurement: 'мм',
+		title: 'ПВД-7',
 	},
 	w28: {
 		currentValue: 2.86,
@@ -182,6 +183,7 @@ export const WINDOWS = {
 		minValue: 0,
 		maxValue: 1000,
 		unitsMeasurement: 'мм',
+		title: 'ПВД-7',
 	},
 	w31: {
 		currentValue: 1.8,
@@ -194,6 +196,7 @@ export const WINDOWS = {
 		minValue: 0,
 		maxValue: 1000,
 		unitsMeasurement: 'мм',
+		title: 'ПВД-7',
 	},
 	w33: {
 		currentValue: 0.78,
@@ -281,6 +284,7 @@ export const WINDOWS = {
 		minValue: 0,
 		maxValue: 100,
 		unitsMeasurement: 'мм',
+		title: 'ПСГ-2',
 	},
 	w47: {
 		currentValue: 93,
@@ -293,6 +297,7 @@ export const WINDOWS = {
 		minValue: 0,
 		maxValue: 1000,
 		unitsMeasurement: 'мм',
+		title: 'ПСГ-1',
 	},
 	w49: {
 		currentValue: 2.26,
@@ -353,18 +358,21 @@ export const WINDOWS = {
 		minValue: 0,
 		maxValue: 10000,
 		unitsMeasurement: 'мм',
+		title: 'ПВД-3',
 	},
 	w59: {
 		currentValue: 523,
 		minValue: 0,
 		maxValue: 1000,
 		unitsMeasurement: 'мм',
+		title: 'ПВД-2',
 	},
 	w60: {
 		currentValue: 532,
 		minValue: 0,
 		maxValue: 1000,
 		unitsMeasurement: 'мм',
+		title: 'ПВД-1',
 	},
 	w61: {
 		currentValue: 472.0,
@@ -541,12 +549,14 @@ export const WINDOWS = {
 		minValue: 0,
 		maxValue: 1000,
 		unitsMeasurement: 'мм',
+		title: 'Маслобак смазки',
 	},
 	w89: {
 		currentValue: 407,
 		minValue: 0,
 		maxValue: 1000,
 		unitsMeasurement: 'мм',
+		title: 'Маслобак регулир.',
 	},
 	w90: {
 		currentValue: 0.13,
