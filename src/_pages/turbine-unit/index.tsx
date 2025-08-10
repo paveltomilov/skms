@@ -4,6 +4,7 @@ import TALeftTop from '@/widgets/TA_lefftop';
 import TARightTop from '@/widgets/TA_rightop';
 import TAMidMId from '@/widgets/TA_midmid';
 import TALeftDown from '@/widgets/TA_leftdown';
+import TARightDown from '@/widgets/TA_rightdown';
 
 const TurbineUnitPage = () => {
 	return (
@@ -20,7 +21,7 @@ const TurbineUnitPage = () => {
 
 				<TARightTop className={styles.section__content_right_top} />
 				<div className={styles.section__content_right_mid}></div>
-				<div className={styles.section__content_right_down}></div>
+				<TARightDown className={styles.section__content_right_down} />
 			</div>
 		</section>
 	);
