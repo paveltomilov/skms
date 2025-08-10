@@ -10,6 +10,8 @@ interface LoginResponse {
 	refresh?: string;
 }
 
+const urlBase = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 export default function LoginPage() {
 	const router = useRouter();
 	const [username, setUsername] = useState('');
@@ -32,7 +34,7 @@ export default function LoginPage() {
 	const handleLogin = async () => {
 		try {
 			const response = await axios.post<LoginResponse>(
-				'http://localhost:8000/api/auth/',
+				`${urlBase}auth/`,
 				{ username, password },
 				{
 					headers: { 'Content-Type': 'application/json' },

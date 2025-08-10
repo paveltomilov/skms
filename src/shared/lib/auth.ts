@@ -1,5 +1,5 @@
 import { VerifyResponse, RefreshResponse } from '@/shared/types/typesAuth';
-
+const urlBase = process.env.NEXT_PUBLIC_API_BASE_URL;
 export async function checkAuth(): Promise<{ valid: boolean }> {
 	const access = localStorage.getItem('accessToken');
 	const refresh = localStorage.getItem('refreshToken');
@@ -9,14 +9,11 @@ export async function checkAuth(): Promise<{ valid: boolean }> {
 	}
 
 	try {
-		const verifyRes = await fetch(
-			'http://localhost:8000/api/auth/verify/',
-			{
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ token: access }),
-			},
-		);
+		const verifyRes = await fetch(`${urlBase}auth/verify/`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ token: access }),
+		});
 
 		if (!verifyRes.ok) {
 			return { valid: false };
@@ -33,14 +30,11 @@ export async function checkAuth(): Promise<{ valid: boolean }> {
 			return { valid: false };
 		}
 
-		const refreshRes = await fetch(
-			'http://localhost:8000/api/auth/refresh/',
-			{
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ refresh }),
-			},
-		);
+		const refreshRes = await fetch(`${urlBase}auth/refresh/`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ refresh }),
+		});
 
 		if (!refreshRes.ok) {
 			return { valid: false };
