@@ -1,11 +1,11 @@
 import { FC, Suspense } from 'react';
-import BoilerUnitPage from '@/_pages/boiler-unit';
+import TurbineUnitPage from '@/_pages/turbine-unit/index';
 import Loading from '../../loading';
 
 const Ptk: FC = () => {
 	return (
 		<Suspense fallback={<Loading />}>
-			<BoilerUnitPage />
+			<TurbineUnitPage />
 		</Suspense>
 	);
 };
