@@ -17,7 +17,7 @@ const TurbineUnitPage = () => {
 				<div className={styles.section__content_mid_down}></div>
 
 				<div className={styles.section__content_right_top}></div>
-				<TARightMid className={styles.section__content_right_mid}/>
+				<TARightMid className={styles.section__content_right_mid} />
 				<div className={styles.section__content_right_down}></div>
 			</div>
 		</section>
