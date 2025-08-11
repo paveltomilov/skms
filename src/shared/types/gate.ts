@@ -18,7 +18,10 @@ export enum GATE_STATE_TYPE {
 export interface IGate {
 	name: string;
 	states: GATE_STATE_TYPE;
-	position: number;
+	position: number; // на какой % открыта задвижка
+	malfunctions?: string[]; //массив неисправностей (приходит с бека)
+	powerSwitch: boolean; // автомат силовой части
+	controlSwitch: boolean; // автомат управленческой части
 }
 
 export interface TriangleColor {

@@ -21,9 +21,42 @@ const gateStateSlice = createSlice({
 			const { id, position } = action.payload;
 			state[id].position = position;
 		},
+		setGateMalfunctions: (
+			state,
+			action: PayloadAction<{ id: string; malfunctions: string[] }>,
+		) => {
+			const { id, malfunctions } = action.payload;
+			state[id].malfunctions = malfunctions;
+		},
+		turnOnSwitch(
+			state,
+			action: PayloadAction<{
+				id: string;
+				type: 'controlSwitch' | 'powerSwitch';
+			}>,
+		) {
+			const { id, type } = action.payload;
+			state[id][type] = true;
+		},
+		turnOffSwitch(
+			state,
+			action: PayloadAction<{
+				id: string;
+				type: 'controlSwitch' | 'powerSwitch';
+			}>,
+		) {
+			const { id, type } = action.payload;
+			state[id][type] = false;
+		},
 	},
 });
 
-export const { setGateState, setGatePosition } = gateStateSlice.actions;
+export const {
+	setGateState,
+	setGatePosition,
+	setGateMalfunctions,
+	turnOnSwitch,
+	turnOffSwitch,
+} = gateStateSlice.actions;
 
 export default gateStateSlice.reducer;

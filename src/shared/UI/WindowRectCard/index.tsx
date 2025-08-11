@@ -3,12 +3,14 @@ import styles from './styles.module.scss';
 import { FC } from 'react';
 import cn from 'classnames';
 import Window from '../Window';
+import { UnitsMeasurement } from '@/shared/types/window';
 
 interface Props {
 	color: 'blue' | 'yellow' | 'red';
 	size?: 'sm' | 'lg';
-	title: string;
-	value: number;
+	title?: string;
+	currentValue: number;
+	unitsMeasurement: UnitsMeasurement;
 	minValue: number;
 	maxValue: number;
 	className?: string;
@@ -16,16 +18,17 @@ interface Props {
 
 const WindowRectCard: FC<Props> = ({
 	color,
-	value,
+	currentValue,
+	unitsMeasurement,
 	minValue = 0,
 	maxValue = 100,
-	title,
+	title = '',
 	size = 'sm',
 	className,
 }) => {
 	// Создаём градиент, где заполненная часть - это цвет, а остальное - прозрачное
 	const backgroundStyle = {
-		background: getTubFill(color, value, minValue, maxValue),
+		background: getTubFill(color, currentValue, minValue, maxValue),
 	};
 
 	const window = cn(styles.window, className && className, {
@@ -37,8 +40,8 @@ const WindowRectCard: FC<Props> = ({
 		<div className={window} style={backgroundStyle}>
 			<Window
 				color={color === 'red' ? 'blue' : color}
-				value={value}
-				textRight="MM"
+				value={currentValue}
+				textRight={unitsMeasurement}
 			/>
 			<span className={styles.window__title}>{title}</span>
 		</div>
