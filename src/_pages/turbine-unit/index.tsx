@@ -5,6 +5,7 @@ import TARightTop from '@/widgets/TA_rightop';
 import TAMidMId from '@/widgets/TA_midmid';
 import TAMidDown from '@/widgets/TA_middown';
 import TALeftDown from '@/widgets/TA_leftdown';
+import TAMidTop from '@/widgets/TA_midtop';
 
 const TurbineUnitPage = () => {
 	return (
@@ -15,7 +16,7 @@ const TurbineUnitPage = () => {
 				<TALeftMid className={styles.section__content_left_mid} />
 				<TALeftDown className={styles.section__content_left_down} />
 
-				<div className={styles.section__content_mid_top}></div>
+				<TAMidTop className={styles.section__content_mid_top}/>
 				<TAMidMId className={styles.section__content_mid_mid} />
 				<TAMidDown className={styles.section__content_mid_down} />
 
