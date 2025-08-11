@@ -115,3 +115,15 @@
     top: 168px;
     left: 206px;
 }
+
+.text {
+    width: 50px;
+    height: 128px;
+    position: absolute;
+    top: 34px;
+    left: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
