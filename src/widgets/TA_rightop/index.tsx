@@ -1,3 +1,5 @@
+'use client';
+
 import { FC } from 'react';
 import cn from 'classnames';
 import styles from './styles.module.scss';
@@ -25,7 +27,15 @@ const TARightTop: FC<Props> = ({ className }) => {
 					textRight={WINDOWS.w69.unitsMeasurement}
 					colorText="white"
 				/>
-				<span className={cn(className, styles.blockCND__text, styles.blockCND__center)}>ЦНД</span>
+				<span
+					className={cn(
+						className,
+						styles.blockCND__text,
+						styles.blockCND__center,
+					)}
+				>
+					ЦНД
+				</span>
 				<Window
 					color="blue"
 					value={WINDOWS.w72.currentValue}
@@ -38,12 +48,16 @@ const TARightTop: FC<Props> = ({ className }) => {
 					textRight={WINDOWS.w73.unitsMeasurement}
 					colorText="white"
 				/>
-				<div className={cn(styles.blockCND__center, styles.blockCND__kPa)}>
+				<div
+					className={cn(
+						styles.blockCND__center,
+						styles.blockCND__kPa,
+					)}
+				>
 					<Window
 						color="blue"
 						value={WINDOWS.w74.currentValue}
 						textRight={WINDOWS.w74.unitsMeasurement}
-
 					/>
 				</div>
 			</div>
@@ -55,7 +69,9 @@ const TARightTop: FC<Props> = ({ className }) => {
 						textRight={WINDOWS.w70.unitsMeasurement}
 					/>
 					<Tilde size="md" />
-					<span className={styles.blockGenerator__text}>Генератор</span>
+					<span className={styles.blockGenerator__text}>
+						Генератор
+					</span>
 				</div>
 				<div className={styles.blockGenerator__right}>
 					<Window
