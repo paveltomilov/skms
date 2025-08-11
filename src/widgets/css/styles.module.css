@@ -17,7 +17,7 @@
   display: flex;
   flex-direction: row;
   padding-left: 39px;
-  gap: 26px;
+  gap: 27px;
 }
 .windowsBottom__pump {
   width: 103px;
@@ -29,8 +29,16 @@
 .windowsBottom__actuator {
   display: flex;
   flex-direction: row;
-  padding: 2px 0 0 6px;
+  padding: 3px 0 0 8px;
   margin-bottom: 16px;
+}
+.windowsBottom__actuatorRight {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 5px 0 0 32px;
+  margin-bottom: 15px;
+  align-items: flex-start;
 }
 .windowsBottom__gate {
   margin-right: 10px;
@@ -40,7 +48,7 @@
   flex-direction: column;
   gap: 14px;
   align-items: flex-end;
-  padding-left: 14px;
+  padding-left: 13px;
 }
 .windowsBottom__frame {
   width: 150px;

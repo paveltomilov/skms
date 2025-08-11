@@ -17,7 +17,7 @@
 	display: flex;
 	flex-direction: row;
 	padding-left: 39px;
-	gap: 26px;
+	gap: 27px;
 
 	&__pump {
 		width: 103px;
@@ -30,8 +30,17 @@
 	&__actuator {
 		display: flex;
 		flex-direction: row;
-		padding: 2px 0 0 6px;
+		padding: 3px 0 0 8px;
 		margin-bottom: 16px;
+	}
+
+	&__actuatorRight {
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-start;
+		padding: 5px 0 0 32px;
+		margin-bottom: 15px;
+		align-items: flex-start;
 	}
 
 	&__gate {
@@ -43,7 +52,7 @@
 		flex-direction: column;
 		gap: 14px;
 		align-items: flex-end;
-		padding-left: 14px;
+		padding-left: 13px;
 	}
 
 	&__frame {
@@ -59,5 +68,4 @@
 	&__attention {
 		margin: 0 auto;
 	}
-    
 }

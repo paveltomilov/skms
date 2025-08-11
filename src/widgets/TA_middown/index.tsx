@@ -14,6 +14,7 @@ import Rectangle from '@/shared/UI/icons/Rectangle';
 interface Props {
 	className?: string;
 }
+const dropPressure: string = 'dP';
 
 const TAMidDown: FC<Props> = ({ className }) => {
 	return (
@@ -27,7 +28,7 @@ const TAMidDown: FC<Props> = ({ className }) => {
 				/>
 			</div>
 			<div className={styles.windowsBottom}>
-				<section className={styles.windowsBottom__pump}>
+				<div className={styles.windowsBottom__pump}>
 					<Window
 						className={styles.flexRow}
 						color="blue"
@@ -44,7 +45,7 @@ const TAMidDown: FC<Props> = ({ className }) => {
 							color="blue"
 							value={WINDOWS.w64.currentValue}
 							textBottom={WINDOWS.w64.unitsMeasurement}
-							textLeft={'dP'}
+							textLeft={dropPressure}
 						/>
 					</div>
 					<Gate
@@ -53,15 +54,15 @@ const TAMidDown: FC<Props> = ({ className }) => {
 						textRight={GATES.g9.name}
 						position="vertical"
 					/>
-				</section>
-				<section className={styles.windowsBottom__pump}>
+				</div>
+				<div className={styles.windowsBottom__pump}>
 					<Window
 						className={styles.flexRow}
 						color="blue"
 						value={WINDOWS.w63.currentValue}
 						textRight={WINDOWS.w63.unitsMeasurement}
 					/>
-					<div className={styles.windowsBottom__actuator}>
+					<div className={styles.windowsBottom__actuatorRight}>
 						<Actuator
 							transform="rotateLeft90"
 							state={ACTUATORS.a7.state}
@@ -70,8 +71,8 @@ const TAMidDown: FC<Props> = ({ className }) => {
 						<Window
 							color="blue"
 							value={WINDOWS.w65.currentValue}
-							textBottom={WINDOWS.w65.unitsMeasurement}
-							textLeft={'dP'}
+							textRight={WINDOWS.w65.unitsMeasurement}
+							textLeft={dropPressure}
 						/>
 					</div>
 					<Gate
@@ -80,8 +81,8 @@ const TAMidDown: FC<Props> = ({ className }) => {
 						textRight={GATES.g10.name}
 						position="vertical"
 					/>
-				</section>
-				<section className={styles.windowsBottom__info}>
+				</div>
+				<div className={styles.windowsBottom__info}>
 					<Button
 						width={88}
 						height={28}
@@ -107,7 +108,7 @@ const TAMidDown: FC<Props> = ({ className }) => {
 							className={styles.windowsBottom__attention}
 						/>
 					</div>
-				</section>
+				</div>
 			</div>
 		</div>
 	);
