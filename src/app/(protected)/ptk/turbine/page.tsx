@@ -1,6 +1,6 @@
 import { FC, Suspense } from 'react';
 import TurbineUnitPage from '@/_pages/turbine-unit';
-import Loading from '../../loading';
+import Loading from '@/app/loading';
 
 const Turbine: FC = () => {
 	return (
