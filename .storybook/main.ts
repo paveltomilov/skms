@@ -14,7 +14,7 @@ const config: StorybookConfig = {
 		name: '@storybook/nextjs',
 		options: {},
 	},
-	staticDirs: ['..\\public'],
+	staticDirs: ['../public'],
 	webpackFinal: async config => {
 		config.resolve ??= {};
 		config.resolve.alias ??= {};
