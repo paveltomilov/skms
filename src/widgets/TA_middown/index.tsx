@@ -63,7 +63,7 @@ const TAMidDown: FC<Props> = ({ className }) => {
 						value={WINDOWS.w63.currentValue}
 						textRight={WINDOWS.w63.unitsMeasurement}
 					/>
-					<div className={styles.windowsBottom__actuator}>
+					<div className={styles.windowsBottom__actuatorRight}>
 						<Actuator
 							transform="rotateLeft90"
 							state={ACTUATORS.a7.state}
