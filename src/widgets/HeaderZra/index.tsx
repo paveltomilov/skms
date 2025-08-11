@@ -3,10 +3,10 @@
 import { FC, useEffect, useState } from 'react';
 import style from './styles.module.scss';
 import Button from '@/shared/UI/Button';
-import GateWindow from '@/entities/GateWindow/GateWindow';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useGateControlButtons } from '@/shared/hooks/useGateControlButtons';
+import GateWindow from '@/entities/GateWindow';
 
 const HeaderZra: FC = () => {
 	const router = useRouter();
