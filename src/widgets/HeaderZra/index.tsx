@@ -1,14 +1,27 @@
 'use client';
-import { FC } from 'react';
+
+import { FC, useEffect, useState } from 'react';
 import style from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import GateWindow from '@/entities/GateWindow/GateWindow';
-import { useSession, signOut } from 'next-auth/react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useGateControlButtons } from '@/shared/hooks/useGateControlButtons';
 
 const HeaderZra: FC = () => {
-	const session = useSession();
+	const router = useRouter();
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+	useEffect(() => {
+		const token = localStorage.getItem('token');
+		setIsLoggedIn(!!token);
+	}, []);
+
+	const handleLogout = () => {
+		localStorage.removeItem('token');
+		setIsLoggedIn(false);
+		router.push('/login');
+	};
 
 	const {
 		handleButton,
@@ -20,7 +33,7 @@ const HeaderZra: FC = () => {
 		stopPtkDisabled,
 		closePtkActive,
 		openPtkActive,
-	} = useGateControlButtons();
+	} = useGateControlButtons('g1');
 
 	return (
 		<header className={style.header}>
@@ -28,12 +41,10 @@ const HeaderZra: FC = () => {
 				<span className={style.defense}>Работа защит</span>
 
 				{/* временно пока не появится в макете кнопка для выхода */}
-				{session.data?.user ? (
-					<button onClick={() => signOut({ callbackUrl: '/login' })}>
-						выйти
-					</button>
+				{isLoggedIn ? (
+					<button onClick={handleLogout}>выйти</button>
 				) : (
-					<Link href={'/login'}>войти</Link>
+					<Link href="/login">войти</Link>
 				)}
 
 				<div className={style.part}>

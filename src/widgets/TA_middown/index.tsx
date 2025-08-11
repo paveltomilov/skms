@@ -10,11 +10,12 @@ import Gate from '@/shared/UI/Gate';
 import { GATES } from '@/shared/configs/gate';
 import Attention from '@/shared/UI/icons/Attention';
 import Rectangle from '@/shared/UI/icons/Rectangle';
+import { UnitsMeasurement } from '@/shared/types/window';
 
 interface Props {
 	className?: string;
 }
-const dropPressure: string = 'dP';
+const dropPressure: UnitsMeasurement = 'dP';
 
 const TAMidDown: FC<Props> = ({ className }) => {
 	return (
@@ -50,7 +51,7 @@ const TAMidDown: FC<Props> = ({ className }) => {
 					</div>
 					<Gate
 						className={styles.windowsBottom__gate}
-						state={GATES.g9.state}
+						state={GATES.g9.states}
 						textRight={GATES.g9.name}
 						position="vertical"
 					/>
@@ -62,7 +63,7 @@ const TAMidDown: FC<Props> = ({ className }) => {
 						value={WINDOWS.w63.currentValue}
 						textRight={WINDOWS.w63.unitsMeasurement}
 					/>
-					<div className={styles.windowsBottom__actuatorRight}>
+					<div className={styles.windowsBottom__actuator}>
 						<Actuator
 							transform="rotateLeft90"
 							state={ACTUATORS.a7.state}
@@ -77,7 +78,7 @@ const TAMidDown: FC<Props> = ({ className }) => {
 					</div>
 					<Gate
 						className={styles.windowsBottom__gate}
-						state={GATES.g10.state}
+						state={GATES.g10.states}
 						textRight={GATES.g10.name}
 						position="vertical"
 					/>

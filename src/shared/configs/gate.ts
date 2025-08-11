@@ -2,10 +2,95 @@ import {
 	GATE_STATE_TYPE,
 	GatePosition,
 	GateStates,
+	IGate,
 	TriangleColor,
 } from '../types/gate';
 import { IconTransform } from '../types/icon';
 import { ICON_COLOR } from './icon';
+
+export const GATES: Record<string, IGate> = {
+	// TA
+	// left_top
+	g1: {
+		name: 'ГП3-Б',
+		states: GATE_STATE_TYPE.open,
+		position: 100,
+		malfunctions: ['p.1.2.1', 'p.1.1.1'], // необязательный параметр, если нет массива неисправностей, значит задвижка исправна
+		controlSwitch: false,
+		powerSwitch: false,
+	},
+
+	// left_mid
+	g2: {
+		name: 'ГП3-А',
+		states: GATE_STATE_TYPE.open,
+		position: 100,
+		controlSwitch: false,
+		powerSwitch: false,
+	},
+	g3: {
+		name: '1ПВ-5',
+		states: GATE_STATE_TYPE.open,
+		position: 100,
+		controlSwitch: false,
+		powerSwitch: false,
+	},
+
+	// left_down
+	g6: {
+		name: '1ПВ-4',
+		states: GATE_STATE_TYPE.open,
+		position: 100,
+		controlSwitch: false,
+		powerSwitch: false,
+	},
+	g7: {
+		name: '1ПВ-21',
+		states: GATE_STATE_TYPE.close,
+		position: 0,
+		controlSwitch: false,
+		powerSwitch: false,
+	},
+	g8: {
+		name: '1ПЭНА-2',
+		states: GATE_STATE_TYPE.open,
+		position: 100,
+		controlSwitch: false,
+		powerSwitch: false,
+	},
+
+	//mid_mid
+	g4: {
+		name: '1Кпсг2–3',
+		states: GATE_STATE_TYPE.open,
+		position: 100,
+		controlSwitch: false,
+		powerSwitch: false,
+	},
+	g5: {
+		name: '1Кпсг1–3',
+		states: GATE_STATE_TYPE.open,
+		position: 100,
+		controlSwitch: false,
+		powerSwitch: false,
+	},
+
+	// mid_down
+	g9: {
+		name: '1ПЭНБ-2',
+		states: GATE_STATE_TYPE.open,
+		position: 100,
+		controlSwitch: false,
+		powerSwitch: false,
+	},
+	g10: {
+		name: '1ПЭНВ-2',
+		states: GATE_STATE_TYPE.open,
+		position: 100,
+		controlSwitch: false,
+		powerSwitch: false,
+	},
+};
 
 export const TRIANGLE_COLOR: TriangleColor = {
 	green: {
@@ -134,27 +219,4 @@ export const GATE_POSITION: GatePosition = {
 		left: '' as keyof Omit<IconTransform, 'mirror'>,
 		right: 'rotate180' as keyof Omit<IconTransform, 'mirror'>,
 	},
-};
-
-export const GATES = {
-	// TA
-	// left_top
-	g1: { name: 'ГП3-Б', state: GATE_STATE_TYPE.open },
-
-	// left_mid
-	g2: { name: 'ГП3-А', state: GATE_STATE_TYPE.open },
-	g3: { name: '1ПВ-5', state: GATE_STATE_TYPE.open },
-
-	// left_down
-	g6: { name: '1ПВ-4', state: GATE_STATE_TYPE.open },
-	g7: { name: '1ПВ-21', state: GATE_STATE_TYPE.close },
-	g8: { name: '1ПЭНА-2', state: GATE_STATE_TYPE.open },
-
-	//mid_mid
-	g4: { name: '1Кпсг2–3', state: GATE_STATE_TYPE.open },
-	g5: { name: '1Кпсг1–3', state: GATE_STATE_TYPE.open },
-
-	// mid_down
-	g9: { name: '1ПЭНБ-2', state: GATE_STATE_TYPE.open },
-	g10: { name: '1ПЭНВ-2', state: GATE_STATE_TYPE.open },
 };

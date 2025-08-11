@@ -24,7 +24,7 @@ const HeaderPtk: FC = () => {
 					<div className={styles.windows_defense}>Pабота защит</div>
 					<div className={styles.windows_kpm}>КРМ</div>
 				</div>
-				<Window color="yellow" value="-4" textRight="°C" />
+				<Window color="yellow" value={-4} textRight="°С" />
 				<div className={styles.buttons}>
 					<Button
 						className={styles.button}

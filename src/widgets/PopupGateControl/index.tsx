@@ -5,7 +5,8 @@ import Gate from '@/shared/UI/Gate';
 import { useAppSelector } from '@/shared/hooks/store';
 
 export const PopupGateControl: FC = () => {
-	const { state, position } = useAppSelector(state => state.gate);
+	//потом передать динамически id, пока захардкодила
+	const { g1 } = useAppSelector(state => state.gate);
 
 	return (
 		<div className={styles.popup}>
@@ -22,9 +23,9 @@ export const PopupGateControl: FC = () => {
 			</div>
 			<div className={styles.line}></div>
 			<div className={styles.gate}>
-				<div className={styles.percent}>{position}</div>
+				<div className={styles.percent}>{g1.position}</div>
 				<div className={styles.percentSymbol}>%Откр.</div>
-				<Gate className={styles.symbol} state={state} disable />
+				<Gate className={styles.symbol} state={g1.states} disable />
 			</div>
 			<div className={styles.buttons}>
 				<Button

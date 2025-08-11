@@ -1,4 +1,4 @@
-import { setGatePosition } from '@/store/gateSlice';
+import { setGatePosition, setGateState } from '@/store/gateSlice';
 import {
 	BASE_RESISTANCE,
 	HIGH_RESISTANCE,
@@ -12,11 +12,11 @@ import { useAppDispatch, useAppSelector } from './store';
 import { setResistance } from '@/store/circuitSlice';
 import { KRUZAP_BUTTONS_CONFIG, PTK_BUTTONS_CONFIG } from '../configs/header';
 import { useRef } from 'react';
+import { GATE_STATE_TYPE } from '../types/gate';
 
-export const useGateControlButtons = () => {
+export const useGateControlButtons = (id: string) => {
 	const dispatch = useAppDispatch();
 
-	// Явно указываем тип для элементов схемы
 	const limitSwitchOpenElement = findElementByID(
 		LIMIT_SWITCH_OPEN_ID,
 		useAppSelector(state => state.circuit),
@@ -62,7 +62,9 @@ export const useGateControlButtons = () => {
 	const stopPtkDisabled = !openPtkActive && !closePtkActive;
 
 	// получаем положение задвижки из стора
-	const gatePosition = useRef(useAppSelector(state => state.gate.position));
+	const gatePosition = useRef(
+		useAppSelector(state => state.gate[id].position),
+	);
 
 	// создаем интервал в глобальной ОВ, чтобы к нему можно было обращаться и изменять в функциях stopGateMovement и handleButton
 	const gateInterval = useRef<NodeJS.Timeout | null>(null);
@@ -80,8 +82,10 @@ export const useGateControlButtons = () => {
 		if (gateInterval.current) {
 			clearInterval(gateInterval.current);
 			gateInterval.current = null;
-			dispatch(setGatePosition(gatePosition.current)); // Диспатчим текущее положение при остановке
-
+			dispatch(setGatePosition({ id, position: gatePosition.current })); // Диспатчим текущее положение при остановке
+			dispatch(
+				setGateState({ id, states: GATE_STATE_TYPE.intermediate }),
+			);
 			console.log(
 				`Задвижка остановилась в положении: ${gatePosition.current}%`,
 			);
@@ -108,10 +112,14 @@ export const useGateControlButtons = () => {
 			// Обновляем положение
 			if (button === 'open') {
 				gatePosition.current += 1;
+				dispatch(setGateState({ id, states: GATE_STATE_TYPE.toOpen }));
 
 				if (gatePosition.current >= 100) {
 					gatePosition.current = 100;
 					stopGateMovement(type);
+					dispatch(
+						setGateState({ id, states: GATE_STATE_TYPE.open }),
+					);
 
 					config.opening.forEach(action => {
 						dispatch(setResistance(action));
@@ -119,17 +127,20 @@ export const useGateControlButtons = () => {
 				}
 			} else if (button === 'close') {
 				gatePosition.current -= 1;
+				dispatch(setGateState({ id, states: GATE_STATE_TYPE.toClose }));
 
 				if (gatePosition.current <= 0) {
 					gatePosition.current = 0;
 					stopGateMovement(type);
+					dispatch(
+						setGateState({ id, states: GATE_STATE_TYPE.close }),
+					);
 
 					config.closing.forEach(action => {
 						dispatch(setResistance(action));
 					});
 				}
 			}
-
 			console.log(`Положение задвижки: ${gatePosition.current}%`);
 		}, 100);
 	};

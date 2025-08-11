@@ -29,7 +29,21 @@ const meta: Meta<typeof WindowRectCard> = {
 		},
 		unitsMeasurement: {
 			description: 'единицы измерения',
-			control: { type: 'text' },
+			options: [
+				'°С',
+				'МПа',
+				'кПа',
+				'т/ч',
+				'об.мин',
+				'А',
+				'мм',
+				'%',
+				'мг/м3',
+				'Гкал/ч',
+			],
+			control: {
+				type: 'radio',
+			},
 		},
 		currentValue: {
 			description: 'Значение в окошке',
