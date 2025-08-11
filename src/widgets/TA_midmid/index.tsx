@@ -1,3 +1,5 @@
+'use client';
+
 import { FC } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
@@ -6,15 +8,16 @@ import Gate from '@/shared/UI/Gate';
 import cn from 'classnames';
 import WindowRectCard from '@/shared/UI/WindowRectCard';
 import { WINDOWS } from '@/shared/configs/window';
-import { GATES } from '@/shared/configs/gate';
 import Actuator from '@/shared/UI/Actuator';
 import { ACTUATORS } from '@/shared/configs/actuator';
+import { useAppSelector } from '@/shared/hooks/store';
 
 interface Props {
 	className?: string;
 }
 
 const TAMidMId: FC<Props> = ({ className }) => {
+	const { g4, g5 } = useAppSelector(state => state.gate);
 	return (
 		<div className={cn(className, styles.container)}>
 			{/* Верхний блок с 5 колонками */}
@@ -193,8 +196,8 @@ const TAMidMId: FC<Props> = ({ className }) => {
 				</section>
 
 				<Gate
-					state={GATES.g4.state}
-					textTopLeft={GATES.g4.name}
+					state={g4.states}
+					textTopLeft={g4.name}
 					position="vertical"
 				/>
 
@@ -216,8 +219,8 @@ const TAMidMId: FC<Props> = ({ className }) => {
 				</section>
 
 				<Gate
-					state={GATES.g5.state}
-					textTopLeft={GATES.g5.name}
+					state={g5.states}
+					textTopLeft={g5.name}
 					position="vertical"
 				/>
 

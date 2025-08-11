@@ -33,7 +33,7 @@ const HeaderZra: FC = () => {
 		stopPtkDisabled,
 		closePtkActive,
 		openPtkActive,
-	} = useGateControlButtons();
+	} = useGateControlButtons('g1');
 
 	return (
 		<header className={style.header}>
