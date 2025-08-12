@@ -1,0 +1,71 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	gap: 41px 0;
+}
+
+.flexRow {
+	display: flex;
+	flex-direction: row;
+}
+
+.windowsTop {
+	padding-left: 33px;
+}
+
+.windowsBottom {
+	display: flex;
+	flex-direction: row;
+	padding-left: 39px;
+	gap: 27px;
+
+	&__pump {
+		width: 103px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding-top: 5px;
+	}
+
+	&__actuator {
+		display: flex;
+		flex-direction: row;
+		padding: 3px 0 0 8px;
+		margin-bottom: 16px;
+	}
+
+	&__actuatorRight {
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-start;
+		padding: 5px 0 0 32px;
+		margin-bottom: 15px;
+		align-items: flex-start;
+	}
+
+	&__gate {
+		margin-right: 10px;
+	}
+
+	&__info {
+		display: flex;
+		flex-direction: column;
+		gap: 14px;
+		align-items: flex-end;
+		padding-left: 13px;
+	}
+
+	&__frame {
+		width: 150px;
+		height: 62px;
+		border: 1px solid black;
+		display: grid;
+		gap: 0 8px;
+		padding: 2px;
+		grid-template-columns: 1fr auto;
+	}
+
+	&__attention {
+		margin: 0 auto;
+	}
+}

@@ -1,8 +1,8 @@
 import { FC, Suspense } from 'react';
-import TurbineUnitPage from '@/_pages/turbine-unit';
+import TurbineUnitPage from '@/_pages/turbine-unit/index';
 import Loading from '../../loading';
 
-const Turbine: FC = () => {
+const Ptk: FC = () => {
 	return (
 		<Suspense fallback={<Loading />}>
 			<TurbineUnitPage />
@@ -10,4 +10,4 @@ const Turbine: FC = () => {
 	);
 };
 
-export default Turbine;
+export default Ptk;

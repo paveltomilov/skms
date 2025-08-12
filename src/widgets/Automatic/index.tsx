@@ -16,7 +16,7 @@ import { useGateControlButtons } from '@/shared/hooks/useGateControlButtons';
 
 export const Automatic: FC = () => {
 	const { handleButton, stopGateMovement, openOn, closeOn } =
-		useGateControlButtons();
+		useGateControlButtons('g1');
 
 	const controlCircuitBreaker = findElementByID(
 		CONTROL_CIRCUIT_BREAKER_ID,

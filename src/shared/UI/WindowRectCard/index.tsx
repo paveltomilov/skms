@@ -3,13 +3,14 @@ import styles from './styles.module.scss';
 import { FC } from 'react';
 import cn from 'classnames';
 import Window from '../Window';
+import { UnitsMeasurement } from '@/shared/types/window';
 
 interface Props {
 	color: 'blue' | 'yellow' | 'red';
 	size?: 'sm' | 'lg';
 	title?: string;
 	currentValue: number;
-	unitsMeasurement: string;
+	unitsMeasurement: UnitsMeasurement;
 	minValue: number;
 	maxValue: number;
 	className?: string;

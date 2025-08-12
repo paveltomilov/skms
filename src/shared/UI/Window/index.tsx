@@ -1,3 +1,4 @@
+import { UnitsMeasurement } from '@/shared/types/window';
 import styles from './styles.module.scss';
 import cn from 'classnames';
 import { FC } from 'react';
@@ -5,10 +6,10 @@ import { FC } from 'react';
 interface Props {
 	color: 'blue' | 'yellow' | 'white';
 	value: number;
-	textTop?: string;
-	textBottom?: string;
-	textLeft?: string;
-	textRight?: string;
+	textTop?: UnitsMeasurement;
+	textBottom?: UnitsMeasurement;
+	textLeft?: UnitsMeasurement;
+	textRight?: UnitsMeasurement;
 	colorText?: 'black' | 'white';
 	className?: string;
 }
