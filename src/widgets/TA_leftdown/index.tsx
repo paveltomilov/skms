@@ -81,7 +81,6 @@ const TALeftDown: FC<Props> = ({ className }) => {
 				<div className={styles.windows__leftup}>
 					<Window
 						color="blue"
-						//textBottom="I отб."
 						value={WINDOWS.w28.currentValue}
 						textRight={WINDOWS.w28.unitsMeasurement}
 					/>
@@ -91,7 +90,6 @@ const TALeftDown: FC<Props> = ({ className }) => {
 						color="blue"
 						value={WINDOWS.w31.currentValue}
 						textRight={WINDOWS.w31.unitsMeasurement}
-						//textBottom="II отб."
 					/>
 				</div>
 				<div className={styles.windows__leftdown}>
@@ -99,7 +97,6 @@ const TALeftDown: FC<Props> = ({ className }) => {
 						color="blue"
 						value={WINDOWS.w33.currentValue}
 						textRight={WINDOWS.w33.unitsMeasurement}
-						//textBottom="III отб."
 					/>
 				</div>
 				<div className={styles.windows__midup}>
@@ -131,6 +128,11 @@ const TALeftDown: FC<Props> = ({ className }) => {
 						textLeft="dP"
 					/>
 				</div>
+			</div>
+			<div className={styles.text}>
+				<span>I отб.</span>
+				<span>II отб.</span>
+				<span>III отб.</span>
 			</div>
 			<Button
 				width={88}
