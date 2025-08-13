@@ -6,7 +6,7 @@ import Window from '@/shared/UI/Window';
 
 const GateWindow: FC = () => {
 	//потом передать динамически id, пока захардкодила
-	const { g1 } = useAppSelector(state => state.gate);
+	const { g1 } = useAppSelector(state => state.gate.gates);
 
 	return (
 		<div className={styles.window}>

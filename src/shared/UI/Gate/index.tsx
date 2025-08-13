@@ -21,6 +21,7 @@ interface Props {
 	textBottomRight?: string;
 	textLeft?: string;
 	textRight?: string;
+	onClick?: () => void;
 	className?: string;
 }
 
@@ -38,13 +39,17 @@ const Gate: FC<Props> = ({
 	textBottomRight,
 	textLeft,
 	textRight,
+	onClick,
 	className,
 }) => {
 	const states = GATE_STATE[state];
 	const positions = GATE_POSITION[position];
 	const isVertical = position === 'vertical';
 	return (
-		<div className={`${styles.gate__wrapper} ${className && className}`}>
+		<div
+			className={`${styles.gate__wrapper} ${className && className}`}
+			onClick={onClick}
+		>
 			<div
 				className={`${styles.gate}
 			${isVertical && styles.gate_vertical} ${shadow && styles.gate_shadow}`}

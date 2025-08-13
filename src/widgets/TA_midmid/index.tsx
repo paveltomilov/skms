@@ -1,5 +1,3 @@
-'use client';
-
 import { FC } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
@@ -11,13 +9,16 @@ import { WINDOWS } from '@/shared/configs/window';
 import Actuator from '@/shared/UI/Actuator';
 import { ACTUATORS } from '@/shared/configs/actuator';
 import { useAppSelector } from '@/shared/hooks/store';
+import { useOpenGatePopup } from '@/shared/hooks/useOpenGatePopup';
 
 interface Props {
 	className?: string;
 }
 
 const TAMidMId: FC<Props> = ({ className }) => {
-	const { g4, g5 } = useAppSelector(state => state.gate);
+	const { g4, g5 } = useAppSelector(state => state.gate.gates);
+
+	const openGatePopup = useOpenGatePopup();
 	return (
 		<div className={cn(className, styles.container)}>
 			{/* Верхний блок с 5 колонками */}
@@ -199,6 +200,7 @@ const TAMidMId: FC<Props> = ({ className }) => {
 					state={g4.states}
 					textTopLeft={g4.name}
 					position="vertical"
+					onClick={() => openGatePopup('g4')}
 				/>
 
 				<section className={styles.bottomSelect}>
@@ -222,6 +224,7 @@ const TAMidMId: FC<Props> = ({ className }) => {
 					state={g5.states}
 					textTopLeft={g5.name}
 					position="vertical"
+					onClick={() => openGatePopup('g5')}
 				/>
 
 				<section className={styles.bottomSelect}>

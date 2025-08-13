@@ -1,129 +1,130 @@
 .container {
-    position: relative;
+	position: relative;
 }
 
 .gates {
-    position: absolute;
-    display: grid;
-    grid-template-columns: 24px 69px 3px 62px 242px 79px 1fr;
-    grid-template-rows: 59px 36px 80px 20px 16px 20px 1fr;
-    grid-template-areas:
-        '.  .   .   .   .   .   '
-        '.  g1  .   .   .   .   '
-        '.  .   .   .   .   .   '
-        '.  .   .   .   .   g3  '
-        '.  .   .   g2  .   g3  '
-        '.  .   .   g2  .   .   '
-        '.  .   .   .   .   .   ';
+	position: absolute;
+	display: grid;
+	z-index: 2;
+	grid-template-columns: 24px 69px 3px 62px 242px 79px 1fr;
+	grid-template-rows: 59px 36px 80px 20px 16px 20px 1fr;
+	grid-template-areas:
+		'.  .   .   .   .   .   '
+		'.  g1  .   .   .   .   '
+		'.  .   .   .   .   .   '
+		'.  .   .   .   .   g3  '
+		'.  .   .   g2  .   g3  '
+		'.  .   .   g2  .   .   '
+		'.  .   .   .   .   .   ';
 
-    &__left {
-        grid-area: g1;
-        margin-left: 8px;
-    }
+	&__left {
+		grid-area: g1;
+		margin-left: 8px;
+	}
 
-    &__mid {
-        grid-area: g2;
-        margin-left: 8px;
-    }
+	&__mid {
+		grid-area: g2;
+		margin-left: 8px;
+	}
 
-    &__right {
-        grid-area: g3;
-        margin-right: 6px;
-    }
+	&__right {
+		grid-area: g3;
+		margin-right: 6px;
+	}
 }
 
 .cards {
-    position: absolute;
-    display: grid;
-    grid-template-columns: 109px 280px 1fr;
-    grid-template-rows: 12px 58px 58px 1fr;
-    grid-template-areas:
-        '.  .   c4  '
-        '.  c1  .   '
-        '.  c2  .   '
-        '.  c3  .   ';
+	position: absolute;
+	display: grid;
+	grid-template-columns: 109px 280px 1fr;
+	grid-template-rows: 12px 58px 58px 1fr;
+	grid-template-areas:
+		'.  .   c4  '
+		'.  c1  .   '
+		'.  c2  .   '
+		'.  c3  .   ';
 
-    &__leftup {
-        grid-area: c1;
-    }
+	&__leftup {
+		grid-area: c1;
+	}
 
-    &__leftmid {
-        grid-area: c2;
-    }
+	&__leftmid {
+		grid-area: c2;
+	}
 
-    &__leftdown {
-        grid-area: c3;
-    }
+	&__leftdown {
+		grid-area: c3;
+	}
 
-    &__right {
-        grid-area: c4;
-    }
+	&__right {
+		grid-area: c4;
+	}
 }
 
 .windows {
-    position: absolute;
-    display: grid;
-    grid-template-columns: 194px 44px 78px 27px 1fr;
-    grid-template-rows: 8px 56px 32px 22px 2px 82px 26px 1fr;
-    grid-template-areas:
-        '.  .   .   .   .   '
-        '.  w1  .   .   .   '
-        '.  w2  .   .   .   '
-        '.  .   .   .   w6  '
-        '.  .   .   w7  .   '
-        '.  w3  .   .   .   '
-        '.  .   w4  .   .   '
-        '.  .   w5  .   .   '   ;
+	position: absolute;
+	display: grid;
+	grid-template-columns: 194px 44px 78px 27px 1fr;
+	grid-template-rows: 8px 56px 32px 22px 2px 82px 26px 1fr;
+	grid-template-areas:
+		'.  .   .   .   .   '
+		'.  w1  .   .   .   '
+		'.  w2  .   .   .   '
+		'.  .   .   .   w6  '
+		'.  .   .   w7  .   '
+		'.  w3  .   .   .   '
+		'.  .   w4  .   .   '
+		'.  .   w5  .   .   ';
 
-    &__leftup {
-        grid-area: w1;
-    }
+	&__leftup {
+		grid-area: w1;
+	}
 
-    &__leftmid {
-        grid-area: w2;
-    }
+	&__leftmid {
+		grid-area: w2;
+	}
 
-    &__leftdown {
-        grid-area: w3;
-    }
+	&__leftdown {
+		grid-area: w3;
+	}
 
-    &__midup {
-        grid-area: w4;
-    }
+	&__midup {
+		grid-area: w4;
+	}
 
-    &__middown {
-        grid-area: w5;
-    }
+	&__middown {
+		grid-area: w5;
+	}
 
-    &__rightup {
-        grid-area: w6;
-    }
+	&__rightup {
+		grid-area: w6;
+	}
 
-    &__rightdown {
-        grid-area: w7;
-    }
+	&__rightdown {
+		grid-area: w7;
+	}
 }
 
 .arrow {
-    position: absolute;
-    top: 123px;
-    left: 392px;
+	position: absolute;
+	top: 123px;
+	left: 392px;
 }
 
 .button {
-    position: absolute;
-    top: 168px;
-    left: 206px;
+	position: absolute;
+	top: 168px;
+	left: 206px;
 }
 
 .text {
-    width: 50px;
-    height: 128px;
-    position: absolute;
-    top: 34px;
-    left: 220px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+	width: 50px;
+	height: 128px;
+	position: absolute;
+	top: 34px;
+	left: 220px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
 }

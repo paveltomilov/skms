@@ -14,10 +14,7 @@ import { setVoltagePoints } from '@/store/pointsSlice';
 import { InputCircuitBreaker } from '@/entities/InputCircuitBreaker';
 import { Automatic } from '../Automatic';
 import ModalWrapper from '../ModalWrapper';
-import { PopupGateControl } from '../PopupGateControl';
-import PopupDiagnostic from '@/entities/PopupDiagnostic';
 import { closeModal } from '@/store/modalSlice';
-import PopupGateValves from '../PopupGateValves';
 
 const Scheme: FC = () => {
 	// для рендера щупов
@@ -43,9 +40,7 @@ const Scheme: FC = () => {
 		console.log(pointsVoltage);
 	}, [scheme]);
 
-	const { automatic, gateControl, diagnostic, gateValves } = useAppSelector(
-		state => state.modal,
-	);
+	const { automatic } = useAppSelector(state => state.modal);
 
 	return (
 		<div className={styles.scheme}>
@@ -73,31 +68,6 @@ const Scheme: FC = () => {
 					onClose={() => dispatch(closeModal('automatic'))}
 				>
 					<Automatic />
-				</ModalWrapper>
-			)}
-
-			{gateControl && (
-				<ModalWrapper
-					title="ПКДВ-2"
-					onClose={() => dispatch(closeModal('gateControl'))}
-				>
-					<PopupGateControl />
-				</ModalWrapper>
-			)}
-			{diagnostic && (
-				<ModalWrapper
-					title="ПКДВ-2"
-					onClose={() => dispatch(closeModal('diagnostic'))}
-				>
-					<PopupDiagnostic />
-				</ModalWrapper>
-			)}
-			{gateValves && (
-				<ModalWrapper
-					title="ПКДВ-2 - Ф.сх."
-					onClose={() => dispatch(closeModal('gateValves'))} //
-				>
-					<PopupGateValves />
 				</ModalWrapper>
 			)}
 		</div>

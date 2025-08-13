@@ -1,32 +1,45 @@
 import { GATES } from '@/shared/configs/gate';
-import { GATE_STATE_TYPE } from '@/shared/types/gate';
+import { GATE_STATE_TYPE, IGate } from '@/shared/types/gate';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+interface GateState {
+	gates: Record<string, IGate>;
+	activeGateId: string | null;
+}
+
+const initialState: GateState = {
+	gates: GATES,
+	activeGateId: null,
+};
 
 const gateStateSlice = createSlice({
 	name: 'gate',
-	initialState: GATES,
+	initialState,
 
 	reducers: {
+		setActiveGate: (state, action: PayloadAction<string>) => {
+			state.activeGateId = action.payload;
+		},
 		setGateState: (
 			state,
 			action: PayloadAction<{ id: string; states: GATE_STATE_TYPE }>,
 		) => {
 			const { id, states } = action.payload;
-			state[id].states = states;
+			state.gates[id].states = states;
 		},
 		setGatePosition: (
 			state,
 			action: PayloadAction<{ id: string; position: number }>,
 		) => {
 			const { id, position } = action.payload;
-			state[id].position = position;
+			state.gates[id].position = position;
 		},
 		setGateMalfunctions: (
 			state,
 			action: PayloadAction<{ id: string; malfunctions: string[] }>,
 		) => {
 			const { id, malfunctions } = action.payload;
-			state[id].malfunctions = malfunctions;
+			state.gates[id].malfunctions = malfunctions;
 		},
 		turnOnSwitch(
 			state,
@@ -36,7 +49,7 @@ const gateStateSlice = createSlice({
 			}>,
 		) {
 			const { id, type } = action.payload;
-			state[id][type] = true;
+			state.gates[id][type] = true;
 		},
 		turnOffSwitch(
 			state,
@@ -46,12 +59,13 @@ const gateStateSlice = createSlice({
 			}>,
 		) {
 			const { id, type } = action.payload;
-			state[id][type] = false;
+			state.gates[id][type] = false;
 		},
 	},
 });
 
 export const {
+	setActiveGate,
 	setGateState,
 	setGatePosition,
 	setGateMalfunctions,

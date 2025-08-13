@@ -2,11 +2,25 @@ import styles from './styles.module.scss';
 import { FC } from 'react';
 import Button from '@/shared/UI/Button';
 import Gate from '@/shared/UI/Gate';
-import { useAppSelector } from '@/shared/hooks/store';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
+import { openModal } from '@/store/modalSlice';
+import { useGateControlButtons } from '@/shared/hooks/useGateControlButtons';
 
 export const PopupGateControl: FC = () => {
-	//потом передать динамически id, пока захардкодила
-	const { g1 } = useAppSelector(state => state.gate);
+	const gateId = useAppSelector(state => state.gate.activeGateId) ?? 'g1';
+	const gate = useAppSelector(state => state.gate.gates[gateId]);
+
+	const dispatch = useAppDispatch();
+
+	const {
+		handleButton,
+		stopGateMovement,
+		closePtkDisabled,
+		openPtkDisabled,
+		stopPtkDisabled,
+		closePtkActive,
+		openPtkActive,
+	} = useGateControlButtons(gateId);
 
 	return (
 		<div className={styles.popup}>
@@ -18,14 +32,14 @@ export const PopupGateControl: FC = () => {
 					width={132}
 					height={38}
 					text="Откр Диагн"
-					onClick={() => console.log('Нажата кнопка Откр Диагн')}
+					onClick={() => dispatch(openModal('diagnostic'))}
 				/>
 			</div>
 			<div className={styles.line}></div>
 			<div className={styles.gate}>
-				<div className={styles.percent}>{g1.position}</div>
+				<div className={styles.percent}>{gate.position}</div>
 				<div className={styles.percentSymbol}>%Откр.</div>
-				<Gate className={styles.symbol} state={g1.states} disable />
+				<Gate className={styles.symbol} state={gate.states} />
 			</div>
 			<div className={styles.buttons}>
 				<Button
@@ -33,21 +47,26 @@ export const PopupGateControl: FC = () => {
 					width={105}
 					height={38}
 					text="Открыть"
-					onClick={() => console.log('Нажата кнопка Открыть')}
+					disabled={openPtkDisabled}
+					active={openPtkActive}
+					onClick={() => handleButton('ptk', 'open')}
 				/>
 				<Button
 					className={styles.popup__button}
 					width={76}
 					height={38}
 					text="Стоп"
-					onClick={() => console.log('Нажата кнопка Стоп')}
+					disabled={stopPtkDisabled}
+					onClick={() => stopGateMovement('ptk')}
 				/>
 				<Button
 					className={styles.popup__button}
 					width={98}
 					height={38}
 					text="Закрыть"
-					onClick={() => console.log('Нажата кнопка Закрыть')}
+					disabled={closePtkDisabled}
+					active={closePtkActive}
+					onClick={() => handleButton('ptk', 'close')}
 				/>
 			</div>
 		</div>

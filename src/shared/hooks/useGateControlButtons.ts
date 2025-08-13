@@ -63,7 +63,7 @@ export const useGateControlButtons = (id: string) => {
 
 	// получаем положение задвижки из стора
 	const gatePosition = useRef(
-		useAppSelector(state => state.gate[id].position),
+		useAppSelector(state => state.gate.gates[id].position),
 	);
 
 	// создаем интервал в глобальной ОВ, чтобы к нему можно было обращаться и изменять в функциях stopGateMovement и handleButton
@@ -161,5 +161,7 @@ export const useGateControlButtons = (id: string) => {
 		// когда кнопки птк в хедере нажаты
 		openPtkActive,
 		closePtkActive,
+
+		currentPosition: gatePosition.current,
 	};
 };
