@@ -1,3 +1,109 @@
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
+
 .container {
-    display: flex;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.windowsTop {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-end;
+	width: 100%;
+	gap: 94px;
+	padding: 0 0 0 34px;
+
+	&__text {
+		@include mixins.text(12px, 500);
+		margin-bottom: 8px;
+	}
+
+	&__collector {
+		width: 191px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 7px;
+		padding: 23px 0 0;
+	}
+
+	&__collectorName {
+		text-align: center;
+		@include mixins.text(16px, 400);
+		padding-left: 14px;
+	}
+
+	&__collectorSensors {
+		display: flex;
+		align-items: center;
+		flex-direction: row;
+		gap: 20px;
+		margin: 0 15px 0 0;
+		justify-content: space-between;
+	}
+}
+
+.windowsMiddle {
+	padding: 0 0 0 48px;
+}
+
+.windowsBottom {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	gap: 188px;
+
+	&__CSD {
+		@include mixins.text(16px, 700);
+		color: variables.$white-color;
+		padding: 75px 0 0 134px;
+	}
+
+	&__indicators {
+		display: flex;
+		flex-direction: row;
+		padding: 10px;
+		gap: 13px;
+
+		&_left {
+			display: flex;
+			flex-direction: column;
+			gap: 17px;
+			padding: 26px 0 0 0;
+		}
+
+		&_text {
+			@include mixins.text(14px, 700);
+		}
+
+		&_right {
+			display: flex;
+			flex-direction: column;
+			gap: 2px;
+		}
+
+		&_arrow {
+			display: flex;
+			flex-direction: row;
+			gap: 8px;
+			padding: 0 0 0 3px;
+
+			&_45 {
+				transform: rotate(-45deg);
+			}
+		}
+
+		&_lamp {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 8px 4px;
+		}
+
+		&_window {
+			padding: 14px 0 0 0;
+			display: flex;
+		}
+	}
 }

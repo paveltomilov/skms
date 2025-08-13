@@ -3,6 +3,8 @@ import styles from './styles.module.scss';
 import cn from 'classnames';
 import Window from '@/shared/UI/Window';
 import { WINDOWS } from '@/shared/configs/window';
+import Button from '@/shared/UI/Button';
+import ArrowPage from '@/shared/UI/icons/ArrowPage';
 
 interface Props {
 	className?: string;
@@ -11,14 +13,22 @@ const TAMidTop: FC<Props> = ({ className }) => {
 	return (
 		<div className={cn(className, styles.container)}>
 			<div className={styles.windowsTop}>
-				<span className={styles.windowsTop__test}>СКСД-2</span>
+				<span className={styles.windowsTop__text}>СКСД-2</span>
 				<div className={styles.windowsTop__collector}>
 					<span className={styles.windowsTop__collectorName}>
 						Горячий коллектор уплотнений
 					</span>
 					<div className={styles.windowsTop__collectorSensors}>
-						<Window color="blue" textRight="МПа" value={0.141} />
-						<Window color="yellow" textRight="°С" value={385} />
+						<Window
+							color="blue"
+							textRight={WINDOWS.w94.unitsMeasurement}
+							value={WINDOWS.w94.currentValue}
+						/>
+						<Window
+							color="yellow"
+							textRight={WINDOWS.w95.unitsMeasurement}
+							value={WINDOWS.w95.currentValue}
+						/>
 					</div>
 				</div>
 				<div className={styles.windowsTop__collector}>
@@ -39,9 +49,77 @@ const TAMidTop: FC<Props> = ({ className }) => {
 					</div>
 				</div>
 			</div>
-			<div className={styles.windowsBottom}></div>
+			<div className={styles.windowsMiddle}>
+				<Button text={'ТУРБ'} width={88} height={28} />
+			</div>
+			<div className={styles.windowsBottom}>
+				<span className={styles.windowsBottom__CSD}>ЦСД</span>
+				<div className={styles.windowsBottom__indicators}>
+					<div className={styles.windowsBottom__indicators_left}>
+						<span className={styles.windowsBottom__indicators_text}>
+							Вибрация подшипников
+						</span>
+						<span className={styles.windowsBottom__indicators_text}>
+							Осевой сдвиг
+						</span>
+						<span className={styles.windowsBottom__indicators_text}>
+							Вода у газоохладителям
+						</span>
+					</div>
+					<div className={styles.windowsBottom__indicators_right}>
+						<div className={styles.windowsBottom__indicators_arrow}>
+							<ArrowPage transform={'rotate90'} />
+
+							<ArrowPage transform={'rotate180'} />
+							<ArrowPage
+								className={
+									styles.windowsBottom__indicators_arrow_45
+								}
+							/>
+						</div>
+						<div className={styles.windowsBottom__indicators_lamp}>
+							<RectangleLamp />
+							<RectangleLamp />
+							<RectangleLamp />
+							<RectangleLamp />
+							<RectangleLamp />
+						</div>
+						<Window
+							className={styles.windowsBottom__indicators_window}
+							color="blue"
+							textRight={WINDOWS.w40.unitsMeasurement}
+							value={WINDOWS.w40.currentValue}
+						/>
+					</div>
+				</div>
+			</div>
 		</div>
 	);
 };
 
 export default TAMidTop;
+
+interface PropsRectangleLamp {
+	width?: number;
+	height?: number;
+	condition?: 'norma' | 'error';
+}
+
+const RectangleLamp: FC<PropsRectangleLamp> = ({
+	width = 24,
+	height = 24,
+	condition = 'norma',
+}) => {
+	const backgroundColor = condition === 'norma' ? '#0BF40E' : '#8F1313';
+	return (
+		<span
+			style={{
+				display: 'block',
+				width,
+				height,
+				backgroundColor,
+				border: '1px solid #000000 ',
+			}}
+		></span>
+	);
+};
