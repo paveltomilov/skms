@@ -87,3 +87,31 @@ export const rightMidThree: GroupElementsArrow[] = [
 		text: 'КЭН-1А',
 	},
 ];
+
+// TA Right bottom
+export const rightBottomOne: GroupElementsArrow[] = [
+	{
+		state: 'on',
+		transform: 'rotateLeft90',
+		disabled: false,
+		text: 'МНС-1Б',
+	},
+	{
+		state: 'off',
+		transform: 'rotateLeft90',
+		disabled: false,
+		text: 'МНС-1А',
+	},
+	{
+		state: 'off',
+		transform: 'rotateLeft90',
+		disabled: false,
+		text: 'АМН-1А',
+	},
+	{
+		state: 'off',
+		transform: 'rotateLeft90',
+		disabled: false,
+		text: 'АМН-1Б',
+	},
+];
