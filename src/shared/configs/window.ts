@@ -249,6 +249,18 @@ export const WINDOWS = {
 		maxValue: 1000,
 		unitsMeasurement: 'т/ч' as UnitsMeasurement,
 	},
+	w94: {
+		currentValue: 0.141,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'МПа' as UnitsMeasurement,
+	},
+	w95: {
+		currentValue: 385,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
 
 	// mid_mid
 	w41: {
@@ -557,8 +569,8 @@ export const WINDOWS = {
 		currentValue: 407,
 		minValue: 0,
 		maxValue: 1000,
-		unitsMeasurement: 'мм',
-		title: 'Маслобак регулир.' as UnitsMeasurement,
+		unitsMeasurement: 'мм' as UnitsMeasurement,
+		title: 'Маслобак регулир.'
 	},
 	w90: {
 		currentValue: 0.13,
