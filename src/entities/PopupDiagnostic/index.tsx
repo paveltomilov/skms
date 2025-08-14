@@ -1,8 +1,11 @@
+import { useAppDispatch } from '@/shared/hooks/store';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import { FC } from 'react';
+import { openModal } from '@/store/modalSlice';
 
 const PopupDiagnostic: FC = () => {
+	const dispatch = useAppDispatch();
 	// Для теста
 	const mass = [
 		{
@@ -58,6 +61,7 @@ const PopupDiagnostic: FC = () => {
 					aria-label="Ф.Ск"
 					text="Ф.Ск"
 					className={styles.popupDiagnostic_bottom_btn}
+					onClick={() => dispatch(openModal('gateValves'))}
 				/>
 				<Button
 					width={97}
