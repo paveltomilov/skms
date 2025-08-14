@@ -22,8 +22,10 @@ const TARightDown: FC<Props> = ({className}) => {
                             color={'blue'}
                             value={WINDOWS.w88.currentValue}
                             textRight={WINDOWS.w88.unitsMeasurement}
-                            textBottom={WINDOWS.w88.title}
                         />
+                        <span className={styles.container_element_box__text}>
+                            {WINDOWS.w88.title}
+                        </span>
                     </div>
                     <Button
                         width={88}
@@ -37,8 +39,10 @@ const TARightDown: FC<Props> = ({className}) => {
                             color={'blue'}
                             value={WINDOWS.w89.currentValue}
                             textRight={WINDOWS.w89.unitsMeasurement}
-                            textBottom={WINDOWS.w89.title}
                         />
+                        <span className={styles.container_element_box__text}>
+                            {WINDOWS.w89.title}
+                        </span>
                     </div>
                 </div>
                 {rightBottomOne.map((item, index) => (

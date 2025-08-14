@@ -169,6 +169,9 @@
 
     &_box {
       position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       align-items: center;
       border: 1px solid variables.$black-color;
       width: 100%;
@@ -187,11 +190,10 @@
 
       div {
         position: relative;
+        max-width: 90px;
         z-index: 1;
 
         div {
-          grid-column: left / right;
-
           span {
             color: variables.$black-color;
           }
@@ -200,10 +202,14 @@
         span {
           color: variables.$white-color;
 
-          &:last-child {
-            padding-right: 15px;
-          }
         }
+      }
+
+      &__text {
+        position: relative;
+        @include mixins.text(12px, 400);
+        color: variables.$white-color;
+        z-index: 1;
       }
 
       &__button {
