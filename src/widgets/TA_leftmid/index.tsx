@@ -1,5 +1,3 @@
-'use client';
-
 import { FC } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
@@ -9,13 +7,17 @@ import cn from 'classnames';
 import Rectangle from '@/shared/UI/icons/Rectangle';
 import { WINDOWS } from '@/shared/configs/window';
 import { useAppSelector } from '@/shared/hooks/store';
+import { useOpenGatePopup } from '@/shared/hooks/useOpenGatePopup';
 
 interface Props {
 	className?: string;
 }
 
 const TAleftmid: FC<Props> = ({ className }) => {
-	const { g2, g3 } = useAppSelector(state => state.gate);
+	const { g2, g3 } = useAppSelector(state => state.gate.gates);
+
+	const openGatePopup = useOpenGatePopup();
+
 	return (
 		<>
 			<div className={cn(className)}>
@@ -52,6 +54,7 @@ const TAleftmid: FC<Props> = ({ className }) => {
 						state={g2.states}
 						textBottom={g2.name}
 						className={styles.gate}
+						onClick={() => openGatePopup('g2')}
 					/>
 
 					<div
@@ -115,6 +118,7 @@ const TAleftmid: FC<Props> = ({ className }) => {
 							position="vertical"
 							state={g3.states}
 							textLeft={g3.name}
+							onClick={() => openGatePopup('g3')}
 							className={styles['containerFour__window-gate']}
 						/>
 					</div>

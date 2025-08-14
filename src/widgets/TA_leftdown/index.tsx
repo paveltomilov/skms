@@ -1,5 +1,3 @@
-'use client';
-
 import { FC } from 'react';
 import styles from './styles.module.scss';
 import Gate from '@/shared/UI/Gate';
@@ -10,13 +8,16 @@ import Button from '@/shared/UI/Button';
 import ArrowButton from '@/shared/UI/Actuator';
 import { WINDOWS } from '@/shared/configs/window';
 import { useAppSelector } from '@/shared/hooks/store';
+import { useOpenGatePopup } from '@/shared/hooks/useOpenGatePopup';
 
 interface Props {
 	className?: string;
 }
 
 const TALeftDown: FC<Props> = ({ className }) => {
-	const { g7, g6, g8 } = useAppSelector(state => state.gate);
+	const { g7, g6, g8 } = useAppSelector(state => state.gate.gates);
+
+	const openGatePopup = useOpenGatePopup();
 
 	return (
 		<div className={cn(className, styles.container)}>
@@ -26,18 +27,21 @@ const TALeftDown: FC<Props> = ({ className }) => {
 					state={g7.states}
 					position="vertical"
 					textLeft={g7.name}
+					onClick={() => openGatePopup('g7')}
 				/>
 				<Gate
 					className={styles.gates__mid}
 					state={g6.states}
 					position="vertical"
 					textLeft={g6.name}
+					onClick={() => openGatePopup('g6')}
 				/>
 				<Gate
 					className={styles.gates__right}
 					state={g8.states}
 					position="vertical"
 					textRight={g8.name}
+					onClick={() => openGatePopup('g8')}
 				/>
 			</div>
 			<div className={styles.cards}>

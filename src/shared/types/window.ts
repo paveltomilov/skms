@@ -8,5 +8,6 @@ export type UnitsMeasurement =
 	| 'мм'
 	| '%'
 	| 'мг/м3'
+	| 'м3/ч'
 	| 'Гкал/ч'
 	| 'dP';

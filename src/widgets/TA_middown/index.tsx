@@ -7,10 +7,11 @@ import { WINDOWS } from '@/shared/configs/window';
 import { ACTUATORS } from '@/shared/configs/actuator';
 import Actuator from '@/shared/UI/Actuator';
 import Gate from '@/shared/UI/Gate';
-import { GATES } from '@/shared/configs/gate';
 import Attention from '@/shared/UI/icons/Attention';
 import Rectangle from '@/shared/UI/icons/Rectangle';
 import { UnitsMeasurement } from '@/shared/types/window';
+import { useAppSelector } from '@/shared/hooks/store';
+import { useOpenGatePopup } from '@/shared/hooks/useOpenGatePopup';
 
 interface Props {
 	className?: string;
@@ -18,6 +19,9 @@ interface Props {
 const dropPressure: UnitsMeasurement = 'dP';
 
 const TAMidDown: FC<Props> = ({ className }) => {
+	const { g9, g10 } = useAppSelector(state => state.gate.gates);
+
+	const openGatePopup = useOpenGatePopup();
 	return (
 		<div className={cn(className, styles.container)}>
 			<div className={styles.windowsTop}>
@@ -51,9 +55,10 @@ const TAMidDown: FC<Props> = ({ className }) => {
 					</div>
 					<Gate
 						className={styles.windowsBottom__gate}
-						state={GATES.g9.states}
-						textRight={GATES.g9.name}
+						state={g9.states}
+						textRight={g9.name}
 						position="vertical"
+						onClick={() => openGatePopup('g9')}
 					/>
 				</div>
 				<div className={styles.windowsBottom__pump}>
@@ -78,9 +83,10 @@ const TAMidDown: FC<Props> = ({ className }) => {
 					</div>
 					<Gate
 						className={styles.windowsBottom__gate}
-						state={GATES.g10.states}
-						textRight={GATES.g10.name}
+						state={g10.states}
+						textRight={g10.name}
 						position="vertical"
+						onClick={() => openGatePopup('g10')}
 					/>
 				</div>
 				<div className={styles.windowsBottom__info}>
