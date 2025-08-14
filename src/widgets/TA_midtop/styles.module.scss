@@ -61,6 +61,13 @@
 		padding: 75px 0 0 134px;
 	}
 
+	&__indicator {
+		width: 24px;
+		height: 24px;
+		background-color: variables.$electric-green-color;
+		border: 1px solid black;
+	}
+
 	&__indicators {
 		display: flex;
 		flex-direction: row;

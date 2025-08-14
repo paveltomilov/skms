@@ -78,11 +78,21 @@ const TAMidTop: FC<Props> = ({ className }) => {
 							/>
 						</div>
 						<div className={styles.windowsBottom__indicators_lamp}>
-							<RectangleLamp />
-							<RectangleLamp />
-							<RectangleLamp />
-							<RectangleLamp />
-							<RectangleLamp />
+							<div
+								className={styles.windowsBottom__indicator}
+							></div>
+							<div
+								className={styles.windowsBottom__indicator}
+							></div>
+							<div
+								className={styles.windowsBottom__indicator}
+							></div>
+							<div
+								className={styles.windowsBottom__indicator}
+							></div>
+							<div
+								className={styles.windowsBottom__indicator}
+							></div>
 						</div>
 						<Window
 							className={styles.windowsBottom__indicators_window}
@@ -98,28 +108,3 @@ const TAMidTop: FC<Props> = ({ className }) => {
 };
 
 export default TAMidTop;
-
-interface PropsRectangleLamp {
-	width?: number;
-	height?: number;
-	condition?: 'norma' | 'error';
-}
-
-const RectangleLamp: FC<PropsRectangleLamp> = ({
-	width = 24,
-	height = 24,
-	condition = 'norma',
-}) => {
-	const backgroundColor = condition === 'norma' ? '#0BF40E' : '#8F1313';
-	return (
-		<span
-			style={{
-				display: 'block',
-				width,
-				height,
-				backgroundColor,
-				border: '1px solid #000000 ',
-			}}
-		></span>
-	);
-};

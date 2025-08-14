@@ -569,8 +569,8 @@ export const WINDOWS = {
 		currentValue: 407,
 		minValue: 0,
 		maxValue: 1000,
-		unitsMeasurement: 'мм',
-		title: 'Маслобак регулир.' as UnitsMeasurement,
+		unitsMeasurement: 'мм' as UnitsMeasurement,
+		title: 'Маслобак регулир.'
 	},
 	w90: {
 		currentValue: 0.13,
