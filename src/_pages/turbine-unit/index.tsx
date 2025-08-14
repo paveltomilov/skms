@@ -3,6 +3,7 @@ import styles from './styles.module.scss';
 import TALeftTop from '@/widgets/TA_lefftop';
 import TARightTop from '@/widgets/TA_rightop';
 import TAMidMId from '@/widgets/TA_midmid';
+import TAMidDown from '@/widgets/TA_middown';
 import TALeftDown from '@/widgets/TA_leftdown';
 import TARightDown from '@/widgets/TA_rightdown';
 
@@ -17,7 +18,7 @@ const TurbineUnitPage = () => {
 
 				<div className={styles.section__content_mid_top}></div>
 				<TAMidMId className={styles.section__content_mid_mid} />
-				<div className={styles.section__content_mid_down}></div>
+				<TAMidDown className={styles.section__content_mid_down} />
 
 				<TARightTop className={styles.section__content_right_top} />
 				<div className={styles.section__content_right_mid}></div>

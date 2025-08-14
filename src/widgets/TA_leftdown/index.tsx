@@ -1,43 +1,43 @@
+'use client';
+
 import { FC } from 'react';
 import styles from './styles.module.scss';
 import Gate from '@/shared/UI/Gate';
 import cn from 'classnames';
-import { GATES } from '@/shared/configs/gate';
 import WindowRectCard from '@/shared/UI/WindowRectCard';
 import Window from '@/shared/UI/Window';
 import Button from '@/shared/UI/Button';
 import ArrowButton from '@/shared/UI/Actuator';
 import { WINDOWS } from '@/shared/configs/window';
+import { useAppSelector } from '@/shared/hooks/store';
 
 interface Props {
 	className?: string;
 }
 
 const TALeftDown: FC<Props> = ({ className }) => {
-	const gate_left = GATES.g7;
-	const gate_mid = GATES.g6;
-	const gate_right = GATES.g8;
+	const { g7, g6, g8 } = useAppSelector(state => state.gate);
 
 	return (
 		<div className={cn(className, styles.container)}>
 			<div className={styles.gates}>
 				<Gate
 					className={styles.gates__left}
-					state={gate_left.state}
+					state={g7.states}
 					position="vertical"
-					textLeft={gate_left.name}
+					textLeft={g7.name}
 				/>
 				<Gate
 					className={styles.gates__mid}
-					state={gate_mid.state}
+					state={g6.states}
 					position="vertical"
-					textLeft={gate_mid.name}
+					textLeft={g6.name}
 				/>
 				<Gate
 					className={styles.gates__right}
-					state={gate_right.state}
+					state={g8.states}
 					position="vertical"
-					textRight={gate_right.name}
+					textRight={g8.name}
 				/>
 			</div>
 			<div className={styles.cards}>
@@ -81,7 +81,6 @@ const TALeftDown: FC<Props> = ({ className }) => {
 				<div className={styles.windows__leftup}>
 					<Window
 						color="blue"
-						textBottom="I отб."
 						value={WINDOWS.w28.currentValue}
 						textRight={WINDOWS.w28.unitsMeasurement}
 					/>
@@ -91,7 +90,6 @@ const TALeftDown: FC<Props> = ({ className }) => {
 						color="blue"
 						value={WINDOWS.w31.currentValue}
 						textRight={WINDOWS.w31.unitsMeasurement}
-						textBottom="II отб."
 					/>
 				</div>
 				<div className={styles.windows__leftdown}>
@@ -99,7 +97,6 @@ const TALeftDown: FC<Props> = ({ className }) => {
 						color="blue"
 						value={WINDOWS.w33.currentValue}
 						textRight={WINDOWS.w33.unitsMeasurement}
-						textBottom="III отб."
 					/>
 				</div>
 				<div className={styles.windows__midup}>
@@ -131,6 +128,11 @@ const TALeftDown: FC<Props> = ({ className }) => {
 						textLeft="dP"
 					/>
 				</div>
+			</div>
+			<div className={styles.text}>
+				<span>I отб.</span>
+				<span>II отб.</span>
+				<span>III отб.</span>
 			</div>
 			<Button
 				width={88}

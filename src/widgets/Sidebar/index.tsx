@@ -24,14 +24,7 @@ const Sidebar = () => {
 						aria-label="Главная"
 						text="Главная"
 						className={styles.buttonText}
-					/>
-
-					<Button
-						width={90}
-						height={34}
-						aria-label="Схема"
-						text="Схема"
-						className={styles.buttonText}
+						href="/"
 					/>
 
 					<Button
@@ -48,7 +41,7 @@ const Sidebar = () => {
 						aria-label="Тренажер"
 						text="Тренажер"
 						className={styles.buttonText}
-						href="/"
+						href="/zra"
 					/>
 
 					<Button
