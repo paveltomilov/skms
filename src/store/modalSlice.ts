@@ -10,10 +10,10 @@ export interface ModalState {
 }
 
 const initialState: ModalState = {
-	automatic: false,
-	gateControl: false,
-	diagnostic: false,
-	gateValves: false,
+	automatic: true,
+	gateControl: true,
+	diagnostic: true,
+	gateValves: true,
 };
 
 const modalSlice = createSlice({
