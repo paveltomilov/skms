@@ -1,0 +1,16 @@
+@use '@/shared/scss/variables.module';
+
+.powerUnit {
+    min-width: 368px;
+    height: 40px;
+    padding-left: 4px;
+    font-size: 34px;
+    line-height: 40px;
+    box-shadow: -1.46px -1.46px 0px 0px variables.$black-color inset,
+        1.46px 1.46px 0px 0px variables.$secondary-color inset,
+        -2.92px -2.92px #D9D9D9 inset,
+        2.92px 2.92px variables.$white-color inset,
+        -1px -1px 0px 1px variables.$gray-disabled-color,
+        0px 0px 0px 2px variables.$white-color;
+
+}

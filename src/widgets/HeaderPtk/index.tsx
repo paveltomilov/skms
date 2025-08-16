@@ -4,14 +4,9 @@ import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import Window from '@/shared/UI/Window';
 import { useDate } from '@/shared/hooks/useDate';
+import PowerUnit from '@/shared/UI/PowerUnit';
 
 const HeaderPtk: FC = () => {
-	// для вывода показаний частоты и мощности
-
-	const readings = {
-		freq: 49.96,
-		pwr: 120.9,
-	};
 
 	const { formattedDate, formattedTime, dateTimeDate, dateTimeTime } =
 		useDate();
@@ -65,9 +60,7 @@ const HeaderPtk: FC = () => {
 						{formattedTime}
 					</time>
 				</div>
-				<div className={styles.readings}>
-					{readings.freq}Гц {readings.pwr}МВт
-				</div>
+				<PowerUnit />
 			</div>
 		</header>
 	);
