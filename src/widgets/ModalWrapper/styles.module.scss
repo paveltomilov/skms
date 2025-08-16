@@ -15,6 +15,9 @@
 	}
 
 	&__wrapper {
+		position: absolute;
+		top: 45%;
+		left: 45%;
 		background: variables.$secondary-color;
 		display: flex;
 		flex-direction: column;
@@ -23,11 +26,6 @@
 		box-shadow: variables.$pop-up-box-shadow,
 			variables.$realistic-drop-shadow;
 
-		// Стили для последнего ребёнка (children) внутри wrapper
-		> *:last-child {
-			padding: 8px 6px;
-			box-sizing: content-box;
-		}
 	}
 
 	&__header {

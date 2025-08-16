@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type Modals = 'automatic' | 'gateControl' | 'diagnostic' | 'gateValves'; // добавить названия модалок
+type Modals = 'automatic' | 'gateControl' | 'diagnostic' | 'gateValves';
 
 export interface ModalState {
 	automatic: boolean;
@@ -10,10 +10,10 @@ export interface ModalState {
 }
 
 const initialState: ModalState = {
-	automatic: true,
-	gateControl: true,
-	diagnostic: true,
-	gateValves: true,
+	automatic: false,
+	gateControl: false,
+	diagnostic: false,
+	gateValves: false,
 };
 
 const modalSlice = createSlice({

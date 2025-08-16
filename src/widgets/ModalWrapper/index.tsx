@@ -1,86 +1,145 @@
-import { FC, useState } from 'react';
+
+import { FC } from 'react';
 import Button from '@/shared/UI/Button';
 import styles from './styles.module.scss';
 import Close from '@/shared/UI/icons/Close';
+import { useDragging } from '@/shared/hooks/useDragging';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
+import { closeModal } from '@/store/modalSlice';
+import { GATES } from '@/shared/configs/gate';
+import { PopupGateControl } from '../PopupGateControl';
+import PopupGateValves from '../PopupGateValves';
+import PopupDiagnostic from '@/entities/PopupDiagnostic';
+import { Automatic } from '../Automatic';
 
 interface ModalProps {
-	title: string;
-	children: React.ReactNode;
 	className?: string;
-	onClose: () => void;
 	isBlur?: boolean;
 }
 
-interface Position {
-	x: number;
-	y: number;
-}
+const ModalWrapper: FC<ModalProps> = ({ isBlur = false }) => {
+	const { gateValves, diagnostic, gateControl, automatic } = useAppSelector(
+		state => state.modal,
+	);
+	const id = useAppSelector(state => state.gate.activeGateId as string);
+	const dispatch = useAppDispatch();
+	const { handleMouseDown, position } = useDragging();
 
-const ModalWrapper: FC<ModalProps> = ({
-	title,
-	onClose,
-	isBlur = false,
-	children,
-}) => {
-	// начальные координаты окна
-	const [position, setPosition] = useState<Position>({ x: 0, y: 0 });
-	// состояние удержания header
-	const [isDragging, setIsDragging] = useState<boolean>(false);
-	// конечные координаты окна
-	const [startPos, setStartPos] = useState<Position>({ x: 0, y: 0 });
+	const { name } = GATES[id];
 
-	const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-		setIsDragging(true);
-		setStartPos({
-			x: e.clientX - position.x,
-			y: e.clientY - position.y,
-		});
-	};
-
-	const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-		if (!isDragging) return;
-
-		const newX = e.clientX - startPos.x;
-		const newY = e.clientY - startPos.y;
-
-		setPosition({
-			x: newX,
-			y: newY,
-		});
-	};
-
-	const handleMouseUp = () => {
-		setIsDragging(false);
-	};
 	return (
-		<div
-			className={`${styles.modal} ${isBlur && styles.modal_isBlur}`}
-			onMouseMove={handleMouseMove}
-			onMouseUp={handleMouseUp}
-			onMouseLeave={handleMouseUp}
-		>
-			<div
-				className={styles.modal__wrapper}
-				onClick={e => e.stopPropagation()}
-				style={{
-					transform: `translate(${position.x}px, ${position.y}px)`,
-				}}
-			>
+		<div className={`${styles.modal} ${isBlur && styles.modal_isBlur}`}>
+			{gateControl && (
 				<div
-					className={styles.modal__header}
-					onMouseDown={handleMouseDown}
+					className={styles.modal__wrapper}
+					onClick={e => e.stopPropagation()}
+					style={{
+						transform: `translate(${position.control.x}px, ${position.control.y}px)`,
+						zIndex: '11',
+					}}
 				>
-					<span className={styles.modal__header_title}>{title}</span>
-					<Button
-						width={26}
-						height={26}
-						onClick={onClose}
-						aria-label="Закрыть"
-						icon={<Close size="sm" />}
-					/>
+					<div
+						id="control"
+						className={styles.modal__header}
+						onMouseDown={handleMouseDown}
+					>
+						<span className={styles.modal__header_title}>
+							{name}
+						</span>
+						<Button
+							width={26}
+							height={26}
+							onClick={() => dispatch(closeModal('gateControl'))}
+							aria-label="Закрыть"
+							icon={<Close size="sm" />}
+						/>
+					</div>
+					<PopupGateControl />
 				</div>
-				{children}
-			</div>
+			)}
+			{diagnostic && (
+				<div
+					className={styles.modal__wrapper}
+					onClick={e => e.stopPropagation()}
+					style={{
+						transform: `translate(${position.diagnostic.x}px, ${position.diagnostic.y}px)`,
+						zIndex: '12',
+					}}
+				>
+					<div
+						id="diagnostic"
+						className={styles.modal__header}
+						onMouseDown={handleMouseDown}
+					>
+						<span className={styles.modal__header_title}>
+							{name}
+						</span>
+						<Button
+							width={26}
+							height={26}
+							onClick={() => dispatch(closeModal('diagnostic'))}
+							aria-label="Закрыть"
+							icon={<Close size="sm" />}
+						/>
+					</div>
+					<PopupDiagnostic />
+				</div>
+			)}
+			{gateValves && (
+				<div
+					className={styles.modal__wrapper}
+					onClick={e => e.stopPropagation()}
+					style={{
+						transform: `translate(${position.values.x}px, ${position.values.y}px)`,
+						zIndex: '12',
+					}}
+				>
+					<div
+						id="values"
+						className={styles.modal__header}
+						onMouseDown={handleMouseDown}
+					>
+						<span className={styles.modal__header_title}>
+							{name}
+						</span>
+						<Button
+							width={26}
+							height={26}
+							onClick={() => dispatch(closeModal('gateValves'))}
+							aria-label="Закрыть"
+							icon={<Close size="sm" />}
+						/>
+					</div>
+					<PopupGateValves />
+				</div>
+			)}
+			{automatic && (
+				<div
+					className={styles.modal__wrapper}
+					onClick={e => e.stopPropagation()}
+					style={{
+						transform: `translate(${position.automatic.x}px, ${position.automatic.y}px)`,
+					}}
+				>
+					<div
+						id="automatic"
+						className={styles.modal__header}
+						onMouseDown={handleMouseDown}
+					>
+						<span className={styles.modal__header_title}>
+							{'Автомат aaa'}
+						</span>
+						<Button
+							width={26}
+							height={26}
+							onClick={() => dispatch(closeModal('automatic'))}
+							aria-label="Закрыть"
+							icon={<Close size="sm" />}
+						/>
+					</div>
+					<Automatic />
+				</div>
+			)}
 		</div>
 	);
 };

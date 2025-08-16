@@ -12,9 +12,7 @@ import { setNewVoltagePoints } from '@/shared/utils/findElementByID/scheme';
 import { InitialStateScheme } from '@/shared/types/scheme';
 import { setVoltagePoints } from '@/store/pointsSlice';
 import { InputCircuitBreaker } from '@/entities/InputCircuitBreaker';
-import { Automatic } from '../Automatic';
 import ModalWrapper from '../ModalWrapper';
-import { closeModal } from '@/store/modalSlice';
 
 const Scheme: FC = () => {
 	// для рендера щупов
@@ -61,15 +59,7 @@ const Scheme: FC = () => {
 			{probeConnections['black'] && <Probe color="black" />}
 			{probeConnections['red'] && <Probe color="red" />}
 
-			{automatic && (
-				<ModalWrapper
-					title="Автомат"
-					isBlur
-					onClose={() => dispatch(closeModal('automatic'))}
-				>
-					<Automatic />
-				</ModalWrapper>
-			)}
+			{automatic && <ModalWrapper />}
 		</div>
 	);
 };

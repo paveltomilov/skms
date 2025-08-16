@@ -10,16 +10,11 @@ import TALeftDown from '@/widgets/TA_leftdown';
 import TAMidTop from '@/widgets/TA_midtop';
 import TARightDown from '@/widgets/TA_rightdown';
 import TARightMid from '@/widgets/TA_rightmid';
-import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
+import { useAppSelector } from '@/shared/hooks/store';
 import ModalWrapper from '@/widgets/ModalWrapper';
-import { closeModal } from '@/store/modalSlice';
-import { PopupGateControl } from '@/widgets/PopupGateControl';
-import PopupDiagnostic from '@/entities/PopupDiagnostic';
-import PopupGateValves from '@/widgets/PopupGateValves';
 
 const TurbineUnitPage = () => {
-	const dispatch = useAppDispatch();
-	const { gateControl, diagnostic, gateValves } = useAppSelector(
+	const { gateControl, gateValves, diagnostic } = useAppSelector(
 		state => state.modal,
 	);
 
@@ -38,29 +33,8 @@ const TurbineUnitPage = () => {
 				<TARightTop className={styles.section__content_right_top} />
 				<TARightMid className={styles.section__content_right_mid} />
 				<TARightDown className={styles.section__content_right_down} />
-				{gateControl && (
-					<ModalWrapper
-						title="ПКДВ-2"
-						onClose={() => dispatch(closeModal('gateControl'))}
-					>
-						<PopupGateControl />
-					</ModalWrapper>
-				)}
-				{diagnostic && (
-					<ModalWrapper
-						title="ПКДВ-2"
-						onClose={() => dispatch(closeModal('diagnostic'))}
-					>
-						<PopupDiagnostic />
-					</ModalWrapper>
-				)}
-				{gateValves && (
-					<ModalWrapper
-						title="ПКДВ-2 - Ф.сх."
-						onClose={() => dispatch(closeModal('gateValves'))} //
-					>
-						<PopupGateValves />
-					</ModalWrapper>
+				{(gateControl || gateValves || diagnostic) && (
+					<ModalWrapper />
 				)}
 			</div>
 		</section>
