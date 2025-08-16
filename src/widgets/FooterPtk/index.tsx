@@ -20,14 +20,14 @@ const FooterPtk: FC = () => {
 					height={28}
 					aria-label={'Кнопка КА'}
 					text="КА"
-					href="/ptk"
+					href="/ptk/boiler"
 				/>
 				<Button
 					width={88}
 					height={28}
 					aria-label={'Кнопка ТА'}
 					text="ТА"
-					href="/ptk/turbine"
+					href="/ptk"
 				/>
 				{Array.from({ length: 14 }).map((_, i) => (
 					<Button
