@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import Window from '@/shared/UI/Window';
 import { useDate } from '@/shared/hooks/useDate';
-import PowerUnit from '@/shared/UI/PowerUnit';
+import PowerUnit from '@/entities/PowerUnit';
 
 const HeaderPtk: FC = () => {
 
