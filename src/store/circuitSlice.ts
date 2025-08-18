@@ -11,9 +11,9 @@ const circuitSlice = createSlice({
 		// Активация неисправности
 		activateMalfunction(
 			state: InitialStateScheme,
-			action: PayloadAction<{ id: string }>,
+			action: PayloadAction<string>,
 		) {
-			const { id } = action.payload;
+			const id = action.payload;
 			const elementId = id.slice(0, -2); // ID элемента
 			const malfunctionIndex = Number(id.slice(-1)) - 1; // Индекс неисправности (преобразуем в число)
 			const element = findElementByID(elementId, state);
@@ -35,9 +35,9 @@ const circuitSlice = createSlice({
 		// Деактивация неисправности (аналогично активации)
 		deactivateMalfunction(
 			state: InitialStateScheme,
-			action: PayloadAction<{ id: string }>,
+			action: PayloadAction<string>,
 		) {
-			const { id } = action.payload;
+			const id = action.payload;
 			const elementId = id.slice(0, -2);
 			const malfunctionIndex = Number(id.slice(-1)) - 1;
 			const element = findElementByID(elementId, state);

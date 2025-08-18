@@ -3,6 +3,7 @@
 
 .popupDiagnostic {
 	display: flex;
+	width: 1159px;
 	flex-direction: column;
 	padding-top: 8px;
 
@@ -59,9 +60,7 @@
 	&_bottom {
 		display: flex;
 		gap: 25px;
-		margin-bottom: 8px;
-		padding-left: 6px;
-		padding-right: 6px;
+		justify-content: space-between;
 
 		&__name {
 			border-top: 2px solid variables.$gray-disabled-color;

@@ -5,12 +5,12 @@ import Gate from '@/shared/UI/Gate';
 import Window from '@/shared/UI/Window';
 
 const GateWindow: FC = () => {
-	//потом передать динамически id, пока захардкодила
-	const { g1 } = useAppSelector(state => state.gate.gates);
+	const gateId = useAppSelector(state => state.gate.activeGateId) ?? 'g1';
+	const gate = useAppSelector(state => state.gate.gates[gateId]);
 
 	return (
 		<div className={styles.window}>
-			<Gate state={g1.states} shadow />
+			<Gate state={gate.states} shadow />
 			<Window
 				color="blue"
 				value={18.8}

@@ -5,9 +5,9 @@ import styles from './styles.module.scss';
 import { useAppSelector } from '@/shared/hooks/store';
 import { PopupGateControl } from '../PopupGateControl';
 import PopupGateValves from '../PopupGateValves';
-import PopupDiagnostic from '@/entities/PopupDiagnostic';
 import { Automatic } from '../Automatic';
 import ModalOverlay from '../ModalOverlay';
+import PopupDiagnostic from '../PopupDiagnostic';
 
 interface ModalProps {
 	className?: string;

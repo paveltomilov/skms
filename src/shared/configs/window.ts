@@ -78,7 +78,7 @@ export const WINDOWS = {
 	w13: {
 		currentValue: 303,
 		minValue: 0,
-		maxValue: 100,
+		maxValue: 1000,
 		unitsMeasurement: '°C' as UnitsMeasurement,
 	},
 	// left_mid
@@ -596,4 +596,830 @@ export const WINDOWS = {
 		maxValue: 100,
 		unitsMeasurement: '°C' as UnitsMeasurement,
 	},
+
+	// KA
+	// left_top
+	w96: {
+		currentValue: 0,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: 'об/мин' as UnitsMeasurement,
+	},
+
+	w97: {
+		currentValue: 802,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: 'об/мин' as UnitsMeasurement,
+	},
+	w98: {
+		currentValue: 903,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: 'об/мин' as UnitsMeasurement,
+	},
+	w99: {
+		currentValue: 860,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: 'об/мин' as UnitsMeasurement,
+	},
+	w100: {
+		currentValue: 683,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: 'об/мин' as UnitsMeasurement,
+	},
+	w101: {
+		currentValue: 0,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: 'об/мин' as UnitsMeasurement,
+	},
+	w102: {
+		currentValue: 0.0,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'A' as UnitsMeasurement,
+	},
+	w103: {
+		currentValue: 16.0,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'A' as UnitsMeasurement,
+	},
+	w104: {
+		currentValue: 13.0,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'A' as UnitsMeasurement,
+	},
+	w105: {
+		currentValue: 10.0,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'A' as UnitsMeasurement,
+	},
+	w106: {
+		currentValue: 16.1,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'A' as UnitsMeasurement,
+	},
+	w107: {
+		currentValue: 0,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'A' as UnitsMeasurement,
+	},
+	w108: {
+		currentValue: 18,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'мм' as UnitsMeasurement,
+	},
+	w109: {
+		currentValue: 14,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'мм' as UnitsMeasurement,
+	},
+	w110: {
+		currentValue: 21,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'мм' as UnitsMeasurement,
+	},
+	w111: {
+		currentValue: 3248,
+		minValue: 0,
+		maxValue: 10000,
+		unitsMeasurement: 'об/мин' as UnitsMeasurement,
+	},
+	w112: {
+		currentValue1: 407,
+		currentValue2: 407,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: 'мм' as UnitsMeasurement,
+	},
+
+	// left_mid
+	w113: {
+		currentValue: null,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w114: {
+		currentValue: null,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w115: {
+		currentValue: 397,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w116: {
+		currentValue: null,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w117: {
+		currentValue: null,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w118: {
+		currentValue: 39,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w119: {
+		currentValue: 0.07,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: 'кВт' as UnitsMeasurement,
+	},
+	w120: {
+		currentValue: 364.4,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: 'кВт' as UnitsMeasurement,
+	},
+	w121: {
+		currentValue: 389.3,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: 'кВт' as UnitsMeasurement,
+	},
+	w122: {
+		currentValue: 362.9,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: 'кВт' as UnitsMeasurement,
+	},
+	w123: {
+		currentValue: 397.7,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: 'кВт' as UnitsMeasurement,
+	},
+	w124: {
+		currentValue: 0.0,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: 'кВт' as UnitsMeasurement,
+	},
+	w125: {
+		currentValue: 0.07,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'кПа' as UnitsMeasurement,
+	},
+	w126: {
+		currentValue: 0.00,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'кПа' as UnitsMeasurement,
+	},
+	w127: {
+		currentValue: 0.00,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'кПа' as UnitsMeasurement,
+	},
+	w128: {
+		currentValue: 0.00,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'кПа' as UnitsMeasurement,
+	},
+	w129: {
+		currentValue: 0.00,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'кПа' as UnitsMeasurement,
+	},
+	w130: {
+		currentValue: 0.00,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'кПа' as UnitsMeasurement,
+	},
+	w131: {
+		currentValue: 74,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w132: {
+		currentValue: 162,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w133: {
+		currentValue: 178,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w134: {
+		currentValue: 175,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w135: {
+		currentValue: 179,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w136: {
+		currentValue: 47,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+
+	// left_down
+	w137: {
+		currentValue: 2.8,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'МПа' as UnitsMeasurement,
+	},
+	w138: {
+		currentValue: 4587.0,
+		minValue: 0,
+		maxValue: 10000,
+		unitsMeasurement: 'кг/ч' as UnitsMeasurement,
+	},
+	w139: {
+		currentValue: 2.8,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+
+	//mid_top
+	w140: {
+		currentValue: 302,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w141: {
+		currentValue: 307,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w142: {
+		currentValue: 414,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w143: {
+		currentValue: 411,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w144: {
+		currentValue: 397,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w145: {
+		currentValue: 399,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w146: {
+		currentValue: null,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: '%' as UnitsMeasurement,
+	},
+	w147: {
+		currentValue: 9,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: '%' as UnitsMeasurement,
+	},
+	w148: {
+		currentValue: 474,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w149: {
+		currentValue: 482,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w150: {
+		currentValue: 225,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w151: {
+		currentValue: 326,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w152: {
+		currentValue: 460,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w153: {
+		currentValue: 463,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w154: {
+		currentValue: 542,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w155: {
+		currentValue: 542,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w156: {
+		currentValue: 525,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w157: {
+		currentValue: 528,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w158: {
+		currentValue: 0.144,
+		minValue: 0,
+		maxValue: 1,
+		unitsMeasurement: 'МПа' as UnitsMeasurement,
+	},
+	w159: {
+		currentValue: 0.146,
+		minValue: 0,
+		maxValue: 1,
+		unitsMeasurement: 'МПа' as UnitsMeasurement,
+	},
+	w160: {
+		currentValue: 520,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w161: {
+		currentValue: 525,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+
+	// mid_mid
+	w162: {
+		currentValue: -0.20,
+		minValue: -1,
+		maxValue: 0,
+		unitsMeasurement: 'кПа' as UnitsMeasurement,
+	},
+	w163: {
+		currentValue: 499,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: 'м3/ч' as UnitsMeasurement,
+	},
+	w164: {
+		currentValue: -0.045,
+		minValue: -1,
+		maxValue: 0,
+		unitsMeasurement: 'кПа' as UnitsMeasurement,
+	},
+	w165: {
+		currentValue: 332,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w166: {
+		currentValue: -0.045,
+		minValue: -1,
+		maxValue: 0,
+		unitsMeasurement: 'кПа' as UnitsMeasurement,
+	},
+	w167: {
+		currentValue: 1.05,
+		minValue: 0,
+		maxValue: 10,
+		unitsMeasurement: 'кПа' as UnitsMeasurement,
+	},
+	w168: {
+		currentValue: 333,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w169: {
+		currentValue: 552,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w170: {
+		currentValue: 5.4,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: '%' as UnitsMeasurement,
+	},
+	w171: {
+		currentValue: 6.4,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: '%' as UnitsMeasurement,
+	},
+	w172: {
+		currentValue: 6.4,
+		minValue: 0,
+		maxValue: 10,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w173: {
+		currentValue: 131,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w174: {
+		currentValue: 584,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w175: {
+		currentValue: 15.8,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: '%' as UnitsMeasurement,
+	},
+	w176: {
+		currentValue: 6.3,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: '%' as UnitsMeasurement,
+	},
+	w177: {
+		currentValue: 144,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w178: {
+		currentValue: 133,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+
+	//mid_down
+	w179: {
+		currentValue: 4633.0,
+		minValue: 0,
+		maxValue: 10000,
+		unitsMeasurement: 'кг/ч' as UnitsMeasurement,
+	},
+	w180: {
+		currentValue: 96,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+
+	//right_top
+	w181: {
+		currentValue: 542,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w182: {
+		currentValue: 539,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w183: {
+		currentValue: 542,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w184: {
+		currentValue: 13.1,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'МПа' as UnitsMeasurement,
+	},
+	w185: {
+		currentValue: 244,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: 'т/ч' as UnitsMeasurement,
+	},
+	w186: {
+		currentValue: 72,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'мм' as UnitsMeasurement,
+	},
+	w187: {
+		currentValue: 72,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'мм' as UnitsMeasurement,
+	},
+	w188: {
+		currentValue: 0,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: '%' as UnitsMeasurement,
+	},
+	w189: {
+		currentValue: 539,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w200: {
+		currentValue: 13.1,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'МПа' as UnitsMeasurement,
+	},
+	w201: {
+		currentValue: 242,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: 'т/ч' as UnitsMeasurement,
+	},
+	w202: {
+		currentValue: 5,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: 'т/ч' as UnitsMeasurement,
+	},
+	w203: {
+		currentValue: 496,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: 'т/ч' as UnitsMeasurement,
+	},
+
+	//right_mid
+	w204: {
+		currentValue: 66,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w205: {
+		currentValue: 64,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w206: {
+		currentValue: 0.0,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'А' as UnitsMeasurement,
+	},
+	w207: {
+		currentValue: 70.3,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'А' as UnitsMeasurement,
+	},
+	w208: {
+		currentValue: 422,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: 'м3/ч^1000' as UnitsMeasurement,
+	},
+	w209: {
+		currentValue: 0.0,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'А' as UnitsMeasurement,
+	},
+	w210: {
+		currentValue: 68.0,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'А' as UnitsMeasurement,
+	},
+	w211: {
+		currentValue: 0,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: '%' as UnitsMeasurement,
+	},
+	w212: {
+		currentValue: 42,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: '%' as UnitsMeasurement,
+	},
+	w213: {
+		currentValue: 54,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: '%' as UnitsMeasurement,
+	},
+	w214: {
+		currentValue: 54,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: '%' as UnitsMeasurement,
+	},
+	w215: {
+		currentValue: 491,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: 'т/ч' as UnitsMeasurement,
+	},
+	w216: {
+		currentValue: 18.2,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'МПа' as UnitsMeasurement,
+	},
+	w217: {
+		currentValue: 236,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w218: {
+		currentValue: 48,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+	w219: {
+		currentValue: 49,
+		minValue: 0,
+		maxValue: 1000,
+		unitsMeasurement: '°C' as UnitsMeasurement,
+	},
+
+	// right_down
+	w220: {
+		currentValue: 53,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: '%' as UnitsMeasurement,
+	},
+	w221: {
+		currentValue: 45,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: '%' as UnitsMeasurement,
+	},
+	w222: {
+		currentValue: 89.2,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'А' as UnitsMeasurement,
+	},
+	w223: {
+		currentValue: 59.2,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'А' as UnitsMeasurement,
+	},
+	w224: {
+		currentValue: 54.3,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'А' as UnitsMeasurement,
+	},
+	w225: {
+		currentValue: 55,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: '%' as UnitsMeasurement,
+	},
+	w226: {
+		currentValue: 41,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: '%' as UnitsMeasurement,
+	},
+	w227: {
+		currentValue: 88.6,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'А' as UnitsMeasurement,
+	},
+	w228: {
+		currentValue: null,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: '%' as UnitsMeasurement,
+	},
+	w229: {
+		currentValue: null,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: '%' as UnitsMeasurement,
+	},
+	w230: {
+		currentValue: null,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'мг/м3' as UnitsMeasurement,
+	},
+	w231: {
+		currentValue: null,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'мг/м3' as UnitsMeasurement,
+	},
+	w232: {
+		currentValue: null,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'мг/м3' as UnitsMeasurement,
+	},
+	w233: {
+		currentValue: null,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'мг/м3' as UnitsMeasurement,
+	},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 };

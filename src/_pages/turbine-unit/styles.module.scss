@@ -28,14 +28,6 @@
 			'left_down mid_down right_down right_down'
 			'left_down mid_down right_down right_down';
 
-		// временно, чтобы видить границы
-		border: 1px red solid;
-
-		// временно, чтобы видить границы
-		& > div {
-			border: 1px red solid;
-		}
-
 		&_left_top {
 			grid-area: left_top;
 		}

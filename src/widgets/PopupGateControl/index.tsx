@@ -20,7 +20,7 @@ export const PopupGateControl: FC = () => {
 		stopPtkDisabled,
 		closePtkActive,
 		openPtkActive,
-	} = useGateControlButtons(gateId);
+	} = useGateControlButtons();
 
 	return (
 		<div className={styles.popup}>

@@ -7,7 +7,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useGateControlButtons } from '@/shared/hooks/useGateControlButtons';
 import GateWindow from '@/entities/GateWindow';
-import { useAppSelector } from '@/shared/hooks/store';
 
 const HeaderZra: FC = () => {
 	// вынести в дальнейшем в отдельный компонент
@@ -26,8 +25,6 @@ const HeaderZra: FC = () => {
 	};
 	//////////////////////////////////////////////////////
 
-	const gateId = useAppSelector(state => state.gate.activeGateId) ?? 'g1';
-
 	const {
 		handleButton,
 		stopGateMovement,
@@ -38,7 +35,7 @@ const HeaderZra: FC = () => {
 		stopPtkDisabled,
 		closePtkActive,
 		openPtkActive,
-	} = useGateControlButtons(gateId);
+	} = useGateControlButtons();
 
 	return (
 		<header className={style.header}>
