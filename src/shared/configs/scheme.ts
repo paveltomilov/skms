@@ -1,4 +1,4 @@
-import { IPoint, ISchemeElement, InitialStateScheme } from '../types/scheme';
+import { InitialStateScheme } from '../types/scheme';
 
 // id элементов схемы
 export const LIMIT_SWITCH_OPEN_ID = 'c.3.1.1';
@@ -63,172 +63,24 @@ export const BASE_RESISTANCE: Record<string, number> = {
 };
 
 // Элементы схемы
-export const SCHEME_ELEMENTS: ISchemeElement[] = [
-	{
-		title: 'Какое-то название',
-		icon: 'yb08',
-		id: CLOSE_FROM_PTK_ID,
-	},
-	{
-		title: 'Какое-то название',
-		icon: 'yb08',
-		id: OPEN_FROM_PTK_ID,
-		buttons: [
-			{
-				id: 'btn4',
-				text: 'ОК',
-			},
-			{
-				id: 'btn5',
-				text: 'дополнительная кнопка',
-			},
-		],
-	},
-	{
-		title: 'Какое-то название',
-		icon: 'xb10',
-		id: 'c.3.2.3.1',
-	},
-	{
-		title: 'Какое-то название',
-		icon: 'xb10',
-		id: 'c.3.1.3.1',
-	},
-	{
-		title: 'Какое-то название',
-		icon: 'cabinet',
-		id: 'c.3.2.3.2.3',
-		buttons: [
-			{
-				id: 'btn6',
-				text: 'ОК',
-			},
-			{
-				id: 'btn7',
-				text: 'дополнительная кнопка',
-			},
-		],
-	},
-	{
-		title: 'Какое-то название',
-		icon: 'cabinet',
-		id: 'c.3.1.3.2.3',
-	},
-	{
-		title: 'Какое-то название',
-		icon: 'lamp',
-		id: 'c.3.1.3.3',
-		buttons: [
-			{
-				id: 'btn6',
-				text: 'lamp',
-			},
-		],
-	},
-	{
-		title: 'Какое-то название',
-		icon: 'lamp',
-		id: 'c.3.2.3.3',
-	},
-	{
-		title: 'Какое-то название',
-		icon: 'f01',
-		id: CONTROL_CIRCUIT_BREAKER_ID,
-	},
-	{
-		title: 'Какое-то название',
-		icon: 'n322',
-		id: 'c.3.1.3.2.2',
-	},
-	{
-		title: 'Какое-то название',
-		icon: 'n322',
-		id: 'c.3.2.3.2.2',
-	},
-	{
-		title: 'Какое-то название',
-		icon: 'p31',
-		id: 'p.3.1',
-	},
-	{
-		title: 'Какое-то название',
-		icon: 's01',
-		id: OPEN_FROM_KRUZAP_ID,
-	},
-	{
-		title: 'Какое-то название',
-		icon: 's01',
-		id: CLOSE_FROM_KRUZAP_ID,
-	},
-	{
-		title: 'Какое-то название',
-		icon: 'sq3',
-		id: LIMIT_SWITCH_CLOSE_ID,
-	},
-	{
-		title: 'Какое-то название',
-		icon: 'sq3',
-		id: LIMIT_SWITCH_OPEN_ID,
-	},
-];
-
-// id точек схемы
-
-export const CONTROL_CIRCUIT_NEUTRAL_ID = 'p.c.n'; // нейтраль цепи управления
-export const POWER_CIRCUIT_NEUTRAL_ID = 'p.p.n'; // нейтраль силовой цепи
-
-// Точки для подключения щупов на схеме
-export const SCHEME_POINTS: Record<string, IPoint> = {
-	'p.p.1.0': { x: 87, y: 12, state: true },
-	'p.p.2.0': { x: 129, y: 27, state: true },
-	'p.p.3.0': { x: 171, y: 42, state: true },
-
-	'p.p.1.1': { x: 87, y: 150, state: true },
-	'p.p.2.1': { x: 129, y: 150, state: true },
-	'p.p.3.1': { x: 171, y: 150, state: true },
-
-	'p.p.1.2': { x: 86, y: 188, state: true },
-	'p.p.2.2': { x: 129, y: 187, state: true },
-	'p.p.3.2': { x: 170, y: 187, state: true },
-
-	'p.p.1.3.1': { x: 86, y: 355, state: true },
-	'p.p.2.3.1': { x: 129, y: 355, state: true },
-	'p.p.3.3.1': { x: 170, y: 355, state: true },
-	'p.p.1.3.2': { x: 208, y: 355, state: true },
-	'p.p.2.3.2': { x: 242, y: 355, state: true },
-	'p.p.3.3.2': { x: 276, y: 355, state: true },
-
-	'p.p.1.4.1.1': { x: 87, y: 398, state: false },
-	'p.p.2.4.1': { x: 128, y: 398, state: false },
-	'p.p.3.4.1.1': { x: 171, y: 398, state: false },
-	'p.p.1.4.2.1': { x: 200, y: 398, state: false },
-	'p.p.2.4.2': { x: 240, y: 398, state: false },
-	'p.p.3.4.2.1': { x: 272, y: 398, state: false },
-
-	'p.p.1.4.1.2': { x: 87, y: 578, state: false },
-	'p.p.2.5': { x: 128, y: 578, state: false },
-	'p.p.3.4.1.2': { x: 171, y: 578, state: false },
-
-	[POWER_CIRCUIT_NEUTRAL_ID]: { x: 129, y: 647, state: false },
-
-	'p.c.0': { x: 86, y: 217, state: true },
-	'p.c.1': { x: 320, y: 215, state: true },
-	'p.c.2': { x: 370, y: 215, state: true },
-
-	'p.с.3.1.1': { x: 518, y: 215, state: true },
-	'p.с.3.1.2': { x: 595, y: 215, state: true },
-	'p.с.3.1.3.2.1': { x: 776, y: 216, state: false },
-	'p.с.3.1.3.2.2': { x: 849, y: 215, state: false },
-
-	'p.с.3.2.1': { x: 518, y: 480, state: true },
-	'p.с.3.2.2': { x: 594, y: 480, state: true },
-	'p.с.3.2.3.2.1': { x: 766, y: 480, state: false },
-	'p.с.3.2.3.2.2': { x: 847, y: 480, state: false },
-
-	[CONTROL_CIRCUIT_NEUTRAL_ID]: { x: 947, y: 215, state: false },
+export const SCHEME_ELEMENTS = {
+	[CLOSE_FROM_PTK_ID]: 'Вставка NDI (команда закрыть с ПТК)',
+	[OPEN_FROM_PTK_ID]: 'Вставка NDI (команда открыть с ПТК)',
+	'c.3.2.3.1': 'Вставка NDI (сигнал «не закрыто»)',
+	'c.3.1.3.1': 'Вставка NDI (сигнал «не открыто»)',
+	'c.3.2.3.2.3': 'Катушка пускателя закрыть',
+	'c.3.1.3.2.3': 'Катушка пускателя открыть',
+	'c.3.1.3.3': 'Лампа в КРУЗА-П закрыто',
+	'c.3.2.3.3': 'Лампа в КРУЗА-П открыто',
+	[CONTROL_CIRCUIT_BREAKER_ID]: 'Автомат питания цепей управления',
+	'c.3.1.3.2.2': 'Блокировка включения пускателя на открытие',
+	'c.3.2.3.2.2': 'Блокировка включения пускателя на закрыть',
+	'p.3.1': 'Провод от фазы С до автомата',
+	[OPEN_FROM_KRUZAP_ID]: 'Кнопка КРУЗА-П (команда открыть с КРУЗА-П)',
+	[CLOSE_FROM_KRUZAP_ID]: 'Кнопка КРУЗА-П (команда закрыть с КРУЗА-П)',
+	[LIMIT_SWITCH_CLOSE_ID]: 'Концевой выключатель закрыто',
+	[LIMIT_SWITCH_OPEN_ID]: 'Концевой выключатель открыто',
 };
-
-export const pointsState = extractStates(SCHEME_POINTS);
 
 const powerCircuit = [
 	[
@@ -1155,13 +1007,3 @@ export const initialStateScheme: InitialStateScheme = {
 	powerCircuit: powerCircuit,
 	controlCircuit: controlCircuit,
 };
-function extractStates(SCHEME_POINTS: Record<string, IPoint>) {
-	const result: Record<string, boolean> = {};
-
-	for (const key in SCHEME_POINTS) {
-		if (SCHEME_POINTS.hasOwnProperty(key)) {
-			result[key] = SCHEME_POINTS[key].state;
-		}
-	}
-	return result;
-}

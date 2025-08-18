@@ -9,6 +9,7 @@ const Loader: FC = () => {
 			height="130"
 			src="/svg/spinner.svg"
 			alt="Loading"
+			priority={true}
 			className={style.loader}
 		/>
 	);

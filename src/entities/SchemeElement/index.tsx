@@ -3,8 +3,6 @@
 import styles from './styles.module.scss';
 import { FC } from 'react';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
-import { openPopup } from '@/store/popupSlice';
-import { ISchemeElement } from '@/shared/types/scheme';
 import {
 	CONTROL_CIRCUIT_BREAKER_ID,
 	HIGH_RESISTANCE,
@@ -13,20 +11,18 @@ import { findElementByID } from '@/shared/utils/findElementByID/scheme';
 import { openModal } from '@/store/modalSlice';
 
 interface Prop {
-	element: ISchemeElement;
+	id: string;
+	title: string;
 }
 
-export const SchemeElement: FC<Prop> = ({ element }) => {
-	const { id } = element;
+export const SchemeElement: FC<Prop> = ({ id, title }) => {
 	const dispatch = useAppDispatch();
 
 	const activeProb = useAppSelector(state => state.multimeter.activeProb);
 
-	const handleOpenPopup = () => {
+	const handleOpenAutomat = () => {
 		if (id === CONTROL_CIRCUIT_BREAKER_ID) {
 			dispatch(openModal('automatic'));
-		} else {
-			dispatch(openPopup({ isOpen: true, content: element }));
 		}
 	};
 
@@ -49,8 +45,8 @@ export const SchemeElement: FC<Prop> = ({ element }) => {
 	return (
 		<button
 			className={elementClassName}
-			id={id}
-			onClick={handleOpenPopup}
+			aria-label={title}
+			onClick={handleOpenAutomat}
 		></button>
 	);
 };

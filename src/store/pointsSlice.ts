@@ -1,6 +1,5 @@
+import { pointsState } from '@/shared/configs/points';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { pointsState } from '@/shared/configs/scheme';
-
 const pointsSlice = createSlice({
 	name: 'points',
 	initialState: pointsState,

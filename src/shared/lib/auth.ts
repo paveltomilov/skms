@@ -1,5 +1,6 @@
 import { VerifyResponse, RefreshResponse } from '@/shared/types/typesAuth';
 const urlBase = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 export async function checkAuth(): Promise<{ valid: boolean }> {
 	const access = localStorage.getItem('accessToken');
 	const refresh = localStorage.getItem('refreshToken');

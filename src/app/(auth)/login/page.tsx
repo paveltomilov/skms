@@ -27,7 +27,6 @@ export default function LoginPage() {
 	useEffect(() => {
 		verifyAuth();
 	}, [verifyAuth]);
-	console.log(urlBase);
 	const handleLogin = async () => {
 		try {
 			const {

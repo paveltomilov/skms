@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import ModalWrapper from '@/widgets/ModalWrapper';
 import { closeModal } from '@/store/modalSlice';
 import { PopupGateControl } from '@/widgets/PopupGateControl';
-import PopupDiagnostic from '@/entities/PopupDiagnostic';
+import PopupDiagnostic from '@/widgets/PopupDiagnostic';
 import PopupGateValves from '@/widgets/PopupGateValves';
 
 export default function PtkLayout({ children }: { children: React.ReactNode }) {

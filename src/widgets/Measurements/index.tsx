@@ -1,11 +1,10 @@
 import Multimeter from '@/widgets/Multimeter';
 import styles from './styles.module.scss';
-import PopUp from '@/entities/PopUp';
 
 const Measurements = () => {
 	return (
 		<div className={styles.measurements}>
-			<PopUp />
+			{/* добавить блок с неисправностями */}
 			<Multimeter />
 		</div>
 	);
