@@ -119,16 +119,6 @@ export const GATES: Record<string, IGate> = {
 		powerSwitch: false,
 	},
 
-	//left_down
-	g13: {
-		name: '',
-		states: GATE_STATE_TYPE.open,
-		position: 100,
-		malfunctions: [],
-		controlSwitch: false,
-		powerSwitch: false,
-	},
-
 	//right_top
 	g14: {
 		name: '1ПП-4',
