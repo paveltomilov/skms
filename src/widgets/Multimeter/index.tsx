@@ -11,7 +11,7 @@ import { MultimeterModePropPayload } from '@/store/multimeterSlice';
 import {
 	CONTROL_CIRCUIT_NEUTRAL_ID,
 	POWER_CIRCUIT_NEUTRAL_ID,
-} from '@/shared/configs/scheme';
+} from '@/shared/configs/points';
 
 const Multimeter: React.FC = () => {
 	const dispatch = useAppDispatch();

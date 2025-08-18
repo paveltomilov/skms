@@ -1,6 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
 import gateReducer from './gateSlice';
-import popupReducer from './popupSlice';
 import modalReducer from './modalSlice';
 import multimeterReducer from './multimeterSlice';
 import circuitReducer from './circuitSlice';
@@ -11,7 +10,6 @@ export const store = () => {
 	return configureStore({
 		reducer: {
 			gate: gateReducer,
-			popup: popupReducer,
 			modal: modalReducer,
 			multimeter: multimeterReducer,
 			circuit: circuitReducer,

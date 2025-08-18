@@ -26,9 +26,15 @@ const modalSlice = createSlice({
 		closeModal(state, { payload }: PayloadAction<Modals>) {
 			state[payload] = false;
 		},
+		closeAllModal(state) {
+			state.diagnostic = false;
+			state.gateControl = false;
+			state.gateValves = false;
+			state.automatic = false;
+		},
 	},
 });
 
-export const { openModal, closeModal } = modalSlice.actions;
+export const { openModal, closeModal, closeAllModal } = modalSlice.actions;
 
 export default modalSlice.reducer;

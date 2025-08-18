@@ -48,6 +48,7 @@ const Button = ({
 	return href ? (
 		<Link
 			href={href}
+			onClick={onClick}
 			className={`${styles.button} ${className && className}
 			${active && styles.active}
 			${success && styles.success}`}

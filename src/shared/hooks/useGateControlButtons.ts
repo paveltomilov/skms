@@ -14,8 +14,11 @@ import { KRUZAP_BUTTONS_CONFIG, PTK_BUTTONS_CONFIG } from '../configs/header';
 import { useRef } from 'react';
 import { GATE_STATE_TYPE } from '../types/gate';
 
-export const useGateControlButtons = (id: string) => {
+export const useGateControlButtons = () => {
 	const dispatch = useAppDispatch();
+
+	// получаем id активной задвижки из стора
+	const gateId = useAppSelector(state => state.gate.activeGateId) ?? 'g1';
 
 	const limitSwitchOpenElement = findElementByID(
 		LIMIT_SWITCH_OPEN_ID,
@@ -63,7 +66,7 @@ export const useGateControlButtons = (id: string) => {
 
 	// получаем положение задвижки из стора
 	const gatePosition = useRef(
-		useAppSelector(state => state.gate.gates[id].position),
+		useAppSelector(state => state.gate.gates[gateId].position),
 	);
 
 	// создаем интервал в глобальной ОВ, чтобы к нему можно было обращаться и изменять в функциях stopGateMovement и handleButton
@@ -82,9 +85,14 @@ export const useGateControlButtons = (id: string) => {
 		if (gateInterval.current) {
 			clearInterval(gateInterval.current);
 			gateInterval.current = null;
-			dispatch(setGatePosition({ id, position: gatePosition.current })); // Диспатчим текущее положение при остановке
 			dispatch(
-				setGateState({ id, states: GATE_STATE_TYPE.intermediate }),
+				setGatePosition({ id: gateId, position: gatePosition.current }),
+			); // Диспатчим текущее положение при остановке
+			dispatch(
+				setGateState({
+					id: gateId,
+					states: GATE_STATE_TYPE.intermediate,
+				}),
 			);
 			console.log(
 				`Задвижка остановилась в положении: ${gatePosition.current}%`,
@@ -112,13 +120,21 @@ export const useGateControlButtons = (id: string) => {
 			// Обновляем положение
 			if (button === 'open') {
 				gatePosition.current += 1;
-				dispatch(setGateState({ id, states: GATE_STATE_TYPE.toOpen }));
+				dispatch(
+					setGateState({
+						id: gateId,
+						states: GATE_STATE_TYPE.toOpen,
+					}),
+				);
 
 				if (gatePosition.current >= 100) {
 					gatePosition.current = 100;
 					stopGateMovement(type);
 					dispatch(
-						setGateState({ id, states: GATE_STATE_TYPE.open }),
+						setGateState({
+							id: gateId,
+							states: GATE_STATE_TYPE.open,
+						}),
 					);
 
 					config.opening.forEach(action => {
@@ -127,13 +143,21 @@ export const useGateControlButtons = (id: string) => {
 				}
 			} else if (button === 'close') {
 				gatePosition.current -= 1;
-				dispatch(setGateState({ id, states: GATE_STATE_TYPE.toClose }));
+				dispatch(
+					setGateState({
+						id: gateId,
+						states: GATE_STATE_TYPE.toClose,
+					}),
+				);
 
 				if (gatePosition.current <= 0) {
 					gatePosition.current = 0;
 					stopGateMovement(type);
 					dispatch(
-						setGateState({ id, states: GATE_STATE_TYPE.close }),
+						setGateState({
+							id: gateId,
+							states: GATE_STATE_TYPE.close,
+						}),
 					);
 
 					config.closing.forEach(action => {

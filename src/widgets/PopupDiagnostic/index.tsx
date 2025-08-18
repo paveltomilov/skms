@@ -2,7 +2,7 @@ import { useAppDispatch } from '@/shared/hooks/store';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import { FC } from 'react';
-import { openModal } from '@/store/modalSlice';
+import { closeAllModal, openModal } from '@/store/modalSlice';
 
 const PopupDiagnostic: FC = () => {
 	const dispatch = useAppDispatch();
@@ -49,14 +49,14 @@ const PopupDiagnostic: FC = () => {
 					Какой-то Name
 				</span>
 				<Button
-					width={206}
+					width={250}
 					height={38}
 					aria-label="Сброс диагностики"
 					text="Сброс диагностики"
 					className={styles.popupDiagnostic_bottom_btn}
 				/>
 				<Button
-					width={69}
+					width={90}
 					height={38}
 					aria-label="Ф.Ск"
 					text="Ф.Ск"
@@ -72,12 +72,21 @@ const PopupDiagnostic: FC = () => {
 					className={styles.popupDiagnostic_bottom_btn}
 				/>
 				<Button
-					width={243}
+					width={310}
 					height={38}
 					aria-label="Разрешить управление"
 					text="Разрешить управление"
 					disabled
 					className={styles.popupDiagnostic_bottom_btn}
+				/>
+				<Button
+					width={140}
+					height={38}
+					aria-label="Тренажер"
+					text="Тренажер"
+					className={styles.popupDiagnostic_bottom_btn}
+					onClick={() => dispatch(closeAllModal())}
+					href="/zra"
 				/>
 			</div>
 		</div>

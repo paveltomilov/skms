@@ -2,21 +2,24 @@
 
 import styles from './styles.module.scss';
 import { FC, useEffect } from 'react';
-import { SCHEME_ELEMENTS, SCHEME_POINTS } from '@/shared/configs/scheme';
+import { SCHEME_ELEMENTS } from '@/shared/configs/scheme';
 import { SchemeElement } from '@/entities/SchemeElement';
 import { SchemePoint } from '@/entities/SchemePoint';
 import { useAppSelector, useAppDispatch } from '@/shared/hooks/store';
 import Probe from '@/entities/Probe';
 import { ProbeColor } from '@/shared/types/multimeter';
-import { setNewVoltagePoints } from '@/shared/utils/findElementByID/scheme';
-import { InitialStateScheme } from '@/shared/types/scheme';
 import { setVoltagePoints } from '@/store/pointsSlice';
 import { InputCircuitBreaker } from '@/entities/InputCircuitBreaker';
 import { Automatic } from '../Automatic';
 import ModalWrapper from '../ModalWrapper';
 import { closeModal } from '@/store/modalSlice';
+import { SCHEME_POINTS } from '@/shared/configs/points';
+import { useGateMalfunctions } from '@/shared/hooks/useGateMalfunctions';
+import { setNewVoltagePoints } from '@/shared/utils/setPointsVoltage/setPointsVoltage';
 
 const Scheme: FC = () => {
+	const dispatch = useAppDispatch();
+
 	// для рендера щупов
 	const activeProbe = useAppSelector(
 		state => state.multimeter.activeProb,
@@ -26,26 +29,27 @@ const Scheme: FC = () => {
 		state => state.multimeter.probeConnections,
 	);
 
-	// для состояния точек
-	const points = useAppSelector(state => state.points);
-	const scheme: InitialStateScheme = useAppSelector(state => state.circuit);
-	const dispatch = useAppDispatch();
+	// для рендера модалки автомата
+	const { automatic } = useAppSelector(state => state.modal);
 
+	// устанавливает значенния неисправностей в тру в схеме задвижки
+	useGateMalfunctions();
+
+	// для состояния точек (вынести в отдельный хук)
+	const points = useAppSelector(state => state.points);
+	const scheme = useAppSelector(state => state.circuit);
 	function dispatched(payload: Record<string, boolean>) {
 		dispatch(setVoltagePoints(payload));
 	}
 
 	useEffect(() => {
-		const pointsVoltage = setNewVoltagePoints(scheme, points, dispatched);
-		console.log(pointsVoltage);
+		setNewVoltagePoints(scheme, points, dispatched);
 	}, [scheme]);
-
-	const { automatic } = useAppSelector(state => state.modal);
 
 	return (
 		<div className={styles.scheme}>
-			{SCHEME_ELEMENTS.map(item => (
-				<SchemeElement key={item.id} element={item} />
+			{Object.entries(SCHEME_ELEMENTS).map(([id, title]) => (
+				<SchemeElement key={id} id={id} title={title} />
 			))}
 
 			<InputCircuitBreaker />
