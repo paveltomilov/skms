@@ -90,6 +90,86 @@ export const GATES: Record<string, IGate> = {
 		controlSwitch: false,
 		powerSwitch: false,
 	},
+
+	//KA
+	//left_top
+	g11: {
+		name: '1АСБ-1',
+		states: GATE_STATE_TYPE.close,
+		position: 100,
+		controlSwitch: false,
+		powerSwitch: false,
+	},
+	g12: {
+		name: '1АСБ-2',
+		states: GATE_STATE_TYPE.open,
+		position: 0,
+		controlSwitch: false,
+		powerSwitch: false,
+	},
+
+
+	//left_down 
+	g13: {
+		name: '',
+		states: GATE_STATE_TYPE.open,
+		position: 100,
+		controlSwitch: false,
+		powerSwitch: false,
+	},
+
+	//right_top
+	g14: {
+		name: '1ПП-4',
+		states: GATE_STATE_TYPE.noPower,
+		position: 100,
+		controlSwitch: false,
+		powerSwitch: false,
+	},
+	g15: {
+		name: '1ПП-5',
+		states: GATE_STATE_TYPE.noPower,
+		position: 100,
+		controlSwitch: false,
+		powerSwitch: false,
+	},
+	g16: {
+		name: '',
+		states: GATE_STATE_TYPE.open,
+		position: 100,
+		controlSwitch: false,
+		powerSwitch: false,
+	},
+	g17: {
+		name: '',
+		states: GATE_STATE_TYPE.open,
+		position: 100,
+		controlSwitch: false,
+		powerSwitch: false,
+	},
+	g18: {
+		name: '',
+		states: GATE_STATE_TYPE.open,
+		position: 100,
+		controlSwitch: false,
+		powerSwitch: false,
+	},
+	g19: {
+		name: '',
+		states: GATE_STATE_TYPE.open,
+		position: 100,
+		controlSwitch: false,
+		powerSwitch: false,
+	},
+
+	//right_mid
+		g20: {
+		name: '1РВЭК-1',
+		states: GATE_STATE_TYPE.close,
+		position: 0,
+		controlSwitch: false,
+		powerSwitch: false,
+	},
 };
 
 export const TRIANGLE_COLOR: TriangleColor = {
