@@ -5,6 +5,7 @@
 	position: relative;
 	display: flex;
 	grid-area: center;
+	cursor: pointer;
 
 	& > :nth-child(2) {
 		margin-left: -1px;

@@ -10,14 +10,8 @@ import TALeftDown from '@/widgets/TA_leftdown';
 import TAMidTop from '@/widgets/TA_midtop';
 import TARightDown from '@/widgets/TA_rightdown';
 import TARightMid from '@/widgets/TA_rightmid';
-import { useAppSelector } from '@/shared/hooks/store';
-import ModalWrapper from '@/widgets/ModalWrapper';
 
 const TurbineUnitPage = () => {
-	const { gateControl, gateValves, diagnostic } = useAppSelector(
-		state => state.modal,
-	);
-
 	return (
 		<section className={styles.section}>
 			<h1 className={styles.section__title}>ТА - Турбоагрегат</h1>
@@ -33,9 +27,6 @@ const TurbineUnitPage = () => {
 				<TARightTop className={styles.section__content_right_top} />
 				<TARightMid className={styles.section__content_right_mid} />
 				<TARightDown className={styles.section__content_right_down} />
-				{(gateControl || gateValves || diagnostic) && (
-					<ModalWrapper />
-				)}
 			</div>
 		</section>
 	);

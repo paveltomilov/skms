@@ -1,144 +1,56 @@
+'use client';
 
-import { FC } from 'react';
-import Button from '@/shared/UI/Button';
+import { FC, useMemo } from 'react';
 import styles from './styles.module.scss';
-import Close from '@/shared/UI/icons/Close';
-import { useDragging } from '@/shared/hooks/useDragging';
-import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
-import { closeModal } from '@/store/modalSlice';
-import { GATES } from '@/shared/configs/gate';
+import { useAppSelector } from '@/shared/hooks/store';
 import { PopupGateControl } from '../PopupGateControl';
 import PopupGateValves from '../PopupGateValves';
 import PopupDiagnostic from '@/entities/PopupDiagnostic';
 import { Automatic } from '../Automatic';
+import ModalOverlay from '../ModalOverlay';
 
 interface ModalProps {
 	className?: string;
-	isBlur?: boolean;
 }
 
-const ModalWrapper: FC<ModalProps> = ({ isBlur = false }) => {
-	const { gateValves, diagnostic, gateControl, automatic } = useAppSelector(
+const ModalWrapper: FC<ModalProps> = ({}) => {
+	const { automatic, gateValves, diagnostic, gateControl } = useAppSelector(
 		state => state.modal,
 	);
-	const id = useAppSelector(state => state.gate.activeGateId as string);
-	const dispatch = useAppDispatch();
-	const { handleMouseDown, position } = useDragging();
+	const isOne = useMemo(
+		() => automatic || gateValves || diagnostic || gateControl,
+		[automatic, gateValves, diagnostic, gateControl],
+	);
 
-	const { name } = GATES[id];
+	const gateId = useAppSelector(state => state.gate.activeGateId as string);
 
 	return (
-		<div className={`${styles.modal} ${isBlur && styles.modal_isBlur}`}>
+		<div
+			className={
+				isOne
+					? `${styles.modal} ${automatic && styles.modal_isBlur}`
+					: `${styles.modal__displayNone}`
+			}
+		>
 			{gateControl && (
-				<div
-					className={styles.modal__wrapper}
-					onClick={e => e.stopPropagation()}
-					style={{
-						transform: `translate(${position.control.x}px, ${position.control.y}px)`,
-						zIndex: '11',
-					}}
-				>
-					<div
-						id="control"
-						className={styles.modal__header}
-						onMouseDown={handleMouseDown}
-					>
-						<span className={styles.modal__header_title}>
-							{name}
-						</span>
-						<Button
-							width={26}
-							height={26}
-							onClick={() => dispatch(closeModal('gateControl'))}
-							aria-label="Закрыть"
-							icon={<Close size="sm" />}
-						/>
-					</div>
+				<ModalOverlay gateId={gateId} id={'gateControl'}>
 					<PopupGateControl />
-				</div>
+				</ModalOverlay>
 			)}
 			{diagnostic && (
-				<div
-					className={styles.modal__wrapper}
-					onClick={e => e.stopPropagation()}
-					style={{
-						transform: `translate(${position.diagnostic.x}px, ${position.diagnostic.y}px)`,
-						zIndex: '12',
-					}}
-				>
-					<div
-						id="diagnostic"
-						className={styles.modal__header}
-						onMouseDown={handleMouseDown}
-					>
-						<span className={styles.modal__header_title}>
-							{name}
-						</span>
-						<Button
-							width={26}
-							height={26}
-							onClick={() => dispatch(closeModal('diagnostic'))}
-							aria-label="Закрыть"
-							icon={<Close size="sm" />}
-						/>
-					</div>
+				<ModalOverlay gateId={gateId} id={'diagnostic'}>
 					<PopupDiagnostic />
-				</div>
+				</ModalOverlay>
 			)}
 			{gateValves && (
-				<div
-					className={styles.modal__wrapper}
-					onClick={e => e.stopPropagation()}
-					style={{
-						transform: `translate(${position.values.x}px, ${position.values.y}px)`,
-						zIndex: '12',
-					}}
-				>
-					<div
-						id="values"
-						className={styles.modal__header}
-						onMouseDown={handleMouseDown}
-					>
-						<span className={styles.modal__header_title}>
-							{name}
-						</span>
-						<Button
-							width={26}
-							height={26}
-							onClick={() => dispatch(closeModal('gateValves'))}
-							aria-label="Закрыть"
-							icon={<Close size="sm" />}
-						/>
-					</div>
+				<ModalOverlay gateId={gateId} id={'gateValves'}>
 					<PopupGateValves />
-				</div>
+				</ModalOverlay>
 			)}
 			{automatic && (
-				<div
-					className={styles.modal__wrapper}
-					onClick={e => e.stopPropagation()}
-					style={{
-						transform: `translate(${position.automatic.x}px, ${position.automatic.y}px)`,
-					}}
-				>
-					<div
-						id="automatic"
-						className={styles.modal__header}
-						onMouseDown={handleMouseDown}
-					>
-						<span className={styles.modal__header_title}>
-							{'Автомат aaa'}
-						</span>
-						<Button
-							width={26}
-							height={26}
-							onClick={() => dispatch(closeModal('automatic'))}
-							aria-label="Закрыть"
-							icon={<Close size="sm" />}
-						/>
-					</div>
+				<ModalOverlay id={'automatic'}>
 					<Automatic />
-				</div>
+				</ModalOverlay>
 			)}
 		</div>
 	);

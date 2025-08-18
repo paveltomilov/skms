@@ -1,5 +1,4 @@
 'use client';
-
 import styles from './styles.module.scss';
 import { FC, useEffect } from 'react';
 import { SCHEME_ELEMENTS, SCHEME_POINTS } from '@/shared/configs/scheme';
@@ -12,7 +11,6 @@ import { setNewVoltagePoints } from '@/shared/utils/findElementByID/scheme';
 import { InitialStateScheme } from '@/shared/types/scheme';
 import { setVoltagePoints } from '@/store/pointsSlice';
 import { InputCircuitBreaker } from '@/entities/InputCircuitBreaker';
-import ModalWrapper from '../ModalWrapper';
 
 const Scheme: FC = () => {
 	// для рендера щупов
@@ -38,8 +36,6 @@ const Scheme: FC = () => {
 		console.log(pointsVoltage);
 	}, [scheme]);
 
-	const { automatic } = useAppSelector(state => state.modal);
-
 	return (
 		<div className={styles.scheme}>
 			{SCHEME_ELEMENTS.map(item => (
@@ -58,8 +54,6 @@ const Scheme: FC = () => {
 			{/* если щуп прикреплен к схеме, его рендерит схема */}
 			{probeConnections['black'] && <Probe color="black" />}
 			{probeConnections['red'] && <Probe color="red" />}
-
-			{automatic && <ModalWrapper />}
 		</div>
 	);
 };
