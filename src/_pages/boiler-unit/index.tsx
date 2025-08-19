@@ -1,3 +1,4 @@
+import КАRightDown from '@/widgets/КА_rightdown';
 import styles from './styles.module.scss';
 
 const BoilerUnitPage = () => {
@@ -15,7 +16,7 @@ const BoilerUnitPage = () => {
 
 				<div className={styles.section__content_right_top}></div>
 				<div className={styles.section__content_right_mid}></div>
-				<div className={styles.section__content_right_down}></div>
+				<КАRightDown className={styles.section__content_right_down}></КАRightDown>
 			</div>
 		</section>
 	);

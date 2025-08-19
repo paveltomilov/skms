@@ -2,5 +2,181 @@
 @use '@/shared/scss/variables.module';
 
 .container {
-    display: flex;
+	display: flex;
+	flex-direction: column;
+}
+
+.windowsTop {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	gap: 7px;
+
+	&__left {
+		padding: 2px 0 0;
+	}
+
+	&__middle {
+		display: flex;
+		flex-direction: column;
+		padding-left: 152px;
+		margin-top: -4px;
+
+		&_item {
+			display: flex;
+			flex-direction: row;
+			gap: 2px;
+			align-items: center;
+
+			&_text {
+				@include mixins.text(14px, 700);
+			}
+		}
+	}
+
+	&__right {
+		display: flex;
+		flex-direction: row;
+		gap: 34px;
+		align-items: flex-start;
+
+		& .pumpBox {
+			margin: -26px 0 0;
+		}
+
+		&_rectangle {
+			margin: -10px 0 0;
+		}
+
+		&_window {
+			margin: -8px 0 0;
+			padding-left: 26px;
+		}
+	}
+}
+
+.windowsMiddle {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	margin: -4px 0 0;
+
+	&__left {
+		display: flex;
+		flex-direction: column;
+		padding-left: 53px;
+		gap: 2px;
+
+		&_line {
+			display: flex;
+			flex-direction: row;
+			align-items: flex-start;
+
+			&_box {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+			}
+
+			&_window {
+				padding: 29px 0 0;
+			}
+
+			& .pumpBox {
+				margin-right: 4px;
+				padding: 3px 0 0 14px;
+			}
+		}
+	}
+
+	&__middle {
+		display: flex;
+		flex-direction: column;
+		padding: 13px 0 0;
+		gap: 2px;
+
+		&_text {
+			margin-left: -11px;
+		}
+
+		&_window {
+			padding-left: 22px;
+
+			& .window__text {
+				margin-left: -22px;
+			}
+		}
+	}
+
+	&__right {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		padding: 0 0 0 155px;
+		gap: 42px;
+	}
+}
+
+.windowsBottom {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	gap: 10px;
+
+	&__left {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		padding: 12px 0 0 121px;
+		gap: 6px;
+
+		&_line {
+			display: flex;
+			flex-direction: row;
+			align-items: flex-end;
+			gap: 9px;
+
+			&_window {
+				margin: 0 0 4px;
+			}
+		}
+	}
+
+	&__middle {
+		display: flex;
+		flex-direction: column;
+		margin: -4px 0 0;
+		gap: 4px;
+
+		&_box {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+	}
+
+	&__right {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		width: 100%;
+
+		&_text {
+			display: block;
+			width: 90px;
+			text-align: center;
+			@include mixins.text(16px, 400);
+			margin: 0 19px 5px 0;
+		}
+	}
+}
+
+.pumpBox {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	&_text {
+		@include mixins.text(14px, 700);
+	}
 }

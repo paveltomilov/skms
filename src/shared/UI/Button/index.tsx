@@ -14,7 +14,7 @@ interface ButtonProps {
 	href?: string;
 	width: number;
 	height: number;
-	text?: ReactNode;
+	text?: string;
 	image?: ImageProps;
 	icon?: ReactNode;
 	disabled?: boolean;
