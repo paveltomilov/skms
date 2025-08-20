@@ -3,9 +3,10 @@ import cn from 'classnames';
 import styles from './styles.module.scss';
 import Window from '@/shared/UI/Window';
 import { WINDOWS } from '@/shared/configs/window';
-import Pump from '@/shared/UI/icons/Pump';
 import Rectangle from '@/shared/UI/icons/Rectangle';
 import Button from '@/shared/UI/Button';
+import Tdm from '@/shared/UI/Tdm';
+import { TDM } from '@/shared/configs/tdm';
 
 interface Props {
 	className?: string;
@@ -14,13 +15,7 @@ interface Props {
 const КАRightDown: FC<Props> = ({ className }) => {
 	const text1C: string = '1с';
 	const text2C: string = '2с';
-	const tractionVentilationMechanisms: Record<string, string> = {
-		tvm1: 'ДВ-1Б',
-		tvm2: 'ДРГ-1А',
-		tvm3: 'ДРГ-1Б',
-		tvm4: 'ДС-1А',
-		tvm5: 'ДС-1Б',
-	};
+
 	return (
 		<div className={cn(className, styles.container)}>
 			<div className={styles.windowsTop}>
@@ -54,12 +49,12 @@ const КАRightDown: FC<Props> = ({ className }) => {
 					</div>
 				</div>
 				<div className={styles.windowsTop__right}>
-					<div className={styles.pumpBox}>
-						<span className={styles.pumpBox_text}>
-							{tractionVentilationMechanisms.tvm1}
-						</span>
-						<Pump second />
-					</div>
+					<Tdm
+						className={styles.pumpBox}
+						direction="toLeft"
+						state={TDM.t2.state}
+						title={TDM.t2.name}
+					/>
 					<Rectangle
 						className={styles.windowsTop__right_rectangle}
 						color={'white'}
@@ -84,12 +79,12 @@ const КАRightDown: FC<Props> = ({ className }) => {
 							/>
 							<Rectangle outlined />
 						</div>
-						<div className={styles.pumpBox}>
-							<span className={styles.pumpBox_text}>
-								{tractionVentilationMechanisms.tvm2}
-							</span>
-							<Pump />
-						</div>
+						<Tdm
+							className={styles.pumpBox}
+							direction="toRight"
+							state={TDM.t3.state}
+							title={TDM.t3.name}
+						/>
 						<Window
 							className={styles.windowsMiddle__left_line_window}
 							textRight={WINDOWS.w223.unitsMeasurement}
@@ -106,12 +101,12 @@ const КАRightDown: FC<Props> = ({ className }) => {
 							/>
 							<Rectangle outlined />
 						</div>
-						<div className={styles.pumpBox}>
-							<span className={styles.pumpBox_text}>
-								{tractionVentilationMechanisms.tvm3}
-							</span>
-							<Pump />
-						</div>
+						<Tdm
+							className={styles.pumpBox}
+							direction="toRight"
+							state={TDM.t4.state}
+							title={TDM.t4.name}
+						/>
 						<Window
 							className={styles.windowsMiddle__left_line_window}
 							textRight={WINDOWS.w224.unitsMeasurement}
@@ -145,25 +140,25 @@ const КАRightDown: FC<Props> = ({ className }) => {
 			<div className={styles.windowsBottom}>
 				<div className={styles.windowsBottom__left}>
 					<div className={styles.windowsBottom__left_line}>
-						<div className={styles.pumpBox}>
-							<span className={styles.pumpBox_text}>
-								{tractionVentilationMechanisms.tvm4}
-							</span>
-							<Pump />
-						</div>
+						<Tdm
+							className={styles.pumpBox}
+							direction="toRight"
+							state={TDM.t5.state}
+							title={TDM.t5.name}
+						/>
 						<Window
-                        className={styles.windowsBottom__left_line_window}
+							className={styles.windowsBottom__left_line_window}
 							textRight={WINDOWS.w222.unitsMeasurement}
 							value={WINDOWS.w222.currentValue}
 							color={'blue'}
 						/>
 					</div>
-					<div className={styles.pumpBox}>
-						<span className={styles.pumpBox_text}>
-							{tractionVentilationMechanisms.tvm5}
-						</span>
-						<Pump />
-					</div>
+					<Tdm
+						className={styles.pumpBox}
+						direction="toRight"
+						state={TDM.t6.state}
+						title={TDM.t6.name}
+					/>
 				</div>
 				<div className={styles.windowsBottom__middle}>
 					<div className={styles.windowsBottom__middle_box}>

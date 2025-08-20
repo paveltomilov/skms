@@ -170,13 +170,3 @@
 		}
 	}
 }
-
-.pumpBox {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-
-	&_text {
-		@include mixins.text(14px, 700);
-	}
-}
