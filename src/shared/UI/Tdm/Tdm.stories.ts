@@ -1,14 +1,32 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import Pump from '.';
+import Tdm from '.';
 
-const meta: Meta<typeof Pump> = {
-	title: 'Icons/Pump',
-	component: Pump,
+const meta: Meta<typeof Tdm> = {
+	title: 'Tdm',
+	component: Tdm,
 	parameters: {
 		layout: 'centered',
 	},
 	tags: ['autodocs'],
 	argTypes: {
+		direction: {
+			description: 'направление ТДМ',
+			options: ['toRight', 'toLeft'],
+			control: {
+				type: 'radio',
+			},
+		},
+		state: {
+			description: 'состояние ТДМ',
+			options: ['on', 'off'],
+			control: {
+				type: 'radio',
+			},
+		},
+		title: {
+			description: 'название ТДМ',
+			control: { type: 'text' },
+		},
 		className: {
 			description:
 				'Для передачи дополнительных стилей (для позиционирования)',
