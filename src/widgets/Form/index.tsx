@@ -2,7 +2,6 @@
 
 import Button from '@/shared/UI/Button';
 import styles from './styles.module.scss';
-import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { FC, FormEventHandler } from 'react';
 import LoginInput from '../../shared/UI/LoginInput';
@@ -12,6 +11,7 @@ import {
 	getIndicator,
 } from '@/shared/utils/loginFunctions/loginFunctions';
 import { useLoginForm } from '@/shared/hooks/useLoginForn';
+import { postAuth } from '@/shared/lib/auth';
 
 interface FormProps {
 	toggleRegisterMode?: boolean;
@@ -29,7 +29,7 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 		configMap,
 		handleChange,
 		resetServerErrors,
-		// setServerErrors,
+		setServerErrors,
 		validateForm,
 	} = useLoginForm({ toggleRegisterMode });
 
@@ -46,17 +46,16 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 			}
 			// Можно добавить логику регистрации
 		} else {
-			const res = (await signIn('credentials', {
-				username: values.login,
-				password: values.password,
-				redirect: false,
-			})) as { error?: string } | undefined;
-
-			if (res && !res.error) {
-				router.push('/');
-			} else {
-				// Обработка ошибок сервера, например:
-				// setServerErrors({ login: true, email: false, password: true });
+			try {
+				const response = await postAuth(values);
+				if (response !== null) {
+					router.push('/ptk');
+				} else {
+					setServerErrors({ login: true, email: false, password: true });
+				}
+			} catch {
+				console.error('Ошибка при аутентификации:');
+				setServerErrors({ login: true, email: false, password: true });
 			}
 		}
 	};
