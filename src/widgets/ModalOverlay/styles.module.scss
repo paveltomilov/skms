@@ -1,0 +1,40 @@
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
+
+.modal {
+	&__wrapper {
+		position: absolute;
+		top: 45%;
+		left: 45%;
+		background: variables.$secondary-color;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: stretch;
+		box-shadow: variables.$pop-up-box-shadow,
+			variables.$realistic-drop-shadow;
+
+		// Стили для последнего ребёнка (children) внутри wrapper
+		> *:last-child {
+			padding: 8px 6px;
+			box-sizing: content-box;
+		}
+	}
+
+	&__header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0 5px;
+		border-top: 1px solid variables.$white-color;
+		border-left: 1px solid variables.$white-color;
+		border-right: 1px solid variables.$white-color;
+		height: 42px;
+		background: linear-gradient(90deg, #8a8a8a 0%, #ffffff 100%);
+
+		&_title {
+			@include mixins.text(14px, 700);
+			color: variables.$white-color;
+		}
+	}
+}

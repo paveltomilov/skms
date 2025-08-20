@@ -1,5 +1,4 @@
 'use client';
-
 import styles from './styles.module.scss';
 import { FC, useEffect } from 'react';
 import { SCHEME_ELEMENTS } from '@/shared/configs/scheme';
@@ -10,9 +9,6 @@ import Probe from '@/entities/Probe';
 import { ProbeColor } from '@/shared/types/multimeter';
 import { setVoltagePoints } from '@/store/pointsSlice';
 import { InputCircuitBreaker } from '@/entities/InputCircuitBreaker';
-import { Automatic } from '../Automatic';
-import ModalWrapper from '../ModalWrapper';
-import { closeModal } from '@/store/modalSlice';
 import { SCHEME_POINTS } from '@/shared/configs/points';
 import { useGateMalfunctions } from '@/shared/hooks/useGateMalfunctions';
 import { setNewVoltagePoints } from '@/shared/utils/setPointsVoltage/setPointsVoltage';
@@ -28,9 +24,6 @@ const Scheme: FC = () => {
 	const probeConnections = useAppSelector(
 		state => state.multimeter.probeConnections,
 	);
-
-	// для рендера модалки автомата
-	const { automatic } = useAppSelector(state => state.modal);
 
 	// устанавливает значенния неисправностей в тру в схеме задвижки
 	useGateMalfunctions();
@@ -64,16 +57,6 @@ const Scheme: FC = () => {
 			{/* если щуп прикреплен к схеме, его рендерит схема */}
 			{probeConnections['black'] && <Probe color="black" />}
 			{probeConnections['red'] && <Probe color="red" />}
-
-			{automatic && (
-				<ModalWrapper
-					title="Автомат"
-					isBlur
-					onClose={() => dispatch(closeModal('automatic'))}
-				>
-					<Automatic />
-				</ModalWrapper>
-			)}
 		</div>
 	);
 };
