@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {RecoveryFormData, ValidationStatusRecovery} from '@/shared/types/recovery';
 import {configRecovery, initialStateRecovery} from '@/shared/configs/recovery';
 import {checkFormValidity, computeValidationStatus} from '@/shared/utils/recoveryFunctions/recoveryFunctions';
@@ -55,6 +55,11 @@ export const useRecoveryForm = ({steps}: UseRecoveryFormProps) => {
     // Обработчик изменения полей формы
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
+        const key = name as keyof RecoveryFormData;
+
+        if (serverErrors[key]) {
+            setServerErrors(prev => ({ ...prev, [key]: false }));
+        }
         setValues(prev => ({ ...prev, [name]: value }));
     };
 

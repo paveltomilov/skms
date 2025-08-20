@@ -2,14 +2,30 @@
 
 import styles from './style.module.scss';
 import Form from '@/widgets/Form';
-import {FC, useState} from 'react';
+import {FC, useCallback, useEffect, useState} from 'react';
 import PopupRegistrationDone from '@/entities/PopupRegistrationDone';
+import {checkAuth} from '@/shared/lib/auth';
+import {useRouter} from 'next/navigation';
+
 
 const Login: FC = () => {
 	const [isRegisterMode, setIsRegisterMode] = useState<boolean>(false);
 	const [modalSuccess, setModalSuccess] = useState<boolean>(false);
+	const router = useRouter();
 
 	const handleToggleRegisterMode = () => setIsRegisterMode(!isRegisterMode);
+	const verifyAuth = useCallback(async () => {
+		try {
+			const { valid } = await checkAuth();
+			if (valid) router.push('/ptk');
+		} catch {
+			console.error('Ошибка проверки аутентификации:');
+		}
+	}, [router]);
+
+	useEffect(() => {
+		verifyAuth();
+	}, [verifyAuth]);
 
 	return (
 		<main className={`${styles.main} ${isRegisterMode ? styles.main_registration : ''}`}>
