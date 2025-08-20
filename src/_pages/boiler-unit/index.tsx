@@ -1,3 +1,4 @@
+import KAMidTop from '@/widgets/KA_midtop';
 import styles from './styles.module.scss';
 
 const BoilerUnitPage = () => {
@@ -9,7 +10,7 @@ const BoilerUnitPage = () => {
 				<div className={styles.section__content_left_mid}></div>
 				<div className={styles.section__content_left_down}></div>
 
-				<div className={styles.section__content_mid_top}></div>
+				<KAMidTop className={styles.section__content_mid_top}></KAMidTop>
 				<div className={styles.section__content_mid_mid}></div>
 				<div className={styles.section__content_mid_down}></div>
 

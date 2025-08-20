@@ -1,14 +1,14 @@
-import { UnitsMeasurement } from '@/shared/types/window';
+import { Prefix, UnitsMeasurement } from '@/shared/types/window';
 import styles from './styles.module.scss';
 import cn from 'classnames';
 import { FC } from 'react';
 
 interface Props {
 	color: 'blue' | 'yellow' | 'white';
-	value: number;
+	value: number | null;
 	textTop?: UnitsMeasurement;
 	textBottom?: UnitsMeasurement;
-	textLeft?: UnitsMeasurement;
+	textLeft?: Prefix;
 	textRight?: UnitsMeasurement;
 	colorText?: 'black' | 'white';
 	className?: string;
