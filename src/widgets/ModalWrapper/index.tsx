@@ -1,40 +1,57 @@
-import { FC } from 'react';
-import Button from '@/shared/UI/Button';
+'use client';
+
+import { FC, useMemo } from 'react';
 import styles from './styles.module.scss';
-import Close from '@/shared/UI/icons/Close';
+import { useAppSelector } from '@/shared/hooks/store';
+import { PopupGateControl } from '../PopupGateControl';
+import PopupGateValves from '../PopupGateValves';
+import { Automatic } from '../Automatic';
+import ModalOverlay from '../ModalOverlay';
+import PopupDiagnostic from '../PopupDiagnostic';
 
 interface ModalProps {
-	title: string;
-	children: React.ReactNode;
 	className?: string;
-	onClose: () => void;
-	isBlur?: boolean;
 }
 
-const ModalWrapper: FC<ModalProps> = ({
-	title,
-	onClose,
-	isBlur = false,
-	children,
-}) => {
+const ModalWrapper: FC<ModalProps> = ({}) => {
+	const { automatic, gateValves, diagnostic, gateControl } = useAppSelector(
+		state => state.modal,
+	);
+	const isOne = useMemo(
+		() => automatic || gateValves || diagnostic || gateControl,
+		[automatic, gateValves, diagnostic, gateControl],
+	);
+
+	const gateId = useAppSelector(state => state.gate.activeGateId as string);
+
 	return (
-		<div className={`${styles.modal} ${isBlur && styles.modal_isBlur}`}>
-			<div
-				className={styles.modal__wrapper}
-				onClick={e => e.stopPropagation()}
-			>
-				<div className={styles.modal__header}>
-					<span className={styles.modal__header_title}>{title}</span>
-					<Button
-						width={26}
-						height={26}
-						onClick={onClose}
-						aria-label="Закрыть"
-						icon={<Close size="sm" />}
-					/>
-				</div>
-				{children}
-			</div>
+		<div
+			className={
+				isOne
+					? `${styles.modal} ${automatic && styles.modal_isBlur}`
+					: `${styles.modal__displayNone}`
+			}
+		>
+			{gateControl && (
+				<ModalOverlay gateId={gateId} id={'gateControl'}>
+					<PopupGateControl />
+				</ModalOverlay>
+			)}
+			{diagnostic && (
+				<ModalOverlay gateId={gateId} id={'diagnostic'}>
+					<PopupDiagnostic />
+				</ModalOverlay>
+			)}
+			{gateValves && (
+				<ModalOverlay gateId={gateId} id={'gateValves'}>
+					<PopupGateValves />
+				</ModalOverlay>
+			)}
+			{automatic && (
+				<ModalOverlay id={'automatic'}>
+					<Automatic />
+				</ModalOverlay>
+			)}
 		</div>
 	);
 };

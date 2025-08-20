@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {LoginFormData, ValidationStatus} from '@/shared/types/login';
 import {config, initialState} from '@/shared/configs/login';
 import {checkFormValidity, computeValidationStatus} from '@/shared/utils/loginFunctions/loginFunctions';
@@ -51,6 +51,11 @@ export function useLoginForm({ toggleRegisterMode }: UseLoginFormProps) {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
+        const key = name as keyof LoginFormData;
+
+        if (serverErrors[key]) {
+            setServerErrors(prev => ({ ...prev, [key]: false }));
+        }
         setValues(prev => ({ ...prev, [name]: value }));
     };
 
