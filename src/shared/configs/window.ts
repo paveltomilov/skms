@@ -570,7 +570,7 @@ export const WINDOWS = {
 		minValue: 0,
 		maxValue: 1000,
 		unitsMeasurement: 'мм' as UnitsMeasurement,
-		title: 'Маслобак регулир.'
+		title: 'Маслобак регулир.',
 	},
 	w90: {
 		currentValue: 0.13,
@@ -784,31 +784,31 @@ export const WINDOWS = {
 		unitsMeasurement: 'кПа' as UnitsMeasurement,
 	},
 	w126: {
-		currentValue: 0.00,
+		currentValue: 0.0,
 		minValue: 0,
 		maxValue: 100,
 		unitsMeasurement: 'кПа' as UnitsMeasurement,
 	},
 	w127: {
-		currentValue: 0.00,
+		currentValue: 0.0,
 		minValue: 0,
 		maxValue: 100,
 		unitsMeasurement: 'кПа' as UnitsMeasurement,
 	},
 	w128: {
-		currentValue: 0.00,
+		currentValue: 0.0,
 		minValue: 0,
 		maxValue: 100,
 		unitsMeasurement: 'кПа' as UnitsMeasurement,
 	},
 	w129: {
-		currentValue: 0.00,
+		currentValue: 0.0,
 		minValue: 0,
 		maxValue: 100,
 		unitsMeasurement: 'кПа' as UnitsMeasurement,
 	},
 	w130: {
-		currentValue: 0.00,
+		currentValue: 0.0,
 		minValue: 0,
 		maxValue: 100,
 		unitsMeasurement: 'кПа' as UnitsMeasurement,
@@ -1010,7 +1010,7 @@ export const WINDOWS = {
 
 	// mid_mid
 	w162: {
-		currentValue: -0.20,
+		currentValue: -0.2,
 		minValue: -1,
 		maxValue: 0,
 		unitsMeasurement: 'кПа' as UnitsMeasurement,
@@ -1389,41 +1389,16 @@ export const WINDOWS = {
 		maxValue: 100,
 		unitsMeasurement: 'мг/м3' as UnitsMeasurement,
 	},
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	w234: {
+		currentValue: 4.0,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'кПа' as UnitsMeasurement,
+	},
+	w235: {
+		currentValue: 4.0,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: 'кПа' as UnitsMeasurement,
+	},
 };
