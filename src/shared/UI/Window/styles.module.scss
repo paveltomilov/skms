@@ -31,9 +31,8 @@
 			border: 1px solid variables.$black-color;
 		}
 
-		&_white {
+		&_transparent {
 			box-shadow: 0px 0px 0px 1px variables.$red-color;
-			background-color: variables.$white-color;
 		}
 	}
 

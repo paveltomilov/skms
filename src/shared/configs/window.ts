@@ -1,4 +1,4 @@
-import { UnitsMeasurement } from '../types/window';
+import { Prefix, UnitsMeasurement } from '../types/window';
 
 export const WINDOWS = {
 	// TA
@@ -876,12 +876,14 @@ export const WINDOWS = {
 		minValue: 0,
 		maxValue: 1000,
 		unitsMeasurement: '°C' as UnitsMeasurement,
+		prefix: 'А' as Prefix,
 	},
 	w141: {
 		currentValue: 307,
 		minValue: 0,
 		maxValue: 1000,
 		unitsMeasurement: '°C' as UnitsMeasurement,
+		prefix: 'Б' as Prefix,
 	},
 	w142: {
 		currentValue: 414,
@@ -984,12 +986,14 @@ export const WINDOWS = {
 		minValue: 0,
 		maxValue: 1,
 		unitsMeasurement: 'МПа' as UnitsMeasurement,
+		prefix: 'dP' as Prefix,
 	},
 	w159: {
 		currentValue: 0.146,
 		minValue: 0,
 		maxValue: 1,
 		unitsMeasurement: 'МПа' as UnitsMeasurement,
+		prefix: 'dP' as Prefix,
 	},
 	w160: {
 		currentValue: 520,

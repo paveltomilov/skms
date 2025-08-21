@@ -1,0 +1,93 @@
+import { FC } from 'react';
+import styles from './styles.module.scss';
+import cn from 'classnames';
+import Window from '@/shared/UI/Window';
+import Button from '@/shared/UI/Button';
+import { midTopGroupUp, midTopGroupDown } from '@/shared/configs/KAGroupElements';
+import Rectangle from '@/shared/UI/icons/Rectangle';
+
+interface Props {
+	className?: string;
+}
+
+const KAMidTop: FC<Props> = ({ className }) => {
+
+	return (
+		<div className={cn(className, styles.container)}>
+			<div className={styles.windows__groupup}>
+				{midTopGroupUp.map((element, index) => (
+					<div className={styles.container_element} key={index}>
+						<Window
+							color={element.color}
+							value={element.value}
+							textRight={element.text}
+							textLeft={element.prefix}
+						/>
+					</div>
+				))}
+			</div>
+			<div className={styles.windows__groupdown}>
+				{midTopGroupDown.map((element, index) => (
+					<div className={styles.container_element} key={index}>
+						<Window
+							color={element.color}
+							value={element.value}
+							textRight={element.text}
+						/>
+					</div>
+				))}
+			</div>
+			<div className={styles.buttons}>
+				<Button
+					width={91}
+					height={28}
+					text='РПП'
+					className={styles.buttons__left}>
+				</Button>
+				<Button
+					width={91}
+					height={28}
+					text='ПромПП'
+					className={styles.buttons__midup}>
+				</Button>
+				<Button
+					width={91}
+					height={28}
+					text='ПП'
+					className={styles.buttons__middown}>
+				</Button>
+				<Button
+					width={91}
+					height={28}
+					text='ТУРБ'
+					className={styles.buttons__right}>
+				</Button>
+				<Button
+					width={167}
+					height={27}
+					text='Вентиляция топки'
+					style={{ font: '12px' }}
+					className={styles.buttons__white}>
+				</Button>
+			</div>
+			<div className={styles.rectangles}>
+				<div className={styles.rectangles__title}>РКПП-А</div>
+				<Rectangle
+					color='disabled'
+					outlined
+					className={styles.rectangles__up} />
+				<Rectangle
+					color='white'
+					className={styles.rectangles__down} />
+				<div className={styles.rectangles__title}>РКПП-А</div>
+			</div>
+			<div className={styles.labels}>
+				<span className={styles.labels__left}>из ЦДВ</span>
+				<span className={styles.labels__mid}>Авар.</span>
+				<span className={styles.labels__right}>в ЦДВ</span>
+			</div>
+		</div>
+	);
+};
+
+export default KAMidTop;

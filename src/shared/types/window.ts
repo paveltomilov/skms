@@ -11,3 +11,16 @@ export type UnitsMeasurement =
 	| 'м3/ч'
 	| 'Гкал/ч'
 	| 'dP';
+
+export type Prefix =
+	| 'А'
+	| 'Б'
+	| 'dP'
+	| 'O2'
+	| 'CO2'
+	| 'NO2'
+	| 'NO'
+	| 'CO'
+	| 'SO2'
+	| '1c'
+	| '2c'
