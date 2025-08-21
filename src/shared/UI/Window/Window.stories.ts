@@ -11,17 +11,17 @@ const meta: Meta<typeof Window> = {
 	argTypes: {
 		color: {
 			description: 'Цвет окошка',
-			options: ['blue', 'yellow', 'white'],
+			options: ['blue', 'yellow', 'transparent'],
 			control: {
 				type: 'radio',
 			},
 		},
 		value: {
 			description: 'Значение в окошке',
-			control: { type: 'text' },
+			control: { type: 'number' },
 		},
 		textTop: {
-			description: 'единицы измерения сверху окошка',
+			description: 'единицы измерения или подписи сверху окошка',
 			options: [
 				'°С',
 				'МПа',
@@ -39,7 +39,7 @@ const meta: Meta<typeof Window> = {
 			},
 		},
 		textBottom: {
-			description: 'единицы измерения снизу окошка',
+			description: 'единицы измерения или подписи снизу окошка',
 			options: [
 				'°С',
 				'МПа',
@@ -57,7 +57,7 @@ const meta: Meta<typeof Window> = {
 			},
 		},
 		textLeft: {
-			description: 'единицы измерения слева окошка',
+			description: 'единицы измерения или подписи слева окошка',
 			options: [
 				'°С',
 				'МПа',
@@ -75,7 +75,7 @@ const meta: Meta<typeof Window> = {
 			},
 		},
 		textRight: {
-			description: 'единицы измерения справа окошка',
+			description: 'единицы измерения или подписи справа окошка',
 			options: [
 				'°С',
 				'МПа',

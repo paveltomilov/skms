@@ -4,12 +4,12 @@ import cn from 'classnames';
 import { FC } from 'react';
 
 interface Props {
-	color: 'blue' | 'yellow' | 'white';
+	color: 'blue' | 'yellow' | 'transparent';
 	value: number | null;
-	textTop?: UnitsMeasurement;
-	textBottom?: UnitsMeasurement;
-	textLeft?: Prefix;
-	textRight?: UnitsMeasurement;
+	textTop?: UnitsMeasurement | Prefix;
+	textBottom?: UnitsMeasurement | Prefix;
+	textLeft?: UnitsMeasurement | Prefix;
+	textRight?: UnitsMeasurement | Prefix;
 	colorText?: 'black' | 'white';
 	className?: string;
 }
@@ -27,7 +27,7 @@ const Window: FC<Props> = ({
 	const fieldColor = cn(styles.window__field, {
 		[styles.window__field_blue]: color === 'blue',
 		[styles.window__field_yellow]: color === 'yellow',
-		[styles.window__field_white]: color === 'white',
+		[styles.window__field_transparent]: color === 'transparent',
 	});
 
 	const text = cn(styles.window__text, {

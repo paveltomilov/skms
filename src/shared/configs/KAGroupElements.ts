@@ -2,7 +2,7 @@ import { WINDOWS } from '@/shared/configs/window';
 import { Prefix, UnitsMeasurement } from '@/shared/types/window';
 
 interface GroupElements {
-	color: 'blue' | 'yellow' | 'white';
+	color: 'blue' | 'yellow' | 'transparent';
 	value: number | null;
 	text: UnitsMeasurement;
 	prefix?: Prefix;
@@ -17,7 +17,7 @@ export const midTopGroupUp: GroupElements[] = [
 		prefix: WINDOWS.w140.prefix,
 	},
 	{
-		color: 'white',
+		color: 'transparent',
 		value: WINDOWS.w146.currentValue,
 		text: WINDOWS.w146.unitsMeasurement,
 	},
@@ -36,14 +36,12 @@ export const midTopGroupUp: GroupElements[] = [
 		value: WINDOWS.w158.currentValue,
 		text: WINDOWS.w158.unitsMeasurement,
 		prefix: WINDOWS.w158.prefix,
-
 	},
 	{
 		color: 'blue',
 		value: WINDOWS.w141.currentValue,
 		text: WINDOWS.w141.unitsMeasurement,
 		prefix: WINDOWS.w141.prefix,
-
 	},
 	{
 		color: 'blue',
@@ -119,7 +117,7 @@ export const midTopGroupDown: GroupElements[] = [
 		value: WINDOWS.w153.currentValue,
 		text: WINDOWS.w153.unitsMeasurement,
 	},
-		{
+	{
 		color: 'yellow',
 		value: WINDOWS.w157.currentValue,
 		text: WINDOWS.w157.unitsMeasurement,
