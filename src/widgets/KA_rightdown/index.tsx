@@ -12,7 +12,7 @@ interface Props {
 	className?: string;
 }
 
-const КАRightDown: FC<Props> = ({ className }) => {
+const KARightDown: FC<Props> = ({ className }) => {
 	const text1C: string = '1с';
 	const text2C: string = '2с';
 
@@ -57,8 +57,7 @@ const КАRightDown: FC<Props> = ({ className }) => {
 					/>
 					<Rectangle
 						className={styles.windowsTop__right_rectangle}
-						color={'white'}
-						outlined
+						color="white"
 					/>
 					<Window
 						className={styles.windowsTop__right_window}
@@ -77,7 +76,7 @@ const КАRightDown: FC<Props> = ({ className }) => {
 								value={WINDOWS.w220.currentValue}
 								color={'blue'}
 							/>
-							<Rectangle outlined />
+							<Rectangle />
 						</div>
 						<Tdm
 							className={styles.pumpBox}
@@ -193,4 +192,4 @@ const КАRightDown: FC<Props> = ({ className }) => {
 	);
 };
 
-export default КАRightDown;
+export default KARightDown;
