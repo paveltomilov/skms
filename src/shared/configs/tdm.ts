@@ -1,4 +1,6 @@
-export const TDM = {
+import ITdm from '../types/tdm';
+
+export const TDM: Record<string, ITdm> = {
 	t1: {
 		name: 'ДВ-1А',
 		state: 'on',
