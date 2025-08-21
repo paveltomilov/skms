@@ -1,0 +1,37 @@
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
+.container {
+	display: grid;
+	grid-template-columns: 69px 88px 31px 77px 88px 53px;
+	padding-top: 17px;
+}
+
+.windows {
+	row-gap: 5px;
+	display: grid;
+}
+
+.windows__button {
+	padding-top: 4px;
+	row-gap: 10px;
+	display: grid;
+	padding-left: 4px;
+	span {
+		@include mixins.text(12px, 500);
+	}
+}
+
+.windows__tilda {
+	row-gap: 4px;
+	display: grid;
+}
+
+.btn {
+	padding: 3px;
+	&__bgWhite {
+		background: variables.$white-color;
+	}
+	&__bgGreen {
+		background: variables.$success-color;
+	}
+}
