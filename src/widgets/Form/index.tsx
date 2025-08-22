@@ -48,13 +48,13 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 		} else {
 			try {
 				const response = await postAuth(values);
-				if (response !== null) {
+				if (response) {
 					router.push('/ptk');
 				} else {
 					setServerErrors({ login: true, email: false, password: true });
 				}
 			} catch {
-				console.error('Ошибка при аутентификации:');
+				console.error('Ошибка при аутентификации');
 				setServerErrors({ login: true, email: false, password: true });
 			}
 		}
