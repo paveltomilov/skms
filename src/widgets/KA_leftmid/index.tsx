@@ -49,7 +49,6 @@ const KALeftMid: FC<Props> = ({ className }) => {
 				))}
 			</div>
 
-			{/* Остальные группы окон */}
 			<div className={styles.windows}>
 				{secondWindows.map((window, index) => (
 					<Window
