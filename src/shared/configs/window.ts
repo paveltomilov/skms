@@ -1255,6 +1255,12 @@ export const WINDOWS = {
 		maxValue: 100,
 		unitsMeasurement: '%' as UnitsMeasurement,
 	},
+	w236: {
+		currentValue: 0,
+		minValue: 0,
+		maxValue: 100,
+		unitsMeasurement: '%' as UnitsMeasurement,
+	},
 	w212: {
 		currentValue: 42,
 		minValue: 0,
