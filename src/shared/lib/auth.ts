@@ -1,5 +1,6 @@
 import {RefreshResponse, VerifyResponse} from '@/shared/types/typesAuth';
 import axios from 'axios';
+import {getCookie, setCookie} from 'cookies-next';
 
 const urlBase = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -15,7 +16,7 @@ interface LoginForm {
 
 export async function checkAuth(): Promise<{ valid: boolean }> {
     const access = localStorage.getItem('accessToken');
-    const refresh = localStorage.getItem('refreshToken');
+    const refresh = getCookie('refreshToken');
 
     if (!access || !refresh) {
         return {valid: false};
@@ -67,7 +68,7 @@ export async function checkAuth(): Promise<{ valid: boolean }> {
     }
 }
 
-export async function postAuth(formData: LoginForm): Promise<LoginResponse | null> {
+export async function postAuth(formData: LoginForm): Promise<boolean> {
     try {
         const response = await axios.post<LoginResponse>(`${urlBase}/auth/`, { username: formData.login, password: formData.password }, {
             headers: { 'Content-Type': 'application/json' },
@@ -80,11 +81,11 @@ export async function postAuth(formData: LoginForm): Promise<LoginResponse | nul
         }
         if (response.status == 200) {
             localStorage.setItem('accessToken', access);
-            localStorage.setItem('refreshToken', refresh);
-            return {access, refresh};
+            setCookie('refreshToken', refresh);
+            return true;
         }
-        return null;
+        return false;
     } catch {
-        return null;
+        return false;
     }
 }

@@ -37,7 +37,7 @@ const Tilde: FC<Props> = ({
 					<path
 						d={isSmall ? 'M0 20L20 0' : 'M0 26L26 0'}
 						stroke="#8F1313"
-						stroke-linecap="round"
+						strokeLinecap="round"
 					/>
 					<path
 						d={
@@ -46,7 +46,7 @@ const Tilde: FC<Props> = ({
 								: 'M-4.76837e-07 -1.1365e-06L26 26'
 						}
 						stroke="#8F1313"
-						stroke-linecap="round"
+						strokeLinecap="round"
 					/>
 				</>
 			)}
