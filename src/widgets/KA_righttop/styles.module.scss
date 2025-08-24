@@ -1,0 +1,134 @@
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
+
+.container {
+	display: flex;
+	flex-direction: column;
+}
+
+.windowTop {
+	display: grid;
+	grid-template-columns: 76px 96px 100px 76px;
+	gap: 55px;
+
+	&__text {
+		text-align: center;
+		@include mixins.text(16px, 400);
+		display: block;
+	}
+
+	&:nth-child(1) {
+		padding: 2px 0 0 5px;
+	}
+
+	&__boxGate {
+		display: flex;
+		flex-direction: row;
+		gap: 3px;
+		padding: 0 0 0 24px;
+		position: relative;
+
+		&::after {
+			position: absolute;
+			content: '';
+			bottom: -1px;
+			width: 80px;
+			height: 20px;
+			border: 1px solid #8f1313;
+		}
+	}
+}
+
+.windowMiddle {
+	display: grid;
+	grid-template-columns: 83px 165px 83px 97px;
+	padding: 2px 0 0 90px;
+	gap: 17px;
+
+	&__wrapperWindow {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+
+		& .word {
+			@include mixins.text(20px, 500);
+			display: block;
+			margin-left: -13px;
+			margin-bottom: -6px;
+			padding: 6px 0 0;
+		}
+	}
+
+	&__boxGate {
+		display: flex;
+		flex-direction: row;
+		gap: 7px;
+		padding: 30px 0 0 2px;
+
+		& .gate {
+			transform: rotate(90deg);
+		}
+	}
+
+	&__right {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		justify-content: flex-end;
+		gap: 24px;
+		padding: 23px 0 0;
+	}
+}
+
+.windowBottom {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	align-items: flex-end;
+	padding: 3px 0 0;
+
+	&__box {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 10px;
+		border: 1px solid #000000;
+		padding: 4px;
+		width: 156px;
+		height: 54px;
+		margin-right: 137px;
+
+		& .text {
+			@include mixins.text(14px, 400);
+			display: block;
+			width: 61px;
+			text-align: center;
+		}
+
+		& .wrapperWindow {
+			display: flex;
+			flex-direction: column;
+			gap: 2px;
+		}
+	}
+
+	&__bottom {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		width: 100%;
+
+		& .window {
+			padding: 0 0 0 8px;
+		}
+
+		& .text {
+			@include mixins.text(16px, 400);
+			padding: 4px 0 0 114px;
+		}
+
+		& .button {
+			margin-top: -6px;
+		}
+	}
+}
