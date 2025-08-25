@@ -19,16 +19,8 @@ const TAMidTop: FC<Props> = ({ className }) => {
 						Горячий коллектор уплотнений
 					</span>
 					<div className={styles.windowsTop__collectorSensors}>
-						<Window
-							color="blue"
-							textRight={WINDOWS.w94.unitsMeasurement}
-							value={WINDOWS.w94.currentValue}
-						/>
-						<Window
-							color="yellow"
-							textRight={WINDOWS.w95.unitsMeasurement}
-							value={WINDOWS.w95.currentValue}
-						/>
+						<Window right data={WINDOWS.w94} />
+						<Window color="yellow" right data={WINDOWS.w95} />
 					</div>
 				</div>
 				<div className={styles.windowsTop__collector}>
@@ -36,16 +28,8 @@ const TAMidTop: FC<Props> = ({ className }) => {
 						Холодный коллектор уплотнений
 					</span>
 					<div className={styles.windowsTop__collectorSensors}>
-						<Window
-							color="blue"
-							textRight={WINDOWS.w38.unitsMeasurement}
-							value={WINDOWS.w38.currentValue}
-						/>
-						<Window
-							color="yellow"
-							textRight={WINDOWS.w39.unitsMeasurement}
-							value={WINDOWS.w39.currentValue}
-						/>
+						<Window right data={WINDOWS.w38} />
+						<Window color="yellow" right data={WINDOWS.w39} />
 					</div>
 				</div>
 			</div>
@@ -96,9 +80,8 @@ const TAMidTop: FC<Props> = ({ className }) => {
 						</div>
 						<Window
 							className={styles.windowsBottom__indicators_window}
-							color="blue"
-							textRight={WINDOWS.w40.unitsMeasurement}
-							value={WINDOWS.w40.currentValue}
+							right
+							data={WINDOWS.w40}
 						/>
 					</div>
 				</div>

@@ -28,26 +28,23 @@ const TARightMid: FC<Props> = ({ className }) => {
 					ariaLabel={'конд'}
 				/>
 				<span className={styles.container_element}>
-					<Window
-						color={'blue'}
-						value={WINDOWS.w79.currentValue}
-						textRight={WINDOWS.w79.unitsMeasurement}
-					/>
+					<Window data={WINDOWS.w79} right />
 					<span className={styles.text}>Конденсатор</span>
 				</span>
 				<div className={styles.container_element}>
-					<Window
-						color={'blue'}
-						value={WINDOWS.w84.currentValue}
-						textRight={WINDOWS.w84.unitsMeasurement}
-					/>
+					<Window data={WINDOWS.w84} right />
 				</div>
 				{rightMidOne.map((element, index) => (
 					<div className={styles.container_element} key={index}>
 						<Window
 							color={element.color}
-							value={element.value}
-							textRight={element.text}
+							data={{
+								currentValue: element.value,
+								maxValue: element.maxValue,
+								minValue: element.minValue,
+								unitsMeasurement: element.text,
+							}}
+							right
 						/>
 					</div>
 				))}
@@ -58,8 +55,13 @@ const TARightMid: FC<Props> = ({ className }) => {
 					<div className={styles.container_element} key={index}>
 						<Window
 							color={element.color}
-							value={element.value}
-							textRight={element.text}
+							data={{
+								currentValue: element.value,
+								maxValue: element.maxValue,
+								minValue: element.minValue,
+								unitsMeasurement: element.text,
+							}}
+							right
 						/>
 					</div>
 				))}
@@ -84,25 +86,13 @@ const TARightMid: FC<Props> = ({ className }) => {
 					1ок-2
 				</span>
 				<div className={styles.container_element}>
-					<Window
-						color={'blue'}
-						value={WINDOWS.w85.currentValue}
-						textRight={WINDOWS.w85.unitsMeasurement}
-					/>
+					<Window data={WINDOWS.w85} right />
 				</div>
 				<div className={styles.container_element}>
-					<Window
-						color={'blue'}
-						value={WINDOWS.w86.currentValue}
-						textRight={WINDOWS.w86.unitsMeasurement}
-					/>
+					<Window data={WINDOWS.w86} right />
 				</div>
 				<div className={styles.container_element}>
-					<Window
-						color={'blue'}
-						value={WINDOWS.w87.currentValue}
-						textRight={WINDOWS.w87.unitsMeasurement}
-					/>
+					<Window data={WINDOWS.w87} right />
 				</div>
 				<div className={styles.container_element}>
 					<Rectangle />

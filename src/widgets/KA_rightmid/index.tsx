@@ -9,7 +9,7 @@ import { TDM } from '@/shared/configs/tdm';
 import Gate from '@/shared/UI/Gate';
 import { useAppSelector } from '@/shared/hooks/store';
 import { useOpenGatePopup } from '@/shared/hooks/useOpenGatePopup';
-import ShortWindow from '../ShortWindow';
+import Window from '@/shared/UI/Window';
 
 interface Props {
 	className?: string;
@@ -23,16 +23,16 @@ const KARightMid: FC<Props> = ({ className }) => {
 			<div className={styles.columnLeft}>
 				<div className={styles.columnLeft__left}>
 					<div className={styles.columnLeft__left_top}>
-						<ShortWindow data={WINDOWS.w189} right />
+						<Window data={WINDOWS.w189} right />
 					</div>
 					<div className={styles.columnLeft__left_mid}>
-						<ShortWindow data={WINDOWS.w174} right />
-						<ShortWindow data={WINDOWS.w175} right />
+						<Window data={WINDOWS.w174} right />
+						<Window data={WINDOWS.w175} right />
 					</div>
 
 					<div className={styles.columnLeft__left_bottom}>
-						<ShortWindow data={WINDOWS.w176} right />
-						<ShortWindow data={WINDOWS.w177} right />
+						<Window data={WINDOWS.w176} right />
+						<Window data={WINDOWS.w177} right />
 					</div>
 				</div>
 				<div className={styles.columnLeft__right}>
@@ -45,8 +45,8 @@ const KARightMid: FC<Props> = ({ className }) => {
 						onClick={() => openGatePopup('g6')}
 					/>
 					<div className={styles.columnLeft__right_bottom}>
-						<ShortWindow data={WINDOWS.w204} right />
-						<ShortWindow data={WINDOWS.w205} right />
+						<Window data={WINDOWS.w204} right />
+						<Window data={WINDOWS.w205} right />
 					</div>
 				</div>
 			</div>
@@ -59,20 +59,20 @@ const KARightMid: FC<Props> = ({ className }) => {
 					</div>
 					<div className={styles.columnMid__left_bottom}>
 						<div className={styles.columnMid__left_bottom_box}>
-							<ShortWindow
+							<Window
 								data={WINDOWS.w206}
 								right
 								left
 								textLeft="1c"
 							/>
-							<ShortWindow
+							<Window
 								data={WINDOWS.w207}
 								right
 								left
 								textLeft="2c"
 							/>
 						</div>
-						<ShortWindow data={WINDOWS.w208} bottom />
+						<Window data={WINDOWS.w208} bottom />
 					</div>
 				</div>
 				<div className={styles.columnMid__mid}>
@@ -100,22 +100,22 @@ const KARightMid: FC<Props> = ({ className }) => {
 				</div>
 				<div className={styles.columnMid__right}>
 					<div className={styles.columnMid__right_top}>
-						<ShortWindow data={WINDOWS.w211} right />
-						<ShortWindow data={WINDOWS.w236} right />
-						<ShortWindow data={WINDOWS.w212} right />
+						<Window data={WINDOWS.w211} right />
+						<Window data={WINDOWS.w236} right />
+						<Window data={WINDOWS.w212} right />
 					</div>
 					<div className={styles.columnMid__right_bottom}>
-						<ShortWindow data={WINDOWS.w213} right />
+						<Window data={WINDOWS.w213} right />
 						<Rectangle color="white" className={styles.rectangle} />
-						<ShortWindow data={WINDOWS.w214} right />
+						<Window data={WINDOWS.w214} right />
 					</div>
 				</div>
 			</div>
 			<div className={styles.columnRight}>
 				<div className={styles.columnRight__top}>
-					<ShortWindow data={WINDOWS.w215} right />
-					<ShortWindow data={WINDOWS.w216} right />
-					<ShortWindow data={WINDOWS.w217} right />
+					<Window data={WINDOWS.w215} right />
+					<Window data={WINDOWS.w216} right />
+					<Window data={WINDOWS.w217} right />
 				</div>
 				<div className={styles.columnRight__mid}>
 					<div>
@@ -126,7 +126,7 @@ const KARightMid: FC<Props> = ({ className }) => {
 					</div>
 				</div>
 				<div className={styles.columnRight__bottom}>
-					<ShortWindow data={WINDOWS.w218} right />
+					<Window data={WINDOWS.w218} right />
 				</div>
 			</div>
 		</div>

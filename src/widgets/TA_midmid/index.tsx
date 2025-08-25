@@ -36,31 +36,11 @@ const TAMidMId: FC<Props> = ({ className }) => {
 
 				{/* 2-й столбец: окна слева */}
 				<section className={styles.windowsLeft}>
-					<Window
-						color="blue"
-						value={WINDOWS.w41.currentValue}
-						textRight={WINDOWS.w41.unitsMeasurement}
-					/>
-					<Window
-						color="blue"
-						value={WINDOWS.w45.currentValue}
-						textRight={WINDOWS.w45.unitsMeasurement}
-					/>
-					<Window
-						color="blue"
-						value={WINDOWS.w50.currentValue}
-						textRight={WINDOWS.w50.unitsMeasurement}
-					/>
-					<Window
-						color="blue"
-						value={WINDOWS.w52.currentValue}
-						textRight={WINDOWS.w52.unitsMeasurement}
-					/>
-					<Window
-						color="blue"
-						value={WINDOWS.w53.currentValue}
-						textRight={WINDOWS.w53.unitsMeasurement}
-					/>
+					<Window data={WINDOWS.w41} right />
+					<Window data={WINDOWS.w45} right />
+					<Window data={WINDOWS.w50} right />
+					<Window data={WINDOWS.w52} right />
+					<Window data={WINDOWS.w53} right />
 				</section>
 
 				{/* 3-й столбец: средний левый блок */}
@@ -73,11 +53,7 @@ const TAMidMId: FC<Props> = ({ className }) => {
 					>
 						Отборы из ЦСД, ЦНД
 					</h3>
-					<Window
-						color="blue"
-						value={WINDOWS.w42.currentValue}
-						textRight={WINDOWS.w42.unitsMeasurement}
-					/>
+					<Window data={WINDOWS.w42} right />
 					<div className={styles.rectAndWindow}>
 						<WindowRectCard
 							color="yellow"
@@ -87,11 +63,7 @@ const TAMidMId: FC<Props> = ({ className }) => {
 							unitsMeasurement={WINDOWS.w46.unitsMeasurement}
 							title={WINDOWS.w46.title}
 						/>
-						<Window
-							color="blue"
-							value={WINDOWS.w47.currentValue}
-							textRight={WINDOWS.w47.unitsMeasurement}
-						/>
+						<Window data={WINDOWS.w47} right />
 					</div>
 					<div className={styles.middleSection__arrowButtons}>
 						<Actuator
@@ -109,13 +81,8 @@ const TAMidMId: FC<Props> = ({ className }) => {
 
 				{/* 4-й столбец: средний правый блок */}
 				<section className={styles.rightMiddleSection}>
-					<Window
-						color="blue"
-						value={WINDOWS.w43.currentValue}
-						textRight={WINDOWS.w43.unitsMeasurement}
-					/>
+					<Window data={WINDOWS.w43} right />
 					<WindowRectCard
-						color="blue"
 						maxValue={WINDOWS.w48.maxValue}
 						minValue={WINDOWS.w48.minValue}
 						currentValue={WINDOWS.w48.currentValue}
@@ -138,21 +105,9 @@ const TAMidMId: FC<Props> = ({ className }) => {
 
 				{/* 5-й столбец: окна справа + кнопка */}
 				<section className={styles.windowsRight}>
-					<Window
-						color="blue"
-						value={WINDOWS.w44.currentValue}
-						textRight={WINDOWS.w44.unitsMeasurement}
-					/>
-					<Window
-						color="blue"
-						value={WINDOWS.w49.currentValue}
-						textRight={WINDOWS.w49.unitsMeasurement}
-					/>
-					<Window
-						color="blue"
-						value={WINDOWS.w51.currentValue}
-						textRight={WINDOWS.w51.unitsMeasurement}
-					/>
+					<Window data={WINDOWS.w44} right />
+					<Window data={WINDOWS.w49} right />
+					<Window data={WINDOWS.w51} right />
 					<Button
 						width={88}
 						height={28}
@@ -167,25 +122,13 @@ const TAMidMId: FC<Props> = ({ className }) => {
 			<section className={styles.bottomGrid}>
 				<div className={styles.bottomGroup}>
 					<Button width={88} height={28} text="ПНД" />
-					<Window
-						color="blue"
-						value={WINDOWS.w57.currentValue}
-						textRight={WINDOWS.w57.unitsMeasurement}
-					/>
-					<Window
-						color="blue"
-						value={WINDOWS.w61.currentValue}
-						textRight={WINDOWS.w61.unitsMeasurement}
-					/>
+					<Window data={WINDOWS.w57} right />
+					<Window data={WINDOWS.w61} right />
 				</div>
 
 				<section className={styles.bottomSelect}>
 					<h3 className={styles.textLabel}>V отб.</h3>
-					<Window
-						color="blue"
-						value={WINDOWS.w54.currentValue}
-						textRight={WINDOWS.w54.unitsMeasurement}
-					/>
+					<Window data={WINDOWS.w54} right />
 					<WindowRectCard
 						color="yellow"
 						maxValue={WINDOWS.w58.maxValue}
@@ -205,13 +148,8 @@ const TAMidMId: FC<Props> = ({ className }) => {
 
 				<section className={styles.bottomSelect}>
 					<h3 className={styles.textLabel}>VI отб.</h3>
-					<Window
-						color="blue"
-						value={WINDOWS.w55.currentValue}
-						textRight={WINDOWS.w55.unitsMeasurement}
-					/>
+					<Window data={WINDOWS.w55} right />
 					<WindowRectCard
-						color="blue"
 						maxValue={WINDOWS.w59.maxValue}
 						minValue={WINDOWS.w59.minValue}
 						currentValue={WINDOWS.w59.currentValue}
@@ -229,13 +167,8 @@ const TAMidMId: FC<Props> = ({ className }) => {
 
 				<section className={styles.bottomSelect}>
 					<h3 className={styles.textLabel}>VII отб.</h3>
-					<Window
-						color="blue"
-						value={WINDOWS.w56.currentValue}
-						textRight={WINDOWS.w56.unitsMeasurement}
-					/>
+					<Window data={WINDOWS.w56} right />
 					<WindowRectCard
-						color="blue"
 						maxValue={WINDOWS.w60.maxValue}
 						minValue={WINDOWS.w60.minValue}
 						currentValue={WINDOWS.w60.currentValue}

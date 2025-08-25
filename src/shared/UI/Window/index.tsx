@@ -3,26 +3,41 @@ import styles from './styles.module.scss';
 import cn from 'classnames';
 import { FC } from 'react';
 
+interface IWindowData {
+	currentValue: number | null;
+	minValue: number | undefined;
+	maxValue: number | undefined;
+	unitsMeasurement: UnitsMeasurement | undefined;
+}
+
 interface Props {
-	color: 'blue' | 'yellow' | 'transparent';
-	value: number | null;
+	data: IWindowData;
+	color?: 'blue' | 'yellow' | 'transparent';
+	colorText?: 'black' | 'white';
+	className?: string;
+	top?: boolean;
+	bottom?: boolean;
+	left?: boolean;
+	right?: boolean;
 	textTop?: UnitsMeasurement | Prefix;
 	textBottom?: UnitsMeasurement | Prefix;
 	textLeft?: UnitsMeasurement | Prefix;
 	textRight?: UnitsMeasurement | Prefix;
-	colorText?: 'black' | 'white';
-	className?: string;
 }
 
 const Window: FC<Props> = ({
-	color,
-	value,
-	textTop,
-	textBottom,
-	textLeft,
-	textRight,
-	colorText = 'black',
+	data,
+	color = 'blue',
 	className,
+	colorText = 'black',
+	top = false,
+	right = false,
+	bottom = false,
+	left = false,
+	textTop = data.unitsMeasurement,
+	textBottom = data.unitsMeasurement,
+	textLeft = data.unitsMeasurement,
+	textRight = data.unitsMeasurement,
 }) => {
 	const fieldColor = cn(styles.window__field, {
 		[styles.window__field_blue]: color === 'blue',
@@ -37,24 +52,24 @@ const Window: FC<Props> = ({
 	return (
 		<div className={`${styles.window} ${className && className}`}>
 			<div className={fieldColor}>
-				{value && <span className={styles.window__value}>{value}</span>}
+				{data && <span className={styles.window__value}>{data.currentValue}</span>}
 			</div>
-			{textTop && (
+			{top && (
 				<span className={cn(text, styles.window__text_top)}>
 					{textTop}
 				</span>
 			)}
-			{textBottom && (
+			{bottom && (
 				<span className={cn(text, styles.window__text_bottom)}>
 					{textBottom}
 				</span>
 			)}
-			{textLeft && (
+			{left && (
 				<span className={cn(text, styles.window__text_left)}>
 					{textLeft}
 				</span>
 			)}
-			{textRight && (
+			{right && (
 				<span className={cn(text, styles.window__text_right)}>
 					{textRight}
 				</span>

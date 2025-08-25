@@ -38,16 +38,8 @@ const TAleftmid: FC<Props> = ({ className }) => {
 							styles['container__window--left'],
 						)}
 					>
-						<Window
-							color="blue"
-							value={WINDOWS.w14.currentValue}
-							textRight={WINDOWS.w14.unitsMeasurement}
-						/>
-						<Window
-							color="blue"
-							value={WINDOWS.w16.currentValue}
-							textRight={WINDOWS.w16.unitsMeasurement}
-						/>
+						<Window data={WINDOWS.w14} right />
+						<Window data={WINDOWS.w16} right />
 					</div>
 
 					<Gate
@@ -63,32 +55,16 @@ const TAleftmid: FC<Props> = ({ className }) => {
 							styles['container__window--right'],
 						)}
 					>
-						<Window
-							color="blue"
-							value={WINDOWS.w15.currentValue}
-							textRight={WINDOWS.w15.unitsMeasurement}
-						/>
-						<Window
-							color="blue"
-							value={WINDOWS.w17.currentValue}
-							textRight={WINDOWS.w17.unitsMeasurement}
-						/>
+						<Window data={WINDOWS.w15} right />
+						<Window data={WINDOWS.w17} right />
 					</div>
 					<p className={styles['container__window-p']}>СКВД-1</p>
 				</div>
 				<div className={styles.containerTwo}>
 					<h3 className={styles['containerTwo__p']}>ХПП</h3>
 					<div className={styles['containerTwo__window']}>
-						<Window
-							color="blue"
-							value={WINDOWS.w18.currentValue}
-							textRight={WINDOWS.w18.unitsMeasurement}
-						/>
-						<Window
-							color="blue"
-							value={WINDOWS.w19.currentValue}
-							textRight={WINDOWS.w19.unitsMeasurement}
-						/>
+						<Window data={WINDOWS.w18} right />
+						<Window data={WINDOWS.w19} right />
 					</div>
 				</div>
 				<div className={styles.containerThree}>
@@ -98,21 +74,9 @@ const TAleftmid: FC<Props> = ({ className }) => {
 
 				<div className={styles.containerFour}>
 					<div className={styles['containerFour__window']}>
-						<Window
-							color="blue"
-							value={WINDOWS.w20.currentValue}
-							textRight={WINDOWS.w20.unitsMeasurement}
-						/>
-						<Window
-							color="blue"
-							value={WINDOWS.w21.currentValue}
-							textRight={WINDOWS.w21.unitsMeasurement}
-						/>
-						<Window
-							color="blue"
-							value={WINDOWS.w23.currentValue}
-							textRight={WINDOWS.w23.unitsMeasurement}
-						/>
+						<Window data={WINDOWS.w20} right />
+						<Window data={WINDOWS.w21} right />
+						<Window data={WINDOWS.w23} right />
 
 						<Gate
 							position="vertical"
@@ -127,24 +91,12 @@ const TAleftmid: FC<Props> = ({ className }) => {
 					<Button width={88} height={28} text="РОУ" />
 
 					<div className={styles['containerFour__windowOne']}>
-						<Window
-							color="blue"
-							value={WINDOWS.w24.currentValue}
-							textRight={WINDOWS.w24.unitsMeasurement}
-						/>
-						<Window
-							color="blue"
-							value={WINDOWS.w25.currentValue}
-							textRight={WINDOWS.w25.unitsMeasurement}
-						/>
+						<Window data={WINDOWS.w24} right />
+						<Window data={WINDOWS.w25} right />
 					</div>
 
 					<div className={styles['containerFour__windowTwo']}>
-						<Window
-							color="blue"
-							value={WINDOWS.w22.currentValue}
-							textRight={WINDOWS.w22.unitsMeasurement}
-						/>
+						<Window data={WINDOWS.w22} right />
 						<Rectangle
 							color="white"
 							className={
@@ -158,11 +110,7 @@ const TAleftmid: FC<Props> = ({ className }) => {
 							IV отб.
 						</h5>
 						<div className={styles['containerFour__windowThree-w']}>
-							<Window
-								color="blue"
-								value={WINDOWS.w26.currentValue}
-								textRight={WINDOWS.w26.unitsMeasurement}
-							/>
+							<Window data={WINDOWS.w26} right />
 						</div>
 						<h5 className={styles['containerFour__windowThree-p3']}>
 							ДПВ

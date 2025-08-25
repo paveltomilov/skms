@@ -83,54 +83,25 @@ const TALeftDown: FC<Props> = ({ className }) => {
 			</div>
 			<div className={styles.windows}>
 				<div className={styles.windows__leftup}>
-					<Window
-						color="blue"
-						value={WINDOWS.w28.currentValue}
-						textRight={WINDOWS.w28.unitsMeasurement}
-					/>
+					<Window data={WINDOWS.w28} right />
 				</div>
 				<div className={styles.windows__leftmid}>
-					<Window
-						color="blue"
-						value={WINDOWS.w31.currentValue}
-						textRight={WINDOWS.w31.unitsMeasurement}
-					/>
+					<Window data={WINDOWS.w31} right />
 				</div>
 				<div className={styles.windows__leftdown}>
-					<Window
-						color="blue"
-						value={WINDOWS.w33.currentValue}
-						textRight={WINDOWS.w33.unitsMeasurement}
-					/>
+					<Window data={WINDOWS.w33} right />
 				</div>
 				<div className={styles.windows__midup}>
-					<Window
-						color="blue"
-						value={WINDOWS.w34.currentValue}
-						textRight={WINDOWS.w34.unitsMeasurement}
-					/>
+					<Window data={WINDOWS.w34} right />
 				</div>
 				<div className={styles.windows__middown}>
-					<Window
-						color="blue"
-						value={WINDOWS.w35.currentValue}
-						textRight={WINDOWS.w35.unitsMeasurement}
-					/>
+					<Window data={WINDOWS.w35} right />
 				</div>
 				<div className={styles.windows__rightup}>
-					<Window
-						color="blue"
-						value={WINDOWS.w36.currentValue}
-						textRight={WINDOWS.w36.unitsMeasurement}
-					/>
+					<Window data={WINDOWS.w36} right />
 				</div>
 				<div className={styles.windows__rightdown}>
-					<Window
-						color="blue"
-						value={WINDOWS.w37.currentValue}
-						textBottom={WINDOWS.w37.unitsMeasurement}
-						textLeft="dP"
-					/>
+					<Window data={WINDOWS.w37} bottom left textLeft="dP" />
 				</div>
 			</div>
 			<div className={styles.text}>
