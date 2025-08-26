@@ -3,7 +3,7 @@
 import Button from '@/shared/UI/Button';
 import styles from './styles.module.scss';
 import { useRouter } from 'next/navigation';
-import { FC, FormEventHandler } from 'react';
+import { FC, FormEventHandler, useEffect, useRef } from 'react';
 import LoginInput from '../../shared/UI/LoginInput';
 import Link from 'next/link';
 import {
@@ -28,10 +28,25 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 		activeFields,
 		configMap,
 		handleChange,
+		handlePaste,
+		forceValidation,
 		resetServerErrors,
 		setServerErrors,
 		validateForm,
 	} = useLoginForm({ toggleRegisterMode });
+
+	const initialLoadRef = useRef(true);
+
+	useEffect(() => {
+		if (initialLoadRef.current) {
+			initialLoadRef.current = false;
+			const timer = setTimeout(() => {
+				forceValidation();
+			}, 100);
+
+			return () => clearTimeout(timer);
+		}
+	}, [forceValidation]);
 
 	const handleSubmit: FormEventHandler<HTMLFormElement> = async event => {
 		event.preventDefault();
@@ -67,6 +82,7 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 				type={'text'}
 				name={'login'}
 				onChange={handleChange}
+				onPaste={(e) => handlePaste(e, 'login')}
 				value={values.login}
 				placeholder={'Логин'}
 				id={'login'}
@@ -102,6 +118,7 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 				type={'password'}
 				name={'password'}
 				onChange={handleChange}
+				onPaste={(e) => handlePaste(e, 'password')}
 				value={values.password}
 				placeholder={'Пароль'}
 				id={'password'}
@@ -138,6 +155,7 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 					type={'email'}
 					name={'email'}
 					onChange={handleChange}
+					onPaste={(e) => handlePaste(e, 'email')}
 					value={values.email || ''}
 					placeholder={'Email'}
 					id={'email'}
@@ -170,9 +188,8 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 				/>
 			)}
 			<div
-				className={`${styles.form_inner} ${
-					toggleRegisterMode ? styles.policy : ''
-				}`}
+				className={`${styles.form_inner} ${toggleRegisterMode ? styles.policy : ''
+					}`}
 			>
 				<label className={styles.form_inner_label}>
 					<input
