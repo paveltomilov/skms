@@ -1,3 +1,5 @@
+'use client';
+
 import KAMidTop from '@/widgets/KA_midtop';
 import KARightDown from '@/widgets/KA_rightdown';
 import styles from './styles.module.scss';
@@ -18,7 +20,7 @@ const BoilerUnitPage = () => {
 				<div className={styles.section__content_mid_down}></div>
 
 				<div className={styles.section__content_right_top}></div>
-				<div className={styles.section__content_right_mid}></div>
+				<KARightMid className={styles.section__content_right_mid} />
 				<KARightDown className={styles.section__content_right_down} />
 			</div>
 		</section>

@@ -15,18 +15,8 @@ const TARightTop: FC<Props> = ({ className }) => {
 	return (
 		<div className={cn(className, styles.container)}>
 			<div className={styles.blockCND}>
-				<Window
-					color="blue"
-					value={WINDOWS.w68.currentValue}
-					textRight={WINDOWS.w68.unitsMeasurement}
-					colorText="white"
-				/>
-				<Window
-					color="blue"
-					value={WINDOWS.w69.currentValue}
-					textRight={WINDOWS.w69.unitsMeasurement}
-					colorText="white"
-				/>
+				<Window data={WINDOWS.w68} right colorText="white" />
+				<Window data={WINDOWS.w69} right colorText="white" />
 				<span
 					className={cn(
 						className,
@@ -36,49 +26,27 @@ const TARightTop: FC<Props> = ({ className }) => {
 				>
 					ЦНД
 				</span>
-				<Window
-					color="blue"
-					value={WINDOWS.w72.currentValue}
-					textRight={WINDOWS.w72.unitsMeasurement}
-					colorText="white"
-				/>
-				<Window
-					color="blue"
-					value={WINDOWS.w73.currentValue}
-					textRight={WINDOWS.w73.unitsMeasurement}
-					colorText="white"
-				/>
+				<Window data={WINDOWS.w72} right colorText="white" />
+				<Window data={WINDOWS.w73} right colorText="white" />
 				<div
 					className={cn(
 						styles.blockCND__center,
 						styles.blockCND__kPa,
 					)}
 				>
-					<Window
-						color="blue"
-						value={WINDOWS.w74.currentValue}
-						textRight={WINDOWS.w74.unitsMeasurement}
-					/>
+					<Window data={WINDOWS.w74} right />
 				</div>
 			</div>
 			<div className={styles.blockGenerator}>
 				<div className={styles.blockGenerator__left}>
-					<Window
-						color="blue"
-						value={WINDOWS.w70.currentValue}
-						textRight={WINDOWS.w70.unitsMeasurement}
-					/>
+					<Window data={WINDOWS.w70} right />
 					<Tilde size="md" />
 					<span className={styles.blockGenerator__text}>
 						Генератор
 					</span>
 				</div>
 				<div className={styles.blockGenerator__right}>
-					<Window
-						color="blue"
-						value={WINDOWS.w71.currentValue}
-						textRight={WINDOWS.w71.unitsMeasurement}
-					/>
+					<Window data={WINDOWS.w71} right />
 				</div>
 			</div>
 		</div>
