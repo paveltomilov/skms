@@ -1,7 +1,10 @@
+'use client';
+
 import KAMidTop from '@/widgets/KA_midtop';
 import KARightDown from '@/widgets/KA_rightdown';
 import styles from './styles.module.scss';
 import KALeftMid from '@/widgets/KA_leftmid';
+import KARightMid from '@/widgets/KA_rightmid';
 
 const BoilerUnitPage = () => {
 	return (
@@ -9,7 +12,7 @@ const BoilerUnitPage = () => {
 			<h1 className={styles.section__title}>КА - Котлоагрегат</h1>
 			<div className={styles.section__content}>
 				<div className={styles.section__content_left_top}></div>
-				<KALeftMid className={styles.section__content_left_mid}/>
+				<KALeftMid className={styles.section__content_left_mid} />
 				<div className={styles.section__content_left_down}></div>
 
 				<KAMidTop className={styles.section__content_mid_top} />
@@ -17,7 +20,7 @@ const BoilerUnitPage = () => {
 				<div className={styles.section__content_mid_down}></div>
 
 				<div className={styles.section__content_right_top}></div>
-				<div className={styles.section__content_right_mid}></div>
+				<KARightMid className={styles.section__content_right_mid} />
 				<KARightDown className={styles.section__content_right_down} />
 			</div>
 		</section>

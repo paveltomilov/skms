@@ -7,44 +7,35 @@ import Rectangle from '@/shared/UI/icons/Rectangle';
 import Button from '@/shared/UI/Button';
 import Tdm from '@/shared/UI/Tdm';
 import { TDM } from '@/shared/configs/tdm';
+import { Prefix } from '@/shared/types/window';
 
 interface Props {
 	className?: string;
 }
 
 const KARightDown: FC<Props> = ({ className }) => {
-	const text1C: string = '1с';
-	const text2C: string = '2с';
+	const text1C: Prefix = '1c';
+	const text2C: Prefix = '2c';
 
 	return (
 		<div className={cn(className, styles.container)}>
 			<div className={styles.windowsTop}>
 				<div className={styles.windowsTop__left}>
-					<Window
-						textRight={WINDOWS.w178.unitsMeasurement}
-						value={WINDOWS.w178.currentValue}
-						color={'blue'}
-					/>
+					<Window data={WINDOWS.w178} right />
 				</div>
 				<div className={styles.windowsTop__middle}>
 					<div className={styles.windowsTop__middle_item}>
 						<span className={styles.windowsTop__middle_item_text}>
 							{text1C}
 						</span>
-						<Window
-							textRight={WINDOWS.w206.unitsMeasurement}
-							value={WINDOWS.w206.currentValue}
-							color={'blue'}
-						/>
+						<Window data={WINDOWS.w206} right />
 					</div>
 					<div className={styles.windowsTop__middle_item}>
-						<span className={styles.windowsTop__middle_item_text}>
-							{text2C}
-						</span>
 						<Window
-							textRight={WINDOWS.w210.unitsMeasurement}
-							value={WINDOWS.w210.currentValue}
-							color={'blue'}
+							data={WINDOWS.w210}
+							right
+							left
+							textLeft={text2C}
 						/>
 					</div>
 				</div>
@@ -61,9 +52,8 @@ const KARightDown: FC<Props> = ({ className }) => {
 					/>
 					<Window
 						className={styles.windowsTop__right_window}
-						textRight={WINDOWS.w219.unitsMeasurement}
-						value={WINDOWS.w219.currentValue}
-						color={'blue'}
+						data={WINDOWS.w219}
+						right
 					/>
 				</div>
 			</div>
@@ -71,11 +61,7 @@ const KARightDown: FC<Props> = ({ className }) => {
 				<div className={styles.windowsMiddle__left}>
 					<div className={styles.windowsMiddle__left_line}>
 						<div className={styles.windowsMiddle__left_line_box}>
-							<Window
-								textRight={WINDOWS.w220.unitsMeasurement}
-								value={WINDOWS.w220.currentValue}
-								color={'blue'}
-							/>
+							<Window data={WINDOWS.w220} right />
 							<Rectangle />
 						</div>
 						<Tdm
@@ -86,18 +72,13 @@ const KARightDown: FC<Props> = ({ className }) => {
 						/>
 						<Window
 							className={styles.windowsMiddle__left_line_window}
-							textRight={WINDOWS.w223.unitsMeasurement}
-							value={WINDOWS.w223.currentValue}
-							color={'blue'}
+							data={WINDOWS.w223}
+							right
 						/>
 					</div>
 					<div className={styles.windowsMiddle__left_line}>
 						<div className={styles.windowsMiddle__left_line_box}>
-							<Window
-								textRight={WINDOWS.w221.unitsMeasurement}
-								value={WINDOWS.w221.currentValue}
-								color={'blue'}
-							/>
+							<Window data={WINDOWS.w221} right />
 							<Rectangle outlined />
 						</div>
 						<Tdm
@@ -108,27 +89,24 @@ const KARightDown: FC<Props> = ({ className }) => {
 						/>
 						<Window
 							className={styles.windowsMiddle__left_line_window}
-							textRight={WINDOWS.w224.unitsMeasurement}
-							value={WINDOWS.w224.currentValue}
-							color={'blue'}
+							data={WINDOWS.w224}
+							right
 						/>
 					</div>
 				</div>
 				<div className={styles.windowsMiddle__middle}>
 					<Window
 						className={styles.windowsMiddle__middle_window}
-						textBottom={WINDOWS.w234.unitsMeasurement}
-						value={WINDOWS.w234.currentValue}
-						color={'blue'}
+						data={WINDOWS.w234}
+						bottom
 					/>
 					<span className={styles.windowsMiddle__middle_text}>
 						{'к горелкам'}
 					</span>
 					<Window
 						className={styles.windowsMiddle__middle_window}
-						textBottom={WINDOWS.w235.unitsMeasurement}
-						value={WINDOWS.w235.currentValue}
-						color={'blue'}
+						data={WINDOWS.w235}
+						bottom
 					/>
 				</div>
 				<div className={styles.windowsMiddle__right}>
@@ -147,9 +125,8 @@ const KARightDown: FC<Props> = ({ className }) => {
 						/>
 						<Window
 							className={styles.windowsBottom__left_line_window}
-							textRight={WINDOWS.w222.unitsMeasurement}
-							value={WINDOWS.w222.currentValue}
-							color={'blue'}
+							data={WINDOWS.w222}
+							right
 						/>
 					</div>
 					<Tdm
@@ -161,25 +138,13 @@ const KARightDown: FC<Props> = ({ className }) => {
 				</div>
 				<div className={styles.windowsBottom__middle}>
 					<div className={styles.windowsBottom__middle_box}>
-						<Window
-							textRight={WINDOWS.w225.unitsMeasurement}
-							value={WINDOWS.w225.currentValue}
-							color={'blue'}
-						/>
+						<Window data={WINDOWS.w225} right />
 						<Rectangle outlined />
 					</div>
 					<div className={styles.windowsBottom__middle_box}>
-						<Window
-							textRight={WINDOWS.w226.unitsMeasurement}
-							value={WINDOWS.w226.currentValue}
-							color={'blue'}
-						/>
+						<Window data={WINDOWS.w226} right />
 						<Rectangle outlined />
-						<Window
-							textRight={WINDOWS.w227.unitsMeasurement}
-							value={WINDOWS.w227.currentValue}
-							color={'blue'}
-						/>
+						<Window data={WINDOWS.w227} right />
 					</div>
 				</div>
 				<div className={styles.windowsBottom__right}>

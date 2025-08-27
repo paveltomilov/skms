@@ -1,6 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import Window from '.';
 
+interface WindowData {
+	currentValue: number | null;
+	minValue?: number;
+	maxValue?: number;
+	unitsMeasurement?: string;
+}
+
 const meta: Meta<typeof Window> = {
 	title: 'Window',
 	component: Window,
@@ -9,6 +16,32 @@ const meta: Meta<typeof Window> = {
 	},
 	tags: ['autodocs'],
 	argTypes: {
+		top: {
+			description:
+				'Булевое значения для отображения текста сверху окошка',
+			control: {
+				type: 'boolean',
+			},
+		},
+		bottom: {
+			description: 'Булевое значения для отображения текста снизу окошка',
+			control: {
+				type: 'boolean',
+			},
+		},
+		left: {
+			description: 'Булевое значения для отображения текста слева окошка',
+			control: {
+				type: 'boolean',
+			},
+		},
+		right: {
+			description:
+				'Булевое значения для отображения текста справа окошка',
+			control: {
+				type: 'boolean',
+			},
+		},
 		color: {
 			description: 'Цвет окошка',
 			options: ['blue', 'yellow', 'transparent'],
@@ -16,9 +49,9 @@ const meta: Meta<typeof Window> = {
 				type: 'radio',
 			},
 		},
-		value: {
-			description: 'Значение в окошке',
-			control: { type: 'number' },
+		data: {
+			description: 'Данные передоваемые компоненту',
+			control: { type: 'object' },
 		},
 		textTop: {
 			description: 'единицы измерения или подписи сверху окошка',
@@ -102,6 +135,9 @@ const meta: Meta<typeof Window> = {
 		className: {
 			description:
 				'Для передачи дополнительных стилей (для позиционирования)',
+			control: {
+				type: 'text',
+			},
 		},
 	},
 };
@@ -112,14 +148,46 @@ type Story = StoryObj<typeof meta>;
 export const Yellow: Story = {
 	args: {
 		color: 'yellow',
-		value: 0,
+		right: 'true',
+		data: {
+			currentValue: 0,
+			minValue: 100,
+			maxValue: 0,
+			unitsMeasurement: 'А',
+		},
 	},
 };
 
 export const TextTop: Story = {
 	args: {
+		top: 'true',
 		textTop: 'текст сверху',
-		value: 0,
+		data: {
+			currentValue: 7.7,
+			minValue: 100,
+			maxValue: 0,
+			unitsMeasurement: 'А',
+		},
 		color: 'blue',
+	},
+};
+
+export const BlueWithAllTexts: Story = {
+	args: {
+		top: true,
+		bottom: true,
+		left: true,
+		right: true,
+		textTop: 'Температура',
+		textBottom: 'Давление',
+		textLeft: 'Вход',
+		data: {
+			currentValue: 25.5,
+			minValue: -10,
+			maxValue: 50,
+			unitsMeasurement: '°С',
+		},
+		color: 'blue',
+		colorText: 'white',
 	},
 };

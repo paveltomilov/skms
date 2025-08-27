@@ -3,7 +3,10 @@ import styles from './styles.module.scss';
 import cn from 'classnames';
 import Window from '@/shared/UI/Window';
 import Button from '@/shared/UI/Button';
-import { midTopGroupUp, midTopGroupDown } from '@/shared/configs/KAGroupElements';
+import {
+	midTopGroupUp,
+	midTopGroupDown,
+} from '@/shared/configs/KAGroupElements';
 import Rectangle from '@/shared/UI/icons/Rectangle';
 
 interface Props {
@@ -11,7 +14,6 @@ interface Props {
 }
 
 const KAMidTop: FC<Props> = ({ className }) => {
-
 	return (
 		<div className={cn(className, styles.container)}>
 			<div className={styles.windows__groupup}>
@@ -19,7 +21,14 @@ const KAMidTop: FC<Props> = ({ className }) => {
 					<div className={styles.container_element} key={index}>
 						<Window
 							color={element.color}
-							value={element.value}
+							data={{
+								currentValue: element.value,
+								minValue: element.minValue,
+								maxValue: element.maxValue,
+								unitsMeasurement: element.text,
+							}}
+							right={!!element.text}
+							left={!!element.prefix}
 							textRight={element.text}
 							textLeft={element.prefix}
 						/>
@@ -31,8 +40,16 @@ const KAMidTop: FC<Props> = ({ className }) => {
 					<div className={styles.container_element} key={index}>
 						<Window
 							color={element.color}
-							value={element.value}
+							data={{
+								currentValue: element.value,
+								minValue: element.minValue,
+								maxValue: element.maxValue,
+								unitsMeasurement: element.text,
+							}}
+							right={!!element.text}
+							left={!!element.prefix}
 							textRight={element.text}
+							textLeft={element.prefix}
 						/>
 					</div>
 				))}
@@ -41,44 +58,43 @@ const KAMidTop: FC<Props> = ({ className }) => {
 				<Button
 					width={91}
 					height={28}
-					text='РПП'
-					className={styles.buttons__left}>
-				</Button>
+					text="РПП"
+					className={styles.buttons__left}
+				></Button>
 				<Button
 					width={91}
 					height={28}
-					text='ПромПП'
-					className={styles.buttons__midup}>
-				</Button>
+					text="ПромПП"
+					className={styles.buttons__midup}
+				></Button>
 				<Button
 					width={91}
 					height={28}
-					text='ПП'
-					className={styles.buttons__middown}>
-				</Button>
+					text="ПП"
+					className={styles.buttons__middown}
+				></Button>
 				<Button
 					width={91}
 					height={28}
-					text='ТУРБ'
-					className={styles.buttons__right}>
-				</Button>
+					text="ТУРБ"
+					className={styles.buttons__right}
+				></Button>
 				<Button
 					width={167}
 					height={27}
-					text='Вентиляция топки'
+					text="Вентиляция топки"
 					style={{ font: '12px' }}
-					className={styles.buttons__white}>
-				</Button>
+					className={styles.buttons__white}
+				></Button>
 			</div>
 			<div className={styles.rectangles}>
 				<div className={styles.rectangles__title}>РКПП-А</div>
 				<Rectangle
-					color='disabled'
+					color="disabled"
 					outlined
-					className={styles.rectangles__up} />
-				<Rectangle
-					color='white'
-					className={styles.rectangles__down} />
+					className={styles.rectangles__up}
+				/>
+				<Rectangle color="white" className={styles.rectangles__down} />
 				<div className={styles.rectangles__title}>РКПП-А</div>
 			</div>
 			<div className={styles.labels}>

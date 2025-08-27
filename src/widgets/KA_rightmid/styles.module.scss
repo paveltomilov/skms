@@ -1,0 +1,171 @@
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
+
+.container {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+}
+
+.columnLeft {
+	display: flex;
+	flex-direction: row;
+	gap: 26px;
+	margin-right: 14px;
+
+	&__left {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+
+		&_top {
+			padding-left: 7px;
+			margin: -3px 0 29px;
+		}
+
+		&_mid {
+			display: flex;
+			flex-direction: column;
+			gap: 60px;
+			margin: 0 0 55px -3px;
+			width: 65px;
+		}
+
+		&_bottom {
+			display: flex;
+			flex-direction: column;
+			width: 65px;
+		}
+	}
+
+	&__right {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		padding-top: 12px;
+
+		&_bottom {
+			display: flex;
+			flex-direction: column;
+			gap: 2px;
+			padding: 106px 0 0 46px;
+		}
+	}
+	&__text {
+		@include mixins.text(16px, 700);
+		padding-left: 26px;
+		margin: 0 0 37px;
+	}
+}
+
+.columnMid {
+	display: flex;
+	flex-direction: row;
+
+	&__left {
+		display: flex;
+		flex-direction: column;
+		width: 78px;
+
+		&_top {
+			display: flex;
+			flex-direction: column;
+			gap: 28px;
+			padding: 10px 0 0;
+			margin-bottom: 40px;
+
+			& .text {
+				@include mixins.text(12px, 400);
+				text-align: end;
+			}
+		}
+
+		&_bottom {
+			display: flex;
+			flex-direction: column;
+			gap: 19px;
+
+			&_box {
+				display: flex;
+				flex-direction: column;
+			}
+		}
+	}
+
+	&__mid {
+		display: flex;
+		flex-direction: column;
+		margin-right: 3px;
+
+		&_top {
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+			padding: 0 0 0 5px;
+			margin: -2px 0 54px;
+		}
+
+		&_wrapper {
+			display: flex;
+			flex-direction: column;
+			width: 45px;
+			align-items: center;
+
+			& .text {
+				@include mixins.text(12px, 500);
+			}
+		}
+	}
+
+	&__right {
+		display: flex;
+		flex-direction: column;
+		gap: 57px;
+		width: 85px;
+
+		&_top {
+			padding-top: 2px;
+			display: flex;
+			flex-direction: column;
+			gap: 21px;
+			align-items: flex-start;
+		}
+
+		&_bottom {
+			display: flex;
+			flex-direction: column;
+			gap: 1px;
+			align-items: end;
+
+			& .rectangle {
+				margin: 0 19px 18px 0;
+			}
+		}
+	}
+}
+
+.columnRight {
+	display: flex;
+	flex-direction: column;
+
+	&__top {
+		width: 92px;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		padding: 30px 0 0;
+		margin: 0 0 35px -9px;
+	}
+
+	&__mid {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		gap: 8px;
+		margin: 0 9px 9px 0;
+	}
+
+	&__bottom {
+		width: 68px;
+		padding-left: 45px;
+	}
+}

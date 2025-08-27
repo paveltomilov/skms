@@ -17,11 +17,7 @@ const TARightDown: FC<Props> = ({ className }) => {
 			<div className={styles.container}>
 				<div className={styles.container_element}>
 					<div className={styles.container_element_box}>
-						<Window
-							color={'blue'}
-							value={WINDOWS.w88.currentValue}
-							textRight={WINDOWS.w88.unitsMeasurement}
-						/>
+						<Window data={WINDOWS.w88} right />
 						<span className={styles.container_element_box__text}>
 							{WINDOWS.w88.title}
 						</span>
@@ -34,11 +30,7 @@ const TARightDown: FC<Props> = ({ className }) => {
 						className={styles.container_element_box__button}
 					/>
 					<div className={styles.container_element_box}>
-						<Window
-							color={'blue'}
-							value={WINDOWS.w89.currentValue}
-							textRight={WINDOWS.w89.unitsMeasurement}
-						/>
+						<Window data={WINDOWS.w89} right />
 						<span className={styles.container_element_box__text}>
 							{WINDOWS.w89.title}
 						</span>
@@ -69,16 +61,8 @@ const TARightDown: FC<Props> = ({ className }) => {
 				<span className={styles.container_element}>к ВПУ</span>
 				<span className={styles.container_element}>мо</span>
 				<div className={styles.container_element}>
-					<Window
-						color={'blue'}
-						value={WINDOWS.w90.currentValue}
-						textRight={WINDOWS.w90.unitsMeasurement}
-					/>
-					<Window
-						color={'blue'}
-						value={WINDOWS.w92.currentValue}
-						textRight={WINDOWS.w92.unitsMeasurement}
-					/>
+					<Window data={WINDOWS.w90} right />
+					<Window data={WINDOWS.w92} right />
 				</div>
 				<span className={styles.container_element}>к подшипникам</span>
 				<div className={styles.container_element}>
@@ -102,16 +86,8 @@ const TARightDown: FC<Props> = ({ className }) => {
 					</span>
 				</div>
 				<div className={styles.container_element}>
-					<Window
-						color={'blue'}
-						value={WINDOWS.w91.currentValue}
-						textRight={WINDOWS.w91.unitsMeasurement}
-					/>
-					<Window
-						color={'blue'}
-						value={WINDOWS.w93.currentValue}
-						textRight={WINDOWS.w93.unitsMeasurement}
-					/>
+					<Window data={WINDOWS.w91} right />
+					<Window data={WINDOWS.w93} right />
 				</div>
 				<span className={styles.container_element}>
 					на регулирование

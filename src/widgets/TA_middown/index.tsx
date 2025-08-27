@@ -36,9 +36,8 @@ const TAMidDown: FC<Props> = ({ className }) => {
 				<div className={styles.windowsBottom__pump}>
 					<Window
 						className={styles.flexRow}
-						color="blue"
-						value={WINDOWS.w62.currentValue}
-						textRight={WINDOWS.w62.unitsMeasurement}
+						data={WINDOWS.w62}
+						right
 					/>
 					<div className={styles.windowsBottom__actuator}>
 						<Actuator
@@ -47,9 +46,9 @@ const TAMidDown: FC<Props> = ({ className }) => {
 							textBottomRight={ACTUATORS.a6.name}
 						/>
 						<Window
-							color="blue"
-							value={WINDOWS.w64.currentValue}
-							textBottom={WINDOWS.w64.unitsMeasurement}
+							data={WINDOWS.w64}
+							bottom
+							left
 							textLeft={dropPressure}
 						/>
 					</div>
@@ -64,9 +63,8 @@ const TAMidDown: FC<Props> = ({ className }) => {
 				<div className={styles.windowsBottom__pump}>
 					<Window
 						className={styles.flexRow}
-						color="blue"
-						value={WINDOWS.w63.currentValue}
-						textRight={WINDOWS.w63.unitsMeasurement}
+						data={WINDOWS.w63}
+						right
 					/>
 					<div className={styles.windowsBottom__actuatorRight}>
 						<Actuator
@@ -75,9 +73,9 @@ const TAMidDown: FC<Props> = ({ className }) => {
 							textBottomRight={ACTUATORS.a7.name}
 						/>
 						<Window
-							color="blue"
-							value={WINDOWS.w65.currentValue}
-							textRight={WINDOWS.w65.unitsMeasurement}
+							data={WINDOWS.w65}
+							right
+							left
 							textLeft={dropPressure}
 						/>
 					</div>
@@ -99,16 +97,14 @@ const TAMidDown: FC<Props> = ({ className }) => {
 					<div className={styles.windowsBottom__frame}>
 						<Window
 							className={styles.flexRow}
-							color="blue"
-							value={WINDOWS.w66.currentValue}
-							textRight={WINDOWS.w66.unitsMeasurement}
+							data={WINDOWS.w66}
+							right
 						/>
 						<Rectangle />
 						<Window
 							className={styles.flexRow}
-							color="blue"
-							value={WINDOWS.w67.currentValue}
-							textRight={WINDOWS.w67.unitsMeasurement}
+							data={WINDOWS.w67}
+							right
 						/>
 						<Attention
 							size="lg"

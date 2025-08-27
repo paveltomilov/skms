@@ -17,8 +17,8 @@
 .windowTop {
 	display: flex;
 	flex-direction: column;
-	margin-left: 396px;
-	margin-top: -35px;
+	margin-left: 399px;
+	margin-top: -31px;
 	width: 71px;
 	height: 44px;
 
@@ -54,13 +54,13 @@
 	&__left {
 		width: 77px;
 		height: 0;
-		margin: -41px 0 0 125px;
+		margin: -42px 0 0 129px;
 	}
 
 	&__right {
 		width: 69px;
 		height: 0;
-		margin: -36px 0 0 271px;
+		margin: -35px 0 0 276px;
 		&__p {
 			@include mixins.text(12px, 500);
 			margin: -10px 0 0 106px;
@@ -70,8 +70,9 @@
 
 .gate {
 	width: 36px;
-	top: 13px;
-	left: 235px;
+	top: 14px;
+	left: 237px;
+
 	position: relative;
 }
 
@@ -88,11 +89,11 @@
 	}
 
 	&__one {
-		margin: -8px 1px -3px 119px;
+		margin: -5px 1px 2px 124px;
 	}
 
 	&__two {
-		margin: -15px -1px 0 218px;
+		margin: -15px -1px 0 221px;
 	}
 
 	&__three {
@@ -100,7 +101,7 @@
 	}
 
 	&__four {
-		margin: -22px 0 0 388px;
+		margin: -23px 0 0 391px;
 	}
 
 	&__p2 {
@@ -111,7 +112,7 @@
 }
 
 .windowBottom {
-	margin: 176px 0 0 16px;
+	margin: 173px 0 0 19px;
 
 	&__right {
 		display: flex;

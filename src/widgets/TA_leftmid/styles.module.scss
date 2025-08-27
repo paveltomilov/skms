@@ -12,7 +12,7 @@
 
 	&__p2 {
 		@include mixins.text(12px, 400);
-		margin: 36px 0 0 23px;
+		margin: 38px 0 0 27px;
 	}
 
 	&__window {
@@ -26,27 +26,28 @@
 
 	&__window-p {
 		@include mixins.text(12px, 500);
-		margin: 6px 0 0 41px;
+		margin: 8px 0 0 37px;
 	}
 }
 
 .gate {
-	margin: 25px 0px 0px 31px;
+	margin: 25px 0px 0px 32px;
 }
 
 .containerTwo {
 	display: flex;
-	margin: -18px 0 0 18px;
+	margin: -18px 0 0 14px;
+
 	@include mixins.text(14px, 400);
 
 	&__p {
 		@include mixins.text(14px, 700);
-		margin-top: 17px;
+		margin: 22px 0 0 4px;
 	}
 
 	&__window {
 		width: 70px;
-		margin-left: 348px;
+		margin: 3px 0 0 352px;
 
 		@include mixins.text(14px, 400);
 	}
@@ -72,12 +73,12 @@
 	width: 465px;
 	&__window {
 		width: 75px;
-		margin: 18px 0 0 100px;
+		margin: 18px 0 0 104px;
 		height: 117px;
 
 		&-gate {
-			margin-top: 13px;
-			margin-left: 4px;
+			margin-top: 12px;
+			margin-left: 2px;
 		}
 	}
 
@@ -89,7 +90,7 @@
 	&__windowOne {
 		align-self: flex-end;
 		width: 70px;
-		margin: 0 -15px -3px 12px;
+		margin: 0 -18px -1px 13px;
 		height: 85px;
 
 		&__windows {
@@ -102,7 +103,7 @@
 
 	&__windowTwo {
 		width: 67px;
-		padding: 42px 0 0 26px;
+		padding: 39px 0 0 30px;
 
 		&-rectangle {
 			margin-left: 6px;
@@ -110,18 +111,17 @@
 	}
 
 	&__windowThree {
-		padding: 19px 0 0 30px;
+		padding: 17px 0 0 30px;
 
 		&-p2 {
-			margin: 0 0 0 -21px;
+			margin: 0 0 0 -18px;
 			@include mixins.text(14px, 700);
 		}
 
 		&-w {
 			display: flex;
 			flex-direction: row;
-			margin-top: 43px;
-			margin-right: 4px;
+			margin-top: 45px;
 		}
 
 		&-p3 {
