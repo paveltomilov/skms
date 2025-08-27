@@ -30,8 +30,25 @@ const WindowCircleCard: FC<Props> = ({
 
 	return (
 		<div className={window} style={backgroundStyle}>
-			<Window color={color} value={value1} textRight="MM" />
-			<Window color={color} value={value2} textRight="MM" />
+			<Window
+				color={color}
+				data={{
+					currentValue: value1,
+					minValue,
+					maxValue,
+					unitsMeasurement: 'мм',
+				}}
+				right
+			/>
+			<Window
+				color={color}
+				data={{
+					currentValue: value2,
+					minValue,
+					maxValue,
+					unitsMeasurement: 'мм',
+				}}
+			/>
 		</div>
 	);
 };

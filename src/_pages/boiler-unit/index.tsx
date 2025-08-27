@@ -4,7 +4,6 @@ import KAMidTop from '@/widgets/KA_midtop';
 import KARightDown from '@/widgets/KA_rightdown';
 import styles from './styles.module.scss';
 import KALeftMid from '@/widgets/KA_leftmid';
-import KARightTop from '@/widgets/KA_righttop';
 
 const BoilerUnitPage = () => {
 	return (
@@ -19,9 +18,7 @@ const BoilerUnitPage = () => {
 				<div className={styles.section__content_mid_mid}></div>
 				<div className={styles.section__content_mid_down}></div>
 
-				<KARightTop
-					className={styles.section__content_right_top}
-				></KARightTop>
+				<div className={styles.section__content_right_top}></div>
 				<div className={styles.section__content_right_mid}></div>
 				<KARightDown className={styles.section__content_right_down} />
 			</div>

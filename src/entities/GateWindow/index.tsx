@@ -13,8 +13,13 @@ const GateWindow: FC = () => {
 			<Gate state={gate.states} shadow />
 			<Window
 				color="blue"
-				value={18.8}
-				textRight="м3/ч"
+				data={{
+					currentValue: 18.8,
+					minValue: 0,
+					maxValue: 1000,
+					unitsMeasurement: 'м3/ч',
+				}}
+				right
 				colorText="white"
 				className={styles.window__measurement}
 			/>
