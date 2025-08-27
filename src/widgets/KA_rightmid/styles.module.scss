@@ -51,9 +51,10 @@
 		}
 	}
 	&__text {
-		@include mixins.text(16px, 700);
 		padding-left: 26px;
 		margin: 0 0 37px;
+		
+		@include mixins.text(16px, 700);
 	}
 }
 

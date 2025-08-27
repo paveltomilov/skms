@@ -40,21 +40,9 @@ const KARightTop: FC<Props> = ({ className }) => {
 			<div className={styles.windowMiddle}>
 				<div className={styles.windowMiddle__wrapperWindow}>
 					<span className={styles.word}>А</span>
-					<Window
-						color="blue"
-						value={WINDOWS.w183.currentValue}
-						textRight={WINDOWS.w183.unitsMeasurement}
-					/>
-					<Window
-						color="blue"
-						value={WINDOWS.w184.currentValue}
-						textRight={WINDOWS.w184.unitsMeasurement}
-					/>
-					<Window
-						color="blue"
-						value={WINDOWS.w185.currentValue}
-						textRight={WINDOWS.w185.unitsMeasurement}
-					/>
+					<Window data={WINDOWS.w183} right />
+					<Window data={WINDOWS.w184} right />
+					<Window data={WINDOWS.w185} right />
 				</div>
 				<div className={styles.windowMiddle__boxGate}>
 					<Gate className={styles.gate} state="magenta" power />
@@ -64,62 +52,36 @@ const KARightTop: FC<Props> = ({ className }) => {
 				</div>
 				<div className={styles.windowMiddle__wrapperWindow}>
 					<span className={styles.word}>Б</span>
-					<Window
-						color="blue"
-						value={WINDOWS.w189.currentValue}
-						textRight={WINDOWS.w189.unitsMeasurement}
-					/>
-					<Window
-						color="blue"
-						value={WINDOWS.w200.currentValue}
-						textRight={WINDOWS.w200.unitsMeasurement}
-					/>
-					<Window
-						color="blue"
-						value={WINDOWS.w201.currentValue}
-						textRight={WINDOWS.w201.unitsMeasurement}
-					/>
+					<Window data={WINDOWS.w189} right />
+					<Window data={WINDOWS.w200} right />
+					<Window data={WINDOWS.w201} right />
 				</div>
 				<div className={styles.windowMiddle__right}>
-					<Window
-						color="blue"
-						value={WINDOWS.w202.currentValue}
-						textRight={WINDOWS.w202.unitsMeasurement}
-					/>
-					<Window
-						color="blue"
-						value={WINDOWS.w203.currentValue}
-						textRight={WINDOWS.w203.unitsMeasurement}
-					/>
+					<Window data={WINDOWS.w202} right />
+					<Window data={WINDOWS.w203} right />
 				</div>
 			</div>
 			<div className={styles.windowBottom}>
 				<div className={styles.windowBottom__box}>
-					<span className={styles.text}>
-						Нагрузка котла
-					</span>
+					<span className={styles.text}>Нагрузка котла</span>
 					<div className={styles.wrapperWindow}>
-						<Window
-							color="blue"
-							value={WINDOWS.w186.currentValue}
-							textRight={WINDOWS.w186.unitsMeasurement}
-						/>
-						<Window
-							color="blue"
-							value={WINDOWS.w187.currentValue}
-							textRight={WINDOWS.w187.unitsMeasurement}
-						/>
+						<Window data={WINDOWS.w186} right />
+						<Window data={WINDOWS.w187} right />
 					</div>
 				</div>
 				<div className={styles.windowBottom__bottom}>
 					<Window
-                        className={styles.window}
-						color="blue"
-						value={WINDOWS.w181.currentValue}
-						textRight={WINDOWS.w181.unitsMeasurement}
+						className={styles.window}
+						data={WINDOWS.w181}
+						right
 					/>
 					<span className={styles.text}>Сниженный узел питания</span>
-					<Button className={styles.button} text="ПИТ" width={92} height={28} />
+					<Button
+						className={styles.button}
+						text="ПИТ"
+						width={92}
+						height={28}
+					/>
 				</div>
 			</div>
 		</div>

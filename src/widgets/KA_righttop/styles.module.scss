@@ -12,9 +12,10 @@
 	gap: 55px;
 
 	&__text {
+		display: block;
+
 		text-align: center;
 		@include mixins.text(16px, 400);
-		display: block;
 	}
 
 	&:nth-child(1) {
@@ -22,18 +23,21 @@
 	}
 
 	&__boxGate {
+		position: relative;
+
 		display: flex;
 		flex-direction: row;
 		gap: 3px;
 		padding: 0 0 0 24px;
-		position: relative;
 
 		&::after {
 			position: absolute;
 			content: '';
 			bottom: -1px;
+
 			width: 80px;
 			height: 20px;
+
 			border: 1px solid #8f1313;
 		}
 	}
@@ -51,11 +55,12 @@
 		align-items: flex-start;
 
 		& .word {
-			@include mixins.text(20px, 500);
 			display: block;
 			margin-left: -13px;
 			margin-bottom: -6px;
 			padding: 6px 0 0;
+
+			@include mixins.text(20px, 500);
 		}
 	}
 
@@ -92,11 +97,12 @@
 		flex-direction: row;
 		align-items: center;
 		gap: 10px;
-		border: 1px solid #000000;
 		padding: 4px;
 		width: 156px;
 		height: 54px;
 		margin-right: 137px;
+
+		border: 1px solid #000000;
 
 		& .text {
 			@include mixins.text(14px, 400);
@@ -123,8 +129,9 @@
 		}
 
 		& .text {
-			@include mixins.text(16px, 400);
 			padding: 4px 0 0 114px;
+
+			@include mixins.text(16px, 400);
 		}
 
 		& .button {
