@@ -23,16 +23,16 @@ const KARightMid: FC<Props> = ({ className }) => {
 			<div className={styles.columnLeft}>
 				<div className={styles.columnLeft__left}>
 					<div className={styles.columnLeft__left_top}>
-						<Window data={WINDOWS.w189} right />
+						<Window data={WINDOWS.w189} right colorText="white" />
 					</div>
 					<div className={styles.columnLeft__left_mid}>
-						<Window data={WINDOWS.w174} right />
-						<Window data={WINDOWS.w175} right />
+						<Window data={WINDOWS.w174} right colorText="white" />
+						<Window data={WINDOWS.w175} right colorText="white" />
 					</div>
 
 					<div className={styles.columnLeft__left_bottom}>
-						<Window data={WINDOWS.w176} right />
-						<Window data={WINDOWS.w177} right />
+						<Window data={WINDOWS.w176} right colorText="white" />
+						<Window data={WINDOWS.w177} right colorText="white" />
 					</div>
 				</div>
 				<div className={styles.columnLeft__right}>

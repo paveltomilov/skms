@@ -74,6 +74,7 @@ const KARightTop: FC<Props> = ({ className }) => {
 						className={styles.window}
 						data={WINDOWS.w181}
 						right
+						colorText="white"
 					/>
 					<span className={styles.text}>Сниженный узел питания</span>
 					<Button
