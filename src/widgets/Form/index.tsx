@@ -25,7 +25,6 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 		validationStatus,
 		serverErrors,
 		isValid,
-		activeFields,
 		configMap,
 		handleChange,
 		resetServerErrors,
@@ -51,11 +50,11 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 				if (response) {
 					router.push('/ptk');
 				} else {
-					setServerErrors({ login: true, email: false, password: true });
+					setServerErrors({ email: false, password: true });
 				}
 			} catch {
 				console.error('Ошибка при аутентификации');
-				setServerErrors({ login: true, email: false, password: true });
+				setServerErrors({ email: false, password: true });
 			}
 		}
 	};
@@ -63,39 +62,33 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 	return (
 		<form className={styles.form} onSubmit={handleSubmit}>
 			<LoginInput
-				label={'Логин'}
-				type={'text'}
-				name={'login'}
+				label={'Email'}
+				type={'email'}
+				name={'email'}
 				onChange={handleChange}
-				value={values.login}
-				placeholder={'Логин'}
-				id={'login'}
+				value={values.email || ''}
+				placeholder={'Email'}
+				id={'email'}
 				indicator={getIndicator(
-					'login',
+					'email',
 					values,
 					validationStatus,
 					serverErrors,
 				)}
-				done={getDone(
-					'login',
-					values,
-					validationStatus,
-					serverErrors,
-					activeFields,
-				)}
-				error={serverErrors.login}
-				warn={!serverErrors.login && validationStatus.login === 2}
+				done={getDone('email', values, validationStatus, serverErrors)}
+				error={serverErrors.email}
+				warn={!serverErrors.email && validationStatus.email === 2}
 				errorMessage={
-					serverErrors.login
-						? configMap.login?.errorMessage
+					serverErrors.email
+						? configMap.email?.errorMessage
 						: undefined
 				}
 				warnMessage={
-					!serverErrors.login && validationStatus.login === 2
-						? configMap.login?.warnMessage
+					!serverErrors.email && validationStatus.email === 2
+						? configMap.email?.warnMessage
 						: undefined
 				}
-				required
+				required={configMap.email?.required}
 			/>
 			<LoginInput
 				label={'Пароль'}
@@ -116,7 +109,6 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 					values,
 					validationStatus,
 					serverErrors,
-					activeFields,
 				)}
 				error={serverErrors.password}
 				warn={!serverErrors.password && validationStatus.password === 2}
@@ -132,43 +124,7 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 				}
 				required
 			/>
-			{toggleRegisterMode && (
-				<LoginInput
-					label={'Email'}
-					type={'email'}
-					name={'email'}
-					onChange={handleChange}
-					value={values.email || ''}
-					placeholder={'Email'}
-					id={'email'}
-					indicator={getIndicator(
-						'email',
-						values,
-						validationStatus,
-						serverErrors,
-					)}
-					done={getDone(
-						'email',
-						values,
-						validationStatus,
-						serverErrors,
-						activeFields,
-					)}
-					error={serverErrors.email}
-					warn={!serverErrors.email && validationStatus.email === 2}
-					errorMessage={
-						serverErrors.email
-							? configMap.email?.errorMessage
-							: undefined
-					}
-					warnMessage={
-						!serverErrors.email && validationStatus.email === 2
-							? configMap.email?.warnMessage
-							: undefined
-					}
-					required={configMap.email?.required}
-				/>
-			)}
+
 			<div
 				className={`${styles.form_inner} ${
 					toggleRegisterMode ? styles.policy : ''

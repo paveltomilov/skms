@@ -5,6 +5,7 @@ import KARightDown from '@/widgets/KA_rightdown';
 import styles from './styles.module.scss';
 import KALeftMid from '@/widgets/KA_leftmid';
 import KALeftDown from '@/widgets/KA_leftdown';
+import KARightMid from '@/widgets/KA_rightmid';
 
 const BoilerUnitPage = () => {
 	return (

@@ -1,91 +1,86 @@
-import {RefreshResponse, VerifyResponse} from '@/shared/types/typesAuth';
+import { RefreshResponse, VerifyResponse } from '@/shared/types/typesAuth';
 import axios from 'axios';
-import {getCookie, setCookie} from 'cookies-next';
+import { getCookie, setCookie } from 'cookies-next';
+import { LoginFormData, LoginResponse } from '../types/login';
 
 const urlBase = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-interface LoginResponse {
-    access?: string;
-    refresh?: string;
-}
-
-interface LoginForm {
-    login: string;
-    password: string;
-}
-
 export async function checkAuth(): Promise<{ valid: boolean }> {
-    const access = localStorage.getItem('accessToken');
-    const refresh = getCookie('refreshToken');
+	const access = localStorage.getItem('accessToken');
+	const refresh = getCookie('refreshToken');
 
-    if (!access || !refresh) {
-        return {valid: false};
-    }
+	if (!access || !refresh) {
+		return { valid: false };
+	}
 
-    try {
-        const verifyRes = await fetch(`${urlBase}/auth/verify/`, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({token: access}),
-        });
+	try {
+		const verifyRes = await fetch(`${urlBase}/auth/verify/`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ token: access }),
+		});
 
-        if (!verifyRes.ok) {
-            return {valid: false};
-        }
+		if (!verifyRes.ok) {
+			return { valid: false };
+		}
 
-        // Properly typed response
-        const verifyData = (await verifyRes.json()) as VerifyResponse;
+		// Properly typed response
+		const verifyData = (await verifyRes.json()) as VerifyResponse;
 
-        if (verifyData.token_valid) {
-            return {valid: true};
-        }
+		if (verifyData.token_valid) {
+			return { valid: true };
+		}
 
-        if (!refresh) {
-            return {valid: false};
-        }
+		if (!refresh) {
+			return { valid: false };
+		}
 
-        const refreshRes = await fetch(`${urlBase}/auth/refresh/`, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({refresh}),
-        });
+		const refreshRes = await fetch(`${urlBase}/auth/refresh/`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ refresh }),
+		});
 
-        if (!refreshRes.ok) {
-            return {valid: false};
-        }
+		if (!refreshRes.ok) {
+			return { valid: false };
+		}
 
-        // Properly typed response
-        const refreshData = (await refreshRes.json()) as RefreshResponse;
+		// Properly typed response
+		const refreshData = (await refreshRes.json()) as RefreshResponse;
 
-        if (refreshData.access) {
-            localStorage.setItem('accessToken', refreshData.access);
-            return {valid: true};
-        }
+		if (refreshData.access) {
+			localStorage.setItem('accessToken', refreshData.access);
+			return { valid: true };
+		}
 
-        return {valid: false};
-    } catch {
-        return {valid: false};
-    }
+		return { valid: false };
+	} catch {
+		return { valid: false };
+	}
 }
 
-export async function postAuth(formData: LoginForm): Promise<boolean> {
-    try {
-        const response = await axios.post<LoginResponse>(`${urlBase}/auth/`, { username: formData.login, password: formData.password }, {
-            headers: { 'Content-Type': 'application/json' },
-        });
+export async function postAuth(formData: LoginFormData): Promise<boolean> {
+	try {
+		const response = await axios.post<LoginResponse>(
+			`${urlBase}/auth/`,
+			{ email: formData.email, password: formData.password },
+			{
+				headers: { 'Content-Type': 'application/json' },
+			},
+		);
 
-        const { access, refresh } = response.data;
+		const { access, refresh } = response.data;
 
-        if (!access || !refresh) {
-            throw new Error('Токены не получены');
-        }
-        if (response.status == 200) {
-            localStorage.setItem('accessToken', access);
-            setCookie('refreshToken', refresh);
-            return true;
-        }
-        return false;
-    } catch {
-        return false;
-    }
+		if (!access || !refresh) {
+			throw new Error('Токены не получены');
+		}
+		if (response.status == 200) {
+			localStorage.setItem('accessToken', access);
+			setCookie('refreshToken', refresh);
+			return true;
+		}
+		return false;
+	} catch {
+		return false;
+	}
 }
