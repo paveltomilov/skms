@@ -65,27 +65,15 @@ const KALeftDown: FC<Props> = ({ className }) => {
 			</div>
 			<div className={styles.window}>
 				<div className={styles.window__top}>
-					<Window
-						color="blue"
-						value={WINDOWS.w137.currentValue}
-						textRight={WINDOWS.w137.unitsMeasurement}
-					/>
+					<Window data={WINDOWS.w137} right />
 				</div>
 				<div className={styles.window__gate}>
 					<Gate disable position="vertical" power state="open" />
 				</div>
-
+				
 				<div className={styles.window__bottom}>
-					<Window
-						color="blue"
-						value={WINDOWS.w138.currentValue}
-						textRight={WINDOWS.w138.unitsMeasurement}
-					/>
-					<Window
-						color="blue"
-						value={WINDOWS.w139.currentValue}
-						textRight={WINDOWS.w139.unitsMeasurement}
-					/>
+					<Window data={WINDOWS.w138} right />
+					<Window	data={WINDOWS.w139} right />
 				</div>
 
 				<div className={styles.window__text}>
