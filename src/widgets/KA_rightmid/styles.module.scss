@@ -53,7 +53,7 @@
 	&__text {
 		padding-left: 26px;
 		margin: 0 0 37px;
-		
+
 		@include mixins.text(16px, 700);
 	}
 }
@@ -162,7 +162,11 @@
 		flex-direction: column;
 		align-items: flex-end;
 		gap: 8px;
-		margin: 0 9px 9px 0;
+		margin: 0 13px 9px 0;
+	}
+
+	&__btn span{
+		@include mixins.text(12px, 500);
 	}
 
 	&__bottom {

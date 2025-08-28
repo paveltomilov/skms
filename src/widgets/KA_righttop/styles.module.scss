@@ -46,7 +46,7 @@
 .windowMiddle {
 	display: grid;
 	grid-template-columns: 83px 165px 83px 97px;
-	padding: 2px 0 0 90px;
+	padding: 3px 0 0 88px;
 	gap: 17px;
 
 	&__wrapperWindow {
@@ -125,7 +125,7 @@
 		width: 100%;
 
 		& .window {
-			padding: 0 0 0 8px;
+			padding: 0 0 0 7px;
 		}
 
 		& .text {
