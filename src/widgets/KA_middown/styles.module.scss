@@ -1,0 +1,84 @@
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
+
+.container {
+	display: grid;
+	grid-template-columns: auto auto auto;
+}
+
+.windowsLeft {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	padding: 0 0 0 96px;
+
+	&__wrapper {
+		display: grid;
+		grid-template-columns: 25px 88px;
+		gap: 4px 27px;
+		align-items: center;
+
+		& .text {
+			grid-area: 1/1/2/3;
+		}
+
+		& .rectangle {
+			display: block;
+			width: 25px;
+			height: 32px;
+
+			border: 1px solid variables.$black-color;
+			background-color: variables.$lightblue-color;
+		}
+	}
+}
+
+.windowsMiddle {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	padding: 0 0 0 44px;
+	gap: 15px;
+
+	&__wrapper {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		padding-left: 70px;
+	}
+
+	& .text {
+		display: block;
+		width: 112px;
+		margin: 0 0 17px;
+
+		text-align: center;
+	}
+}
+
+.windowsRight {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	padding: 4px 12px 0px 0;
+	gap: 16px;
+
+	& .text {
+		margin: 0 11px 17px 0;
+	}
+
+	&__btnWrapper {
+		display: flex;
+		flex-direction: column;
+		margin: 0 7px 0 0;
+		gap: 88px;
+
+		& .btn > span {
+			@include mixins.text(12px, 500);
+		}
+	}
+}
+
+.text {
+	@include mixins.text(16px, 400);
+}
