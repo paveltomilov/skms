@@ -6,6 +6,7 @@ import styles from './styles.module.scss';
 import KALeftMid from '@/widgets/KA_leftmid';
 import KALeftDown from '@/widgets/KA_leftdown';
 import KARightMid from '@/widgets/KA_rightmid';
+import KALeftTop from '@/widgets/KA_lefttop';
 import KAMidMid from '@/widgets/KA_midmid';
 
 const BoilerUnitPage = () => {
@@ -13,7 +14,7 @@ const BoilerUnitPage = () => {
 		<section className={styles.section}>
 			<h1 className={styles.section__title}>КА - Котлоагрегат</h1>
 			<div className={styles.section__content}>
-				<div className={styles.section__content_left_top}></div>
+				<KALeftTop className={styles.section__content_left_top}/>
 				<KALeftMid className={styles.section__content_left_mid} />
 				<KALeftDown className={styles.section__content_left_down} />
 
