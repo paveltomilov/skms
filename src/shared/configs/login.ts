@@ -19,7 +19,7 @@ export const config: Login = [
 
 			const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-			if (!emailPattern.test(email)) return 2; 
+			if (!emailPattern.test(email)) return 2;
 
 			return 3;
 		},
