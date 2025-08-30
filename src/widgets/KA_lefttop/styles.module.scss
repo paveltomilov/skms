@@ -6,21 +6,11 @@
 }
 
 .textSpan {
-	@include mixins.flex-center;
 	position: absolute;
 	top: 50px;
 	left: 73px;
 	width: 70px;
 	height: 32px;
-	background: variables.$gray-disabled-color;
-	clip-path: polygon(0% 0%, 100% 0%, 80% 100%, 20% 100%);
-	box-shadow: 0 0 0 2px variables.$black-color,
-		inset 0 0 0 1px variables.$black-color;
-
-	span {
-		@include mixins.text(16px, 700);
-		color: variables.$white-color;
-	}
 }
 
 .lettersRow {
@@ -29,7 +19,7 @@
 	left: 13px;
 	display: flex;
 	flex-direction: column;
-	gap: 6px;
+	gap: 8px;
 }
 
 .letter {
@@ -43,7 +33,6 @@
 	left: 28px;
 	display: grid;
 	grid-template-columns: 102px 36px 69px;
-	gap: 0;
 }
 
 .firstWindows {
@@ -54,7 +43,7 @@
 .tildaContainer {
 	display: flex;
 	flex-direction: column;
-	gap: 2px;
+	gap: 4px;
 	margin-left: 11px;
 }
 .secondWindows {
@@ -103,26 +92,9 @@
 .psuBlock {
 	display: flex;
 	flex-direction: column;
-	gap: 2px;
+	align-items: flex-end;
 }
 
-.psuText {
-	@include mixins.flex-center;
-	@include mixins.text(16px, 400);
-	height: 16px;
-	width: 174px;
-	color: variables.$white-color;
-	background: variables.$gray-disabled-color;
-	border: 1px solid variables.$black-color;
-}
-
-.psuRec {
-	align-self: flex-end;
-	width: 44px;
-	height: 16px;
-	background: variables.$gray-disabled-color;
-	border: 1px solid variables.$black-color;
-}
 
 .sumBlock {
 	display: flex;

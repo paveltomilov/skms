@@ -6,7 +6,7 @@ interface Props {
 }
 
 const lampSrcMap = {
-  default: '/svg/lamp/default.svg',
+  default: '/svg/trapezoid.svg',
   success: '/svg/lamp/success.svg',
   error: '/svg/lamp/error.svg',
   warn: '/svg/lamp/warn.svg',
