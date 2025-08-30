@@ -39,7 +39,7 @@ const KAMidMid: FC<Props> = ({className}) => {
             <div className={styles.container_element}>
                 <Window data={WINDOWS.w171} right left textLeft={'O2'} colorText={'white'} className={styles.container_element__item}/>
                 <Window data={WINDOWS.w172} right colorText={'white'} className={styles.container_element__item}/>
-                <Window data={WINDOWS.w173} right colorText={'white'} className={styles.container_element__item}/>
+                <Window data={WINDOWS.w173} right colorText={"black"}  className={styles.container_element__item}/>
             </div>
         </div>
     );

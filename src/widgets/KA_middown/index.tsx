@@ -37,7 +37,6 @@ const KAMidDown: FC<Props> = ({ className }) => {
 				<span className={styles.text}>Рециркуляция мазута</span>
 			</div>
 			<div className={styles.windowsRight}>
-				<Window data={WINDOWS.w173} right />
 				<span className={styles.text}>э/ф</span>
 				<div className={styles.windowsRight__btnWrapper}>
 					<Button className={styles.btn} width={79} height={22} text="РДИГ" />
