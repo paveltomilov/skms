@@ -1,0 +1,156 @@
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
+
+.container {
+	position: relative;
+}
+
+.textSpan {
+	@include mixins.flex-center;
+	position: absolute;
+	top: 50px;
+	left: 73px;
+	width: 70px;
+	height: 32px;
+	background: variables.$gray-disabled-color;
+	clip-path: polygon(0% 0%, 100% 0%, 80% 100%, 20% 100%);
+	box-shadow: 0 0 0 2px variables.$black-color,
+		inset 0 0 0 1px variables.$black-color;
+
+	span {
+		@include mixins.text(16px, 700);
+		color: variables.$white-color;
+	}
+}
+
+.lettersRow {
+	position: absolute;
+	top: 95px;
+	left: 13px;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.letter {
+	@include mixins.flex-center;
+	@include mixins.text(14px, 700);
+}
+
+.windowsGrid {
+	position: absolute;
+	top: 89px;
+	left: 28px;
+	display: grid;
+	grid-template-columns: 102px 36px 69px;
+	gap: 0;
+}
+
+.firstWindows {
+	display: flex;
+	flex-direction: column;
+}
+
+.tildaContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	margin-left: 11px;
+}
+.secondWindows {
+	display: flex;
+	flex-direction: column;
+}
+
+.thirdWindows {
+	position: absolute;
+	top: 68px;
+	left: 249px;
+	display: flex;
+	flex-direction: column;
+}
+
+.windowGateContainer {
+	position: absolute;
+	top: 42px;
+	left: 346px;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	&__text {
+		@include mixins.text(18px, 400);
+		text-align: center;
+		margin: 0 0 0 70px;
+	}
+}
+
+.gateContainer {
+	display: flex;
+	flex-direction: column;
+	width: 72px;
+	margin-left: 44px;
+}
+
+.psuSumContainer {
+	position: absolute;
+	top: 233px;
+	left: 27px;
+	display: flex;
+	gap: 10px;
+	align-items: flex-end;
+}
+
+.psuBlock {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.psuText {
+	@include mixins.flex-center;
+	@include mixins.text(16px, 400);
+	height: 16px;
+	width: 174px;
+	color: variables.$white-color;
+	background: variables.$gray-disabled-color;
+	border: 1px solid variables.$black-color;
+}
+
+.psuRec {
+	align-self: flex-end;
+	width: 44px;
+	height: 16px;
+	background: variables.$gray-disabled-color;
+	border: 1px solid variables.$black-color;
+}
+
+.sumBlock {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	margin: 0 0 12px 4px;
+}
+
+.sumLabel {
+	@include mixins.text(12px, 600);
+}
+
+.buttonsContainer {
+	position: absolute;
+	top: 283px;
+	right: 174px;
+	display: grid;
+	grid-template-columns: 112px 91px 62px;
+	span {
+		@include mixins.text(12px, 500);
+	}
+}
+
+.btn {
+	@include mixins.flex-center;
+	padding: 3px 6px;
+	@include mixins.text(12px, 500);
+	&__bgGreen {
+		background: variables.$success-color;
+	}
+}
