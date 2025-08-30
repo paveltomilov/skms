@@ -6,7 +6,7 @@ import Window from '../Window';
 import { UnitsMeasurement } from '@/shared/types/window';
 
 interface Props {
-	color: 'blue' | 'yellow' | 'red';
+	color?: 'blue' | 'yellow' | 'red';
 	size?: 'sm' | 'lg';
 	title?: string;
 	currentValue: number;
@@ -28,7 +28,12 @@ const WindowRectCard: FC<Props> = ({
 }) => {
 	// Создаём градиент, где заполненная часть - это цвет, а остальное - прозрачное
 	const backgroundStyle = {
-		background: getTubFill(color, currentValue, minValue, maxValue),
+		background: getTubFill(
+			(color = 'red'),
+			currentValue,
+			minValue,
+			maxValue,
+		),
 	};
 
 	const window = cn(styles.window, className && className, {
@@ -40,8 +45,13 @@ const WindowRectCard: FC<Props> = ({
 		<div className={window} style={backgroundStyle}>
 			<Window
 				color={color === 'red' ? 'blue' : color}
-				value={currentValue}
-				textRight={unitsMeasurement}
+				data={{
+					currentValue,
+					minValue,
+					maxValue,
+					unitsMeasurement,
+				}}
+				right
 			/>
 			<span className={styles.window__title}>{title}</span>
 		</div>

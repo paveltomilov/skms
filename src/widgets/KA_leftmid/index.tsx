@@ -4,25 +4,25 @@ import cn from 'classnames';
 import Window from '@/shared/UI/Window';
 import Button from '@/shared/UI/Button';
 import Tilde from '@/shared/UI/icons/Tilde';
-import { buttonsConfig, firstWindows, fourthWindows, secondWindows, thirdWindows, tildaConfig } from '@/shared/configs/KALeftMid';
+import {
+	buttonsConfig,
+	firstWindows,
+	fourthWindows,
+	secondWindows,
+	thirdWindows,
+	tildaConfig,
+} from '@/shared/configs/KALeftMid';
 
 interface Props {
 	className?: string;
 }
-
-
 
 const KALeftMid: FC<Props> = ({ className }) => {
 	return (
 		<div className={cn(className, styles.container)}>
 			<div className={styles.windows}>
 				{firstWindows.map((window, index) => (
-					<Window
-						key={index}
-						color="blue"
-						value={window.currentValue}
-						textRight={window.unitsMeasurement}
-					/>
+					<Window key={index} data={window} right />
 				))}
 			</div>
 
@@ -42,7 +42,7 @@ const KALeftMid: FC<Props> = ({ className }) => {
 				{tildaConfig.map((tilda, index) => (
 					<Tilde
 						key={index}
-						size='md'
+						size="md"
 						color={tilda.color}
 						disable={tilda.disabled}
 					/>
@@ -51,34 +51,19 @@ const KALeftMid: FC<Props> = ({ className }) => {
 
 			<div className={styles.windows}>
 				{secondWindows.map((window, index) => (
-					<Window
-						key={index}
-						color="blue"
-						value={window.currentValue}
-						textRight={window.unitsMeasurement}
-					/>
+					<Window key={index} data={window} right />
 				))}
 			</div>
 
 			<div className={styles.windows}>
 				{thirdWindows.map((window, index) => (
-					<Window
-						key={index}
-						color="blue"
-						value={window.currentValue}
-						textRight={window.unitsMeasurement}
-					/>
+					<Window key={index} data={window} right />
 				))}
 			</div>
 
 			<div className={styles.windows}>
 				{fourthWindows.map((window, index) => (
-					<Window
-						key={index}
-						color="blue"
-						value={window.currentValue}
-						textRight={window.unitsMeasurement}
-					/>
+					<Window key={index} data={window} right />
 				))}
 			</div>
 		</div>

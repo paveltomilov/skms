@@ -7,7 +7,6 @@ import { useDate } from '@/shared/hooks/useDate';
 import PowerUnit from '@/entities/PowerUnit';
 
 const HeaderPtk: FC = () => {
-
 	const { formattedDate, formattedTime, dateTimeDate, dateTimeTime } =
 		useDate();
 
@@ -19,7 +18,16 @@ const HeaderPtk: FC = () => {
 					<div className={styles.windows_defense}>Pабота защит</div>
 					<div className={styles.windows_kpm}>КРМ</div>
 				</div>
-				<Window color="yellow" value={-4} textRight="°С" />
+				<Window
+					color="yellow"
+					data={{
+						currentValue: -4,
+						minValue: -1000,
+						maxValue: 1000,
+						unitsMeasurement: '°С',
+					}}
+					right
+				/>
 				<div className={styles.buttons}>
 					<Button
 						className={styles.button}

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState, useRef } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { LoginFormData, ValidationStatus } from '@/shared/types/login';
 import { config, initialState } from '@/shared/configs/login';
 import {
@@ -13,33 +13,16 @@ interface UseLoginFormProps {
 export function useLoginForm({ toggleRegisterMode }: UseLoginFormProps) {
 	const [values, setValues] = useState<LoginFormData>(initialState);
 	const [validationStatus, setValidationStatus] = useState<ValidationStatus>({
-		login: 0,
 		email: 0,
 		password: 0,
 	});
 	const [serverErrors, setServerErrors] = useState<
 		Record<keyof LoginFormData, boolean>
 	>({
-		login: false,
 		email: false,
 		password: false,
 	});
 	const [isValid, setIsValid] = useState(false);
-	const [isPasted, setIsPasted] = useState(false);
-	const [fieldsTouched, setFieldsTouched] = useState<
-		Record<keyof LoginFormData, boolean>
-	>({
-		login: false,
-		email: false,
-		password: false,
-	});
-	const pasteTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-	const activeFields = useMemo<(keyof LoginFormData)[]>(() => {
-		return toggleRegisterMode
-			? ['login', 'password', 'email']
-			: ['login', 'password'];
-	}, [toggleRegisterMode]);
 
 	const configMap = useMemo(() => {
 		const map: Record<string, (typeof config)[number]> = {};
@@ -52,13 +35,6 @@ export function useLoginForm({ toggleRegisterMode }: UseLoginFormProps) {
 	useEffect(() => {
 		setValues(initialState);
 		setServerErrors({
-			login: false,
-			email: false,
-			password: false,
-		});
-		setIsPasted(false);
-		setFieldsTouched({
-			login: false,
 			email: false,
 			password: false,
 		});
@@ -67,23 +43,13 @@ export function useLoginForm({ toggleRegisterMode }: UseLoginFormProps) {
 	useEffect(() => {
 		const newValidationStatus = computeValidationStatus(values);
 		setValidationStatus(newValidationStatus);
-
-		const allRequiredFieldsFilled = activeFields.every(field => {
-			const fieldConfig = configMap[field];
-			if (fieldConfig?.required) {
-				return values[field]?.trim() !== '';
-			}
-			return true;
-		});
-
-		const formIsValid = checkFormValidity(
-			values,
-			newValidationStatus,
-			serverErrors,
-			activeFields,
+		setIsValid(
+			checkFormValidity(values, newValidationStatus, serverErrors, [
+				'email',
+				'password',
+			]),
 		);
-		setIsValid(formIsValid || allRequiredFieldsFilled || isPasted);
-	}, [values, serverErrors, activeFields, isPasted, configMap]);
+	}, [values, serverErrors]);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -92,60 +58,7 @@ export function useLoginForm({ toggleRegisterMode }: UseLoginFormProps) {
 		if (serverErrors[key]) {
 			setServerErrors(prev => ({ ...prev, [key]: false }));
 		}
-
-		if (!fieldsTouched[key]) {
-			setFieldsTouched(prev => ({ ...prev, [key]: true }));
-		}
-
 		setValues(prev => ({ ...prev, [name]: value }));
-
-		if (isPasted) {
-			setIsPasted(false);
-		}
-	};
-
-	const handlePaste = (
-		e: React.ClipboardEvent<HTMLInputElement>,
-		fieldName: keyof LoginFormData,
-	) => {
-		const pastedValue = e.clipboardData.getData('text');
-
-		setIsPasted(true);
-
-		if (pasteTimeoutRef.current) {
-			clearTimeout(pasteTimeoutRef.current);
-		}
-
-		pasteTimeoutRef.current = setTimeout(() => {
-			setIsPasted(false);
-		}, 1500);
-
-		if (!fieldsTouched[fieldName]) {
-			setFieldsTouched(prev => ({ ...prev, [fieldName]: true }));
-		}
-
-		if (serverErrors[fieldName]) {
-			setServerErrors(prev => ({ ...prev, [fieldName]: false }));
-		}
-		setValues(prev => ({ ...prev, [fieldName]: pastedValue }));
-	};
-
-	const forceValidation = () => {
-		const newValidationStatus = computeValidationStatus(values);
-		setValidationStatus(newValidationStatus);
-
-		const newTouched = { ...fieldsTouched };
-		activeFields.forEach(field => {
-			newTouched[field] = true;
-		});
-		setFieldsTouched(newTouched);
-
-		return checkFormValidity(
-			values,
-			newValidationStatus,
-			serverErrors,
-			activeFields,
-		);
 	};
 
 	const resetValues = (newValues: LoginFormData = initialState) => {
@@ -154,39 +67,32 @@ export function useLoginForm({ toggleRegisterMode }: UseLoginFormProps) {
 
 	const resetServerErrors = () => {
 		setServerErrors({
-			login: false,
 			email: false,
 			password: false,
 		});
 	};
 
 	const validateForm = (): boolean => {
-		return forceValidation();
-	};
+		const newValidationStatus = computeValidationStatus(values);
+		setValidationStatus(newValidationStatus);
 
-	useEffect(() => {
-		return () => {
-			if (pasteTimeoutRef.current) {
-				clearTimeout(pasteTimeoutRef.current);
-			}
-		};
-	}, []);
+		const hasLocalErrors = Object.values(newValidationStatus).some(
+			level => level === 1,
+		);
+		const hasServerErrors = Object.values(serverErrors).some(Boolean);
+		return !hasLocalErrors && !hasServerErrors;
+	};
 
 	return {
 		values,
 		validationStatus,
 		serverErrors,
 		isValid,
-		activeFields,
 		configMap,
 		handleChange,
-		handlePaste,
-		forceValidation, 
 		resetValues,
 		resetServerErrors,
 		setServerErrors,
 		validateForm,
-		isPasted,
-		fieldsTouched,
 	};
 }

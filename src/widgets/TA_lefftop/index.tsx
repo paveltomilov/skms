@@ -23,15 +23,13 @@ const TALeftTop: FC<Props> = ({ className }) => {
 			<p className={styles.container__p1}>ГПП</p>
 			<div className={styles.windowTop}>
 				<Window
-					color="blue"
-					value={WINDOWS.w1.currentValue}
-					textRight={WINDOWS.w1.unitsMeasurement}
+					data={WINDOWS.w1}
+					right
 					className={styles.windowTop__right}
 				/>
 				<Window
-					color="blue"
-					value={WINDOWS.w2.currentValue}
-					textRight={WINDOWS.w2.unitsMeasurement}
+					data={WINDOWS.w2}
+					right
 					className={styles.windowTop__right}
 				/>
 			</div>
@@ -40,16 +38,8 @@ const TALeftTop: FC<Props> = ({ className }) => {
 				<p className={styles.windowMedium__p3}>Свежий пар</p>
 			</div>
 			<div className={styles.windowMedium__left}>
-				<Window
-					color="blue"
-					value={WINDOWS.w3.currentValue}
-					textRight={WINDOWS.w3.unitsMeasurement}
-				/>
-				<Window
-					color="blue"
-					value={WINDOWS.w5.currentValue}
-					textRight={WINDOWS.w5.unitsMeasurement}
-				/>
+				<Window data={WINDOWS.w3} right />
+				<Window data={WINDOWS.w5} right />
 			</div>
 			<Gate
 				state={g1.states}
@@ -58,67 +48,37 @@ const TALeftTop: FC<Props> = ({ className }) => {
 				className={styles.gate}
 			/>
 			<div className={styles.windowMedium__right}>
-				<Window
-					color="blue"
-					value={WINDOWS.w4.currentValue}
-					textRight={WINDOWS.w4.unitsMeasurement}
-				/>
-				<Window
-					color="blue"
-					value={WINDOWS.w6.currentValue}
-					textRight={WINDOWS.w6.unitsMeasurement}
-				/>
+				<Window data={WINDOWS.w4} right />
+				<Window data={WINDOWS.w6} right />
 				<p className={styles.windowMedium__right__p}>СКВД-2</p>
 			</div>
 			<div className={styles.windowMediumBottom}>
 				<p className={styles.windowMediumBottom__p1}>ХПП</p>
 				<Window
-					color="blue"
-					value={WINDOWS.w7.currentValue}
-					textRight={WINDOWS.w7.unitsMeasurement}
+					data={WINDOWS.w7}
+					right
 					className={styles.windowMediumBottom__one}
 				/>
 				<div className={styles.windowMediumBottom__two}>
+					<Window data={WINDOWS.w8} right />
 					<Window
-						color="blue"
-						value={WINDOWS.w8.currentValue}
-						textRight={WINDOWS.w8.unitsMeasurement}
-					/>
-					<Window
-						color="blue"
-						value={WINDOWS.w9.currentValue}
-						textRight={WINDOWS.w9.unitsMeasurement}
+						data={WINDOWS.w9}
+						right
 						className={styles.windowMediumBottom__three}
 					/>
 				</div>
 				<div className={styles.windowMediumBottom__four}>
-					<Window
-						color="blue"
-						value={WINDOWS.w10.currentValue}
-						textRight={WINDOWS.w10.unitsMeasurement}
-					/>
-					<Window
-						color="blue"
-						value={WINDOWS.w11.currentValue}
-						textBottom={WINDOWS.w11.unitsMeasurement}
-					/>
+					<Window data={WINDOWS.w10} right />
+					<Window data={WINDOWS.w11} bottom />
 					<p className={styles.windowMediumBottom__p2}>ЦВД</p>
 				</div>
 			</div>
 			<div className={styles.windowBottom}>
 				<p>ГПП</p>
 				<div className={styles.windowBottom__right}>
-					<Window
-						color="blue"
-						value={WINDOWS.w12.currentValue}
-						textRight={WINDOWS.w12.unitsMeasurement}
-					/>
+					<Window data={WINDOWS.w12} right />
 					<div className={styles.windowBottom__right__bottom}>
-						<Window
-							color="blue"
-							value={WINDOWS.w13.currentValue}
-							textRight={WINDOWS.w13.unitsMeasurement}
-						/>
+						<Window data={WINDOWS.w13} right />
 					</div>
 				</div>
 			</div>
