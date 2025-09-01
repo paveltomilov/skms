@@ -23,16 +23,16 @@ const KARightMid: FC<Props> = ({ className }) => {
 			<div className={styles.columnLeft}>
 				<div className={styles.columnLeft__left}>
 					<div className={styles.columnLeft__left_top}>
-						<Window data={WINDOWS.w189} right />
+						<Window data={WINDOWS.w189} right colorText="white" />
 					</div>
 					<div className={styles.columnLeft__left_mid}>
-						<Window data={WINDOWS.w174} right />
-						<Window data={WINDOWS.w175} right />
+						<Window data={WINDOWS.w174} right colorText="white" />
+						<Window data={WINDOWS.w175} right colorText="white" />
 					</div>
 
 					<div className={styles.columnLeft__left_bottom}>
-						<Window data={WINDOWS.w176} right />
-						<Window data={WINDOWS.w177} right />
+						<Window data={WINDOWS.w176} right colorText="white" />
+						<Window data={WINDOWS.w177} right colorText="white" />
 					</div>
 				</div>
 				<div className={styles.columnLeft__right}>
@@ -118,12 +118,18 @@ const KARightMid: FC<Props> = ({ className }) => {
 					<Window data={WINDOWS.w217} right />
 				</div>
 				<div className={styles.columnRight__mid}>
-					<div>
-						<Button text="РОВ" width={79} height={22} />
-					</div>
-					<div>
-						<Button text="КРСК" width={79} height={22} />
-					</div>
+					<Button
+						className={styles.columnRight__btn}
+						text="РОВ"
+						width={79}
+						height={22}
+					/>
+					<Button
+						className={styles.columnRight__btn}
+						text="КРСК"
+						width={79}
+						height={22}
+					/>
 				</div>
 				<div className={styles.columnRight__bottom}>
 					<Window data={WINDOWS.w218} right />

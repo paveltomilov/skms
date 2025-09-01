@@ -21,7 +21,7 @@ const KARightDown: FC<Props> = ({ className }) => {
 		<div className={cn(className, styles.container)}>
 			<div className={styles.windowsTop}>
 				<div className={styles.windowsTop__left}>
-					<Window data={WINDOWS.w178} right />
+					<Window data={WINDOWS.w178} right colorText="white" />
 				</div>
 				<div className={styles.windowsTop__middle}>
 					<div className={styles.windowsTop__middle_item}>
