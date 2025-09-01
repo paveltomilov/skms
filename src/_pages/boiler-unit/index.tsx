@@ -22,7 +22,7 @@ const BoilerUnitPage = () => {
 
 				<KAMidTop className={styles.section__content_mid_top} />
 				<KAMidMid className={styles.section__content_mid_mid} />
-				<KAMidDown className={styles.section__content_mid_down}/>
+				<KAMidDown className={styles.section__content_mid_down} />
 
 				<KARightTop className={styles.section__content_right_top} />
 				<KARightMid className={styles.section__content_right_mid} />
