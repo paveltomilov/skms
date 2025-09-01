@@ -13,10 +13,15 @@ export const config: Login = [
 		errorMessage: 'Пользователь с таким E-mail уже существует',
 		warnMessage: 'E-mail введен не корректно',
 		validate: (state: LoginFormData) => {
-			if (!state.email || !state.email.trim()) return 0;
-			const emailPattern = /^\S+@\S+\.\S+$/;
-			if (!emailPattern.test(state.email)) return 2;
-			return 0;
+			const email = state.email?.trim();
+
+			if (!email) return 0;
+
+			const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+			if (!emailPattern.test(email)) return 2;
+
+			return 3;
 		},
 	},
 	{
@@ -30,12 +35,17 @@ export const config: Login = [
 
 			const forbiddenSymbolsPattern = /[@#!]/;
 			const cyrillicPattern = /[а-яёА-ЯЁ]/;
+
 			if (
 				forbiddenSymbolsPattern.test(state.password) ||
 				cyrillicPattern.test(state.password)
-			)
+			) {
 				return 2;
-			return 0;
+			}
+
+			if (state.password.length < 6) return 2;
+
+			return 3; // OK
 		},
 	},
 ];

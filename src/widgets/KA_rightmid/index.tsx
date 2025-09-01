@@ -118,12 +118,18 @@ const KARightMid: FC<Props> = ({ className }) => {
 					<Window data={WINDOWS.w217} right />
 				</div>
 				<div className={styles.columnRight__mid}>
-					<div>
-						<Button text="РОВ" width={79} height={22} />
-					</div>
-					<div>
-						<Button text="КРСК" width={79} height={22} />
-					</div>
+					<Button
+						className={styles.columnRight__btn}
+						text="РОВ"
+						width={79}
+						height={22}
+					/>
+					<Button
+						className={styles.columnRight__btn}
+						text="КРСК"
+						width={79}
+						height={22}
+					/>
 				</div>
 				<div className={styles.columnRight__bottom}>
 					<Window data={WINDOWS.w218} right />

@@ -13,7 +13,7 @@
 	gap: 7px;
 
 	&__left {
-		padding: 7px 0 0;
+		padding: 4px 0 0;
 	}
 
 	&__middle {
@@ -165,8 +165,9 @@
 			display: block;
 			width: 90px;
 			text-align: center;
-			@include mixins.text(16px, 400);
 			margin: 0 19px 5px 0;
+
+			@include mixins.text(16px, 400);
 		}
 	}
 }
