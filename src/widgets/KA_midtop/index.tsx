@@ -50,6 +50,7 @@ const KAMidTop: FC<Props> = ({ className }) => {
 							left={!!element.prefix}
 							textRight={element.text}
 							textLeft={element.prefix}
+							colorText="white"
 						/>
 					</div>
 				))}
