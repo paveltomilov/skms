@@ -8,6 +8,8 @@ import Button from '@/shared/UI/Button';
 import WindowCircleCard from '@/shared/UI/WindowCircleCard';
 import { WINDOWS } from '@/shared/configs/window';
 import Gate from '@/shared/UI/Gate';
+import ShapeComponent from '@/shared/UI/icons/ShapeComponent';
+
 
 interface Props {
 	className?: string;
@@ -17,7 +19,7 @@ const KALeftTop: FC<Props> = ({ className }) => {
 	return (
 		<div className={cn(className, styles.container)}>
 			<div className={styles.textSpan}>
-				<span>БСУ</span>
+				<ShapeComponent text='БСУ' shape='trapezoid' />
 			</div>
 			<div className={styles.thirdWindows}>
 				{thirdWindowsTop.map((window, index) => (
@@ -69,8 +71,8 @@ const KALeftTop: FC<Props> = ({ className }) => {
 			</div>
 			<div className={styles.psuSumContainer}>
 				<div className={styles.psuBlock}>
-					<span className={styles.psuText}>ПСУ</span>
-					<span className={styles.psuRec}></span>
+					<ShapeComponent text='ПСУ' shape='rectangle' width={174} height={16} />
+					<ShapeComponent shape='rectangle' width={44} height={16} />
 				</div>
 				<div className={styles.sumBlock}>
 					<span className={styles.sumLabel}>Сум.</span>

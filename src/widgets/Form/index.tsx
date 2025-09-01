@@ -126,8 +126,9 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 			/>
 
 			<div
-				className={`${styles.form_inner} ${toggleRegisterMode ? styles.policy : ''
-					}`}
+				className={`${styles.form_inner} ${
+					toggleRegisterMode ? styles.policy : ''
+				}`}
 			>
 				<label className={styles.form_inner_label}>
 					<input
