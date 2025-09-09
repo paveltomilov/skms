@@ -19,6 +19,11 @@ export interface IconSize {
 		height: string;
 		viewBox: string;
 	};
+	ls: {
+		width: string;
+		height: string;
+		viewBox: string;
+	};
 }
 
 export interface IconColor {
@@ -37,6 +42,7 @@ export interface IconColor {
 }
 
 export interface IconTransform {
+	rotate45: string;
 	rotate90: string;
 	rotateLeft90: string;
 	rotate180: string;

@@ -21,10 +21,16 @@ export const ICON_SIZE: IconSize = {
 		height: '28',
 		viewBox: '0 0 28 28',
 	},
+	ls: {
+		width: '30',
+		height: '30',
+		viewBox: '0 0 30 30',
+	}
 };
 
 export const ICON_TRANSFORM: IconTransform = {
 	rotate90: 'rotate(90)',
+	rotate45: 'rotate(45)',
 	rotateLeft90: 'rotate(-90)',
 	rotate180: 'rotate(180)',
 	mirror: 'rotate(180) scale(1 -1)',

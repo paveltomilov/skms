@@ -1,12 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type Modals = 'automatic' | 'gateControl' | 'diagnostic' | 'gateValves';
+type Modals = 'automatic' | 'gateControl' | 'diagnostic' | 'gateValves' | 'test';
 
 export interface ModalState {
 	automatic: boolean;
 	gateControl: boolean;
 	diagnostic: boolean;
 	gateValves: boolean;
+	test: boolean;
 }
 
 const initialState: ModalState = {
@@ -14,6 +15,7 @@ const initialState: ModalState = {
 	gateControl: false,
 	diagnostic: false,
 	gateValves: false,
+	test: false,
 };
 
 const modalSlice = createSlice({
@@ -31,6 +33,7 @@ const modalSlice = createSlice({
 			state.gateControl = false;
 			state.gateValves = false;
 			state.automatic = false;
+			state.test = false;
 		},
 	},
 });

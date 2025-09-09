@@ -1,13 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import Window from '.';
 
-interface WindowData {
-	currentValue: number | null;
-	minValue?: number;
-	maxValue?: number;
-	unitsMeasurement?: string;
-}
-
 const meta: Meta<typeof Window> = {
 	title: 'Window',
 	component: Window,

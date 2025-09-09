@@ -8,7 +8,7 @@ import { useDragging } from '@/shared/hooks/useDragging';
 import { GATES } from '@/shared/configs/gate';
 
 interface ModalOverlayProps {
-	id: 'gateControl' | 'diagnostic' | 'gateValves' | 'automatic';
+	id: 'gateControl' | 'diagnostic' | 'gateValves' | 'automatic' | 'test';
 	gateId?: string;
 	children: React.ReactNode;
 }

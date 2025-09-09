@@ -615,4 +615,103 @@
             </clipPath>
         </defs>
     </symbol>
+    <!-- пустой контакт -->
+    <symbol id="channel" width="30" height="30" viewBox="0 0 30 30" fill="none">
+        <g clip-path="url(#clip0_5903_28372)">
+            <circle cx="15" cy="15" r="14.5" fill="#E6E6E6" stroke="black" />
+            <circle cx="15" cy="15" r="11.0385" fill="url(#paint0_linear_5903_28372)" stroke="black" />
+        </g>
+        <defs>
+            <linearGradient id="paint0_linear_5903_28372" x1="15" y1="3.46155" x2="15" y2="26.5385"
+                gradientUnits="userSpaceOnUse">
+                <stop stop-color="#6A6969" />
+                <stop offset="1" stop-color="#212121" />
+            </linearGradient>
+            <clipPath id="clip0_5903_28372">
+                <rect width="30" height="30" fill="white" />
+            </clipPath>
+        </defs>
+    </symbol>
+    <!-- винт контакта -->
+    <symbol id="screw" width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path
+            d="M10 1.5C14.6944 1.5 18.5 5.30558 18.5 10C18.5 14.6944 14.6944 18.5 10 18.5C5.30558 18.5 1.5 14.6944 1.5 10C1.5 5.30558 5.30558 1.5 10 1.5Z"
+            fill="#EAEAEA" stroke="black" />
+        <path
+            d="M10.0186 4C10.5299 4.00002 11.0263 4.06385 11.5 4.18457V8.5H15.8145C15.9352 8.97377 16 9.47009 16 9.98145C16 10.5062 15.9316 11.015 15.8047 11.5H11.5V15.7773C11.0262 15.8981 10.5299 15.9629 10.0186 15.9629C9.49386 15.9629 8.98491 15.8945 8.5 15.7676V11.5H4.23242C4.10547 11.015 4.03711 10.5063 4.03711 9.98145C4.03711 9.47004 4.10191 8.97381 4.22266 8.5H8.5V4.19434C8.98485 4.06748 9.49394 4 10.0186 4Z"
+            fill="url(#paint0_linear_5903_28375)" />
+        <path
+            d="M10.0186 4L10.0186 3.5H10.0186V4ZM11.5 4.18457H12V3.79601L11.6235 3.70006L11.5 4.18457ZM11.5 8.5H11V9H11.5V8.5ZM15.8145 8.5L16.299 8.37654L16.203 8H15.8145V8.5ZM16 9.98145L16.5 9.98145V9.98145H16ZM15.8047 11.5V12H16.1907L16.2884 11.6266L15.8047 11.5ZM11.5 11.5V11H11V11.5H11.5ZM11.5 15.7773L11.6235 16.2619L12 16.1659V15.7773H11.5ZM10.0186 15.9629V16.4629H10.0186L10.0186 15.9629ZM8.5 15.7676H8V16.1536L8.37342 16.2513L8.5 15.7676ZM8.5 11.5H9V11H8.5V11.5ZM4.23242 11.5L3.74872 11.6266L3.84645 12H4.23242V11.5ZM4.03711 9.98145H3.53711V9.98145L4.03711 9.98145ZM4.22266 8.5V8H3.83409L3.73814 8.37653L4.22266 8.5ZM8.5 8.5V9H9V8.5H8.5ZM8.5 4.19434L8.37344 3.71062L8 3.80833V4.19434H8.5ZM10.0186 4L10.0185 4.5C10.4881 4.50002 10.943 4.55862 11.3765 4.66908L11.5 4.18457L11.6235 3.70006C11.1095 3.56907 10.5716 3.50002 10.0186 3.5L10.0186 4ZM11.5 4.18457H11V8.5H11.5H12V4.18457H11.5ZM11.5 8.5V9H15.8145V8.5V8H11.5V8.5ZM15.8145 8.5L15.3299 8.62346C15.4406 9.05765 15.5 9.51251 15.5 9.98145H16H16.5C16.5 9.42766 16.4298 8.88989 16.299 8.37654L15.8145 8.5ZM16 9.98145L15.5 9.98144C15.5 10.4626 15.4373 10.9289 15.321 11.3734L15.8047 11.5L16.2884 11.6266C16.4259 11.1012 16.5 10.5498 16.5 9.98145L16 9.98145ZM15.8047 11.5V11H11.5V11.5V12H15.8047V11.5ZM11.5 11.5H11V15.7773H11.5H12V11.5H11.5ZM11.5 15.7773L11.3765 15.2928C10.9423 15.4035 10.4876 15.4629 10.0185 15.4629L10.0186 15.9629L10.0186 16.4629C10.5723 16.4629 11.1101 16.3927 11.6235 16.2619L11.5 15.7773ZM10.0186 15.9629V15.4629C9.5375 15.4629 9.07107 15.4002 8.62658 15.2839L8.5 15.7676L8.37342 16.2513C8.89875 16.3888 9.45022 16.4629 10.0186 16.4629V15.9629ZM8.5 15.7676H9V11.5H8.5H8V15.7676H8.5ZM8.5 11.5V11H4.23242V11.5V12H8.5V11.5ZM4.23242 11.5L4.71613 11.3734C4.59977 10.9289 4.53711 10.4626 4.53711 9.98144L4.03711 9.98145L3.53711 9.98145C3.53711 10.5499 3.61118 11.1011 3.74872 11.6266L4.23242 11.5ZM4.03711 9.98145H4.53711C4.53711 9.51246 4.59652 9.05769 4.70717 8.62347L4.22266 8.5L3.73814 8.37653C3.60731 8.88993 3.53711 9.42763 3.53711 9.98145H4.03711ZM4.22266 8.5V9H8.5V8.5V8H4.22266V8.5ZM8.5 8.5H9V4.19434H8.5H8V8.5H8.5ZM8.5 4.19434L8.62656 4.67805C9.07039 4.56193 9.53696 4.5 10.0186 4.5V4V3.5C9.45092 3.5 8.8993 3.57303 8.37344 3.71062L8.5 4.19434Z"
+            fill="black" />
+        <defs>
+            <linearGradient id="paint0_linear_5903_28375" x1="3.3725" y1="6.21535" x2="14.0062"
+                y2="14.4121" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#D9D9D9" />
+                <stop offset="1" stop-color="#737373" />
+            </linearGradient>
+        </defs>
+    </symbol>
+
+    <!-- наконечник провода pin-->
+    <symbol id="pin" width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <circle cx="8" cy="8" r="7.5" fill="#FFDC52" stroke="black" />
+        <circle cx="8" cy="8" r="4.5" fill="white" stroke="black" />
+    </symbol>
+
+    <!-- отвертка курсор -->
+    <symbol id="cursor" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path
+            d="M11 11V9H12V8H13V7H14V6H15V5H16V4H19V5H20V8H19V9H18V10H17V11H16V12H15V13H13V14H12V16H11V15H10V14H9V13H8V12H10V11H11Z"
+            fill="white" />
+        <rect x="4" y="19" width="1" height="1" fill="black" />
+        <rect x="5" y="18" width="1" height="1" fill="black" />
+        <rect x="6" y="17" width="1" height="1" fill="black" />
+        <rect x="7" y="16" width="1" height="1" fill="black" />
+        <rect x="8" y="15" width="1" height="1" fill="black" />
+        <rect x="9" y="14" width="1" height="1" fill="black" />
+        <rect x="10" y="15" width="1" height="1" fill="black" />
+        <rect x="11" y="16" width="1" height="1" fill="black" />
+        <rect x="12" y="15" width="1" height="1" fill="black" />
+        <rect x="12" y="14" width="1" height="1" fill="black" />
+        <rect x="13" y="13" width="1" height="1" fill="black" />
+        <rect x="14" y="13" width="1" height="1" fill="black" />
+        <rect x="15" y="12" width="1" height="1" fill="black" />
+        <rect x="11" y="8" width="1" height="1" fill="black" />
+        <rect x="16" y="11" width="1" height="1" fill="black" />
+        <rect x="12" y="7" width="1" height="1" fill="black" />
+        <rect x="17" y="10" width="1" height="1" fill="black" />
+        <rect x="13" y="6" width="1" height="1" fill="black" />
+        <rect x="18" y="9" width="1" height="1" fill="black" />
+        <rect x="14" y="5" width="1" height="1" fill="black" />
+        <rect x="19" y="8" width="1" height="1" fill="black" />
+        <rect x="15" y="4" width="1" height="1" fill="black" />
+        <rect x="20" y="6" width="1" height="1" fill="black" />
+        <rect x="20" y="5" width="1" height="1" fill="black" />
+        <rect x="18" y="3" width="1" height="1" fill="black" />
+        <rect x="17" y="3" width="1" height="1" fill="black" />
+        <rect x="12" y="11" width="1" height="1" fill="black" />
+        <rect x="13" y="10" width="1" height="1" fill="black" />
+        <rect x="14" y="9" width="1" height="1" fill="black" />
+        <rect x="15" y="8" width="1" height="1" fill="black" />
+        <rect x="16" y="7" width="1" height="1" fill="black" />
+        <rect x="17" y="6" width="1" height="1" fill="black" />
+        <rect width="1" height="1" transform="matrix(1 0 0 -1 19 5)" fill="black" />
+        <rect x="20" y="7" width="1" height="1" fill="black" />
+        <rect x="16" y="3" width="1" height="1" fill="black" />
+        <rect x="8" y="13" width="1" height="1" fill="black" />
+        <rect x="7" y="12" width="1" height="1" fill="black" />
+        <rect x="8" y="11" width="1" height="1" fill="black" />
+        <rect x="9" y="11" width="1" height="1" fill="black" />
+        <rect x="10" y="10" width="1" height="1" fill="black" />
+        <rect x="10" y="9" width="1" height="1" fill="black" />
+    </symbol>
+
+    <!-- прерывание кабеля -->
+
+    <symbol id="breakLine" width="56" height="10" viewBox="0 0 56 10" fill="none">
+        <path
+            d="M2 4.88905C2 4.88905 10.5 -1.61119 27.9999 4.88899C45.4998 11.3892 53.9999 4.88899 53.9999 4.88899"
+            stroke="#B1B1B1" stroke-width="4" stroke-linecap="round" />
+    </symbol>
+
 </svg>
