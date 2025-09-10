@@ -656,56 +656,8 @@
     <symbol id="pin" width="16" height="16" viewBox="0 0 16 16" fill="none">
         <circle cx="8" cy="8" r="7.5" fill="#FFDC52" stroke="black" />
         <circle cx="8" cy="8" r="4.5" fill="white" stroke="black" />
-    </symbol>
-
-    <!-- отвертка курсор -->
-    <symbol id="cursor" width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path
-            d="M11 11V9H12V8H13V7H14V6H15V5H16V4H19V5H20V8H19V9H18V10H17V11H16V12H15V13H13V14H12V16H11V15H10V14H9V13H8V12H10V11H11Z"
-            fill="white" />
-        <rect x="4" y="19" width="1" height="1" fill="black" />
-        <rect x="5" y="18" width="1" height="1" fill="black" />
-        <rect x="6" y="17" width="1" height="1" fill="black" />
-        <rect x="7" y="16" width="1" height="1" fill="black" />
-        <rect x="8" y="15" width="1" height="1" fill="black" />
-        <rect x="9" y="14" width="1" height="1" fill="black" />
-        <rect x="10" y="15" width="1" height="1" fill="black" />
-        <rect x="11" y="16" width="1" height="1" fill="black" />
-        <rect x="12" y="15" width="1" height="1" fill="black" />
-        <rect x="12" y="14" width="1" height="1" fill="black" />
-        <rect x="13" y="13" width="1" height="1" fill="black" />
-        <rect x="14" y="13" width="1" height="1" fill="black" />
-        <rect x="15" y="12" width="1" height="1" fill="black" />
-        <rect x="11" y="8" width="1" height="1" fill="black" />
-        <rect x="16" y="11" width="1" height="1" fill="black" />
-        <rect x="12" y="7" width="1" height="1" fill="black" />
-        <rect x="17" y="10" width="1" height="1" fill="black" />
-        <rect x="13" y="6" width="1" height="1" fill="black" />
-        <rect x="18" y="9" width="1" height="1" fill="black" />
-        <rect x="14" y="5" width="1" height="1" fill="black" />
-        <rect x="19" y="8" width="1" height="1" fill="black" />
-        <rect x="15" y="4" width="1" height="1" fill="black" />
-        <rect x="20" y="6" width="1" height="1" fill="black" />
-        <rect x="20" y="5" width="1" height="1" fill="black" />
-        <rect x="18" y="3" width="1" height="1" fill="black" />
-        <rect x="17" y="3" width="1" height="1" fill="black" />
-        <rect x="12" y="11" width="1" height="1" fill="black" />
-        <rect x="13" y="10" width="1" height="1" fill="black" />
-        <rect x="14" y="9" width="1" height="1" fill="black" />
-        <rect x="15" y="8" width="1" height="1" fill="black" />
-        <rect x="16" y="7" width="1" height="1" fill="black" />
-        <rect x="17" y="6" width="1" height="1" fill="black" />
-        <rect width="1" height="1" transform="matrix(1 0 0 -1 19 5)" fill="black" />
-        <rect x="20" y="7" width="1" height="1" fill="black" />
-        <rect x="16" y="3" width="1" height="1" fill="black" />
-        <rect x="8" y="13" width="1" height="1" fill="black" />
-        <rect x="7" y="12" width="1" height="1" fill="black" />
-        <rect x="8" y="11" width="1" height="1" fill="black" />
-        <rect x="9" y="11" width="1" height="1" fill="black" />
-        <rect x="10" y="10" width="1" height="1" fill="black" />
-        <rect x="10" y="9" width="1" height="1" fill="black" />
-    </symbol>
-
+    </symbol> 
+    
     <!-- прерывание кабеля -->
 
     <symbol id="breakLine" width="56" height="10" viewBox="0 0 56 10" fill="none">

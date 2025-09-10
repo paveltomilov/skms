@@ -8,7 +8,7 @@ import {
 	HIGH_RESISTANCE,
 } from '@/shared/configs/scheme';
 import { findElementByID } from '@/shared/utils/findElementByID/scheme';
-import { closeAllModal, openModal } from '@/store/modalSlice';
+import { openModal } from '@/store/modalSlice';
 
 interface Prop {
 	id: string;
@@ -21,13 +21,9 @@ export const SchemeElement: FC<Prop> = ({ id, title }) => {
 	const activeProb = useAppSelector(state => state.multimeter.activeProb);
 
 	const handleOpenAutomat = () => {
-		dispatch(closeAllModal());
 		if (id === CONTROL_CIRCUIT_BREAKER_ID) {
 			dispatch(openModal('automatic'));
-		} else {
-			dispatch(openModal('test'));
 		}
-
 	};
 
 	// для визуализации состояния элементов схемы

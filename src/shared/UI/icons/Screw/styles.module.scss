@@ -2,11 +2,10 @@
 	rotate: 0;
 	transition: rotate 0.3s ease-in;
 
-	cursor: url('/frontend/public/images/CURSOR_screwdriver.png') 2 2,
-		url('/frontend/public/svg/sprite.svg#cursor') 2 2, pointer;
+	cursor: url('/images/CURSOR_screwdriver.png') 4 40, pointer;
 
 	&_open {
-		rotate: 135deg;
+		rotate: -135deg;
 		transition: rotate 0.3s ease-in;
 	}
 }

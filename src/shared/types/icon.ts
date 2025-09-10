@@ -42,7 +42,6 @@ export interface IconColor {
 }
 
 export interface IconTransform {
-	rotate45: string;
 	rotate90: string;
 	rotateLeft90: string;
 	rotate180: string;

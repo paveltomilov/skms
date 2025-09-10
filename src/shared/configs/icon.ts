@@ -30,7 +30,6 @@ export const ICON_SIZE: IconSize = {
 
 export const ICON_TRANSFORM: IconTransform = {
 	rotate90: 'rotate(90)',
-	rotate45: 'rotate(45)',
 	rotateLeft90: 'rotate(-90)',
 	rotate180: 'rotate(180)',
 	mirror: 'rotate(180) scale(1 -1)',
