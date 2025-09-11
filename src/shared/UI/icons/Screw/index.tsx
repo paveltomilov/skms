@@ -28,7 +28,6 @@ const Screw: FC<Props> = ({ className, isOpen = false }) => {
 			preserveAspectRatio="xMidYMid meet"
 			className={cn(styles.icon, className, {
 				[styles.icon_open]: status,
-				[styles.icon]: !status,
 			})}
 		>
 			<use

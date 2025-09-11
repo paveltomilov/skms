@@ -33,6 +33,6 @@ export const Open: Story = {
 
 export const Close: Story = {
 	args: {
-		isOpen: '',
+		isOpen: false,
 	},
 };
