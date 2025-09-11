@@ -1,0 +1,12 @@
+@use '@/shared/scss/variables.module';
+@use '@/shared/scss/mixins.module';
+
+
+.line {
+    display: block;
+    width: 8px;
+    border: 1px solid variables.$black-color;
+    border-bottom: none;
+    background-color: variables.$backgroundMArker;
+    transition: all 0.3s ease-in;
+}

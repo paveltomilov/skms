@@ -1,0 +1,11 @@
+.icon {
+	transform: rotate(0);
+	transition: transform 0.3s ease-in;
+
+	cursor: url('/images/CURSOR_screwdriver.png') 4 40, pointer;
+
+	&_open {
+		transform: rotate(-135deg);
+		transition: transform 0.3s ease-in;
+	}
+}

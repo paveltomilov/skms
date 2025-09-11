@@ -19,6 +19,11 @@ export interface IconSize {
 		height: string;
 		viewBox: string;
 	};
+	ls: {
+		width: string;
+		height: string;
+		viewBox: string;
+	};
 }
 
 export interface IconColor {

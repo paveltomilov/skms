@@ -21,6 +21,11 @@ export const ICON_SIZE: IconSize = {
 		height: '28',
 		viewBox: '0 0 28 28',
 	},
+	ls: {
+		width: '30',
+		height: '30',
+		viewBox: '0 0 30 30',
+	}
 };
 
 export const ICON_TRANSFORM: IconTransform = {
