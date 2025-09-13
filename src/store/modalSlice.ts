@@ -1,12 +1,36 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type Modals = 'automatic' | 'gateControl' | 'diagnostic' | 'gateValves';
+export type Modals =
+	| 'automatic'
+	| 'gateControl'
+	| 'diagnostic'
+	| 'gateValves'
+	| 'lamps'
+	| 'block_switches'
+	| 'starter'
+	| 'motor'
+	| 'user_info'
+	| 'fusible_insert'
+	| 'starter_coil'
+	| 'blocking_activation'
+	| 'button'
+	| 'notification';
 
 export interface ModalState {
 	automatic: boolean;
 	gateControl: boolean;
 	diagnostic: boolean;
 	gateValves: boolean;
+	lamps: boolean;
+	block_switches: boolean;
+	starter: boolean;
+	motor: boolean;
+	user_info: boolean;
+	fusible_insert: boolean;
+	starter_coil: boolean;
+	blocking_activation: boolean;
+	button: boolean;
+	notification: boolean;
 }
 
 const initialState: ModalState = {
@@ -14,6 +38,16 @@ const initialState: ModalState = {
 	gateControl: false,
 	diagnostic: false,
 	gateValves: false,
+	lamps: false,
+	block_switches: false,
+	starter: false,
+	motor: false,
+	user_info: false,
+	fusible_insert: false,
+	starter_coil: false,
+	blocking_activation: false,
+	button: false,
+	notification: false,
 };
 
 const modalSlice = createSlice({
@@ -27,10 +61,9 @@ const modalSlice = createSlice({
 			state[payload] = false;
 		},
 		closeAllModal(state) {
-			state.diagnostic = false;
-			state.gateControl = false;
-			state.gateValves = false;
-			state.automatic = false;
+			Object.keys(state).forEach(key => {
+				state[key as keyof ModalState] = false;
+			});
 		},
 	},
 });
