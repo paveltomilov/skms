@@ -1,0 +1,72 @@
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
+
+.popupWindow {
+	position: relative;
+	width: 1350px;
+	height: 623px;
+	box-sizing: content-box;
+	background-image: url('/images/block_limit_switches.png');
+	background-size: 478px 399px;
+	background-position: 463px 155px;
+	background-origin: content-box;
+	background-repeat: no-repeat;
+	overflow: hidden;
+}
+
+.block {
+	display: flex;
+	flex-direction: row;
+	gap: 190px;
+	padding: 228px 0 0 570px;
+
+	&__left {
+		position: relative;
+		padding-top: 12px;
+		width: 78px;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 41px 22px;
+
+		&_provod {
+			position: absolute;
+			display: flex;
+			flex-direction: column;
+			top: -147px;
+			left: -173px;
+
+            >:nth-child(1) {
+                margin: 0 0 -208px;
+            }
+		}
+
+		&_screw {
+			position: absolute;
+			display: flex;
+			flex-direction: column;
+			gap: 114px;
+			top: 15px;
+			left: 3px;
+		}
+	}
+
+	&__right {
+		width: 26px;
+		display: flex;
+		flex-direction: column;
+		gap: 32px;
+	}
+}
+
+.textBlock {
+	position: absolute;
+	display: grid;
+	grid-template-columns: 35px 35px;
+	gap: 117px 22px;
+	top: 218px;
+	left: 568px;
+
+	&__text {
+		@include mixins.text(20px, 400);
+	}
+}

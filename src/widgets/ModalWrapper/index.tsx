@@ -1,19 +1,20 @@
 'use client';
 
 import { FC, useMemo } from 'react';
+import cn from 'classnames';
 import styles from './styles.module.scss';
 import { useAppSelector } from '@/shared/hooks/store';
 import { PopupGateControl } from '../PopupGateControl';
 import PopupGateValves from '../PopupGateValves';
-import { Automatic } from '../Automatic';
 import ModalOverlay from '../ModalOverlay';
 import PopupDiagnostic from '../PopupDiagnostic';
+import PopupBlockSwitches from '../PopupBlockSwitches';
 
 interface ModalProps {
 	className?: string;
 }
 
-const ModalWrapper: FC<ModalProps> = ({}) => {
+const ModalWrapper: FC<ModalProps> = ({ className }) => {
 	const { automatic, gateValves, diagnostic, gateControl } = useAppSelector(
 		state => state.modal,
 	);
@@ -26,11 +27,10 @@ const ModalWrapper: FC<ModalProps> = ({}) => {
 
 	return (
 		<div
-			className={
-				isOne
-					? `${styles.modal} ${automatic && styles.modal_isBlur}`
-					: `${styles.modal__displayNone}`
-			}
+			className={cn(className, styles.modal__displayNone, {
+				[styles.modal]: isOne,
+				[styles.modal_isBlur]: automatic,
+			})}
 		>
 			{gateControl && (
 				<ModalOverlay gateId={gateId} id={'gateControl'}>
@@ -49,7 +49,7 @@ const ModalWrapper: FC<ModalProps> = ({}) => {
 			)}
 			{automatic && (
 				<ModalOverlay id={'automatic'}>
-					<Automatic />
+					<PopupBlockSwitches />
 				</ModalOverlay>
 			)}
 		</div>

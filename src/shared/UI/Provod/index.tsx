@@ -21,7 +21,7 @@ const Provod: FC<Props> = ({
 	return (
 		<div
 			className={cn(styles.container, className)}
-			style={{ rotate: `${rotate}deg` }}
+			style={{ transform: `rotate(${rotate}deg)` }}
 		>
 			<Pin className={styles.pin} />
 			<ProvodLine length={length} className={styles.provodLine} />
