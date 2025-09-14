@@ -15,7 +15,6 @@ interface Prop {
 
 export const SchemeElement: FC<Prop> = ({ id, title, type }) => {
 	const dispatch = useAppDispatch();
-	console.log(type);
 
 	const activeProb = useAppSelector(state => state.multimeter.activeProb);
 

@@ -10,6 +10,7 @@ import ModalOverlay from '../ModalOverlay';
 import PopupDiagnostic from '../PopupDiagnostic';
 import { Automatic } from '../Automatic';
 import { Modals } from '@/store/modalSlice';
+import PopupBlockSwitches from '../PopupBlockSwitches';
 
 interface IModals {
 	condition: boolean;
@@ -31,8 +32,8 @@ const ModalWrapper: FC<{className?: string}> = ({ className }) => {
 		user_info,
 		notification,
 	} = useAppSelector(state => state.modal);
-	const isOne = useMemo(
-		() =>
+
+	const isOne = 
 			automatic ||
 			gateValves ||
 			diagnostic ||
@@ -42,28 +43,18 @@ const ModalWrapper: FC<{className?: string}> = ({ className }) => {
 			block_switches ||
 			starter ||
 			user_info ||
-			notification,
-		[
-			automatic,
-			gateValves,
-			diagnostic,
-			gateControl,
-			lamps,
-			motor,
-			block_switches,
-			starter,
-			notification,
-			user_info,
-		],
-	);
+			notification;
+
 	const gateId = useAppSelector(state => state.gate.activeGateId as string);
+
 	const empty: React.ReactElement = <p>Компонент в разработке</p>;
+
 	const modals: IModals[] = [
 		{
 			condition: automatic,
 			id: 'automatic',
 			headerTitle: 'Автомат',
-			gateId: gateId,
+			gateId: undefined,
 			component: <Automatic />,
 		},
 		{
@@ -106,7 +97,7 @@ const ModalWrapper: FC<{className?: string}> = ({ className }) => {
 			id: 'block_switches',
 			headerTitle: 'Блок концевых выключателей',
 			gateId: undefined,
-			component: empty,
+			component: <PopupBlockSwitches />,
 		},
 		{
 			condition: starter,
@@ -145,4 +136,5 @@ const ModalWrapper: FC<{className?: string}> = ({ className }) => {
 		</div>
 	);
 };
+
 export default ModalWrapper;
