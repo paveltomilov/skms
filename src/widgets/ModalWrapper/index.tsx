@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, useMemo } from 'react';
+import { FC, JSX, useMemo } from 'react';
 import cn from 'classnames';
 import styles from './styles.module.scss';
 import { useAppSelector } from '@/shared/hooks/store';
@@ -9,12 +9,16 @@ import PopupGateValves from '../PopupGateValves';
 import ModalOverlay from '../ModalOverlay';
 import PopupDiagnostic from '../PopupDiagnostic';
 import { Automatic } from '../Automatic';
+import { Modals } from '@/store/modalSlice';
 
-interface ModalProps {
-	className?: string;
+interface IModals {
+	condition: boolean;
+	id: Modals;
+	headerTitle: string;
+	gateId: string | undefined;
+	component: JSX.Element;
 }
-
-const ModalWrapper: FC<ModalProps> = ({ className }) => {
+const ModalWrapper: FC<{className?: string}> = ({ className }) => {
 	const {
 		automatic,
 		gateValves,
@@ -52,80 +56,93 @@ const ModalWrapper: FC<ModalProps> = ({ className }) => {
 			user_info,
 		],
 	);
-
 	const gateId = useAppSelector(state => state.gate.activeGateId as string);
+	const empty: React.ReactElement = <p>Компонент в разработке</p>;
+	const modals: IModals[] = [
+		{
+			condition: automatic,
+			id: 'automatic',
+			headerTitle: 'Автомат',
+			gateId: gateId,
+			component: <Automatic />,
+		},
+		{
+			condition: gateValves,
+			id: 'gateValves',
+			headerTitle: '',
+			gateId: gateId,
+			component: <PopupGateValves />,
+		},
+		{
+			condition: diagnostic,
+			id: 'diagnostic',
+			headerTitle: '',
+			gateId: gateId,
+			component: <PopupDiagnostic />,
+		},
+		{
+			condition: gateControl,
+			id: 'gateControl',
+			headerTitle: '',
+			gateId: gateId,
+			component: <PopupGateControl />,
+		},
+		{
+			condition: lamps,
+			id: 'lamps',
+			headerTitle: 'Лампочки',
+			gateId: undefined,
+			component: empty,
+		},
+		{
+			condition: motor,
+			id: 'motor',
+			headerTitle: 'Контакты обмотки двигателя',
+			gateId: undefined,
+			component: empty,
+		},
+		{
+			condition: block_switches,
+			id: 'block_switches',
+			headerTitle: 'Блок концевых выключателей',
+			gateId: undefined,
+			component: empty,
+		},
+		{
+			condition: starter,
+			id: 'starter',
+			headerTitle: 'Пускатель (на открыть и на закрыть)',
+			gateId: undefined,
+			component: empty,
+		},
+		{
+			condition: notification,
+			id: 'notification',
+			headerTitle: 'Дата реализации',
+			gateId: undefined,
+			component: empty,
+		},
+		{
+			condition: user_info,
+			id: 'user_info',
+			headerTitle: 'Пользователь',
+			gateId: undefined,
+			component: empty,
+		},
+	];
 
 	return (
 		<div
-			className={cn(className, styles.modal__displayNone, {
-				[styles.modal]: isOne,
-				[styles.modal_isBlur]: automatic,
-			})}
+			className={cn(className, styles.modal__displayNone, { [styles.modal]: isOne, [styles.modal_isBlur]: automatic,})}
 		>
-			{gateControl && (
-				<ModalOverlay gateId={gateId} id={'gateControl'}>
-					<PopupGateControl />
-				</ModalOverlay>
-			)}
-			{diagnostic && (
-				<ModalOverlay gateId={gateId} id={'diagnostic'}>
-					<PopupDiagnostic />
-				</ModalOverlay>
-			)}
-			{gateValves && (
-				<ModalOverlay gateId={gateId} id={'gateValves'}>
-					<PopupGateValves />
-				</ModalOverlay>
-			)}
-			{automatic && (
-				<ModalOverlay id={'automatic'} headerTitle={'Автомат'}>
-					<Automatic />
-				</ModalOverlay>
-			)}
-			{lamps && (
-				<ModalOverlay id={'lamps'} headerTitle={'Лампочки'}>
-					<span>Лампочки</span>
-				</ModalOverlay>
-			)}
-			{motor && (
-				<ModalOverlay
-					id={'motor'}
-					headerTitle={'Контакты обмотки двигателя'}
-				>
-					<p>Контакты обмотки двигателя</p>
-				</ModalOverlay>
-			)}
-			{starter && (
-				<ModalOverlay
-					id={'starter'}
-					headerTitle={'Пускатель (на открыть и на закрыть)'}
-				>
-					<p>Пускатель (на открыть и на закрыть)</p>
-				</ModalOverlay>
-			)}
-			{block_switches && (
-				<ModalOverlay
-					id={'block_switches'}
-					headerTitle={'Блок концевых выключателей'}
-				>
-					<p>Блок концевых выключателей</p>
-				</ModalOverlay>
-			)}
-			{notification && (
-				<ModalOverlay
-					id={'notification'}
-					headerTitle={'Дата реализации'}
-				>
-					<p>Компонент в разработке</p>
-				</ModalOverlay>
-			)}
-			{user_info && (
-				<ModalOverlay id={'user_info'} headerTitle={'Пользователь'}>
-					<p>Компонент в разработке</p>
-				</ModalOverlay>
+			{modals.map(
+				({ condition, id, headerTitle, gateId, component }) =>
+					condition && ( <ModalOverlay key={id} gateId={gateId} id={id} headerTitle={headerTitle} >
+							{component}
+						</ModalOverlay>
+					),
 			)}
 		</div>
 	);
 };
-
 export default ModalWrapper;

@@ -16,22 +16,7 @@ export type Modals =
 	| 'button'
 	| 'notification';
 
-export interface ModalState {
-	automatic: boolean;
-	gateControl: boolean;
-	diagnostic: boolean;
-	gateValves: boolean;
-	lamps: boolean;
-	block_switches: boolean;
-	starter: boolean;
-	motor: boolean;
-	user_info: boolean;
-	fusible_insert: boolean;
-	starter_coil: boolean;
-	blocking_activation: boolean;
-	button: boolean;
-	notification: boolean;
-}
+export type ModalState = Record<Modals, boolean>;
 
 const initialState: ModalState = {
 	automatic: false,
@@ -60,10 +45,8 @@ const modalSlice = createSlice({
 		closeModal(state, { payload }: PayloadAction<Modals>) {
 			state[payload] = false;
 		},
-		closeAllModal(state) {
-			Object.keys(state).forEach(key => {
-				state[key as keyof ModalState] = false;
-			});
+		closeAllModal() {
+			return initialState;
 		},
 	},
 });
