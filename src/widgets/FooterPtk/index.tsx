@@ -7,6 +7,7 @@ import Close from '@/shared/UI/icons/Close';
 import EllipseClose from '@/shared/UI/icons/EllipseClose';
 import Micro from '@/shared/UI/icons/Micro';
 import ArrowChange from '@/shared/UI/icons/ArrowChange';
+import OperatorPanel from '@/entities/OperatorPanel';
 
 const FooterPtk: FC = () => {
 	return (
@@ -107,8 +108,15 @@ const FooterPtk: FC = () => {
 					</p>
 				</div>
 			</div>
+			<OperatorPanel/>
 
-			<div className={styles.footer__operatorPanel}>
+			{/* <div className={styles.footer__operatorPanel}> */}
+
+				{/* <Button
+				width={330}
+				height={64}
+				>
+				
 				<Button
 					width={44}
 					height={44}
@@ -126,7 +134,10 @@ const FooterPtk: FC = () => {
 						ASUTP_SMENA_V
 					</span>
 				</div>
-			</div>
+
+				</Button> */}
+
+			{/* </div> */}
 		</footer>
 	);
 };
