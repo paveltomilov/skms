@@ -19,10 +19,10 @@
 			variables.$realistic-drop-shadow;
 
 		// Стили для последнего ребёнка (children) внутри wrapper
-		// > *:last-child {
-		// 	padding: 8px 6px;
-		// 	box-sizing: content-box;
-		// }
+		> *:last-child {
+			padding: 8px 6px;
+			box-sizing: content-box;
+		}
 	}
 
 	&__header {

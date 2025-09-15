@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, JSX, useMemo } from 'react';
+import { FC, JSX } from 'react';
 import cn from 'classnames';
 import styles from './styles.module.scss';
 import { useAppSelector } from '@/shared/hooks/store';
