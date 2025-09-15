@@ -1,19 +1,38 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type Modals = 'automatic' | 'gateControl' | 'diagnostic' | 'gateValves';
+export type Modals =
+	| 'automatic'
+	| 'gateControl'
+	| 'diagnostic'
+	| 'gateValves'
+	| 'lamps'
+	| 'block_switches'
+	| 'starter'
+	| 'motor'
+	| 'user_info'
+	| 'fusible_insert'
+	| 'starter_coil'
+	| 'blocking_activation'
+	| 'button'
+	| 'notification';
 
-export interface ModalState {
-	automatic: boolean;
-	gateControl: boolean;
-	diagnostic: boolean;
-	gateValves: boolean;
-}
+export type ModalState = Record<Modals, boolean>;
 
 const initialState: ModalState = {
 	automatic: false,
 	gateControl: false,
 	diagnostic: false,
 	gateValves: false,
+	lamps: false,
+	block_switches: false,
+	starter: false,
+	motor: false,
+	user_info: false,
+	fusible_insert: false,
+	starter_coil: false,
+	blocking_activation: false,
+	button: false,
+	notification: false,
 };
 
 const modalSlice = createSlice({
@@ -26,11 +45,8 @@ const modalSlice = createSlice({
 		closeModal(state, { payload }: PayloadAction<Modals>) {
 			state[payload] = false;
 		},
-		closeAllModal(state) {
-			state.diagnostic = false;
-			state.gateControl = false;
-			state.gateValves = false;
-			state.automatic = false;
+		closeAllModal() {
+			return initialState;
 		},
 	},
 });
