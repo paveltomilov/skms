@@ -4,13 +4,17 @@
 .modal {
 	&__wrapper {
 		position: absolute;
-		top: 45%;
-		left: 45%;
-		background: variables.$secondary-color;
+		top: 10%;
+		left: 10%;
+
+
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: stretch;
+	
+
+		background: variables.$secondary-color;
 		box-shadow: variables.$pop-up-box-shadow,
 			variables.$realistic-drop-shadow;
 
@@ -31,6 +35,8 @@
 		border-right: 1px solid variables.$white-color;
 		height: 42px;
 		background: linear-gradient(90deg, #8a8a8a 0%, #ffffff 100%);
+		cursor: grab;
+
 
 		&_title {
 			@include mixins.text(14px, 700);

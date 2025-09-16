@@ -3,27 +3,24 @@
 import styles from './styles.module.scss';
 import { FC } from 'react';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
-import {
-	CONTROL_CIRCUIT_BREAKER_ID,
-	HIGH_RESISTANCE,
-} from '@/shared/configs/scheme';
+import { HIGH_RESISTANCE } from '@/shared/configs/scheme';
 import { findElementByID } from '@/shared/utils/findElementByID/scheme';
-import { openModal } from '@/store/modalSlice';
+import { closeAllModal, Modals, openModal } from '@/store/modalSlice';
 
 interface Prop {
 	id: string;
 	title: string;
+	type: Modals;
 }
 
-export const SchemeElement: FC<Prop> = ({ id, title }) => {
+export const SchemeElement: FC<Prop> = ({ id, title, type }) => {
 	const dispatch = useAppDispatch();
 
 	const activeProb = useAppSelector(state => state.multimeter.activeProb);
 
-	const handleOpenAutomat = () => {
-		if (id === CONTROL_CIRCUIT_BREAKER_ID) {
-			dispatch(openModal('automatic'));
-		}
+	const handleOpen = () => {
+		dispatch(closeAllModal());
+		dispatch(openModal(type));
 	};
 
 	// для визуализации состояния элементов схемы
@@ -46,7 +43,7 @@ export const SchemeElement: FC<Prop> = ({ id, title }) => {
 		<button
 			className={elementClassName}
 			aria-label={title}
-			onClick={handleOpenAutomat}
+			onClick={handleOpen}
 		></button>
 	);
 };
