@@ -4,15 +4,10 @@
 .modal {
 	&__wrapper {
 		position: absolute;
-		top: 10%;
-		left: 10%;
-
-
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		align-items: stretch;
-	
+		align-items: stretch;	
 
 		background: variables.$secondary-color;
 		box-shadow: variables.$pop-up-box-shadow,

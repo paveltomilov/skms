@@ -22,49 +22,73 @@
 
 	&__left {
 		position: relative;
-		padding-top: 12px;
-		width: 78px;
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		gap: 41px 22px;
+		padding-top: 12px;
+		width: 78px;
 
 		&_provod {
 			position: absolute;
-			display: flex;
-			flex-direction: column;
 			top: -147px;
 			left: -173px;
+			display: flex;
+			flex-direction: column;
 
-            >:nth-child(1) {
-                margin: 0 0 -208px;
-            }
+			> :nth-child(1) {
+				margin: 0 0 -202px;
+			}
+		}
+
+		&_marker {
+			position: absolute;
+			top: 13px;
+			left: -281px;
+			display: flex;
+			flex-direction: column;
+			gap: 111px;
 		}
 
 		&_screw {
 			position: absolute;
-			display: flex;
-			flex-direction: column;
-			gap: 114px;
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 114px 30px;
 			top: 15px;
 			left: 3px;
+		}
+		.provod__A1 {
+			position: absolute;
+			bottom: 76px;
+			left: 64px;
+
+			> :first-child {
+				margin-bottom: -8px;
+			}
+
+			&_marker {
+				position: absolute;
+				top: 29px;
+				left: 10px;
+			}
 		}
 	}
 
 	&__right {
-		width: 26px;
 		display: flex;
 		flex-direction: column;
 		gap: 32px;
+		width: 26px;
 	}
 }
 
 .textBlock {
 	position: absolute;
+	top: 218px;
+	left: 568px;
 	display: grid;
 	grid-template-columns: 35px 35px;
 	gap: 117px 22px;
-	top: 218px;
-	left: 568px;
 
 	&__text {
 		@include mixins.text(20px, 400);

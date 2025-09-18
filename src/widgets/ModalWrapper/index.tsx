@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, JSX, useMemo } from 'react';
+import { FC, JSX } from 'react';
 import cn from 'classnames';
 import styles from './styles.module.scss';
 import { useAppSelector } from '@/shared/hooks/store';
@@ -56,13 +56,13 @@ const ModalWrapper: FC<{className?: string}> = ({ className }) => {
 			headerTitle: 'Автомат',
 			gateId: undefined,
 			component: <Automatic />,
-		},
+		},		
 		{
-			condition: gateValves,
-			id: 'gateValves',
+			condition: gateControl,
+			id: 'gateControl',
 			headerTitle: '',
 			gateId: gateId,
-			component: <PopupGateValves />,
+			component: <PopupGateControl />,
 		},
 		{
 			condition: diagnostic,
@@ -72,11 +72,11 @@ const ModalWrapper: FC<{className?: string}> = ({ className }) => {
 			component: <PopupDiagnostic />,
 		},
 		{
-			condition: gateControl,
-			id: 'gateControl',
+			condition: gateValves,
+			id: 'gateValves',
 			headerTitle: '',
 			gateId: gateId,
-			component: <PopupGateControl />,
+			component: <PopupGateValves />,
 		},
 		{
 			condition: lamps,
