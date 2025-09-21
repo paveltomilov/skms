@@ -37,7 +37,13 @@ const Provod: FC<Props> = ({
 				isDefault={isDefault}
 			/>
 			{isBreak && <BreakLine className={styles.breakLine} />}
-			{marker && <Marker text={marker} />}
+			{marker && (
+				<Marker
+					className={styles.marker}
+					text={marker}
+					rotate={rotate == 90 ? 270 : 180}
+				/>
+			)}
 		</div>
 	);
 };

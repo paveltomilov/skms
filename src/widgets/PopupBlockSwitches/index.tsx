@@ -29,19 +29,19 @@ const PopupBlockSwitches: FC<Props> = ({ className }) => {
 				<div className={styles.block__left}>
 					{reRenderingElement(<Channel size="md" />, 8)}
 					<div className={styles.block__left_provod}>
-						<Provod length={300} rotate={90} />
-						<Provod length={300} rotate={90} />
+						<Provod length={300} rotate={90} marker="A11" />
+						<Provod length={300} rotate={90} marker="A19" />
 					</div>
 					<div className={styles.block__left_screw}>
-						<ScrewConnection provodLeft />
-						<ScrewConnection provodRight />
-						<ScrewConnection provodLeft />
+						<ScrewConnection provodLeft textTop="A11" />
+						<ScrewConnection provodRight textTop="A1" />
+						<ScrewConnection provodLeft textTop="A19" />
 						<ScrewConnection provodRight />
 					</div>
 				</div>
 				<div className={styles.provodA1}>
-					<Provod length={191} rotate={180} />
-					<Bend className={styles.provodA1__bend} rotate='180'/>
+					<Provod length={191} rotate={180} marker="A1" />
+					<Bend className={styles.provodA1__bend} rotate="180" />
 					<ProvodConstructor provod_B={86} turn_A="180" turn_B="90" />
 				</div>
 				<div className={styles.block__right}>
