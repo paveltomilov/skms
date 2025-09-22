@@ -1,47 +1,11 @@
-@use '@/shared/scss/variables.module';
-@use '@/shared/scss/mixins.module';
-
-.wrapper {
-	position: relative;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-}
-
 .icon {
 	transform: rotate(0);
 	transition: transform 0.3s ease-in;
+
 	cursor: url('/images/CURSOR_screwdriver.png') 4 40, pointer;
 
 	&_open {
 		transform: rotate(-135deg);
+		transition: transform 0.3s ease-in;
 	}
-}
-
-.top,
-.bottom,
-.left,
-.right {
-	position: absolute;
-	user-select: none;
-	@include mixins.text(20px, 400);
-}
-
-.top {
-	top: -18px;
-	left: 50%;
-	transform: translateX(-50%);
-}
-
-
-.left {
-	left: -16px;
-	top: 50%;
-	transform: translateY(-50%);
-}
-
-.right {
-	right: -16px;
-	top: 50%;
-	transform: translateY(-50%);
 }

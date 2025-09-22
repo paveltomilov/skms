@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import Screw from '.';
-import { MarkerName } from '@/shared/types/markers';
 
 const meta: Meta<typeof Screw> = {
 	title: 'Icons/Screw',
@@ -11,21 +10,14 @@ const meta: Meta<typeof Screw> = {
 	tags: ['autodocs'],
 	argTypes: {
 		isOpen: {
-			description: 'Состояние винта: откручен / закручен',
-			control: { type: 'boolean' },
+			description: 'Соостояние винта откручен/закручен',
+			control: {
+				type: 'boolean',
+			},
 		},
 		className: {
 			description:
-				'Для передачи дополнительных стилей (например, позиционирование)',
-			control: { type: 'text' },
-		},
-		textTop: {
-			description: 'Подпись сверху',
-			options: ['A', 'B', 'N', 'C'] satisfies MarkerName[],
-		},
-		textRight: {
-			description: 'Подпись справа',
-			options: ['A', 'B', 'N', 'C'] satisfies MarkerName[],
+				'Для передачи дополнительных стилей (для позиционирования)',
 		},
 	},
 };
@@ -36,13 +28,11 @@ type Story = StoryObj<typeof meta>;
 export const Open: Story = {
 	args: {
 		isOpen: true,
-		textTop: 'A',
 	},
 };
 
 export const Close: Story = {
 	args: {
 		isOpen: false,
-		textRight: 'N',
 	},
 };
