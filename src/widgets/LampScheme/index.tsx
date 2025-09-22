@@ -43,7 +43,7 @@ export const LampScheme: FC = () => {
 									aria-hidden
 								/>
 								<ProvodLine
-									length={110}
+									length={119}
 									className={styles.pin__pref}
 									aria-hidden
 								/>
