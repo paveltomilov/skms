@@ -1,55 +1,38 @@
 'use client';
 
-import LampIndicator from '@/shared/UI/LampIndicator';
-import styles from './styles.module.scss';
 import { FC } from 'react';
+import cn from 'classnames';
+import LampIndicator from '@/shared/UI/LampIndicator';
 import Screw from '@/shared/UI/icons/Screw';
 import ProvodLine from '@/shared/UI/icons/ProvodLine';
-import cn from 'classnames';
 import Marker from '@/shared/UI/Marker';
+import Channel from '@/shared/UI/icons/Channel';
+import styles from './styles.module.scss';
+import { columns, pins } from '@/shared/configs/lampsScheme';
 
 export const LampScheme: FC = () => {
 	return (
-		<div className={styles.container}>
-			<div className={cn(styles.column)}>
-				<h3 className={styles.title}>Закрыто</h3>
-				<div className={styles.lampWrapper}>
-					<LampIndicator color="white" />
-				</div>
-
-				<div className={styles.foot}>
-					<div className={styles.pin}>
-						<Screw textLeft="A" />
-						<ProvodLine length={110} className={styles.pin__pref} />
-						<Marker text="A" className={styles.pin__marker} />
-					</div>
-					<div className={styles.pin}>
-						<Screw textLeft="N" />
-						<ProvodLine length={110} className={styles.pin__pref} />
-						<Marker text="N" className={styles.pin__marker} />
-					</div>
-				</div>
-			</div>
-
-			<div className={cn(styles.column, styles.columnRight)}>
-				<h3 className={styles.title}>Открыто</h3>
-				<div className={styles.lampWrapperOn}>
-					<LampIndicator color="lamp_green" />
-				</div>
-
-				<div className={styles.foot}>
-					<div className={styles.pin}>
-						<Screw textLeft="A" />
-						<ProvodLine length={110} className={styles.pin__pref} />
-						<Marker text='A' className={styles.pin__marker} />
-					</div>
-					<div className={styles.pin}>
-						<Screw textLeft="N" />
-						<ProvodLine length={110} className={styles.pin__pref} />
-						<Marker text="N" className={styles.pin__marker} />
-					</div>
-				</div>
-			</div>
-		</div>
+		<section className={styles.container} aria-label="Схема ламп">
+			{columns.map(({ title, color }) => (
+				<section
+					key={title}
+					className={cn(styles.column, title === 'Открыто' && styles.columnRight)}
+					aria-labelledby={`lamp-${title}`}
+				>
+					<h2 id={`lamp-${title}`} className={styles.title}>{title}</h2>
+					<LampIndicator color={color} aria-hidden />
+					<ul className={styles.foot} aria-label="Клеммы">
+						{pins.map(({ code }) => (
+							<li key={code} className={styles.pin} aria-label={`Клемма ${code}`}>
+								<Channel size="md" className={styles.pin__channel} aria-hidden />
+								<Screw className={styles.pin__screw} textLeft={code} aria-hidden />
+								<ProvodLine length={110} className={styles.pin__pref} aria-hidden />
+								<Marker text={code} className={styles.pin__marker} />
+							</li>
+						))}
+					</ul>
+				</section>
+			))}
+		</section>
 	);
 };

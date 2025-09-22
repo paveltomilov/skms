@@ -23,7 +23,7 @@
 }
 
 .title {
-	@include mixins.text(400, 20px);
+	@include mixins.text(400, 18px);
 }
 
 .lampWrapper,
@@ -43,9 +43,12 @@
 	position: relative;
 	padding-left: 10px;
 	&__pref {
-		margin: -5px 0px 0px 7px;
+		margin: -15px 0px 0px 5px;
 	}
 	&__marker {
 		margin: -56px 0 0 -6px;
+	}
+	&__channel {
+		margin: 0px -23px -3px -3px;
 	}
 }
