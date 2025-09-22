@@ -23,7 +23,7 @@
 .left,
 .right {
 	position: absolute;
-	@include mixins.text(20px, 400);
+	@include mixins.text(18px, 400);
 }
 
 .top {
