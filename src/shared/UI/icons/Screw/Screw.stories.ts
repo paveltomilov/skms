@@ -27,6 +27,10 @@ const meta: Meta<typeof Screw> = {
 			description: 'Подпись справа',
 			options: ['A', 'B', 'N', 'C'] satisfies MarkerName[],
 		},
+		textLeft: {
+			description: 'Подпись слева',
+			options: ['A', 'B', 'N', 'C'] satisfies MarkerName[],
+		},
 	},
 };
 
