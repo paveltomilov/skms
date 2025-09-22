@@ -33,10 +33,10 @@ const PopupBlockSwitches: FC<Props> = ({ className }) => {
 						<Provod length={300} rotate={90} marker="A19" />
 					</div>
 					<div className={styles.block__left_screw}>
-						<ScrewConnection provodLeft textTop="A11" />
-						<ScrewConnection provodRight textTop="A1" />
-						<ScrewConnection provodLeft textTop="A19" />
-						<ScrewConnection provodRight />
+						<ScrewConnection provodLocation="left" textTop="A11" />
+						<ScrewConnection provodLocation="right" textTop="A1" />
+						<ScrewConnection provodLocation="left" textTop="A19" />
+						<ScrewConnection provodLocation="right" />
 					</div>
 				</div>
 				<div className={styles.provodA1}>

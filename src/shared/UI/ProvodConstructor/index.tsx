@@ -36,15 +36,15 @@ const ProvodConstructor: FC<Props> = ({
 			{' '}
 			{isBreak_end && <BreakLine isBreak_end />}
 			{provod_C <= 0 ? null : (
-				<ProvodLine length={provod_C} isDefault isPin={false} />
+				<ProvodLine length={provod_C} isPin={false} />
 			)}
 			{turn_B && <Bend rotate={turn_B} />}
 			{provod_B <= 0 ? null : (
-				<ProvodLine length={provod_B} isDefault isPin={false} />
+				<ProvodLine length={provod_B} isPin={false} />
 			)}
 			{turn_A && <Bend rotate={turn_A} />}
 			{provod_A <= 0 ? null : (
-				<ProvodLine length={provod_A} isDefault isPin={false} />
+				<ProvodLine length={provod_A} isPin={false} />
 			)}
 			{isBreak && <BreakLine />}
 		</div>

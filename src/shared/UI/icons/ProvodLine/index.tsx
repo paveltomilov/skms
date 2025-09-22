@@ -7,20 +7,20 @@ interface Props {
 	className?: string;
 	length?: number;
 	isPin: boolean;
-	isDefault: boolean;
+	rotate?: 90 | 180 | 270 | 0;
 }
 
 const ProvodLine: FC<Props> = ({
 	className,
 	length = 96,
 	isPin,
-	isDefault = true,
+	rotate = 0,
 }) => {
 	return (
 		<div
-			style={{ height: `${length}px` }}
+			style={{ height: `${length}px`, transform: `rotate(${rotate}deg)` }}
 			className={cn(styles.line, className, {
-				[styles.line__absolute]: !isDefault,
+				[styles.line__absolute]: isPin,
 			})}
 		>
 			{isPin && <Pin className={styles.pin} />}

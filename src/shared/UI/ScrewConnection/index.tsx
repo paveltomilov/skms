@@ -11,10 +11,7 @@ interface Props {
 	textRight?: MarkerName;
 	textTop?: MarkerName;
 	textLeft?: MarkerName;
-	provodLeft?: boolean;
-	provodTop?: boolean;
-	provodRight?: boolean;
-	provodBottom?: boolean;
+	provodLocation?: 'bottom' | 'left' | 'top' | 'right';
 }
 
 const ScrewConnection: FC<Props> = ({
@@ -23,22 +20,19 @@ const ScrewConnection: FC<Props> = ({
 	textRight,
 	textTop,
 	textLeft,
-	provodLeft,
-	provodTop,
-	provodRight,
-	provodBottom,
+	provodLocation,
 }) => {
 	const [deg, setDeg] = useState<90 | 180 | 270 | 0>(0);
 	const [open, setOpen] = useState<boolean>(isOpen);
 
 	useEffect(() => {
-		if (provodLeft) setDeg(90);
-		if (provodTop) setDeg(180);
-		if (provodRight) setDeg(270);
-		if (provodBottom) setDeg(0);
+		if (provodLocation === 'left') setDeg(90);
+		if (provodLocation === 'top') setDeg(180);
+		if (provodLocation === 'right') setDeg(270);
+		if (provodLocation === 'bottom') setDeg(0);
 
 		setOpen(isOpen);
-	}, [provodLeft, provodTop, provodRight, provodBottom, isOpen]);
+	}, [provodLocation, isOpen]);
 
 	return (
 		<div className={cn(className, styles.component)}>
@@ -52,16 +46,15 @@ const ScrewConnection: FC<Props> = ({
 			/>
 			<Provod
 				className={cn(styles.provod, {
-					[styles.provod__left]: provodLeft,
-					[styles.provod__top]: provodTop,
-					[styles.provod__right]: provodRight,
-					[styles.provod__bottom]: provodBottom,
+					[styles.provod__left]: provodLocation === 'left',
+					[styles.provod__top]: provodLocation === 'top',
+					[styles.provod__right]: provodLocation === 'right',
+					[styles.provod__bottom]: provodLocation === 'bottom',
 				})}
 				isPin
 				isBreak={false}
 				length={open ? 1 : 22}
 				rotate={deg}
-				isDefault={false}
 			/>
 		</div>
 	);

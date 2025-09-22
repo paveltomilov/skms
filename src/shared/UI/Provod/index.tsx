@@ -11,9 +11,8 @@ interface Props {
 	rotate?: 90 | 180 | 270 | 0;
 	length?: number;
 	isBreak?: boolean;
-	isPin?: boolean;
 	marker?: MarkerName;
-	isDefault?: boolean;
+	isPin?: boolean
 }
 
 const Provod: FC<Props> = ({
@@ -21,9 +20,8 @@ const Provod: FC<Props> = ({
 	rotate = 0,
 	length,
 	isBreak = true,
-	isPin = false,
 	marker,
-	isDefault = true,
+	isPin = false,
 }) => {
 	return (
 		<div
@@ -34,14 +32,13 @@ const Provod: FC<Props> = ({
 				length={length}
 				className={styles.provodLine}
 				isPin={isPin}
-				isDefault={isDefault}
 			/>
 			{isBreak && <BreakLine className={styles.breakLine} />}
 			{marker && (
 				<Marker
 					className={styles.marker}
 					text={marker}
-					rotate={rotate == 90 ? 270 : 180}
+					rotate={rotate === 90 ? 270 : rotate === 270 ? 90 : rotate}
 				/>
 			)}
 		</div>
