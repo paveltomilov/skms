@@ -20,7 +20,7 @@ interface IModals {
 	gateId: string | undefined;
 	component: JSX.Element;
 }
-const ModalWrapper: FC<{className?: string}> = ({ className }) => {
+const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 	const {
 		automatic,
 		gateValves,
@@ -34,17 +34,17 @@ const ModalWrapper: FC<{className?: string}> = ({ className }) => {
 		notification,
 	} = useAppSelector(state => state.modal);
 
-	const isOne = 
-			automatic ||
-			gateValves ||
-			diagnostic ||
-			gateControl ||
-			lamps ||
-			motor ||
-			block_switches ||
-			starter ||
-			user_info ||
-			notification;
+	const isOne =
+		automatic ||
+		gateValves ||
+		diagnostic ||
+		gateControl ||
+		lamps ||
+		motor ||
+		block_switches ||
+		starter ||
+		user_info ||
+		notification;
 
 	const gateId = useAppSelector(state => state.gate.activeGateId as string);
 
@@ -59,11 +59,11 @@ const ModalWrapper: FC<{className?: string}> = ({ className }) => {
 			component: <Automatic />,
 		},
 		{
-			condition: gateValves,
-			id: 'gateValves',
+			condition: gateControl,
+			id: 'gateControl',
 			headerTitle: '',
 			gateId: gateId,
-			component: <PopupGateValves />,
+			component: <PopupGateControl />,
 		},
 		{
 			condition: diagnostic,
@@ -73,11 +73,11 @@ const ModalWrapper: FC<{className?: string}> = ({ className }) => {
 			component: <PopupDiagnostic />,
 		},
 		{
-			condition: gateControl,
-			id: 'gateControl',
+			condition: gateValves,
+			id: 'gateValves',
 			headerTitle: '',
 			gateId: gateId,
-			component: <PopupGateControl />,
+			component: <PopupGateValves />,
 		},
 		{
 			condition: lamps,
@@ -125,13 +125,13 @@ const ModalWrapper: FC<{className?: string}> = ({ className }) => {
 
 	return (
 		<div
-			className={cn(className, styles.modal__displayNone, { [styles.modal]: isOne, [styles.modal_isBlur]: automatic,})}
+			className={cn(className, styles.modal__displayNone, { [styles.modal]: isOne, [styles.modal_isBlur]: automatic, })}
 		>
 			{modals.map(
 				({ condition, id, headerTitle, gateId, component }) =>
-					condition && ( <ModalOverlay key={id} gateId={gateId} id={id} headerTitle={headerTitle} >
-							{component}
-						</ModalOverlay>
+					condition && (<ModalOverlay key={id} gateId={gateId} id={id} headerTitle={headerTitle} >
+						{component}
+					</ModalOverlay>
 					),
 			)}
 		</div>
