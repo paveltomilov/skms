@@ -9,23 +9,36 @@
 	justify-content: center;
 }
 
-.contact__left,
-.contact__right {
+.contact {
 	display: flex;
-	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background-color: variables.$white-color;
+	border-radius: 64px;
+	width: 263px;
+	height: 263px;
+
+	&__left {
+		display: flex;
+		flex-direction: column;
+	}
+
+	&__right {
+		display: flex;
+		flex-direction: column;
+	}
 }
 
 .left {
 	display: flex;
-	height: 30px;
 
 	&__provod {
-		margin-left: -15px;
+		rotate: 90deg;
 	}
 
 	&__marker {
 		height: 20px;
-		margin-top: 5px;
+		margin-top: 50px;
 		margin-left: 5px;
 		z-index: 10;
 	}
@@ -38,7 +51,6 @@
 
 .right {
 	display: flex;
-	height: 30px;
 
 	&__provod {
 		margin-left: -50px;
