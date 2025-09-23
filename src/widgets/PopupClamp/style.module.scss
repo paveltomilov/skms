@@ -1,0 +1,33 @@
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
+
+.popup {
+	width: 1250px;
+	display: flex;
+}
+
+.contact__left,
+.contact__right {
+	display: flex;
+	flex-direction: column;
+}
+
+.left {
+	display: flex;
+
+	&__provod {
+		margin-left: -50px;
+	}
+
+	&__marker {
+		height: 20px;
+		margin-top: 50px;
+		margin-left: 50px;
+		z-index: 10;
+	}
+
+	&__screw {
+		margin-top: 50px;
+		margin-left: 10px;
+	}
+}
