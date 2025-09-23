@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import Provod from '.';
+import { MarkerName } from '@/shared/types/markers';
 
 const meta: Meta<typeof Provod> = {
 	title: 'Provod',
@@ -11,7 +12,7 @@ const meta: Meta<typeof Provod> = {
 	argTypes: {
 		rotate: {
 			description: 'Расположение провода',
-			options: [90, 180, 270],
+			options: [90, 180, 270, 0],
 			control: {
 				type: 'radio',
 			},
@@ -36,6 +37,13 @@ const meta: Meta<typeof Provod> = {
 				type: 'text',
 			},
 		},
+		marker: {
+			description: 'Задаем значанени указанные на бирки кабеля',
+			options: ['A', 'B', 'N', 'C'] satisfies MarkerName[],
+			control: {
+				type: 'radio'
+			}
+		}
 	},
 };
 

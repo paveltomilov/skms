@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import ProvodLine from '.';
+import ProvodLine from './index';
 
 const meta: Meta<typeof ProvodLine> = {
 	title: 'Icons/ProvodLine',
@@ -19,6 +19,19 @@ const meta: Meta<typeof ProvodLine> = {
 				type: 'number',
 			},
 		},
+		isPin: {
+			description: 'Нужно ли контактное кольцо',
+			control: {
+				type: 'boolean',
+			},
+		},
+		rotate: {
+			description: 'Поворт компонета',
+			options: [90, 180, 270, 0],
+			control: {
+				type: 'radio',
+			},
+		},
 	},
 };
 
@@ -27,6 +40,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	args: {
-		length: 111,
+		length: 20,
+		isPin: true,
 	},
 };

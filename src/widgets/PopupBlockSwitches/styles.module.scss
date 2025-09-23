@@ -22,51 +22,60 @@
 
 	&__left {
 		position: relative;
-		padding-top: 12px;
-		width: 78px;
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		gap: 41px 22px;
+		padding-top: 12px;
+		width: 78px;
 
 		&_provod {
 			position: absolute;
+			top: -128px;
+			left: -187px;
 			display: flex;
 			flex-direction: column;
-			top: -147px;
-			left: -173px;
 
-            >:nth-child(1) {
-                margin: 0 0 -208px;
-            }
+			> :nth-child(1) {
+				margin: 0 0 -172px;
+			}
 		}
 
 		&_screw {
 			position: absolute;
-			display: flex;
-			flex-direction: column;
-			gap: 114px;
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 111.5px 30px;
 			top: 15px;
 			left: 3px;
 		}
 	}
 
 	&__right {
-		width: 26px;
 		display: flex;
 		flex-direction: column;
 		gap: 32px;
+		width: 26px;
 	}
 }
 
-.textBlock {
+.provodA1 {
 	position: absolute;
-	display: grid;
-	grid-template-columns: 35px 35px;
-	gap: 117px 22px;
-	top: 218px;
-	left: 568px;
+	top: 40.5px;
+	left: 657px;
 
-	&__text {
-		@include mixins.text(20px, 400);
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+
+	> :first-child {
+		margin-bottom: -8px;
+	}
+
+	&__bend {
+		position: absolute;
+		right: 3px;
+		top: 188px;
+
+
 	}
 }

@@ -1,15 +1,19 @@
 import { FC } from 'react';
+import styles from './styles.module.scss';
+import cn from 'classnames';
 
 interface Props {
 	className?: string;
+	isBreak_end?: boolean;
 }
 
-const BreakLine: FC<Props> = ({ className }) => {
+const BreakLine: FC<Props> = ({ className, isBreak_end }) => {
 	return (
 		<svg
-			style={{ width: '56px', height: '10px' }}
 			preserveAspectRatio="xMidYMid meet"
-			className={className && className}
+			className={cn(className, styles.line, {
+				[styles.line__isBreak_end]: isBreak_end,
+			})}
 		>
 			<use xlinkHref={'/svg/sprite.svg#breakLine'} />
 		</svg>
