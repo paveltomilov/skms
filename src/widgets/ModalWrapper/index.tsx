@@ -11,8 +11,6 @@ import PopupDiagnostic from '../PopupDiagnostic';
 import { Automatic } from '../Automatic';
 import { Modals } from '@/store/modalSlice';
 import PopupBlockSwitches from '../PopupBlockSwitches';
-import { LampScheme } from '../LampScheme';
-import PopupActuator from '@/widgets/PopupActuator';
 
 interface IModals {
 	condition: boolean;
@@ -85,7 +83,7 @@ const ModalWrapper: FC<{className?: string}> = ({ className }) => {
 			id: 'lamps',
 			headerTitle: 'Лампочки',
 			gateId: undefined,
-			component: <LampScheme/>,
+			component: empty,
 		},
 		{
 			condition: motor,
@@ -106,7 +104,7 @@ const ModalWrapper: FC<{className?: string}> = ({ className }) => {
 			id: 'starter',
 			headerTitle: 'Пускатель (на открыть и на закрыть)',
 			gateId: undefined,
-			component: <PopupActuator />,
+			component: empty,
 		},
 		{
 			condition: notification,

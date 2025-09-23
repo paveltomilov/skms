@@ -24,24 +24,23 @@
 .left,
 .right {
 	position: absolute;
-	user-select: none;
-	@include mixins.text(20px, 400);
+	@include mixins.text(18px, 400);
 }
 
 .top {
-	top: -18px;
+	top: -22px;
 	left: 50%;
 	transform: translateX(-50%);
 }
 
 .left {
-	left: -16px;
+	left: -20px;
 	top: 50%;
 	transform: translateY(-50%);
 }
 
 .right {
-	right: -16px;
+	right: -20px;
 	top: 50%;
 	transform: translateY(-50%);
 }
