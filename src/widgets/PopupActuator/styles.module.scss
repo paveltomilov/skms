@@ -1,0 +1,87 @@
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
+
+.actuator_container {
+  display: flex;
+  justify-content: center;
+  padding-top: 55px;
+  padding-bottom: 70px;
+  width: 1350px;
+  background-color: variables.$primary-color;
+
+  &_inner {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 100%;
+    max-width: 760px;
+    height: 500px;
+    background-image: url('/images/bg_popup_actuator.png');
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}
+
+.inner_left,
+.inner_right {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-content: space-between;
+  gap: 102px 10px;
+  width: 100%;
+  max-width: 348px;
+
+  &_wrap {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__provod {
+      margin-bottom: 15px;
+    }
+
+    &__reverse {
+      margin-bottom: unset;
+      padding-top: 15px;
+    }
+
+    &__connection {
+      left: 0;
+      bottom: 23px;
+
+      div span {
+        right: -30px;
+      }
+    }
+  }
+
+  .inner_left_wrap:nth-child(5) .inner_left_wrap__connection,
+  .inner_right_wrap:nth-child(5) .inner_right_wrap__connection {
+    div span {
+      right: -40px;
+    }
+  }
+
+  .inner_left_wrap:nth-child(10) .inner_left_wrap__connection,
+  .inner_right_wrap:nth-child(10) .inner_right_wrap__connection {
+    div span {
+      right: -20px;
+    }
+  }
+
+  &__reverse {
+    flex-direction: column-reverse;
+
+    &__bottom {
+      top: 26px;
+      bottom: unset;
+
+      div span {
+        right: -40px;
+      }
+    }
+  }
+}
