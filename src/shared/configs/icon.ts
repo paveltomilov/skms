@@ -25,7 +25,7 @@ export const ICON_SIZE: IconSize = {
 		width: '30',
 		height: '30',
 		viewBox: '0 0 30 30',
-	}
+	},
 };
 
 export const ICON_TRANSFORM: IconTransform = {

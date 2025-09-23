@@ -1,0 +1,11 @@
+.line {
+	width: 56px;
+	height: 10px;
+	transform: translate(0, -3px);
+
+&__isBreak_end {
+	transform: translate(0,3px);
+}
+ 
+
+}
