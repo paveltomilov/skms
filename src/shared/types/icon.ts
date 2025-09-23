@@ -39,6 +39,7 @@ export interface IconColor {
 	green: string;
 	electric_green: string;
 	dark_green: string;
+	lamp_green: string;
 }
 
 export interface IconTransform {
