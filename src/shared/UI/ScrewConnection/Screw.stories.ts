@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import ScrewConnection from './index';
+import Screw from '.';
 import { MarkerName } from '@/shared/types/markers';
 
-const meta: Meta<typeof ScrewConnection> = {
-	title: 'UI/ScrewConnection',
-	component: ScrewConnection,
+const meta: Meta<typeof Screw> = {
+	title: 'Icons/Screw',
+	component: Screw,
 	parameters: {
 		layout: 'centered',
 	},
@@ -12,6 +12,7 @@ const meta: Meta<typeof ScrewConnection> = {
 	argTypes: {
 		isOpen: {
 			description: 'Состояние винта: откручен / закручен',
+			control: { type: 'boolean' },
 		},
 		className: {
 			description:
@@ -30,10 +31,6 @@ const meta: Meta<typeof ScrewConnection> = {
 			description: 'Подпись слева',
 			options: ['A', 'B', 'N', 'C'] satisfies MarkerName[],
 		},
-		provodLocation: {
-			description: 'Расположение провода',
-			options: ['left', 'right', 'top', 'bottom'],
-		},
 	},
 };
 
@@ -44,7 +41,6 @@ export const Open: Story = {
 	args: {
 		isOpen: true,
 		textTop: 'A',
-		provodLocation: 'bottom',
 	},
 };
 
@@ -52,6 +48,5 @@ export const Close: Story = {
 	args: {
 		isOpen: false,
 		textRight: 'N',
-		provodLocation: 'top',
 	},
 };
