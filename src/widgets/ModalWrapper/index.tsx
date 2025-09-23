@@ -57,13 +57,13 @@ const ModalWrapper: FC<{className?: string}> = ({ className }) => {
 			headerTitle: 'Автомат',
 			gateId: undefined,
 			component: <Automatic />,
-		},
+		},		
 		{
-			condition: gateValves,
-			id: 'gateValves',
+			condition: gateControl,
+			id: 'gateControl',
 			headerTitle: '',
 			gateId: gateId,
-			component: <PopupGateValves />,
+			component: <PopupGateControl />,
 		},
 		{
 			condition: diagnostic,
@@ -73,11 +73,11 @@ const ModalWrapper: FC<{className?: string}> = ({ className }) => {
 			component: <PopupDiagnostic />,
 		},
 		{
-			condition: gateControl,
-			id: 'gateControl',
+			condition: gateValves,
+			id: 'gateValves',
 			headerTitle: '',
 			gateId: gateId,
-			component: <PopupGateControl />,
+			component: <PopupGateValves />,
 		},
 		{
 			condition: lamps,

@@ -3,7 +3,9 @@ import styles from './styles.module.scss';
 import cn from 'classnames';
 import Provod from '@/shared/UI/Provod';
 import Channel from '@/shared/UI/icons/Channel';
-import Screw from '@/shared/UI/icons/Screw';
+import ProvodConstructor from '@/shared/UI/ProvodConstructor';
+import ScrewConnection from '@/shared/UI/ScrewConnection';
+import Bend from '@/shared/UI/icons/Bend';
 
 interface Props {
 	className?: string;
@@ -15,7 +17,6 @@ function reRenderingElement(
 ): ReactNode[] {
 	const elements: ReactNode[] = [];
 	for (let i = 0; i < quantity; i++) {
-		// Клонируем элемент с уникальным key
 		elements.push(cloneElement(element, { key: i }));
 	}
 	return elements;
@@ -28,22 +29,24 @@ const PopupBlockSwitches: FC<Props> = ({ className }) => {
 				<div className={styles.block__left}>
 					{reRenderingElement(<Channel size="md" />, 8)}
 					<div className={styles.block__left_provod}>
-						<Provod length={317} rotate={90} />
-						<Provod length={317} rotate={90} />
+						<Provod length={300} rotate={90} marker="A11" />
+						<Provod length={300} rotate={90} marker="A19" />
 					</div>
 					<div className={styles.block__left_screw}>
-						<Screw />
-						<Screw />
+						<ScrewConnection provodLocation="left" textTop="A11" />
+						<ScrewConnection provodLocation="right" textTop="A1" />
+						<ScrewConnection provodLocation="left" textTop="A19" />
+						<ScrewConnection provodLocation="right" />
 					</div>
+				</div>
+				<div className={styles.provodA1}>
+					<Provod length={191} rotate={180} marker="A1" />
+					<Bend className={styles.provodA1__bend} rotate="180" />
+					<ProvodConstructor provod_B={86} turn_A="180" turn_B="90" />
 				</div>
 				<div className={styles.block__right}>
 					{reRenderingElement(<Channel />, 4)}
 				</div>
-			</div>
-			<div className={styles.textBlock}>
-				<span className={styles.textBlock__text}>A11</span>
-				<span className={styles.textBlock__text}>A1</span>
-				<span className={styles.textBlock__text}>A19</span>
 			</div>
 		</div>
 	);
