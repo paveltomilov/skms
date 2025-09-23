@@ -11,6 +11,7 @@ import PopupDiagnostic from '../PopupDiagnostic';
 import { Automatic } from '../Automatic';
 import { Modals } from '@/store/modalSlice';
 import PopupBlockSwitches from '../PopupBlockSwitches';
+import { LampScheme } from '../LampScheme';
 
 interface IModals {
 	condition: boolean;
@@ -56,20 +57,6 @@ const ModalWrapper: FC<{className?: string}> = ({ className }) => {
 			headerTitle: 'Автомат',
 			gateId: undefined,
 			component: <Automatic />,
-		},		
-		{
-			condition: gateControl,
-			id: 'gateControl',
-			headerTitle: '',
-			gateId: gateId,
-			component: <PopupGateControl />,
-		},
-		{
-			condition: diagnostic,
-			id: 'diagnostic',
-			headerTitle: '',
-			gateId: gateId,
-			component: <PopupDiagnostic />,
 		},
 		{
 			condition: gateValves,
@@ -79,11 +66,25 @@ const ModalWrapper: FC<{className?: string}> = ({ className }) => {
 			component: <PopupGateValves />,
 		},
 		{
+			condition: diagnostic,
+			id: 'diagnostic',
+			headerTitle: '',
+			gateId: gateId,
+			component: <PopupDiagnostic />,
+		},
+		{
+			condition: gateControl,
+			id: 'gateControl',
+			headerTitle: '',
+			gateId: gateId,
+			component: <PopupGateControl />,
+		},
+		{
 			condition: lamps,
 			id: 'lamps',
 			headerTitle: 'Лампочки',
 			gateId: undefined,
-			component: empty,
+			component: <LampScheme/>,
 		},
 		{
 			condition: motor,
