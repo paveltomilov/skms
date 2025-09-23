@@ -1,0 +1,57 @@
+@use '@/shared/scss/variables.module';
+
+.operatorPanel__wrapper {
+    height: 64px;
+    position: relative;
+}
+
+.panel {
+    min-width: 330px;
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &__img {
+        width: 44px;
+        height: 44px;
+        border: 1.5px solid rgba(0, 0, 0, 0.5);
+        background-image: url('/images/operator.webp');
+        background-size: 90%;
+        background-position: center center;
+        background-repeat: no-repeat;
+        box-shadow: variables.$default-button-box-shadow ;
+    }
+
+    &__operator {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    &__operatorTitle {
+        font-weight: 400;
+        font-size: 20px;
+        color: #000000;
+    }
+
+    &__operatorName {
+        font-weight: 700;
+        font-size: 18px;
+        color: #110f93;
+    }
+
+    &__info {
+        width: 88px;
+        font-size: 10px;
+        line-height: 100%;
+        color: variables.$gray-disabled-color;
+    }
+}
+
+.userInfo {
+    position: fixed;
+    bottom: 64px;
+}

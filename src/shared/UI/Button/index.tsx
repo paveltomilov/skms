@@ -23,7 +23,6 @@ interface ButtonProps {
 	className?: string;
 	ariaLabel?: string;
 	style?: CSSProperties;
-	children?: React.ReactNode;
 	onClick?: () => void;
 	onMouseDown?: () => void;
 	onMouseUp?: () => void;
@@ -42,7 +41,6 @@ const Button = ({
 	className,
 	ariaLabel,
 	style,
-	children,
 	onClick,
 	onMouseDown,
 	onMouseUp,
@@ -98,7 +96,6 @@ const Button = ({
 			)}
 			{icon && icon}
 			{text && <span className={styles.button_text}>{text}</span>}
-			{children}
 		</button>
 	);
 };

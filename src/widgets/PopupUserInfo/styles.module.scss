@@ -1,0 +1,48 @@
+@use '@/shared/scss/variables.module';
+
+.userInfo {
+    width: 318px;
+    min-height: 323px;
+    background-color: variables.$primary-color ;
+    font-size: 20px;
+    box-shadow: variables.$pop-up-box-shadow,
+        variables.$realistic-drop-shadow;
+
+    z-index: 2;
+
+    &__profile {
+        margin: 30px 14px;
+        display: flex;
+
+        &__photo {
+            width: 80px;
+            height: 80px;
+            background-color: bisque;
+        }
+
+        &__info {
+            margin: 10px 12px;
+            line-height: 30px;
+
+            &__name {
+                font-weight: 500;
+            }
+        }
+    }
+
+    &__more {
+        margin-left: 14px;
+        list-style-type: none;
+        line-height: 36px;
+
+        li img {
+            width: 16px;
+            margin-right: 8px;
+            display: inline;
+        }
+    }
+
+    &__logout {
+        margin: 20px auto;
+    }
+}

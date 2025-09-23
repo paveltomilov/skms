@@ -1,34 +1,39 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
-
+import PopupUserInfo from '@/widgets/PopupUserInfo';
 
 const OperatorPanel: FC = () => {
 
+    const [userInfoIsOpen, setUserInfoIsOpen] = useState(false);
+    const handleUserInfo = () => setUserInfoIsOpen(!userInfoIsOpen);
+
     return (
-        <Button
-            width={330}
-            height={64}
-        >
-            {/* <Button
-                width={44}
-                height={44}
-                image={{
-                    src: '/images/operator.webp',
-                    width: 40,
-                    height: 40,
-                }}
-                style={{ padding: '1px' }}
-                onClick={() => console.log('Кнопка оператор работает!')}
-            /> */}
-            <img src='/images/operator.webp'/>
-            <div className={styles.footer__operator__wrapper}>
-                <span className={styles.footer__operator}>Оператор:</span>
-                <span className={styles.footer__operatorName}>
-                    ASUTP_SMENA_V
-                </span>
-            </div>
-        </Button>
+        <div className={styles.operatorPanel__wrapper}>
+            {userInfoIsOpen &&
+                <PopupUserInfo
+                    className={styles.userInfo}
+                    handlePopupClose={() => setUserInfoIsOpen(false)} />}
+            <Button
+                width={330}
+                height={64}
+                onClick={handleUserInfo}
+                icon={
+                    <div className={styles.panel}>
+                        <div className={styles.panel__img}>
+                        </div>
+                        <div className={styles.panel__operator}>
+                            <span className={styles.panel__operatorTitle}>Оператор:</span>
+                            <span className={styles.panel__operatorName}>
+                                ASUTP_SMENA_V
+                            </span>
+                        </div>
+                        <div className={styles.panel__info}>Информация о профиле</div>
+                    </div>
+                }
+            />
+        </div>
     );
 };
+
 export default OperatorPanel;

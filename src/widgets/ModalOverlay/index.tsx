@@ -1,11 +1,10 @@
 import { FC } from 'react';
 import styles from './styles.module.scss';
-import Button from '@/shared/UI/Button';
 import { closeModal, Modals } from '@/store/modalSlice';
-import Close from '@/shared/UI/icons/Close';
 import { useAppDispatch } from '@/shared/hooks/store';
 import { useDragging } from '@/shared/hooks/useDragging';
 import { GATES } from '@/shared/configs/gate';
+import ModalHeader from '@/entities/ModalHeader';
 
 interface ModalOverlayProps {
 	id: Modals;
@@ -22,7 +21,7 @@ const ModalOverlay: FC<ModalOverlayProps> = ({
 }) => {
 	const { handleMouseDown, position } = useDragging();
 	const dispatch = useAppDispatch();
-	const name  = GATES[gateId].name;
+	const name = GATES[gateId].name;
 
 	return (
 		<div
@@ -33,22 +32,13 @@ const ModalOverlay: FC<ModalOverlayProps> = ({
 				zIndex: '11',
 			}}
 		>
-			<div
+			<ModalHeader
 				id={id}
-				className={styles.modal__header}
-				onMouseDown={e => handleMouseDown(e)}
-			>
-				<span className={styles.modal__header_title}>
-					{headerTitle ? headerTitle : name}
-				</span>
-				<Button
-					width={26}
-					height={26}
-					onClick={() => dispatch(closeModal(id))}
-					aria-label="Закрыть"
-					icon={<Close size="sm" />}
-				/>
-			</div>
+				handleMouseDown={e => handleMouseDown(e)}
+				headerTitle={headerTitle}
+				gateName={name}
+				handleClose={() => dispatch(closeModal(id))}
+			/>
 			{children}
 		</div>
 	);
