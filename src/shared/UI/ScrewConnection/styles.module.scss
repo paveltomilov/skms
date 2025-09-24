@@ -1,0 +1,22 @@
+.component {
+	display: block;
+	position: relative;
+}
+
+.provod {
+	position: absolute;
+
+	&__left {
+		top: 0;
+	}
+
+	&__top {
+		top: 0;
+		right: 0;
+	}
+
+	&__right {
+		right: 0;
+		bottom: 2px;
+	}
+}

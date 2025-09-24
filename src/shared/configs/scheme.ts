@@ -1,3 +1,4 @@
+import { Modals } from '@/store/modalSlice';
 import { InitialStateScheme } from '../types/scheme';
 
 // id элементов схемы
@@ -63,24 +64,76 @@ export const BASE_RESISTANCE: Record<string, number> = {
 };
 
 // Элементы схемы
-export const SCHEME_ELEMENTS = {
-	[CLOSE_FROM_PTK_ID]: 'Вставка NDI (команда закрыть с ПТК)',
-	[OPEN_FROM_PTK_ID]: 'Вставка NDI (команда открыть с ПТК)',
-	'c.3.2.3.1': 'Вставка NDI (сигнал «не закрыто»)',
-	'c.3.1.3.1': 'Вставка NDI (сигнал «не открыто»)',
-	'c.3.2.3.2.3': 'Катушка пускателя закрыть',
-	'c.3.1.3.2.3': 'Катушка пускателя открыть',
-	'c.3.1.3.3': 'Лампа в КРУЗА-П закрыто',
-	'c.3.2.3.3': 'Лампа в КРУЗА-П открыто',
-	[CONTROL_CIRCUIT_BREAKER_ID]: 'Автомат питания цепей управления',
-	'c.3.1.3.2.2': 'Блокировка включения пускателя на открытие',
-	'c.3.2.3.2.2': 'Блокировка включения пускателя на закрыть',
-	'p.3.1': 'Провод от фазы С до автомата',
-	[OPEN_FROM_KRUZAP_ID]: 'Кнопка КРУЗА-П (команда открыть с КРУЗА-П)',
-	[CLOSE_FROM_KRUZAP_ID]: 'Кнопка КРУЗА-П (команда закрыть с КРУЗА-П)',
-	[LIMIT_SWITCH_CLOSE_ID]: 'Концевой выключатель закрыто',
-	[LIMIT_SWITCH_OPEN_ID]: 'Концевой выключатель открыто',
-};
+export const SCHEME_ELEMENTS: { id: string; aria: string; type: Modals }[] = [
+	{
+		id: CLOSE_FROM_PTK_ID,
+		aria: 'Вставка NDI (команда закрыть с ПТК)',
+		type: 'fusible_insert',
+	},
+	{
+		id: OPEN_FROM_PTK_ID,
+		aria: 'Вставка NDI (команда открыть с ПТК)',
+		type: 'fusible_insert',
+	},
+	{
+		id: 'c.3.2.3.1',
+		aria: 'Вставка NDI (сигнал «не закрыто»)',
+		type: 'fusible_insert',
+	},
+	{
+		id: 'c.3.1.3.1',
+		aria: 'Вставка NDI (сигнал «не открыто»)',
+		type: 'fusible_insert',
+	},
+	{
+		id: 'c.3.2.3.2.3',
+		aria: 'Катушка пускателя закрыть',
+		type: 'starter_coil',
+	},
+	{
+		id: 'c.3.1.3.2.3',
+		aria: 'Катушка пускателя открыть',
+		type: 'starter_coil',
+	},
+	{ id: 'c.3.1.3.3', aria: 'Лампа в КРУЗА-П закрыто', type: 'lamps' },
+	{ id: 'c.3.2.3.3', aria: 'Лампа в КРУЗА-П открыто', type: 'lamps' },
+	{
+		id: CONTROL_CIRCUIT_BREAKER_ID,
+		aria: 'Автомат питания цепей управления',
+		type: 'automatic',
+	},
+	{
+		id: 'c.3.1.3.2.2',
+		aria: 'Блокировка включения пускателя на открытие',
+		type: 'blocking_activation',
+	},
+	{
+		id: 'c.3.2.3.2.2',
+		aria: 'Блокировка включения пускателя на закрыть',
+		type: 'blocking_activation',
+	},
+	{ id: 'p.3.1', aria: 'Реверсивный пускатель', type: 'starter' },
+	{
+		id: OPEN_FROM_KRUZAP_ID,
+		aria: 'Кнопка КРУЗА-П (команда открыть с КРУЗА-П)',
+		type: 'button',
+	},
+	{
+		id: CLOSE_FROM_KRUZAP_ID,
+		aria: 'Кнопка КРУЗА-П (команда закрыть с КРУЗА-П)',
+		type: 'button',
+	},
+	{
+		id: LIMIT_SWITCH_CLOSE_ID,
+		aria: 'Концевой выключатель закрыто',
+		type: 'block_switches',
+	},
+	{
+		id: LIMIT_SWITCH_OPEN_ID,
+		aria: 'Концевой выключатель открыто',
+		type: 'block_switches',
+	},
+];
 
 const powerCircuit = [
 	[

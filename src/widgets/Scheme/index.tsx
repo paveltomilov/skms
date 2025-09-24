@@ -41,8 +41,8 @@ const Scheme: FC = () => {
 
 	return (
 		<div className={styles.scheme}>
-			{Object.entries(SCHEME_ELEMENTS).map(([id, title]) => (
-				<SchemeElement key={id} id={id} title={title} />
+			{SCHEME_ELEMENTS.map(({id, aria, type}) => (
+				<SchemeElement key={id} id={id} title={aria} type={type} />
 			))}
 
 			<InputCircuitBreaker />

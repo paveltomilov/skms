@@ -1,0 +1,81 @@
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
+
+.popupWindow {
+	position: relative;
+	width: 1350px;
+	height: 623px;
+	box-sizing: content-box;
+	background-image: url('/images/block_limit_switches.png');
+	background-size: 478px 399px;
+	background-position: 463px 155px;
+	background-origin: content-box;
+	background-repeat: no-repeat;
+	overflow: hidden;
+}
+
+.block {
+	display: flex;
+	flex-direction: row;
+	gap: 190px;
+	padding: 228px 0 0 570px;
+
+	&__left {
+		position: relative;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 41px 22px;
+		padding-top: 12px;
+		width: 78px;
+
+		&_provod {
+			position: absolute;
+			top: -128px;
+			left: -187px;
+			display: flex;
+			flex-direction: column;
+
+			> :nth-child(1) {
+				margin: 0 0 -172px;
+			}
+		}
+
+		&_screw {
+			position: absolute;
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 111.5px 30px;
+			top: 15px;
+			left: 3px;
+		}
+	}
+
+	&__right {
+		display: flex;
+		flex-direction: column;
+		gap: 32px;
+		width: 26px;
+	}
+}
+
+.provodA1 {
+	position: absolute;
+	top: 48.5px;
+	left: 663px;
+
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+
+	> :first-child {
+		margin-bottom: -8px;
+	}
+
+	&__bend {
+		position: absolute;
+		right: 3px;
+		top: 188px;
+
+
+	}
+}

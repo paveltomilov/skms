@@ -1,26 +1,28 @@
 import { FC } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
-import { closeModal } from '@/store/modalSlice';
+import { closeModal, Modals } from '@/store/modalSlice';
 import Close from '@/shared/UI/icons/Close';
 import { useAppDispatch } from '@/shared/hooks/store';
 import { useDragging } from '@/shared/hooks/useDragging';
 import { GATES } from '@/shared/configs/gate';
 
 interface ModalOverlayProps {
-	id: 'gateControl' | 'diagnostic' | 'gateValves' | 'automatic';
+	id: Modals;
 	gateId?: string;
 	children: React.ReactNode;
+	headerTitle?: string;
 }
 
 const ModalOverlay: FC<ModalOverlayProps> = ({
 	id,
 	gateId = 'g1',
 	children,
+	headerTitle,
 }) => {
 	const { handleMouseDown, position } = useDragging();
 	const dispatch = useAppDispatch();
-	const { name } = GATES[gateId];
+	const name  = GATES[gateId].name;
 
 	return (
 		<div
@@ -37,7 +39,7 @@ const ModalOverlay: FC<ModalOverlayProps> = ({
 				onMouseDown={e => handleMouseDown(e)}
 			>
 				<span className={styles.modal__header_title}>
-					{id === 'automatic' ? 'Автомат' : name}
+					{headerTitle ? headerTitle : name}
 				</span>
 				<Button
 					width={26}
