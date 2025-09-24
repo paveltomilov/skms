@@ -11,6 +11,7 @@ import PopupDiagnostic from '../PopupDiagnostic';
 import { Automatic } from '../Automatic';
 import { Modals } from '@/store/modalSlice';
 import PopupBlockSwitches from '../PopupBlockSwitches';
+import PopupActuator from '@/widgets/PopupActuator';
 
 interface IModals {
 	condition: boolean;
@@ -104,7 +105,7 @@ const ModalWrapper: FC<{className?: string}> = ({ className }) => {
 			id: 'starter',
 			headerTitle: 'Пускатель (на открыть и на закрыть)',
 			gateId: undefined,
-			component: empty,
+			component: <PopupActuator />,
 		},
 		{
 			condition: notification,
