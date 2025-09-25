@@ -13,4 +13,10 @@ export type MarkerName =
 	| 'T1'
 	| 'T2'
 	| 'T3'
-	| 'N';
+	| 'N'
+	| 'B1'
+	| 'C1'
+	| 'A2'
+	| 'B21'
+	| 'C21'
+	| 'A4';
