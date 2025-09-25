@@ -4,8 +4,8 @@
 .actuator_container {
   display: flex;
   justify-content: center;
-  padding-top: 55px;
-  padding-bottom: 70px;
+  padding-top: 55px !important;
+  padding-bottom: 70px !important;
   width: 1350px;
   background-color: variables.$primary-color;
 
@@ -29,7 +29,7 @@
   flex-wrap: wrap;
   flex-direction: row;
   align-content: space-between;
-  gap: 102px 10px;
+  gap: 102px 9px;
   width: 100%;
   max-width: 348px;
 
@@ -53,7 +53,7 @@
       bottom: 23px;
 
       div span {
-        right: -30px;
+        right: -27px;
       }
     }
   }
@@ -80,7 +80,7 @@
       bottom: unset;
 
       div span {
-        right: -40px;
+        right: -36px;
       }
     }
   }
