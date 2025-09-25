@@ -11,6 +11,8 @@ import PopupDiagnostic from '../PopupDiagnostic';
 import { Automatic } from '../Automatic';
 import { Modals } from '@/store/modalSlice';
 import PopupBlockSwitches from '../PopupBlockSwitches';
+import { LampScheme } from '../LampScheme';
+import PopupActuator from '@/widgets/PopupActuator';
 
 interface IModals {
 	condition: boolean;
@@ -19,7 +21,7 @@ interface IModals {
 	gateId: string | undefined;
 	component: JSX.Element;
 }
-const ModalWrapper: FC<{className?: string}> = ({ className }) => {
+const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 	const {
 		automatic,
 		gateValves,
@@ -33,17 +35,17 @@ const ModalWrapper: FC<{className?: string}> = ({ className }) => {
 		notification,
 	} = useAppSelector(state => state.modal);
 
-	const isOne = 
-			automatic ||
-			gateValves ||
-			diagnostic ||
-			gateControl ||
-			lamps ||
-			motor ||
-			block_switches ||
-			starter ||
-			user_info ||
-			notification;
+	const isOne =
+		automatic ||
+		gateValves ||
+		diagnostic ||
+		gateControl ||
+		lamps ||
+		motor ||
+		block_switches ||
+		starter ||
+		user_info ||
+		notification;
 
 	const gateId = useAppSelector(state => state.gate.activeGateId as string);
 
@@ -56,7 +58,7 @@ const ModalWrapper: FC<{className?: string}> = ({ className }) => {
 			headerTitle: 'Автомат',
 			gateId: undefined,
 			component: <Automatic />,
-		},		
+		},
 		{
 			condition: gateControl,
 			id: 'gateControl',
@@ -83,7 +85,7 @@ const ModalWrapper: FC<{className?: string}> = ({ className }) => {
 			id: 'lamps',
 			headerTitle: 'Лампочки',
 			gateId: undefined,
-			component: empty,
+			component: <LampScheme/>,
 		},
 		{
 			condition: motor,
@@ -104,7 +106,7 @@ const ModalWrapper: FC<{className?: string}> = ({ className }) => {
 			id: 'starter',
 			headerTitle: 'Пускатель (на открыть и на закрыть)',
 			gateId: undefined,
-			component: empty,
+			component: <PopupActuator />,
 		},
 		{
 			condition: notification,
@@ -124,13 +126,13 @@ const ModalWrapper: FC<{className?: string}> = ({ className }) => {
 
 	return (
 		<div
-			className={cn(className, styles.modal__displayNone, { [styles.modal]: isOne, [styles.modal_isBlur]: automatic,})}
+			className={cn(className, styles.modal__displayNone, { [styles.modal]: isOne, [styles.modal_isBlur]: automatic, })}
 		>
 			{modals.map(
 				({ condition, id, headerTitle, gateId, component }) =>
-					condition && ( <ModalOverlay key={id} gateId={gateId} id={id} headerTitle={headerTitle} >
-							{component}
-						</ModalOverlay>
+					condition && (<ModalOverlay key={id} gateId={gateId} id={id} headerTitle={headerTitle} >
+						{component}
+					</ModalOverlay>
 					),
 			)}
 		</div>
