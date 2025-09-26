@@ -19,58 +19,91 @@
 .clamp {
 	width: 261px;
 	height: 190px;
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	grid-template-rows: repeat(3, 1fr);
-	gap: 0px;
+	position: relative;
 }
 
 .topLeft {
-	grid-area: 1 / 1 / 2 / 2;
-	position: relative;
-	height: 75px;
-	border: 1px solid red;
-
 	&__provod {
 		position: absolute;
-		top: 30%;
-		left: 30%;
+		top: 26%;
+		left: 4%;
+		z-index: 1;
 	}
 
 	&__provodTop {
 		position: absolute;
-		top: 25%;
-		left: 25%;
+		top: 22%;
+		left: 16%;
 	}
 
 	&__provodRight {
 		position: absolute;
-		top: 25%;
-		left: 25%;
+		top: 7%;
+		left: 24%;
 	}
 
-	&__Screw {
-		position: absolute;
-		top: 25%;
-		left: 25%;
+	&__screw {
+		z-index: 1;
+		margin-top: 3%;
+		left: 37%;
 	}
 }
 
 .centerLeft {
-	grid-area: 2 / 1 / 3 / 2;
-	position: relative;
-	border: 1px solid blue;
-	height: 45px;
-
 	&__provod {
 		position: absolute;
-		top: -37%;
-		left: 27%;
+		top: 30%;
+		left: 14%;
 	}
 
 	&__screw {
 		position: absolute;
-		top: 25%;
-		left: 75%;
+		margin-top: 22%;
+		left: 37%;
+		z-index: 1;
 	}
+}
+
+.bottom {
+	&__provod {
+		position: absolute;
+		top: 60%;
+		left: 6%;
+		z-index: 1;
+	}
+
+	&__provodTop {
+		position: absolute;
+		top: 68%;
+		left: 17%;
+	}
+
+	&__provodRight {
+		position: absolute;
+		top: 71%;
+		left: 21%;
+	}
+
+	&__screw {
+		position: absolute;
+		margin-top: 19%;
+		left: 37%;
+		z-index: 1;
+	}
+}
+
+.screw__top {
+	position: absolute;
+}
+
+.provod__top {
+	position: absolute;
+	top: 7%;
+	left: 79%;
+}
+
+.screw {
+	position: absolute;
+	top: 10%;
+	left: 37%;
 }
