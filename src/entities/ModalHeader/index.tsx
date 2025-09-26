@@ -8,8 +8,8 @@ interface ModalHeaderProps {
     id?: Modals;
     handleMouseDown?: MouseEventHandler<HTMLDivElement>;
     headerTitle?: string;
-    gateName?:string;
-    handleClose:() => void;
+    gateName?: string;
+    handleClose: () => void;
 };
 
 const ModalHeader: FC<ModalHeaderProps> = ({

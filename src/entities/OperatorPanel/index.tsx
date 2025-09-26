@@ -2,14 +2,19 @@ import { FC, useState } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import PopupUserInfo from '@/widgets/PopupUserInfo';
+import { useOutsideClick } from '@/shared/hooks/useOutsideClick';
 
 const OperatorPanel: FC = () => {
 
     const [userInfoIsOpen, setUserInfoIsOpen] = useState(false);
     const handleUserInfo = () => setUserInfoIsOpen(!userInfoIsOpen);
 
+    const outsideClickRef = useOutsideClick(() => setUserInfoIsOpen(false));
+
     return (
-        <div className={styles.operatorPanel__wrapper}>
+        <div
+            ref={outsideClickRef}
+            className={styles.operatorPanel__wrapper}>
             {userInfoIsOpen &&
                 <PopupUserInfo
                     className={styles.userInfo}

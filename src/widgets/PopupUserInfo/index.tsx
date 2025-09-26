@@ -23,7 +23,8 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
     };
 
     return (
-        <div className={cn(className, styles.userInfo)}>
+        <div
+            className={cn(className, styles.userInfo)}>
             <ModalHeader
                 headerTitle="Пользователь"
                 handleClose={handlePopupClose}
