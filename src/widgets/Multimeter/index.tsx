@@ -7,7 +7,7 @@ import ProbeHolder from '@/shared/UI/icons/ProbeHolder';
 import Probe from '@/entities/Probe';
 import { useEffect } from 'react';
 import { getMultimeterAction } from '@/store/actions/multimiter/getMultimeterAction';
-import { MultimeterModePropPayload } from '@/store/multimeterSlice';
+import { MultimeterModePropPayload, attachProbe, detachProbe } from '@/store/multimeterSlice';
 import {
 	CONTROL_CIRCUIT_NEUTRAL_ID,
 	POWER_CIRCUIT_NEUTRAL_ID,
@@ -29,6 +29,9 @@ const Multimeter: React.FC = () => {
 		state => state.points[blackProbe as string],
 	);
 
+	const isVoltageMode =
+		currentMode.startsWith('ACV') || currentMode.startsWith('DCV');
+
 	const probeState: MultimeterModePropPayload = {
 		red: {
 			isNeutral:
@@ -47,7 +50,21 @@ const Multimeter: React.FC = () => {
 	//Экшен для текущего режима мультиметра
 	const modeAction = getMultimeterAction(currentMode);
 
-	//Отслеживание изменения напряжения на щупах
+	//Фиксируем черный щуп на нейтрали при измерении напряжения
+	useEffect(() => {
+		if (!isVoltageMode) {
+			dispatch(detachProbe('black'));
+			return;
+		}
+
+		dispatch(
+			attachProbe({
+				probeColor: 'black',
+				pointId: CONTROL_CIRCUIT_NEUTRAL_ID,
+			}),
+		);
+	}, [dispatch, isVoltageMode]);
+
 	useEffect(() => {
 		dispatch(modeAction(probeState));
 	}, [probeState, modeAction]);
