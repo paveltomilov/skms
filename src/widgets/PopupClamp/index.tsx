@@ -2,89 +2,124 @@ import Provod from '@/shared/UI/Provod';
 import styles from './style.module.scss';
 import ProvodConstructor from '@/shared/UI/ProvodConstructor';
 import ScrewConnection from '@/shared/UI/ScrewConnection';
-import Screw from '@/shared/UI/icons/Screw';
 
 const PopupClamp = () => {
 	return (
 		<div className={styles.popup}>
 			<div className={styles.contact}>
 				<div className={styles.clamp}>
-					<div className={styles.topLeft}>
+					<div className={styles.top}>
 						<Provod
-							className={styles.topLeft__provod}
+							className={styles.top__provod}
 							length={40}
 							marker="A"
 							rotate={90}
+							retreatMarker={20}
 							isBreak={false}
 						/>
 						<ProvodConstructor
-							className={styles.topLeft__provodTop}
+							className={styles.top__provodTop}
 							provod_B={0}
 							turn_A="180"
 						/>
 
 						<ScrewConnection
-							className={styles.topLeft__screw}
+							className={styles.top__screw}
 							provodLocation="left"
 							textRight="A"
 						/>
 						<ProvodConstructor
-							className={styles.topLeft__provodRight}
+							className={styles.top__provodRight}
 							provod_B={0}
 							rotate="0"
 							turn_A="0"
 						/>
+						<ScrewConnection
+							className={styles.top__connect}
+							provodLocation="left"
+						/>
+						<ProvodConstructor
+							className={styles.top__topA}
+							provod_B={-1}
+							turn_A="90"
+						/>
+						<ProvodConstructor
+							className={styles.top__topB}
+							provod_B={-1}
+							turn_A="180"
+						/>
 					</div>
-					<div className={styles.centerLeft}>
+					<div className={styles.center}>
 						<Provod
-							className={styles.centerLeft__provod}
+							className={styles.center__provod}
 							length={86}
 							rotate={90}
 							isBreak={false}
 							marker="B"
+							retreatMarker={20}
 						/>
 
 						<ScrewConnection
-							className={styles.centerLeft__screw}
+							className={styles.center__screw}
 							provodLocation="left"
 							textRight="B"
 						/>
+						<ScrewConnection
+							className={styles.top__connect}
+							provodLocation="left"
+						/>
+						<ProvodConstructor
+							className={styles.center__topA}
+							provod_B={0}
+							turn_A="90"
+						/>
+
+						<ProvodConstructor
+							className={styles.center__topB}
+							provod_B={-1}
+							turn_A="180"
+						/>
 					</div>
-					<div className={styles.clamp__centerRight}></div>
-					<div className={styles.bottomLeft}>
+					<div className={styles.bottom}>
 						<Provod
 							className={styles.bottom__provod}
 							length={40}
 							marker="C"
 							rotate={90}
 							isBreak={false}
+							retreatMarker={20}
 						/>
 						<ProvodConstructor
 							className={styles.bottom__provodTop}
 							provod_B={0}
 							turn_A="90"
 						/>
-					</div>
-
-					<div className={styles.fog}>
-						<ScrewConnection
-							className={styles.bottom__screw}
-							provodLocation="left"
-							textRight="C"
-						/>
 						<ProvodConstructor
 							className={styles.bottom__provodRight}
 							provod_B={0}
-							rotate="270"
-							turn_A="0"
+							turn_A="270"
+						/>
+						<ScrewConnection
+							className={styles.bottom__connect}
+							provodLocation="left"
+						/>
+						<ProvodConstructor
+							className={styles.bottom__topA}
+							provod_B={0}
+							turn_A="90"
+						/>
+
+						<ProvodConstructor
+							className={styles.bottom__topB}
+							provod_B={-1}
+							turn_A="180"
 						/>
 					</div>
-					<Screw className={styles.screw} />
-					<ProvodConstructor
-						className={styles.provod__top}
-						provod_B={-1}
-						turn_A="180"
-						turn_B="90"
+
+					<ScrewConnection
+						className={styles.bottom__screw}
+						provodLocation="left"
+						textRight="C"
 					/>
 				</div>
 			</div>

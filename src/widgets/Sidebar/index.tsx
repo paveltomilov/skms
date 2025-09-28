@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import Chevron from '@/shared/UI/icons/Chevron';
-import PopupClamp from '../PopupClamp';
 import ModalOverlay from '../ModalOverlay';
+import PopupClamp from '../PopupClamp';
 
 const Sidebar = () => {
 	const [isOpen, setIsOpen] = useState(false);

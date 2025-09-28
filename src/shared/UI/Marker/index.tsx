@@ -7,11 +7,26 @@ interface Props {
 	className?: string;
 	text: MarkerName;
 	rotate?: number;
+	bottomRetreat?: number;
 }
 
-const Marker: FC<Props> = ({ className, text, rotate = 0 }) => {
-	const style = rotate ? { transform: `rotate(${rotate}deg)` } : undefined;
-	return <span className={cn(className, styles.marker)} style={style}>{text}</span>;
+const Marker: FC<Props> = ({
+	className,
+	text,
+	rotate = 0,
+	bottomRetreat = 40,
+}) => {
+	return (
+		<span
+			className={cn(className, styles.marker)}
+			style={{
+				transform: `rotate(${rotate}deg)`,
+				bottom: `${bottomRetreat}px`,
+			}}
+		>
+			{text}
+		</span>
+	);
 };
 
 export default Marker;

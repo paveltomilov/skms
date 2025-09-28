@@ -1,12 +1,9 @@
 @use '@/shared/scss/mixins.module';
 @use '@/shared/scss/variables.module';
 
-.popup {
-}
-
 .contact {
-	width: 674px;
-	height: 533px;
+	width: 637px;
+	height: 502px;
 	background: url(../../../public/images/block_clamp.png) center/cover
 		no-repeat;
 	display: flex;
@@ -22,52 +19,82 @@
 	position: relative;
 }
 
-.topLeft {
+.top {
 	&__provod {
 		position: absolute;
-		top: 26%;
-		left: 4%;
+		top: 24%;
+		left: 6%;
 		z-index: 1;
 	}
 
 	&__provodTop {
 		position: absolute;
-		top: 22%;
-		left: 16%;
+		top: 20%;
+		left: 13%;
 	}
 
 	&__provodRight {
 		position: absolute;
-		top: 7%;
-		left: 24%;
+		top: 11.5%;
+		left: 21%;
 	}
 
 	&__screw {
 		z-index: 1;
-		margin-top: 3%;
-		left: 37%;
+		margin-top: 6%;
+		left: 35.5%;
+	}
+
+	&__connect {
+		rotate: 180deg;
+		right: 27.75%;
+		margin-top: -10%;
+	}
+
+	&__topA {
+		position: absolute;
+		left: 75%;
+		top: 11.5%;
+	}
+
+	&__topB {
+		position: absolute;
+		left: 75%;
+		top: 16.5%;
 	}
 }
 
-.centerLeft {
+.center {
 	&__provod {
 		position: absolute;
-		top: 30%;
-		left: 14%;
+		top: 31%;
+		left: 15%;
 	}
 
 	&__screw {
 		position: absolute;
-		margin-top: 22%;
-		left: 37%;
+		margin-top: 20.75%;
+		left: 35.5%;
 		z-index: 1;
+	}
+
+	&__topB {
+		position: absolute;
+		left: 75%;
+		top: 55%;
+	}
+
+	&__topA {
+		position: absolute;
+		top: 50%;
+		left: 75%;
 	}
 }
 
 .bottom {
 	&__provod {
 		position: absolute;
-		top: 60%;
+		top: 62%;
 		left: 6%;
 		z-index: 1;
 	}
@@ -75,35 +102,38 @@
 	&__provodTop {
 		position: absolute;
 		top: 68%;
-		left: 17%;
+		left: 13%;
 	}
 
 	&__provodRight {
 		position: absolute;
-		top: 71%;
+		top: 76%;
 		left: 21%;
 	}
 
 	&__screw {
 		position: absolute;
-		margin-top: 19%;
-		left: 37%;
+		margin-top: -7.75%;
+		left: 35.5%;
 		z-index: 1;
 	}
-}
 
-.screw__top {
-	position: absolute;
-}
+	&__connect {
+		position: absolute;
+		rotate: 180deg;
+		left: -27.75%;
+		margin-top: 18%;
+	}
 
-.provod__top {
-	position: absolute;
-	top: 7%;
-	left: 79%;
-}
+	&__topB {
+		position: absolute;
+		left: 75%;
+		top: 76%;
+	}
 
-.screw {
-	position: absolute;
-	top: 10%;
-	left: 37%;
+	&__topA {
+		position: absolute;
+		top: 71.5%;
+		left: 75%;
+	}
 }
