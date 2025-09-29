@@ -1,13 +1,32 @@
-import { RefreshResponse, VerifyResponse } from '@/shared/types/typesAuth';
+import {RefreshResponse, VerifyResponse} from '@/shared/types/typesAuth';
 import axios from 'axios';
-import { getCookie, setCookie } from 'cookies-next';
-import { LoginFormData, LoginResponse } from '../types/login';
+import {deleteCookie, getCookie, setCookie} from 'cookies-next';
+import {LoginFormData, LoginResponse} from '../types/login';
 
 const urlBase = process.env.NEXT_PUBLIC_API_BASE_URL;
 
+// Вспомогательная функция для сохранения accessToken с timestamp
+export function saveAccessToken(token: string): void {
+	setCookie('accessToken', token, {maxAge: 900});
+}
+
+// Вспомогательная функция для сохранения refreshToken с timestamp
+export function saveRefreshToken(token: string): void {
+	setCookie('refreshToken', token, { maxAge: 1800});
+}
+
+// Вспомогательная функция для извлечения и проверки refreshToken (30 минут)
+export function getRefreshToken(): string | null {
+	return getCookie('refreshToken') as string | null;
+}
+
+export function getAccessToken(): string | null {
+	return getCookie('accessToken') as string | null;
+}
+
 export async function checkAuth(): Promise<{ valid: boolean }> {
-	const access = localStorage.getItem('accessToken');
-	const refresh = getCookie('refreshToken');
+	const access = getAccessToken();
+	const refresh = getRefreshToken();
 
 	if (!access || !refresh) {
 		return { valid: false };
@@ -24,15 +43,10 @@ export async function checkAuth(): Promise<{ valid: boolean }> {
 			return { valid: false };
 		}
 
-		// Properly typed response
 		const verifyData = (await verifyRes.json()) as VerifyResponse;
 
 		if (verifyData.token_valid) {
 			return { valid: true };
-		}
-
-		if (!refresh) {
-			return { valid: false };
 		}
 
 		const refreshRes = await fetch(`${urlBase}/auth/refresh/`, {
@@ -45,16 +59,18 @@ export async function checkAuth(): Promise<{ valid: boolean }> {
 			return { valid: false };
 		}
 
-		// Properly typed response
 		const refreshData = (await refreshRes.json()) as RefreshResponse;
 
 		if (refreshData.access) {
-			localStorage.setItem('accessToken', refreshData.access);
+			saveAccessToken(refreshData.access);
 			return { valid: true };
 		}
 
 		return { valid: false };
 	} catch {
+		// Очищаем токены при ошибке для безопасности
+		deleteCookie('accessToken');
+		deleteCookie('refreshToken');
 		return { valid: false };
 	}
 }
@@ -75,8 +91,8 @@ export async function postAuth(formData: LoginFormData): Promise<boolean> {
 			throw new Error('Токены не получены');
 		}
 		if (response.status == 200) {
-			localStorage.setItem('accessToken', access);
-			setCookie('refreshToken', refresh);
+			saveAccessToken(access);
+			saveRefreshToken(refresh);
 			return true;
 		}
 		return false;
