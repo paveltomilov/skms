@@ -31,7 +31,6 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		starter,
 		block_switches,
 		motor,
-		user_info,
 		notification,
 	} = useAppSelector(state => state.modal);
 
@@ -44,7 +43,6 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		motor ||
 		block_switches ||
 		starter ||
-		user_info ||
 		notification;
 
 	const gateId = useAppSelector(state => state.gate.activeGateId as string);
@@ -112,13 +110,6 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			condition: notification,
 			id: 'notification',
 			headerTitle: 'Дата реализации',
-			gateId: undefined,
-			component: empty,
-		},
-		{
-			condition: user_info,
-			id: 'user_info',
-			headerTitle: 'Пользователь',
 			gateId: undefined,
 			component: empty,
 		},
