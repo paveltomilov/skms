@@ -63,7 +63,7 @@ const PopupClamp = () => {
 							textRight="B"
 						/>
 						<ScrewConnection
-							className={styles.top__connect}
+							className={styles.center__connect}
 							provodLocation="left"
 						/>
 						<ProvodConstructor

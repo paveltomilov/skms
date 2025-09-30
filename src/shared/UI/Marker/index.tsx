@@ -23,6 +23,7 @@ const Marker: FC<Props> = ({
 				transform: `rotate(${rotate}deg)`,
 				bottom: `${bottomRetreat}px`,
 			}}
+			aria-label={`Маркер ${text}`}
 		>
 			{text}
 		</span>

@@ -52,16 +52,7 @@ const Sidebar = () => {
 						className={styles.buttonText}
 						href="/ptk"
 					/>
-					<Button
-						width={90}
-						height={34}
-						aria-label="Клеммы"
-						text="Клеммы"
-						className={styles.buttonText}
-						onClick={() => setIsOpen(true)}
-					/>
 				</div>
-
 				<button
 					onClick={handleToggleSidebar}
 					className={styles.closeButton}
