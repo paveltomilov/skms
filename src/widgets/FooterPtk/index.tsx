@@ -7,6 +7,7 @@ import Close from '@/shared/UI/icons/Close';
 import EllipseClose from '@/shared/UI/icons/EllipseClose';
 import Micro from '@/shared/UI/icons/Micro';
 import ArrowChange from '@/shared/UI/icons/ArrowChange';
+import OperatorPanel from '@/entities/OperatorPanel';
 
 const FooterPtk: FC = () => {
 	return (
@@ -107,26 +108,7 @@ const FooterPtk: FC = () => {
 					</p>
 				</div>
 			</div>
-
-			<div className={styles.footer__operatorPanel}>
-				<Button
-					width={44}
-					height={44}
-					image={{
-						src: '/images/operator.webp',
-						width: 40,
-						height: 40,
-					}}
-					style={{ padding: '1px' }}
-					onClick={() => console.log('Кнопка оператор работает!')}
-				/>
-				<div className={styles.footer__operator__wrapper}>
-					<span className={styles.footer__operator}>Оператор:</span>
-					<span className={styles.footer__operatorName}>
-						ASUTP_SMENA_V
-					</span>
-				</div>
-			</div>
+			<OperatorPanel />
 		</footer>
 	);
 };

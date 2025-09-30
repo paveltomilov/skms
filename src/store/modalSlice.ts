@@ -9,7 +9,6 @@ export type Modals =
 	| 'block_switches'
 	| 'starter'
 	| 'motor'
-	| 'user_info'
 	| 'fusible_insert'
 	| 'starter_coil'
 	| 'blocking_activation'
@@ -27,7 +26,6 @@ const initialState: ModalState = {
 	block_switches: false,
 	starter: false,
 	motor: false,
-	user_info: false,
 	fusible_insert: false,
 	starter_coil: false,
 	blocking_activation: false,
