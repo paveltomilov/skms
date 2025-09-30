@@ -26,7 +26,7 @@ const ModalHeader: FC<ModalHeaderProps> = ({
             onMouseDown={handleMouseDown}
         >
             <span className={styles.header__title}>
-                {headerTitle ? headerTitle : gateName}
+                {headerTitle || gateName}
             </span>
             <Button
                 width={26}

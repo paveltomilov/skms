@@ -30,10 +30,10 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
                 handleClose={handlePopupClose}
             />
             <div className={styles.userInfo__profile}>
-                <img className={styles.userInfo__profile__photo} alt="Фото пользователя"></img>
+                <img className={styles.userInfo__profile__photo} src='/images/user_icon.png' alt="Фото пользователя"></img>
                 <div className={styles.userInfo__profile__info}>
                     <div className={styles.userInfo__profile__info__name}>{localStorage.getItem('user_name')}</div>
-                    <div className={styles.userInfo__profile__onfo__status}>
+                    <div className={styles.userInfo__profile__info__status}>
                         {localStorage.getItem('user_isstaff') === 'true' ? 'Преподаватель' : 'Студент'}
                     </div>
                 </div>
