@@ -1,4 +1,12 @@
+.popup {
+	width: 1335px;
+	height: 605px;
+}
+
 .contact {
+	position: fixed;
+	top: 25%;
+	left: 20%;
 	width: 637px;
 	height: 502px;
 	background: url('/images/block_clamp.png') center/cover no-repeat;
@@ -36,27 +44,30 @@
 	}
 
 	&__screw {
+		position: absolute;
 		z-index: 1;
-		margin-top: 6%;
-		left: 35.5%;
+		top: 8.5%;
+		left: 35.25%;
 	}
 
 	&__connect {
+		position: absolute;
 		rotate: 180deg;
-		right: 27.75%;
-		margin-top: -10%;
+		right: 28%;
+		top: 6.5%;
+		z-index: 1;
 	}
 
 	&__topA {
 		position: absolute;
-		left: 75%;
+		left: 74.5%;
 		top: 11.5%;
 	}
 
 	&__topB {
 		position: absolute;
-		left: 75%;
-		top: 16.5%;
+		left: 74.5%;
+		top: 16%;
 	}
 }
 
@@ -69,8 +80,8 @@
 
 	&__screw {
 		position: absolute;
-		margin-top: 20.75%;
-		left: 35.5%;
+		top: 47%;
+		left: 35.25%;
 		z-index: 1;
 	}
 
@@ -82,21 +93,23 @@
 
 	&__topA {
 		position: absolute;
-		top: 50%;
+		top: 50.5%;
 		left: 75%;
 	}
 
 	&__connect {
+		position: absolute;
 		rotate: 180deg;
 		right: 27.75%;
-		margin-top: -10%;
+		top: 45.5%;
+		z-index: 1;
 	}
 }
 
 .bottom {
 	&__provod {
 		position: absolute;
-		top: 62%;
+		top: 61%;
 		left: 6%;
 		z-index: 1;
 	}
@@ -115,16 +128,17 @@
 
 	&__screw {
 		position: absolute;
-		margin-top: -7.75%;
-		left: 35.5%;
+		top: 84%;
+		left: 35.25%;
 		z-index: 1;
 	}
 
 	&__connect {
 		position: absolute;
 		rotate: 180deg;
-		left: -27.75%;
-		margin-top: 18%;
+		right: 28%;
+		bottom: 5.5%;
+		z-index: 1;
 	}
 
 	&__topB {
@@ -135,7 +149,7 @@
 
 	&__topA {
 		position: absolute;
-		top: 71.5%;
+		top: 71%;
 		left: 75%;
 	}
 }
