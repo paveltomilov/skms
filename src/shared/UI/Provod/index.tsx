@@ -12,7 +12,8 @@ interface Props {
 	length?: number;
 	isBreak?: boolean;
 	marker?: MarkerName;
-	isPin?: boolean
+	isPin?: boolean;
+	retreatMarker?: number;
 }
 
 const Provod: FC<Props> = ({
@@ -22,6 +23,7 @@ const Provod: FC<Props> = ({
 	isBreak = true,
 	marker,
 	isPin = false,
+	retreatMarker,
 }) => {
 	return (
 		<div
@@ -37,6 +39,7 @@ const Provod: FC<Props> = ({
 			{marker && (
 				<Marker
 					className={styles.marker}
+					bottomRetreat={retreatMarker}
 					text={marker}
 					rotate={rotate === 90 ? 270 : rotate === 270 ? 90 : rotate}
 				/>

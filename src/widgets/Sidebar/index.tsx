@@ -53,7 +53,6 @@ const Sidebar = () => {
 						href="/ptk"
 					/>
 				</div>
-
 				<button
 					onClick={handleToggleSidebar}
 					className={styles.closeButton}

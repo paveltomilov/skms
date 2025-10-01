@@ -1,0 +1,158 @@
+@use '@/shared/scss/variables.module';
+
+.popup {
+	width: 1335px;
+	height: 605px;
+	background-color: variables.$primary-color;
+}
+
+.contact {
+	position: fixed;
+	top: 25%;
+	left: 20%;
+	width: 637px;
+	height: 502px;
+	background: url('/images/block_clamp.png') center/cover no-repeat;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding-left: 209px;
+	padding-bottom: 103px;
+}
+
+.clamp {
+	width: 261px;
+	height: 190px;
+	position: relative;
+}
+
+.top {
+	&__provod {
+		position: absolute;
+		top: 24%;
+		left: 6%;
+		z-index: 1;
+	}
+
+	&__provodTop {
+		position: absolute;
+		top: 20%;
+		left: 13%;
+	}
+
+	&__provodRight {
+		position: absolute;
+		top: 11.5%;
+		left: 21%;
+	}
+
+	&__screw {
+		position: absolute;
+		z-index: 1;
+		top: 8.5%;
+		left: 35.25%;
+	}
+
+	&__connect {
+		position: absolute;
+		rotate: 180deg;
+		right: 28%;
+		top: 6.5%;
+		z-index: 1;
+	}
+
+	&__topA {
+		position: absolute;
+		left: 74.5%;
+		top: 11.5%;
+	}
+
+	&__topB {
+		position: absolute;
+		left: 74.5%;
+		top: 16%;
+	}
+}
+
+.center {
+	&__provod {
+		position: absolute;
+		top: 31%;
+		left: 15%;
+	}
+
+	&__screw {
+		position: absolute;
+		top: 47%;
+		left: 35.25%;
+		z-index: 1;
+	}
+
+	&__topB {
+		position: absolute;
+		left: 75%;
+		top: 55%;
+	}
+
+	&__topA {
+		position: absolute;
+		top: 50.5%;
+		left: 75%;
+	}
+
+	&__connect {
+		position: absolute;
+		rotate: 180deg;
+		right: 27.75%;
+		top: 45.5%;
+		z-index: 1;
+	}
+}
+
+.bottom {
+	&__provod {
+		position: absolute;
+		top: 61%;
+		left: 6%;
+		z-index: 1;
+	}
+
+	&__provodTop {
+		position: absolute;
+		top: 68%;
+		left: 13%;
+	}
+
+	&__provodRight {
+		position: absolute;
+		top: 76%;
+		left: 21%;
+	}
+
+	&__screw {
+		position: absolute;
+		top: 84%;
+		left: 35.25%;
+		z-index: 1;
+	}
+
+	&__connect {
+		position: absolute;
+		rotate: 180deg;
+		right: 28%;
+		bottom: 5.5%;
+		z-index: 1;
+	}
+
+	&__topB {
+		position: absolute;
+		left: 75%;
+		top: 76%;
+	}
+
+	&__topA {
+		position: absolute;
+		top: 71%;
+		left: 75%;
+	}
+}
