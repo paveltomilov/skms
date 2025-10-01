@@ -1,6 +1,9 @@
+@use '@/shared/scss/variables.module';
+
 .popup {
 	width: 1335px;
 	height: 605px;
+	background-color: variables.$primary-color;
 }
 
 .contact {
