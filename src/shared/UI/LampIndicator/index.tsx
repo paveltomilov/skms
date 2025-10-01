@@ -1,23 +1,23 @@
 import { ICON_COLOR, SCHEME_ICON_SIZE } from '@/shared/configs/icon';
-import { IconColor } from '@/shared/types/icon';
+import { LampIndicatorColor } from '@/shared/types/icon';
 import { SchemeIconType } from '@/shared/types/scheme';
 import { FC } from 'react';
 
 interface Props {
   type?: Extract<SchemeIconType, 'lamp'>;
-  color?: keyof Pick<IconColor, 'white' | 'red' | 'lamp_green'>;
+  color?: LampIndicatorColor;
   className?: string;
   style?: React.CSSProperties;
 }
 
 const LampIndicator: FC<Props> = ({
   type = 'lamp',
-  color = 'white',
+  color = 'lamp_white_off',
   className,
   style,
 }) => {
   const sizes = SCHEME_ICON_SIZE[type];
-  const topColor = ICON_COLOR[color];
+  const topColor = ICON_COLOR[color] ?? ICON_COLOR.lamp_white_off;
 
   return (
     <svg
@@ -42,3 +42,7 @@ const LampIndicator: FC<Props> = ({
 };
 
 export default LampIndicator;
+
+
+
+

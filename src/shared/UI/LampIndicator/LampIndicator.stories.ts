@@ -11,16 +11,22 @@ const meta: Meta<typeof LampIndicator> = {
 	argTypes: {
 		color: {
 			description:
-				'Цвет верхней части лампы: `white` — выкл, `lamp_green` — вкл, `red` — авария',
-			options: ['white', 'lamp_green', 'red'],
+				'Состояния верхней части лампы: белая — lamp_white_off зелёная — lamp_open_on,  белая — lamp_closed_off зелёная — lamp_green_on.',
+			options: [
+				'lamp_white_off',
+				'lamp_open_on',
+				'lamp_closed_off',
+				'lamp_green_on',
+			],
 			control: { type: 'radio' },
 		},
 		className: {
-			description: 'Для передачи дополнительных стилей/позиционирования',
+			description:
+				'Дополнительный CSS-класс контейнера. Обычно не требуется.',
 			control: false,
 		},
 		style: {
-			description: 'Inline-стили контейнера SVG',
+			description: 'Inline-стили для SVG.',
 			control: false,
 		},
 	},
@@ -29,44 +35,30 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Green: Story = {
+export const WhiteOff: Story = {
 	args: {
 		type: 'lamp',
-		color: 'lamp_green',
-	},
-	parameters: {
-		docs: {
-			description: {
-				story: 'Лампа в состоянии **вкл**.',
-			},
-		},
+		color: 'lamp_white_off',
 	},
 };
 
-export const White: Story = {
+export const WhiteOn: Story = {
 	args: {
 		type: 'lamp',
-		color: 'white',
-	},
-	parameters: {
-		docs: {
-			description: {
-				story: 'Лампа в состоянии **выкл**.',
-			},
-		},
+		color: 'lamp_open_on',
 	},
 };
 
-export const Red: Story = {
+export const GreenOff: Story = {
 	args: {
 		type: 'lamp',
-		color: 'red',
+		color: 'lamp_closed_off',
 	},
-	parameters: {
-		docs: {
-			description: {
-				story: 'Лампа в состоянии **авария**.',
-			},
-		},
+};
+
+export const GreenOn: Story = {
+	args: {
+		type: 'lamp',
+		color: 'lamp_green_on',
 	},
 };
