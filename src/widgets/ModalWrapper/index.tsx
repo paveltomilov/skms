@@ -13,6 +13,7 @@ import { Modals } from '@/store/modalSlice';
 import PopupBlockSwitches from '../PopupBlockSwitches';
 import { LampScheme } from '../LampScheme';
 import PopupActuator from '@/widgets/PopupActuator';
+import PopupClamp from '../PopupClamp';
 
 interface IModals {
 	condition: boolean;
@@ -83,14 +84,14 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			id: 'lamps',
 			headerTitle: 'Лампочки',
 			gateId: undefined,
-			component: <LampScheme/>,
+			component: <LampScheme />,
 		},
 		{
 			condition: motor,
 			id: 'motor',
 			headerTitle: 'Контакты обмотки двигателя',
 			gateId: undefined,
-			component: empty,
+			component: <PopupClamp />,
 		},
 		{
 			condition: block_switches,
@@ -117,13 +118,22 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 
 	return (
 		<div
-			className={cn(className, styles.modal__displayNone, { [styles.modal]: isOne, [styles.modal_isBlur]: automatic, })}
+			className={cn(className, styles.modal__displayNone, {
+				[styles.modal]: isOne,
+				[styles.modal_isBlur]: automatic,
+			})}
 		>
 			{modals.map(
 				({ condition, id, headerTitle, gateId, component }) =>
-					condition && (<ModalOverlay key={id} gateId={gateId} id={id} headerTitle={headerTitle} >
-						{component}
-					</ModalOverlay>
+					condition && (
+						<ModalOverlay
+							key={id}
+							gateId={gateId}
+							id={id}
+							headerTitle={headerTitle}
+						>
+							{component}
+						</ModalOverlay>
 					),
 			)}
 		</div>
