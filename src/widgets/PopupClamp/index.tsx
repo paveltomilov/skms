@@ -23,6 +23,7 @@ const PopupClamp = () => {
 							turn_A="180"
 						/>
 						<ScrewConnection
+							pointId="p.1.4.1.2"
 							className={styles.top__screw}
 							provodLocation="left"
 							textRight="A"
@@ -34,6 +35,7 @@ const PopupClamp = () => {
 							turn_A="0"
 						/>
 						<ScrewConnection
+							pointId="p.n"
 							className={styles.top__connect}
 							provodLocation="left"
 						/>
@@ -58,11 +60,13 @@ const PopupClamp = () => {
 							retreatMarker={20}
 						/>
 						<ScrewConnection
+							pointId="p.2.5"
 							className={styles.center__screw}
 							provodLocation="left"
 							textRight="B"
 						/>
 						<ScrewConnection
+							pointId="p.n"
 							className={styles.center__connect}
 							provodLocation="left"
 						/>
@@ -97,6 +101,7 @@ const PopupClamp = () => {
 							turn_A="270"
 						/>
 						<ScrewConnection
+							pointId="p.n"
 							className={styles.bottom__connect}
 							provodLocation="left"
 						/>
@@ -113,6 +118,7 @@ const PopupClamp = () => {
 						/>
 					</div>
 					<ScrewConnection
+						pointId="p.3.4.1.2"
 						className={styles.bottom__screw}
 						provodLocation="left"
 						textRight="C"
