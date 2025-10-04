@@ -17,7 +17,7 @@ const LampIndicator: FC<Props> = ({
   style,
 }) => {
   const sizes = SCHEME_ICON_SIZE[type];
-  const topColor = ICON_COLOR[color] ?? ICON_COLOR.lamp_white_off;
+  const topColor = (ICON_COLOR[color] ?? ICON_COLOR.lamp_white_off) as string;
 
   return (
     <svg

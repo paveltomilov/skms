@@ -30,7 +30,7 @@
 
 .foot {
 	@include mixins.flex-center;
-	height: 37px;
+	height: 93px;
 	gap: 28px;
 	margin-left: 5px;
 }
@@ -49,6 +49,6 @@
 
 	&__marker {
 		position: relative;
-		margin-top: -56px;
+		top: -55px;
 	}
 }
