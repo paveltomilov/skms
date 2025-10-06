@@ -53,7 +53,7 @@ export const SCHEME_POINTS: Record<string, IPoint> = {
 	'p.c.3.2.3.2.1': { x: 766, y: 480, state: false },
 	'p.c.3.2.3.2.2': { x: 845, y: 480, state: false },
 
-	[CONTROL_CIRCUIT_NEUTRAL_ID]: { x: 947, y: 215, state: false },
+	[CONTROL_CIRCUIT_NEUTRAL_ID]: { x: 1045, y: 67, state: false },
 };
 
 function extractStates(SCHEME_POINTS: Record<string, IPoint>) {
