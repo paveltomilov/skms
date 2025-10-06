@@ -1,8 +1,8 @@
-import {usePathname, useRouter} from 'next/navigation';
-import { useEffect, useState } from 'react';
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect, useState, useCallback } from 'react';
+import axios, { AxiosError } from 'axios';
 import { jwtDecode } from 'jwt-decode';
-import { getCookie, setCookie, deleteCookie } from 'cookies-next'; // Импорт из cookies-next
+import { getCookie, setCookie, deleteCookie } from 'cookies-next';
 import { RefreshResponse } from '@/shared/types/typesAuth';
 
 const urlBase: string | undefined = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -20,109 +20,194 @@ interface User {
 }
 
 const LOGIN_PATH = '/login';
+const ACCESS_DENIED = '/access-denied';
 const TEACHER_DASHBOARD = '/teacher-dashboard';
 const STUDENT_DASHBOARD = '/student-dashboard';
 const ADMIN_DASHBOARD = '/admin';
 
+// Функция для редиректов
+const getRedirectPath = (
+    userRole: string | null,
+    currentPath: string,
+    requiredRole?: string
+): string | null => {
+    // Если пользователь не аутентифицирован
+    if (!userRole) {
+        return currentPath.startsWith(LOGIN_PATH) ? null : LOGIN_PATH;
+    }
+
+    // Если требуется определенная роль, но у пользователя другая
+    if (requiredRole && userRole !== requiredRole) {
+        return currentPath.startsWith(ACCESS_DENIED) ? null : ACCESS_DENIED;
+    }
+
+    // Автоматический редирект по роли только с главной страницы
+    if (currentPath === '/') {
+        const rolePaths: Record<string, string> = {
+            teacher: TEACHER_DASHBOARD,
+            student: STUDENT_DASHBOARD,
+            admin: ADMIN_DASHBOARD,
+        };
+        return rolePaths[userRole] || LOGIN_PATH;
+    }
+
+    return null;
+};
+
 export const useAuth = (requiredRole?: 'admin' | 'teacher' | 'student') => {
     const router = useRouter();
     const pathname = usePathname();
-    const [role, setRole] = useState<string | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+    const [state, setState] = useState<{
+        role: string | null;
+        loading: boolean;
+        error: string | null;
+        user: User | null;
+    }>({
+        role: null,
+        loading: true,
+        error: null,
+        user: null,
+    });
+
+    const refreshAccessToken = useCallback(async (refreshToken: string): Promise<string | null> => {
+        try {
+            const refreshRes = await axios.post<RefreshResponse>(
+                `${urlBase}/auth/refresh/`,
+                { refresh: refreshToken }
+            );
+            return refreshRes.data.access || null;
+        } catch {
+            return null;
+        }
+    }, []);
+
+    const fetchUserData = useCallback(async (accessToken: string): Promise<User | null> => {
+        try {
+            const decoded = jwtDecode(accessToken) as JwtPayload;
+            const response = await axios.get<User>(
+                `${urlBase}/users/${decoded.user_id}`,
+                { headers: { Authorization: `Bearer ${accessToken}` } }
+            );
+            return response.data;
+        } catch (error) {
+            if (error instanceof AxiosError && error.response?.status === 401) {
+                return null;
+            }
+            throw error;
+        }
+    }, []);
 
     useEffect(() => {
-        const checkAuth = async () => {
-            // Используем getCookie для получения токенов
-            const accessToken = getCookie('accessToken') as string | undefined;
-            const refreshToken = getCookie('refreshToken') as string | undefined;
+        let isMounted = true;
 
-            if (!accessToken) {
+        const checkAuth = async () => {
+            if (!isMounted) return;
+
+            try {
+                if (!urlBase) {
+                    throw new Error('API URL не настроен');
+                }
+
+                const accessToken = getCookie('accessToken') as string | undefined;
+                const refreshToken = getCookie('refreshToken') as string | undefined;
+
+                // Нет токенов
+                if (!accessToken || !refreshToken) {
+                    const shouldRedirect = !pathname.startsWith(LOGIN_PATH);
+                    if (isMounted) {
+                        setState({
+                            role: null,
+                            loading: false,
+                            error: shouldRedirect ? 'Требуется авторизация' : null,
+                            user: null
+                        });
+                    }
+                    if (shouldRedirect) {
+                        await router.push(LOGIN_PATH);
+                    }
+                    return;
+                }
+
+                let currentAccessToken = accessToken;
+                let userData: User | null = await fetchUserData(currentAccessToken);
+
+                // Если токен истек, пробуем обновить
+                if (!userData && refreshToken) {
+                    const newAccessToken = await refreshAccessToken(refreshToken);
+                    if (newAccessToken) {
+                        setCookie('accessToken', newAccessToken, {
+                            path: '/',
+                            secure: process.env.NODE_ENV === 'production',
+                            sameSite: 'lax'
+                        });
+                        currentAccessToken = newAccessToken;
+                        userData = await fetchUserData(currentAccessToken);
+                    }
+                }
+
+                // Не удалось аутентифицировать
+                if (!userData) {
+                    deleteCookie('accessToken', { path: '/' });
+                    deleteCookie('refreshToken', { path: '/' });
+
+                    const shouldRedirect = !pathname.startsWith(LOGIN_PATH);
+                    if (isMounted) {
+                        setState({
+                            role: null,
+                            loading: false,
+                            error: 'Ошибка аутентификации',
+                            user: null
+                        });
+                    }
+                    if (shouldRedirect) {
+                        await router.push(LOGIN_PATH);
+                    }
+                    return;
+                }
+
+                // Проверяем необходимость редиректа
+                const redirectPath = getRedirectPath(userData.role, pathname, requiredRole);
+                if (redirectPath && !pathname.startsWith(redirectPath)) {
+                    await router.push(redirectPath);
+                    return; // Прерываем выполнение, т.к. будет редирект
+                }
+
+                if (isMounted) {
+                    setState({
+                        role: userData.role,
+                        loading: false,
+                        error: null,
+                        user: userData
+                    });
+                }
+
+            } catch {
+
+                if (isMounted) {
+                    setState({
+                        role: null,
+                        loading: false,
+                        error: 'Ошибка аутентификации',
+                        user: null
+                    });
+                }
+
+                // Очищаем куки при ошибке
+                deleteCookie('accessToken', { path: '/' });
+                deleteCookie('refreshToken', { path: '/' });
+
                 if (!pathname.startsWith(LOGIN_PATH)) {
                     await router.push(LOGIN_PATH);
                 }
-                setLoading(false);
-                return;
             }
-
-            if (!urlBase) {
-                setError('API URL не настроен');
-                setLoading(false);
-                return;
-            }
-
-            let currentAccessToken: string = accessToken;
-            let response: AxiosResponse<User> | undefined;
-
-            try {
-                // Декодируем токен для получения user_id
-                const decoded: JwtPayload = jwtDecode<JwtPayload>(currentAccessToken);
-                const userId: number = decoded.user_id;
-
-                // Пытаемся запросить пользователя по ID
-                try {
-                    response = await axios.get<User>(`${urlBase}/users/${userId}`, {
-                        headers: { Authorization: `Bearer ${currentAccessToken}` },
-                    });
-                } catch (error: unknown) {
-                    // Если ошибка 401 (токен истёк), пытаемся обновить
-                    if (error instanceof AxiosError && error.response?.status === 401 && refreshToken) {
-                        try {
-                            const refreshRes = await axios.post<RefreshResponse>(`${urlBase}/auth/refresh/`, {
-                                refresh: refreshToken,
-                            });
-                            const newAccessToken: string | undefined = refreshRes.data.access;
-                            if (newAccessToken) {
-                                // Сохраняем новый access-токен в куку с помощью setCookie
-                                setCookie('accessToken', newAccessToken, { path: '/', httpOnly: false }); // httpOnly: false для клиентского доступа
-
-                                // Обновляем локальную переменную и повторяем запрос
-                                currentAccessToken = newAccessToken;
-                                response = await axios.get<User>(`${urlBase}/users/${userId}`, {
-                                    headers: { Authorization: `Bearer ${currentAccessToken}` },
-                                });
-                            }
-                        } catch  {
-                            // Очищаем куки с помощью deleteCookie и редиректим
-                            deleteCookie('accessToken', { path: '/' });
-                            deleteCookie('refreshToken', { path: '/' });
-                            router.push(LOGIN_PATH);
-                            setLoading(false);
-                            return;
-                        }
-                    } else {
-                        throw error;
-                    }
-                }
-
-                const userRole = response?.data?.role ?? null;
-                setRole(userRole);
-
-                // Логика перенаправления по ролям (только если роль не совпадает с требуемой)
-                if (requiredRole && userRole !== requiredRole) {
-                    if (userRole === 'teacher' && !pathname.startsWith(TEACHER_DASHBOARD)) {
-                        router.push(TEACHER_DASHBOARD);
-                    } else if (userRole === 'student' && !pathname.startsWith(STUDENT_DASHBOARD)) {
-                        router.push(STUDENT_DASHBOARD);
-                    } else if (userRole === 'admin' && !pathname.startsWith(ADMIN_DASHBOARD)) {
-                        router.push(ADMIN_DASHBOARD);
-                    } else {
-                        router.push(LOGIN_PATH); // Если роль неизвестна
-                    }
-                }
-            } catch {
-                setError('Ошибка аутентификации');
-                // Очищаем куки и редиректим
-                deleteCookie('accessToken', { path: '/' });
-                deleteCookie('refreshToken', { path: '/' });
-                await router.push(LOGIN_PATH);
-            }
-
-            setLoading(false);
         };
 
         checkAuth();
-    }, [pathname, requiredRole, router]);
 
-    return { role, loading, error };
+        return () => {
+            isMounted = false;
+        };
+    }, [pathname, requiredRole, router, fetchUserData, refreshAccessToken]);
+
+    return state;
 };
