@@ -32,42 +32,60 @@ const Multimeter: React.FC = () => {
 	const isVoltageMode =
 		currentMode.startsWith('ACV') || currentMode.startsWith('DCV');
 
-	const probeState: MultimeterModePropPayload = {
-		red: {
-			isNeutral:
-				redProbe === POWER_CIRCUIT_NEUTRAL_ID ||
-				redProbe === CONTROL_CIRCUIT_NEUTRAL_ID,
-			isPower: redIsPowerPoint,
-		},
-		black: {
-			isNeutral:
-				blackProbe === POWER_CIRCUIT_NEUTRAL_ID ||
-				blackProbe === CONTROL_CIRCUIT_NEUTRAL_ID,
-			isPower: blackIsPowerPoint,
-		},
-	};
-
-	//Экшен для текущего режима мультиметра
-	const modeAction = getMultimeterAction(currentMode);
-
-	//Фиксируем черный щуп на нейтрали при измерении напряжения
+	// Фиксируем чёрный щуп на нужной нейтрали в режиме измерения напряжения
 	useEffect(() => {
 		if (!isVoltageMode) {
 			dispatch(detachProbe('black'));
 			return;
 		}
 
+		// если пользователь перетаскивает чёрный щуп — не вмешиваемся
+		if (activeProb === 'black') return;
+
+		// выбираем нужную нейтраль в зависимости от того, куда подключён красный щуп
+		const desiredNeutral = redIsPowerPoint
+			? POWER_CIRCUIT_NEUTRAL_ID
+			: CONTROL_CIRCUIT_NEUTRAL_ID;
+
+		// если уже прикреплён к нужной нейтрали — ничего не делаем
+		if (probeConnections.black === desiredNeutral) return;
+
 		dispatch(
 			attachProbe({
 				probeColor: 'black',
-				pointId: CONTROL_CIRCUIT_NEUTRAL_ID,
+				pointId: desiredNeutral,
 			}),
 		);
-	}, [dispatch, isVoltageMode]);
+	}, [dispatch, isVoltageMode, redIsPowerPoint, probeConnections.black, activeProb]);
 
+	// Вызываем action для текущего режима (ACV, DCV, Ohm и т.д.)
+	// probeState вычисляется внутри эффекта, чтобы не менять ссылку каждый рендер
 	useEffect(() => {
-		dispatch(modeAction(probeState));
-	}, [probeState, modeAction]);
+		const probeState: MultimeterModePropPayload = {
+			red: {
+				isNeutral:
+					redProbe === POWER_CIRCUIT_NEUTRAL_ID ||
+					redProbe === CONTROL_CIRCUIT_NEUTRAL_ID,
+				isPower: redIsPowerPoint,
+			},
+			black: {
+				isNeutral:
+					blackProbe === POWER_CIRCUIT_NEUTRAL_ID ||
+					blackProbe === CONTROL_CIRCUIT_NEUTRAL_ID,
+				isPower: blackIsPowerPoint,
+			},
+		};
+
+		const action = getMultimeterAction(currentMode);
+		dispatch(action(probeState));
+	}, [
+		dispatch,
+		currentMode,
+		redProbe,
+		blackProbe,
+		redIsPowerPoint,
+		blackIsPowerPoint,
+	]);
 
 	return (
 		<div className={styles.multimeter}>
