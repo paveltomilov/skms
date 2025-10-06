@@ -2,16 +2,14 @@ import styles from './styles.module.scss';
 import Provod from '@/shared/UI/Provod';
 import Channel from '@/shared/UI/icons/Channel';
 import ScrewConnection from '@/shared/UI/ScrewConnection';
-import {MarkerName} from '@/shared/types/markers';
-import React, {FC} from 'react';
+import React, { FC } from 'react';
+import { actuatorsConnectionsLeft, actuatorsConnectionsRight, Connection } from '@/shared/configs/actuatorConnections';
 
-const actuatorsConnectionsLeft: MarkerName[] = ['A1', 'B1', 'C1', 'A2', 'A13', 'A21', 'B21', 'C21', 'A13', 'N'];
-const actuatorsConnectionsRight: MarkerName[] = ['L1', 'L2', 'L3', 'A4', 'A21', 'A21', 'B21', 'C21', 'A21', 'N'];
-const connectionsLeftBottom: number = actuatorsConnectionsLeft.indexOf('A13');
-const connectionsRightBottom: number = actuatorsConnectionsRight.indexOf('A21');
+const connectionsLeftBottom: number = 4;
+const connectionsRightBottom: number = 4;
 
 interface ActuatorSideProps {
-    connections: MarkerName[];
+    connections: Connection[];
     bottomIndex: number;
     wrapClass: string;
     wrapReverseClass: string;
@@ -33,22 +31,23 @@ const ActuatorSide = React.memo(({
                       }: ActuatorSideProps) => {
     return (
         <>
-            {connections.map((connectionsName:MarkerName, index: number) => {
+            {connections.map((connection, index: number) => {
                 const trigger: boolean = index > bottomIndex;
                 return (
                     <div className={`${wrapClass}${trigger ? ` ${wrapReverseClass}` : ''}`}
-                         key={`${connectionsName}-${index}`}>
+                        key={`${connection.marker}-${index}`}>
                         <Provod
                             className={`${provodClass}${trigger ? ` ${provodReverseClass}` : ''}`}
                             rotate={trigger ? 0 : 180}
                             length={130}
-                            marker={connectionsName}
+                            marker={connection.marker}
                         />
-                        <Channel size={'md'}/>
+                        <Channel size={'md'} />
                         <ScrewConnection
+                            pointId={connection.point}
                             className={`${connectionClass}${trigger ? ` ${connectionReverseClass}` : ''}`}
                             provodLocation={trigger ? 'bottom' : 'top'}
-                            textRight={connectionsName}
+                            textRight={connection.marker}
                         />
                     </div>
                 );
@@ -57,7 +56,7 @@ const ActuatorSide = React.memo(({
     );
 });
 
-const PopupActuator:FC = () => {
+const PopupActuator: FC = () => {
     return (
         <div className={styles.actuator_container}>
             <div className={styles.actuator_container_inner}>
