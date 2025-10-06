@@ -41,17 +41,17 @@ export const SCHEME_POINTS: Record<string, IPoint> = {
 
 	'p.c.0': { x: 86, y: 217, state: true },
 	'p.c.1': { x: 320, y: 215, state: true },
-	'p.c.2': { x: 370, y: 215, state: true },
+	'p.c.2': { x: 371, y: 215, state: true },
 
 	'p.c.3.1.1': { x: 518, y: 215, state: true },
 	'p.c.3.1.2': { x: 595, y: 215, state: true },
 	'p.c.3.1.3.2.1': { x: 776, y: 216, state: false },
-	'p.c.3.1.3.2.2': { x: 849, y: 215, state: false },
+	'p.c.3.1.3.2.2': { x: 847, y: 215, state: false },
 
 	'p.c.3.2.1': { x: 518, y: 480, state: true },
 	'p.c.3.2.2': { x: 594, y: 480, state: true },
 	'p.c.3.2.3.2.1': { x: 766, y: 480, state: false },
-	'p.c.3.2.3.2.2': { x: 847, y: 480, state: false },
+	'p.c.3.2.3.2.2': { x: 845, y: 480, state: false },
 
 	[CONTROL_CIRCUIT_NEUTRAL_ID]: { x: 947, y: 215, state: false },
 };
