@@ -64,7 +64,7 @@ export const LampScheme: FC = () => {
 							{pins.map(({ code }) => (
 								<li key={code} className={styles.pin} aria-label={`Клемма ${code}`}>
 									<Channel size="md" className={styles.pin__channel} aria-hidden />
-									<ScrewConnection className={styles.pin__screw} textLeft={code} aria-hidden />
+									<ScrewConnection pointId={pointId} className={styles.pin__screw} textLeft={code} aria-hidden />
 									<ProvodLine isPin={false} length={88} className={styles.pin__pref} aria-hidden />
 									<Marker text={code} className={styles.pin__marker} />
 								</li>
