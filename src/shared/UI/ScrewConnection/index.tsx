@@ -6,6 +6,7 @@ import Screw from '../icons/Screw';
 import Provod from '../Provod';
 
 interface Props {
+	pointId: string;
 	className?: string;
 	isOpen?: boolean;
 	textRight?: MarkerName;
@@ -15,6 +16,7 @@ interface Props {
 }
 
 const ScrewConnection: FC<Props> = ({
+	pointId,
 	className,
 	isOpen = false,
 	textRight,
@@ -35,7 +37,7 @@ const ScrewConnection: FC<Props> = ({
 	}, [provodLocation, isOpen]);
 
 	return (
-		<div className={cn(className, styles.component)}>
+		<div className={cn(className, styles.component, pointId)}>
 			<Screw
 				className={styles.screw}
 				isOpen={open}

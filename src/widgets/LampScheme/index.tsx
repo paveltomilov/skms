@@ -38,6 +38,7 @@ export const LampScheme: FC = () => {
 									aria-hidden
 								/>
 								<ScrewConnection
+									pointId='unknown'
 									className={styles.pin__screw}
 									textLeft={code}
 									aria-hidden
