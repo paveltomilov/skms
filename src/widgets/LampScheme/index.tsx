@@ -13,7 +13,7 @@ import ProvodLine from '@/shared/UI/icons/ProvodLine';
 export const LampScheme: FC = () => {
 	return (
 		<section className={styles.container} aria-label="Схема ламп">
-			{columns.map(({ title, color , point }) => (
+			{columns.map(({ title, color }) => (
 				<section
 					key={title}
 					className={cn(styles.column, {
@@ -38,7 +38,7 @@ export const LampScheme: FC = () => {
 									aria-hidden
 								/>
 								<ScrewConnection
-									pointId={code === 'A' ? point : 'p.c.n'}
+									pointId='unknown'
 									className={styles.pin__screw}
 									textLeft={code}
 									aria-hidden
