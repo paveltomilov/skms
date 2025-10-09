@@ -17,7 +17,7 @@ interface ProbeProps {
 type FixedPosition = { left: number; top: number } | null;
 
 const PROBE_WIDTH = 17;
-const PROBE_TIP_FROM_TOP = 74;
+const PROBE_TIP_FROM_TOP = 14;
 
 const getDropElementPosition = (
 	dropId: string,
@@ -76,7 +76,7 @@ export const Probe: React.FC<ProbeProps> = ({ color }) => {
 
 			setFixedPosition({
 				left: rect.left + rect.width / 2 - PROBE_WIDTH / 2 + offsetX,
-				top: rect.bottom - PROBE_TIP_FROM_TOP + offsetY + 64,
+				top: rect.bottom - PROBE_TIP_FROM_TOP + offsetY,
 			});
 
 			animationFrame = window.requestAnimationFrame(updatePosition);
@@ -110,7 +110,7 @@ export const Probe: React.FC<ProbeProps> = ({ color }) => {
 		if (pointId) {
 			const coords = SCHEME_POINTS[pointId];
 			return {
-				left: `${coords.x + 3 - PROBE_WIDTH / 2}px`,
+				left: `${coords.x + 12 - PROBE_WIDTH / 2}px`,
 				top: `${coords.y + 40 - PROBE_TIP_FROM_TOP}px`, 
 				transform: 'rotate(0deg)',
 			};
