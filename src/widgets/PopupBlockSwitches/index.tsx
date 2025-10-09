@@ -1,4 +1,4 @@
-import { cloneElement, FC, ReactElement, ReactNode } from 'react';
+﻿import { cloneElement, FC, ReactElement, ReactNode } from 'react';
 import styles from './styles.module.scss';
 import cn from 'classnames';
 import Provod from '@/shared/UI/Provod';
@@ -33,10 +33,10 @@ const PopupBlockSwitches: FC<Props> = ({ className }) => {
 						<Provod length={300} rotate={90} marker="A19" />
 					</div>
 					<div className={styles.block__left_screw}>
-						<ScrewConnection pointId="p.c.3.1.2" provodLocation="left" textTop="A11" />
-						<ScrewConnection pointId="p.c.3.1.1" provodLocation="right" textTop="A1" />
-						<ScrewConnection pointId="p.c.3.2.2" provodLocation="left" textTop="A19" />
-						<ScrewConnection pointId="p.c.3.2.1" provodLocation="right" />
+						<ScrewConnection pointId="p.c.3.1.2" dropId="p.c.3.1.2-block-left-A11" provodLocation="left" textTop="A11" />
+						<ScrewConnection pointId="p.c.3.1.1" dropId="p.c.3.1.1-block-left-A1" provodLocation="right" textTop="A1" />
+						<ScrewConnection pointId="p.c.3.2.2" dropId="p.c.3.2.2-block-left-A19" provodLocation="left" textTop="A19" />
+						<ScrewConnection pointId="p.c.3.2.1" dropId="p.c.3.2.1-block-left" provodLocation="right" />
 					</div>
 				</div>
 				<div className={styles.provodA1}>
@@ -53,3 +53,7 @@ const PopupBlockSwitches: FC<Props> = ({ className }) => {
 };
 
 export default PopupBlockSwitches;
+
+
+
+

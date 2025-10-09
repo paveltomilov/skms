@@ -1,4 +1,5 @@
-import { FC, useEffect, useState } from 'react';
+﻿import { FC, useEffect, useState } from 'react';
+import { useDroppable } from '@dnd-kit/core';
 import cn from 'classnames';
 import styles from './styles.module.scss';
 import { MarkerName } from '@/shared/types/markers';
@@ -7,23 +8,41 @@ import Provod from '../Provod';
 
 interface Props {
 	pointId: string;
+	dropId?: string;
 	className?: string;
 	isOpen?: boolean;
 	textRight?: MarkerName;
 	textTop?: MarkerName;
 	textLeft?: MarkerName;
 	provodLocation?: 'bottom' | 'left' | 'top' | 'right';
+	probeOffsetX?: number;
+	probeOffsetY?: number;
 }
 
 const ScrewConnection: FC<Props> = ({
 	pointId,
+	dropId,
 	className,
 	isOpen = false,
 	textRight,
 	textTop,
 	textLeft,
 	provodLocation,
+	probeOffsetX = 0,
+	probeOffsetY = 0,
 }) => {
+	const dropTargetId = dropId ?? pointId;
+
+	const { setNodeRef, isOver } = useDroppable({
+		id: dropTargetId,
+		data: {
+			type: 'point',
+			accepts: ['probe'],
+			pointId,
+			dropId: dropTargetId,
+		},
+	});
+
 	const [deg, setDeg] = useState<90 | 180 | 270 | 0>(0);
 	const [open, setOpen] = useState<boolean>(isOpen);
 
@@ -37,7 +56,15 @@ const ScrewConnection: FC<Props> = ({
 	}, [provodLocation, isOpen]);
 
 	return (
-		<div className={cn(className, styles.component, pointId)}>
+		<div
+			ref={setNodeRef}
+			data-drop-id={dropTargetId}
+			data-probe-offset-x={probeOffsetX}
+			data-probe-offset-y={probeOffsetY}
+			className={cn(className, styles.component, pointId, {
+				[styles.component_over]: isOver,
+			})}
+		>
 			<Screw
 				className={styles.screw}
 				isOpen={open}
@@ -63,3 +90,4 @@ const ScrewConnection: FC<Props> = ({
 };
 
 export default ScrewConnection;
+

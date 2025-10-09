@@ -36,6 +36,7 @@ const PopupClamp = () => {
 						/>
 						<ScrewConnection
 							pointId="p.p.n"
+							dropId="p.p.n-top"
 							className={styles.top__connect}
 							provodLocation="left"
 						/>
@@ -67,6 +68,7 @@ const PopupClamp = () => {
 						/>
 						<ScrewConnection
 							pointId="p.p.n"
+							dropId="p.p.n-center"
 							className={styles.center__connect}
 							provodLocation="left"
 						/>
@@ -102,6 +104,7 @@ const PopupClamp = () => {
 						/>
 						<ScrewConnection
 							pointId="p.p.n"
+							dropId="p.p.n-bottom"
 							className={styles.bottom__connect}
 							provodLocation="left"
 						/>

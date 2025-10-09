@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { checkAuth } from '@/shared/lib/auth';
 import ModalWrapper from '@/widgets/ModalWrapper';
+import Dnd from '@/widgets/Dnd';
 
 export default function ProtectedLayout({
 	children,
@@ -27,9 +28,9 @@ export default function ProtectedLayout({
 	if (checking) return <p>Проверка авторизации...</p>;
 
 	return (
-		<>
+		<Dnd>
 			<ModalWrapper />
 			{children}
-		</>
+		</Dnd>
 	);
 }

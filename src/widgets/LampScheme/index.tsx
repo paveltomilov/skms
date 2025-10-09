@@ -6,7 +6,7 @@ import LampIndicator from '@/shared/UI/LampIndicator';
 import Marker from '@/shared/UI/Marker';
 import Channel from '@/shared/UI/icons/Channel';
 import styles from './styles.module.scss';
-import { columns, isPointObj, LampVariant, lampVariants, PALETTES, pins } from '@/shared/configs/lampsScheme';
+import { columns, isPointObj, LampVariant, lampVariants, PALETTES } from '@/shared/configs/lampsScheme';
 import ScrewConnection from '@/shared/UI/ScrewConnection';
 import ProvodLine from '@/shared/UI/icons/ProvodLine';
 import { findElementByID } from '@/shared/utils/findElementByID/scheme';
@@ -18,38 +18,40 @@ export const LampScheme: FC = () => {
 	const points = useAppSelector(s => s.points);
 	const circuit = useAppSelector(s => s.circuit);
 
-	const resolveLampColor = useCallback((
-		variant: LampVariant,
-		pointId: string,
-		elementId: string
-	): LampIndicatorColor => {
-		const colors = PALETTES[variant];
-		const raw = (points as Record<string, unknown>)[pointId];
+	const resolveLampColor = useCallback(
+		(variant: LampVariant, supplyPointId: string, elementId: string): LampIndicatorColor => {
+			const colors = PALETTES[variant];
+			const raw = (points as Record<string, unknown>)[supplyPointId];
 
-		const hasVoltage =
-			(typeof raw === 'boolean' && raw === true) ||
-			(isPointObj(raw) && (raw.state === true || (raw.voltage ?? 0) > 0));
+			const hasVoltage =
+				(typeof raw === 'boolean' && raw === true) ||
+				(isPointObj(raw) && (raw.state === true || (raw.voltage ?? 0) > 0));
 
-		if (!hasVoltage) return colors.off;
+			if (!hasVoltage) return colors.off;
 
-		try {
-			const el = findElementByID(elementId, circuit);
-			const ok =
-				typeof el?.resistance === 'number' &&
-				isFinite(el.resistance) &&
-				el.resistance < HIGH_RESISTANCE;
+			try {
+				const el = findElementByID(elementId, circuit);
+				const ok =
+					typeof el?.resistance === 'number' &&
+					isFinite(el.resistance) &&
+					el.resistance < HIGH_RESISTANCE;
 
-			return ok ? colors.on : colors.off;
-		} catch {
-			return colors.off;
-		}
-	}, [points, circuit]);
+				return ok ? colors.on : colors.off;
+			} catch {
+				return colors.off;
+			}
+		},
+		[points, circuit],
+	);
 
 	return (
-		<section className={styles.container} aria-label="Схема ламп">
-			{columns.map(({ id, title, pointId, elementId, position }) => {
+		<section className={styles.container} aria-label="Схема сигнализации">
+			{columns.map(({ id, title, pins, elementId, position }) => {
 				const variant = lampVariants[id];
-				const lampColor = resolveLampColor(variant, pointId, elementId);
+				const supplyPin = pins.find(pin => pin.code === 'A');
+				const lampColor = supplyPin
+					? resolveLampColor(variant, supplyPin.pointId, elementId)
+					: PALETTES[variant].off;
 
 				return (
 					<section
@@ -60,11 +62,21 @@ export const LampScheme: FC = () => {
 						<h3 id={`lamp-${id}`}>{title}</h3>
 						<LampIndicator color={lampColor} aria-hidden />
 
-						<ul className={styles.foot} aria-label="Список клемм">
-							{pins.map(({ code }) => (
-								<li key={code} className={styles.pin} aria-label={`Клемма ${code}`}>
+						<ul className={styles.foot} aria-label="Клеммы лампы">
+							{pins.map(({ code, pointId }) => (
+								<li
+									key={`${id}-${code}`}
+									className={styles.pin}
+									aria-label={`Клемма ${code}`}
+								>
 									<Channel size="md" className={styles.pin__channel} aria-hidden />
-									<ScrewConnection pointId={pointId} className={styles.pin__screw} textLeft={code} aria-hidden />
+									<ScrewConnection
+										pointId={pointId}
+										dropId={`${pointId}-${id}-${code}`}
+										className={styles.pin__screw}
+										textLeft={code}
+										aria-hidden
+									/>
 									<ProvodLine isPin={false} length={88} className={styles.pin__pref} aria-hidden />
 									<Marker text={code} className={styles.pin__marker} />
 								</li>

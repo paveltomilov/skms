@@ -55,8 +55,8 @@ const Scheme: FC = () => {
 			{activeProbe && <Probe color={activeProbe} />}
 
 			{/* если щуп прикреплен к схеме, его рендерит схема */}
-			{probeConnections['black'] && <Probe color="black" />}
-			{probeConnections['red'] && <Probe color="red" />}
+			{probeConnections.black.pointId && <Probe color="black" />}
+			{probeConnections.red.pointId && <Probe color="red" />}
 		</div>
 	);
 };

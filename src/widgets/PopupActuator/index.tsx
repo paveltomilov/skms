@@ -45,6 +45,7 @@ const ActuatorSide = React.memo(({
                         <Channel size={'md'} />
                         <ScrewConnection
                             pointId={connection.point}
+                            dropId={`${connection.point}-${connection.marker}-${index}`}
                             className={`${connectionClass}${trigger ? ` ${connectionReverseClass}` : ''}`}
                             provodLocation={trigger ? 'bottom' : 'top'}
                             textRight={connection.marker}

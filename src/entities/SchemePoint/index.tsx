@@ -17,11 +17,11 @@ export const SchemePoint: React.FC<Props> = ({ id, position }) => {
 		data: {
 			id,
 			type: 'point',
-			accepts: 'probe',
+			accepts: ['probe'],
+			pointId: id,
 		},
 	});
 
-	// для визуализации состояния точек
 	const schemePoint = useAppSelector(state => state.points[id]);
 
 	const pointClassName = `${styles.point} ${isOver && styles.point_over} ${

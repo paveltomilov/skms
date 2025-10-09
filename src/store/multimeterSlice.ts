@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+﻿import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type {
 	MultimeterMode,
 	MultimeterState,
@@ -11,13 +11,17 @@ import { setACV750Action } from '@/store/actions/multimiter/setACV750Action';
 const initialState: MultimeterState = {
 	currentMode: 'OFF',
 	displayValue: null,
-	probeConnections: { red: null, black: null },
+	probeConnections: {
+		red: { pointId: null, dropId: null },
+		black: { pointId: null, dropId: null },
+	},
 	activeProb: null,
 };
 
 interface AttachProbePayload {
 	probeColor: 'red' | 'black';
 	pointId: UniqueIdentifier | null;
+	dropId: string | null;
 }
 
 export interface MultimeterModePropPayload {
@@ -34,13 +38,13 @@ export const multimeterSlice = createSlice({
 		},
 
 		attachProbe: (state, action: PayloadAction<AttachProbePayload>) => {
-			const { probeColor, pointId } = action.payload;
-			state.probeConnections[probeColor] = pointId;
+			const { probeColor, pointId, dropId } = action.payload;
+			state.probeConnections[probeColor] = { pointId, dropId };
 		},
 
 		detachProbe: (state, action: PayloadAction<ProbeColor>) => {
 			const probeColor = action.payload;
-			state.probeConnections[probeColor] = null;
+			state.probeConnections[probeColor] = { pointId: null, dropId: null };
 		},
 
 		setActiveProb: (
@@ -50,7 +54,7 @@ export const multimeterSlice = createSlice({
 			state.activeProb = action.payload;
 		},
 
-		setMeasurementResult: (state, action: PayloadAction<number | null>) => {
+		setMeasurementResult: (state, action: PayloadAction<number | string | null>) => {
 			state.displayValue = action.payload;
 		},
 

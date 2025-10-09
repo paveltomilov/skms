@@ -1,5 +1,6 @@
-﻿import { LampIndicatorColor } from '../types/icon';
+import { LampIndicatorColor } from '../types/icon';
 import { MarkerName } from '../types/markers';
+import { CONTROL_CIRCUIT_NEUTRAL_ID } from './points';
 
 export const LAMP_PALETTES = {
 	white: { on: 'lamp_open_on', off: 'lamp_white_off' },
@@ -8,25 +9,28 @@ export const LAMP_PALETTES = {
 
 export type LampPalette = keyof typeof LAMP_PALETTES;
 
+export interface LampPin {
+	code: MarkerName;
+	pointId: string;
+}
+
 export interface LampColumn {
 	id: 'closed' | 'open';
 	title: string;
-	pointId: string;
+	pins: LampPin[];
 	elementId: string;
 	palette: LampPalette;
 	position: 'left' | 'right';
 }
 
-export const pins: { code: MarkerName }[] = [
-	{ code: 'A' as const },
-	{ code: 'N' as const },
-];
-
 export const columns: LampColumn[] = [
 	{
 		id: 'closed',
 		title: 'Закрыто',
-		pointId: 'p.c.3.1.2',
+		pins: [
+			{ code: 'A', pointId: 'p.c.3.1.2' },
+			{ code: 'N', pointId: CONTROL_CIRCUIT_NEUTRAL_ID },
+		],
 		elementId: 'c.3.1.3.3',
 		palette: 'white',
 		position: 'left',
@@ -34,7 +38,10 @@ export const columns: LampColumn[] = [
 	{
 		id: 'open',
 		title: 'Открыто',
-		pointId: 'p.c.3.2.2',
+		pins: [
+			{ code: 'A', pointId: 'p.c.3.2.2' },
+			{ code: 'N', pointId: CONTROL_CIRCUIT_NEUTRAL_ID },
+		],
 		elementId: 'c.3.2.3.3',
 		palette: 'green',
 		position: 'right',
@@ -52,13 +59,13 @@ export const PALETTES: Record<LampVariant, LampColorConfig> = {
 	green: { on: 'lamp_green_on', off: 'lamp_closed_off' },
 };
 
-// можно брать из стора/настроек; пока — простая мапа:
+// Отображение ламп по состоянию; если нужно — поменять цвет:
 export const lampVariants: Record<'closed' | 'open', LampVariant> = {
-	closed: 'white', // ← поменяешь на 'green', если нужно
-	open: 'green', // ← и тут независимо
+	closed: 'white', // можно заменить на 'green', если понадобится
+	open: 'green', // и наоборот
 };
 
-// точка может быть boolean или объектом
+// Тип точки: boolean или объект, содержащий состояние
 export type PointObj = { state?: boolean; voltage?: number };
 export const isPointObj = (v: unknown): v is PointObj =>
 	!!v && typeof v === 'object';
