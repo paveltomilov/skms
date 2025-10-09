@@ -1,19 +1,15 @@
-﻿import { LampIndicatorColor } from '../types/icon';
+import type { LampIndicatorColor } from '../types/icon';
 import { MarkerName } from '../types/markers';
-
-export const LAMP_PALETTES = {
-	white: { on: 'lamp_open_on', off: 'lamp_white_off' },
-	green: { on: 'lamp_green_on', off: 'lamp_closed_off' },
-} as const;
-
-export type LampPalette = keyof typeof LAMP_PALETTES;
 
 export interface LampColumn {
 	id: 'closed' | 'open';
 	title: string;
-	pointId: string;
+	pointIds: string[];
 	elementId: string;
-	palette: LampPalette;
+	colors: {
+		on: LampIndicatorColor;
+		off: LampIndicatorColor;
+	};
 	position: 'left' | 'right';
 }
 
@@ -25,40 +21,24 @@ export const pins: { code: MarkerName }[] = [
 export const columns: LampColumn[] = [
 	{
 		id: 'closed',
-		title: 'Закрыто',
-		pointId: 'p.c.3.1.2',
+		title: 'Лампа закрыто',
+		pointIds: ['p.c.3.2.2'], // А19 — белая лампа
 		elementId: 'c.3.1.3.3',
-		palette: 'white',
+		colors: {
+			on: 'lamp_white_on',
+			off: 'lamp_white_off',
+		},
 		position: 'left',
 	},
 	{
 		id: 'open',
-		title: 'Открыто',
-		pointId: 'p.c.3.2.2',
+		title: 'Лампа открыто',
+		pointIds: ['p.c.3.1.2'], // А11 — зелёная лампа
 		elementId: 'c.3.2.3.3',
-		palette: 'green',
+		colors: {
+			on: 'lamp_green_on',
+			off: 'lamp_green_off',
+		},
 		position: 'right',
 	},
 ];
-
-export type LampColorConfig = {
-	on: LampIndicatorColor;
-	off: LampIndicatorColor;
-};
-export type LampVariant = 'white' | 'green';
-
-export const PALETTES: Record<LampVariant, LampColorConfig> = {
-	white: { on: 'lamp_open_on', off: 'lamp_white_off' },
-	green: { on: 'lamp_green_on', off: 'lamp_closed_off' },
-};
-
-// можно брать из стора/настроек; пока — простая мапа:
-export const lampVariants: Record<'closed' | 'open', LampVariant> = {
-	closed: 'white', // ← поменяешь на 'green', если нужно
-	open: 'green', // ← и тут независимо
-};
-
-// точка может быть boolean или объектом
-export type PointObj = { state?: boolean; voltage?: number };
-export const isPointObj = (v: unknown): v is PointObj =>
-	!!v && typeof v === 'object';

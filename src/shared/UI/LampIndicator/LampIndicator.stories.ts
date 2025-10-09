@@ -11,18 +11,12 @@ const meta: Meta<typeof LampIndicator> = {
 	argTypes: {
 		color: {
 			description:
-				'Состояния верхней части лампы: белая — lamp_white_off зелёная — lamp_open_on,  белая — lamp_closed_off зелёная — lamp_green_on.',
-			options: [
-				'lamp_white_off',
-				'lamp_open_on',
-				'lamp_closed_off',
-				'lamp_green_on',
-			],
+				'Состояния верхней части лампы: белая — lamp_white_off / lamp_white_on, зелёная — lamp_green_off / lamp_green_on.',
+			options: ['lamp_white_off', 'lamp_white_on', 'lamp_green_off', 'lamp_green_on'],
 			control: { type: 'radio' },
 		},
 		className: {
-			description:
-				'Дополнительный CSS-класс контейнера. Обычно не требуется.',
+			description: 'Дополнительный CSS-класс контейнера. Обычно не требуется.',
 			control: false,
 		},
 		style: {
@@ -45,14 +39,14 @@ export const WhiteOff: Story = {
 export const WhiteOn: Story = {
 	args: {
 		type: 'lamp',
-		color: 'lamp_open_on',
+		color: 'lamp_white_on',
 	},
 };
 
 export const GreenOff: Story = {
 	args: {
 		type: 'lamp',
-		color: 'lamp_closed_off',
+		color: 'lamp_green_off',
 	},
 };
 
