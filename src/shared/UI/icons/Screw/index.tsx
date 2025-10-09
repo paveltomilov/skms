@@ -6,7 +6,7 @@ import { MarkerName } from '@/shared/types/markers';
 
 interface Props {
 	className?: string;
-	isOpen?: boolean;
+	isClose?: boolean;
 	textRight?: MarkerName;
 	textTop?: MarkerName;
 	textLeft?: MarkerName;
@@ -15,7 +15,7 @@ interface Props {
 
 const Screw: FC<Props> = ({
 	className,
-	isOpen = false,
+	isClose = false,
 	textRight,
 	textTop,
 	textLeft,
@@ -32,7 +32,7 @@ const Screw: FC<Props> = ({
 				width={sizes.width}
 				height={sizes.height}
 				viewBox={sizes.viewBox}
-				className={cn(styles.icon, { [styles.icon_open]: isOpen })}
+				className={cn(styles.icon, { [styles.icon_open]: !isClose })}
 			>
 				<use
 					xlinkHref="/svg/sprite.svg#screw"
