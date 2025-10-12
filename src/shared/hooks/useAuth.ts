@@ -36,9 +36,13 @@ const getRedirectPath = (
         return currentPath.startsWith(LOGIN_PATH) ? null : LOGIN_PATH;
     }
 
+    if (currentPath.startsWith(ACCESS_DENIED)) {
+        return null;
+    }
+
     // Если требуется определенная роль, но у пользователя другая
     if (requiredRole && userRole !== requiredRole) {
-        return currentPath.startsWith(ACCESS_DENIED) ? null : ACCESS_DENIED;
+        return ACCESS_DENIED;
     }
 
     // Автоматический редирект по роли только с главной страницы
