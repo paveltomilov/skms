@@ -6,6 +6,10 @@ import Channel from '@/shared/UI/icons/Channel';
 import ProvodConstructor from '@/shared/UI/ProvodConstructor';
 import ScrewConnection from '@/shared/UI/ScrewConnection';
 import Bend from '@/shared/UI/icons/Bend';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
+import { togglePointState } from '@/store/pointsSlice';
+import { AppDispatch, RootState } from '@/store/store';
+import blockSwitchesConnections from '@/shared/configs/blockSwitchesConnections';
 
 interface Props {
 	className?: string;
@@ -23,6 +27,8 @@ function reRenderingElement(
 }
 
 const PopupBlockSwitches: FC<Props> = ({ className }) => {
+	const dispatch = useAppDispatch<AppDispatch>();
+	const screwStates = useAppSelector((state: RootState) => state.points);
 	return (
 		<div className={cn(className, styles.popupWindow)}>
 			<div className={styles.block}>
@@ -33,10 +39,27 @@ const PopupBlockSwitches: FC<Props> = ({ className }) => {
 						<Provod length={300} rotate={90} marker="A19" />
 					</div>
 					<div className={styles.block__left_screw}>
-						<ScrewConnection pointId="p.c.3.1.2" provodLocation="left" textTop="A11" />
-						<ScrewConnection pointId="p.c.3.1.1" provodLocation="right" textTop="A1" />
-						<ScrewConnection pointId="p.c.3.2.2" provodLocation="left" textTop="A19" />
-						<ScrewConnection pointId="p.c.3.2.1" provodLocation="right" />
+						{blockSwitchesConnections.map(connect => {
+							const status = screwStates[connect.point];
+							return (
+								<ScrewConnection
+									key={connect.point}
+									screwStatus={status ? 'close' : 'open'}
+									pointId={connect.point}
+									provodLocation={connect.provodLocation}
+									textTop={
+										connect.textTop
+											? connect.textTop
+											: undefined
+									}
+									changeGlobalState={() =>
+										dispatch(
+											togglePointState(connect.point),
+										)
+									}
+								/>
+							);
+						})}
 					</div>
 				</div>
 				<div className={styles.provodA1}>

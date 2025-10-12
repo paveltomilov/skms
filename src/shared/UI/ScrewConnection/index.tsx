@@ -4,37 +4,46 @@ import styles from './styles.module.scss';
 import { MarkerName } from '@/shared/types/markers';
 import Screw from '../icons/Screw';
 import Provod from '../Provod';
-import { useAppDispatch } from '@/shared/hooks/store';
-import { togglePointState } from '@/store/pointsSlice';
-import useGetStateScrew from '@/shared/hooks/useGetStateScrew';
 
 interface Props {
+	screwStatus?: 'close' | 'open';
 	pointId: string;
 	className?: string;
 	textRight?: MarkerName;
 	textTop?: MarkerName;
 	textLeft?: MarkerName;
 	provodLocation?: 'bottom' | 'left' | 'top' | 'right';
+	changeGlobalState?: () => void;
 }
 
 const ScrewConnection: FC<Props> = ({
+	screwStatus = 'close',
 	pointId,
 	className,
 	textRight,
 	textTop,
 	textLeft,
 	provodLocation,
+	changeGlobalState,
 }) => {
-	const dispatch = useAppDispatch();
+	const [stateScrew, setStateScrew] = useState<'close' | 'open'>(screwStatus);
 	const [deg, setDeg] = useState<90 | 180 | 270 | 0>(0);
-	const screwState: boolean = useGetStateScrew(pointId);
+
+	function handleScrewClick() {
+		setStateScrew(() => (stateScrew === 'open' ? 'close' : 'open'));
+
+		if (changeGlobalState) {
+			changeGlobalState();
+		}
+	}
 
 	useEffect(() => {
 		if (provodLocation === 'left') setDeg(90);
 		if (provodLocation === 'top') setDeg(180);
 		if (provodLocation === 'right') setDeg(270);
 		if (provodLocation === 'bottom') setDeg(0);
-	}, [provodLocation]);
+		setStateScrew(screwStatus);
+	}, [provodLocation, screwStatus]);
 
 	return (
 		<div
@@ -42,16 +51,16 @@ const ScrewConnection: FC<Props> = ({
 				className,
 				styles.component,
 				pointId,
-				`${screwState}`,
+				`${stateScrew}`,
 			)}
 		>
 			<Screw
 				className={styles.screw}
-				isClose={screwState}
+				status={stateScrew}
 				textLeft={textLeft}
 				textRight={textRight}
 				textTop={textTop}
-				onClick={() => dispatch(togglePointState(pointId))}
+				onClick={handleScrewClick}
 			/>
 			<Provod
 				className={cn(styles.provod, {
@@ -62,7 +71,7 @@ const ScrewConnection: FC<Props> = ({
 				})}
 				isPin
 				isBreak={false}
-				length={!screwState ? 1 : 22}
+				length={stateScrew === 'open' ? 1 : 22}
 				rotate={deg}
 			/>
 		</div>

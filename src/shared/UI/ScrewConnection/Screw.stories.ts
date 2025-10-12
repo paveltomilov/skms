@@ -3,21 +3,24 @@ import Screw from '.';
 import { MarkerName } from '@/shared/types/markers';
 
 const meta: Meta<typeof Screw> = {
-	title: 'Icons/Screw',
+	title: 'ScrewConnection',
 	component: Screw,
 	parameters: {
 		layout: 'centered',
 	},
 	tags: ['autodocs'],
 	argTypes: {
-		isOpen: {
+		screwStatus: {
 			description: 'Состояние винта: откручен / закручен',
-			control: { type: 'boolean' },
+			options: ['close', 'open'],
 		},
 		className: {
 			description:
 				'Для передачи дополнительных стилей (например, позиционирование)',
 			control: { type: 'text' },
+			table: {
+				disable: true, // Полностью скрывает из Controls
+			},
 		},
 		textTop: {
 			description: 'Подпись сверху',
@@ -31,6 +34,22 @@ const meta: Meta<typeof Screw> = {
 			description: 'Подпись слева',
 			options: ['A', 'B', 'N', 'C'] satisfies MarkerName[],
 		},
+		pointId: {
+			description: 'Идентификатор точки на схеме',
+			type: 'string',
+			table: {
+				disable: true, // Полностью скрывает из Controls
+			},
+		},
+		provodLocation: {
+			description: 'Сторона подключенрия провода',
+			options: ['left', 'top', 'right', 'bottom'],
+		},
+		changeGlobalState: {
+			table: {
+				disable: true, // Полностью скрывает из Controls
+			},
+		},
 	},
 };
 
@@ -39,14 +58,14 @@ type Story = StoryObj<typeof meta>;
 
 export const Open: Story = {
 	args: {
-		isOpen: true,
+		screwStatus: 'open',
 		textTop: 'A',
 	},
 };
 
 export const Close: Story = {
 	args: {
-		isOpen: false,
+		screwStatus: 'close',
 		textRight: 'N',
 	},
 };
