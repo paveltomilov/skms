@@ -22,8 +22,8 @@ export const columns: LampColumn[] = [
 	{
 		id: 'closed',
 		title: 'Лампа закрыто',
-		pointIds: ['p.c.3.2.2'], // А19 — белая лампа
-		elementId: 'c.3.1.3.3',
+		pointIds: ['p.c.3.1.2'], // контакт цепи индикации «закрыто»
+		elementId: 'c.3.2.3.3',
 		colors: {
 			on: 'lamp_white_on',
 			off: 'lamp_white_off',
@@ -33,8 +33,8 @@ export const columns: LampColumn[] = [
 	{
 		id: 'open',
 		title: 'Лампа открыто',
-		pointIds: ['p.c.3.1.2'], // А11 — зелёная лампа
-		elementId: 'c.3.2.3.3',
+		pointIds: ['p.c.3.2.2'], // контакт цепи индикации «открыто»
+		elementId: 'c.3.1.3.3',
 		colors: {
 			on: 'lamp_green_on',
 			off: 'lamp_green_off',

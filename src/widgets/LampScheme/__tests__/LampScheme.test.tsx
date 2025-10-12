@@ -19,10 +19,10 @@ jest.mock('@/shared/utils/findElementByID/scheme', () => ({
 	findElementByID: (...args: unknown[]) => mockFindElementByID(...args),
 }));
 
-const CLOSED_POINT_ID = 'p.c.3.2.2';
-const OPEN_POINT_ID = 'p.c.3.1.2';
-const CLOSED_ELEMENT_ID = 'c.3.1.3.3';
-const OPEN_ELEMENT_ID = 'c.3.2.3.3';
+const CLOSED_POINT_ID = 'p.c.3.1.2';
+const OPEN_POINT_ID = 'p.c.3.2.2';
+const CLOSED_ELEMENT_ID = 'c.3.2.3.3';
+const OPEN_ELEMENT_ID = 'c.3.1.3.3';
 
 const renderLampScheme = (
 	points: Record<string, boolean | { state?: boolean } | undefined>,

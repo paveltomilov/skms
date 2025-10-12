@@ -18,6 +18,7 @@ const LampIndicator: FC<Props> = ({
 }) => {
   const sizes = SCHEME_ICON_SIZE[type];
   const topColor = (ICON_COLOR[color] ?? ICON_COLOR.lamp_white_off) as string;
+  const isOffState = color === 'lamp_white_off' || color === 'lamp_green_off';
 
   return (
     <svg
@@ -35,14 +36,13 @@ const LampIndicator: FC<Props> = ({
         href="/svg/sprite.svg#lampIndicator-top"
         width="100%"
         height="100%"
-        style={{ color: topColor }}
+        style={{ color: topColor, opacity: isOffState ? 0.5 : 1 }}
       />
     </svg>
   );
 };
 
 export default LampIndicator;
-
 
 
 
