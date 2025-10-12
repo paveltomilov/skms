@@ -3,7 +3,7 @@ import { useEffect, useState, useCallback } from 'react';
 import axios, { AxiosError } from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { getCookie } from 'cookies-next';
-import { checkAuth, logout } from '@/shared/lib/auth'; 
+import { checkAuth, logout } from '@/shared/lib/auth';
 
 const urlBase: string | undefined = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -165,8 +165,7 @@ export const useAuth = (requiredRole?: 'admin' | 'teacher' | 'student') => {
                     });
                 }
 
-            } catch (error) {
-                console.error('Auth error:', error);
+            } catch {
 
                 if (isMounted) {
                     setState({
