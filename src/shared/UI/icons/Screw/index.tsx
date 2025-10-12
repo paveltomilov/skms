@@ -15,7 +15,7 @@ interface Props {
 
 const Screw: FC<Props> = ({
 	className,
-	status = "close",
+	status = 'close',
 	textRight,
 	textTop,
 	textLeft,
@@ -32,7 +32,9 @@ const Screw: FC<Props> = ({
 				width={sizes.width}
 				height={sizes.height}
 				viewBox={sizes.viewBox}
-				className={cn(styles.icon, { [styles.icon_open]: status === "open" })}
+				className={cn(styles.icon, {
+					[styles.icon_open]: status === 'open',
+				})}
 			>
 				<use
 					xlinkHref="/svg/sprite.svg#screw"
