@@ -1,54 +1,38 @@
-import {RefreshResponse, VerifyResponse} from '@/shared/types/typesAuth';
+import { RefreshResponse, VerifyResponse } from '@/shared/types/typesAuth';
 import axios from 'axios';
-import {deleteCookie, getCookie, setCookie} from 'cookies-next';
-import {LoginFormData, LoginResponse} from '../types/login';
+import { getCookie, setCookie, deleteCookie } from 'cookies-next';
+import { LoginFormData, LoginResponse } from '../types/login';
 
 const urlBase = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-// Вспомогательная функция для сохранения accessToken с timestamp
-export function saveAccessToken(token: string): void {
-	setCookie('accessToken', token, {maxAge: 900});
-}
-
-// Вспомогательная функция для сохранения refreshToken с timestamp
-export function saveRefreshToken(token: string): void {
-	setCookie('refreshToken', token, { maxAge: 1800});
-}
-
-// Вспомогательная функция для извлечения и проверки refreshToken (30 минут)
-export function getRefreshToken(): string | null {
-	return getCookie('refreshToken') as string | null;
-}
-
-export function getAccessToken(): string | null {
-	return getCookie('accessToken') as string | null;
-}
-
 export async function checkAuth(): Promise<{ valid: boolean }> {
-	const access = getAccessToken();
-	const refresh = getRefreshToken();
+	// Единообразное хранение - accessToken в localStorage, refreshToken в cookies
+	const access = localStorage.getItem('accessToken');
+	const refresh = getCookie('refreshToken');
 
 	if (!access || !refresh) {
+		// Очищаем оба хранилища при отсутствии токенов
+		localStorage.removeItem('accessToken');
+		deleteCookie('refreshToken');
 		return { valid: false };
 	}
 
 	try {
+		// 1. Проверяем валидность accessToken
 		const verifyRes = await fetch(`${urlBase}/auth/verify/`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ token: access }),
 		});
 
-		if (!verifyRes.ok) {
-			return { valid: false };
+		if (verifyRes.ok) {
+			const verifyData = (await verifyRes.json()) as VerifyResponse;
+			if (verifyData.token_valid) {
+				return { valid: true }; // AccessToken валиден
+			}
 		}
 
-		const verifyData = (await verifyRes.json()) as VerifyResponse;
-
-		if (verifyData.token_valid) {
-			return { valid: true };
-		}
-
+		// 2. Если accessToken невалиден, пробуем обновить через refreshToken
 		const refreshRes = await fetch(`${urlBase}/auth/refresh/`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
@@ -56,20 +40,22 @@ export async function checkAuth(): Promise<{ valid: boolean }> {
 		});
 
 		if (!refreshRes.ok) {
-			return { valid: false };
+			throw new Error('Refresh token failed');
 		}
 
 		const refreshData = (await refreshRes.json()) as RefreshResponse;
 
 		if (refreshData.access) {
-			saveAccessToken(refreshData.access);
+			// Сохраняем новый accessToken
+			localStorage.setItem('accessToken', refreshData.access);
 			return { valid: true };
 		}
 
 		return { valid: false };
+
 	} catch {
-		// Очищаем токены при ошибке для безопасности
-		deleteCookie('accessToken');
+		// При любой ошибке очищаем хранилища
+		localStorage.removeItem('accessToken');
 		deleteCookie('refreshToken');
 		return { valid: false };
 	}
@@ -90,13 +76,30 @@ export async function postAuth(formData: LoginFormData): Promise<boolean> {
 		if (!access || !refresh) {
 			throw new Error('Токены не получены');
 		}
-		if (response.status == 200) {
-			saveAccessToken(access);
-			saveRefreshToken(refresh);
+
+		if (response.status === 200) {
+			// Единообразное сохранение
+			localStorage.setItem('accessToken', access);
+			setCookie('refreshToken', refresh, {
+				path: '/',
+				secure: process.env.NODE_ENV === 'production',
+				sameSite: 'lax'
+			});
 			return true;
 		}
 		return false;
 	} catch {
 		return false;
 	}
+}
+
+// Вспомогательная функция для получения accessToken
+export function getAccessToken(): string | null {
+	return localStorage.getItem('accessToken');
+}
+
+// Функция для выхода
+export function logout(): void {
+	localStorage.removeItem('accessToken');
+	deleteCookie('refreshToken');
 }

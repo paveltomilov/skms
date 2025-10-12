@@ -2,8 +2,8 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState, useCallback } from 'react';
 import axios, { AxiosError } from 'axios';
 import { jwtDecode } from 'jwt-decode';
-import { getCookie, setCookie, deleteCookie } from 'cookies-next';
-import { RefreshResponse } from '@/shared/types/typesAuth';
+import { getCookie } from 'cookies-next';
+import { checkAuth, logout } from '@/shared/lib/auth'; // 🔧 ИСПОЛЬЗУЕМ СУЩЕСТВУЮЩИЕ ФУНКЦИИ
 
 const urlBase: string | undefined = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -69,20 +69,20 @@ export const useAuth = (requiredRole?: 'admin' | 'teacher' | 'student') => {
         user: null,
     });
 
-    const refreshAccessToken = useCallback(async (refreshToken: string): Promise<string | null> => {
+    const fetchUserData = useCallback(async (): Promise<User | null> => {
         try {
-            const refreshRes = await axios.post<RefreshResponse>(
-                `${urlBase}/auth/refresh/`,
-                { refresh: refreshToken }
-            );
-            return refreshRes.data.access || null;
-        } catch {
-            return null;
-        }
-    }, []);
+            const { valid } = await checkAuth();
 
-    const fetchUserData = useCallback(async (accessToken: string): Promise<User | null> => {
-        try {
+            if (!valid) {
+                return null;
+            }
+
+            // Если токены валидны, получаем accessToken и данные пользователя
+            const accessToken = localStorage.getItem('accessToken');
+            if (!accessToken) {
+                return null;
+            }
+
             const decoded = jwtDecode(accessToken) as JwtPayload;
             const response = await axios.get<User>(
                 `${urlBase}/users/${decoded.user_id}`,
@@ -100,7 +100,7 @@ export const useAuth = (requiredRole?: 'admin' | 'teacher' | 'student') => {
     useEffect(() => {
         let isMounted = true;
 
-        const checkAuth = async () => {
+        const checkAuthAndFetchUser = async () => {
             if (!isMounted) return;
 
             try {
@@ -108,10 +108,9 @@ export const useAuth = (requiredRole?: 'admin' | 'teacher' | 'student') => {
                     throw new Error('API URL не настроен');
                 }
 
-                const accessToken = getCookie('accessToken') as string | undefined;
+                const accessToken = localStorage.getItem('accessToken');
                 const refreshToken = getCookie('refreshToken') as string | undefined;
 
-                // Нет токенов
                 if (!accessToken || !refreshToken) {
                     const shouldRedirect = !pathname.startsWith(LOGIN_PATH);
                     if (isMounted) {
@@ -128,27 +127,12 @@ export const useAuth = (requiredRole?: 'admin' | 'teacher' | 'student') => {
                     return;
                 }
 
-                let currentAccessToken = accessToken;
-                let userData: User | null = await fetchUserData(currentAccessToken);
-
-                // Если токен истек, пробуем обновить
-                if (!userData && refreshToken) {
-                    const newAccessToken = await refreshAccessToken(refreshToken);
-                    if (newAccessToken) {
-                        setCookie('accessToken', newAccessToken, {
-                            path: '/',
-                            secure: process.env.NODE_ENV === 'production',
-                            sameSite: 'lax'
-                        });
-                        currentAccessToken = newAccessToken;
-                        userData = await fetchUserData(currentAccessToken);
-                    }
-                }
+                const userData = await fetchUserData();
 
                 // Не удалось аутентифицировать
                 if (!userData) {
-                    deleteCookie('accessToken', { path: '/' });
-                    deleteCookie('refreshToken', { path: '/' });
+
+                    logout();
 
                     const shouldRedirect = !pathname.startsWith(LOGIN_PATH);
                     if (isMounted) {
@@ -181,7 +165,8 @@ export const useAuth = (requiredRole?: 'admin' | 'teacher' | 'student') => {
                     });
                 }
 
-            } catch {
+            } catch (error) {
+                console.error('Auth error:', error);
 
                 if (isMounted) {
                     setState({
@@ -192,9 +177,7 @@ export const useAuth = (requiredRole?: 'admin' | 'teacher' | 'student') => {
                     });
                 }
 
-                // Очищаем куки при ошибке
-                deleteCookie('accessToken', { path: '/' });
-                deleteCookie('refreshToken', { path: '/' });
+                logout();
 
                 if (!pathname.startsWith(LOGIN_PATH)) {
                     await router.push(LOGIN_PATH);
@@ -202,12 +185,12 @@ export const useAuth = (requiredRole?: 'admin' | 'teacher' | 'student') => {
             }
         };
 
-        checkAuth();
+        checkAuthAndFetchUser();
 
         return () => {
             isMounted = false;
         };
-    }, [pathname, requiredRole, router, fetchUserData, refreshAccessToken]);
+    }, [pathname, requiredRole, router, fetchUserData]);
 
     return state;
 };
