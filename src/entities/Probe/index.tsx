@@ -111,7 +111,7 @@ export const Probe: React.FC<ProbeProps> = ({ color }) => {
 			const coords = SCHEME_POINTS[pointId];
 			return {
 				left: `${coords.x + 12 - PROBE_WIDTH / 2}px`,
-				top: `${coords.y + 40 - PROBE_TIP_FROM_TOP}px`, 
+				top: `${coords.y + 26 - PROBE_TIP_FROM_TOP}px`, 
 				transform: 'rotate(0deg)',
 			};
 		}

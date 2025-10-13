@@ -77,5 +77,11 @@ export const RESISTANCE_MEASUREMENTS: ResistanceMeasurement[] = [
 	},
 ];
 
-export const OHM_200_MAX_VALUE = 200;
+export const OHM_RANGE_LIMITS = {
+	OHM_200: 200,
+	OHM_2000: 2_000,
+	OHM_20k: 20_000,
+	OHM_200k: 200_000,
+	OHM_2000k: 2_000_000,
+} as const;
 export const OHM_OPEN_LINE = HIGH_RESISTANCE;

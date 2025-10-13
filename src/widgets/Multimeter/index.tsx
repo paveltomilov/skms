@@ -11,6 +11,7 @@ import { getMultimeterAction } from '@/store/actions/multimiter/getMultimeterAct
 import {
 	MultimeterModePropPayload,
 	attachProbe,
+	detachProbe,
 	setMeasurementResult,
 } from '@/store/multimeterSlice';
 import {
@@ -19,9 +20,10 @@ import {
 } from '@/shared/configs/points';
 import { calculateResistanceBetweenPoints } from '@/shared/utils/calculateResistanceBetweenPoints/calculateResistanceBetweenPoints';
 import {
-	OHM_200_MAX_VALUE,
 	OHM_OPEN_LINE,
+	OHM_RANGE_LIMITS,
 } from '@/shared/configs/resistanceMeasurement';
+import { UniqueIdentifier } from '@dnd-kit/core';
 
 const Multimeter = () => {
 	const dispatch = useAppDispatch();
@@ -30,8 +32,8 @@ const Multimeter = () => {
 		useAppSelector(state => state.multimeter);
 	const circuit = useAppSelector(state => state.circuit);
 
-	const redProbe = probeConnections.red.pointId;
-	const blackProbe = probeConnections.black.pointId;
+	const redProbe: UniqueIdentifier | null = probeConnections.red.pointId;
+	const blackProbe: UniqueIdentifier | null = probeConnections.black.pointId;
 
 	const redIsPowerPoint = useAppSelector(state =>
 		redProbe ? state.points[redProbe as string] : false,
@@ -42,6 +44,10 @@ const Multimeter = () => {
 
 	const isVoltageMode =
 		currentMode.startsWith('ACV') || currentMode.startsWith('DCV');
+	const isOhmMode = currentMode.startsWith('OHM');
+	const currentOhmLimit = isOhmMode
+		? OHM_RANGE_LIMITS[currentMode as keyof typeof OHM_RANGE_LIMITS] ?? null
+		: null;
 
 	const probeState: MultimeterModePropPayload = useMemo(() => ({
 		red: {
@@ -87,7 +93,37 @@ const Multimeter = () => {
 	]);
 
 	useEffect(() => {
-		if (currentMode === 'OHM_200') {
+		if (currentMode !== 'OFF') {
+			return;
+		}
+
+		if (
+			activeProb !== 'red' &&
+			(probeConnections.red.pointId !== null ||
+				probeConnections.red.dropId !== null)
+		) {
+			dispatch(detachProbe('red'));
+		}
+
+		if (
+			activeProb !== 'black' &&
+			(probeConnections.black.pointId !== null ||
+				probeConnections.black.dropId !== null)
+		) {
+			dispatch(detachProbe('black'));
+		}
+	}, [
+		dispatch,
+		currentMode,
+		activeProb,
+		probeConnections.red.pointId,
+		probeConnections.red.dropId,
+		probeConnections.black.pointId,
+		probeConnections.black.dropId,
+	]);
+
+	useEffect(() => {
+		if (isOhmMode) {
 			const resistance = calculateResistanceBetweenPoints(
 				(redProbe as string | null) ?? null,
 				(blackProbe as string | null) ?? null,
@@ -99,12 +135,18 @@ const Multimeter = () => {
 				return;
 			}
 
-			if (resistance >= OHM_OPEN_LINE || resistance > OHM_200_MAX_VALUE) {
+			if (resistance >= OHM_OPEN_LINE) {
 				dispatch(setMeasurementResult('OL'));
 				return;
 			}
 
-			dispatch(setMeasurementResult(Number(resistance.toFixed(1))));
+			if (currentOhmLimit !== null && resistance > currentOhmLimit) {
+				dispatch(setMeasurementResult('OL'));
+				return;
+			}
+
+			const decimals = resistance >= 100 ? 0 : 1;
+			dispatch(setMeasurementResult(Number(resistance.toFixed(decimals))));
 			return;
 		}
 
@@ -114,6 +156,8 @@ const Multimeter = () => {
 		modeAction,
 		probeState,
 		currentMode,
+		isOhmMode,
+		currentOhmLimit,
 		redProbe,
 		blackProbe,
 		circuit,

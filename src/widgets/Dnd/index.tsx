@@ -23,6 +23,7 @@ export const Dnd: React.FC<Props> = ({ children }) => {
 	const probeConnections = useAppSelector(
 		state => state.multimeter.probeConnections,
 	);
+	const currentMode = useAppSelector(state => state.multimeter.currentMode);
 
 	const handleDragStart = ({ active }: DragStartEvent) => {
 		const probeColor = active.id as ProbeColor;
@@ -32,6 +33,12 @@ export const Dnd: React.FC<Props> = ({ children }) => {
 
 	const handleDragEnd = ({ active, over }: DragEndEvent) => {
 		const probeColor = active.id as ProbeColor;
+
+		if (currentMode === 'OFF') {
+			dispatch(detachProbe(probeColor));
+			dispatch(setActiveProb(null));
+			return;
+		}
 
 		if (over && over.data.current?.type === 'point') {
 			const pointId =
