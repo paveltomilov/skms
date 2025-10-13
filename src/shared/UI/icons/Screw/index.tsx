@@ -1,5 +1,5 @@
 import { ICON_SIZE } from '@/shared/configs/icon';
-import { Dispatch, FC, SetStateAction } from 'react';
+import { FC } from 'react';
 import cn from 'classnames';
 import styles from './styles.module.scss';
 import { MarkerName } from '@/shared/types/markers';
@@ -10,7 +10,7 @@ interface Props {
 	textRight?: MarkerName;
 	textTop?: MarkerName;
 	textLeft?: MarkerName;
-	onClick: Dispatch<SetStateAction<boolean>>;
+	onClick: () => void;
 }
 
 const Screw: FC<Props> = ({
@@ -28,7 +28,7 @@ const Screw: FC<Props> = ({
 			{textTop && <span className={styles.top}>{textTop}</span>}
 			{textLeft && <span className={styles.left}>{textLeft}</span>}
 			<svg
-				onClick={() => onClick(p => !p)}
+				onClick={onClick}
 				width={sizes.width}
 				height={sizes.height}
 				viewBox={sizes.viewBox}

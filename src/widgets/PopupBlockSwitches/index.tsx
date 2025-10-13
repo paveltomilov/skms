@@ -39,27 +39,23 @@ const PopupBlockSwitches: FC<Props> = ({ className }) => {
 						<Provod length={300} rotate={90} marker="A19" />
 					</div>
 					<div className={styles.block__left_screw}>
-						{blockSwitchesConnections.map(connect => {
-							const status = screwStates[connect.point];
-							return (
-								<ScrewConnection
-									key={connect.point}
-									screwStatus={status ? 'close' : 'open'}
-									pointId={connect.point}
-									provodLocation={connect.provodLocation}
-									textTop={
-										connect.textTop
-											? connect.textTop
-											: undefined
-									}
-									changeGlobalState={() =>
-										dispatch(
-											togglePointState(connect.point),
-										)
-									}
-								/>
-							);
-						})}
+						{blockSwitchesConnections.map(
+							({ point, provodLocation, textTop }, index) => {
+								const status = screwStates[point];
+								return (
+									<ScrewConnection
+										key={point + index}
+										screwStatus={status ? 'close' : 'open'}
+										pointId={point}
+										provodLocation={provodLocation}
+										textTop={textTop ? textTop : undefined}
+										changeGlobalState={() =>
+											dispatch(togglePointState(point))
+										}
+									/>
+								);
+							},
+						)}
 					</div>
 				</div>
 				<div className={styles.provodA1}>
