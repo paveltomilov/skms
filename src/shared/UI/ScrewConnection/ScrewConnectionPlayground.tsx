@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import ScrewConnection, { Props } from '../ScrewConnection';
+import ScrewConnection, { Props } from '.';
 
 // компонент обертка для реализации функционала в storyBook
 const ScrewConnectionPlayground: FC<Props> = props => {

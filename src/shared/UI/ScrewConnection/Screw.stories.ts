@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { MarkerName } from '@/shared/types/markers';
-import ScrewConnectionPlayground from '../helpers/ScrewConnectionPlayground';
+import ScrewConnectionPlayground from './ScrewConnectionPlayground';
 
 const meta: Meta<typeof ScrewConnectionPlayground> = {
 	title: 'ScrewConnection',
