@@ -68,7 +68,7 @@ const ActuatorSide = React.memo(
 								}`}
 								provodLocation={trigger ? 'bottom' : 'top'}
 								textRight={connection.marker}
-								changeGlobalState={() =>
+								onToggle={() =>
 									dispatch(togglePointState(connection.point))
 								}
 							/>

@@ -49,7 +49,7 @@ const PopupBlockSwitches: FC<Props> = ({ className }) => {
 										pointId={point}
 										provodLocation={provodLocation}
 										textTop={textTop ? textTop : undefined}
-										changeGlobalState={() =>
+										onToggle={() =>
 											dispatch(togglePointState(point))
 										}
 									/>

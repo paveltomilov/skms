@@ -48,7 +48,7 @@ export const LampScheme: FC = () => {
 									className={styles.pin__screw}
 									textLeft={marker}
 									aria-hidden
-									changeGlobalState={() =>
+									onToggle={() =>
 										dispatch(togglePointState(point))
 									}
 								/>

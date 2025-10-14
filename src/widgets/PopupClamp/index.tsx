@@ -35,7 +35,7 @@ const PopupClamp = () => {
 							className={styles.top__screw}
 							provodLocation="left"
 							textRight="A"
-							changeGlobalState={() =>
+							onToggle={() =>
 								dispatch(togglePointState('p.p.1.4.1.2'))
 							}
 						/>
@@ -52,9 +52,7 @@ const PopupClamp = () => {
 							}
 							className={styles.top__connect}
 							provodLocation="left"
-							changeGlobalState={() =>
-								dispatch(togglePointState('p.p.n'))
-							}
+							onToggle={() => dispatch(togglePointState('p.p.n'))}
 						/>
 						<ProvodConstructor
 							className={styles.top__topA}
@@ -84,7 +82,7 @@ const PopupClamp = () => {
 							className={styles.center__screw}
 							provodLocation="left"
 							textRight="B"
-							changeGlobalState={() =>
+							onToggle={() =>
 								dispatch(togglePointState('p.p.2.5'))
 							}
 						/>
@@ -95,9 +93,7 @@ const PopupClamp = () => {
 							}
 							className={styles.center__connect}
 							provodLocation="left"
-							changeGlobalState={() =>
-								dispatch(togglePointState('p.p.n'))
-							}
+							onToggle={() => dispatch(togglePointState('p.p.n'))}
 						/>
 						<ProvodConstructor
 							className={styles.center__topA}
@@ -136,9 +132,7 @@ const PopupClamp = () => {
 							}
 							className={styles.bottom__connect}
 							provodLocation="left"
-							changeGlobalState={() =>
-								dispatch(togglePointState('p.p.n'))
-							}
+							onToggle={() => dispatch(togglePointState('p.p.n'))}
 						/>
 						<ProvodConstructor
 							className={styles.bottom__topA}
@@ -160,7 +154,7 @@ const PopupClamp = () => {
 						className={styles.bottom__screw}
 						provodLocation="left"
 						textRight="C"
-						changeGlobalState={() =>
+						onToggle={() =>
 							dispatch(togglePointState('p.p.3.4.1.2'))
 						}
 					/>

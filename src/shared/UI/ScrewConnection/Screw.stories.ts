@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import Screw from '.';
 import { MarkerName } from '@/shared/types/markers';
+import ScrewConnectionPlayground from '../helpers/ScrewConnectionPlayground';
 
-const meta: Meta<typeof Screw> = {
+const meta: Meta<typeof ScrewConnectionPlayground> = {
 	title: 'ScrewConnection',
-	component: Screw,
+	component: ScrewConnectionPlayground,
 	parameters: {
 		layout: 'centered',
 	},
@@ -45,7 +45,7 @@ const meta: Meta<typeof Screw> = {
 			description: 'Сторона подключенрия провода',
 			options: ['left', 'top', 'right', 'bottom'],
 		},
-		changeGlobalState: {
+		onToggle: {
 			table: {
 				disable: true, // Полностью скрывает из Controls
 			},
