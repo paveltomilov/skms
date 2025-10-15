@@ -23,7 +23,7 @@ const LOGIN_PATH = '/login';
 const ACCESS_DENIED = '/access-denied';
 const TEACHER_DASHBOARD = '/teacher-dashboard';
 const STUDENT_DASHBOARD = '/student-dashboard';
-const ADMIN_DASHBOARD = '/admin';
+const ADMIN_DASHBOARD = '/admin-dashboard';
 
 // Функция для редиректов
 const getRedirectPath = (
@@ -45,8 +45,8 @@ const getRedirectPath = (
         return ACCESS_DENIED;
     }
 
-    // Автоматический редирект по роли только с главной страницы
-    if (currentPath === '/') {
+    // Автоматический редирект по роли только со страницы ptk
+    if (currentPath === '/ptk') {
         const rolePaths: Record<string, string> = {
             teacher: TEACHER_DASHBOARD,
             student: STUDENT_DASHBOARD,

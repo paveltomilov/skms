@@ -6,7 +6,6 @@ import { LoginFormData, LoginResponse } from '../types/login';
 const urlBase = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export async function checkAuth(): Promise<{ valid: boolean }> {
-	// Единообразное хранение - accessToken в localStorage, refreshToken в cookies
 	const access = localStorage.getItem('accessToken');
 	const refresh = getCookie('refreshToken');
 
@@ -78,7 +77,6 @@ export async function postAuth(formData: LoginFormData): Promise<boolean> {
 		}
 
 		if (response.status === 200) {
-			// Единообразное сохранение
 			localStorage.setItem('accessToken', access);
 			setCookie('refreshToken', refresh, {
 				path: '/',
