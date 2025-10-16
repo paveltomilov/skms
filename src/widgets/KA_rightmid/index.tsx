@@ -10,6 +10,7 @@ import Gate from '@/shared/UI/Gate';
 import { useAppSelector } from '@/shared/hooks/store';
 import { useOpenGatePopup } from '@/shared/hooks/useOpenGatePopup';
 import Window from '@/shared/UI/Window';
+import useShowModal from '@/shared/hooks/useShowModal';
 
 interface Props {
 	className?: string;
@@ -18,6 +19,7 @@ interface Props {
 const KARightMid: FC<Props> = ({ className }) => {
 	const { g16 } = useAppSelector(state => state.gate.gates);
 	const openGatePopup = useOpenGatePopup();
+	const handleModalNotification = useShowModal('notification');
 	return (
 		<div className={cn(className, styles.container)}>
 			<div className={styles.columnLeft}>
@@ -123,12 +125,14 @@ const KARightMid: FC<Props> = ({ className }) => {
 						text="РОВ"
 						width={79}
 						height={22}
+						onClick={handleModalNotification}
 					/>
 					<Button
 						className={styles.columnRight__btn}
 						text="КРСК"
 						width={79}
 						height={22}
+						onClick={handleModalNotification}
 					/>
 				</div>
 				<div className={styles.columnRight__bottom}>

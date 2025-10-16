@@ -11,12 +11,14 @@ import {
 	rightMidThree,
 	rightMidTwo,
 } from '@/shared/configs/TAGroupElements';
+import useShowModal from '@/shared/hooks/useShowModal';
 
 interface Props {
 	className?: string;
 }
 
 const TARightMid: FC<Props> = ({ className }) => {
+	const handleModalNotification = useShowModal('notification');
 	return (
 		<div className={cn(className)}>
 			<div className={styles.container}>
@@ -26,6 +28,7 @@ const TARightMid: FC<Props> = ({ className }) => {
 					height={28}
 					text={'конд'}
 					ariaLabel={'конд'}
+					onClick={handleModalNotification}
 				/>
 				<span className={styles.container_element}>
 					<Window data={WINDOWS.w79} right />
@@ -71,6 +74,7 @@ const TARightMid: FC<Props> = ({ className }) => {
 					height={28}
 					text={'эж'}
 					ariaLabel={'эж'}
+					onClick={handleModalNotification}
 				/>
 				{rightMidThree.map((element, index) => (
 					<div key={index} className={styles.container_element}>

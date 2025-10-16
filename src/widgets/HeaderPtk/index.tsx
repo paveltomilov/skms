@@ -5,12 +5,10 @@ import Button from '@/shared/UI/Button';
 import Window from '@/shared/UI/Window';
 import { useDate } from '@/shared/hooks/useDate';
 import PowerUnit from '@/entities/PowerUnit';
-import { useAppDispatch } from '@/shared/hooks/store';
-import { AppDispatch } from '@/store/store';
-import { openModal } from '@/store/modalSlice';
+import useShowModal from '@/shared/hooks/useShowModal';
 
 const HeaderPtk: FC = () => {
-	const dispatch = useAppDispatch<AppDispatch>();
+	const handleModalNotification = useShowModal('notification');
 	const { formattedDate, formattedTime, dateTimeDate, dateTimeTime } =
 		useDate();
 
@@ -40,7 +38,7 @@ const HeaderPtk: FC = () => {
 						text="Гл. меню"
 						onClick={() => {
 							console.log('Нажата кнопка Главное меню');
-							dispatch(openModal('notification'));
+							handleModalNotification();
 						}}
 					/>
 					<Button
@@ -50,7 +48,7 @@ const HeaderPtk: FC = () => {
 						text="Сигналы"
 						onClick={() => {
 							console.log('Нажата кнопка Сигналы');
-							dispatch(openModal('notification'));
+							handleModalNotification();
 						}}
 					/>
 					<Button
@@ -60,7 +58,7 @@ const HeaderPtk: FC = () => {
 						text="Графики"
 						onClick={() => {
 							console.log('Нажата кнопка Графики');
-							dispatch(openModal('notification'));
+							handleModalNotification();
 						}}
 					/>
 				</div>
@@ -71,7 +69,7 @@ const HeaderPtk: FC = () => {
 					text="?"
 					onClick={() => {
 						console.log('Нажата кнопка ?');
-						dispatch(openModal('notification'));
+						handleModalNotification();
 					}}
 				/>
 				<div suppressHydrationWarning className={styles.datetime}>

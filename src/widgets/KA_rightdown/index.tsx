@@ -8,6 +8,7 @@ import Button from '@/shared/UI/Button';
 import Tdm from '@/shared/UI/Tdm';
 import { TDM } from '@/shared/configs/tdm';
 import { Prefix } from '@/shared/types/window';
+import useShowModal from '@/shared/hooks/useShowModal';
 
 interface Props {
 	className?: string;
@@ -16,6 +17,7 @@ interface Props {
 const KARightDown: FC<Props> = ({ className }) => {
 	const text1C: Prefix = '1c';
 	const text2C: Prefix = '2c';
+	const handleModalNotification = useShowModal('notification');
 
 	return (
 		<div className={cn(className, styles.container)}>
@@ -110,8 +112,18 @@ const KARightDown: FC<Props> = ({ className }) => {
 					/>
 				</div>
 				<div className={styles.windowsMiddle__right}>
-					<Button width={91} height={28} text={'ВТ'} />
-					<Button width={91} height={28} text={'ГТ'} />
+					<Button
+						width={91}
+						height={28}
+						text={'ВТ'}
+						onClick={handleModalNotification}
+					/>
+					<Button
+						width={91}
+						height={28}
+						text={'ГТ'}
+						onClick={handleModalNotification}
+					/>
 				</div>
 			</div>
 			<div className={styles.windowsBottom}>
