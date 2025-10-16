@@ -43,6 +43,3 @@ const LampIndicator: FC<Props> = ({
 };
 
 export default LampIndicator;
-
-
-
