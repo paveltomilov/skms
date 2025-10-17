@@ -935,7 +935,7 @@ const controlCircuit = [
 					{
 						id: 'c.3.2.1.2',
 						name: 'Нет контакта',
-						active: false,
+						active: true,
 					},
 					{
 						id: 'c.3.2.1.3',

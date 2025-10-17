@@ -82,9 +82,6 @@ export const useGateControlButtons = () => {
 	/** у кнопки Закрыть ПТК когда сопротивление 1 млрд — она дизейбл */
 	const closePtkDisabled = closeFromPtkElement.resistance === HIGH_RESISTANCE;
 
-	/** кнопка Стоп дизейблена, когда не нажаты кнопки Открыть и Закрыть ПТК */
-	const stopPtkDisabled = !openPtkActive && !closePtkActive;
-
 	/** булевое состояние несправности кнопка Открыть КРУЗА-П, "Нет контакта, команда не уходит" */
 	const openKruzapMalfunctionActive = openFromKruzapElement.malfunctions.some(
 		malfunction =>
@@ -109,16 +106,31 @@ export const useGateControlButtons = () => {
 			malfunction.id === 'c.3.2.3.2.1.1.1' && malfunction.active,
 	);
 
-	// /** булевое состояние несправности блока концевых выключателей ветки Открыть , "Залипший контакт" */
-	// const limitSwitchOpenMalfunctionActive =
-	// 	limitSwitchOpenElement.malfunctions.some(
-	// 		malfunction => malfunction.id === 'c.3.1.1.1' && malfunction.active,
-	// 	);
-	// /** булевое состояние несправности блока концевых выключателей ветки Закрыть , "Залипший контакт" */
-	// const limitSwitchCloseMalfunctionActive =
-	// 	limitSwitchOpenElement.malfunctions.some(
-	// 		malfunction => malfunction.id === 'c.3.1.1.1' && malfunction.active,
-	// 	);
+	/** булевое состояние несправности блока концевых выключателей ветки Открыть , "Залипший контакт" */
+	const hasSticksLimitSwitchOpenMalfunction =
+		limitSwitchOpenElement.malfunctions.some(
+			malfunction => malfunction.id === 'c.3.1.1.1' && malfunction.active,
+		);
+	/** булевое состояние несправности блока концевых выключателей ветки Закрыть , "Залипший контакт" */
+	const hasSticksLimitSwitchCloseMalfunction =
+		limitSwitchCloseElement.malfunctions.some(
+			malfunction => malfunction.id === 'c.3.2.1.1' && malfunction.active,
+		);
+
+	/** булевое состояние несправности блока концевых выключателей ветки Открыть , "Нет контакта" */
+	const NotClosedLimitSwitchOpenMalfunction =
+		limitSwitchOpenElement.malfunctions.some(
+			malfunction => malfunction.id === 'c.3.1.1.2' && malfunction.active,
+		);
+
+	/** булевое состояние несправности блока концевых выключателей ветки Закрыть , "Нет контакта" */
+	const NotClosedLimitSwitchCloseMalfunction =
+		limitSwitchCloseElement.malfunctions.some(
+			malfunction => malfunction.id === 'c.3.2.1.2' && malfunction.active,
+		);
+
+	/** кнопка Стоп дизейблена, когда не нажаты кнопки Открыть и Закрыть ПТК */
+	const stopPtkDisabled = !openPtkActive && !closePtkActive;
 
 	/** получаем положение задвижки из стора */
 	const gatePosition = useRef(
@@ -160,7 +172,7 @@ export const useGateControlButtons = () => {
 		const config =
 			type === 'ptk' ? PTK_BUTTONS_CONFIG : KRUZAP_BUTTONS_CONFIG;
 
-		/** проверяем на наличие неисправностей */
+		//проверяем на наличие неисправностей кнопок Открыть Закрыть
 		const malfunctionIsActive =
 			(type === 'kruzap' &&
 				((button === 'open' && openKruzapMalfunctionActive) ||
@@ -178,6 +190,21 @@ export const useGateControlButtons = () => {
 			return;
 		}
 
+		//проверяем на наличие неисправностей кнопок блока концевых выключателей
+
+		if (NotClosedLimitSwitchOpenMalfunction && button === 'open') {
+			console.log(
+				`${limitSwitchOpenElement.name}  имеет неиспрвность 'Нет контакта'`,
+			);
+			return;
+		}
+
+		if (NotClosedLimitSwitchCloseMalfunction && button === 'close') {
+			console.log(
+				`${limitSwitchCloseElement.name} имеет неиспрвность 'Нет контакта'`,
+			);
+			return;
+		}
 		// обновляем сопротивления, которые меняются сразу после нажатия на кнопку Открыть/Закрыть
 		config[button].forEach(action => {
 			dispatch(setResistance(action));
@@ -203,6 +230,13 @@ export const useGateControlButtons = () => {
 
 				if (gatePosition.current >= 100) {
 					gatePosition.current = 100;
+					//проверяем на наличие неисправностей кнопок блока концевых выключателей
+					if (hasSticksLimitSwitchOpenMalfunction) {
+						console.log(
+							`${limitSwitchOpenElement.name} имеет неиспрвность 'Залипший контакт'`,
+						);
+						return;
+					}
 					stopGateMovement(type);
 					dispatch(
 						setGateState({
@@ -226,6 +260,13 @@ export const useGateControlButtons = () => {
 
 				if (gatePosition.current <= 0) {
 					gatePosition.current = 0;
+					//проверяем на наличие неисправностей кнопок блока концевых выключателей
+					if (hasSticksLimitSwitchCloseMalfunction) {
+						console.log(
+							`${limitSwitchCloseElement.name} имеет неиспрвность 'Залипший контакт'`,
+						);
+						return;
+					}
 					stopGateMovement(type);
 					dispatch(
 						setGateState({

@@ -9,6 +9,8 @@ import {
 	OPEN_FROM_PTK_ID,
 } from './scheme';
 
+
+
 export const PTK_BUTTONS_CONFIG = {
 	// срабатывает сразу после нажатия на кнопку открыть ПТК
 	open: [
