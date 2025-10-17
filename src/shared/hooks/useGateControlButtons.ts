@@ -1,11 +1,13 @@
 import { setGatePosition, setGateState } from '@/store/gateSlice';
 import {
 	BASE_RESISTANCE,
+	CLOSE_FROM_KRUZAP_ID,
+	CLOSE_FROM_PTK_ID,
 	HIGH_RESISTANCE,
 	LIMIT_SWITCH_CLOSE_ID,
 	LIMIT_SWITCH_OPEN_ID,
+	OPEN_FROM_KRUZAP_ID,
 	OPEN_FROM_PTK_ID,
-	CLOSE_FROM_PTK_ID,
 } from '../configs/scheme';
 import { findElementByID } from '../utils/findElementByID/scheme';
 import { useAppDispatch, useAppSelector } from './store';
@@ -19,15 +21,16 @@ export const useGateControlButtons = () => {
 
 	// получаем id активной задвижки из стора
 	const gateId = useAppSelector(state => state.gate.activeGateId) ?? 'g1';
+	const circuitState = useAppSelector(state => state.circuit);
 
 	const limitSwitchOpenElement = findElementByID(
 		LIMIT_SWITCH_OPEN_ID,
-		useAppSelector(state => state.circuit),
+		circuitState,
 	);
 
 	const limitSwitchCloseElement = findElementByID(
 		LIMIT_SWITCH_CLOSE_ID,
-		useAppSelector(state => state.circuit),
+		circuitState,
 	);
 
 	const openDisabled = limitSwitchOpenElement.resistance === HIGH_RESISTANCE;
@@ -41,35 +44,60 @@ export const useGateControlButtons = () => {
 		limitSwitchOpenElement.resistance ===
 		BASE_RESISTANCE[LIMIT_SWITCH_OPEN_ID];
 
-	const openFromPtkElement = findElementByID(
-		OPEN_FROM_PTK_ID,
-		useAppSelector(state => state.circuit),
-	);
+	const openFromPtkElement = findElementByID(OPEN_FROM_PTK_ID, circuitState);
 
 	const closeFromPtkElement = findElementByID(
 		CLOSE_FROM_PTK_ID,
-		useAppSelector(state => state.circuit),
+		circuitState,
 	);
 
-	//если у этих элементов базовое сопротивление (~ 0), то кнопки открыть/закрыть птк active (нажата)
+	const openFromKruzapElement = findElementByID(
+		OPEN_FROM_KRUZAP_ID,
+		circuitState,
+	);
+
+	const closeFromKruzapElement = findElementByID(
+		CLOSE_FROM_KRUZAP_ID,
+		circuitState,
+	);
+
+	// если у этих элементов базовое сопротивление (~ 0), то кнопки открыть/закрыть ПТК активны (нажаты)
 	const openPtkActive =
 		openFromPtkElement.resistance === BASE_RESISTANCE[OPEN_FROM_PTK_ID];
 	const closePtkActive =
 		closeFromPtkElement.resistance === BASE_RESISTANCE[CLOSE_FROM_PTK_ID];
 
-	// у кнопок птк когда сопротивление 1млрд то она дизейбл
+	// у кнопок ПТК когда сопротивление 1 млрд — она дизейбл
 	const openPtkDisabled = openFromPtkElement.resistance === HIGH_RESISTANCE;
 	const closePtkDisabled = closeFromPtkElement.resistance === HIGH_RESISTANCE;
 
-	//кнопка стоп дизэйблена когда не нажаты кнопки открыть и закрыть птк
+	// кнопка Стоп дизейблена, когда не нажаты кнопки Открыть и Закрыть ПТК
 	const stopPtkDisabled = !openPtkActive && !closePtkActive;
+
+	const openKruzapMalfunctionActive = openFromKruzapElement.malfunctions.some(
+		malfunction =>
+			malfunction.id === 'c.3.1.3.2.1.2.1' && malfunction.active,
+	);
+	const closeKruzapMalfunctionActive =
+		closeFromKruzapElement.malfunctions.some(
+			malfunction =>
+				malfunction.id === 'c.3.2.3.2.1.2.1' && malfunction.active,
+		);
+	const openPtkMalfunctionActive = openFromPtkElement.malfunctions.some(
+		malfunction =>
+			malfunction.id === 'c.3.1.3.2.1.1.1' && malfunction.active,
+	);
+	const closePtkMalfunctionActive = closeFromPtkElement.malfunctions.some(
+		malfunction =>
+			malfunction.id === 'c.3.2.3.2.1.1.1' && malfunction.active,
+	);
 
 	// получаем положение задвижки из стора
 	const gatePosition = useRef(
 		useAppSelector(state => state.gate.gates[gateId].position),
 	);
 
-	// создаем интервал в глобальной ОВ, чтобы к нему можно было обращаться и изменять в функциях stopGateMovement и handleButton
+	// создаем интервал в глобальной ОВ
 	const gateInterval = useRef<NodeJS.Timeout | null>(null);
 
 	// Функция для остановки движения задвижки
@@ -77,7 +105,7 @@ export const useGateControlButtons = () => {
 		const config =
 			type === 'ptk' ? PTK_BUTTONS_CONFIG : KRUZAP_BUTTONS_CONFIG;
 
-		// обновляем сопротивления, которые меняются сразу после нажатия на кнопку стоп
+		// обновляем сопротивления, которые меняются сразу после нажатия на кнопку Стоп
 		config.stop.forEach(action => {
 			dispatch(setResistance(action));
 		});
@@ -104,20 +132,38 @@ export const useGateControlButtons = () => {
 		const config =
 			type === 'ptk' ? PTK_BUTTONS_CONFIG : KRUZAP_BUTTONS_CONFIG;
 
-		// обновляем сопротивления, которые меняются сразу после нажатия на кнопку открыть/закрыть
+		// проверяем на наличие неисправностей
+		const malfunctionIsActive =
+			(type === 'kruzap' &&
+				((button === 'open' && openKruzapMalfunctionActive) ||
+					(button === 'close' && closeKruzapMalfunctionActive))) ||
+			(type === 'ptk' &&
+				((button === 'open' && openPtkMalfunctionActive) ||
+					(button === 'close' && closePtkMalfunctionActive)));
+
+		if (malfunctionIsActive) {
+			const typeLabel = type === 'ptk' ? 'ПТК' : 'КРУЗАП';
+			const buttonLabel = button === 'open' ? 'Открыть' : 'Закрыть';
+			console.log(
+				`[управление-задвижкой] Команда заблокирована неисправностью: ${typeLabel} — ${buttonLabel}`,
+			);
+			return;
+		}
+
+		// обновляем сопротивления, которые меняются сразу после нажатия на кнопку Открыть/Закрыть
 		config[button].forEach(action => {
 			dispatch(setResistance(action));
 		});
 
-		// Очищаем предыдущий интервал
+		// очищаем предыдущий интервал
 		if (gateInterval.current) {
 			clearInterval(gateInterval.current);
 			gateInterval.current = null;
 		}
 
-		// Запускаем новый интервал
+		// запускаем новый интервал
 		gateInterval.current = setInterval(() => {
-			// Обновляем положение
+			// обновляем положение
 			if (button === 'open') {
 				gatePosition.current += 1;
 				dispatch(
@@ -172,17 +218,17 @@ export const useGateControlButtons = () => {
 	return {
 		handleButton,
 		stopGateMovement,
-		// когда кнопки крузап в хедере Disabled
+		// когда кнопки КРУЗАП в хедере Disabled
 		openKruzapDisabled: openDisabled,
 		closeKruzapDisabled: closeDisabled,
-		// когда кнопки на автомате в модалке включены
-		openOn: openOn,
-		closeOn: closeOn,
-		// когда кнопки птк в хедере Disabled
+		// когда концевики «нажаты» (по базовым сопротивлениям)
+		openOn,
+		closeOn,
+		// когда кнопки ПТК в хедере Disabled
 		openPtkDisabled: openDisabled || (openPtkDisabled && closePtkActive),
 		closePtkDisabled: closeDisabled || (closePtkDisabled && openPtkActive),
 		stopPtkDisabled,
-		// когда кнопки птк в хедере нажаты
+		// когда кнопки ПТК в хедере нажаты
 		openPtkActive,
 		closePtkActive,
 
