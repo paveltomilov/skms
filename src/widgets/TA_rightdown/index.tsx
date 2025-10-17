@@ -6,12 +6,14 @@ import { WINDOWS } from '@/shared/configs/window';
 import Button from '@/shared/UI/Button';
 import Actuator from '@/shared/UI/Actuator';
 import { rightBottomOne } from '@/shared/configs/TAGroupElements';
+import useShowModal from '@/shared/hooks/useShowModal';
 
 interface Props {
 	className?: string;
 }
 
 const TARightDown: FC<Props> = ({ className }) => {
+	const handleModalNotification = useShowModal('notification');
 	return (
 		<div className={cn(className)}>
 			<div className={styles.container}>
@@ -28,6 +30,7 @@ const TARightDown: FC<Props> = ({ className }) => {
 						ariaLabel={'мс'}
 						text={'мс'}
 						className={styles.container_element_box__button}
+						onClick={handleModalNotification}
 					/>
 					<div className={styles.container_element_box}>
 						<Window data={WINDOWS.w89} right />

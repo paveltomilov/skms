@@ -14,6 +14,7 @@ import PopupBlockSwitches from '../PopupBlockSwitches';
 import { LampScheme } from '../LampScheme';
 import PopupActuator from '@/widgets/PopupActuator';
 import PopupClamp from '../PopupClamp';
+import PopupNotificationDev from '../PopupNotificationDev';
 
 interface IModals {
 	condition: boolean;
@@ -47,8 +48,6 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		notification;
 
 	const gateId = useAppSelector(state => state.gate.activeGateId as string);
-
-	const empty: React.ReactElement = <p>Компонент в разработке</p>;
 
 	const modals: IModals[] = [
 		{
@@ -112,7 +111,7 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			id: 'notification',
 			headerTitle: 'Дата реализации',
 			gateId: undefined,
-			component: empty,
+			component: <PopupNotificationDev/>,
 		},
 	];
 
