@@ -19,43 +19,52 @@ import { GATE_STATE_TYPE } from '../types/gate';
 export const useGateControlButtons = () => {
 	const dispatch = useAppDispatch();
 
-	// получаем id активной задвижки из стора
+	/** получаем id активной задвижки из стора */
 	const gateId = useAppSelector(state => state.gate.activeGateId) ?? 'g1';
 	const circuitState = useAppSelector(state => state.circuit);
 
+	/** получаем контакт ветки Открыть блок концевых выключателей */
 	const limitSwitchOpenElement = findElementByID(
 		LIMIT_SWITCH_OPEN_ID,
 		circuitState,
 	);
-
+	/** получаем контакт ветки Закрыть блок концевых выключателей */
 	const limitSwitchCloseElement = findElementByID(
 		LIMIT_SWITCH_CLOSE_ID,
 		circuitState,
 	);
-
+	/** булевое значение состояния РАЗОМКНУТ контакта ветки Открыть блок концевых выключателей */
 	const openDisabled = limitSwitchOpenElement.resistance === HIGH_RESISTANCE;
+
+	/** булевое значение состояния РАЗОМКНУТ контакта ветки Закрыть блок концевых выключателей */
 	const closeDisabled =
 		limitSwitchCloseElement.resistance === HIGH_RESISTANCE;
 
+	/** булевое значение состояния ЗАМКНУТ контакта ветки Открыть блок концевых выключателей */
 	const openOn =
 		limitSwitchCloseElement.resistance ===
 		BASE_RESISTANCE[LIMIT_SWITCH_CLOSE_ID];
+
+	/** булевое значение состояния ЗАМКНУТ контакта ветки Закрыть блок концевых выключателей */
 	const closeOn =
 		limitSwitchOpenElement.resistance ===
 		BASE_RESISTANCE[LIMIT_SWITCH_OPEN_ID];
 
+	/** получаем кнопку ПТК Открыть */
 	const openFromPtkElement = findElementByID(OPEN_FROM_PTK_ID, circuitState);
 
+	/** получаем кнопку ПТК Закрыть */
 	const closeFromPtkElement = findElementByID(
 		CLOSE_FROM_PTK_ID,
 		circuitState,
 	);
-
+	/** получаем кнопку КРУЗА-П Открыть */
 	const openFromKruzapElement = findElementByID(
 		OPEN_FROM_KRUZAP_ID,
 		circuitState,
 	);
 
+	/** получаем кнопку КРУЗА-П Закрыть */
 	const closeFromKruzapElement = findElementByID(
 		CLOSE_FROM_KRUZAP_ID,
 		circuitState,
@@ -67,40 +76,59 @@ export const useGateControlButtons = () => {
 	const closePtkActive =
 		closeFromPtkElement.resistance === BASE_RESISTANCE[CLOSE_FROM_PTK_ID];
 
-	// у кнопок ПТК когда сопротивление 1 млрд — она дизейбл
+	/** у кнопки Открыть ПТК когда сопротивление 1 млрд — она дизейбл */
 	const openPtkDisabled = openFromPtkElement.resistance === HIGH_RESISTANCE;
+
+	/** у кнопки Закрыть ПТК когда сопротивление 1 млрд — она дизейбл */
 	const closePtkDisabled = closeFromPtkElement.resistance === HIGH_RESISTANCE;
 
-	// кнопка Стоп дизейблена, когда не нажаты кнопки Открыть и Закрыть ПТК
+	/** кнопка Стоп дизейблена, когда не нажаты кнопки Открыть и Закрыть ПТК */
 	const stopPtkDisabled = !openPtkActive && !closePtkActive;
 
+	/** булевое состояние несправности кнопка Открыть КРУЗА-П, "Нет контакта, команда не уходит" */
 	const openKruzapMalfunctionActive = openFromKruzapElement.malfunctions.some(
 		malfunction =>
 			malfunction.id === 'c.3.1.3.2.1.2.1' && malfunction.active,
 	);
+	/** булевое состояние несправности кнопка Закрыть КРУЗА-П, "Нет контакта, команда не уходит" */
 	const closeKruzapMalfunctionActive =
 		closeFromKruzapElement.malfunctions.some(
 			malfunction =>
 				malfunction.id === 'c.3.2.3.2.1.2.1' && malfunction.active,
 		);
+
+	/** булевое состояние несправности кнопка Открыть ПТК, "Нет контакта, команда не уходит" */
 	const openPtkMalfunctionActive = openFromPtkElement.malfunctions.some(
 		malfunction =>
 			malfunction.id === 'c.3.1.3.2.1.1.1' && malfunction.active,
 	);
+
+	/** булевое состояние несправности кнопка Закрыть ПТК, "Нет контакта, команда не уходит" */
 	const closePtkMalfunctionActive = closeFromPtkElement.malfunctions.some(
 		malfunction =>
 			malfunction.id === 'c.3.2.3.2.1.1.1' && malfunction.active,
 	);
 
-	// получаем положение задвижки из стора
+	// /** булевое состояние несправности блока концевых выключателей ветки Открыть , "Залипший контакт" */
+	// const limitSwitchOpenMalfunctionActive =
+	// 	limitSwitchOpenElement.malfunctions.some(
+	// 		malfunction => malfunction.id === 'c.3.1.1.1' && malfunction.active,
+	// 	);
+	// /** булевое состояние несправности блока концевых выключателей ветки Закрыть , "Залипший контакт" */
+	// const limitSwitchCloseMalfunctionActive =
+	// 	limitSwitchOpenElement.malfunctions.some(
+	// 		malfunction => malfunction.id === 'c.3.1.1.1' && malfunction.active,
+	// 	);
+
+	/** получаем положение задвижки из стора */
 	const gatePosition = useRef(
 		useAppSelector(state => state.gate.gates[gateId].position),
 	);
 
-	// создаем интервал в глобальной ОВ
+	/** создаем интервал в глобальной ОВ */
 	const gateInterval = useRef<NodeJS.Timeout | null>(null);
 
-	// Функция для остановки движения задвижки
+	/** Функция для остановки движения задвижки */
 	const stopGateMovement = (type: 'ptk' | 'kruzap') => {
 		const config =
 			type === 'ptk' ? PTK_BUTTONS_CONFIG : KRUZAP_BUTTONS_CONFIG;
@@ -132,7 +160,7 @@ export const useGateControlButtons = () => {
 		const config =
 			type === 'ptk' ? PTK_BUTTONS_CONFIG : KRUZAP_BUTTONS_CONFIG;
 
-		// проверяем на наличие неисправностей
+		/** проверяем на наличие неисправностей */
 		const malfunctionIsActive =
 			(type === 'kruzap' &&
 				((button === 'open' && openKruzapMalfunctionActive) ||
