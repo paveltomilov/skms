@@ -8,8 +8,10 @@ import EllipseClose from '@/shared/UI/icons/EllipseClose';
 import Micro from '@/shared/UI/icons/Micro';
 import ArrowChange from '@/shared/UI/icons/ArrowChange';
 import OperatorPanel from '@/entities/OperatorPanel';
+import useShowModal from '@/shared/hooks/useShowModal';
 
 const FooterPtk: FC = () => {
+	const handleModalNotification = useShowModal('notification');
 	return (
 		<footer className={styles.footer} aria-label="Панель управления">
 			<nav
@@ -48,12 +50,14 @@ const FooterPtk: FC = () => {
 						height={26}
 						aria-label="Кнопка С"
 						text="С"
+						onClick={handleModalNotification}
 					/>
 					<Button
 						width={26}
 						height={26}
 						aria-label="Кнопка З"
 						text="З"
+						onClick={handleModalNotification}
 					/>
 				</div>
 				<div className={styles.footer__centralGroup__middle}>
@@ -62,12 +66,14 @@ const FooterPtk: FC = () => {
 						height={28}
 						aria-label="Левый контрол"
 						icon={<ArrowChange />}
+						onClick={handleModalNotification}
 					/>
 					<Button
 						width={88}
 						height={28}
 						aria-label="Правый контрол"
 						icon={<ArrowChange transform="mirror" />}
+						onClick={handleModalNotification}
 					/>
 				</div>
 				<div className={styles.footer__centralGroup__right}>
@@ -76,6 +82,7 @@ const FooterPtk: FC = () => {
 						height={26}
 						aria-label="Блок 1"
 						text="Бл1"
+						onClick={handleModalNotification}
 					/>
 					<Button
 						width={26}
@@ -83,6 +90,7 @@ const FooterPtk: FC = () => {
 						aria-label="Закрыть"
 						icon={<Close size="xs" />}
 						className={styles.footer__centralGroup__right_close}
+						onClick={handleModalNotification}
 					/>
 				</div>
 			</div>
@@ -94,12 +102,14 @@ const FooterPtk: FC = () => {
 						height={28}
 						aria-label="Инструмент 1"
 						icon={<EllipseClose />}
+						onClick={handleModalNotification}
 					/>
 					<Button
 						width={88}
 						height={28}
 						aria-label="Инструмент 2"
 						icon={<Micro />}
+						onClick={handleModalNotification}
 					/>
 				</div>
 				<div className={styles.footer__warning__wrapper}>
