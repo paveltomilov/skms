@@ -2,6 +2,8 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
 	reactStrictMode: true,
+	output: 'export',
+	trailingSlash: true,
 	images: {
 		// Разрешаем загрузку изображений из локальных источников
 		domains: [], // Добавьте домены, если используете внешние изображения
@@ -11,6 +13,8 @@ const nextConfig: NextConfig = {
 		deviceSizes: [320, 420, 768, 1024, 1200],
 		imageSizes: [16, 32, 48, 64, 96],
 	},
+	basePath: '',
+	assetPrefix: '',
 
 	webpack(config) {
 		config.resolve.alias = {

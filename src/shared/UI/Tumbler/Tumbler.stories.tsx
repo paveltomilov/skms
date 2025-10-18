@@ -1,26 +1,21 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type {Meta, StoryObj} from '@storybook/react';
 import Switch from '.';
-import { configureStore } from '@reduxjs/toolkit';
-import circuitReducer, { setResistance } from '@/store/circuitSlice';
-import { FC, useEffect } from 'react';
-import { getInputCircuitBreakerState } from '@/shared/utils/getInputCircuitBreakerState/getInputCircuitBreakerState';
-import {
-	BASE_RESISTANCE,
-	HIGH_RESISTANCE,
-	INPUT_CIRCUIT_BREAKER_ID,
-} from '@/shared/configs/scheme';
-import { Provider } from 'react-redux';
-import type { Decorator } from '@storybook/react';
+import {configureStore} from '@reduxjs/toolkit';
+import circuitReducer, {setResistance} from '@/store/circuitSlice';
+import {FC, useEffect} from 'react';
+import {getInputCircuitBreakerState} from '@/shared/utils/getInputCircuitBreakerState/getInputCircuitBreakerState';
+import {BASE_RESISTANCE, HIGH_RESISTANCE, INPUT_CIRCUIT_BREAKER_ID,} from '@/shared/configs/scheme';
+import {Provider} from 'react-redux';
+
+interface SwitchProps {
+	mode: 'open' | 'close';
+}
 
 const mockStore = configureStore({
 	reducer: {
 		circuit: circuitReducer,
 	},
 });
-
-interface Prop {
-	state: 'on' | 'off';
-}
 
 const meta: Meta<typeof Switch> = {
 	title: 'Switch',
@@ -30,8 +25,8 @@ const meta: Meta<typeof Switch> = {
 	},
 	tags: ['autodocs'],
 	decorators: [
-		(Story, { args }) => {
-			const { state } = args as Prop;
+		(Story, { context }) => {
+			const { state } = context.parameters as {state: 'on' | 'off'};
 			const StoreUpdater: FC = () => {
 				const mode = getInputCircuitBreakerState();
 
@@ -67,22 +62,19 @@ const meta: Meta<typeof Switch> = {
 			);
 		},
 	],
-	argTypes: {
-		state: {
-			description: 'Состояния переключателя: on - вкл, off - выкл',
-			options: ['on', 'off'],
-			control: {
-				type: 'radio',
-			},
-		},
-	},
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const On: Story = {
+	parameters: {
+		state: 'on',
+	},
+};
+
+export const Off: Story = {
 	args: {
-		state: 'open',
+		state: 'off',
 	},
 };

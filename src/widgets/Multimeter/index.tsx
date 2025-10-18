@@ -5,7 +5,7 @@ import ControlPanel from '@/entities/ControlPanel';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import ProbeHolder from '@/shared/UI/icons/ProbeHolder';
 import Probe from '@/entities/Probe';
-import { useEffect } from 'react';
+import React, {useEffect, useMemo} from 'react';
 import { getMultimeterAction } from '@/store/actions/multimiter/getMultimeterAction';
 import { MultimeterModePropPayload, attachProbe, detachProbe } from '@/store/multimeterSlice';
 import {
@@ -32,7 +32,7 @@ const Multimeter: React.FC = () => {
 	const isVoltageMode =
 		currentMode.startsWith('ACV') || currentMode.startsWith('DCV');
 
-	const probeState: MultimeterModePropPayload = {
+	const probeState: MultimeterModePropPayload = useMemo(() => ({
 		red: {
 			isNeutral:
 				redProbe === POWER_CIRCUIT_NEUTRAL_ID ||
@@ -45,7 +45,7 @@ const Multimeter: React.FC = () => {
 				blackProbe === CONTROL_CIRCUIT_NEUTRAL_ID,
 			isPower: blackIsPowerPoint,
 		},
-	};
+	}), [redProbe, blackProbe, redIsPowerPoint, blackIsPowerPoint]);
 
 	//Экшен для текущего режима мультиметра
 	const modeAction = getMultimeterAction(currentMode);
@@ -67,7 +67,7 @@ const Multimeter: React.FC = () => {
 
 	useEffect(() => {
 		dispatch(modeAction(probeState));
-	}, [probeState, modeAction]);
+	}, [probeState, modeAction, dispatch]);
 
 	return (
 		<div className={styles.multimeter}>
