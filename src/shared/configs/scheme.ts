@@ -137,12 +137,12 @@ export const SCHEME_ELEMENTS: { id: string; aria: string; type: Modals }[] = [
 	},
 	{
 		id: LIMIT_SWITCH_CLOSE_ID,
-		aria: 'Концевой выключатель закрыто',
+		aria: 'Концевой выключатель ветки закрыто',
 		type: 'block_switches',
 	},
 	{
 		id: LIMIT_SWITCH_OPEN_ID,
-		aria: 'Концевой выключатель открыто',
+		aria: 'Концевой выключатель ветки открыто',
 		type: 'block_switches',
 	},
 	{
@@ -774,7 +774,7 @@ const controlCircuit = [
 			//ветка открыть
 			{
 				id: LIMIT_SWITCH_OPEN_ID,
-				name: 'Концевой выключатель открыто',
+				name: 'Концевой выключатель ветки открыто',
 				resistance: 0,
 				malfunctions: [
 					{
@@ -924,7 +924,7 @@ const controlCircuit = [
 			//ветка закрыть
 			{
 				id: LIMIT_SWITCH_CLOSE_ID,
-				name: 'Концевой выключатель закрыто',
+				name: 'Концевой выключатель ветки закрыто',
 				resistance: 0,
 				malfunctions: [
 					{
@@ -935,7 +935,7 @@ const controlCircuit = [
 					{
 						id: 'c.3.2.1.2',
 						name: 'Нет контакта',
-						active: true,
+						active: false,
 					},
 					{
 						id: 'c.3.2.1.3',

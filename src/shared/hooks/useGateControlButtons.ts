@@ -118,13 +118,13 @@ export const useGateControlButtons = () => {
 		);
 
 	/** булевое состояние несправности блока концевых выключателей ветки Открыть , "Нет контакта" */
-	const NotClosedLimitSwitchOpenMalfunction =
+	const notClosedLimitSwitchOpenMalfunction =
 		limitSwitchOpenElement.malfunctions.some(
 			malfunction => malfunction.id === 'c.3.1.1.2' && malfunction.active,
 		);
 
 	/** булевое состояние несправности блока концевых выключателей ветки Закрыть , "Нет контакта" */
-	const NotClosedLimitSwitchCloseMalfunction =
+	const notClosedLimitSwitchCloseMalfunction =
 		limitSwitchCloseElement.malfunctions.some(
 			malfunction => malfunction.id === 'c.3.2.1.2' && malfunction.active,
 		);
@@ -156,12 +156,36 @@ export const useGateControlButtons = () => {
 			dispatch(
 				setGatePosition({ id: gateId, position: gatePosition.current }),
 			); // Диспатчим текущее положение при остановке
-			dispatch(
-				setGateState({
-					id: gateId,
-					states: GATE_STATE_TYPE.intermediate,
-				}),
-			);
+
+			if (
+				hasSticksLimitSwitchCloseMalfunction &&
+				gatePosition.current === 0
+			) {
+				dispatch(
+					setGateState({
+						id: gateId,
+						states: GATE_STATE_TYPE.close,
+					}),
+				);
+			} else if (
+				hasSticksLimitSwitchOpenMalfunction &&
+				gatePosition.current === 100
+			) {
+				dispatch(
+					setGateState({
+						id: gateId,
+						states: GATE_STATE_TYPE.open,
+					}),
+				);
+			} else {
+				dispatch(
+					setGateState({
+						id: gateId,
+						states: GATE_STATE_TYPE.intermediate,
+					}),
+				);
+			}
+
 			console.log(
 				`Задвижка остановилась в положении: ${gatePosition.current}%`,
 			);
@@ -192,14 +216,14 @@ export const useGateControlButtons = () => {
 
 		//проверяем на наличие неисправностей кнопок блока концевых выключателей
 
-		if (NotClosedLimitSwitchOpenMalfunction && button === 'open') {
+		if (notClosedLimitSwitchOpenMalfunction && button === 'open') {
 			console.log(
 				`${limitSwitchOpenElement.name}  имеет неиспрвность 'Нет контакта'`,
 			);
 			return;
 		}
 
-		if (NotClosedLimitSwitchCloseMalfunction && button === 'close') {
+		if (notClosedLimitSwitchCloseMalfunction && button === 'close') {
 			console.log(
 				`${limitSwitchCloseElement.name} имеет неиспрвность 'Нет контакта'`,
 			);
@@ -232,8 +256,21 @@ export const useGateControlButtons = () => {
 					gatePosition.current = 100;
 					//проверяем на наличие неисправностей кнопок блока концевых выключателей
 					if (hasSticksLimitSwitchOpenMalfunction) {
+						dispatch(
+							setGatePosition({
+								id: gateId,
+								position: 100,
+							}),
+						);
+						dispatch(
+							setGateState({
+								id: gateId,
+								states: GATE_STATE_TYPE.open,
+							}),
+						);
+
 						console.log(
-							`${limitSwitchOpenElement.name} имеет неиспрвность 'Залипший контакт'`,
+							`Конецквой ${limitSwitchOpenElement.name} имеет неиспрвность 'Залипший контакт'`,
 						);
 						return;
 					}
@@ -262,8 +299,20 @@ export const useGateControlButtons = () => {
 					gatePosition.current = 0;
 					//проверяем на наличие неисправностей кнопок блока концевых выключателей
 					if (hasSticksLimitSwitchCloseMalfunction) {
+						dispatch(
+							setGatePosition({
+								id: gateId,
+								position: 0,
+							}),
+						);
+						dispatch(
+							setGateState({
+								id: gateId,
+								states: GATE_STATE_TYPE.close,
+							}),
+						);
 						console.log(
-							`${limitSwitchCloseElement.name} имеет неиспрвность 'Залипший контакт'`,
+							`Конецквой ${limitSwitchOpenElement.name} имеет неиспрвность 'Залипший контакт'`,
 						);
 						return;
 					}
