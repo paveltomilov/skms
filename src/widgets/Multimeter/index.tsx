@@ -5,9 +5,13 @@ import ControlPanel from '@/entities/ControlPanel';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import ProbeHolder from '@/shared/UI/icons/ProbeHolder';
 import Probe from '@/entities/Probe';
-import React, {useEffect, useMemo} from 'react';
+import { useEffect } from 'react';
 import { getMultimeterAction } from '@/store/actions/multimiter/getMultimeterAction';
-import { MultimeterModePropPayload, attachProbe, detachProbe } from '@/store/multimeterSlice';
+import {
+	MultimeterModePropPayload,
+	attachProbe,
+	detachProbe,
+} from '@/store/multimeterSlice';
 import {
 	CONTROL_CIRCUIT_NEUTRAL_ID,
 	POWER_CIRCUIT_NEUTRAL_ID,
@@ -22,52 +26,71 @@ const Multimeter: React.FC = () => {
 	const redProbe = probeConnections.red;
 	const blackProbe = probeConnections.black;
 
-	const redIsPowerPoint = useAppSelector(
+	const redHasVoltage = useAppSelector(
 		state => state.points[redProbe as string],
 	);
-	const blackIsPowerPoint = useAppSelector(
+	const blackHasVoltage = useAppSelector(
 		state => state.points[blackProbe as string],
 	);
 
 	const isVoltageMode =
 		currentMode.startsWith('ACV') || currentMode.startsWith('DCV');
+	const isResistanceMode = currentMode.startsWith('OHM');
 
-	const probeState: MultimeterModePropPayload = useMemo(() => ({
-		red: {
-			isNeutral:
-				redProbe === POWER_CIRCUIT_NEUTRAL_ID ||
-				redProbe === CONTROL_CIRCUIT_NEUTRAL_ID,
-			isPower: redIsPowerPoint,
-		},
-		black: {
-			isNeutral:
-				blackProbe === POWER_CIRCUIT_NEUTRAL_ID ||
-				blackProbe === CONTROL_CIRCUIT_NEUTRAL_ID,
-			isPower: blackIsPowerPoint,
-		},
-	}), [redProbe, blackProbe, redIsPowerPoint, blackIsPowerPoint]);
+	const shouldStickToControlNeutral = isVoltageMode || isResistanceMode;
 
-	//Экшен для текущего режима мультиметра
-	const modeAction = getMultimeterAction(currentMode);
-
-	//Фиксируем черный щуп на нейтрали при измерении напряжения
 	useEffect(() => {
-		if (!isVoltageMode) {
-			dispatch(detachProbe('black'));
+		if (activeProb === 'black') return;
+
+		if (shouldStickToControlNeutral) {
+			if (blackProbe === CONTROL_CIRCUIT_NEUTRAL_ID) return;
+
+			dispatch(
+				attachProbe({
+					probeColor: 'black',
+					pointId: CONTROL_CIRCUIT_NEUTRAL_ID,
+				}),
+			);
 			return;
 		}
 
-		dispatch(
-			attachProbe({
-				probeColor: 'black',
-				pointId: CONTROL_CIRCUIT_NEUTRAL_ID,
-			}),
-		);
-	}, [dispatch, isVoltageMode]);
+		if (!blackProbe) return;
 
+		dispatch(detachProbe('black'));
+	}, [
+		dispatch,
+		shouldStickToControlNeutral,
+		blackProbe,
+		activeProb,
+	]);
+
+	
 	useEffect(() => {
-		dispatch(modeAction(probeState));
-	}, [probeState, modeAction, dispatch]);
+		const probeState: MultimeterModePropPayload = {
+			red: {
+				isNeutral:
+					redProbe === POWER_CIRCUIT_NEUTRAL_ID ||
+					redProbe === CONTROL_CIRCUIT_NEUTRAL_ID,
+				isPower: redHasVoltage,
+			},
+			black: {
+				isNeutral:
+					blackProbe === POWER_CIRCUIT_NEUTRAL_ID ||
+					blackProbe === CONTROL_CIRCUIT_NEUTRAL_ID,
+				isPower: blackHasVoltage,
+			},
+		};
+
+		const action = getMultimeterAction(currentMode);
+		dispatch(action(probeState));
+	}, [
+		dispatch,
+		currentMode,
+		redProbe,
+		blackProbe,
+		redHasVoltage,
+		blackHasVoltage,
+	]);
 
 	return (
 		<div className={styles.multimeter}>
@@ -76,7 +99,6 @@ const Multimeter: React.FC = () => {
 			<ProbeHolder
 				className={`${styles.multimeter__probeHolder} ${styles.multimeter__probeHolder_black}`}
 			>
-				{/* если щуп не перетаскивается и не прикреплен к схеме, он рендерится мультиметром */}
 				{activeProb !== 'black' && !probeConnections['black'] && (
 					<Probe color="black" />
 				)}
@@ -84,7 +106,6 @@ const Multimeter: React.FC = () => {
 			<ProbeHolder
 				className={`${styles.multimeter__probeHolder} ${styles.multimeter__probeHolder_red}`}
 			>
-				{/* если щуп не перетаскивается и не прикреплен к схеме, он рендерится мультиметром */}
 				{activeProb !== 'red' && !probeConnections['red'] && (
 					<Probe color="red" />
 				)}

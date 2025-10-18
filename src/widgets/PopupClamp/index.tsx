@@ -2,8 +2,13 @@ import Provod from '@/shared/UI/Provod';
 import styles from './style.module.scss';
 import ProvodConstructor from '@/shared/UI/ProvodConstructor';
 import ScrewConnection from '@/shared/UI/ScrewConnection';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
+import { AppDispatch, RootState } from '@/store/store';
+import { togglePointState } from '@/store/pointsSlice';
 
 const PopupClamp = () => {
+	const dispatch = useAppDispatch<AppDispatch>();
+	const screwStates = useAppSelector((state: RootState) => state.points);
 	return (
 		<div className={styles.popup}>
 			<div className={styles.contact}>
@@ -23,9 +28,16 @@ const PopupClamp = () => {
 							turn_A="180"
 						/>
 						<ScrewConnection
+							pointId="p.p.1.4.1.2"
+							screwStatus={
+								screwStates['p.p.1.4.1.2'] ? 'close' : 'open'
+							}
 							className={styles.top__screw}
 							provodLocation="left"
 							textRight="A"
+							onToggle={() =>
+								dispatch(togglePointState('p.p.1.4.1.2'))
+							}
 						/>
 						<ProvodConstructor
 							className={styles.top__provodRight}
@@ -34,8 +46,13 @@ const PopupClamp = () => {
 							turn_A="0"
 						/>
 						<ScrewConnection
+							pointId="p.p.n"
+							screwStatus={
+								screwStates['p.p.n'] ? 'close' : 'open'
+							}
 							className={styles.top__connect}
 							provodLocation="left"
+							onToggle={() => dispatch(togglePointState('p.p.n'))}
 						/>
 						<ProvodConstructor
 							className={styles.top__topA}
@@ -58,13 +75,25 @@ const PopupClamp = () => {
 							retreatMarker={20}
 						/>
 						<ScrewConnection
+							pointId="p.p.2.5"
+							screwStatus={
+								screwStates['p.p.2.5'] ? 'close' : 'open'
+							}
 							className={styles.center__screw}
 							provodLocation="left"
 							textRight="B"
+							onToggle={() =>
+								dispatch(togglePointState('p.p.2.5'))
+							}
 						/>
 						<ScrewConnection
+							pointId="p.p.n"
+							screwStatus={
+								screwStates['p.p.n'] ? 'close' : 'open'
+							}
 							className={styles.center__connect}
 							provodLocation="left"
+							onToggle={() => dispatch(togglePointState('p.p.n'))}
 						/>
 						<ProvodConstructor
 							className={styles.center__topA}
@@ -97,8 +126,13 @@ const PopupClamp = () => {
 							turn_A="270"
 						/>
 						<ScrewConnection
+							pointId="p.p.n"
+							screwStatus={
+								screwStates['p.p.n'] ? 'close' : 'open'
+							}
 							className={styles.bottom__connect}
 							provodLocation="left"
+							onToggle={() => dispatch(togglePointState('p.p.n'))}
 						/>
 						<ProvodConstructor
 							className={styles.bottom__topA}
@@ -113,9 +147,16 @@ const PopupClamp = () => {
 						/>
 					</div>
 					<ScrewConnection
+						pointId="p.p.3.4.1.2"
+						screwStatus={
+							screwStates['p.p.3.4.1.2'] ? 'close' : 'open'
+						}
 						className={styles.bottom__screw}
 						provodLocation="left"
 						textRight="C"
+						onToggle={() =>
+							dispatch(togglePointState('p.p.3.4.1.2'))
+						}
 					/>
 				</div>
 			</div>

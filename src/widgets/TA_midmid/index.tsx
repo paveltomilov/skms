@@ -10,6 +10,7 @@ import Actuator from '@/shared/UI/Actuator';
 import { ACTUATORS } from '@/shared/configs/actuator';
 import { useAppSelector } from '@/shared/hooks/store';
 import { useOpenGatePopup } from '@/shared/hooks/useOpenGatePopup';
+import useShowModal from '@/shared/hooks/useShowModal';
 
 interface Props {
 	className?: string;
@@ -17,7 +18,7 @@ interface Props {
 
 const TAMidMId: FC<Props> = ({ className }) => {
 	const { g4, g5 } = useAppSelector(state => state.gate.gates);
-
+	const handleModalNotification = useShowModal('notification');
 	const openGatePopup = useOpenGatePopup();
 	return (
 		<div className={cn(className, styles.container)}>
@@ -113,6 +114,7 @@ const TAMidMId: FC<Props> = ({ className }) => {
 						height={28}
 						text="ПСГ"
 						className={styles.windowsRight__btn}
+						onClick={handleModalNotification}
 					/>
 				</section>
 				<span className={styles.textLabelBottom}>Обратная СВ</span>
@@ -121,7 +123,12 @@ const TAMidMId: FC<Props> = ({ className }) => {
 			{/* Нижний блок с 7 колонками */}
 			<section className={styles.bottomGrid}>
 				<div className={styles.bottomGroup}>
-					<Button width={88} height={28} text="ПНД" />
+					<Button
+						width={88}
+						height={28}
+						text="ПНД"
+						onClick={handleModalNotification}
+					/>
 					<Window data={WINDOWS.w57} right />
 					<Window data={WINDOWS.w61} right />
 				</div>

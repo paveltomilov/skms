@@ -9,6 +9,7 @@ import ArrowButton from '@/shared/UI/Actuator';
 import { WINDOWS } from '@/shared/configs/window';
 import { useAppSelector } from '@/shared/hooks/store';
 import { useOpenGatePopup } from '@/shared/hooks/useOpenGatePopup';
+import useShowModal from '@/shared/hooks/useShowModal';
 
 interface Props {
 	className?: string;
@@ -16,6 +17,7 @@ interface Props {
 
 const TALeftDown: FC<Props> = ({ className }) => {
 	const { g7, g6, g8 } = useAppSelector(state => state.gate.gates);
+	const handleModalNotification = useShowModal('notification');
 
 	const openGatePopup = useOpenGatePopup();
 
@@ -114,6 +116,7 @@ const TALeftDown: FC<Props> = ({ className }) => {
 				height={28}
 				text="ПВД"
 				className={styles.button}
+				onClick={handleModalNotification}
 			/>
 			<ArrowButton
 				state="off"
