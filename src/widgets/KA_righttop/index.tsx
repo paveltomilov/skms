@@ -7,6 +7,7 @@ import Gate from '@/shared/UI/Gate';
 import { GATES } from '@/shared/configs/gate';
 import { useOpenGatePopup } from '@/shared/hooks/useOpenGatePopup';
 import Button from '@/shared/UI/Button';
+import useShowModal from '@/shared/hooks/useShowModal';
 
 interface Props {
 	className?: string;
@@ -14,6 +15,7 @@ interface Props {
 
 const KARightTop: FC<Props> = ({ className }) => {
 	const openGatePopup = useOpenGatePopup();
+	const handleModalNotification = useShowModal('notification');
 	return (
 		<div className={cn(className, styles.container)}>
 			<div className={styles.windowTop}>
@@ -82,6 +84,7 @@ const KARightTop: FC<Props> = ({ className }) => {
 						text="ПИТ"
 						width={92}
 						height={28}
+						onClick={handleModalNotification}
 					/>
 				</div>
 			</div>

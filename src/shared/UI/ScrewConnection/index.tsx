@@ -5,31 +5,27 @@ import styles from './styles.module.scss';
 import { MarkerName } from '@/shared/types/markers';
 import Screw from '../icons/Screw';
 import Provod from '../Provod';
-
-interface Props {
-	pointId: string;
-	dropId?: string;
+export interface Props {
+	screwStatus?: 'close' | 'open';
+	pointId?: string;
 	className?: string;
-	isOpen?: boolean;
 	textRight?: MarkerName;
 	textTop?: MarkerName;
 	textLeft?: MarkerName;
 	provodLocation?: 'bottom' | 'left' | 'top' | 'right';
-	probeOffsetX?: number;
-	probeOffsetY?: number;
+	onToggle: () => void;
 }
 
 const ScrewConnection: FC<Props> = ({
+	screwStatus = 'close',
 	pointId,
 	dropId,
 	className,
-	isOpen = false,
 	textRight,
 	textTop,
 	textLeft,
 	provodLocation,
-	probeOffsetX = 0,
-	probeOffsetY = 0,
+	onToggle,
 }) => {
 	const dropTargetId = dropId ?? pointId;
 
@@ -44,34 +40,30 @@ const ScrewConnection: FC<Props> = ({
 	});
 
 	const [deg, setDeg] = useState<90 | 180 | 270 | 0>(0);
-	const [open, setOpen] = useState<boolean>(isOpen);
 
 	useEffect(() => {
 		if (provodLocation === 'left') setDeg(90);
 		if (provodLocation === 'top') setDeg(180);
 		if (provodLocation === 'right') setDeg(270);
 		if (provodLocation === 'bottom') setDeg(0);
-
-		setOpen(isOpen);
-	}, [provodLocation, isOpen]);
+	}, [provodLocation]);
 
 	return (
 		<div
-			ref={setNodeRef}
-			data-drop-id={dropTargetId}
-			data-probe-offset-x={probeOffsetX}
-			data-probe-offset-y={probeOffsetY}
-			className={cn(className, styles.component, pointId, {
-				[styles.component_over]: isOver,
-			})}
+			className={cn(
+				className,
+				styles.component,
+				pointId,
+				`${screwStatus}`,
+			)}
 		>
 			<Screw
 				className={styles.screw}
-				isOpen={open}
+				status={screwStatus}
 				textLeft={textLeft}
 				textRight={textRight}
 				textTop={textTop}
-				onClick={setOpen}
+				onClick={onToggle}
 			/>
 			<Provod
 				className={cn(styles.provod, {
@@ -82,7 +74,7 @@ const ScrewConnection: FC<Props> = ({
 				})}
 				isPin
 				isBreak={false}
-				length={open ? 1 : 22}
+				length={screwStatus === 'open' ? 1 : 22}
 				rotate={deg}
 			/>
 		</div>
