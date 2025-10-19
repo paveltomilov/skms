@@ -1,7 +1,7 @@
 import { findElementByID } from '@/shared/utils/findElementByID/scheme';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { InitialStateScheme } from '@/shared/types/scheme';
-import { initialStateScheme } from '../shared/configs/scheme';
+import { initialStateScheme } from '@/shared/configs/scheme';
 
 const initialState: InitialStateScheme = initialStateScheme;
 const circuitSlice = createSlice({

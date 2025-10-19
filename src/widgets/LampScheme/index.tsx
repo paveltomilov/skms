@@ -6,14 +6,19 @@ import LampIndicator from '@/shared/UI/LampIndicator';
 import Marker from '@/shared/UI/Marker';
 import Channel from '@/shared/UI/icons/Channel';
 import styles from './styles.module.scss';
-import { columns, pins } from '@/shared/configs/lampsScheme';
+import { columns } from '@/shared/configs/lampsScheme';
 import ScrewConnection from '@/shared/UI/ScrewConnection';
 import ProvodLine from '@/shared/UI/icons/ProvodLine';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
+import { AppDispatch, RootState } from '@/store/store';
+import { togglePointState } from '@/store/pointsSlice';
 
 export const LampScheme: FC = () => {
+	const dispatch = useAppDispatch<AppDispatch>();
+	const screwStates = useAppSelector((state: RootState) => state.points);
 	return (
 		<section className={styles.container} aria-label="Схема ламп">
-			{columns.map(({ title, color }) => (
+			{columns.map(({ title, color, points }) => (
 				<section
 					key={title}
 					className={cn(styles.column, {
@@ -21,16 +26,14 @@ export const LampScheme: FC = () => {
 					})}
 					aria-labelledby={`lamp-${title}`}
 				>
-					<h3 id={`lamp-${title}`} >
-						{title}
-					</h3>
+					<h3 id={`lamp-${title}`}>{title}</h3>
 					<LampIndicator color={color} aria-hidden />
 					<ul className={styles.foot} aria-label="Клеммы">
-						{pins.map(({ code }) => (
+						{points.map(({ marker, point }) => (
 							<li
-								key={code}
+								key={marker}
 								className={styles.pin}
-								aria-label={`Клемма ${code}`}
+								aria-label={`Клемма ${marker}`}
 							>
 								<Channel
 									size="md"
@@ -38,10 +41,16 @@ export const LampScheme: FC = () => {
 									aria-hidden
 								/>
 								<ScrewConnection
-									pointId='unknown'
+									pointId={point}
+									screwStatus={
+										screwStates[point] ? 'close' : 'open'
+									}
 									className={styles.pin__screw}
-									textLeft={code}
+									textLeft={marker}
 									aria-hidden
+									onToggle={() =>
+										dispatch(togglePointState(point))
+									}
 								/>
 								<ProvodLine
 									isPin={false}
@@ -50,8 +59,9 @@ export const LampScheme: FC = () => {
 									aria-hidden
 								/>
 								<Marker
-									text={code}
+									text={marker}
 									className={styles.pin__marker}
+									bottomRetreat={30}
 								/>
 							</li>
 						))}

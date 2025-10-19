@@ -1,6 +1,6 @@
 'use client';
 import styles from './styles.module.scss';
-import { FC, useEffect } from 'react';
+import {FC, useCallback, useEffect} from 'react';
 import { SCHEME_ELEMENTS } from '@/shared/configs/scheme';
 import { SchemeElement } from '@/entities/SchemeElement';
 import { SchemePoint } from '@/entities/SchemePoint';
@@ -31,13 +31,13 @@ const Scheme: FC = () => {
 	// для состояния точек (вынести в отдельный хук)
 	const points = useAppSelector(state => state.points);
 	const scheme = useAppSelector(state => state.circuit);
-	function dispatched(payload: Record<string, boolean>) {
+	const dispatched = useCallback((payload: Record<string, boolean>) => {
 		dispatch(setVoltagePoints(payload));
-	}
+	}, [dispatch]);
 
 	useEffect(() => {
 		setNewVoltagePoints(scheme, points, dispatched);
-	}, [scheme]);
+	}, [dispatched, points, scheme]);
 
 	return (
 		<div className={styles.scheme}>

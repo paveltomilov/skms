@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 
 interface Position {
 	x: number;
@@ -26,18 +26,18 @@ export function useDragging() {
 		});
 	};
 
-	const handleMouseMove = (e: MouseEvent) => {
+	const handleMouseMove = useCallback((e: MouseEvent) => {
 		if (!isDragging) return;
 
 		setPosition({
 			x: e.clientX - startPos.x,
 			y: e.clientY - startPos.y,
 		});
-	};
+	}, [isDragging, startPos.x, startPos.y]);
 
-	const handleMouseUp = () => {
+	const handleMouseUp = useCallback(() => {
 		setIsDragging(false);
-	};
+	}, []);
 
 	// Добавляем/удаляем глобальные обработчики
 	useEffect(() => {
@@ -53,7 +53,7 @@ export function useDragging() {
 			document.removeEventListener('mousemove', handleMouseMove);
 			document.removeEventListener('mouseup', handleMouseUp);
 		};
-	}, [isDragging, startPos]);
+	}, [handleMouseMove, handleMouseUp, isDragging, startPos]);
 
 	return {
 		handleMouseDown,
