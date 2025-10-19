@@ -37,7 +37,7 @@ const Scheme: FC = () => {
 
 	useEffect(() => {
 		setNewVoltagePoints(scheme, points, dispatched);
-	}, [dispatched, points, scheme]);
+	}, [dispatched, scheme]);
 
 	return (
 		<div className={styles.scheme}>
