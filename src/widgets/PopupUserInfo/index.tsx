@@ -40,14 +40,14 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
             </div>
             <ul className={styles.userInfo__more}>
                 <li>
-                    <img src='/svg/support.svg' />
+                    <img src='/svg/support.svg'  alt={'support'}/>
                     Помощь
                 </li>
                 <li>
-                    <img src='/svg/history.svg' />
+                    <img src='/svg/history.svg'  alt={'history'}/>
                     История сессий</li>
                 <li>
-                    <img src='/svg/add-account.svg' />
+                    <img src='/svg/add-account.svg'  alt={'add account'}/>
                     Добавить аккаунт</li>
             </ul>
             <Button
