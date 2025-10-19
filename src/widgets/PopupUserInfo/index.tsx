@@ -4,7 +4,6 @@ import Button from '@/shared/UI/Button';
 import { useRouter } from 'next/navigation';
 import cn from 'classnames';
 import ModalHeader from '@/entities/ModalHeader';
-import { deleteCookie } from 'cookies-next';
 import { useUserCookies } from '@/shared/hooks/useUserCookies';
 
 interface PopupUserInfoProps {
@@ -21,12 +20,10 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 
 	const handleLogout = () => {
 		localStorage.removeItem('accessToken');
-		deleteCookie('refreshToken');
-		deleteCookie('userFirstName');
-		deleteCookie('userLastName');
-		deleteCookie('userRole');
 		router.push('/');
 	};
+
+	const fullName = firstName && lastName ? `${firstName} ${lastName}` : '—';
 
 	return (
 		<div className={cn(className, styles.userInfo)}>
@@ -42,9 +39,7 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 				></img>
 				<div className={styles.userInfo__profile__info}>
 					<div className={styles.userInfo__profile__info__name}>
-						{firstName && lastName
-							? `${firstName} ${lastName}`
-							: '—'}
+						{fullName}
 					</div>
 					<div className={styles.userInfo__profile__info__status}>
 						{role === 'admin' ? 'Преподаватель' : 'Студент'}

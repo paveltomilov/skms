@@ -76,20 +76,11 @@ export async function postAuth(formData: LoginFormData): Promise<boolean> {
 			throw new Error('Данные некорректны');
 		}
 		if (response.status == 200) {
-			// Опции для cookies
-			// const cookieOptions = {
-			// 	maxAge: 60 * 60 * 24 * 7, // 7 дней
-			// 	path: '/',
-			// 	sameSite: 'lax' as const,
-			// 	secure: process.env.NODE_ENV === 'production',
-			// };
-
 			localStorage.setItem('accessToken', access);
 			setCookie('refreshToken', refresh);
-			setCookie('refreshToken', refresh);
-			setCookie('userFirstName', first_name);
-			setCookie('userLastName', last_name);
-			setCookie('userRole', role);
+			setCookie('first_name', first_name);
+			setCookie('last_name', last_name);
+			setCookie('role', role);
 			return true;
 		}
 		return false;
