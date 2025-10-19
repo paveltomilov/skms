@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import styles from './styles.module.scss';
 import { Display } from '@/entities/Display';
 import ControlPanel from '@/entities/ControlPanel';

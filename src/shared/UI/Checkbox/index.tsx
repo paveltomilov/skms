@@ -19,7 +19,7 @@ export const Checkbox: FC<CheckboxProps> = ({id,name, disabled, checked,size = '
 		<div className={style.checkbox}>
 			<input className={style.input} type="checkbox" id={id} name={name} disabled={disabled} checked={checked}/>
 			<label  className={style.label} htmlFor={id} style={{'--width': `${sizes.width}px`, '--height': `${sizes.height}px`} as React.CSSProperties}>
-				<Accept size={sizes.iconSize}/>
+				<Accept size={sizes.iconSize as 'xs' | 'sm'}/>
 				<p className={style.text}>{text}</p>
             </label>
 		</div>
