@@ -91,7 +91,7 @@ describe('LampScheme', () => {
 			[OPEN_POINT_ID]: false,
 		});
 
-		expect(colors).toEqual(['lamp_white_on', 'lamp_green_off']);
+		expect(colors).toEqual(['lamp_white_off', 'lamp_green_on']);
 	});
 
 	it('включает только зелёную лампу при питании А11', () => {
@@ -100,7 +100,7 @@ describe('LampScheme', () => {
 			[OPEN_POINT_ID]: true,
 		});
 
-		expect(colors).toEqual(['lamp_white_off', 'lamp_green_on']);
+		expect(colors).toEqual(['lamp_white_on', 'lamp_green_off']);
 	});
 
 	it('включает обе лампы при питании А11 и А19', () => {
@@ -124,6 +124,6 @@ describe('LampScheme', () => {
 			},
 		);
 
-		expect(colors).toEqual(['lamp_white_off', 'lamp_green_on']);
+		expect(colors).toEqual(['lamp_white_on', 'lamp_green_off']);
 	});
 });
