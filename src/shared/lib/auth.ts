@@ -71,7 +71,7 @@ export async function postAuth(formData: LoginFormData): Promise<boolean> {
 
 		const { access, refresh, first_name, last_name, role } = response.data;
 
-		if (!access || !refresh || !first_name || !last_name || !role) {
+		if (!access || !refresh) {
 			// throw new Error('Токены не получены');
 			throw new Error('Данные некорректны');
 		}
@@ -85,11 +85,11 @@ export async function postAuth(formData: LoginFormData): Promise<boolean> {
 			// };
 
 			localStorage.setItem('accessToken', access);
-			setCookie('refreshToken', refresh); // ← с опциями!
+			setCookie('refreshToken', refresh);
+			setCookie('refreshToken', refresh);
 			setCookie('userFirstName', first_name);
 			setCookie('userLastName', last_name);
-			setCookie('userRole', role); // ← сохраняем как есть: "admin" или "student"
-
+			setCookie('userRole', role);
 			return true;
 		}
 		return false;
