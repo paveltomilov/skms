@@ -8,6 +8,7 @@ import Rectangle from '@/shared/UI/icons/Rectangle';
 import { WINDOWS } from '@/shared/configs/window';
 import { useAppSelector } from '@/shared/hooks/store';
 import { useOpenGatePopup } from '@/shared/hooks/useOpenGatePopup';
+import useShowModal from '@/shared/hooks/useShowModal';
 
 interface Props {
 	className?: string;
@@ -15,6 +16,7 @@ interface Props {
 
 const TAleftmid: FC<Props> = ({ className }) => {
 	const { g2, g3 } = useAppSelector(state => state.gate.gates);
+	const handleModalNotification = useShowModal('notification');
 
 	const openGatePopup = useOpenGatePopup();
 
@@ -69,7 +71,12 @@ const TAleftmid: FC<Props> = ({ className }) => {
 				</div>
 				<div className={styles.containerThree}>
 					<h4 className={styles['containerThree__p']}>в котел</h4>
-					<Button width={88} height={28} text="ПИТ" />
+					<Button
+						width={88}
+						height={28}
+						text="ПИТ"
+						onClick={handleModalNotification}
+					/>
 				</div>
 
 				<div className={styles.containerFour}>
@@ -88,7 +95,12 @@ const TAleftmid: FC<Props> = ({ className }) => {
 					</div>
 
 					<h4 className={styles['containerFour__p']}>КСН</h4>
-					<Button width={88} height={28} text="РОУ" />
+					<Button
+						width={88}
+						height={28}
+						text="РОУ"
+						onClick={handleModalNotification}
+					/>
 
 					<div className={styles['containerFour__windowOne']}>
 						<Window data={WINDOWS.w24} right />

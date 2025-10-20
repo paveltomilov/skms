@@ -12,6 +12,7 @@ import Rectangle from '@/shared/UI/icons/Rectangle';
 import { UnitsMeasurement } from '@/shared/types/window';
 import { useAppSelector } from '@/shared/hooks/store';
 import { useOpenGatePopup } from '@/shared/hooks/useOpenGatePopup';
+import useShowModal from '@/shared/hooks/useShowModal';
 
 interface Props {
 	className?: string;
@@ -20,6 +21,7 @@ const dropPressure: UnitsMeasurement = 'dP';
 
 const TAMidDown: FC<Props> = ({ className }) => {
 	const { g9, g10 } = useAppSelector(state => state.gate.gates);
+	const handleModalNotification = useShowModal('notification');
 
 	const openGatePopup = useOpenGatePopup();
 	return (
@@ -30,6 +32,7 @@ const TAMidDown: FC<Props> = ({ className }) => {
 					height={28}
 					text="ПДУ"
 					className={styles.windowsTop__btn}
+					onClick={handleModalNotification}
 				/>
 			</div>
 			<div className={styles.windowsBottom}>
@@ -93,6 +96,7 @@ const TAMidDown: FC<Props> = ({ className }) => {
 						height={28}
 						text="ПЭН-В"
 						className={styles.windowsBottom__btn}
+						onClick={handleModalNotification}
 					/>
 					<div className={styles.windowsBottom__frame}>
 						<Window

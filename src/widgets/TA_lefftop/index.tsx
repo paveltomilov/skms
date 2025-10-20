@@ -7,6 +7,7 @@ import cn from 'classnames';
 import { WINDOWS } from '@/shared/configs/window';
 import { useAppSelector } from '@/shared/hooks/store';
 import { useOpenGatePopup } from '@/shared/hooks/useOpenGatePopup';
+import useShowModal from '@/shared/hooks/useShowModal';
 
 interface Props {
 	className?: string;
@@ -14,12 +15,18 @@ interface Props {
 
 const TALeftTop: FC<Props> = ({ className }) => {
 	const { g1 } = useAppSelector(state => state.gate.gates);
+	const handleModalNotification = useShowModal('notification');
 
 	const openGatePopup = useOpenGatePopup();
 
 	return (
 		<div className={cn(className, styles.container)}>
-			<Button width={88} height={28} text={'КА'} />
+			<Button
+				width={88}
+				height={28}
+				text={'КА'}
+				onClick={handleModalNotification}
+			/>
 			<p className={styles.container__p1}>ГПП</p>
 			<div className={styles.windowTop}>
 				<Window

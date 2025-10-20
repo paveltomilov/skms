@@ -12,12 +12,14 @@ import {
 	thirdWindows,
 	tildaConfig,
 } from '@/shared/configs/KALeftMid';
+import useShowModal from '@/shared/hooks/useShowModal';
 
 interface Props {
 	className?: string;
 }
 
 const KALeftMid: FC<Props> = ({ className }) => {
+	const handleModalNotification = useShowModal('notification');
 	return (
 		<div className={cn(className, styles.container)}>
 			<div className={styles.windows}>
@@ -34,6 +36,7 @@ const KALeftMid: FC<Props> = ({ className }) => {
 						height={16}
 						text={btn.text}
 						className={cn(styles.btn, styles[btn.bgClass])}
+						onClick={handleModalNotification}
 					/>
 				))}
 			</div>

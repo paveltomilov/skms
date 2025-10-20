@@ -15,5 +15,5 @@ export const useGateMalfunctions = () => {
 
 	useEffect(() => {
 		gateMalfunctions.forEach(id => dispatch(activateMalfunction(id)));
-	}, []);
+	}, [dispatch, gateMalfunctions]);
 };
