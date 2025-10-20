@@ -1,6 +1,6 @@
 ﻿import { Modals } from '@/store/modalSlice';
 import { CircuitBranch, InitialStateScheme } from '../types/scheme';
-import { E } from './controlCircuit.vars';
+import { elements } from './controlCircuit.vars';
 
 // id элементов схемы
 export const LIMIT_SWITCH_OPEN_ID = 'c.3.1.1';
@@ -720,78 +720,77 @@ const powerCircuit = [
 	],
 ];
 
-const controlCircuit: CircuitBranch[] = [
-	E.C0,
-	E.CONTROL_CIRCUIT_BREAKER,
-	E.C2,
+export const controlCircuit: CircuitBranch[] = [
+	elements['c.0'],
+	elements['c.1'],
+	elements['c.2'],
 	[
 		[
-			E.C_3_0_0,
-			E.C_3_0_1,
-			E.C_3_0_2,
-			E.C_3_0_3,
+			elements['c.3.0.0'],
+			elements['c.3.0.1'],
+			elements['c.3.0.2'],
+			elements['c.3.0.3'],
 			[
-				E.C_3_0_4_0_0,
-				E.C_3_0_4_0_1,
-				E.C_3_0_4_0_2,
+				elements['c.3.0.4.0.0'],
+				elements['c.3.0.4.0.1'],
+				elements['c.3.0.4.0.2'],
 			],
 			[
-				E.C_3_0_4_1_0_0_0,
-				E.C_3_0_4_1_0_0_1,
-				E.C_3_0_4_1_0_0_2,
+				elements['c.3.0.4.1.0.0.0'],
+				elements['c.3.0.4.1.0.0.1'],
+				elements['c.3.0.4.1.0.0.2'],
 			],
 			[
-				E.C_3_0_0_1_0,
-				E.C_3_0_0_1_1,
-				E.C_3_0_0_1_2,
-				E.C_3_0_0_1_4,
+				elements['c.3.0.0.1.0'],
+				elements['c.3.0.0.1.1'],
+				elements['c.3.0.0.1.2'],
+				elements['c.3.0.0.1.4'],
 			],
 			[
-				E.C_3_0_4_1_0_1_0,
-				E.C_3_0_4_1_0_1_1,
-				E.C_3_0_4_1_0_1_2,
+				elements['c.3.0.4.1.0.1.0'],
+				elements['c.3.0.4.1.0.1.1'],
+				elements['c.3.0.4.1.0.1.2'],
 			],
 			[
-				E.C_3_0_4_2_0,
-				E.C_3_0_4_2_1,
-				E.C_3_0_4_2_2,
+				elements['c.3.0.4.2.0'],
+				elements['c.3.0.4.2.1'],
+				elements['c.3.0.4.2.2'],
 			],
 		],
 		[
-			E.C_3_1_0,
-			E.C_3_1_1,
-			E.C_3_1_2,
-			E.C_3_1_3,
+			elements['c.3.1.0'],
+			elements['c.3.1.1'],
+			elements['c.3.1.2'],
+			elements['c.3.1.3'],
 			[
-				E.C_3_1_4_0_0,
-				E.C_3_1_4_0_1,
-				E.C_3_1_4_0_2,
+				elements['c.3.1.4.0.0'],
+				elements['c.3.1.4.0.1'],
+				elements['c.3.1.4.0.2'],
 			],
 			[
-				E.C_3_1_4_1_0_0_0,
-				E.C_3_1_4_1_0_0_1,
-				E.C_3_1_4_1_0_0_2,
+				elements['c.3.1.4.1.0.0.0'],
+				elements['c.3.1.4.1.0.0.1'],
+				elements['c.3.1.4.1.0.0.2'],
 			],
 			[
-				E.C_3_1_0_1_0,
-				E.C_3_1_0_1_1,
-				E.C_3_1_0_1_2,
-				E.C_3_1_0_1_4,
+				elements['c.3.1.0.1.0'],
+				elements['c.3.1.0.1.1'],
+				elements['c.3.1.0.1.2'],
+				elements['c.3.1.0.1.4'],
 			],
 			[
-				E.C_3_1_4_1_0_1_0,
-				E.C_3_1_4_1_0_1_1,
-				E.C_3_1_4_1_0_1_2,
+				elements['c.3.1.4.1.0.1.0'],
+				elements['c.3.1.4.1.0.1.1'],
+				elements['c.3.1.4.1.0.1.2'],
 			],
 			[
-				E.C_3_1_4_2_0,
-				E.C_3_1_4_2_1,
-				E.C_3_1_4_2_2,
+				elements['c.3.1.4.2.0'],
+				elements['c.3.1.4.2.1'],
+				elements['c.3.1.4.2.2'],
 			],
 		],
 	],
 ];
-
 
 export const initialStateScheme: InitialStateScheme = {
 	powerCircuit: powerCircuit,
