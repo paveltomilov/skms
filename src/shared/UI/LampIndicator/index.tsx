@@ -36,7 +36,7 @@ const LampIndicator: FC<Props> = ({
         href="/svg/sprite.svg#lampIndicator-top"
         width="100%"
         height="100%"
-        style={{ color: topColor, opacity: isOffState ? 0.5 : 1 }}
+        style={{ color: topColor, opacity: isOffState ? 0.7 : 1 }}
       />
     </svg>
   );
