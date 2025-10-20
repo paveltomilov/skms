@@ -3,14 +3,14 @@ import { initialStateScheme } from '@/shared/configs/scheme';
 import { findElementByID } from './scheme';
 
 describe('test function findElementById', () => {
-	// it('should accept ids starting with "p"', () => {
-	// 	const result = findElementByID('p.2.1', initialStateScheme);
-	// 	expect(result.id).toBe('p.2.1' );
-	// });
+	it('should accept ids starting with "p"', () => {
+		const result = findElementByID('p.1.1', initialStateScheme);
+		expect(result.id).toBe('p.1.1');
+	});
 
 	it('should accept ids starting with "c"', () => {
-		const result = findElementByID('c.1', initialStateScheme);
-		expect(result.id).toBe('c.1');
+		const result = findElementByID('c.0', initialStateScheme);
+		expect(result.id).toBe('c.0');
 	});
 
 	it('should throw error when id starts with wrong letter', () => {

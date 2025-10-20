@@ -1,5 +1,6 @@
-import { Modals } from '@/store/modalSlice';
-import { InitialStateScheme } from '../types/scheme';
+﻿import { Modals } from '@/store/modalSlice';
+import { CircuitBranch, InitialStateScheme } from '../types/scheme';
+import { E } from './controlCircuit.vars';
 
 // id элементов схемы
 export const LIMIT_SWITCH_OPEN_ID = 'c.3.1.1';
@@ -719,359 +720,78 @@ const powerCircuit = [
 	],
 ];
 
-const controlCircuit = [
-	{
-		id: CONTROL_CIRCUIT_BREAKER_ID,
-		name: 'Автомат питания цепей управления',
-		resistance: 0,
-		malfunctions: [
-			{
-				id: 'c.1.1',
-				name: 'Плохой контакт на клемме, нет фазы',
-				active: false,
-			},
-			{
-				id: 'c.1.2',
-				name: 'Ложно выбивает',
-				active: false,
-			},
-			{
-				id: 'c.1.3',
-				name: 'Собирается механически, но нет коммутации',
-				active: false,
-			},
-		],
-	},
-	{
-		id: 'c.2',
-		name: 'Провод фазы после автомата',
-		resistance: 0.1,
-		malfunctions: [
-			{
-				id: 'c.2.1',
-				name: 'Обрыв провода',
-				active: false,
-			},
-			{
-				id: 'c.2.2',
-				name: 'Короткое замыкание на землю',
-				active: false,
-			},
-			{
-				id: 'c.2.3',
-				name: 'Короткое замыкание с проводом от фазы на концевой выключатель закрыто',
-				active: false,
-			},
-			{
-				id: 'c.2.4',
-				name: 'Короткое замыкание с проводом фазы двигателя',
-				active: false,
-			},
-		],
-	},
+const controlCircuit: CircuitBranch[] = [
+	E.C0,
+	E.CONTROL_CIRCUIT_BREAKER,
+	E.C2,
 	[
 		[
-			//ветка открыть
-			{
-				id: LIMIT_SWITCH_OPEN_ID,
-				name: 'Концевой выключатель открыто',
-				resistance: 0,
-				malfunctions: [
-					{
-						id: 'c.3.1.1.1',
-						name: 'Залипший контакт',
-						active: false,
-					},
-					{
-						id: 'c.3.1.1.2',
-						name: 'Нет контакта',
-						active: false,
-					},
-					{
-						id: 'c.3.1.1.3',
-						name: 'Не настроен',
-						active: false,
-					},
-				],
-			},
-			{
-				id: 'c.3.1.2',
-				name: 'Провод концевого выключателя открыто до клемника КРУЗА-П',
-				resistance: 0.1,
-				malfunctions: [
-					{
-						id: 'c.3.1.2.1',
-						name: 'Обрыв провода',
-						active: false,
-					},
-					{
-						id: 'c.3.1.2.2',
-						name: 'Короткое замыкание на землю',
-						active: false,
-					},
-					{
-						id: 'c.3.1.2.3',
-						name: 'Короткое замыкание с проводом концевого выключателя закрыто до клемника КРУЗА-П',
-						active: false,
-					},
-					{
-						id: 'c.3.1.2.4',
-						name: 'Короткое замыкание с проводом фазы двигателя',
-						active: false,
-					},
-				],
-			},
+			E.C_3_0_0,
+			E.C_3_0_1,
+			E.C_3_0_2,
+			E.C_3_0_3,
 			[
-				{
-					id: 'c.3.1.3.1',
-					name: 'Вставка NDI (сигнал «не открыто»)',
-					resistance: 0,
-					malfunctions: [
-						{
-							id: 'c.3.1.3.1.1',
-							name: 'Нет контакта, сигнал не проходит',
-							active: false,
-						},
-						{
-							id: 'c.3.1.3.1.2',
-							name: 'Ложно сработанная, сигнал не снимается',
-							active: false,
-						},
-					],
-				},
-				[
-					[
-						{
-							id: OPEN_FROM_PTK_ID,
-							name: 'Вставка NDI (команда открыть с ПТК)',
-							resistance: 1000000000,
-							malfunctions: [
-								{
-									id: 'c.3.1.3.2.1.1.1',
-									name: 'Нет контакта, команда не уходит',
-									active: false,
-								},
-								{
-									id: 'c.3.1.3.2.1.1.2',
-									name: 'Ложно сработанная, команда постоянно висит',
-									active: false,
-								},
-							],
-						},
-						{
-							id: OPEN_FROM_KRUZAP_ID,
-							name: 'Кнопка КРУЗА-П (команда открыть с КРУЗА-П)',
-							resistance: 1000000000,
-							malfunctions: [
-								{
-									id: 'c.3.1.3.2.1.2.1',
-									name: 'Нет контакта, команда не уходит',
-									active: false,
-								},
-								{
-									id: 'c.3.1.3.2.1.2.2',
-									name: 'Ложно сработанная, команда постоянно висит',
-									active: false,
-								},
-							],
-						},
-					],
-					{
-						id: 'c.3.1.3.2.2',
-						name: 'Блокировка включения пускателя на открытие',
-						resistance: BASE_RESISTANCE['c.3.1.3.2.2'],
-						malfunctions: [
-							{
-								id: 'c.3.1.3.2.2.1',
-								name: 'Нет контакта',
-								active: false,
-							},
-							{
-								id: 'c.3.1.3.2.2.2',
-								name: 'Ложно сработанный контакт',
-								active: false,
-							},
-						],
-					},
-					{
-						id: 'c.3.1.3.2.3',
-						name: 'Катушка пускателя открыть',
-						resistance: BASE_RESISTANCE['c.3.1.3.2.3'],
-						malfunctions: [
-							{
-								id: 'c.3.1.3.2.3.1',
-								name: 'Неисправна катушка, пускатель не подтягивается',
-								active: false,
-							},
-						],
-					},
-				],
-				{
-					id: 'c.3.1.3.3',
-					name: 'Лампа в КРУЗА-П закрыто',
-					resistance: 4800,
-					malfunctions: [
-						{
-							id: 'c.3.1.3.3.1',
-							name: 'Перегорела',
-							active: false,
-						},
-					],
-				},
+				E.C_3_0_4_0_0,
+				E.C_3_0_4_0_1,
+				E.C_3_0_4_0_2,
+			],
+			[
+				E.C_3_0_4_1_0_0_0,
+				E.C_3_0_4_1_0_0_1,
+				E.C_3_0_4_1_0_0_2,
+			],
+			[
+				E.C_3_0_0_1_0,
+				E.C_3_0_0_1_1,
+				E.C_3_0_0_1_2,
+				E.C_3_0_0_1_4,
+			],
+			[
+				E.C_3_0_4_1_0_1_0,
+				E.C_3_0_4_1_0_1_1,
+				E.C_3_0_4_1_0_1_2,
+			],
+			[
+				E.C_3_0_4_2_0,
+				E.C_3_0_4_2_1,
+				E.C_3_0_4_2_2,
 			],
 		],
 		[
-			//ветка закрыть
-			{
-				id: LIMIT_SWITCH_CLOSE_ID,
-				name: 'Концевой выключатель закрыто',
-				resistance: 0,
-				malfunctions: [
-					{
-						id: 'c.3.2.1.1',
-						name: 'Залипший контакт',
-						active: false,
-					},
-					{
-						id: 'c.3.2.1.2',
-						name: 'Нет контакта',
-						active: false,
-					},
-					{
-						id: 'c.3.2.1.3',
-						name: 'Не настроен',
-						active: false,
-					},
-				],
-			},
-			{
-				id: 'c.3.2.2',
-				name: 'Провод концевого выключателя закрыто до клемника КРУЗА-П',
-				resistance: 0.1,
-				malfunctions: [
-					{
-						id: 'c.3.2.2.1',
-						name: 'Обрыв провода',
-						active: false,
-					},
-					{
-						id: 'c.3.2.2.2',
-						name: 'Короткое замыкание на землю',
-						active: false,
-					},
-					{
-						id: 'c.3.2.2.3',
-						name: 'Короткое замыкание с проводом концевого выключателя закрыто до клемника КРУЗА-П',
-						active: false,
-					},
-					{
-						id: 'c.3.2.2.4',
-						name: 'Короткое замыкание с проводом фазы двигателя',
-						active: false,
-					},
-				],
-			},
+			E.C_3_1_0,
+			E.C_3_1_1,
+			E.C_3_1_2,
+			E.C_3_1_3,
 			[
-				{
-					id: 'c.3.2.3.1',
-					name: 'Вставка NDI (сигнал «не закрыто»)',
-					resistance: 0,
-					malfunctions: [
-						{
-							id: 'c.3.2.3.1.1',
-							name: 'Нет контакта, сигнал не проходит',
-							active: false,
-						},
-						{
-							id: 'c.3.2.3.1.2',
-							name: 'Ложно сработанная, сигнал не снимается',
-							active: false,
-						},
-					],
-				},
-				[
-					[
-						{
-							id: CLOSE_FROM_PTK_ID,
-							name: 'Вставка NDI (команда закрыть с ПТК)',
-							resistance: 1000000000,
-							malfunctions: [
-								{
-									id: 'c.3.2.3.2.1.1.1',
-									name: 'Нет контакта, команда не уходит',
-									active: false,
-								},
-								{
-									id: 'c.3.2.3.2.1.1.2',
-									name: 'Ложно сработанная, команда постоянно висит',
-									active: false,
-								},
-							],
-						},
-						{
-							id: CLOSE_FROM_KRUZAP_ID,
-							name: 'Кнопка КРУЗА-П (команда закрыть с КРУЗА-П)',
-							resistance: 1000000000,
-							malfunctions: [
-								{
-									id: 'c.3.2.3.2.1.2.1',
-									name: 'Нет контакта, команда не уходит',
-									active: false,
-								},
-								{
-									id: 'c.3.2.3.2.1.2.2',
-									name: 'Ложно сработанная, команда постоянно висит',
-									active: false,
-								},
-							],
-						},
-					],
-					{
-						id: 'c.3.2.3.2.2',
-						name: 'Блокировка включения пускателя на закрыть',
-						resistance: BASE_RESISTANCE['c.3.1.3.2.2'],
-						malfunctions: [
-							{
-								id: 'c.3.2.3.2.2.1',
-								name: 'Нет контакта',
-								active: false,
-							},
-							{
-								id: 'c.3.2.3.2.2.2',
-								name: 'Ложно сработанный контакт',
-								active: false,
-							},
-						],
-					},
-					{
-						id: 'c.3.2.3.2.3',
-						name: 'Катушка пускателя закрыть',
-						resistance: BASE_RESISTANCE['c.3.1.3.2.3'],
-						malfunctions: [
-							{
-								id: 'c.3.2.3.2.3.1',
-								name: 'Неисправна катушка, пускатель не подтягивается',
-								active: false,
-							},
-						],
-					},
-				],
-				{
-					id: 'c.3.2.3.3',
-					name: 'Лампа в КРУЗА-П открыто',
-					resistance: 4800,
-					malfunctions: [
-						{
-							id: 'c.3.2.3.3.1',
-							name: 'Перегорела',
-							active: false,
-						},
-					],
-				},
+				E.C_3_1_4_0_0,
+				E.C_3_1_4_0_1,
+				E.C_3_1_4_0_2,
+			],
+			[
+				E.C_3_1_4_1_0_0_0,
+				E.C_3_1_4_1_0_0_1,
+				E.C_3_1_4_1_0_0_2,
+			],
+			[
+				E.C_3_1_0_1_0,
+				E.C_3_1_0_1_1,
+				E.C_3_1_0_1_2,
+				E.C_3_1_0_1_4,
+			],
+			[
+				E.C_3_1_4_1_0_1_0,
+				E.C_3_1_4_1_0_1_1,
+				E.C_3_1_4_1_0_1_2,
+			],
+			[
+				E.C_3_1_4_2_0,
+				E.C_3_1_4_2_1,
+				E.C_3_1_4_2_2,
 			],
 		],
 	],
 ];
+
 
 export const initialStateScheme: InitialStateScheme = {
 	powerCircuit: powerCircuit,
