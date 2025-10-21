@@ -1,7 +1,7 @@
-import { RefreshResponse, VerifyResponse } from '@/shared/types/typesAuth';
+import {RefreshResponse, VerifyResponse} from '@/shared/types/typesAuth';
 import axios from 'axios';
-import { getCookie, setCookie, deleteCookie } from 'cookies-next';
-import { LoginFormData, LoginResponse } from '../types/login';
+import {deleteCookie, getCookie, setCookie} from 'cookies-next';
+import {LoginFormData, LoginResponse} from '../types/login';
 
 const urlBase = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -60,7 +60,7 @@ export async function checkAuth(): Promise<{ valid: boolean }> {
 	}
 }
 
-export async function postAuth(formData: LoginFormData): Promise<boolean> {
+export async function postAuth(formData: LoginFormData): Promise<{ success:boolean, role?: string | undefined }> {
 	try {
 		const response = await axios.post<LoginResponse>(
 			`${urlBase}/auth/`,
@@ -83,11 +83,11 @@ export async function postAuth(formData: LoginFormData): Promise<boolean> {
 			setCookie('last_name', last_name);
 			setCookie('role', role);
 
-			return true;
+			return {success:true, role};
 		}
-		return false;
+		return {success: false};
 	} catch {
-		return false;
+		return {success: false};
 	}
 }
 

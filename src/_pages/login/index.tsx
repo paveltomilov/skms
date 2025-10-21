@@ -6,6 +6,8 @@ import { FC, useCallback, useEffect, useState } from 'react';
 import PopupRegistrationDone from '@/entities/PopupRegistrationDone';
 import { checkAuth } from '@/shared/lib/auth';
 import { useRouter } from 'next/navigation';
+import {useAuth} from '@/shared/hooks/useAuth';
+import {getDashboardRoute, UserRole} from '@/shared/configs/routes';
 
 const Login: FC = () => {
 	const [isRegisterMode, setIsRegisterMode] = useState<boolean>(false);
@@ -13,15 +15,19 @@ const Login: FC = () => {
 	const router = useRouter();
 
 	const handleToggleRegisterMode = () => setIsRegisterMode(!isRegisterMode);
+	const {role} = useAuth();
 
 	const verifyAuth = useCallback(async () => {
 		try {
 			const { valid } = await checkAuth();
-			if (valid) router.push('/ptk');
+			if (valid && role) {
+				const dashboardRoute = getDashboardRoute(role as UserRole);
+				router.push(dashboardRoute);
+			}
 		} catch {
 			console.error('Ошибка проверки аутентификации:');
 		}
-	}, [router]);
+	}, [router, role]);
 
 	useEffect(() => {
 		verifyAuth();
