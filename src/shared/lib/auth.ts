@@ -70,7 +70,7 @@ export async function postAuth(formData: LoginFormData): Promise<boolean> {
 			},
 		);
 
-		const { access, refresh } = response.data;
+		const { access, refresh , first_name, last_name, role } = response.data;
 
 		if (!access || !refresh) {
 			throw new Error('Токены не получены');
@@ -78,11 +78,11 @@ export async function postAuth(formData: LoginFormData): Promise<boolean> {
 
 		if (response.status === 200) {
 			localStorage.setItem('accessToken', access);
-			setCookie('refreshToken', refresh, {
-				path: '/',
-				secure: process.env.NODE_ENV === 'production',
-				sameSite: 'lax'
-			});
+			setCookie('refreshToken', refresh);
+			setCookie('first_name', first_name);
+			setCookie('last_name', last_name);
+			setCookie('role', role);
+
 			return true;
 		}
 		return false;

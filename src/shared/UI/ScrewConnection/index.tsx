@@ -4,45 +4,52 @@ import styles from './styles.module.scss';
 import { MarkerName } from '@/shared/types/markers';
 import Screw from '../icons/Screw';
 import Provod from '../Provod';
-
-interface Props {
+export interface Props {
+	screwStatus?: 'close' | 'open';
+	pointId?: string;
 	className?: string;
-	isOpen?: boolean;
 	textRight?: MarkerName;
 	textTop?: MarkerName;
 	textLeft?: MarkerName;
 	provodLocation?: 'bottom' | 'left' | 'top' | 'right';
+	onToggle: () => void;
 }
 
 const ScrewConnection: FC<Props> = ({
+	screwStatus = 'close',
+	pointId,
 	className,
-	isOpen = false,
 	textRight,
 	textTop,
 	textLeft,
 	provodLocation,
+	onToggle,
 }) => {
 	const [deg, setDeg] = useState<90 | 180 | 270 | 0>(0);
-	const [open, setOpen] = useState<boolean>(isOpen);
 
 	useEffect(() => {
 		if (provodLocation === 'left') setDeg(90);
 		if (provodLocation === 'top') setDeg(180);
 		if (provodLocation === 'right') setDeg(270);
 		if (provodLocation === 'bottom') setDeg(0);
-
-		setOpen(isOpen);
-	}, [provodLocation, isOpen]);
+	}, [provodLocation]);
 
 	return (
-		<div className={cn(className, styles.component)}>
+		<div
+			className={cn(
+				className,
+				styles.component,
+				pointId,
+				`${screwStatus}`,
+			)}
+		>
 			<Screw
 				className={styles.screw}
-				isOpen={open}
+				status={screwStatus}
 				textLeft={textLeft}
 				textRight={textRight}
 				textTop={textTop}
-				onClick={setOpen}
+				onClick={onToggle}
 			/>
 			<Provod
 				className={cn(styles.provod, {
@@ -53,7 +60,7 @@ const ScrewConnection: FC<Props> = ({
 				})}
 				isPin
 				isBreak={false}
-				length={open ? 1 : 22}
+				length={screwStatus === 'open' ? 1 : 22}
 				rotate={deg}
 			/>
 		</div>

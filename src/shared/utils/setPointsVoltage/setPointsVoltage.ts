@@ -28,38 +28,38 @@ export function setNewVoltagePoints(
 
 	pointsAcc['p.c.2'] = calcPoint(pointsAcc['p.c.1'], scheme, 'c.2');
 
-	pointsAcc['p.с.3.1.1'] = calcPoint(pointsAcc['p.c.2'], scheme, 'c.3.1.1');
+	pointsAcc['p.c.3.1.1'] = calcPoint(pointsAcc['p.c.2'], scheme, 'c.3.1.1');
 
-	pointsAcc['p.с.3.1.2'] = calcPoint(
-		pointsAcc['p.с.3.1.1'],
+	pointsAcc['p.c.3.1.2'] = calcPoint(
+		pointsAcc['p.c.3.1.1'],
 		scheme,
 		'c.3.1.2',
 	);
 
-	pointsAcc['p.с.3.1.3.2.1'] =
-		calcPoint(pointsAcc['p.с.3.1.2'], scheme, 'c.3.1.3.2.1.1') ||
-		calcPoint(pointsAcc['p.с.3.1.2'], scheme, 'c.3.1.3.2.1.2');
+	pointsAcc['p.c.3.1.3.2.1'] =
+		calcPoint(pointsAcc['p.c.3.1.2'], scheme, 'c.3.1.3.2.1.1') ||
+		calcPoint(pointsAcc['p.c.3.1.2'], scheme, 'c.3.1.3.2.1.2');
 
-	pointsAcc['p.с.3.1.3.2.2'] = calcPoint(
-		pointsAcc['p.с.3.1.3.2.1'],
+	pointsAcc['p.c.3.1.3.2.2'] = calcPoint(
+		pointsAcc['p.c.3.1.3.2.1'],
 		scheme,
 		'c.3.1.3.2.2',
 	);
 
-	pointsAcc['p.с.3.2.1'] = calcPoint(pointsAcc['p.c.2'], scheme, 'c.3.2.1');
+	pointsAcc['p.c.3.2.1'] = calcPoint(pointsAcc['p.c.2'], scheme, 'c.3.2.1');
 
-	pointsAcc['p.с.3.2.2'] = calcPoint(
-		pointsAcc['p.с.3.2.1'],
+	pointsAcc['p.c.3.2.2'] = calcPoint(
+		pointsAcc['p.c.3.2.1'],
 		scheme,
 		'c.3.2.2',
 	);
 
-	pointsAcc['p.с.3.2.3.2.1'] =
-		calcPoint(pointsAcc['p.с.3.2.2'], scheme, 'c.3.2.3.2.1.1') ||
-		calcPoint(pointsAcc['p.с.3.2.2'], scheme, 'c.3.2.3.2.1.2');
+	pointsAcc['p.c.3.2.3.2.1'] =
+		calcPoint(pointsAcc['p.c.3.2.2'], scheme, 'c.3.2.3.2.1.1') ||
+		calcPoint(pointsAcc['p.c.3.2.2'], scheme, 'c.3.2.3.2.1.2');
 
-	pointsAcc['p.с.3.2.3.2.2'] = calcPoint(
-		pointsAcc['p.с.3.2.3.2.1'],
+	pointsAcc['p.c.3.2.3.2.2'] = calcPoint(
+		pointsAcc['p.c.3.2.3.2.1'],
 		scheme,
 		'c.3.2.3.2.2',
 	);

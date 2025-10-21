@@ -5,11 +5,13 @@ import Window from '@/shared/UI/Window';
 import { WINDOWS } from '@/shared/configs/window';
 import Button from '@/shared/UI/Button';
 import ArrowPage from '@/shared/UI/icons/ArrowPage';
+import useShowModal from '@/shared/hooks/useShowModal';
 
 interface Props {
 	className?: string;
 }
 const TAMidTop: FC<Props> = ({ className }) => {
+	const handleModalNotification = useShowModal('notification');
 	return (
 		<div className={cn(className, styles.container)}>
 			<div className={styles.windowsTop}>
@@ -34,7 +36,12 @@ const TAMidTop: FC<Props> = ({ className }) => {
 				</div>
 			</div>
 			<div className={styles.windowsMiddle}>
-				<Button text={'ТУРБ'} width={88} height={28} />
+				<Button
+					text={'ТУРБ'}
+					width={88}
+					height={28}
+					onClick={handleModalNotification}
+				/>
 			</div>
 			<div className={styles.windowsBottom}>
 				<span className={styles.windowsBottom__CSD}>ЦСД</span>

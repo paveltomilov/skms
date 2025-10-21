@@ -1,7 +1,6 @@
+// shared/components/AuthGuard.tsx
 import { FC } from 'react';
 import { useAuth } from '@/shared/hooks/useAuth';
-import { useRouter, usePathname } from 'next/navigation';
-import { useEffect } from 'react';
 
 interface IAuthGuard {
     children?: React.ReactNode;
@@ -10,41 +9,37 @@ interface IAuthGuard {
 
 const AuthGuard: FC<IAuthGuard> = ({ children, requiredRole }) => {
     const { user, loading, error, role } = useAuth(requiredRole);
-    const router = useRouter();
-    const pathname = usePathname();
-
-    useEffect(() => {
-        if (!loading) {
-            // Если нет пользователя и не на странице логина - редирект
-            if (!user && !pathname.startsWith('/login')) {
-                router.push('/login');
-                return;
-            }
-
-            // Если есть пользователь, но роль не совпадает и не на access-denied
-            if (user && requiredRole && role !== requiredRole && !pathname.startsWith('/access-denied')) {
-                router.push('/access-denied');
-            }
-        }
-    }, [loading, user, requiredRole, role, router, pathname]);
 
     if (loading) {
-        return <div>Загрузка...</div>;
+        return (
+            <div className="flex justify-center items-center min-h-screen">
+                <div>Загрузка...</div>
+            </div>
+        );
     }
 
     if (error) {
-        return <div>Ошибка: {error}</div>;
+        return (
+            <div className="flex justify-center items-center min-h-screen">
+                <div>Ошибка: {error}</div>
+            </div>
+        );
     }
 
     if (!user) {
-        return <div>Перенаправление на страницу входа...</div>;
+        return (
+            <div className="flex justify-center items-center min-h-screen">
+                <div>Перенаправление на страницу входа...</div>
+            </div>
+        );
     }
 
     if (requiredRole && role !== requiredRole) {
-        if (pathname.startsWith('/access-denied')) {
-            return <>{children}</>;
-        }
-        return <div>Проверка доступа...</div>;
+        return (
+            <div className="flex justify-center items-center min-h-screen">
+                <div>Доступ запрещен для вашей роли</div>
+            </div>
+        );
     }
 
     return <>{children}</>;

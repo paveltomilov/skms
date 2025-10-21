@@ -1,14 +1,15 @@
-import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState, useCallback } from 'react';
-import axios, { AxiosError } from 'axios';
-import { jwtDecode } from 'jwt-decode';
-import { getCookie } from 'cookies-next';
-import { checkAuth, logout } from '@/shared/lib/auth';
+// shared/hooks/useAuth.ts
+import {usePathname, useRouter} from 'next/navigation';
+import {useCallback, useEffect, useState} from 'react';
+import axios, {AxiosError} from 'axios';
+import {jwtDecode} from 'jwt-decode';
+import {checkAuth, logout} from '@/shared/lib/auth';
 
 const urlBase: string | undefined = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 interface JwtPayload {
     user_id: number;
+    role?: 'admin' | 'teacher' | 'student';
 }
 
 interface User {
@@ -18,45 +19,6 @@ interface User {
     last_name: string;
     role: 'admin' | 'teacher' | 'student';
 }
-
-const LOGIN_PATH = '/login';
-const ACCESS_DENIED = '/access-denied';
-const TEACHER_DASHBOARD = '/teacher-dashboard';
-const STUDENT_DASHBOARD = '/student-dashboard';
-const ADMIN_DASHBOARD = '/admin-dashboard';
-
-// Функция для редиректов
-const getRedirectPath = (
-    userRole: string | null,
-    currentPath: string,
-    requiredRole?: string
-): string | null => {
-    // Если пользователь не аутентифицирован
-    if (!userRole) {
-        return currentPath.startsWith(LOGIN_PATH) ? null : LOGIN_PATH;
-    }
-
-    if (currentPath.startsWith(ACCESS_DENIED)) {
-        return null;
-    }
-
-    // Если требуется определенная роль, но у пользователя другая
-    if (requiredRole && userRole !== requiredRole) {
-        return ACCESS_DENIED;
-    }
-
-    // Автоматический редирект по роли только со страницы ptk
-    if (currentPath === '/ptk') {
-        const rolePaths: Record<string, string> = {
-            teacher: TEACHER_DASHBOARD,
-            student: STUDENT_DASHBOARD,
-            admin: ADMIN_DASHBOARD,
-        };
-        return rolePaths[userRole] || LOGIN_PATH;
-    }
-
-    return null;
-};
 
 export const useAuth = (requiredRole?: 'admin' | 'teacher' | 'student') => {
     const router = useRouter();
@@ -75,6 +37,7 @@ export const useAuth = (requiredRole?: 'admin' | 'teacher' | 'student') => {
 
     const fetchUserData = useCallback(async (): Promise<User | null> => {
         try {
+            // Используем вашу готовую функцию проверки аутентификации
             const { valid } = await checkAuth();
 
             if (!valid) {
@@ -108,37 +71,41 @@ export const useAuth = (requiredRole?: 'admin' | 'teacher' | 'student') => {
             if (!isMounted) return;
 
             try {
-                if (!urlBase) {
-                    throw new Error('API URL не настроен');
-                }
+                setState(prev => ({ ...prev, loading: true }));
 
-                const accessToken = localStorage.getItem('accessToken');
-                const refreshToken = getCookie('refreshToken') as string | undefined;
+                // Используем вашу функцию checkAuth для проверки токенов
+                const { valid } = await checkAuth();
 
-                if (!accessToken || !refreshToken) {
-                    const shouldRedirect = !pathname.startsWith(LOGIN_PATH);
+                if (!valid) {
+                    const isPublicRoute =
+                        pathname.startsWith('/login') ||
+                        pathname === '/';
+
+                    if (!isPublicRoute) {
+                        router.push('/login');
+                    }
+
                     if (isMounted) {
                         setState({
                             role: null,
                             loading: false,
-                            error: shouldRedirect ? 'Требуется авторизация' : null,
+                            error: isPublicRoute ? null : 'Требуется авторизация',
                             user: null
                         });
-                    }
-                    if (shouldRedirect) {
-                        await router.push(LOGIN_PATH);
                     }
                     return;
                 }
 
                 const userData = await fetchUserData();
 
-                // Не удалось аутентифицировать
+                // Не удалось получить данные пользователя
                 if (!userData) {
-
                     logout();
 
-                    const shouldRedirect = !pathname.startsWith(LOGIN_PATH);
+                    if (!pathname.startsWith('/login')) {
+                        router.push('/login');
+                    }
+
                     if (isMounted) {
                         setState({
                             role: null,
@@ -147,17 +114,36 @@ export const useAuth = (requiredRole?: 'admin' | 'teacher' | 'student') => {
                             user: null
                         });
                     }
-                    if (shouldRedirect) {
-                        await router.push(LOGIN_PATH);
-                    }
                     return;
                 }
 
-                // Проверяем необходимость редиректа
-                const redirectPath = getRedirectPath(userData.role, pathname, requiredRole);
-                if (redirectPath && !pathname.startsWith(redirectPath)) {
-                    await router.push(redirectPath);
-                    return; // Прерываем выполнение, т.к. будет редирект
+                // Проверяем доступ по роли
+                if (requiredRole && userData.role !== requiredRole) {
+                    // Редирект на соответствующую dashboard для роли пользователя
+                    const roleDashboard = {
+                        admin: '/admin-dashboard',
+                        teacher: '/teacher-dashboard',
+                        student: '/ptk'
+                    }[userData.role] || '/';
+
+                    if (pathname !== roleDashboard) {
+                        router.push(roleDashboard);
+                        return;
+                    }
+                }
+
+                // Автоматический редирект на dashboard после логина с главной страницы
+                if (!requiredRole && pathname === '/') {
+                    const roleDashboard = {
+                        admin: '/admin-dashboard',
+                        teacher: '/teacher-dashboard',
+                        student: '/ptk'
+                    }[userData.role] || '/';
+
+                    if (pathname !== roleDashboard) {
+                        router.push(roleDashboard);
+                        return;
+                    }
                 }
 
                 if (isMounted) {
@@ -169,7 +155,8 @@ export const useAuth = (requiredRole?: 'admin' | 'teacher' | 'student') => {
                     });
                 }
 
-            } catch {
+            } catch (error) {
+                console.error('Auth error:', error);
 
                 if (isMounted) {
                     setState({
@@ -182,8 +169,8 @@ export const useAuth = (requiredRole?: 'admin' | 'teacher' | 'student') => {
 
                 logout();
 
-                if (!pathname.startsWith(LOGIN_PATH)) {
-                    await router.push(LOGIN_PATH);
+                if (!pathname.startsWith('/login')) {
+                    router.push('/login');
                 }
             }
         };

@@ -8,12 +8,14 @@ import {
 	midTopGroupDown,
 } from '@/shared/configs/KAGroupElements';
 import Rectangle from '@/shared/UI/icons/Rectangle';
+import useShowModal from '@/shared/hooks/useShowModal';
 
 interface Props {
 	className?: string;
 }
 
 const KAMidTop: FC<Props> = ({ className }) => {
+	const handleModalNotification = useShowModal('notification');
 	return (
 		<div className={cn(className, styles.container)}>
 			<div className={styles.windows__groupup}>
@@ -61,24 +63,28 @@ const KAMidTop: FC<Props> = ({ className }) => {
 					height={28}
 					text="РПП"
 					className={styles.buttons__left}
+					onClick={handleModalNotification}
 				></Button>
 				<Button
 					width={91}
 					height={28}
 					text="ПромПП"
 					className={styles.buttons__midup}
+					onClick={handleModalNotification}
 				></Button>
 				<Button
 					width={91}
 					height={28}
 					text="ПП"
 					className={styles.buttons__middown}
+					onClick={handleModalNotification}
 				></Button>
 				<Button
 					width={91}
 					height={28}
 					text="ТУРБ"
 					className={styles.buttons__right}
+					onClick={handleModalNotification}
 				></Button>
 				<Button
 					width={167}
@@ -86,6 +92,7 @@ const KAMidTop: FC<Props> = ({ className }) => {
 					text="Вентиляция топки"
 					style={{ font: '12px' }}
 					className={styles.buttons__white}
+					onClick={handleModalNotification}
 				></Button>
 			</div>
 			<div className={styles.rectangles}>

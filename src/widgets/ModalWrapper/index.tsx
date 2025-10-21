@@ -13,6 +13,12 @@ import { Modals } from '@/store/modalSlice';
 import PopupBlockSwitches from '../PopupBlockSwitches';
 import { LampScheme } from '../LampScheme';
 import PopupActuator from '@/widgets/PopupActuator';
+import PopupClamp from '../PopupClamp';
+import { PopupSetSimulation } from '../PopupSetSimulation';
+import PopupNotificationDev from '../PopupNotificationDev';
+import { PopupStudentStatistic } from '../PopupStudetnStatistic';
+import { PopupStudentCreate } from '../PopupStudentCreate';
+import { PopupStudentDelete } from '../PopupStudentDelete';
 
 interface IModals {
 	condition: boolean;
@@ -31,8 +37,11 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		starter,
 		block_switches,
 		motor,
-		user_info,
 		notification,
+		setSimulation,
+		studentStatistics,
+		studentCreate,
+		studentDelete
 	} = useAppSelector(state => state.modal);
 
 	const isOne =
@@ -44,12 +53,14 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		motor ||
 		block_switches ||
 		starter ||
-		user_info ||
-		notification;
+		notification ||
+		setSimulation ||
+		studentStatistics ||
+		studentCreate ||
+		studentDelete
+;
 
 	const gateId = useAppSelector(state => state.gate.activeGateId as string);
-
-	const empty: React.ReactElement = <p>Компонент в разработке</p>;
 
 	const modals: IModals[] = [
 		{
@@ -85,14 +96,14 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			id: 'lamps',
 			headerTitle: 'Лампочки',
 			gateId: undefined,
-			component: <LampScheme/>,
+			component: <LampScheme />,
 		},
 		{
 			condition: motor,
 			id: 'motor',
 			headerTitle: 'Контакты обмотки двигателя',
 			gateId: undefined,
-			component: empty,
+			component: <PopupClamp />,
 		},
 		{
 			condition: block_switches,
@@ -113,26 +124,56 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			id: 'notification',
 			headerTitle: 'Дата реализации',
 			gateId: undefined,
-			component: empty,
+			component: <PopupNotificationDev/>,
 		},
 		{
-			condition: user_info,
-			id: 'user_info',
-			headerTitle: 'Пользователь',
+			condition: setSimulation,
+			id: 'setSimulation',
+			headerTitle: 'Задать симуляцию',
 			gateId: undefined,
-			component: empty,
+			component: <PopupSetSimulation />,
+		},
+		{
+			condition: studentStatistics,
+			id: 'studentStatistics',
+			headerTitle: 'Статистика ученика',
+			gateId: undefined,
+			component: <PopupStudentStatistic />,
+		},
+		{
+			condition: studentCreate,
+			id: 'studentCreate',
+			headerTitle: 'Создание ученика',
+			gateId: undefined,
+			component: <PopupStudentCreate />,
+		},
+		{
+			condition: studentDelete,
+			id: 'studentDelete',
+			headerTitle: 'Удаление ученика',
+			gateId: undefined,
+			component: <PopupStudentDelete />,
 		},
 	];
 
 	return (
 		<div
-			className={cn(className, styles.modal__displayNone, { [styles.modal]: isOne, [styles.modal_isBlur]: automatic, })}
+			className={cn(className, styles.modal__displayNone, {
+				[styles.modal]: isOne,
+				[styles.modal_isBlur]: automatic,
+			})}
 		>
 			{modals.map(
 				({ condition, id, headerTitle, gateId, component }) =>
-					condition && (<ModalOverlay key={id} gateId={gateId} id={id} headerTitle={headerTitle} >
-						{component}
-					</ModalOverlay>
+					condition && (
+						<ModalOverlay
+							key={id}
+							gateId={gateId}
+							id={id}
+							headerTitle={headerTitle}
+						>
+							{component}
+						</ModalOverlay>
 					),
 			)}
 		</div>

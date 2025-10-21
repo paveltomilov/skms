@@ -95,8 +95,16 @@ export const SCHEME_ELEMENTS: { id: string; aria: string; type: Modals }[] = [
 		aria: 'Катушка пускателя открыть',
 		type: 'starter_coil',
 	},
-	{ id: 'c.3.1.3.3', aria: 'Лампа в КРУЗА-П закрыто', type: 'lamps' },
-	{ id: 'c.3.2.3.3', aria: 'Лампа в КРУЗА-П открыто', type: 'lamps' },
+	{
+		id: 'c.3.1.3.3',
+		aria: 'Лампа в КРУЗА-П закрыто',
+		type: 'lamps'
+	},
+	{
+		id: 'c.3.2.3.3',
+		aria: 'Лампа в КРУЗА-П открыто',
+		type: 'lamps'
+	},
 	{
 		id: CONTROL_CIRCUIT_BREAKER_ID,
 		aria: 'Автомат питания цепей управления',
@@ -112,7 +120,11 @@ export const SCHEME_ELEMENTS: { id: string; aria: string; type: Modals }[] = [
 		aria: 'Блокировка включения пускателя на закрыть',
 		type: 'blocking_activation',
 	},
-	{ id: 'p.3.1', aria: 'Реверсивный пускатель', type: 'starter' },
+	{
+		id: 'p.3.1',
+		aria: 'Реверсивный пускатель',
+		type: 'starter'
+	},
 	{
 		id: OPEN_FROM_KRUZAP_ID,
 		aria: 'Кнопка КРУЗА-П (команда открыть с КРУЗА-П)',
@@ -132,6 +144,11 @@ export const SCHEME_ELEMENTS: { id: string; aria: string; type: Modals }[] = [
 		id: LIMIT_SWITCH_OPEN_ID,
 		aria: 'Концевой выключатель открыто',
 		type: 'block_switches',
+	},
+	{
+		id: 'p.1.4.1.2',
+		aria: 'Двигатель',
+		type: 'motor',
 	},
 ];
 

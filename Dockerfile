@@ -1,32 +1,36 @@
 # Используем базовый образ с Node.js для сборки проекта
-FROM node:lts AS build
+FROM node:lts-alpine AS build
 
 # Устанавливаем рабочую директорию
 WORKDIR /app
 
-# Копируем package.json и package-lock.json (если есть)
+# Копируем package.json и package-lock.json
 COPY package*.json ./
 
 # Устанавливаем зависимости
-RUN npm install 
+RUN npm install
 
-# Копируем остальные файлы проекта в контейнер
+# Копируем остальные файлы проекта
 COPY . .
 
 # Собираем приложение
 RUN npm run build
 
 # Используем базовый образ для Nginx
-FROM nginx:latest
+FROM nginx:alpine
 
-# Копируем собранные файлы в директорию, откуда nginx будет раздавать статические файлы
-COPY --from=build /app/.next /usr/share/nginx/html
+# Копируем ВСЮ выходную директорию Next.js
+COPY --from=build /app/out /usr/share/nginx/html
 
-# Копируем пользовательский конфигурационный файл nginx
+# Копируем статические файлы
+COPY --from=build /app/public /usr/share/nginx/html
+
+# Копируем конфигурацию nginx
 COPY .nginx/nginx.conf /etc/nginx/nginx.conf
 
-# Настраиваем открытие порта 80
+# Создаем директорию для логов
+RUN mkdir -p /var/log/nginx
+
 EXPOSE 80
 
-# Запускаем nginx
 CMD ["nginx", "-g", "daemon off;"]
