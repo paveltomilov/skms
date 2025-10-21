@@ -9,4 +9,7 @@ export type LoginFormData = {
 export interface LoginResponse {
 	access?: string;
 	refresh?: string;
+	first_name?: string;
+	last_name?: string;
+	role?: string;
 }
