@@ -16,6 +16,8 @@ import WindowCircleCard from '@/shared/UI/WindowCircleCard';
 import { WINDOWS } from '@/shared/configs/window';
 import Gate from '@/shared/UI/Gate';
 import ShapeComponent from '@/shared/UI/icons/ShapeComponent';
+import { useAppSelector } from '@/shared/hooks/store';
+import { useOpenGatePopup } from '@/shared/hooks/useOpenGatePopup';
 import useShowModal from '@/shared/hooks/useShowModal';
 
 interface Props {
@@ -23,6 +25,12 @@ interface Props {
 }
 
 const KALeftTop: FC<Props> = ({ className }) => {
+
+
+	const { g11, g12 } = useAppSelector(state => state.gate.gates);
+
+	const openGatePopup = useOpenGatePopup();
+
 	const handleModalNotification = useShowModal('notification');
 	return (
 		<div className={cn(className, styles.container)}>
@@ -73,14 +81,16 @@ const KALeftTop: FC<Props> = ({ className }) => {
 				/>
 				<div className={styles.gateContainer}>
 					<Gate
-						state="close"
-						position="vertical"
-						textRight="1АСБ-1"
+						state={g11.states}
+						position='vertical'
+						textRight={g11.name}
+						onClick={() => openGatePopup('g7')}
 					/>
 					<Gate
-						state="close"
-						position="vertical"
-						textRight="1АСБ-2"
+						state={g12.states}
+						position='vertical'
+						textRight={g12.name}
+						onClick={() => openGatePopup('g6')}
 					/>
 				</div>
 				<span className={styles.windowGateContainer__text}>

@@ -33,6 +33,7 @@ const Sidebar = () => {
 						aria-label="Обучение"
 						text="Обучение"
 						className={styles.buttonText}
+						href="/training"
 					/>
 
 					<Button
