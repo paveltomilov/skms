@@ -14,7 +14,11 @@ import PopupBlockSwitches from '../PopupBlockSwitches';
 import { LampScheme } from '../LampScheme';
 import PopupActuator from '@/widgets/PopupActuator';
 import PopupClamp from '../PopupClamp';
+import { PopupSetSimulation } from '../PopupSetSimulation';
 import PopupNotificationDev from '../PopupNotificationDev';
+import { PopupStudentStatistic } from '../PopupStudetnStatistic';
+import { PopupStudentCreate } from '../PopupStudentCreate';
+import { PopupStudentDelete } from '../PopupStudentDelete';
 
 interface IModals {
 	condition: boolean;
@@ -34,6 +38,10 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		block_switches,
 		motor,
 		notification,
+		setSimulation,
+		studentStatistics,
+		studentCreate,
+		studentDelete
 	} = useAppSelector(state => state.modal);
 
 	const isOne =
@@ -45,7 +53,12 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		motor ||
 		block_switches ||
 		starter ||
-		notification;
+		notification ||
+		setSimulation ||
+		studentStatistics ||
+		studentCreate ||
+		studentDelete
+;
 
 	const gateId = useAppSelector(state => state.gate.activeGateId as string);
 
@@ -112,6 +125,34 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			headerTitle: 'Дата реализации',
 			gateId: undefined,
 			component: <PopupNotificationDev/>,
+		},
+		{
+			condition: setSimulation,
+			id: 'setSimulation',
+			headerTitle: 'Задать симуляцию',
+			gateId: undefined,
+			component: <PopupSetSimulation />,
+		},
+		{
+			condition: studentStatistics,
+			id: 'studentStatistics',
+			headerTitle: 'Статистика ученика',
+			gateId: undefined,
+			component: <PopupStudentStatistic />,
+		},
+		{
+			condition: studentCreate,
+			id: 'studentCreate',
+			headerTitle: 'Создание ученика',
+			gateId: undefined,
+			component: <PopupStudentCreate />,
+		},
+		{
+			condition: studentDelete,
+			id: 'studentDelete',
+			headerTitle: 'Удаление ученика',
+			gateId: undefined,
+			component: <PopupStudentDelete />,
 		},
 	];
 
