@@ -16,7 +16,7 @@ const Bend: FC<Props> = ({ className, rotate = 0 }) => {
 				style={{ transform: `rotate(${rotate}deg)` }}
 				src={'/images/curv.png'}
 				className={styles.bend_img}
-			/>
+			 	alt={'band'}/>
 		</div>
 	);
 };
