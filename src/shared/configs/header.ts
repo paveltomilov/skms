@@ -34,9 +34,9 @@ export const PTK_BUTTONS_CONFIG = {
 	close: [
 		{
 			id: CLOSE_FROM_PTK_ID,
-			value: BASE_RESISTANCE[CLOSE_FROM_PTK_ID],
+			value: BASE_RESISTANCE[CLOSE_FROM_KRUZAP_ID],
 		}, // Замыкаем "закрыть"
-		{ id: OPEN_FROM_PTK_ID, value: HIGH_RESISTANCE }, // Размыкаем "открыть"
+		{ id: OPEN_FROM_KRUZAP_ID, value: HIGH_RESISTANCE }, // Размыкаем "открыть"
 		{
 			id: LIMIT_SWITCH_OPEN_ID,
 			value: BASE_RESISTANCE[LIMIT_SWITCH_OPEN_ID],
@@ -51,7 +51,7 @@ export const PTK_BUTTONS_CONFIG = {
 		{ id: LIMIT_SWITCH_CLOSE_ID, value: HIGH_RESISTANCE }, // Размыкаем концевой "закрыть"
 	],
 	stop: [
-		{ id: OPEN_FROM_PTK_ID, value: HIGH_RESISTANCE }, // Размыкаем "открыть"
+		{ id: OPEN_FROM_KRUZAP_ID, value: HIGH_RESISTANCE }, // Размыкаем "открыть"
 		{ id: CLOSE_FROM_PTK_ID, value: HIGH_RESISTANCE }, // Размыкаем "закрыть"
 	],
 };
@@ -80,9 +80,9 @@ export const KRUZAP_BUTTONS_CONFIG = {
 	close: [
 		{
 			id: CLOSE_FROM_KRUZAP_ID,
-			value: BASE_RESISTANCE[CLOSE_FROM_PTK_ID],
+			value: BASE_RESISTANCE[CLOSE_FROM_KRUZAP_ID],
 		}, // Замыкаем "закрыть"
-		{ id: OPEN_FROM_PTK_ID, value: HIGH_RESISTANCE }, // Размыкаем "открыть"
+		{ id: OPEN_FROM_KRUZAP_ID, value: HIGH_RESISTANCE }, // Размыкаем "открыть"
 		{
 			id: LIMIT_SWITCH_OPEN_ID,
 			value: BASE_RESISTANCE[LIMIT_SWITCH_OPEN_ID],
