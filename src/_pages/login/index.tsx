@@ -2,11 +2,10 @@
 
 import styles from './style.module.scss';
 import Form from '@/widgets/Form';
-import {FC, useCallback, useEffect, useState} from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import PopupRegistrationDone from '@/entities/PopupRegistrationDone';
-import {checkAuth} from '@/shared/lib/auth';
-import {useRouter} from 'next/navigation';
-
+import { checkAuth } from '@/shared/lib/auth';
+import { useRouter } from 'next/navigation';
 
 const Login: FC = () => {
 	const [isRegisterMode, setIsRegisterMode] = useState<boolean>(false);
@@ -14,6 +13,7 @@ const Login: FC = () => {
 	const router = useRouter();
 
 	const handleToggleRegisterMode = () => setIsRegisterMode(!isRegisterMode);
+
 	const verifyAuth = useCallback(async () => {
 		try {
 			const { valid } = await checkAuth();
@@ -28,17 +28,38 @@ const Login: FC = () => {
 	}, [verifyAuth]);
 
 	return (
-		<main className={`${styles.main} ${isRegisterMode ? styles.main_registration : ''}`}>
-			<span className={`${styles.main_deco_left} ${isRegisterMode ? styles.left_registration : ''}`}></span>
-			<span className={`${styles.main_deco_right} ${isRegisterMode ? styles.right_registration : ''}`}></span>
-			<div className={`${styles.main_container} ${isRegisterMode ? styles.container_registration : ''}`}>
+		<main
+			className={`${styles.main} ${
+				isRegisterMode ? styles.main_registration : ''
+			}`}
+		>
+			<span
+				className={`${styles.main_deco_left} ${
+					isRegisterMode ? styles.left_registration : ''
+				}`}
+			></span>
+			<span
+				className={`${styles.main_deco_right} ${
+					isRegisterMode ? styles.right_registration : ''
+				}`}
+			></span>
+			<div
+				className={`${styles.main_container} ${
+					isRegisterMode ? styles.container_registration : ''
+				}`}
+			>
 				<h2 className={styles.main_container_title}>
 					{isRegisterMode ? 'Регистрация' : 'Вход'}
 				</h2>
-				<Form toggleRegisterMode={isRegisterMode} activateModalSuccess={setModalSuccess} />
+				<Form
+					toggleRegisterMode={isRegisterMode}
+					activateModalSuccess={setModalSuccess}
+				/>
 				<div className={styles.main_wrap}>
 					<span className={styles.main_wrap__text}>
-						{isRegisterMode ? 'Уже зарегистрировались?' : 'Еще не зарегистрировались?'}
+						{isRegisterMode
+							? 'Уже зарегистрировались?'
+							: 'Еще не зарегистрировались?'}
 					</span>
 					<button
 						className={styles.main_wrap__link}
@@ -54,7 +75,6 @@ const Login: FC = () => {
 					/>
 				)}
 			</div>
-
 		</main>
 	);
 };
