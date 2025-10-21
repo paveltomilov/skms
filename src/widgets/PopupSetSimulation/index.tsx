@@ -2,7 +2,7 @@ import { FC } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 
-const malfunctions =
+const malfunctions: string[] =
     [
         'Неисправность 1',
         'Неисправность 2',
@@ -22,11 +22,19 @@ export const PopupSetSimulation: FC = () => {
             />
             <div className={styles.element}>Название элемента</div>
             <div className={styles.malfunction}>
-                <select name="city" id="city-select" className={styles.malfunction__select}>
-                    {malfunctions.map((mal)=> 
-                    <option key={mal} className='opt'>{mal}</option>)}
+                <select
+                    name="malfunction"
+                    id="malfunction-select"
+                    className={styles.malfunction__select}
+                    onChange={e => console.log(e.target.value)}
+                >
+                    {malfunctions.map((mal) => (
+                        <option key={mal} value={mal} className='opt'>
+                            {mal}
+                        </option>
+                    ))}
                 </select>
-                </div>
+            </div>
             <Button
                 width={307}
                 height={38}

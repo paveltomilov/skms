@@ -7,15 +7,14 @@ import cn from 'classnames';
 
 interface Props {
     className?: string,
-    key?: string | number;
 };
 
-const StudentCard: FC<Props> = ({className,key}) => {
+const StudentCard: FC<Props> = ({className}) => {
 
     const dispatch = useDispatch();
 
     return (
-        <div key={key} className={cn(styles.card, className)}>
+        <div className={cn(styles.card, className)}>
             <div className={styles.card__profile}>
                 <img className={styles.card__profile__photo} src='/images/user_icon.png' alt="Фото пользователя"></img>
                 <div className={styles.card__profile__name}>Иванов Иван Иванович</div>
