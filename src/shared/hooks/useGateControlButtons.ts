@@ -240,8 +240,10 @@ export const useGateControlButtons = () => {
 			gateInterval.current = null;
 		}
 
+
 		// запускаем новый интервал
 		gateInterval.current = setInterval(() => {
+
 			// обновляем положение
 			if (button === 'open') {
 				gatePosition.current += 1;
@@ -253,8 +255,23 @@ export const useGateControlButtons = () => {
 				);
 
 				if (gatePosition.current >= 100) {
+					if (gatePosition.current === 100) {
+						setTimeout(() => {
+							stopGateMovement(type)
+							const controlCircuitBreaker = findElementByID(
+								INPUT_CIRCUIT_BREAKER_ID,
+								useAppSelector(state => state.circuit),
+							);
+							controlCircuitBreaker.forEach(item => {
+								dispatch(setResistance(item, HIGH_RESISTANCE))
+							})
+							// разобрать гл.автомат
+						}, 2000)
+					}
+
 					gatePosition.current = 100;
 					//проверяем на наличие неисправностей кнопок блока концевых выключателей
+
 					if (hasSticksLimitSwitchOpenMalfunction) {
 						dispatch(
 							setGatePosition({
@@ -272,6 +289,8 @@ export const useGateControlButtons = () => {
 						console.log(
 							`Конецквой ${limitSwitchOpenElement.name} имеет неиспрвность 'Залипший контакт'`,
 						);
+
+
 						return;
 					}
 					stopGateMovement(type);
@@ -296,6 +315,19 @@ export const useGateControlButtons = () => {
 				);
 
 				if (gatePosition.current <= 0) {
+					if (gatePosition.current === 0) {
+						setTimeout(() => {
+							stopGateMovement(type)
+							const controlCircuitBreaker = findElementByID(
+								INPUT_CIRCUIT_BREAKER_ID,
+								useAppSelector(state => state.circuit),
+							);
+							controlCircuitBreaker.forEach(item => {
+								dispatch(setResistance(item, HIGH_RESISTANCE))
+							})
+							// разобрать гл.автомат
+						}, 2000)
+					}
 					gatePosition.current = 0;
 					//проверяем на наличие неисправностей кнопок блока концевых выключателей
 					if (hasSticksLimitSwitchCloseMalfunction) {
