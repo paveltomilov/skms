@@ -1,18 +1,26 @@
 import { FC } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
+import { useAppSelector } from '@/shared/hooks/store';
 
-const malfunctions: string[] =
-    [
-        'Неисправность 1',
-        'Неисправность 2',
-        'Неисправность 3',
-        'Неисправность 4',
-        'Неисправность 5',
-        'Неисправность 6',
-    ];
+// const malfunctions: string[] =
+//     [
+//         'Неисправность 1',
+//         'Неисправность 2',
+//         'Неисправность 3',
+//         'Неисправность 4',
+//         'Неисправность 5',
+//         'Неисправность 6',
+//     ];
 
 export const PopupSetSimulation: FC = () => {
+
+    const gates = useAppSelector(
+        state => state.gate,
+    );
+    const malfunctions = gates.activeGateId ? gates.gates[gates.activeGateId].malfunctions : [];
+    const name = gates.activeGateId ? gates.gates[gates.activeGateId].name : '';
+
     return (
         <div className={styles.popup}>
             <Button
@@ -20,7 +28,7 @@ export const PopupSetSimulation: FC = () => {
                 height={38}
                 text='+ Добавить элемент'
             />
-            <div className={styles.element}>Название элемента</div>
+            <div className={styles.element}>{name}</div>
             <div className={styles.malfunction}>
                 <select
                     name="malfunction"

@@ -4,11 +4,15 @@ import React, { useState } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import Chevron from '@/shared/UI/icons/Chevron';
+import { useAppDispatch } from '@/shared/hooks/store';
+import { trainingOn } from '@/store/trainingSlice';
 
 const Sidebar = () => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	const handleToggleSidebar = () => setIsOpen(!isOpen);
+
+	const dispatch = useAppDispatch();
 
 	return (
 		<>
@@ -34,6 +38,7 @@ const Sidebar = () => {
 						text="Обучение"
 						className={styles.buttonText}
 						href="/training"
+						onClick={()=>dispatch(trainingOn())}
 					/>
 
 					<Button
