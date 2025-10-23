@@ -21,24 +21,30 @@ const LampIndicator: FC<Props> = ({
   const isOffState = color === 'lamp_white_off' || color === 'lamp_green_off';
 
   return (
-    <svg
-      width={sizes.width}
-      height={sizes.height}
-      viewBox="0 0 291 403"
-      aria-hidden
-      className={className}
-      style={style}
-      preserveAspectRatio="xMidYMid meet"
-    >
-      <use href="/svg/sprite.svg#lampIndicator-base" width="100%" height="100%" />
-
-      <use
-        href="/svg/sprite.svg#lampIndicator-top"
-        width="100%"
-        height="100%"
-        style={{ color: topColor, opacity: isOffState ? 0.7 : 1 }}
-      />
-    </svg>
+      <svg
+        width={sizes.width}
+        height={sizes.height}
+        viewBox="0 0 291 403"
+        aria-hidden
+        className={className}
+        style={style}
+        preserveAspectRatio="xMidYMid meet"
+      >
+        <use href="/svg/sprite.svg#lampIndicator-base" width="100%" height="100%" />
+        {!isOffState &&
+          <use
+            href="/svg/sprite.svg#lampIndicator-light"
+            width="100%"
+            height="100%"
+            style={{ color: topColor }}
+          />}
+        <use
+          href="/svg/sprite.svg#lampIndicator-top"
+          width="100%"
+          height="100%"
+          style={{ color: topColor, opacity: isOffState ? 0.7 : 1 }}
+        />
+      </svg>
   );
 };
 
