@@ -737,10 +737,6 @@
 
   <!-- ВЕРХ: шапка лампы + ореол-->
   <symbol id="lampIndicator-top" viewBox="0 0 291 403">
-    <g filter="url(#filter0_top)">
-      <ellipse cx="145.5" cy="73.5" rx="109.5" ry="37.5"
-               fill="currentColor" fill-opacity="1"/>
-    </g>
 
     <path opacity="0.6"
           d="M145 36.7119C161.599 36.7119 180.985 35.7187 199.229 38.0322C217.463 40.3447 234.447 45.9518 246.255 59.0742C251.581 64.9929 254.354 71.2868 254.493 77.6162H35.5059C35.6448 71.2868 38.4192 64.993 43.7451 59.0742C55.5532 45.9518 72.5366 40.3447 90.7715 38.0322C109.015 35.7187 128.401 36.7119 145 36.7119Z"
@@ -757,6 +753,17 @@
       </filter>
     </defs>
   </symbol>
+
+  <!-- ВЕРХ: ореол-->
+
+  <symbol id="lampIndicator-light" viewBox="0 0 291 403">
+        <g filter="url(#filter0_top)">
+        <ellipse cx="145.5" cy="73.5" rx="109.5" ry="37.5"
+               fill="currentColor" fill-opacity="1"/>
+        </g>
+
+  </symbol>
+
 
 </svg>
 

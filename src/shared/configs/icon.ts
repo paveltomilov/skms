@@ -25,7 +25,7 @@ export const ICON_SIZE: IconSize = {
 		width: '30',
 		height: '30',
 		viewBox: '0 0 30 30',
-	}
+	},
 };
 
 export const ICON_TRANSFORM: IconTransform = {
@@ -48,7 +48,10 @@ export const ICON_COLOR: IconColor = {
 	green: '#0AB700',
 	electric_green: '#0BF40E',
 	dark_green: '#005C00',
-	lamp_green: '#60F993',
+	lamp_white_off: '#E1E1E1',
+	lamp_white_on: '#FFFFFF',
+	lamp_green_off: '#58C37C',
+	lamp_green_on: '#60F993',
 };
 
 export const STATUS_ICON_SIZE = {
