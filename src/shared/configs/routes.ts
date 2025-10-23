@@ -12,8 +12,11 @@ export const PUBLIC_ROUTES = [
 ] as const;
 
 // Вспомогательная функция для получения dashboard по роли
-export const getDashboardRoute = (role: UserRole): string => {
-    return DASHBOARD_ROUTES[role];
+export const getDashboardRoute = (role: UserRole | null): string => {
+    if (role !== null) {
+        return DASHBOARD_ROUTES[role];
+    }
+    return 'student';
 };
 
 // Функция проверки публичного маршрута

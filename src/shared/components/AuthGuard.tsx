@@ -24,7 +24,7 @@ const AuthGuard: FC<IAuthGuard> = ({ children, requiredRole }) => {
             }
 
             // Если есть роль, но не совпадает с требуемой - редирект на dashboard роли
-            if (role && requiredRole && role !== requiredRole) {
+            if (requiredRole && role  !== requiredRole) {
                 const dashboardRoute = getDashboardRoute(role);
                 router.push(dashboardRoute);
                 return;

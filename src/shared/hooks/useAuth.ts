@@ -24,14 +24,6 @@ export const useAuth = (requiredRole?: UserRole) => {
 
         const checkAuthAndFetchUser = async () => {
             if (!isMounted) return;
-            if (requiredRole) {
-                setState({
-                    role: requiredRole,
-                    loading: false,
-                    error: null,
-                });
-                return;
-            }
 
             try {
                 setState(prev => ({...prev, loading: true}));
@@ -67,11 +59,9 @@ export const useAuth = (requiredRole?: UserRole) => {
                     return;
                 }
 
-                const userRole = cookieRole.toString() as UserRole;
-
                 if (isMounted) {
                     setState({
-                        role: userRole,
+                        role: cookieRole as UserRole,
                         loading: false,
                         error: null,
                     });
