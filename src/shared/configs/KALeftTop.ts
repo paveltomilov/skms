@@ -1,29 +1,29 @@
-import { WINDOWS } from '@/shared/configs/window';
+import { KeyWindows } from './window';
 
 type TildaConfig = {
 	color?: 'white' | 'green';
 	disabled?: boolean;
 };
 
-export const firstWindowsTop = [
-	WINDOWS.w96,
-	WINDOWS.w97,
-	WINDOWS.w98,
-	WINDOWS.w99,
-	WINDOWS.w100,
-	WINDOWS.w101,
+export const firstWindowsTop: KeyWindows[] = [
+	'w96',
+	'w97',
+	'w98',
+	'w99',
+	'w100',
+	'w101',
 ];
 
-export const secondWindowsTop = [
-	WINDOWS.w102,
-	WINDOWS.w103,
-	WINDOWS.w104,
-	WINDOWS.w105,
-	WINDOWS.w106,
-	WINDOWS.w107,
+export const secondWindowsTop: KeyWindows[] = [
+	'w102',
+	'w103',
+	'w104',
+	'w105',
+	'w106',
+	'w107',
 ];
 
-export const thirdWindowsTop = [WINDOWS.w108, WINDOWS.w109, WINDOWS.w110];
+export const thirdWindowsTop: KeyWindows[] = ['w108', 'w109', 'w110'];
 
 export const tildaConfigTop: TildaConfig[] = [
 	{ color: 'white', disabled: true },

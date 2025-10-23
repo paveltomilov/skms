@@ -9,7 +9,7 @@ interface Props {
 	color?: 'blue' | 'yellow' | 'red';
 	size?: 'sm' | 'lg';
 	title?: string;
-	currentValue: number;
+	currentValue: number | null;
 	unitsMeasurement: UnitsMeasurement;
 	minValue: number;
 	maxValue: number;
@@ -30,7 +30,7 @@ const WindowRectCard: FC<Props> = ({
 	const backgroundStyle = {
 		background: getTubFill(
 			(color = 'red'),
-			currentValue,
+			currentValue = 0,
 			minValue,
 			maxValue,
 		),

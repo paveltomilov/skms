@@ -13,18 +13,21 @@ import {
 	tildaConfig,
 } from '@/shared/configs/KALeftMid';
 import useShowModal from '@/shared/hooks/useShowModal';
+import { WindowsState } from '@/shared/configs/window';
 
 interface Props {
 	className?: string;
+	windows: WindowsState;
 }
 
-const KALeftMid: FC<Props> = ({ className }) => {
+const KALeftMid: FC<Props> = ({ className, windows }) => {
 	const handleModalNotification = useShowModal('notification');
+
 	return (
 		<div className={cn(className, styles.container)}>
 			<div className={styles.windows}>
-				{firstWindows.map((window, index) => (
-					<Window key={index} data={window} right />
+				{firstWindows.map(id => (
+					<Window key={id} data={windows[id]} right />
 				))}
 			</div>
 
@@ -53,20 +56,20 @@ const KALeftMid: FC<Props> = ({ className }) => {
 			</div>
 
 			<div className={styles.windows}>
-				{secondWindows.map((window, index) => (
-					<Window key={index} data={window} right />
+				{secondWindows.map(id => (
+					<Window key={id} data={windows[id]} right />
 				))}
 			</div>
 
 			<div className={styles.windows}>
-				{thirdWindows.map((window, index) => (
-					<Window key={index} data={window} right />
+				{thirdWindows.map(id => (
+					<Window key={id} data={windows[id]} right />
 				))}
 			</div>
 
 			<div className={styles.windows}>
-				{fourthWindows.map((window, index) => (
-					<Window key={index} data={window} right />
+				{fourthWindows.map(id => (
+					<Window key={id} data={windows[id]} right />
 				))}
 			</div>
 		</div>

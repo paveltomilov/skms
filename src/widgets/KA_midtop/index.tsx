@@ -9,12 +9,14 @@ import {
 } from '@/shared/configs/KAGroupElements';
 import Rectangle from '@/shared/UI/icons/Rectangle';
 import useShowModal from '@/shared/hooks/useShowModal';
+import { WindowsState } from '@/shared/configs/window';
 
 interface Props {
 	className?: string;
+	windows: WindowsState;
 }
 
-const KAMidTop: FC<Props> = ({ className }) => {
+const KAMidTop: FC<Props> = ({ className, windows }) => {
 	const handleModalNotification = useShowModal('notification');
 	return (
 		<div className={cn(className, styles.container)}>
@@ -23,16 +25,11 @@ const KAMidTop: FC<Props> = ({ className }) => {
 					<div className={styles.container_element} key={index}>
 						<Window
 							color={element.color}
-							data={{
-								currentValue: element.value,
-								minValue: element.minValue,
-								maxValue: element.maxValue,
-								unitsMeasurement: element.text,
-							}}
-							right={!!element.text}
-							left={!!element.prefix}
-							textRight={element.text}
-							textLeft={element.prefix}
+							data={windows[element.id]}
+							right={!!windows[element.id].unitsMeasurement}
+							left={!!windows[element.id].prefix}
+							textRight={windows[element.id].unitsMeasurement}
+							textLeft={windows[element.id].prefix}
 						/>
 					</div>
 				))}
@@ -42,16 +39,11 @@ const KAMidTop: FC<Props> = ({ className }) => {
 					<div className={styles.container_element} key={index}>
 						<Window
 							color={element.color}
-							data={{
-								currentValue: element.value,
-								minValue: element.minValue,
-								maxValue: element.maxValue,
-								unitsMeasurement: element.text,
-							}}
-							right={!!element.text}
-							left={!!element.prefix}
-							textRight={element.text}
-							textLeft={element.prefix}
+							data={windows[element.id]}
+							right={!!windows[element.id].unitsMeasurement}
+							left={!!windows[element.id].prefix}
+							textRight={windows[element.id].unitsMeasurement}
+							textLeft={windows[element.id].prefix}
 							colorText="white"
 						/>
 					</div>
