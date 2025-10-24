@@ -4,6 +4,7 @@ import {
 	CLOSE_FROM_KRUZAP_ID,
 	CLOSE_FROM_PTK_ID,
 	HIGH_RESISTANCE,
+	INPUT_CIRCUIT_BREAKER_ID,
 	LIMIT_SWITCH_CLOSE_ID,
 	LIMIT_SWITCH_OPEN_ID,
 	OPEN_FROM_KRUZAP_ID,
@@ -240,10 +241,8 @@ export const useGateControlButtons = () => {
 			gateInterval.current = null;
 		}
 
-
 		// запускаем новый интервал
 		gateInterval.current = setInterval(() => {
-
 			// обновляем положение
 			if (button === 'open') {
 				gatePosition.current += 1;
@@ -255,18 +254,29 @@ export const useGateControlButtons = () => {
 				);
 
 				if (gatePosition.current >= 100) {
-					if (gatePosition.current === 100) {
+					if (
+						gatePosition.current === 100 &&
+						hasSticksLimitSwitchOpenMalfunction
+					) {
 						setTimeout(() => {
-							stopGateMovement(type)
-							const controlCircuitBreaker = findElementByID(
-								INPUT_CIRCUIT_BREAKER_ID,
-								useAppSelector(state => state.circuit),
+							stopGateMovement(type);
+							dispatch(
+								setGateState({
+									id: gateId,
+									states: GATE_STATE_TYPE.open,
+								}),
 							);
-							controlCircuitBreaker.forEach(item => {
-								dispatch(setResistance(item, HIGH_RESISTANCE))
-							})
+							INPUT_CIRCUIT_BREAKER_ID.forEach(item =>
+								dispatch(
+									setResistance({
+										id: item,
+										value: HIGH_RESISTANCE,
+									}),
+								),
+							);
+
 							// разобрать гл.автомат
-						}, 2000)
+						}, 2000);
 					}
 
 					gatePosition.current = 100;
@@ -289,7 +299,6 @@ export const useGateControlButtons = () => {
 						console.log(
 							`Конецквой ${limitSwitchOpenElement.name} имеет неиспрвность 'Залипший контакт'`,
 						);
-
 
 						return;
 					}
@@ -315,18 +324,29 @@ export const useGateControlButtons = () => {
 				);
 
 				if (gatePosition.current <= 0) {
-					if (gatePosition.current === 0) {
+					if (
+						gatePosition.current === 0 &&
+						hasSticksLimitSwitchCloseMalfunction
+					) {
 						setTimeout(() => {
-							stopGateMovement(type)
-							const controlCircuitBreaker = findElementByID(
-								INPUT_CIRCUIT_BREAKER_ID,
-								useAppSelector(state => state.circuit),
+							stopGateMovement(type);
+							dispatch(
+								setGateState({
+									id: gateId,
+									states: GATE_STATE_TYPE.close,
+								}),
 							);
-							controlCircuitBreaker.forEach(item => {
-								dispatch(setResistance(item, HIGH_RESISTANCE))
-							})
+							INPUT_CIRCUIT_BREAKER_ID.forEach(item =>
+								dispatch(
+									setResistance({
+										id: item,
+										value: HIGH_RESISTANCE,
+									}),
+								),
+							);
+
 							// разобрать гл.автомат
-						}, 2000)
+						}, 2000);
 					}
 					gatePosition.current = 0;
 					//проверяем на наличие неисправностей кнопок блока концевых выключателей

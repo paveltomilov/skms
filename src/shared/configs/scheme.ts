@@ -780,7 +780,7 @@ const controlCircuit = [
 					{
 						id: 'c.3.1.1.1',
 						name: 'Залипший контакт',
-						active: false,
+						active: true,
 					},
 					{
 						id: 'c.3.1.1.2',
