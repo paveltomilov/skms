@@ -143,7 +143,6 @@ export const useGateControlButtons = () => {
 	/** создаем интервал в глобальной ОВ */
 	const gateInterval = useRef<NodeJS.Timeout | null>(null);
 
-
 	/** Функция для остановки движения задвижки */
 	const stopGateMovement = (type: 'ptk' | 'kruzap') => {
 		const config =
@@ -234,7 +233,7 @@ export const useGateControlButtons = () => {
 		}
 
 		/** создаем булевое значение запуска время срабатывания вводного автома */
-		const hasTimeIntroductoryAutomaton: boolen = false;
+		let hasTimeIntroductoryAutomaton: boolean = false;
 
 		// обновляем сопротивления, которые меняются сразу после нажатия на кнопку Открыть/Закрыть
 		config[button].forEach(action => {
@@ -259,8 +258,7 @@ export const useGateControlButtons = () => {
 					}),
 				);
 				if (gatePosition.current >= 100) {
-
-					// при наличии неисправности запуск таймера на отключения вводного автомата 
+					// при наличии неисправности запуск таймера на отключения вводного автомата
 					if (
 						!hasTimeIntroductoryAutomaton &&
 						hasSticksLimitSwitchOpenMalfunction
@@ -329,8 +327,7 @@ export const useGateControlButtons = () => {
 					}),
 				);
 				if (gatePosition.current <= 0) {
-
-					// при наличии неисправности запуск таймера на отключения вводного автомата 
+					// при наличии неисправности запуск таймера на отключения вводного автомата
 					if (
 						!hasTimeIntroductoryAutomaton &&
 						hasSticksLimitSwitchCloseMalfunction
