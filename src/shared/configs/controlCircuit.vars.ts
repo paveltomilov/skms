@@ -92,7 +92,7 @@ function makeEl(
 	};
 }
 
-export const E = {
+export const controlCircuitElements = {
 	...makeEl('C0', 'c.0', 'Провод от силовой части схемы к автомату питания управления', 'wire'),
 	...makeEl('C1', 'c.1', 'Автомат питания цепей управления', 'breaker'),
 	...makeEl('C2', 'c.2', 'Провод от автомата до соединительной коробки', 'wire'),
