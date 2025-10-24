@@ -17,6 +17,8 @@ import { KRUZAP_BUTTONS_CONFIG, PTK_BUTTONS_CONFIG } from '../configs/header';
 import { useRef } from 'react';
 import { GATE_STATE_TYPE } from '../types/gate';
 
+const TimeShutdown: number = 2000;
+
 export const useGateControlButtons = () => {
 	const dispatch = useAppDispatch();
 
@@ -141,6 +143,7 @@ export const useGateControlButtons = () => {
 	/** создаем интервал в глобальной ОВ */
 	const gateInterval = useRef<NodeJS.Timeout | null>(null);
 
+
 	/** Функция для остановки движения задвижки */
 	const stopGateMovement = (type: 'ptk' | 'kruzap') => {
 		const config =
@@ -215,7 +218,7 @@ export const useGateControlButtons = () => {
 			return;
 		}
 
-		//проверяем на наличие неисправностей кнопок блока концевых выключателей
+		// проверяем на наличие неисправностей контактов блока концевых выключателей
 
 		if (notClosedLimitSwitchOpenMalfunction && button === 'open') {
 			console.log(
@@ -223,13 +226,16 @@ export const useGateControlButtons = () => {
 			);
 			return;
 		}
-
 		if (notClosedLimitSwitchCloseMalfunction && button === 'close') {
 			console.log(
 				`${limitSwitchCloseElement.name} имеет неиспрвность 'Нет контакта'`,
 			);
 			return;
 		}
+
+		/** создаем булевое значение запуска время срабатывания вводного автома */
+		const hasTimeIntroductoryAutomaton: boolen = false;
+
 		// обновляем сопротивления, которые меняются сразу после нажатия на кнопку Открыть/Закрыть
 		config[button].forEach(action => {
 			dispatch(setResistance(action));
@@ -252,12 +258,14 @@ export const useGateControlButtons = () => {
 						states: GATE_STATE_TYPE.toOpen,
 					}),
 				);
-
 				if (gatePosition.current >= 100) {
+
+					// при наличии неисправности запуск таймера на отключения вводного автомата 
 					if (
-						gatePosition.current === 100 &&
+						!hasTimeIntroductoryAutomaton &&
 						hasSticksLimitSwitchOpenMalfunction
 					) {
+						hasTimeIntroductoryAutomaton = true;
 						setTimeout(() => {
 							stopGateMovement(type);
 							dispatch(
@@ -266,6 +274,8 @@ export const useGateControlButtons = () => {
 									states: GATE_STATE_TYPE.open,
 								}),
 							);
+
+							// отключяем вводной автомат
 							INPUT_CIRCUIT_BREAKER_ID.forEach(item =>
 								dispatch(
 									setResistance({
@@ -274,14 +284,11 @@ export const useGateControlButtons = () => {
 									}),
 								),
 							);
-
-							// разобрать гл.автомат
-						}, 2000);
+						}, TimeShutdown);
 					}
-
 					gatePosition.current = 100;
-					//проверяем на наличие неисправностей кнопок блока концевых выключателей
 
+					// проверяем на наличие неисправностей контактов ОТКРЫТО блока концевых выключателей
 					if (hasSticksLimitSwitchOpenMalfunction) {
 						dispatch(
 							setGatePosition({
@@ -309,7 +316,6 @@ export const useGateControlButtons = () => {
 							states: GATE_STATE_TYPE.open,
 						}),
 					);
-
 					config.opening.forEach(action => {
 						dispatch(setResistance(action));
 					});
@@ -322,12 +328,14 @@ export const useGateControlButtons = () => {
 						states: GATE_STATE_TYPE.toClose,
 					}),
 				);
-
 				if (gatePosition.current <= 0) {
+
+					// при наличии неисправности запуск таймера на отключения вводного автомата 
 					if (
-						gatePosition.current === 0 &&
+						!hasTimeIntroductoryAutomaton &&
 						hasSticksLimitSwitchCloseMalfunction
 					) {
+						hasTimeIntroductoryAutomaton = true;
 						setTimeout(() => {
 							stopGateMovement(type);
 							dispatch(
@@ -336,6 +344,8 @@ export const useGateControlButtons = () => {
 									states: GATE_STATE_TYPE.close,
 								}),
 							);
+
+							// отключяем вводной автомат
 							INPUT_CIRCUIT_BREAKER_ID.forEach(item =>
 								dispatch(
 									setResistance({
@@ -344,12 +354,11 @@ export const useGateControlButtons = () => {
 									}),
 								),
 							);
-
-							// разобрать гл.автомат
-						}, 2000);
+						}, TimeShutdown);
 					}
 					gatePosition.current = 0;
-					//проверяем на наличие неисправностей кнопок блока концевых выключателей
+
+					// проверяем на наличие неисправностей контактов ЗАКРЫТ блока концевых выключателей
 					if (hasSticksLimitSwitchCloseMalfunction) {
 						dispatch(
 							setGatePosition({
@@ -375,7 +384,6 @@ export const useGateControlButtons = () => {
 							states: GATE_STATE_TYPE.close,
 						}),
 					);
-
 					config.closing.forEach(action => {
 						dispatch(setResistance(action));
 					});
