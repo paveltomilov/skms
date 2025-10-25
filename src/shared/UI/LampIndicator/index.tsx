@@ -1,53 +1,58 @@
-import { ICON_COLOR, SCHEME_ICON_SIZE } from '@/shared/configs/icon';
-import { getBottomGradientByColor, getVisualConfigByColor } from '@/shared/configs/lampIndicator';
+import { SCHEME_ICON_SIZE } from '@/shared/configs/icon';
+import { getVisualConfigByColor } from '@/shared/configs/lampIndicator';
 import type { LampIndicatorColor } from '@/shared/types/icon';
-import { LampIndicatorCssVars } from '@/shared/types/lamp';
 import type { SchemeIconType } from '@/shared/types/scheme';
-import { FC } from 'react';
+import cn from 'classnames';
+import { FC, SVGProps } from 'react';
+import styles from './styles.module.scss';
 
+type SvgProps = Omit<SVGProps<SVGSVGElement>, 'color'>;
 
-interface Props {
+interface Props extends SvgProps {
 	type?: Extract<SchemeIconType, 'lamp'>;
 	color?: LampIndicatorColor;
-	className?: string;
-	style?: React.CSSProperties;
 }
+
+const COLOR_CLASSNAME: Record<LampIndicatorColor, string> = {
+	lamp_white_off: styles.lamp_white_off,
+	lamp_white_on: styles.lamp_white_on,
+	lamp_green_off: styles.lamp_green_off,
+	lamp_green_on: styles.lamp_green_on,
+};
 
 const LampIndicator: FC<Props> = ({
 	type = 'lamp',
 	color = 'lamp_white_off',
 	className,
-	style,
+	...rest
 }) => {
 	const sizes = SCHEME_ICON_SIZE[type];
-	const topColor = (ICON_COLOR[color] ?? ICON_COLOR.lamp_white_off) as string;
 	const { showGlow, showTop, topOpacity } = getVisualConfigByColor(color);
-	const bottomGradient = getBottomGradientByColor(color);
-
-	const bottomGradientVars: LampIndicatorCssVars = {
-		'--lamp-bottom-start': bottomGradient.start,
-		'--lamp-bottom-end': bottomGradient.end,
-	};
-
-	const styleWithVars = { ...style, ...bottomGradientVars } as React.CSSProperties;
+	const colorClassName = COLOR_CLASSNAME[color] ?? styles.lamp_white_off;
 
 	return (
 		<svg
 			width={sizes.width}
 			height={sizes.height}
 			viewBox="0 0 291 403"
-			aria-hidden
-			className={className}
-			style={styleWithVars}
+			role="presentation"
+			aria-hidden="true"
+			className={cn(styles.root, colorClassName, className)}
 			preserveAspectRatio="xMidYMid meet"
+			{...rest}
 		>
-			<use href="/svg/sprite.svg#lampIndicator-base" width="100%" height="100%" />
+			<use
+				href="/svg/sprite.svg#lampIndicator-base"
+				width="100%"
+				height="100%"
+				className={styles.base}
+			/>
 			{showGlow && (
 				<use
 					href="/svg/sprite.svg#lampIndicator-light"
 					width="100%"
 					height="100%"
-					style={{ color: topColor }}
+					className={styles.glow}
 				/>
 			)}
 			{showTop && topOpacity > 0 && (
@@ -55,7 +60,7 @@ const LampIndicator: FC<Props> = ({
 					href="/svg/sprite.svg#lampIndicator-top"
 					width="100%"
 					height="100%"
-					style={{ color: topColor, opacity: topOpacity }}
+					className={styles.top}
 				/>
 			)}
 		</svg>
