@@ -15,7 +15,7 @@ const windowsSlice = createSlice({
 			state[payload.id].currentValue = payload.value;
 		},
 		setValueAll: (
-			state: WindowsState,
+			_,
 			{ payload }: PayloadAction<WindowsState>,
 		) => {
 			return payload;

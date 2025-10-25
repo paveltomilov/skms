@@ -19,17 +19,44 @@ const BoilerUnitPage = () => {
 		<section className={styles.section}>
 			<h1 className={styles.section__title}>КА - Котлоагрегат</h1>
 			<div className={styles.section__content}>
-				<KALeftTop className={styles.section__content_left_top} windows={windows} />
-				<KALeftMid className={styles.section__content_left_mid} windows={windows} />
-				<KALeftDown className={styles.section__content_left_down} windows={windows} />
+				<KALeftTop
+					className={styles.section__content_left_top}
+					windows={windows}
+				/>
+				<KALeftMid
+					className={styles.section__content_left_mid}
+					windows={windows}
+				/>
+				<KALeftDown
+					className={styles.section__content_left_down}
+					windows={windows}
+				/>
 
-				<KAMidTop className={styles.section__content_mid_top} windows={windows} />
-				<KAMidMid className={styles.section__content_mid_mid} windows={windows} />
-				<KAMidDown className={styles.section__content_mid_down} windows={windows} />
+				<KAMidTop
+					className={styles.section__content_mid_top}
+					windows={windows}
+				/>
+				<KAMidMid
+					className={styles.section__content_mid_mid}
+					windows={windows}
+				/>
+				<KAMidDown
+					className={styles.section__content_mid_down}
+					windows={windows}
+				/>
 
-				<KARightTop className={styles.section__content_right_top} windows={windows} />
-				<KARightMid className={styles.section__content_right_mid} windows={windows} />
-				<KARightDown className={styles.section__content_right_down} windows={windows} />
+				<KARightTop
+					className={styles.section__content_right_top}
+					windows={windows}
+				/>
+				<KARightMid
+					className={styles.section__content_right_mid}
+					windows={windows}
+				/>
+				<KARightDown
+					className={styles.section__content_right_down}
+					windows={windows}
+				/>
 			</div>
 		</section>
 	);
