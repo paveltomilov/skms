@@ -48,8 +48,8 @@ export const ICON_COLOR: IconColor = {
 	green: '#0AB700',
 	electric_green: '#0BF40E',
 	dark_green: '#005C00',
-	lamp_white_off: '#E1E1E1',
-	lamp_white_on: '#FFFFFF',
+	lamp_white_off: '#EAEAEA',
+	lamp_white_on: '#FCFCFC',
 	lamp_green_off: '#58C37C',
 	lamp_green_on: '#60F993',
 };
