@@ -13,7 +13,7 @@ export default function PtkLayout({ children }: { children: React.ReactNode }) {
 	useEffect(() => {
 		const interval = setInterval(() => {
 			updateWindows();
-		}, getRandomNumberWindows(1000, 3000));
+		}, getRandomNumberWindows(1000, 2000));
 
 		return () => clearInterval(interval);
 	}, [updateWindows]);

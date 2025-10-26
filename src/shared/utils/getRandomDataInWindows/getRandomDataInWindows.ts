@@ -1,13 +1,22 @@
 import { KeyWindows, WINDOWS } from '../../configs/window';
 import { getRandomNumberWindows } from '../getRandomNumberWindows/getRandomNumberWindows';
 
-const getRandomDataInWindows = (id: KeyWindows): number | null => {
+const getRandomDataInWindows = (
+	id: KeyWindows,
+	valuePercent?: number,
+): number | null => {
 	const windowsConfig = WINDOWS[id];
 	const { currentValue } = windowsConfig;
 	let percent = 1;
 
 	if (currentValue == null || currentValue === 0) {
 		return currentValue;
+	}
+	if (valuePercent && valuePercent > 0) {
+		return getRandomNumberWindows(
+			currentValue - currentValue * (valuePercent / 100),
+			currentValue + currentValue * (valuePercent / 100),
+		);
 	}
 	const moduleCurrentValue = Math.abs(currentValue);
 

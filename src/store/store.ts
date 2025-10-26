@@ -6,10 +6,12 @@ import circuitReducer from './circuitSlice';
 import pointsReducer from './pointsSlice';
 import powerUnitReducer from './powerUnitSlice';
 import windowsReducer from './windowsSlice';
+import percentReducer from './percentSlice';
 
 export const store = () => {
 	return configureStore({
 		reducer: {
+			percent: percentReducer,
 			windows: windowsReducer,
 			gate: gateReducer,
 			modal: modalReducer,

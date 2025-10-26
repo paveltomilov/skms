@@ -7,11 +7,15 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useGateControlButtons } from '@/shared/hooks/useGateControlButtons';
 import GateWindow from '@/entities/GateWindow';
+import { useAppDispatch } from '@/shared/hooks/store';
+import { AppDispatch } from '@/store/store';
+import { setPercent } from '@/store/percentSlice';
 
 const HeaderZra: FC = () => {
 	// вынести в дальнейшем в отдельный компонент
 	const router = useRouter();
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const dispatch = useAppDispatch<AppDispatch>();
 
 	useEffect(() => {
 		const token = localStorage.getItem('token');
@@ -79,6 +83,20 @@ const HeaderZra: FC = () => {
 				<GateWindow />
 
 				<div className={style.part}>
+					{/* временный интерфейс для изменения базовых параметров window */}
+					<select
+						size={2}
+						className={style.hideScrollbar}
+						onChange={e =>
+							dispatch(setPercent(Number(e.target.value)))
+						}
+					>
+						{Array.from({ length: 101 }, (_, idx) => (
+							<option key={idx} value={idx}>
+								{idx}
+							</option>
+						))}
+					</select>
 					<Button
 						width={105}
 						height={38}
