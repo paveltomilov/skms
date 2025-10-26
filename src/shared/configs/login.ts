@@ -48,9 +48,43 @@ export const config: Login = [
 			return 3; // OK
 		},
 	},
+	{
+		name: 'first_name',
+		required: true,
+		errorMessage: 'Имя введено неверно',
+		warnMessage:
+			'Имя не должно содержать в себе символы @, #, ! и также кирилицу',
+		validate: (state: LoginFormData) => {
+			if (!state.first_name.trim()) return 0;
+
+			const latinPattern = /^[A-Za-z]+$/;
+
+			if (!latinPattern.test(state.first_name.trim())) return 2;
+
+			return 3; // OK
+		},
+	},
+	{
+		name: 'last_name',
+		required: true,
+		errorMessage: 'Фамилия введена неверно',
+		warnMessage:
+			'Фамилия не должна содержать в себе символы @, #, ! и также кирилицу',
+		validate: (state: LoginFormData) => {
+			if (!state.last_name.trim()) return 0;
+
+			const latinPattern = /^[A-Za-z]+$/;
+
+			if (!latinPattern.test(state.last_name.trim())) return 2;
+
+			return 3; // OK
+		},
+	},
 ];
 
 export const initialState: LoginFormData = {
 	email: '',
 	password: '',
+	first_name: '',
+	last_name: '',
 };

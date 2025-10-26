@@ -1,7 +1,7 @@
-import { RefreshResponse, VerifyResponse } from '@/shared/types/typesAuth';
+import {RefreshResponse, VerifyResponse} from '@/shared/types/typesAuth';
 import axios from 'axios';
-import { getCookie, setCookie } from 'cookies-next';
-import { LoginFormData, LoginResponse } from '../types/login';
+import {getCookie, setCookie} from 'cookies-next';
+import {LoginFormData, LoginResponse} from '../types/login';
 
 const urlBase = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -72,7 +72,6 @@ export async function postAuth(formData: LoginFormData): Promise<boolean> {
 		const { access, refresh, first_name, last_name, role } = response.data;
 
 		if (!access || !refresh) {
-			// throw new Error('Токены не получены');
 			throw new Error('Данные некорректны');
 		}
 		if (response.status == 200) {
