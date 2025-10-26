@@ -1,54 +1,8 @@
 ﻿import { Modals } from '@/store/modalSlice';
-import { CircuitBranch, InitialStateScheme } from '../types/scheme';
-import { controlCircuitElementsMap } from './controlCircuit/controlCircuit.map';
+import { InitialStateScheme } from '../types/scheme';
+import { controlCircuit } from './controlCircuit/controlCircuit';
 
-export { controlCircuitElementsMap } from './controlCircuit/controlCircuit.map';
-
-const {
-	provodOtSilovojChastiSkhemyKAvtomatuPitaniyaUpravleniya,
-	avtomatPitaniyaSkhemyUpravleniya,
-	provodOtAvtomataDoSoyedinitelnojKorobki,
-	provodVSoyedinitelnojKorobkeNaVetkuOtkrytiya,
-	provodOtSoyedinitelnojKorobkiDoKontsevogoVyklyuchatelyaOtkryto,
-	kontsevojVyklyuchatelOtkryto,
-	provodOtKontsevogoVyklyuchatelyaOtkrytoDoKlemmikaKRUZA_P,
-	provodOtKRUZA_PDoVstavkiNDIOtkryto,
-	vstavkaNDIOtkryto,
-	provodOtVstavkiNDIOtkrytoDoNejtrali,
-	provodOtKRUZA_PDoVstavkiNDOOtkryt,
-	vstavkaNDOOtkryt,
-	provodOtVstavkiNDOOtkrytDoKlemmikaKRUZA_P,
-	provodOtKlemmikaKRUZA_PDoKontaktovBlokirovkiSkhemyOtkrytiyaPuskatelyaZakryto,
-	kontaktyBlokirovkiPuskatelyaZakryto,
-	provodOtKontaktovBlokirovkiPuskatelyaZakrytoNaKatushechkuPuskatelyaOtkryto,
-	katushechkaPuskatelyaOtkryt,
-	provodOtKlemmikaKRUZA_PDoKnopkiOtkryt,
-	knopkaOtkryt,
-	provodOtKnopkiOtkrytDoKlemmikaKRUZA_P,
-	provodOtKlemmikaKRUZA_PDoLampyZakryto,
-	lampaZakryto,
-	provodOtLampyZakrytoDoNejtrali,
-	provodVSoyedinitelnojKorobkeNaVetkuZakrytiya,
-	provodOtSoyedinitelnojKorobkiDoKontsevogoVyklyuchatelyaZakryto,
-	kontsevojVyklyuchatelZakryto,
-	provodOtKontsevogoVyklyuchatelyaZakrytoDoKlemmikaKRUZA_P,
-	provodOtKRUZA_PDoVstavkiNDIZakryto,
-	vstavkaNDIZakryto,
-	provodOtVstavkiNDIZakrytoDoNejtrali,
-	provodOtKRUZA_PDoVstavkiNDOZakryt,
-	vstavkaNDOZakryt,
-	provodOtVstavkiNDOZakrytDoKlemmikaKRUZA_P,
-	provodOtKlemmikaKRUZA_PDoKontaktovBlokirovkiSkhemyZakrytiyaPuskatelyaOtkryto,
-	kontaktyBlokirovkiPuskatelyaOtkryto,
-	provodOtKontaktovBlokirovkiPuskatelyaOtkrytoNaKatushechkuPuskatelyaZakryto,
-	katushechkaPuskatelyaZakryt,
-	provodOtKlemmikaKRUZA_PDoKnopkiZakryt,
-	knopkaZakryt,
-	provodOtKnopkiZakrytDoKlemmikaKRUZA_P,
-	provodOtKlemmikaKRUZA_PDoLampyOtkryto,
-	lampaOtkryto,
-	provodOtLampyOtkrytoDoNejtrali,
-} = controlCircuitElementsMap;
+export { controlCircuit } from './controlCircuit/controlCircuit';
 
 // id элементов схемы
 export const LIMIT_SWITCH_OPEN_ID = 'c.3.1.1';
@@ -147,12 +101,12 @@ export const SCHEME_ELEMENTS: { id: string; aria: string; type: Modals }[] = [
 	{
 		id: 'c.3.1.3.3',
 		aria: 'Лампа в КРУЗА-П закрыто',
-		type: 'lamps'
+		type: 'lamps',
 	},
 	{
 		id: 'c.3.2.3.3',
 		aria: 'Лампа в КРУЗА-П открыто',
-		type: 'lamps'
+		type: 'lamps',
 	},
 	{
 		id: CONTROL_CIRCUIT_BREAKER_ID,
@@ -172,7 +126,7 @@ export const SCHEME_ELEMENTS: { id: string; aria: string; type: Modals }[] = [
 	{
 		id: 'p.3.1',
 		aria: 'Реверсивный пускатель',
-		type: 'starter'
+		type: 'starter',
 	},
 	{
 		id: OPEN_FROM_KRUZAP_ID,
@@ -768,83 +722,7 @@ const powerCircuit = [
 	],
 ];
 
-
-export const controlCircuit: CircuitBranch[] = [
-	provodOtSilovojChastiSkhemyKAvtomatuPitaniyaUpravleniya,
-	avtomatPitaniyaSkhemyUpravleniya,
-	provodOtAvtomataDoSoyedinitelnojKorobki,
-	[
-		[
-			provodVSoyedinitelnojKorobkeNaVetkuOtkrytiya,
-			provodOtSoyedinitelnojKorobkiDoKontsevogoVyklyuchatelyaOtkryto,
-			kontsevojVyklyuchatelOtkryto,
-			provodOtKontsevogoVyklyuchatelyaOtkrytoDoKlemmikaKRUZA_P,
-			[
-				provodOtKRUZA_PDoVstavkiNDIOtkryto,
-				vstavkaNDIOtkryto,
-				provodOtVstavkiNDIOtkrytoDoNejtrali,
-			],
-			[
-				provodOtKRUZA_PDoVstavkiNDOOtkryt,
-				vstavkaNDOOtkryt,
-				provodOtVstavkiNDOOtkrytDoKlemmikaKRUZA_P,
-			],
-			[
-				provodOtKlemmikaKRUZA_PDoKontaktovBlokirovkiSkhemyOtkrytiyaPuskatelyaZakryto,
-				kontaktyBlokirovkiPuskatelyaZakryto,
-				provodOtKontaktovBlokirovkiPuskatelyaZakrytoNaKatushechkuPuskatelyaOtkryto,
-				katushechkaPuskatelyaOtkryt,
-			],
-			[
-				provodOtKlemmikaKRUZA_PDoKnopkiOtkryt,
-				knopkaOtkryt,
-				provodOtKnopkiOtkrytDoKlemmikaKRUZA_P,
-			],
-			[
-				provodOtKlemmikaKRUZA_PDoLampyZakryto,
-				lampaZakryto,
-				provodOtLampyZakrytoDoNejtrali,
-			],
-		],
-		[
-			provodVSoyedinitelnojKorobkeNaVetkuZakrytiya,
-			provodOtSoyedinitelnojKorobkiDoKontsevogoVyklyuchatelyaZakryto,
-			kontsevojVyklyuchatelZakryto,
-			provodOtKontsevogoVyklyuchatelyaZakrytoDoKlemmikaKRUZA_P,
-			[
-				provodOtKRUZA_PDoVstavkiNDIZakryto,
-				vstavkaNDIZakryto,
-				provodOtVstavkiNDIZakrytoDoNejtrali,
-			],
-			[
-				provodOtKRUZA_PDoVstavkiNDOZakryt,
-				vstavkaNDOZakryt,
-				provodOtVstavkiNDOZakrytDoKlemmikaKRUZA_P,
-			],
-			[
-				provodOtKlemmikaKRUZA_PDoKontaktovBlokirovkiSkhemyZakrytiyaPuskatelyaOtkryto,
-				kontaktyBlokirovkiPuskatelyaOtkryto,
-				provodOtKontaktovBlokirovkiPuskatelyaOtkrytoNaKatushechkuPuskatelyaZakryto,
-				katushechkaPuskatelyaZakryt,
-			],
-			[
-				provodOtKlemmikaKRUZA_PDoKnopkiZakryt,
-				knopkaZakryt,
-				provodOtKnopkiZakrytDoKlemmikaKRUZA_P,
-			],
-			[
-				provodOtKlemmikaKRUZA_PDoLampyOtkryto,
-				lampaOtkryto,
-				provodOtLampyOtkrytoDoNejtrali,
-			],
-		],
-	],
-];
-
 export const initialStateScheme: InitialStateScheme = {
 	powerCircuit: powerCircuit,
 	controlCircuit: controlCircuit,
 };
-
-
-
