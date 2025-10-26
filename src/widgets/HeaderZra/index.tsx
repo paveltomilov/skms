@@ -7,8 +7,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useGateControlButtons } from '@/shared/hooks/useGateControlButtons';
 import GateWindow from '@/entities/GateWindow';
-import { useAppDispatch } from '@/shared/hooks/store';
-import { AppDispatch } from '@/store/store';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
+import { AppDispatch, RootState } from '@/store/store';
 import { setPercent } from '@/store/percentSlice';
 
 const HeaderZra: FC = () => {
@@ -16,11 +16,16 @@ const HeaderZra: FC = () => {
 	const router = useRouter();
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const dispatch = useAppDispatch<AppDispatch>();
+	const [percentDef, setPercentDef] = useState<number>(0);
+	const percentValue = useAppSelector((state: RootState) => state.percent);
 
 	useEffect(() => {
 		const token = localStorage.getItem('token');
 		setIsLoggedIn(!!token);
 	}, []);
+	useEffect(() => {
+		setPercentDef(percentValue);
+	}, [percentValue]);
 
 	const handleLogout = () => {
 		localStorage.removeItem('token');
@@ -87,6 +92,7 @@ const HeaderZra: FC = () => {
 					<select
 						size={2}
 						className={style.hideScrollbar}
+						value={percentDef}
 						onChange={e =>
 							dispatch(setPercent(Number(e.target.value)))
 						}
