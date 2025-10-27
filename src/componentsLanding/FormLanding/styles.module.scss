@@ -1,0 +1,95 @@
+.form {
+	padding: 48px;
+	display: grid;
+	grid-template-columns: repeat(2, 442px);
+	grid-template-rows: repeat(4, auto);
+	grid-column-gap: 52px;
+	grid-row-gap: 56px;
+	border-radius: 12px;
+	background-color: var(--lan-bright-cyan---lime-green);
+	margin-bottom: 24px;
+
+	&__title {
+		grid-area: 1 / 1 / 2 / 3;
+		color: var(--lan-very-dark-mostly-black-blue);
+	}
+
+	&__fio {
+		grid-area: 2 / 1 / 3 / 2;
+		display: flex;
+		flex-direction: column;
+	}
+
+	&__mail {
+		grid-area: 2 / 2 / 3 / 3;
+		display: flex;
+		flex-direction: column;
+	}
+
+	&__company {
+		grid-area: 3 / 1 / 4 / 2;
+		display: flex;
+		flex-direction: column;
+	}
+
+	&__telephone {
+		grid-area: 3 / 2 / 4 / 3;
+		display: flex;
+		flex-direction: column;
+	}
+
+	&__sogl {
+		grid-area: 4 / 1 / 5 / 3;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+	&__button {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		font-family: var(--second-family);
+		font-weight: 600;
+		font-size: 14px;
+		line-height: 136%;
+		text-transform: uppercase;
+		border: 1px solid var(--lan-very-dark-gray);
+		border-radius: 4px;
+		color: var(--lan-very-dark-mostly-black-blue);
+	}
+
+	&__check {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+}
+
+.label {
+}
+
+.input {
+	background-color: inherit;
+	border: none;
+	border-bottom: 1px solid var(--lan-very-dark-gray);
+	padding-top: 18px;
+	padding-bottom: 8px;
+	outline: none;
+
+	&__checkbox {
+		width: 24px;
+		height: 24px;
+		margin-right: 5px;
+	}
+}
+
+.checkbox__descr {
+	font-family: var(--second-family);
+	font-weight: 500;
+	font-size: 13px;
+	line-height: 100%;
+	color: var(--lan-very-dark-gray);
+}

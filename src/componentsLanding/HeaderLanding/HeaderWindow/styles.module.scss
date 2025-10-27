@@ -1,0 +1,24 @@
+@use '@/shared/scss/variables.module';
+@use '@/shared/scss/mixins.module';
+
+.header {
+	&__button {
+		margin-left: 20px;
+	}
+
+	&__window {
+		border: 1px solid red;
+		position: fixed;
+		top: 150px;
+	}
+
+	&__mail {
+		display: flex;
+		flex-direction: column;
+	}
+
+	&__massenger {
+		display: flex;
+		gap: 10px;
+	}
+}

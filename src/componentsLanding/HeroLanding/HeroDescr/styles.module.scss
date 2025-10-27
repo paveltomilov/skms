@@ -1,0 +1,30 @@
+.wrapper {
+	width: 504px;
+	display: flex;
+	flex-direction: column;
+
+	&__strong {
+		font-weight: 600;
+		font-size: 20px;
+		line-height: 136%;
+		text-transform: uppercase;
+		margin-bottom: 16px;
+		color: var(--lan-light-grayish-blue);
+	}
+
+	&__text {
+		font-weight: 400;
+		font-size: 17px;
+		line-height: 128%;
+		margin-bottom: 20px;
+		color: var(--lan-light-grayish-cyan);
+	}
+
+	&__button {
+		font-family: var(--second-family);
+		font-weight: 600;
+		font-size: 14px;
+		line-height: 136%;
+		text-transform: uppercase;
+	}
+}

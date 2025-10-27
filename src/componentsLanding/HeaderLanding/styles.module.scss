@@ -1,0 +1,24 @@
+.header {
+	position: sticky; /* оставляем на месте при скролле */
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 20; /* выше hero и всего остального */
+
+	background-color: transparent;
+	transition: all 0.2s ease-in-out;
+
+	&__container {
+		color: var(--lan-light-grayish-cyan);
+		padding-top: 24px;
+		padding-bottom: 24px;
+
+		display: flex;
+		align-items: center; // вертикальное выравнивание
+		justify-content: space-between;
+	}
+
+	&.scrolled {
+		background-color: var(--lan-very-dark-mostly-black-blue);
+	}
+}

@@ -1,0 +1,23 @@
+.card {
+	width: 328px;
+	padding: 24px 48px 24px 24px;
+	border-radius: 12px;
+	border: 2px solid var(--lan-very-dark-gray);
+}
+
+.title {
+	font-family: var(--second-family);
+	font-weight: 600;
+	font-size: 14px;
+	line-height: 136%;
+	text-transform: uppercase;
+	color: var(--lan-moderate-cyan);
+}
+
+.description {
+	font-family: var(--second-family);
+	font-weight: 400;
+	font-size: 17px;
+	line-height: 128%;
+	color: var(--lan-light-grayish-cyan);
+}

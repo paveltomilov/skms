@@ -1,0 +1,35 @@
+.hero {
+	margin-top: -88px;
+	display: flex; // делаем секцию flex‑контейнером
+	justify-content: center; // горизонтальное центрирование
+	align-items: center; // вертикальное центрирование
+
+	&__container {
+		width: 100%;
+		height: 800px;
+		background: url(/assets/images/hero.png) no-repeat center / cover;
+		padding-top: 169px;
+		color: var(--lan-light-grayish-blue);
+	}
+
+	&__title {
+		margin-bottom: 84px;
+	}
+
+	&__content {
+		display: flex;
+		justify-content: flex-end;
+	}
+}
+
+.lineLeft {
+	align-self: flex-start;
+} /* слева */
+.lineCenter {
+	align-self: center;
+} /* центр */
+.lineRight {
+	align-self: flex-end;
+} /* справа */
+
+/* Дополнительные стили для контейнера и подзаголовка можно оставить как есть */

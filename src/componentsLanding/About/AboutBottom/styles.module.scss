@@ -1,0 +1,132 @@
+.about {
+	&__container {
+		padding-top: 94px;
+	}
+}
+
+.title {
+	max-width: 504px;
+	margin-bottom: 52px;
+}
+
+.content {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-template-rows: 1fr;
+	grid-column-gap: 24px;
+	grid-row-gap: 0px;
+	color: var(--lan-light-grayish-cyan);
+
+	&__left {
+		grid-area: 1 / 1 / 2 / 2;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+
+		&__description {
+			width: 416px;
+			font-family: var(--second-family);
+			font-weight: 400;
+			font-size: 17px;
+			line-height: 128%;
+		}
+	}
+
+	&__right {
+		grid-area: 1 / 2 / 2 / 3;
+
+		&__description {
+			font-family: var(--second-family);
+			font-weight: 400;
+			font-size: 17px;
+			line-height: 128%;
+			color: var(--lan-light-grayish-cyan);
+			margin-bottom: 52px;
+		}
+	}
+}
+
+.supervisor {
+	width: 266px;
+
+	&__image {
+		font-family: var(--second-family);
+		font-weight: 500;
+		font-size: 100px;
+		line-height: 100%;
+		text-transform: uppercase;
+		color: var(--lan-light-grayish-blue);
+		margin-bottom: 24px;
+	}
+}
+
+.statistic {
+	background-color: var(--lan-very-dark-mostly-black-blue-2);
+	border-radius: 12px;
+	padding: 24px;
+
+	&__title {
+		font-family: var(--second-family);
+		font-weight: 600;
+		font-size: 17px;
+		line-height: 128%;
+		letter-spacing: 0.01em;
+		color: var(--lan-light-grayish-blue);
+		margin-bottom: 24px;
+	}
+
+	&__descr {
+		font-family: var(--second-family);
+		font-weight: 500;
+		font-size: 15px;
+		line-height: 128%;
+		color: var(--lan-light-grayish-blue);
+	}
+}
+
+.schedule {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: 1fr;
+	grid-column-gap: 12px;
+	align-items: end;
+}
+
+.schedule1 {
+	height: 268px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 12px;
+	background: url(/assets/images/column1.png) no-repeat;
+	grid-area: 1 / 1 / 2 / 2;
+}
+
+.schedule2 {
+	grid-area: 1 / 2 / 2 / 3;
+	height: 215px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 12px;
+	background: url(/assets/images/column2.png) no-repeat;
+}
+
+.schedule3 {
+	grid-area: 1 / 3 / 2 / 4;
+	height: 170px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 12px;
+	background: url(/assets/images/column3.png) no-repeat;
+}
+
+.interest {
+	font-family: var(--second-family);
+	font-weight: 700;
+	font-size: 26px;
+	line-height: 128%;
+	letter-spacing: 0.01em;
+	color: var(--lan-light-grayish-blue);
+}

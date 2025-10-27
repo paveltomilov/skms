@@ -1,0 +1,37 @@
+.form__section {
+	padding-top: 172px;
+}
+
+.social {
+	&__form {
+		display: flex;
+		gap: 24px;
+		flex-wrap: wrap;
+
+		&__block {
+			height: 240px;
+			width: 240px;
+			border: 1px solid var(--lan-very-dark-gray);
+			border-radius: 12px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	}
+}
+
+.link {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-family: var(--second-family);
+	font-weight: 600;
+	font-size: 14px;
+	line-height: 100%;
+	text-transform: uppercase;
+	color: var(--lan-light-grayish-blue);
+
+	&__svg {
+		margin-right: 15px;
+	}
+}
