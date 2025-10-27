@@ -17,7 +17,7 @@ export interface IPoint {
 	state: boolean;
 }
 
-interface Malfunction {
+export interface Malfunction {
 	id: string;
 	name: string;
 	active: boolean;

@@ -17,6 +17,9 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 }) => {
 	const router = useRouter();
 	const { firstName, lastName, role } = useUserCookies();
+	const status = 	role === 'admin' ? 'Администратор' :
+					role=== 'teacher' ? 'Преподаватель' : 
+					'Студент';
 
 	const handleLogout = () => {
 		localStorage.removeItem('accessToken');
@@ -42,7 +45,7 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 						{fullName}
 					</div>
 					<div className={styles.userInfo__profile__info__status}>
-						{role === 'admin' ? 'Преподаватель' : 'Студент'}
+						{status}
 					</div>
 				</div>
 			</div>
