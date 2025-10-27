@@ -8,7 +8,7 @@ import { useAppSelector } from './store';
 const useRandomWindowCurrentValue = () => {
 	const dispatch = useDispatch<AppDispatch>();
 	const windows = useSelector((state: RootState) => state.windows);
-	const valuePercent = useAppSelector((state: RootState) => state.percent);
+	const volumePercent = useAppSelector((state: RootState) => state.percent);
 
 	const updateRandomValues = () => {
 		const updatedWindows = {} as Record<
@@ -20,7 +20,7 @@ const useRandomWindowCurrentValue = () => {
 			if (windows.hasOwnProperty(key)) {
 				updatedWindows[key] = {
 					...windows[key],
-					currentValue: getRandomDataInWindows(key, valuePercent),
+					currentValue: getRandomDataInWindows(key, volumePercent),
 				};
 			}
 		}

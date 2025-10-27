@@ -3,35 +3,44 @@ import { getRandomNumberWindows } from '../getRandomNumberWindows/getRandomNumbe
 
 const getRandomDataInWindows = (
 	id: KeyWindows,
-	valuePercent?: number,
+	volumePercent: number,
 ): number | null => {
 	const windowsConfig = WINDOWS[id];
-	const { currentValue } = windowsConfig;
-	let percent = 1;
+	const { currentValue, maxValue, minValue, unitsMeasurement } =
+		windowsConfig;
+	const PERCENT_OF_CHANGE = 2 / 100;
+	const PERCENT_OF_VOLUME = volumePercent === 0 ? 0 : volumePercent / 100;
+	const BASE_VOLUME = maxValue - minValue;
+	const PERCENT_BASE = BASE_VOLUME * PERCENT_OF_VOLUME + minValue;
 
-	if (currentValue == null || currentValue === 0) {
+	if (currentValue == null) {
 		return currentValue;
 	}
-	if (valuePercent && valuePercent > 0) {
+	let calculated = currentValue;
+
+	if (PERCENT_OF_VOLUME) {
+		calculated = PERCENT_BASE;
+	}
+
+	if (
+		unitsMeasurement === '%' &&
+		calculated + calculated * PERCENT_OF_CHANGE >= 100
+	) {
 		return getRandomNumberWindows(
-			currentValue - currentValue * (valuePercent / 100),
-			currentValue + currentValue * (valuePercent / 100),
+			calculated - calculated * PERCENT_OF_CHANGE,
+			100,
 		);
 	}
-	const moduleCurrentValue = Math.abs(currentValue);
 
-	if (moduleCurrentValue < 1 && moduleCurrentValue > 0) {
-		percent = 5;
-	}
-	if (moduleCurrentValue < 10 && moduleCurrentValue > 1) {
-		percent = 3;
-	}
-	if (moduleCurrentValue < 50 && moduleCurrentValue > 10) {
-		percent = 2;
-	}
 	return getRandomNumberWindows(
-		currentValue - currentValue * (percent / 100),
-		currentValue + currentValue * (percent / 100),
+		Math.min(
+			calculated - calculated * PERCENT_OF_CHANGE,
+			calculated + calculated * PERCENT_OF_CHANGE,
+		),
+		Math.max(
+			calculated - calculated * PERCENT_OF_CHANGE,
+			calculated + calculated * PERCENT_OF_CHANGE,
+		),
 	);
 };
 
