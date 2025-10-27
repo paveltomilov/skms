@@ -12,7 +12,7 @@ import { FC } from 'react';
 
 const LandingPage: FC = () => {
 	return (
-		<>
+		<div className={'landing'}>
 			<Header />
 			<main>
 				<HeroLanding />
@@ -25,7 +25,7 @@ const LandingPage: FC = () => {
 				<FormSection />
 			</main>
 			<footer className="landing-footer">© 2025 Company</footer>
-		</>
+		</div>
 	);
 };
 

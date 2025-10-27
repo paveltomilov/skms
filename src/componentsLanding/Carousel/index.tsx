@@ -64,9 +64,9 @@ const Carousel: FC<{ slides: React.ReactNode[] }> = ({ slides }) => {
 						<path
 							d="M13 1L1 13L13 25"
 							stroke="#F9FAFB"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
+							strokeWidth="2"
+							strokeLinecap="round"
+							strokeLinejoin="round"
 						/>
 					</svg>
 				</button>
@@ -88,9 +88,9 @@ const Carousel: FC<{ slides: React.ReactNode[] }> = ({ slides }) => {
 						<path
 							d="M0.999998 25L13 13L1 0.999999"
 							stroke="#F9FAFB"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
+							strokeWidth="2"
+							strokeLinecap="round"
+							strokeLinejoin="round"
 						/>
 					</svg>
 				</button>

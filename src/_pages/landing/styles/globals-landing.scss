@@ -99,7 +99,7 @@ body {
 	-moz-text-size-adjust: 100%;
 
 	/* фон и цвет текста */
-	background: #0a0a14;
+	//background: #0a0a14;
 
 	/* шрифты */
 }
@@ -153,6 +153,10 @@ select {
 body.modal-open {
 	overflow: hidden;
 	padding-right: 15px;
+}
+
+.landing {
+	background-color: #0a0a14;
 }
 
 .container {

@@ -24,15 +24,16 @@ function FormLanding() {
 		consent: false,
 	});
 
-	const handleChange =
-		(key: keyof FormValues) =>
-		(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-			const value =
-				key === 'consent'
-					? e.currentTarget.checked
-					: e.currentTarget.value;
-			setForm(prev => ({ ...prev, [key]: value as any }));
+	// Обработчик для текстовых полей
+	const handleInputChange = (key: keyof Omit<FormValues, 'consent'>) =>
+		(e: ChangeEvent<HTMLInputElement>) => {
+			setForm(prev => ({ ...prev, [key]: e.target.value }));
 		};
+
+	// Отдельный обработчик для чекбокса
+	const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
+		setForm(prev => ({ ...prev, consent: e.target.checked }));
+	};
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -56,7 +57,7 @@ function FormLanding() {
 					id="name"
 					type="text"
 					value={form.name}
-					onChange={handleChange('name')}
+					onChange={handleInputChange('name')}
 					className={styles.input}
 					placeholder="ФИО"
 					required
@@ -72,7 +73,7 @@ function FormLanding() {
 					id="company"
 					type="text"
 					value={form.company}
-					onChange={handleChange('company')}
+					onChange={handleInputChange('company')}
 					className={styles.input}
 					placeholder="Название компании "
 				/>
@@ -87,7 +88,7 @@ function FormLanding() {
 					id="email"
 					type="email"
 					value={form.email}
-					onChange={handleChange('email')}
+					onChange={handleInputChange('email')}
 					className={styles.input}
 					placeholder="Введите Вашу почту "
 					required
@@ -103,7 +104,7 @@ function FormLanding() {
 					id="phone"
 					type="tel"
 					value={form.phone}
-					onChange={handleChange('phone')}
+					onChange={handleInputChange('phone')}
 					className={styles.input}
 					placeholder="Ваш номер телефона "
 				/>
@@ -130,7 +131,7 @@ function FormLanding() {
 						id="consent"
 						type="checkbox"
 						checked={form.consent}
-						onChange={handleChange('consent')}
+						onChange={handleCheckboxChange}
 						required
 					/>
 					<label htmlFor="consent" className={styles.checkbox__descr}>

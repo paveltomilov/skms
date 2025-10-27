@@ -1,6 +1,5 @@
-import { FC, Suspense } from 'react';
+import {FC, Suspense} from 'react';
 import Loading from './loading';
-import LandingLayout from '../_pages/landing/layout';
 import LandingPage from '../_pages/landing';
 
 const Landing: FC = () => {
