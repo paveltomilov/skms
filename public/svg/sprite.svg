@@ -712,7 +712,8 @@
         <stop stop-color="#EAEAEA"/><stop offset="1" stop-color="#FCFCFC"/>
       </linearGradient>
       <linearGradient id="paint2_base" x1="3.81759" y1="38.1944" x2="155.389" y2="-25.2353" gradientUnits="userSpaceOnUse">
-        <stop stop-color="white"/><stop offset="1" stop-color="white"/>
+        <stop offset="0" stop-color="var(--lamp-bottom-start, #FFFFFF)"/>
+        <stop offset="1" stop-color="var(--lamp-bottom-end, #E8E8E8)"/>
       </linearGradient>
       <linearGradient id="paint3_base" x1="165.918" y1="225.872" x2="227.849" y2="240.51" gradientUnits="userSpaceOnUse">
         <stop stop-color="#E4E2E2"/><stop offset="1" stop-color="#E8E8E8"/>
@@ -737,16 +738,12 @@
 
   <!-- ВЕРХ: шапка лампы + ореол-->
   <symbol id="lampIndicator-top" viewBox="0 0 291 403">
-    <g filter="url(#filter0_top)">
-      <ellipse cx="145.5" cy="73.5" rx="109.5" ry="37.5"
-               fill="currentColor" fill-opacity="1"/>
-    </g>
 
-    <path opacity="0.6"
+    <path
           d="M145 36.7119C161.599 36.7119 180.985 35.7187 199.229 38.0322C217.463 40.3447 234.447 45.9518 246.255 59.0742C251.581 64.9929 254.354 71.2868 254.493 77.6162H35.5059C35.6448 71.2868 38.4192 64.993 43.7451 59.0742C55.5532 45.9518 72.5366 40.3447 90.7715 38.0322C109.015 35.7187 128.401 36.7119 145 36.7119Z"
           fill="currentColor" stroke="#696969"/>
 
-    <rect opacity="0.6" x="35.5" y="76.8711" width="219" height="33.9206"
+    <rect x="35.5" y="76.8711" width="219" height="33.9206"
           fill="currentColor" stroke="#696969"/>
 
     <defs>
@@ -758,5 +755,15 @@
     </defs>
   </symbol>
 
-</svg>
+  <!-- ВЕРХ: ореол-->
 
+  <symbol id="lampIndicator-light" viewBox="0 0 291 403">
+        <g filter="url(#filter0_top)">
+        <ellipse cx="145.5" cy="73.5" rx="109.5" ry="37.5"
+               fill="currentColor" fill-opacity="1"/>
+        </g>
+
+  </symbol>
+
+
+</svg>
