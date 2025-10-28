@@ -39,8 +39,17 @@ export interface IconColor {
 	green: string;
 	electric_green: string;
 	dark_green: string;
-	lamp_green: string;
+	lamp_white_off: string;
+	lamp_white_on: string;
+	lamp_green_off: string;
+	lamp_green_on: string;
 }
+
+export type LampIndicatorColor =
+	| 'lamp_white_off'
+	| 'lamp_white_on'
+	| 'lamp_green_off'
+	| 'lamp_green_on';
 
 export interface IconTransform {
 	rotate90: string;
