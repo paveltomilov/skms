@@ -4,7 +4,7 @@ import { AppDispatch, RootState } from '@/store/store';
 import { setValueAll } from '@/store/windowsSlice';
 import getRandomDataInWindows from '../utils/getRandomDataInWindows/getRandomDataInWindows';
 import { useAppSelector } from './store';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { getRandomNumberWindows } from '../utils/getRandomNumberWindows/getRandomNumberWindows';
 
 const useRandomWindowCurrentValue = () => {
@@ -12,7 +12,7 @@ const useRandomWindowCurrentValue = () => {
 	const windows = useSelector((state: RootState) => state.windows);
 	const volumePercent = useAppSelector((state: RootState) => state.percent);
 
-	const updateRandomValues = () => {
+	const updateRandomValues = useCallback(() => {
 		const updatedWindows = {} as Record<
 			KeyWindows,
 			(typeof windows)[KeyWindows]
@@ -26,9 +26,8 @@ const useRandomWindowCurrentValue = () => {
 				};
 			}
 		}
-
 		dispatch(setValueAll(updatedWindows));
-	};
+	}, [windows, volumePercent, dispatch]);
 
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -37,6 +36,5 @@ const useRandomWindowCurrentValue = () => {
 		return () => clearInterval(interval);
 	}, [updateRandomValues]);
 };
-
 
 export default useRandomWindowCurrentValue;

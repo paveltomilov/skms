@@ -102,6 +102,9 @@ const HeaderZra: FC = () => {
 								{idx}
 							</option>
 						))}
+						<option key={'default'} value={-1}>
+							DEF
+						</option>
 					</select>
 					<Button
 						width={105}

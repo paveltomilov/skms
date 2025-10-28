@@ -8,40 +8,45 @@ const getRandomDataInWindows = (
 	const windowsConfig = WINDOWS[id];
 	const { currentValue, maxValue, minValue, unitsMeasurement } =
 		windowsConfig;
-	const PERCENT_OF_CHANGE = 2 / 100;
-	const PERCENT_OF_VOLUME = volumePercent === 0 ? 0 : volumePercent / 100;
-	const BASE_VOLUME = maxValue - minValue;
-	const PERCENT_BASE = BASE_VOLUME * PERCENT_OF_VOLUME + minValue;
+	const PercentOfChange = 2 / 100;
 
 	if (currentValue == null) {
 		return currentValue;
 	}
-	let calculated = currentValue;
-
-	if (PERCENT_OF_VOLUME) {
-		calculated = PERCENT_BASE;
-	}
-
-	if (
-		unitsMeasurement === '%' &&
-		calculated + calculated * PERCENT_OF_CHANGE >= 100
-	) {
+	// при значении слайдера off volumePercent = -1 для возврата дефолтного значения из WINDOWS
+	if (volumePercent === -1) {
 		return getRandomNumberWindows(
-			calculated - calculated * PERCENT_OF_CHANGE,
-			100,
+			currentValue - Math.abs(currentValue * PercentOfChange),
+			currentValue + Math.abs(currentValue * PercentOfChange),
 		);
 	}
 
-	return getRandomNumberWindows(
-		Math.min(
-			calculated - calculated * PERCENT_OF_CHANGE,
-			calculated + calculated * PERCENT_OF_CHANGE,
-		),
-		Math.max(
-			calculated - calculated * PERCENT_OF_CHANGE,
-			calculated + calculated * PERCENT_OF_CHANGE,
-		),
-	);
+	if (volumePercent === 0) {
+		return getRandomNumberWindows(
+			minValue,
+			minValue + Math.abs(minValue * PercentOfChange),
+		);
+	}
+	if (volumePercent === 100) {
+		return getRandomNumberWindows(
+			maxValue - Math.abs(maxValue * PercentOfChange),
+			maxValue,
+		);
+	}
+	const TargetPercent = volumePercent / 100;
+	const BaseVolume = maxValue - minValue;
+	const PercentBase = BaseVolume * TargetPercent + minValue;
+	const min = PercentBase - PercentBase * PercentOfChange;
+	const max = PercentBase + PercentBase * PercentOfChange;
+
+	if (unitsMeasurement === '%' && max >= 100) {
+		return getRandomNumberWindows(min, 100);
+	}
+	if (unitsMeasurement === '%' && min <= 0) {
+		return getRandomNumberWindows(0, max);
+	}
+
+	return getRandomNumberWindows(min, max);
 };
 
 export default getRandomDataInWindows;

@@ -1,5 +1,7 @@
 export const getRandomNumberWindows = (min: number, max: number): number => {
-	const randomNumber = Math.random() * (max - min) + min;
+	const minValue = Math.min(max, min);
+	const maxValue = Math.max(max, min);
+	const randomNumber = Math.random() * (maxValue - minValue) + minValue;
 	const moduleRandomNumber = Math.abs(randomNumber);
 
 	if (moduleRandomNumber > 100 && moduleRandomNumber < 1000) {

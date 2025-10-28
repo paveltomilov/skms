@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const percentSlice = createSlice({
 	name: 'percent',
-	initialState: 0 as number,
+	initialState: -1 as number,
 
 	reducers: {
 		setPercent: (state, { payload }: PayloadAction<number>) => payload,
