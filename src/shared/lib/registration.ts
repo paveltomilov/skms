@@ -26,7 +26,7 @@ export async  function postRegistration(formData: LoginFormData): Promise<{ succ
             {headers: {'Content-Type': 'application/json'}},
         );
         
-        if (response.status == 200 || response.status == 201) {
+        if (response.status === 200 || response.status === 201) {
             return {success: true};
         }
         return {success: false};
