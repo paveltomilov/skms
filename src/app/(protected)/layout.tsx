@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { checkAuth } from '@/shared/lib/auth';
 import ModalWrapper from '@/widgets/ModalWrapper';
 import useRandomWindowCurrentValue from '@/shared/hooks/useRandomWindowCurrentValue';
+import AuthGuard from '@/shared/components/AuthGuard';
 
 export default function ProtectedLayout({
 	children,
@@ -30,9 +31,9 @@ export default function ProtectedLayout({
 	if (checking) return <p>Проверка авторизации...</p>;
 
 	return (
-		<>
+		<AuthGuard>
 			<ModalWrapper />
 			{children}
-		</>
+		</AuthGuard>
 	);
 }

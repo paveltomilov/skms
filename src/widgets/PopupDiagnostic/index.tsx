@@ -82,8 +82,8 @@ const PopupDiagnostic: FC = () => {
 				<Button
 					width={140}
 					height={38}
-					aria-label="Тренажер"
-					text="Тренажер"
+					aria-label="Принц. Сх."
+					text="Принц. Сх."
 					className={styles.popupDiagnostic_bottom_btn}
 					onClick={() => dispatch(closeAllModal())}
 					href="/zra"
