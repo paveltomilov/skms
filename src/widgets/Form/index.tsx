@@ -2,16 +2,14 @@
 
 import Button from '@/shared/UI/Button';
 import styles from './styles.module.scss';
-import { useRouter } from 'next/navigation';
-import { FC, FormEventHandler } from 'react';
+import {useRouter} from 'next/navigation';
+import {FC, FormEventHandler} from 'react';
 import LoginInput from '../../shared/UI/LoginInput';
 import Link from 'next/link';
-import {
-	getDone,
-	getIndicator,
-} from '@/shared/utils/loginFunctions/loginFunctions';
-import { useLoginForm } from '@/shared/hooks/useLoginForn';
-import { postAuth } from '@/shared/lib/auth';
+import {getDone, getIndicator,} from '@/shared/utils/loginFunctions/loginFunctions';
+import {useLoginForm} from '@/shared/hooks/useLoginForn';
+import {postAuth} from '@/shared/lib/auth';
+import {getDashboardRoute, UserRole} from '@/shared/configs/routes';
 
 interface FormProps {
 	toggleRegisterMode?: boolean;
@@ -47,8 +45,10 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 		} else {
 			try {
 				const response = await postAuth(values);
-				if (response) {
-					router.push('/ptk');
+
+				if (response.success && response.role) {
+					const dashboardRoute = getDashboardRoute(response.role as UserRole);
+					router.push(dashboardRoute);
 				} else {
 					setServerErrors({ email: false, password: true });
 				}
