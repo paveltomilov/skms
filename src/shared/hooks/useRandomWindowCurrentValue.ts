@@ -4,6 +4,8 @@ import { AppDispatch, RootState } from '@/store/store';
 import { setValueAll } from '@/store/windowsSlice';
 import getRandomDataInWindows from '../utils/getRandomDataInWindows/getRandomDataInWindows';
 import { useAppSelector } from './store';
+import { useEffect } from 'react';
+import { getRandomNumberWindows } from '../utils/getRandomNumberWindows/getRandomNumberWindows';
 
 const useRandomWindowCurrentValue = () => {
 	const dispatch = useDispatch<AppDispatch>();
@@ -28,7 +30,13 @@ const useRandomWindowCurrentValue = () => {
 		dispatch(setValueAll(updatedWindows));
 	};
 
-	return updateRandomValues;
+	useEffect(() => {
+		const interval = setInterval(() => {
+			updateRandomValues();
+		}, getRandomNumberWindows(1000, 2000));
+		return () => clearInterval(interval);
+	}, [updateRandomValues]);
 };
+
 
 export default useRandomWindowCurrentValue;
