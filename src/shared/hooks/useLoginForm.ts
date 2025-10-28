@@ -15,14 +15,22 @@ export function useLoginForm({ toggleRegisterMode }: UseLoginFormProps) {
 	const [validationStatus, setValidationStatus] = useState<ValidationStatus>({
 		email: 0,
 		password: 0,
+		first_name: 0,
+		last_name: 0,
 	});
 	const [serverErrors, setServerErrors] = useState<
 		Record<keyof LoginFormData, boolean>
 	>({
 		email: false,
 		password: false,
+		first_name: false,
+		last_name: false,
 	});
 	const [isValid, setIsValid] = useState(false);
+	const activeFields = useMemo<(keyof LoginFormData)[]>(() => {
+		return toggleRegisterMode ? ['first_name', 'last_name', 'password', 'email'] : ['email', 'password'];
+	}, [toggleRegisterMode]);
+
 
 	const configMap = useMemo(() => {
 		const map: Record<string, (typeof config)[number]> = {};
@@ -37,6 +45,8 @@ export function useLoginForm({ toggleRegisterMode }: UseLoginFormProps) {
 		setServerErrors({
 			email: false,
 			password: false,
+			first_name: false,
+			last_name: false,
 		});
 	}, [toggleRegisterMode]);
 
@@ -44,12 +54,9 @@ export function useLoginForm({ toggleRegisterMode }: UseLoginFormProps) {
 		const newValidationStatus = computeValidationStatus(values);
 		setValidationStatus(newValidationStatus);
 		setIsValid(
-			checkFormValidity(values, newValidationStatus, serverErrors, [
-				'email',
-				'password',
-			]),
+			checkFormValidity(values, newValidationStatus, serverErrors, activeFields),
 		);
-	}, [values, serverErrors]);
+	}, [values, serverErrors, activeFields]);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -69,6 +76,8 @@ export function useLoginForm({ toggleRegisterMode }: UseLoginFormProps) {
 		setServerErrors({
 			email: false,
 			password: false,
+			first_name: false,
+			last_name: false,
 		});
 	};
 
@@ -88,6 +97,7 @@ export function useLoginForm({ toggleRegisterMode }: UseLoginFormProps) {
 		validationStatus,
 		serverErrors,
 		isValid,
+		activeFields,
 		configMap,
 		handleChange,
 		resetValues,
