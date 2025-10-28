@@ -1,6 +1,6 @@
 import {RefreshResponse, VerifyResponse} from '@/shared/types/typesAuth';
 import axios from 'axios';
-import {getCookie, setCookie} from 'cookies-next';
+import {deleteCookie, getCookie, setCookie} from 'cookies-next';
 import {LoginFormData, LoginResponse} from '../types/login';
 
 const urlBase = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -10,31 +10,28 @@ export async function checkAuth(): Promise<{ valid: boolean }> {
 	const refresh = getCookie('refreshToken');
 
 	if (!access || !refresh) {
+		// Очищаем оба хранилища при отсутствии токенов
+		localStorage.removeItem('accessToken');
+		deleteCookie('refreshToken');
 		return { valid: false };
 	}
 
 	try {
+		// 1. Проверяем валидность accessToken
 		const verifyRes = await fetch(`${urlBase}/auth/verify/`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ token: access }),
 		});
 
-		if (!verifyRes.ok) {
-			return { valid: false };
+		if (verifyRes.ok) {
+			const verifyData = (await verifyRes.json()) as VerifyResponse;
+			if (verifyData.token_valid) {
+				return { valid: true }; // AccessToken валиден
+			}
 		}
 
-		// Properly typed response
-		const verifyData = (await verifyRes.json()) as VerifyResponse;
-
-		if (verifyData.token_valid) {
-			return { valid: true };
-		}
-
-		if (!refresh) {
-			return { valid: false };
-		}
-
+		// 2. Если accessToken невалиден, пробуем обновить через refreshToken
 		const refreshRes = await fetch(`${urlBase}/auth/refresh/`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
@@ -42,24 +39,28 @@ export async function checkAuth(): Promise<{ valid: boolean }> {
 		});
 
 		if (!refreshRes.ok) {
-			return { valid: false };
+			throw new Error('Refresh token failed');
 		}
 
-		// Properly typed response
 		const refreshData = (await refreshRes.json()) as RefreshResponse;
 
 		if (refreshData.access) {
+			// Сохраняем новый accessToken
 			localStorage.setItem('accessToken', refreshData.access);
 			return { valid: true };
 		}
 
 		return { valid: false };
+
 	} catch {
+		// При любой ошибке очищаем хранилища
+		localStorage.removeItem('accessToken');
+		deleteCookie('refreshToken');
 		return { valid: false };
 	}
 }
 
-export async function postAuth(formData: LoginFormData): Promise<boolean> {
+export async function postAuth(formData: LoginFormData): Promise<{ success:boolean, role?: string | undefined }> {
 	try {
 		const response = await axios.post<LoginResponse>(
 			`${urlBase}/auth/`,
@@ -69,21 +70,34 @@ export async function postAuth(formData: LoginFormData): Promise<boolean> {
 			},
 		);
 
-		const { access, refresh, first_name, last_name, role } = response.data;
+		const { access, refresh , first_name, last_name, role } = response.data;
 
 		if (!access || !refresh) {
-			throw new Error('Данные некорректны');
+			throw new Error('Токены не получены');
 		}
-		if (response.status == 200) {
+
+		if (response.status === 200) {
 			localStorage.setItem('accessToken', access);
 			setCookie('refreshToken', refresh);
 			setCookie('first_name', first_name);
 			setCookie('last_name', last_name);
 			setCookie('role', role);
-			return true;
+
+			return {success:true, role};
 		}
-		return false;
+		return {success: false};
 	} catch {
-		return false;
+		return {success: false};
 	}
+}
+
+// Вспомогательная функция для получения accessToken
+export function getAccessToken(): string | null {
+	return localStorage.getItem('accessToken');
+}
+
+// Функция для выхода
+export function logout(): void {
+	localStorage.removeItem('accessToken');
+	deleteCookie('refreshToken');
 }
