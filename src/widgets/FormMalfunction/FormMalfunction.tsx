@@ -16,8 +16,7 @@ const FormMalfunction: FC = () => {
 
     const isButtonDisabled = !elementValue || !malfunctionValue;
 
-    const initMalfunctions: Malfunction[] = [];
-    const [malfunctions, setMalfunctions] = useState(initMalfunctions);
+    const [malfunctions, setMalfunctions] = useState<Malfunction[]>([]);
 
     const studentId = useAppSelector(state => state.training.studentId);
 

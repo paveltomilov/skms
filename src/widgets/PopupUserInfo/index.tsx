@@ -18,8 +18,8 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 	const router = useRouter();
 	const { firstName, lastName, role } = useUserCookies();
 	const status = 	role === 'admin' ? 'Администратор' :
-					role=== 'teacher' ? 'Преподаватель' : 
-					'Студент';
+					role === 'teacher' ? 'Преподаватель' : 
+					'Cтудент';
 
 	const handleLogout = () => {
 		localStorage.removeItem('accessToken');

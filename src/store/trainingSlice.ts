@@ -13,7 +13,7 @@ const initialState: TrainingState = {
 };
 
 const trainingSlice = createSlice({
-	name: 'powerUnit',
+	name: 'training',
 	initialState,
 	reducers: {
 		trainingOn: state => {

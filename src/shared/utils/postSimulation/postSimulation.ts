@@ -1,26 +1,28 @@
+import axios, { AxiosError } from 'axios';
 import { SimulationFormData } from '@/shared/types/similation';
 
 export async function postSimulation(
 	urlBase: string | undefined,
 	access: string | null,
-	simulationData: SimulationFormData):
-	Promise<boolean> {
+	simulationData: SimulationFormData
+): Promise<boolean> {
+	if (!access) {
+		throw new Error('отсутствует токен');
+	};
 
 	try {
-		const response = await fetch(`${urlBase}/simulation/`, {
-			method: 'POST',
+		await axios.post(`${urlBase}/simulation/`, simulationData, {
 			headers: {
-				'Authorization': `Bearer ${access}`,
+				Authorization: `Bearer ${access}`,
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify(simulationData),
 		});
-
-		if (response.status == 200) {
-			return true;
-		}
-		return false;
-	} catch {
-		throw new Error('Данные некорректны');
-	}
-}
+		return true;
+	} catch (error) {
+		const axiosError = error as AxiosError;
+		const message = axiosError.response?.data
+			? JSON.stringify(axiosError.response.data)
+			: 'Failed to fetch';
+		throw new Error(message);
+	};
+};
