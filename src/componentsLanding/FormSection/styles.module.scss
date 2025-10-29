@@ -1,5 +1,6 @@
 .form__section {
 	padding-top: 172px;
+	padding-bottom: 172px;
 }
 
 .social {
@@ -30,8 +31,28 @@
 	line-height: 100%;
 	text-transform: uppercase;
 	color: var(--lan-light-grayish-blue);
+	transition: all 0.2s ease-in-out;
+
+	&:hover {
+		color: var(--lan-bright-cyan---lime-green);
+	}
 
 	&__svg {
-		margin-right: 15px;
+		width: 40px;
+		height: 40px;
+		margin-right: 12px;
+
+		path {
+			fill: var(--lan-light-grayish-blue);
+			transition: all 0.2s ease-in-out;
+		}
+
+		&__dzen {
+			margin-right: 12px;
+		}
+	}
+
+	&:hover &__svg path {
+		fill: var(--lan-bright-cyan---lime-green);
 	}
 }

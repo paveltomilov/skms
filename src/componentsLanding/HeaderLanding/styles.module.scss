@@ -14,11 +14,50 @@
 		padding-bottom: 24px;
 
 		display: flex;
-		align-items: center; // вертикальное выравнивание
-		justify-content: space-between;
+		align-items: center;
+	}
+
+	&__bit {
+		margin-right: 32px;
+	}
+
+	&__nav {
+		margin-right: 53px;
+	}
+
+	&__telephone {
+		font-family: var(--second-family);
+		font-weight: 500;
+		font-size: 15px;
+		line-height: 100%;
+		color: var(--lan-light-grayish-blue);
+		margin-right: 22px;
 	}
 
 	&.scrolled {
 		background-color: var(--lan-very-dark-mostly-black-blue);
+	}
+}
+
+.button {
+	&__login {
+		color: var(--lan-very-dark-mostly-black-blue);
+		background: var(--lan-light-grayish-blue);
+
+		transition: all 0.2s ease-in-out;
+		margin-right: 12px;
+
+		&:hover {
+			background: var(--lan-light-grayish-cyan);
+		}
+	}
+
+	&__register {
+		font-family: var(--second-family);
+		font-weight: 500;
+		font-size: 15px;
+		line-height: 100%;
+		text-align: center;
+		color: var(--lan-very-dark-mostly-black-blue);
 	}
 }

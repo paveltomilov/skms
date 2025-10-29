@@ -18,19 +18,14 @@ const HeroDescr: FC = () => {
 					реалистичной среде
 				</p>
 			</div>
-			<div className={styles.wrapper__button}>
-				<Button
-					text="попробовать бесплатно"
-					color="var(--lan-very-dark-mostly-black-blue)"
-					bgColor="var(--lan-bright-cyan---lime-green)" // основной цвет кнопки
-					hoverBgColor="var(--lan-moderate-cyan)" // цвет при наведении
-					activeBgColor="var(--lan-gray)" // цвет при нажатии
-					focusOutlineColor="var(--lan-moderate-cyan)" // outline при фокусе
-					width={504}
-					height={40}
-					radius={4}
-				/>
-			</div>
+
+			<Button
+				className={styles.wrapper__button}
+				text="попробовать бесплатно"
+				width={504}
+				height={40}
+				radius={4}
+			/>
 		</div>
 	);
 };

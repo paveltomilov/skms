@@ -9,6 +9,7 @@ import Reviews from '@/componentsLanding/Reviews';
 import Survey from '@/componentsLanding/Survey';
 import './styles/globals-landing.scss';
 import { FC } from 'react';
+import Footer from '@/componentsLanding/Footer';
 
 const LandingPage: FC = () => {
 	return (
@@ -24,7 +25,7 @@ const LandingPage: FC = () => {
 				<Survey />
 				<FormSection />
 			</main>
-			<footer className="landing-footer">© 2025 Company</footer>
+			<Footer />
 		</div>
 	);
 };

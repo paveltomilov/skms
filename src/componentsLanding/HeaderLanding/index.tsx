@@ -8,11 +8,6 @@ import Logo from './Logo';
 import Button from '../Button';
 
 const Header: FC = () => {
-	// const [hied, setHied] = useState(false);
-	// const windowGet = () => {
-	// 	setHied(!hied);
-	// };
-
 	const [isOpen, setIsOpen] = useState(false); // окно с телефоном
 	const [scrolled, setScrolled] = useState(false); // прокрутка >10px
 
@@ -41,10 +36,15 @@ const Header: FC = () => {
 		<header className={headerClass}>
 			<div className={styles.header__container}>
 				<Logo />
-				<Navigation />
+				<Navigation className={styles.header__nav} gap={16} />
 				<div>
 					<div className={styles.header__bit}>
-						<a href="">8981968545</a>
+						<a
+							href="tel:+78452398636"
+							className={styles.header__telephone}
+						>
+							+7 (845) 239-86-36
+						</a>
 						<button
 							onClick={toggleWindow}
 							className={styles.header__button}
@@ -66,24 +66,30 @@ const Header: FC = () => {
 					{isOpen && <HeaderWindow />}
 				</div>
 				<Button
+					className={styles.button__login}
 					text="Войти"
-					color="var(--color-dark)"
-					bgColor="var(--green-color)"
-					hoverBgColor="" // можно задать цвет при наведении
-					activeBgColor="var(--color-active)"
-					focusOutlineColor="var(--color-focus)"
-					width={80}
+					width={85}
 					height={40}
 					radius={4}
+					icon={
+						<svg
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								d="M11 7L9.6 8.4L12.2 11H2V13H12.2L9.6 15.6L11 17L16 12L11 7ZM20 19H12V21H20C21.1 21 22 20.1 22 19V5C22 3.9 21.1 3 20 3H12V5H20V19Z"
+								fill="#0A0A14"
+							/>
+						</svg>
+					}
 					href="/login" // ← теперь кнопка становится ссылкой
 				/>
 				<Button
+					className={styles.button__register}
 					text="Зарегистрироваться"
-					color="var(--lan-very-dark-mostly-black-blue)"
-					bgColor="var(--lan-bright-cyan---lime-green)" // основной цвет кнопки
-					hoverBgColor="var(--lan-moderate-cyan)" // цвет при наведении
-					activeBgColor="var(--lan-gray)" // цвет при нажатии
-					focusOutlineColor="var(--lan-moderate-cyan)" // outline при фокусе
 					width={172}
 					height={40}
 					radius={4}

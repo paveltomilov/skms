@@ -1,7 +1,15 @@
-.about {
+.abouttop {
 	&__container {
 		padding-top: 87px;
 		padding-bottom: 86px;
+		position: relative;
+
+		&_img {
+			position: absolute;
+			content: '';
+			bottom: -100px;
+			left: 0;
+		}
 	}
 }
 

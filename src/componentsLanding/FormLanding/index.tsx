@@ -25,15 +25,11 @@ function FormLanding() {
 	});
 
 	// Обработчик для текстовых полей
-	const handleInputChange = (key: keyof Omit<FormValues, 'consent'>) =>
+	const handleInputChange =
+		(key: keyof Omit<FormValues, 'consent'>) =>
 		(e: ChangeEvent<HTMLInputElement>) => {
 			setForm(prev => ({ ...prev, [key]: e.target.value }));
 		};
-
-	// Отдельный обработчик для чекбокса
-	const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
-		setForm(prev => ({ ...prev, consent: e.target.checked }));
-	};
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -41,6 +37,7 @@ function FormLanding() {
 		console.log('Отправляем форму', form);
 	};
 
+	const [consent, setConsent] = useState(false);
 	return (
 		<form onSubmit={handleSubmit} className={styles.form}>
 			<SectionTitle
@@ -130,13 +127,13 @@ function FormLanding() {
 						className={styles.input__checkbox}
 						id="consent"
 						type="checkbox"
-						checked={form.consent}
-						onChange={handleCheckboxChange}
+						checked={consent}
+						onChange={() => setConsent(prev => !prev)}
 						required
 					/>
 					<label htmlFor="consent" className={styles.checkbox__descr}>
-						Я даю согласие на обработку
-						<span className={styles.checkbox__span}>
+						Я даю согласие на обработку &nbsp;
+						<span className={styles.checkbox__descr_span}>
 							персональных данных
 						</span>
 					</label>

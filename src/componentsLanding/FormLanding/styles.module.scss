@@ -4,7 +4,7 @@
 	grid-template-columns: repeat(2, 442px);
 	grid-template-rows: repeat(4, auto);
 	grid-column-gap: 52px;
-	grid-row-gap: 56px;
+	grid-row-gap: 52px;
 	border-radius: 12px;
 	background-color: var(--lan-bright-cyan---lime-green);
 	margin-bottom: 24px;
@@ -59,6 +59,7 @@
 		border: 1px solid var(--lan-very-dark-gray);
 		border-radius: 4px;
 		color: var(--lan-very-dark-mostly-black-blue);
+		margin-bottom: 12px;
 	}
 
 	&__check {
@@ -72,7 +73,7 @@
 }
 
 .input {
-	background-color: inherit;
+	background-color: var(--lan-bright-cyan---lime-green);
 	border: none;
 	border-bottom: 1px solid var(--lan-very-dark-gray);
 	padding-top: 18px;
@@ -80,16 +81,74 @@
 	outline: none;
 
 	&__checkbox {
-		width: 24px;
-		height: 24px;
-		margin-right: 5px;
+		position: absolute;
+		opacity: 0;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
 	}
 }
 
 .checkbox__descr {
+	&_span {
+		text-decoration: underline;
+	}
+}
+
+/* Базовый стиль чек‑бокса */
+.checkbox__descr {
+	position: relative; /* нужен для ::before */
+	padding-left: 30px; /* отступ, чтобы место на чек‑бокс */
+	cursor: pointer;
+	user-select: none;
 	font-family: var(--second-family);
 	font-weight: 500;
 	font-size: 13px;
 	line-height: 100%;
 	color: var(--lan-very-dark-gray);
+}
+
+/* Сам «чек‑бокс» – псевдоэлемент перед текстом */
+.checkbox__descr::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 20px;
+	height: 20px;
+
+	/* База (фон, бордер) */
+	background: var(--lan-bright-cyan---lime-green); /* ваш фон по умолчанию */
+	border: 1px solid var(--lan-very-dark-gray); /* цвет границы */
+	border-radius: 4px; /* скругление, если нужно */
+
+	/* Анимация при переходе (необязательно) */
+	transition: all 0.2s ease;
+}
+
+/* Состояние «отмечен» – меняем фон/контуру и добавляем галочку */
+.input__checkbox:checked + .checkbox__descr::before {
+	background: #93f2a8; /* цвет при отмеченном состоянии */
+	border-color: #93f2a8;
+	/* Добавляем галочку через псевдо‑элемент ::after */
+}
+
+.checkbox__descr::after {
+	content: '';
+	position: absolute;
+	left: 7px;
+	top: 50%;
+	transform: translateY(-50%) rotate(45deg);
+	width: 6px;
+	height: 12px;
+	border-right: 2px solid var(--lan-very-dark-gray);
+	border-bottom: 2px solid var(--lan-very-dark-gray);
+	opacity: 0; /* скрываем по умолчанию */
+	transition: opacity 0.15s ease;
+}
+
+/* Галочка видна только при checked */
+.input__checkbox:checked + .checkbox__descr::after {
+	opacity: 1;
 }

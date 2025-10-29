@@ -1,8 +1,6 @@
 .nav {
-	margin-right: 40px;
-
 	&__list {
 		display: flex;
-		gap: 40px;
+		gap: var(--gap, 1rem);
 	}
 }

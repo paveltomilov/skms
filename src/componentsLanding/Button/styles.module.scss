@@ -1,4 +1,3 @@
-/* src/componentsLanding/Button/styles.module.scss */
 .btn {
 	display: inline-flex;
 	align-items: center;
@@ -8,15 +7,15 @@
 	height: var(--h);
 	border-radius: var(--radius);
 
-	background-color: var(--bg); // фон кнопки
-	color: var(--color, #fff); // цвет текста (fallback = white)
+	background-color: var(--lan-bright-cyan---lime-green); // фон кнопки
+	color: var(--lan-very-dark-mostly-black-blue);
 
 	border: none;
 	cursor: pointer;
 	transition: background-color 0.2s, outline 0.2s;
 
 	&:hover {
-		background-color: var(--bg-hover);
+		background-color: #93f2a8;
 	}
 	&:active {
 		background-color: var(--bg-active);

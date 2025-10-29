@@ -1,24 +1,48 @@
-@use '@/shared/scss/variables.module';
-@use '@/shared/scss/mixins.module';
-
 .header {
-	&__button {
-		margin-left: 20px;
-	}
-
+	position: relative;
 	&__window {
-		border: 1px solid red;
-		position: fixed;
-		top: 150px;
+		border: 1px solid var(--lan-light-grayish-blue);
+		border-radius: 0 0 12px 12px;
+		padding: 16px 12px;
+		width: 199px;
+		height: 142px;
+		position: absolute;
+		top: 20px;
+		left: -16px;
+		background: var(--lan-very-dark-mostly-black-blue);
 	}
+}
 
-	&__mail {
-		display: flex;
-		flex-direction: column;
-	}
+.mail {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	margin-bottom: 32px;
+}
 
-	&__massenger {
-		display: flex;
-		gap: 10px;
+.social {
+	display: flex;
+	gap: 4px;
+	transition: all 0.2s ease-in-out;
+
+	&__link {
+		background: var(--lan-very-dark-mostly-black-blue-2);
+		border-radius: 12px;
+		padding: 12px 8px;
+		width: 41px;
+
+		&:hover .social__link__svg path {
+			fill: var(--lan-bright-cyan---lime-green);
+		}
+
+		&__svg {
+			width: 16px;
+			height: 16px;
+
+			path {
+				fill: var(--lan-light-grayish-blue);
+				transition: all 0.2s ease-in-out;
+			}
+		}
 	}
 }

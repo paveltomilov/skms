@@ -1,27 +1,25 @@
-// src/componentsLanding/Button/index.tsx
 'use client';
 import React from 'react';
-import Link from 'next/link'; // ← импортируем Link
+import Link from 'next/link';
 import styles from './styles.module.scss';
 
 export type ButtonProps = {
 	text: string;
-	color?: string; // цвет текста
+	color?: string;
 	bgColor?: string;
 	hoverBgColor?: string;
 	activeBgColor?: string;
+	icon?: React.ReactNode;
 	focusOutlineColor?: string;
-
 	width?: number;
 	height?: number;
 	radius?: number;
+	className?: string;
 	onClick?: () => void;
 
 	/** Если передано, кнопка будет <a href={href}> */
 	href?: string;
-
-	/** Параметры границы. По умолчанию – без рамки. */
-	border?: string; // пример: "1px solid #000"
+	border?: string;
 };
 
 const Button: React.FC<ButtonProps> = ({
@@ -34,8 +32,10 @@ const Button: React.FC<ButtonProps> = ({
 	width = 48,
 	height = 48,
 	radius,
+	icon,
 	onClick,
 	href,
+	className,
 	border, // <-- новый проп
 }) => {
 	const rootStyle: React.CSSProperties = {
@@ -50,19 +50,32 @@ const Button: React.FC<ButtonProps> = ({
 		...(border && { '--border': border }), // ← добавляем переменную
 	} as React.CSSProperties;
 
+	const content = (
+		<>
+			<span>{text}</span>
+			{icon && <span className={styles.icon}>{icon}</span>}
+		</>
+	);
+
+	const mergedClassName = [styles.btn, className].filter(Boolean).join(' ');
+
 	if (href) {
 		return (
 			<Link href={href} passHref legacyBehavior>
-				<a className={styles.btn} style={rootStyle} onClick={onClick}>
-					{text}
+				<a
+					className={mergedClassName}
+					style={rootStyle}
+					onClick={onClick}
+				>
+					{content}
 				</a>
 			</Link>
 		);
 	}
 
 	return (
-		<button className={styles.btn} style={rootStyle} onClick={onClick}>
-			{text}
+		<button className={mergedClassName} style={rootStyle} onClick={onClick}>
+			{content}
 		</button>
 	);
 };
