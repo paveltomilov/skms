@@ -19,24 +19,26 @@ const getRandomDataInWindows = (
 			? currentValue
 			: BaseVolume * TargetPercent + minValue;
 
+	const deviation = PercentWithBase * PercentOfChange;
+
 	let min =
-		PercentWithBase - PercentWithBase * PercentOfChange <= minValue
+		PercentWithBase - deviation <= minValue
 			? minValue
-			: PercentWithBase - PercentWithBase * PercentOfChange;
+			: PercentWithBase - deviation;
 	let max =
-		PercentWithBase + PercentWithBase * PercentOfChange >= maxValue
+		PercentWithBase + deviation >= maxValue
 			? maxValue
-			: PercentWithBase + PercentWithBase * PercentOfChange;
+			: PercentWithBase + deviation;
 
 	if (PercentWithBase < 0) {
 		min =
-			PercentWithBase - PercentWithBase * PercentOfChange <= minValue
+			PercentWithBase - deviation <= minValue
 				? minValue
-				: PercentWithBase - PercentWithBase * PercentOfChange;
+				: PercentWithBase - deviation;
 		max =
-			PercentWithBase + PercentWithBase * PercentOfChange <= minValue
+			PercentWithBase + deviation <= minValue
 				? minValue
-				: PercentWithBase + PercentWithBase * PercentOfChange;
+				: PercentWithBase + deviation;
 	}
 
 	return getRandomNumberWindows(min, max);
