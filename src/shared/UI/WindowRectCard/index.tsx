@@ -29,8 +29,8 @@ const WindowRectCard: FC<Props> = ({
 	// Создаём градиент, где заполненная часть - это цвет, а остальное - прозрачное
 	const backgroundStyle = {
 		background: getTubFill(
-			(color = 'red'),
-			currentValue = 0,
+			(color ?? 'red'),
+			currentValue ?? 0,
 			minValue,
 			maxValue,
 		),
