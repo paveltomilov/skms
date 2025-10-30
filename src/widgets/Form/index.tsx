@@ -7,13 +7,21 @@ import {FC, FormEventHandler} from 'react';
 import LoginInput from '../../shared/UI/LoginInput';
 import Link from 'next/link';
 import {getDone, getIndicator,} from '@/shared/utils/loginFunctions/loginFunctions';
-import {useLoginForm} from '@/shared/hooks/useLoginForn';
+import {useLoginForm} from '@/shared/hooks/useLoginForm';
 import {postAuth} from '@/shared/lib/auth';
-import {getDashboardRoute, UserRole} from '@/shared/configs/routes';
+import {postRegistration} from '@/shared/lib/registration';
+import {LoginFormData} from '@/shared/types/login';
 
 interface FormProps {
 	toggleRegisterMode?: boolean;
 	activateModalSuccess?: (value: boolean) => void;
+}
+const PASSWORD_ERROR = { email: false, password: true, first_name: false, last_name: false };
+interface FieldConfig {
+	name: keyof LoginFormData;
+	label: string;
+	type: string;
+	placeholder: string;
 }
 
 const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
@@ -23,6 +31,7 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 		validationStatus,
 		serverErrors,
 		isValid,
+		activeFields,
 		configMap,
 		handleChange,
 		resetServerErrors,
@@ -30,109 +39,101 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 		validateForm,
 	} = useLoginForm({ toggleRegisterMode });
 
-	const handleSubmit: FormEventHandler<HTMLFormElement> = async event => {
-		event.preventDefault();
+	// Конфигурация полей формы
+	const fieldConfigs: FieldConfig[] = [
+		...(toggleRegisterMode ? [
+			{ name: 'first_name', label: 'Имя', type: 'text', placeholder: 'Имя' },
+			{ name: 'last_name', label: 'Фамилия', type: 'text', placeholder: 'Фамилия' },
+		] : []) as FieldConfig[],
+		{ name: 'email', label: 'Email', type: 'email', placeholder: 'Email' },
+		{ name: 'password', label: 'Пароль', type: 'password', placeholder: 'Пароль' },
+	];
 
+	// Функция для рендеринга поля
+	const renderField = (field: FieldConfig) => {
+		const { name, label, type, placeholder } = field;
+		const hasError = serverErrors[name];
+		const hasWarn = !hasError && validationStatus[name] === 2;
+
+		return (
+			<LoginInput
+				key={name}
+				label={label}
+				type={type}
+				name={name}
+				onChange={handleChange}
+				value={values[name] || ''}
+				placeholder={placeholder}
+				id={name}
+				indicator={getIndicator(name, values, validationStatus, serverErrors)}
+				done={getDone(name, values, validationStatus, serverErrors, activeFields)}
+				error={hasError}
+				warn={hasWarn}
+				errorMessage={hasError ? configMap[name]?.errorMessage : undefined}
+				warnMessage={hasWarn ? configMap[name]?.warnMessage : undefined}
+				required={configMap[name]?.required}
+			/>
+		);
+	};
+
+	// Обработка регистрации
+	const handleRegistration = async () => {
+		try {
+			const response = await postRegistration(values);
+
+			if (response.success && activateModalSuccess) {
+				activateModalSuccess(true);
+			}
+
+			if (response.errors) {
+				setServerErrors({
+					email: !!response.errors.email,
+					password: !!response.errors.password,
+					first_name: !!response.errors.first_name,
+					last_name: !!response.errors.last_name,
+				});
+			}
+		} catch {
+			console.error('Ошибка при регистрации');
+			setServerErrors(PASSWORD_ERROR);
+		}
+	};
+
+	// Обработка авторизации
+	const handleAuth = async () => {
+		try {
+			const response = await postAuth(values);
+			if (response) {
+				router.push('/ptk');
+			} else {
+				setServerErrors(PASSWORD_ERROR);
+			}
+		} catch {
+			console.error('Ошибка при аутентификации');
+			setServerErrors(PASSWORD_ERROR);
+		}
+	};
+	const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
+		event.preventDefault();
 		resetServerErrors();
 
 		if (!validateForm()) return;
 
 		if (toggleRegisterMode) {
-			if (activateModalSuccess) {
-				activateModalSuccess(true);
-			}
-			// Можно добавить логику регистрации
+			await handleRegistration();
 		} else {
-			try {
-				const response = await postAuth(values);
-
-				if (response.success && response.role) {
-					const dashboardRoute = getDashboardRoute(response.role as UserRole);
-					router.push(dashboardRoute);
-				} else {
-					setServerErrors({ email: false, password: true });
-				}
-			} catch {
-				console.error('Ошибка при аутентификации');
-				setServerErrors({ email: false, password: true });
-			}
+			await handleAuth();
 		}
 	};
 
 	return (
 		<form className={styles.form} onSubmit={handleSubmit}>
-			<LoginInput
-				label={'Email'}
-				type={'email'}
-				name={'email'}
-				onChange={handleChange}
-				value={values.email || ''}
-				placeholder={'Email'}
-				id={'email'}
-				indicator={getIndicator(
-					'email',
-					values,
-					validationStatus,
-					serverErrors,
-				)}
-				done={getDone('email', values, validationStatus, serverErrors)}
-				error={serverErrors.email}
-				warn={!serverErrors.email && validationStatus.email === 2}
-				errorMessage={
-					serverErrors.email
-						? configMap.email?.errorMessage
-						: undefined
-				}
-				warnMessage={
-					!serverErrors.email && validationStatus.email === 2
-						? configMap.email?.warnMessage
-						: undefined
-				}
-				required={configMap.email?.required}
-			/>
-			<LoginInput
-				label={'Пароль'}
-				type={'password'}
-				name={'password'}
-				onChange={handleChange}
-				value={values.password}
-				placeholder={'Пароль'}
-				id={'password'}
-				indicator={getIndicator(
-					'password',
-					values,
-					validationStatus,
-					serverErrors,
-				)}
-				done={getDone(
-					'password',
-					values,
-					validationStatus,
-					serverErrors,
-				)}
-				error={serverErrors.password}
-				warn={!serverErrors.password && validationStatus.password === 2}
-				errorMessage={
-					serverErrors.password
-						? configMap.password?.errorMessage
-						: undefined
-				}
-				warnMessage={
-					!serverErrors.password && validationStatus.password === 2
-						? configMap.password?.warnMessage
-						: undefined
-				}
-				required
-			/>
+			{fieldConfigs.map(renderField)}
 
-			<div
-				className={`${styles.form_inner} ${
-					toggleRegisterMode ? styles.policy : ''
-				}`}
-			>
+			<div className={`${styles.form_inner} ${toggleRegisterMode ? styles.policy : ''}`}>
 				<label className={styles.form_inner_label}>
 					<input
-						type={'checkbox'}
+						type="checkbox"
 						name={toggleRegisterMode ? 'policy' : 'remember'}
 						className={styles.form_inner_label__checkbox}
 					/>
@@ -142,11 +143,10 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 					href={toggleRegisterMode ? '/policy' : '/recovery'}
 					className={styles.form_inner__forget}
 				>
-					{toggleRegisterMode
-						? 'обработку персональных данных'
-						: 'Забыли пароль?'}
+					{toggleRegisterMode ? 'обработку персональных данных' : 'Забыли пароль?'}
 				</Link>
 			</div>
+
 			<Button
 				width={toggleRegisterMode ? 278 : 171}
 				height={55}

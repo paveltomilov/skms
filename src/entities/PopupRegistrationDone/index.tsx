@@ -24,7 +24,7 @@ const PopupRegistrationDone: FC<PopupRegistrationDoneProps> = ({closeModalSucces
     };
     
     return(
-        <div className={styles.container}>
+        <div className={`${styles.container} ${steps !== 3 ? styles.pb : ''}`}>
             <Image
                 width={200}
                 height={200}

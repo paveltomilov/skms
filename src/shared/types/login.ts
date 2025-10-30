@@ -4,6 +4,8 @@ export type ValidationStatus = Record<keyof LoginFormData, ValidationLevel>;
 export type LoginFormData = {
 	email: string;
 	password: string;
+	first_name: string;
+	last_name: string;
 };
 
 export interface LoginResponse {
