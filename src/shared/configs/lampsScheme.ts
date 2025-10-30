@@ -32,14 +32,14 @@ export const columns: LampColumn[] = [
 		id: 'closed',
 		title: 'Закрыто',
 		color: 'white',
-		pointIds: [CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID],
+		pointIds: [OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID], // А19 - p.c.3.0.2 (выход концевика "Открыто")
 		elementId: KRUZAP_CLOSED_STATUS_LAMP_ID,
 		colors: {
 			on: 'lamp_white_on',
 			off: 'lamp_white_off',
 		},
 		points: [
-			{ marker: 'A', point: CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID }, // p.c.3.1.2
+			{ marker: 'A', point: OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID }, // А19
 			{ marker: 'N', point: CONTROL_CIRCUIT_NEUTRAL_ID },
 		],
 		position: 'left',
@@ -48,14 +48,14 @@ export const columns: LampColumn[] = [
 		id: 'open',
 		title: 'Открыто',
 		color: 'lamp_green',
-		pointIds: [OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID],
+		pointIds: [CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID], // А11 - p.c.3.1.2 (выход концевика "Закрыто")
 		elementId: KRUZAP_OPEN_STATUS_LAMP_ID,
 		colors: {
 			on: 'lamp_green_on',
 			off: 'lamp_green_off',
 		},
 		points: [
-			{ marker: 'A', point: OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID }, // p.c.3.0.2
+			{ marker: 'A', point: CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID }, // А11
 			{ marker: 'N', point: CONTROL_CIRCUIT_NEUTRAL_ID },
 		],
 		position: 'right',

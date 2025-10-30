@@ -85,11 +85,14 @@ export const CONTROL_BREAKER_INPUT_POINT_ID = 'p.c.1'; // Вход автома�
 export const CONTROL_BREAKER_OUTPUT_POINT_ID = 'p.c.2'; // Выход автомата управления
 export const OPEN_LIMIT_SWITCH_INPUT_POINT_ID = 'p.c.3.0.1'; // Вход концевика «Открыто»
 export const OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID = 'p.c.3.0.2'; // Выход концевика «Открыто»
+export const CLOSED_LAMP_INPUT_POINT_ID = 'p.c.3.0.4.2.1'; // Вход лампы «Закрыто» (в ветке «ОТКРЫТЬ»)
 // Точки ветки «ОТКРЫТЬ» выровнены по структуре 4.1.*
 export const OPEN_COMMAND_MERGE_POINT_ID = 'p.c.3.0.4.1.0.0.2'; // Точка объединения команды «Открыть»
 export const OPEN_INTERLOCK_INPUT_POINT_ID = 'p.c.3.0.4.1.0.1.0'; // Вход блок-контакта «Открыть»
 export const CLOSE_LIMIT_SWITCH_INPUT_POINT_ID = 'p.c.3.1.1'; // Вход концевика «Закрыто»
 export const CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID = 'p.c.3.1.2'; // Выход концевика «Закрыто»
+export const OPEN_LAMP_INPUT_POINT_ID = 'p.c.3.1.4.2.1'; // Вход лампы «Открыто» (в ветке «ЗАКРЫТЬ»)
 // Точки ветки «ЗАКРЫТЬ» выровнены по структуре 4.1.*
 export const CLOSE_COMMAND_MERGE_POINT_ID = 'p.c.3.1.4.1.0.0.2'; // Точка объединения команды «Закрыть»
 export const CLOSE_INTERLOCK_INPUT_POINT_ID = 'p.c.3.1.4.1.0.1.0'; // Вход блок-контакта «Закрыть»
+
