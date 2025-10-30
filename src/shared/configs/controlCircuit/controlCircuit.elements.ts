@@ -5,17 +5,57 @@
  */
 
 import { CircuitElement } from '../../types/scheme';
-
-// Определяем константы локально, чтобы избежать циклической зависимости
-const LIMIT_SWITCH_OPEN_ID = 'c.3.1.1';
-const LIMIT_SWITCH_CLOSE_ID = 'c.3.2.1';
-const CONTROL_CIRCUIT_BREAKER_ID = 'c.1';
+import {
+	BUTTON_KRUZA_P_CLOSE_ID,
+	BUTTON_KRUZA_P_OPEN_ID,
+	COIL_CLOSE_ID,
+	COIL_OPEN_ID,
+	CONTROL_CIRCUIT_BREAKER_ID,
+	INSERT_NDI_CMD_CLOSE_PTK_ID,
+	INSERT_NDI_CMD_OPEN_PTK_ID,
+	INSERT_NDI_NOT_CLOSED_ID,
+	INSERT_NDI_NOT_OPEN_ID,
+	INTERLOCK_CONTACT_CLOSE_ID,
+	INTERLOCK_CONTACT_OPEN_ID,
+	LAMP_KRUZA_P_CLOSED_ID,
+	LAMP_KRUZA_P_OPEN_ID,
+	LIMIT_SWITCH_CLOSE_ID,
+	LIMIT_SWITCH_OPEN_ID,
+	WIRE_AFTER_INTERLOCK_TO_COIL_CLOSE_ID,
+	WIRE_AFTER_INTERLOCK_TO_COIL_OPEN_ID,
+	WIRE_BEFORE_BUTTON_KRUZA_P_CLOSE_ID,
+	WIRE_BEFORE_BUTTON_KRUZA_P_OPEN_ID,
+	WIRE_BEFORE_INTERLOCK_CLOSE_ID,
+	WIRE_BEFORE_INTERLOCK_OPEN_ID,
+	WIRE_BEFORE_LAMP_KRUZA_P_CLOSED_ID,
+	WIRE_BEFORE_LAMP_KRUZA_P_OPEN_ID,
+	WIRE_BEFORE_NDI_CMD_CLOSE_PTK_ID,
+	WIRE_BEFORE_NDI_CMD_OPEN_PTK_ID,
+	WIRE_BEFORE_NDI_NOT_CLOSED_ID,
+	WIRE_BEFORE_NDI_NOT_OPEN_ID,
+	WIRE_BOX_TO_LIMIT_CLOSE_ID,
+	WIRE_BOX_TO_LIMIT_OPEN_ID,
+	WIRE_BUTTON_KRUZA_P_CLOSE_TO_NEUTRAL_ID,
+	WIRE_BUTTON_KRUZA_P_OPEN_TO_NEUTRAL_ID,
+	WIRE_LAMP_KRUZA_P_CLOSED_TO_NEUTRAL_ID,
+	WIRE_LAMP_KRUZA_P_OPEN_TO_NEUTRAL_ID,
+	WIRE_LIMIT_CLOSE_TO_TERMINAL_ID,
+	WIRE_LIMIT_OPEN_TO_TERMINAL_ID,
+	WIRE_NDI_CMD_CLOSE_PTK_TO_NEUTRAL_ID,
+	WIRE_NDI_CMD_OPEN_PTK_TO_NEUTRAL_ID,
+	WIRE_NDI_NOT_CLOSED_TO_NEUTRAL_ID,
+	WIRE_NDI_NOT_OPEN_TO_NEUTRAL_ID,
+	WIRE_PHASE_AFTER_BREAKER_ID,
+	WIRE_POWER_TO_CONTROL_BREAKER_ID,
+	WIRE_TERMINAL_TO_NDI_NOT_CLOSED_ID,
+	WIRE_TERMINAL_TO_NDI_NOT_OPEN_ID,
+} from '../../constants';
 
 // ======================== Общая часть (c.0, c.1, c.2) ========================
 
 export const provodOtSilovojChastiSkhemyKAvtomatuPitaniyaUpravleniya: CircuitElement =
 	{
-		id: 'c.0',
+		id: WIRE_POWER_TO_CONTROL_BREAKER_ID,
 		name: 'Провод от силовой части схемы к автомату питания управления',
 		resistance: 0.1,
 		kind: 'wire',
@@ -55,7 +95,7 @@ export const avtomatPitaniyaSkhemyUpravleniya: CircuitElement = {
 };
 
 export const provodFazyPosleAvtomata: CircuitElement = {
-	id: 'c.2',
+	id: WIRE_PHASE_AFTER_BREAKER_ID,
 	name: 'Провод фазы после автомата',
 	resistance: 0.1,
 	kind: 'wire',
@@ -72,17 +112,447 @@ export const provodFazyPosleAvtomata: CircuitElement = {
 	],
 };
 
-// ======================== Ветка ОТКРЫТЬ (c.3.1.*) ========================
+// ======================== Ветка ОТКРЫТЬ (c.3.0.*) ========================
 
 // Провод от соединительной коробки до концевого выключателя открыто
 export const provodOtSoyedinitelnojKorobkiDoKontsevogoVyklyuchatelyaOtkryto: CircuitElement =
 	{
-		id: 'c.3.1.0',
+		id: WIRE_BOX_TO_LIMIT_OPEN_ID,
 		name: 'Провод от соединительной коробки до концевого выключателя открыто',
 		resistance: 0.1,
 		kind: 'wire',
 		startPoint: 'p.c.3.0.0',
 		endPoint: 'p.c.3.0.1',
+		malfunctions: [
+			{ id: 'c.3.0.0.1', name: 'Обрыв провода', active: false },
+			{
+				id: 'c.3.0.0.2',
+				name: 'Короткое замыкание на землю',
+				active: false,
+			},
+			{
+				id: 'c.3.0.0.3',
+				name: 'Короткое замыкание с соседним проводом',
+				active: false,
+			},
+		],
+	};
+
+export const kontsevojVyklyuchatelOtkryto: CircuitElement = {
+	id: LIMIT_SWITCH_OPEN_ID,
+	name: 'Концевой выключатель открыто',
+	resistance: 0,
+	kind: 'limitSwitch',
+	startPoint: 'p.c.3.0.1',
+	endPoint: 'p.c.3.0.2',
+	malfunctions: [
+		{ id: 'c.3.0.1.1', name: 'Залипший контакт', active: false },
+		{ id: 'c.3.0.1.2', name: 'Нет контакта', active: false },
+		{ id: 'c.3.0.1.3', name: 'Не настроен', active: false },
+	],
+};
+
+// Провод от концевого выключателя до клеммника
+export const provodOtKontsevogoVyklyuchatelyaOtkrytoDoKlemmikaKRUZAP2: CircuitElement =
+	{
+		id: WIRE_LIMIT_OPEN_TO_TERMINAL_ID,
+		name: 'Провод от концевого выключателя открыто до клеммника',
+		resistance: 0.1,
+		kind: 'wire',
+		startPoint: 'p.c.3.0.2',
+		endPoint: 'p.c.3.0.3',
+		malfunctions: [
+			{ id: 'c.3.0.2.1', name: 'Обрыв провода', active: false },
+			{
+				id: 'c.3.0.2.2',
+				name: 'Короткое замыкание на землю',
+				active: false,
+			},
+			{
+				id: 'c.3.0.2.3',
+				name: 'Короткое замыкание с соседним проводом',
+				active: false,
+			},
+		],
+	};
+
+// Провод от клеммника до вставки NDI (сигнал не открыто)
+export const provodOtKlemmikaDoVstavkiNDI_signalNeOtkryto: CircuitElement = {
+	id: WIRE_TERMINAL_TO_NDI_NOT_OPEN_ID,
+	name: 'Провод от клеммника до вставки NDI (сигнал не открыто)',
+	resistance: 0.1,
+	kind: 'wire',
+	startPoint: 'p.c.3.0.3',
+	endPoint: 'p.c.3.0.4',
+	malfunctions: [
+		{ id: 'c.3.0.3.1', name: 'Обрыв провода', active: false },
+		{
+			id: 'c.3.0.3.2',
+			name: 'Короткое замыкание на землю',
+			active: false,
+		},
+		{
+			id: 'c.3.0.3.3',
+			name: 'Короткое замыкание с соседним проводом',
+			active: false,
+		},
+	],
+};
+
+// Вставка NDI (сигнал не открыто)
+export const vstavkaNDI_signalNeOtkryto: CircuitElement = {
+	id: WIRE_BEFORE_NDI_NOT_OPEN_ID,
+	name: 'Провод перед вставкой NDI (сигнал не открыто)',
+	resistance: 0.1,
+	kind: 'wire',
+	startPoint: 'p.c.3.0.4',
+	endPoint: 'p.c.3.0.4.0.0',
+	malfunctions: [
+		{ id: 'c.3.0.4.0.0.1', name: 'Обрыв провода', active: false },
+		{
+			id: 'c.3.0.4.0.0.2',
+			name: 'Короткое замыкание на землю',
+			active: false,
+		},
+		{
+			id: 'c.3.0.4.0.0.3',
+			name: 'Короткое замыкание с соседним проводом',
+			active: false,
+		},
+	],
+};
+
+export const vstavkaNDI_signalNeOtkryto_element: CircuitElement = {
+	id: INSERT_NDI_NOT_OPEN_ID,
+	name: 'Вставка NDI (сигнал «не открыто»)',
+	resistance: 0,
+	kind: 'insert',
+	startPoint: 'p.c.3.0.4.0.0',
+	endPoint: 'p.c.3.0.4.0.1',
+	malfunctions: [
+		{
+			id: 'c.3.0.4.0.1.1',
+			name: 'Нет контакта, цепь не замыкается',
+			active: false,
+		},
+		{
+			id: 'c.3.0.4.0.1.2',
+			name: 'Ложно сработала, цепь не размыкается',
+			active: false,
+		},
+	],
+};
+
+export const provodOtVstavkiNDI_signalNeOtkrytoDoNejtrali: CircuitElement = {
+	id: WIRE_NDI_NOT_OPEN_TO_NEUTRAL_ID,
+	name: 'Провод от вставки NDI (сигнал не открыто) до нейтрали',
+	resistance: 0.1,
+	kind: 'wire',
+	startPoint: 'p.c.3.0.4.0.1',
+	endPoint: 'p.c.n',
+	malfunctions: [
+		{ id: 'c.3.0.4.0.2.1', name: 'Обрыв провода', active: false },
+		{
+			id: 'c.3.0.4.0.2.2',
+			name: 'Короткое замыкание на землю',
+			active: false,
+		},
+		{
+			id: 'c.3.0.4.0.2.3',
+			name: 'Короткое замыкание с соседним проводом',
+			active: false,
+		},
+	],
+};
+
+// Провода и элементы для команды с ПТК (c.3.0.4.1.0.0.*)
+export const provodPeredVstavkojNDI_komandaOtkrytSPTK: CircuitElement = {
+	id: WIRE_BEFORE_NDI_CMD_OPEN_PTK_ID,
+	name: 'Провод перед вставкой NDI (команда открыть с ПТК)',
+	resistance: 0.1,
+	kind: 'wire',
+	startPoint: 'p.c.3.0.4.1.0.0.0',
+	endPoint: 'p.c.3.0.4.1.0.0.1',
+	malfunctions: [
+		{ id: 'c.3.0.4.1.0.0.0.1', name: 'Обрыв провода', active: false },
+		{
+			id: 'c.3.0.4.1.0.0.0.2',
+			name: 'Короткое замыкание на землю',
+			active: false,
+		},
+		{
+			id: 'c.3.0.4.1.0.0.0.3',
+			name: 'Короткое замыкание с соседним проводом',
+			active: false,
+		},
+	],
+};
+
+export const vstavkaNDI_komandaOtkrytSPTK: CircuitElement = {
+	id: INSERT_NDI_CMD_OPEN_PTK_ID,
+	name: 'Вставка NDI (команда открыть с ПТК)',
+	resistance: 0,
+	kind: 'insert',
+	startPoint: 'p.c.3.0.4.1.0.0.1',
+	endPoint: 'p.c.3.0.4.1.0.0.2',
+	malfunctions: [
+		{
+			id: 'c.3.0.4.1.0.0.1.1',
+			name: 'Нет контакта, команда не уходит',
+			active: false,
+		},
+		{
+			id: 'c.3.0.4.1.0.0.1.2',
+			name: 'Ложно сработала, команда постоянно висит',
+			active: false,
+		},
+	],
+};
+
+export const provodOtVstavkiNDI_komandaOtkrytSPTKDoNejtrali: CircuitElement = {
+	id: WIRE_NDI_CMD_OPEN_PTK_TO_NEUTRAL_ID,
+	name: 'Провод от вставки NDI (команда открыть с ПТК) до нейтрали',
+	resistance: 0.1,
+	kind: 'wire',
+	startPoint: 'p.c.3.0.4.1.0.0.2',
+	endPoint: 'p.c.n',
+	malfunctions: [
+		{
+			id: 'c.3.0.4.1.0.0.2.1',
+			name: 'Обрыв провода',
+			active: false,
+		},
+		{
+			id: 'c.3.0.4.1.0.0.2.2',
+			name: 'Короткое замыкание на землю',
+			active: false,
+		},
+		{
+			id: 'c.3.0.4.1.0.0.2.3',
+			name: 'Короткое замыкание с соседним проводом',
+			active: false,
+		},
+	],
+};
+
+// Блокировка и катушка (c.3.0.4.1.0.1.*)
+export const provodPeredBlokirovkojOtkrytie: CircuitElement = {
+	id: WIRE_BEFORE_INTERLOCK_OPEN_ID,
+	name: 'Провод перед блокировкой (открытие)',
+	resistance: 0.1,
+	kind: 'wire',
+	startPoint: 'p.c.3.0.4.1.0.1.0',
+	endPoint: 'p.c.3.0.4.1.0.1.1',
+	malfunctions: [
+		{ id: 'c.3.0.4.1.1.0.1', name: 'Обрыв провода', active: false },
+		{
+			id: 'c.3.0.4.1.1.0.2',
+			name: 'Короткое замыкание на землю',
+			active: false,
+		},
+		{
+			id: 'c.3.0.4.1.1.0.3',
+			name: 'Короткое замыкание с соседним проводом',
+			active: false,
+		},
+	],
+};
+
+export const blokirovkaVklyucheniaPuskatelyaNaOtkrytie: CircuitElement = {
+	id: INTERLOCK_CONTACT_OPEN_ID,
+	name: 'Блокировка включения пускателя на открытие',
+	resistance: 0,
+	kind: 'blockingContact',
+	startPoint: 'p.c.3.0.4.1.0.1.1',
+	endPoint: 'p.c.3.0.4.1.0.1.2',
+	malfunctions: [
+		{ id: 'c.3.0.4.1.1.1.1', name: 'Нет контакта', active: false },
+		{
+			id: 'c.3.0.4.1.1.1.2',
+			name: 'Ложно замкнутый контакт',
+			active: false,
+		},
+	],
+};
+
+export const provodOtBlokirovkiDoKatushkiOtkrytie: CircuitElement = {
+	id: WIRE_AFTER_INTERLOCK_TO_COIL_OPEN_ID,
+	name: 'Провод от блокировки до катушки (открытие)',
+	resistance: 0.1,
+	kind: 'wire',
+	startPoint: 'p.c.3.0.4.1.0.1.2',
+	endPoint: 'p.c.3.0.4.1.0.1.3',
+	malfunctions: [
+		{ id: 'c.3.0.4.1.1.2.1', name: 'Обрыв провода', active: false },
+		{
+			id: 'c.3.0.4.1.1.2.2',
+			name: 'Короткое замыкание на землю',
+			active: false,
+		},
+		{
+			id: 'c.3.0.4.1.1.2.3',
+			name: 'Короткое замыкание с соседним проводом',
+			active: false,
+		},
+	],
+};
+
+export const katushkaPuskatelyaOtkryt: CircuitElement = {
+	id: COIL_OPEN_ID,
+	name: 'Катушка пускателя открыть',
+	resistance: 6400,
+	kind: 'coil',
+	startPoint: 'p.c.3.0.4.1.0.1.3',
+	endPoint: 'p.c.n',
+	malfunctions: [
+		{
+			id: 'c.3.0.4.1.1.4.1',
+			name: 'Неисправна катушка, пускатель не подтягивается',
+			active: false,
+		},
+	],
+};
+
+// Кнопка КРУЗА-П (c.3.0.4.1.0.1.*)
+export const provodPeredKnopkojKRUZAP_komandaOtkryt: CircuitElement = {
+	id: WIRE_BEFORE_BUTTON_KRUZA_P_OPEN_ID,
+	name: 'Провод перед кнопкой КРУЗА-П (открыть)',
+	resistance: 0.1,
+	kind: 'wire',
+	startPoint: 'p.c.3.0.4.1.2.0',
+	endPoint: 'p.c.3.0.4.1.2.1',
+	malfunctions: [
+		{ id: 'c.3.0.4.1.2.0.1', name: 'Обрыв провода', active: false },
+		{
+			id: 'c.3.0.4.1.2.0.2',
+			name: 'Короткое замыкание',
+			active: false,
+		},
+		{
+			id: 'c.3.0.4.1.2.0.3',
+			name: 'Короткое замыкание с соседним проводом',
+			active: false,
+		},
+	],
+};
+
+export const knopkaKRUZAP_komandaOtkryt: CircuitElement = {
+	id: BUTTON_KRUZA_P_OPEN_ID,
+	name: 'Кнопка КРУЗА-П (команда открыть с КРУЗА-П)',
+	resistance: 0,
+	kind: 'button',
+	startPoint: 'p.c.3.0.4.1.2.1',
+	endPoint: 'p.c.3.0.4.1.2.2',
+	malfunctions: [
+		{
+			id: 'c.3.0.4.1.2.1.1',
+			name: 'Нет контакта, команда не уходит',
+			active: false,
+		},
+		{
+			id: 'c.3.0.4.1.2.1.2',
+			name: 'Ложно сработала, команда постоянно висит',
+			active: false,
+		},
+	],
+};
+
+export const provodOtKnopkiKRUZAP_komandaOtkrytDoNejtrali: CircuitElement = {
+	id: WIRE_BUTTON_KRUZA_P_OPEN_TO_NEUTRAL_ID,
+	name: 'Провод от кнопки КРУЗА-П (открыть) до нейтрали',
+	resistance: 0.1,
+	kind: 'wire',
+	startPoint: 'p.c.3.0.4.1.2.2',
+	endPoint: 'p.c.n',
+	malfunctions: [
+		{
+			id: 'c.3.0.4.1.2.2.1',
+			name: 'Обрыв провода',
+			active: false,
+		},
+		{
+			id: 'c.3.0.4.1.2.2.2',
+			name: 'Короткое замыкание',
+			active: false,
+		},
+		{
+			id: 'c.3.0.4.1.2.2.3',
+			name: 'Короткое замыкание с соседним проводом',
+			active: false,
+		},
+	],
+};
+
+// Лампа в КРУЗА-П (закрыто) - c.3.0.4.2.*
+export const provodPeredLampojVKRUZAP_zakryto: CircuitElement = {
+	id: WIRE_BEFORE_LAMP_KRUZA_P_CLOSED_ID,
+	name: 'Провод перед лампой в КРУЗА-П (закрыто)',
+	resistance: 0.1,
+	kind: 'wire',
+	startPoint: 'p.c.3.0.4.2.0',
+	endPoint: 'p.c.3.0.4.2.1',
+	malfunctions: [
+		{ id: 'c.3.0.4.2.0.1', name: 'Обрыв провода', active: false },
+		{
+			id: 'c.3.0.4.2.0.2',
+			name: 'Короткое замыкание',
+			active: false,
+		},
+		{
+			id: 'c.3.0.4.2.0.3',
+			name: 'Короткое замыкание с соседним проводом',
+			active: false,
+		},
+	],
+};
+
+export const lampaVKRUZAP_zakryto: CircuitElement = {
+	id: LAMP_KRUZA_P_CLOSED_ID,
+	name: 'Лампа в КРУЗА-П закрыто',
+	resistance: 4800,
+	kind: 'lamp',
+	startPoint: 'p.c.3.0.4.2.1',
+	endPoint: 'p.c.3.0.4.2.2',
+	malfunctions: [{ id: 'c.3.0.4.2.1.1', name: 'Перегорела', active: false }],
+};
+
+export const provodOtLampyVKRUZAP_zakrytoDoNejtrali: CircuitElement = {
+	id: WIRE_LAMP_KRUZA_P_CLOSED_TO_NEUTRAL_ID,
+	name: 'Провод от лампы в КРУЗА-П (закрыто) до нейтрали',
+	resistance: 0.1,
+	kind: 'wire',
+	startPoint: 'p.c.3.0.4.2.2',
+	endPoint: 'p.c.n',
+	malfunctions: [
+		{
+			id: 'c.3.0.4.2.2.1',
+			name: 'Обрыв провода',
+			active: false,
+		},
+		{
+			id: 'c.3.0.4.2.2.2',
+			name: 'Короткое замыкание',
+			active: false,
+		},
+		{
+			id: 'c.3.0.4.2.2.3',
+			name: 'Короткое замыкание с соседним проводом',
+			active: false,
+		},
+	],
+};
+
+// ======================== Ветка ЗАКРЫТЬ (c.3.1.*) ========================
+
+// Аналогичная структура для ветки закрыть
+export const provodOtSoyedinitelnojKorobkiDoKontsevogoVyklyuchatelyaZakryto: CircuitElement =
+	{
+		id: WIRE_BOX_TO_LIMIT_CLOSE_ID,
+		name: 'Провод от соединительной коробки до концевого выключателя закрыто',
+		resistance: 0.1,
+		kind: 'wire',
+		startPoint: 'p.c.3.1.0',
+		endPoint: 'p.c.3.1.1',
 		malfunctions: [
 			{ id: 'c.3.1.0.1', name: 'Обрыв провода', active: false },
 			{
@@ -98,13 +568,13 @@ export const provodOtSoyedinitelnojKorobkiDoKontsevogoVyklyuchatelyaOtkryto: Cir
 		],
 	};
 
-export const kontsevojVyklyuchatelOtkryto: CircuitElement = {
-	id: LIMIT_SWITCH_OPEN_ID,
-	name: 'Концевой выключатель открыто',
+export const kontsevojVyklyuchatelZakryto: CircuitElement = {
+	id: LIMIT_SWITCH_CLOSE_ID,
+	name: 'Концевой выключатель закрыто',
 	resistance: 0,
 	kind: 'limitSwitch',
-	startPoint: 'p.c.3.0.1',
-	endPoint: 'p.c.3.0.2',
+	startPoint: 'p.c.3.1.1',
+	endPoint: 'p.c.3.1.2',
 	malfunctions: [
 		{ id: 'c.3.1.1.1', name: 'Залипший контакт', active: false },
 		{ id: 'c.3.1.1.2', name: 'Нет контакта', active: false },
@@ -112,15 +582,14 @@ export const kontsevojVyklyuchatelOtkryto: CircuitElement = {
 	],
 };
 
-// Провод от концевого выключателя до клеммника
-export const provodOtKontsevogoVyklyuchatelyaOtkrytoDoKlemmikaKRUZAP2: CircuitElement =
+export const provodOtKontsevogoVyklyuchatelyaZakrytoDoKlemmikaKRUZAP2: CircuitElement =
 	{
-		id: 'c.3.1.2',
-		name: 'Провод от концевого выключателя открыто до клеммника',
+		id: WIRE_LIMIT_CLOSE_TO_TERMINAL_ID,
+		name: 'Провод от концевого выключателя закрыто до клеммника',
 		resistance: 0.1,
 		kind: 'wire',
-		startPoint: 'p.c.3.0.2',
-		endPoint: 'p.c.3.0.3',
+		startPoint: 'p.c.3.1.2',
+		endPoint: 'p.c.3.1.3',
 		malfunctions: [
 			{ id: 'c.3.1.2.1', name: 'Обрыв провода', active: false },
 			{
@@ -136,14 +605,13 @@ export const provodOtKontsevogoVyklyuchatelyaOtkrytoDoKlemmikaKRUZAP2: CircuitEl
 		],
 	};
 
-// Провод от клеммника до вставки NDI (сигнал не открыто)
-export const provodOtKlemmikaDoVstavkiNDI_signalNeOtkryto: CircuitElement = {
-	id: 'c.3.1.3',
-	name: 'Провод от клеммника до вставки NDI (сигнал не открыто)',
+export const provodOtKlemmikaDoVstavkiNDI_signalNeZakryto: CircuitElement = {
+	id: WIRE_TERMINAL_TO_NDI_NOT_CLOSED_ID,
+	name: 'Провод от клеммника до вставки NDI (сигнал не закрыто)',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: 'p.c.3.0.3',
-	endPoint: 'p.c.3.0.4',
+	startPoint: 'p.c.3.1.3',
+	endPoint: 'p.c.3.1.4',
 	malfunctions: [
 		{ id: 'c.3.1.3.1', name: 'Обрыв провода', active: false },
 		{
@@ -159,14 +627,13 @@ export const provodOtKlemmikaDoVstavkiNDI_signalNeOtkryto: CircuitElement = {
 	],
 };
 
-// Вставка NDI (сигнал не открыто)
-export const vstavkaNDI_signalNeOtkryto: CircuitElement = {
-	id: 'c.3.1.4.0.0',
-	name: 'Провод перед вставкой NDI (сигнал не открыто)',
+export const provodPeredVstavkojNDI_signalNeZakryto: CircuitElement = {
+	id: WIRE_BEFORE_NDI_NOT_CLOSED_ID,
+	name: 'Провод перед вставкой NDI (сигнал не закрыто)',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: 'p.c.3.0.4',
-	endPoint: 'p.c.3.0.4.0.0',
+	startPoint: 'p.c.3.1.4.0.0',
+	endPoint: 'p.c.3.1.4.0.1',
 	malfunctions: [
 		{ id: 'c.3.1.4.0.0.1', name: 'Обрыв провода', active: false },
 		{
@@ -182,13 +649,13 @@ export const vstavkaNDI_signalNeOtkryto: CircuitElement = {
 	],
 };
 
-export const vstavkaNDI_signalNeOtkryto_element: CircuitElement = {
-	id: 'c.3.1.4.0.1',
-	name: 'Вставка NDI (сигнал «не открыто»)',
+export const vstavkaNDI_signalNeZakryto: CircuitElement = {
+	id: INSERT_NDI_NOT_CLOSED_ID,
+	name: 'Вставка NDI (сигнал «не закрыто»)',
 	resistance: 0,
 	kind: 'insert',
-	startPoint: 'p.c.3.0.4.0.0',
-	endPoint: 'p.c.3.0.4.0.1',
+	startPoint: 'p.c.3.1.4.0.1',
+	endPoint: 'p.c.3.1.4.0.2',
 	malfunctions: [
 		{
 			id: 'c.3.1.4.0.1.1',
@@ -203,12 +670,12 @@ export const vstavkaNDI_signalNeOtkryto_element: CircuitElement = {
 	],
 };
 
-export const provodOtVstavkiNDI_signalNeOtkrytoDoNejtrali: CircuitElement = {
-	id: 'c.3.1.4.0.2',
-	name: 'Провод от вставки NDI (сигнал не открыто) до нейтрали',
+export const provodOtVstavkiNDI_signalNeZakrytoDoNejtrali: CircuitElement = {
+	id: WIRE_NDI_NOT_CLOSED_TO_NEUTRAL_ID,
+	name: 'Провод от вставки NDI (сигнал не закрыто) до нейтрали',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: 'p.c.3.0.4.0.1',
+	startPoint: 'p.c.3.1.4.0.2',
 	endPoint: 'p.c.n',
 	malfunctions: [
 		{ id: 'c.3.1.4.0.2.1', name: 'Обрыв провода', active: false },
@@ -225,16 +692,19 @@ export const provodOtVstavkiNDI_signalNeOtkrytoDoNejtrali: CircuitElement = {
 	],
 };
 
-// Провода и элементы для команды с ПТК (c.3.1.4.1.0.0.*)
-export const provodPeredVstavkojNDI_komandaOtkrytSPTK: CircuitElement = {
-	id: 'c.3.1.4.1.0.0.0',
-	name: 'Провод перед вставкой NDI (команда открыть с ПТК)',
+export const provodPeredVstavkojNDI_komandaZakrytSPTK: CircuitElement = {
+	id: WIRE_BEFORE_NDI_CMD_CLOSE_PTK_ID,
+	name: 'Провод перед вставкой NDI (команда закрыть с ПТК)',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: 'p.c.3.0.4.1.0.0.0',
-	endPoint: 'p.c.3.0.4.1.0.0.1',
+	startPoint: 'p.c.3.1.4.1.0.0.0',
+	endPoint: 'p.c.3.1.4.1.0.0.1',
 	malfunctions: [
-		{ id: 'c.3.1.4.1.0.0.0.1', name: 'Обрыв провода', active: false },
+		{
+			id: 'c.3.1.4.1.0.0.0.1',
+			name: 'Обрыв провода',
+			active: false,
+		},
 		{
 			id: 'c.3.1.4.1.0.0.0.2',
 			name: 'Короткое замыкание на землю',
@@ -248,13 +718,13 @@ export const provodPeredVstavkojNDI_komandaOtkrytSPTK: CircuitElement = {
 	],
 };
 
-export const vstavkaNDI_komandaOtkrytSPTK: CircuitElement = {
-	id: 'c.3.1.4.1.0.0.1',
-	name: 'Вставка NDI (команда открыть с ПТК)',
+export const vstavkaNDI_komandaZakrytSPTK: CircuitElement = {
+	id: INSERT_NDI_CMD_CLOSE_PTK_ID,
+	name: 'Вставка NDI (команда закрыть с ПТК)',
 	resistance: 0,
 	kind: 'insert',
-	startPoint: 'p.c.3.0.4.1.0.0.1',
-	endPoint: 'p.c.3.0.4.1.0.0.2',
+	startPoint: 'p.c.3.1.4.1.0.0.1',
+	endPoint: 'p.c.3.1.4.1.0.0.2',
 	malfunctions: [
 		{
 			id: 'c.3.1.4.1.0.0.1.1',
@@ -269,12 +739,12 @@ export const vstavkaNDI_komandaOtkrytSPTK: CircuitElement = {
 	],
 };
 
-export const provodOtVstavkiNDI_komandaOtkrytSPTKDoNejtrali: CircuitElement = {
-	id: 'c.3.1.4.1.0.0.2',
-	name: 'Провод от вставки NDI (команда открыть с ПТК) до нейтрали',
+export const provodOtVstavkiNDI_komandaZakrytSPTKDoNejtrali: CircuitElement = {
+	id: WIRE_NDI_CMD_CLOSE_PTK_TO_NEUTRAL_ID,
+	name: 'Провод от вставки NDI (команда закрыть с ПТК) до нейтрали',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: 'p.c.3.0.4.1.0.0.2',
+	startPoint: 'p.c.3.1.4.1.0.0.2',
 	endPoint: 'p.c.n',
 	malfunctions: [
 		{
@@ -295,14 +765,13 @@ export const provodOtVstavkiNDI_komandaOtkrytSPTKDoNejtrali: CircuitElement = {
 	],
 };
 
-// Блокировка и катушка (c.3.1.4.1.0.1.*)
-export const provodPeredBlokirovkojOtkrytie: CircuitElement = {
-	id: 'c.3.1.4.1.1.0',
-	name: 'Провод перед блокировкой (открытие)',
+export const provodPeredBlokirovkojZakrytie: CircuitElement = {
+	id: WIRE_BEFORE_INTERLOCK_CLOSE_ID,
+	name: 'Провод перед блокировкой (закрытие)',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: 'p.c.3.0.4.1.0.1.0',
-	endPoint: 'p.c.3.0.4.1.0.1.1',
+	startPoint: 'p.c.3.1.4.1.0.1.0',
+	endPoint: 'p.c.3.1.4.1.0.1.1',
 	malfunctions: [
 		{ id: 'c.3.1.4.1.1.0.1', name: 'Обрыв провода', active: false },
 		{
@@ -318,13 +787,13 @@ export const provodPeredBlokirovkojOtkrytie: CircuitElement = {
 	],
 };
 
-export const blokirovkaVklyucheniaPuskatelyaNaOtkrytie: CircuitElement = {
-	id: 'c.3.1.4.1.1.1',
-	name: 'Блокировка включения пускателя на открытие',
+export const blokirovkaVklyucheniaPuskatelyaNaZakrytie: CircuitElement = {
+	id: INTERLOCK_CONTACT_CLOSE_ID,
+	name: 'Блокировка включения пускателя на закрыть',
 	resistance: 0,
 	kind: 'blockingContact',
-	startPoint: 'p.c.3.0.4.1.0.1.1',
-	endPoint: 'p.c.3.0.4.1.0.1.2',
+	startPoint: 'p.c.3.1.4.1.0.1.1',
+	endPoint: 'p.c.3.1.4.1.0.1.2',
 	malfunctions: [
 		{ id: 'c.3.1.4.1.1.1.1', name: 'Нет контакта', active: false },
 		{
@@ -335,13 +804,13 @@ export const blokirovkaVklyucheniaPuskatelyaNaOtkrytie: CircuitElement = {
 	],
 };
 
-export const provodOtBlokirovkiDoKatushkiOtkrytie: CircuitElement = {
-	id: 'c.3.1.4.1.1.2',
-	name: 'Провод от блокировки до катушки (открытие)',
+export const provodOtBlokirovkiDoKatushkiZakrytie: CircuitElement = {
+	id: WIRE_AFTER_INTERLOCK_TO_COIL_CLOSE_ID,
+	name: 'Провод от блокировки до катушки (закрытие)',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: 'p.c.3.0.4.1.0.1.2',
-	endPoint: 'p.c.3.0.4.1.0.1.3',
+	startPoint: 'p.c.3.1.4.1.0.1.2',
+	endPoint: 'p.c.3.1.4.1.0.1.3',
 	malfunctions: [
 		{ id: 'c.3.1.4.1.1.2.1', name: 'Обрыв провода', active: false },
 		{
@@ -357,12 +826,12 @@ export const provodOtBlokirovkiDoKatushkiOtkrytie: CircuitElement = {
 	],
 };
 
-export const katushkaPuskatelyaOtkryt: CircuitElement = {
-	id: 'c.3.1.4.1.1.4',
-	name: 'Катушка пускателя открыть',
+export const katushkaPuskatelyaZakryt: CircuitElement = {
+	id: COIL_CLOSE_ID,
+	name: 'Катушка пускателя закрыть',
 	resistance: 6400,
 	kind: 'coil',
-	startPoint: 'p.c.3.0.4.1.0.1.3',
+	startPoint: 'p.c.3.1.4.1.0.1.3',
 	endPoint: 'p.c.n',
 	malfunctions: [
 		{
@@ -373,14 +842,13 @@ export const katushkaPuskatelyaOtkryt: CircuitElement = {
 	],
 };
 
-// Кнопка КРУЗА-П (c.3.1.4.1.0.1.*)
-export const provodPeredKnopkojKRUZAP_komandaOtkryt: CircuitElement = {
-	id: 'c.3.1.4.1.2.0',
-	name: 'Провод перед кнопкой КРУЗА-П (открыть)',
+export const provodPeredKnopkojKRUZAP_komandaZakryt: CircuitElement = {
+	id: WIRE_BEFORE_BUTTON_KRUZA_P_CLOSE_ID,
+	name: 'Провод перед кнопкой КРУЗА-П (закрыть)',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: 'p.c.3.0.4.1.2.0',
-	endPoint: 'p.c.3.0.4.1.2.1',
+	startPoint: 'p.c.3.1.4.1.2.0',
+	endPoint: 'p.c.3.1.4.1.2.1',
 	malfunctions: [
 		{ id: 'c.3.1.4.1.2.0.1', name: 'Обрыв провода', active: false },
 		{
@@ -396,13 +864,13 @@ export const provodPeredKnopkojKRUZAP_komandaOtkryt: CircuitElement = {
 	],
 };
 
-export const knopkaKRUZAP_komandaOtkryt: CircuitElement = {
-	id: 'c.3.1.4.1.2.1',
-	name: 'Кнопка КРУЗА-П (команда открыть с КРУЗА-П)',
+export const knopkaKRUZAP_komandaZakryt: CircuitElement = {
+	id: BUTTON_KRUZA_P_CLOSE_ID,
+	name: 'Кнопка КРУЗА-П (команда закрыть с КРУЗА-П)',
 	resistance: 0,
 	kind: 'button',
-	startPoint: 'p.c.3.0.4.1.2.1',
-	endPoint: 'p.c.3.0.4.1.2.2',
+	startPoint: 'p.c.3.1.4.1.2.1',
+	endPoint: 'p.c.3.1.4.1.2.2',
 	malfunctions: [
 		{
 			id: 'c.3.1.4.1.2.1.1',
@@ -417,12 +885,12 @@ export const knopkaKRUZAP_komandaOtkryt: CircuitElement = {
 	],
 };
 
-export const provodOtKnopkiKRUZAP_komandaOtkrytDoNejtrali: CircuitElement = {
-	id: 'c.3.1.4.1.2.2',
-	name: 'Провод от кнопки КРУЗА-П (открыть) до нейтрали',
+export const provodOtKnopkiKRUZAP_komandaZakrytDoNejtrali: CircuitElement = {
+	id: WIRE_BUTTON_KRUZA_P_CLOSE_TO_NEUTRAL_ID,
+	name: 'Провод от кнопки КРУЗА-П (закрыть) до нейтрали',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: 'p.c.3.0.4.1.2.2',
+	startPoint: 'p.c.3.1.4.1.2.2',
 	endPoint: 'p.c.n',
 	malfunctions: [
 		{
@@ -443,14 +911,13 @@ export const provodOtKnopkiKRUZAP_komandaOtkrytDoNejtrali: CircuitElement = {
 	],
 };
 
-// Лампа в КРУЗА-П (закрыто) - c.3.1.4.2.*
-export const provodPeredLampojVKRUZAP_zakryto: CircuitElement = {
-	id: 'c.3.1.4.2.0',
-	name: 'Провод перед лампой в КРУЗА-П (закрыто)',
+export const provodPeredLampojVKRUZAP_otkryto: CircuitElement = {
+	id: WIRE_BEFORE_LAMP_KRUZA_P_OPEN_ID,
+	name: 'Провод перед лампой в КРУЗА-П (открыто)',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: 'p.c.3.0.4.2.0',
-	endPoint: 'p.c.3.0.4.2.1',
+	startPoint: 'p.c.3.1.4.2.0',
+	endPoint: 'p.c.3.1.4.2.1',
 	malfunctions: [
 		{ id: 'c.3.1.4.2.0.1', name: 'Обрыв провода', active: false },
 		{
@@ -466,22 +933,22 @@ export const provodPeredLampojVKRUZAP_zakryto: CircuitElement = {
 	],
 };
 
-export const lampaVKRUZAP_zakryto: CircuitElement = {
-	id: 'c.3.1.4.2.1',
-	name: 'Лампа в КРУЗА-П закрыто',
+export const lampaVKRUZAP_otkryto: CircuitElement = {
+	id: LAMP_KRUZA_P_OPEN_ID,
+	name: 'Лампа в КРУЗА-П открыто',
 	resistance: 4800,
 	kind: 'lamp',
-	startPoint: 'p.c.3.0.4.2.1',
-	endPoint: 'p.c.3.0.4.2.2',
+	startPoint: 'p.c.3.1.4.2.1',
+	endPoint: 'p.c.3.1.4.2.2',
 	malfunctions: [{ id: 'c.3.1.4.2.1.1', name: 'Перегорела', active: false }],
 };
 
-export const provodOtLampyVKRUZAP_zakrytoDoNejtrali: CircuitElement = {
-	id: 'c.3.1.4.2.2',
-	name: 'Провод от лампы в КРУЗА-П (закрыто) до нейтрали',
+export const provodOtLampyVKRUZAP_otkrytoDoNejtrali: CircuitElement = {
+	id: WIRE_LAMP_KRUZA_P_OPEN_TO_NEUTRAL_ID,
+	name: 'Провод от лампы в КРУЗА-П (открыто) до нейтрали',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: 'p.c.3.0.4.2.2',
+	startPoint: 'p.c.3.1.4.2.2',
 	endPoint: 'p.c.n',
 	malfunctions: [
 		{
@@ -502,429 +969,3 @@ export const provodOtLampyVKRUZAP_zakrytoDoNejtrali: CircuitElement = {
 	],
 };
 
-// ======================== Ветка ЗАКРЫТЬ (c.3.2.*) ========================
-
-// Аналогичная структура для ветки закрыть
-export const provodOtSoyedinitelnojKorobkiDoKontsevogoVyklyuchatelyaZakryto: CircuitElement =
-	{
-		id: 'c.3.2.0',
-		name: 'Провод от соединительной коробки до концевого выключателя закрыто',
-		resistance: 0.1,
-		kind: 'wire',
-		startPoint: 'p.c.3.1.0',
-		endPoint: 'p.c.3.1.1',
-		malfunctions: [
-			{ id: 'c.3.2.0.1', name: 'Обрыв провода', active: false },
-			{
-				id: 'c.3.2.0.2',
-				name: 'Короткое замыкание на землю',
-				active: false,
-			},
-			{
-				id: 'c.3.2.0.3',
-				name: 'Короткое замыкание с соседним проводом',
-				active: false,
-			},
-		],
-	};
-
-export const kontsevojVyklyuchatelZakryto: CircuitElement = {
-	id: LIMIT_SWITCH_CLOSE_ID,
-	name: 'Концевой выключатель закрыто',
-	resistance: 0,
-	kind: 'limitSwitch',
-	startPoint: 'p.c.3.1.1',
-	endPoint: 'p.c.3.1.2',
-	malfunctions: [
-		{ id: 'c.3.2.1.1', name: 'Залипший контакт', active: false },
-		{ id: 'c.3.2.1.2', name: 'Нет контакта', active: false },
-		{ id: 'c.3.2.1.3', name: 'Не настроен', active: false },
-	],
-};
-
-export const provodOtKontsevogoVyklyuchatelyaZakrytoDoKlemmikaKRUZAP2: CircuitElement =
-	{
-		id: 'c.3.2.2',
-		name: 'Провод от концевого выключателя закрыто до клеммника',
-		resistance: 0.1,
-		kind: 'wire',
-		startPoint: 'p.c.3.1.2',
-		endPoint: 'p.c.3.1.3',
-		malfunctions: [
-			{ id: 'c.3.2.2.1', name: 'Обрыв провода', active: false },
-			{
-				id: 'c.3.2.2.2',
-				name: 'Короткое замыкание на землю',
-				active: false,
-			},
-			{
-				id: 'c.3.2.2.3',
-				name: 'Короткое замыкание с соседним проводом',
-				active: false,
-			},
-		],
-	};
-
-export const provodOtKlemmikaDoVstavkiNDI_signalNeZakryto: CircuitElement = {
-	id: 'c.3.2.3',
-	name: 'Провод от клеммника до вставки NDI (сигнал не закрыто)',
-	resistance: 0.1,
-	kind: 'wire',
-	startPoint: 'p.c.3.1.3',
-	endPoint: 'p.c.3.1.4',
-	malfunctions: [
-		{ id: 'c.3.2.3.1', name: 'Обрыв провода', active: false },
-		{
-			id: 'c.3.2.3.2',
-			name: 'Короткое замыкание на землю',
-			active: false,
-		},
-		{
-			id: 'c.3.2.3.3',
-			name: 'Короткое замыкание с соседним проводом',
-			active: false,
-		},
-	],
-};
-
-export const provodPeredVstavkojNDI_signalNeZakryto: CircuitElement = {
-	id: 'c.3.2.4.0.0',
-	name: 'Провод перед вставкой NDI (сигнал не закрыто)',
-	resistance: 0.1,
-	kind: 'wire',
-	startPoint: 'p.c.3.1.4.0.0',
-	endPoint: 'p.c.3.1.4.0.1',
-	malfunctions: [
-		{ id: 'c.3.2.4.0.0.1', name: 'Обрыв провода', active: false },
-		{
-			id: 'c.3.2.4.0.0.2',
-			name: 'Короткое замыкание на землю',
-			active: false,
-		},
-		{
-			id: 'c.3.2.4.0.0.3',
-			name: 'Короткое замыкание с соседним проводом',
-			active: false,
-		},
-	],
-};
-
-export const vstavkaNDI_signalNeZakryto: CircuitElement = {
-	id: 'c.3.2.4.0.1',
-	name: 'Вставка NDI (сигнал «не закрыто»)',
-	resistance: 0,
-	kind: 'insert',
-	startPoint: 'p.c.3.1.4.0.1',
-	endPoint: 'p.c.3.1.4.0.2',
-	malfunctions: [
-		{
-			id: 'c.3.2.4.0.1.1',
-			name: 'Нет контакта, цепь не замыкается',
-			active: false,
-		},
-		{
-			id: 'c.3.2.4.0.1.2',
-			name: 'Ложно сработала, цепь не размыкается',
-			active: false,
-		},
-	],
-};
-
-export const provodOtVstavkiNDI_signalNeZakrytoDoNejtrali: CircuitElement = {
-	id: 'c.3.2.4.0.2',
-	name: 'Провод от вставки NDI (сигнал не закрыто) до нейтрали',
-	resistance: 0.1,
-	kind: 'wire',
-	startPoint: 'p.c.3.1.4.0.2',
-	endPoint: 'p.c.n',
-	malfunctions: [
-		{ id: 'c.3.2.4.0.2.1', name: 'Обрыв провода', active: false },
-		{
-			id: 'c.3.2.4.0.2.2',
-			name: 'Короткое замыкание на землю',
-			active: false,
-		},
-		{
-			id: 'c.3.2.4.0.2.3',
-			name: 'Короткое замыкание с соседним проводом',
-			active: false,
-		},
-	],
-};
-
-export const provodPeredVstavkojNDI_komandaZakrytSPTK: CircuitElement = {
-	id: 'c.3.2.4.1.0.0.0',
-	name: 'Провод перед вставкой NDI (команда закрыть с ПТК)',
-	resistance: 0.1,
-	kind: 'wire',
-	startPoint: 'p.c.3.1.4.1.0.0.0',
-	endPoint: 'p.c.3.1.4.1.0.0.1',
-	malfunctions: [
-		{
-			id: 'c.3.2.4.1.0.0.0.1',
-			name: 'Обрыв провода',
-			active: false,
-		},
-		{
-			id: 'c.3.2.4.1.0.0.0.2',
-			name: 'Короткое замыкание на землю',
-			active: false,
-		},
-		{
-			id: 'c.3.2.4.1.0.0.0.3',
-			name: 'Короткое замыкание с соседним проводом',
-			active: false,
-		},
-	],
-};
-
-export const vstavkaNDI_komandaZakrytSPTK: CircuitElement = {
-	id: 'c.3.2.4.1.0.0.1',
-	name: 'Вставка NDI (команда закрыть с ПТК)',
-	resistance: 0,
-	kind: 'insert',
-	startPoint: 'p.c.3.1.4.1.0.0.1',
-	endPoint: 'p.c.3.1.4.1.0.0.2',
-	malfunctions: [
-		{
-			id: 'c.3.2.4.1.0.0.1.1',
-			name: 'Нет контакта, команда не уходит',
-			active: false,
-		},
-		{
-			id: 'c.3.2.4.1.0.0.1.2',
-			name: 'Ложно сработала, команда постоянно висит',
-			active: false,
-		},
-	],
-};
-
-export const provodOtVstavkiNDI_komandaZakrytSPTKDoNejtrali: CircuitElement = {
-	id: 'c.3.2.4.1.0.0.2',
-	name: 'Провод от вставки NDI (команда закрыть с ПТК) до нейтрали',
-	resistance: 0.1,
-	kind: 'wire',
-	startPoint: 'p.c.3.1.4.1.0.0.2',
-	endPoint: 'p.c.n',
-	malfunctions: [
-		{
-			id: 'c.3.2.4.1.0.0.2.1',
-			name: 'Обрыв провода',
-			active: false,
-		},
-		{
-			id: 'c.3.2.4.1.0.0.2.2',
-			name: 'Короткое замыкание на землю',
-			active: false,
-		},
-		{
-			id: 'c.3.2.4.1.0.0.2.3',
-			name: 'Короткое замыкание с соседним проводом',
-			active: false,
-		},
-	],
-};
-
-export const provodPeredBlokirovkojZakrytie: CircuitElement = {
-	id: 'c.3.2.4.1.1.0',
-	name: 'Провод перед блокировкой (закрытие)',
-	resistance: 0.1,
-	kind: 'wire',
-	startPoint: 'p.c.3.1.4.1.0.1.0',
-	endPoint: 'p.c.3.1.4.1.0.1.1',
-	malfunctions: [
-		{ id: 'c.3.2.4.1.1.0.1', name: 'Обрыв провода', active: false },
-		{
-			id: 'c.3.2.4.1.1.0.2',
-			name: 'Короткое замыкание на землю',
-			active: false,
-		},
-		{
-			id: 'c.3.2.4.1.1.0.3',
-			name: 'Короткое замыкание с соседним проводом',
-			active: false,
-		},
-	],
-};
-
-export const blokirovkaVklyucheniaPuskatelyaNaZakrytie: CircuitElement = {
-	id: 'c.3.2.4.1.1.1',
-	name: 'Блокировка включения пускателя на закрыть',
-	resistance: 0,
-	kind: 'blockingContact',
-	startPoint: 'p.c.3.1.4.1.0.1.1',
-	endPoint: 'p.c.3.1.4.1.0.1.2',
-	malfunctions: [
-		{ id: 'c.3.2.4.1.1.1.1', name: 'Нет контакта', active: false },
-		{
-			id: 'c.3.2.4.1.1.1.2',
-			name: 'Ложно замкнутый контакт',
-			active: false,
-		},
-	],
-};
-
-export const provodOtBlokirovkiDoKatushkiZakrytie: CircuitElement = {
-	id: 'c.3.2.4.1.1.2',
-	name: 'Провод от блокировки до катушки (закрытие)',
-	resistance: 0.1,
-	kind: 'wire',
-	startPoint: 'p.c.3.1.4.1.0.1.2',
-	endPoint: 'p.c.3.1.4.1.0.1.3',
-	malfunctions: [
-		{ id: 'c.3.2.4.1.1.2.1', name: 'Обрыв провода', active: false },
-		{
-			id: 'c.3.2.4.1.1.2.2',
-			name: 'Короткое замыкание на землю',
-			active: false,
-		},
-		{
-			id: 'c.3.2.4.1.1.2.3',
-			name: 'Короткое замыкание с соседним проводом',
-			active: false,
-		},
-	],
-};
-
-export const katushkaPuskatelyaZakryt: CircuitElement = {
-	id: 'c.3.2.4.1.1.4',
-	name: 'Катушка пускателя закрыть',
-	resistance: 6400,
-	kind: 'coil',
-	startPoint: 'p.c.3.1.4.1.0.1.3',
-	endPoint: 'p.c.n',
-	malfunctions: [
-		{
-			id: 'c.3.2.4.1.1.4.1',
-			name: 'Неисправна катушка, пускатель не подтягивается',
-			active: false,
-		},
-	],
-};
-
-export const provodPeredKnopkojKRUZAP_komandaZakryt: CircuitElement = {
-	id: 'c.3.2.4.1.2.0',
-	name: 'Провод перед кнопкой КРУЗА-П (закрыть)',
-	resistance: 0.1,
-	kind: 'wire',
-	startPoint: 'p.c.3.1.4.1.2.0',
-	endPoint: 'p.c.3.1.4.1.2.1',
-	malfunctions: [
-		{ id: 'c.3.2.4.1.2.0.1', name: 'Обрыв провода', active: false },
-		{
-			id: 'c.3.2.4.1.2.0.2',
-			name: 'Короткое замыкание',
-			active: false,
-		},
-		{
-			id: 'c.3.2.4.1.2.0.3',
-			name: 'Короткое замыкание с соседним проводом',
-			active: false,
-		},
-	],
-};
-
-export const knopkaKRUZAP_komandaZakryt: CircuitElement = {
-	id: 'c.3.2.4.1.2.1',
-	name: 'Кнопка КРУЗА-П (команда закрыть с КРУЗА-П)',
-	resistance: 0,
-	kind: 'button',
-	startPoint: 'p.c.3.1.4.1.2.1',
-	endPoint: 'p.c.3.1.4.1.2.2',
-	malfunctions: [
-		{
-			id: 'c.3.2.4.1.2.1.1',
-			name: 'Нет контакта, команда не уходит',
-			active: false,
-		},
-		{
-			id: 'c.3.2.4.1.2.1.2',
-			name: 'Ложно сработала, команда постоянно висит',
-			active: false,
-		},
-	],
-};
-
-export const provodOtKnopkiKRUZAP_komandaZakrytDoNejtrali: CircuitElement = {
-	id: 'c.3.2.4.1.2.2',
-	name: 'Провод от кнопки КРУЗА-П (закрыть) до нейтрали',
-	resistance: 0.1,
-	kind: 'wire',
-	startPoint: 'p.c.3.1.4.1.2.2',
-	endPoint: 'p.c.n',
-	malfunctions: [
-		{
-			id: 'c.3.2.4.1.2.2.1',
-			name: 'Обрыв провода',
-			active: false,
-		},
-		{
-			id: 'c.3.2.4.1.2.2.2',
-			name: 'Короткое замыкание',
-			active: false,
-		},
-		{
-			id: 'c.3.2.4.1.2.2.3',
-			name: 'Короткое замыкание с соседним проводом',
-			active: false,
-		},
-	],
-};
-
-export const provodPeredLampojVKRUZAP_otkryto: CircuitElement = {
-	id: 'c.3.2.4.2.0',
-	name: 'Провод перед лампой в КРУЗА-П (открыто)',
-	resistance: 0.1,
-	kind: 'wire',
-	startPoint: 'p.c.3.1.4.2.0',
-	endPoint: 'p.c.3.1.4.2.1',
-	malfunctions: [
-		{ id: 'c.3.2.4.2.0.1', name: 'Обрыв провода', active: false },
-		{
-			id: 'c.3.2.4.2.0.2',
-			name: 'Короткое замыкание',
-			active: false,
-		},
-		{
-			id: 'c.3.2.4.2.0.3',
-			name: 'Короткое замыкание с соседним проводом',
-			active: false,
-		},
-	],
-};
-
-export const lampaVKRUZAP_otkryto: CircuitElement = {
-	id: 'c.3.2.4.2.1',
-	name: 'Лампа в КРУЗА-П открыто',
-	resistance: 4800,
-	kind: 'lamp',
-	startPoint: 'p.c.3.1.4.2.1',
-	endPoint: 'p.c.3.1.4.2.2',
-	malfunctions: [{ id: 'c.3.2.4.2.1.1', name: 'Перегорела', active: false }],
-};
-
-export const provodOtLampyVKRUZAP_otkrytoDoNejtrali: CircuitElement = {
-	id: 'c.3.2.4.2.2',
-	name: 'Провод от лампы в КРУЗА-П (открыто) до нейтрали',
-	resistance: 0.1,
-	kind: 'wire',
-	startPoint: 'p.c.3.1.4.2.2',
-	endPoint: 'p.c.n',
-	malfunctions: [
-		{
-			id: 'c.3.2.4.2.2.1',
-			name: 'Обрыв провода',
-			active: false,
-		},
-		{
-			id: 'c.3.2.4.2.2.2',
-			name: 'Короткое замыкание',
-			active: false,
-		},
-		{
-			id: 'c.3.2.4.2.2.3',
-			name: 'Короткое замыкание с соседним проводом',
-			active: false,
-		},
-	],
-};

@@ -8,7 +8,7 @@ interface Connection {
 
 const blockSwitchesConnections: Connection[] = [
 	{
-		point: 'p.c.3.1.1',
+		point: 'p.c.3.0.1',
 		provodLocation: 'left',
 		textTop: 'A11',
 	},
@@ -18,7 +18,7 @@ const blockSwitchesConnections: Connection[] = [
 		textTop: 'A1',
 	},
 	{
-		point: 'p.c.3.2.1',
+		point: 'p.c.3.1.1',
 		provodLocation: 'left',
 		textTop: 'A19',
 	},

@@ -1,4 +1,5 @@
 import { CircuitElement, CircuitBranch, InitialStateScheme } from '@/shared/types/scheme';
+import { initialStateScheme } from '@/shared/configs/scheme';
 
 const searchInBranches = (branches: CircuitBranch[], targetId: string): CircuitElement | null => {
 	for (const branch of branches) {
@@ -30,7 +31,16 @@ export const findElementByID = (id: string, state: InitialStateScheme) => {
 
 	const branch = id.startsWith('p') ? state.powerCircuit : state.controlCircuit;
 
-	const result = searchInBranches(branch, id);
+	let result = searchInBranches(branch, id);
+
+	// Если элемент не найден в текущем состоянии (например, при рассинхроне стора),
+	// пробуем достать его из изначальной схемы, чтобы не падать ошибкой.
+	if (!result) {
+		const fallbackBranch = id.startsWith('p')
+			? initialStateScheme.powerCircuit
+			: initialStateScheme.controlCircuit;
+		result = searchInBranches(fallbackBranch, id);
+	}
 
 	if (!result) {
 		throw new Error(`Element with id "${id}" not found`);

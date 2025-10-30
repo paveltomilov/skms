@@ -20,11 +20,11 @@ export const actuatorsConnectionsLeft: Connection[] = [
 	},
 	{
 		marker: 'A4',
-		point: 'p.c.3.2.3.2.1',
+		point: 'p.c.3.1.3.2.1',
 	},
 	{
 		marker: 'A13',
-		point: 'p.c.3.1.3.2.2',
+		point: 'p.c.3.0.3.2.2',
 	},
 	{
 		marker: 'A21',
@@ -40,7 +40,7 @@ export const actuatorsConnectionsLeft: Connection[] = [
 	},
 	{
 		marker: 'A21',
-		point: 'p.c.3.2.3.2.2',
+		point: 'p.c.3.1.3.2.2',
 	},
 	{
 		marker: 'N',
@@ -63,11 +63,11 @@ export const actuatorsConnectionsRight: Connection[] = [
 	},
 	{
 		marker: 'A2',
-		point: 'p.c.3.1.3.2.1',
+		point: 'p.c.3.0.3.2.1',
 	},
 	{
 		marker: 'A21',
-		point: 'p.c.3.2.3.2.2',
+		point: 'p.c.3.1.3.2.2',
 	},
 	{
 		marker: 'A21',
@@ -83,7 +83,7 @@ export const actuatorsConnectionsRight: Connection[] = [
 	},
 	{
 		marker: 'A13',
-		point: 'p.c.3.1.3.2.2',
+		point: 'p.c.3.0.3.2.2',
 	},
 	{
 		marker: 'N',
