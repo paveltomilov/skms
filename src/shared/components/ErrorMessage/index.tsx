@@ -1,6 +1,12 @@
+import Button from '@/shared/UI/Button';
 import { FC } from 'react';
 
-const ErrorMessage: FC<{ message: string | null }> = ({ message }) => {
+interface ErrorMessageProps {
+    message: string,
+    refetch: () => Promise<void>,
+}
+
+const ErrorMessage: FC<ErrorMessageProps> = ({ message, refetch }) => {
     if (!message) {
         return null;
     }
@@ -8,6 +14,11 @@ const ErrorMessage: FC<{ message: string | null }> = ({ message }) => {
     return (
         <div role="alert">
             {message}
+            <Button 
+            width={200}
+            height={40}
+            text='попробовать снова'
+            onClick={refetch}/>
         </div>
     );
 };

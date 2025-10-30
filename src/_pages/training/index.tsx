@@ -16,7 +16,7 @@ const Training = () => {
 
     const { role } = useUserCookies();
 
-    const { students, isLoading, error } = useStudents(role);
+    const { students, isLoading, error, refetch } = useStudents(role);
 
     const handleCreateMalfunctions = () => {
         postMalfunctions(urlBase, access, elements);
@@ -48,7 +48,7 @@ const Training = () => {
                 onClick={() => handleCreateMalfunctions()}
             />
             {isLoading && <Loader />}
-            {error && <ErrorMessage message={error} />}
+            {error && <ErrorMessage message={error} refetch={refetch}/>}
         </>
     );
 };
