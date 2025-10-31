@@ -16,8 +16,6 @@ export type ButtonProps = {
 	radius?: number;
 	className?: string;
 	onClick?: () => void;
-
-	/** Если передано, кнопка будет <a href={href}> */
 	href?: string;
 	border?: string;
 };
@@ -36,7 +34,7 @@ const Button: React.FC<ButtonProps> = ({
 	onClick,
 	href,
 	className,
-	border, // <-- новый проп
+	border,
 }) => {
 	const rootStyle: React.CSSProperties = {
 		'--color': color,
@@ -47,7 +45,7 @@ const Button: React.FC<ButtonProps> = ({
 		...(hoverBgColor && { '--bg-hover': hoverBgColor }),
 		...(activeBgColor && { '--bg-active': activeBgColor }),
 		...(focusOutlineColor && { '--focus-outline': focusOutlineColor }),
-		...(border && { '--border': border }), // ← добавляем переменную
+		...(border && { '--border': border }),
 	} as React.CSSProperties;
 
 	const content = (

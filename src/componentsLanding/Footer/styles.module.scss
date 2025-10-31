@@ -1,23 +1,24 @@
 .footer {
-	padding-top: 24px;
-	padding-bottom: 24px;
+	padding-top: 180px;
 
 	&__container {
+		height: 211px;
 		position: relative;
 		display: flex;
 		justify-content: space-between;
-	}
+		z-index: 10;
 
-	&__img {
-		position: absolute;
-		content: '';
-		bottom: 0;
-		left: 0;
+		&__img {
+			position: absolute;
+			top: -140px;
+			left: 0;
+			z-index: -1;
+		}
 	}
 
 	&__nav {
 		margin-top: 24px;
-		margin-bottom: 24px;
+		margin-bottom: 20px;
 	}
 
 	&_container {
@@ -33,7 +34,7 @@
 
 		&__right {
 			width: 237px;
-			height: auto;
+			height: 192px;
 			display: flex;
 			flex-direction: column;
 			justify-content: flex-start;

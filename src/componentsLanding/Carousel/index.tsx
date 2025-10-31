@@ -9,15 +9,12 @@ import styles from './styles.module.scss';
 import type { Swiper as SwiperCore } from 'swiper';
 
 const Carousel: FC<{ slides: React.ReactNode[] }> = ({ slides }) => {
-	/* Храним реальный экземпляр Swiper в state – типизировано как SwiperCore | null */
 	const [swiperInstance, setSwiperInstance] = useState<SwiperCore | null>(
 		null,
 	);
 
-	/* Ссылка для кнопок (тип совпадает с состоянием) */
 	const swiperRef = useRef<SwiperCore | null>(null);
 
-	/* После того как экземпляр появится – кладём его в ref. */
 	useEffect(() => {
 		if (swiperInstance) {
 			swiperRef.current = swiperInstance;
@@ -35,8 +32,7 @@ const Carousel: FC<{ slides: React.ReactNode[] }> = ({ slides }) => {
 					delay: 4000,
 					disableOnInteraction: false,
 				}}
-				/* Передаём экземпляр в state */
-				onSwiper={setSwiperInstance} // ← важное изменение!
+				onSwiper={setSwiperInstance}
 				className={styles.swiper}
 			>
 				{slides.map((content, i) => (
@@ -46,7 +42,6 @@ const Carousel: FC<{ slides: React.ReactNode[] }> = ({ slides }) => {
 				))}
 			</Swiper>
 
-			{/* Навигационные кнопки – вне Swiper */}
 			<div className={styles.navButtons}>
 				<button
 					type="button"

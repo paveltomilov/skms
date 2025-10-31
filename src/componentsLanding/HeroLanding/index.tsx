@@ -1,23 +1,16 @@
-/* ──────────────────────────────────────────────── */
-/* 1️⃣ HeroLanding.tsx                                 */
-/* ──────────────────────────────────────────────── */
 'use client';
 import React, { FC } from 'react';
 import styles from './styles.module.scss'; // ваш SCSS‑файл
-
-/* Подключаем два «детского» компонента */
 import HeroTitle from './HeroTitle';
 import HeroDescr from './HeroDescr';
+import { Inter } from 'next/font/google';
 
-/**
- * Внутри HeroLanding можно задать любые данные,
- * которые потом передадим в дочерние компоненты.
- *
- * Если понадобится гибкость – добавьте пропы к HeroLanding
- * и просто пересылайте их дальше.
- */
+const inter = Inter({
+	weight: ['400', '500', '700'],
+	subsets: ['latin'],
+});
+
 const HeroLanding: FC = () => {
-	/* Данные для заголовка (3 строки) */
 	const titleLines: [string, string, string] = [
 		'Skill ',
 		'Management ',
@@ -27,7 +20,7 @@ const HeroLanding: FC = () => {
 	return (
 		<section id="hero" className={styles.hero}>
 			<div className={`${styles.hero__container} container`}>
-				<div className={styles.hero__title}>
+				<div className={`${styles.hero__title} ${inter.className}`}>
 					<HeroTitle titleLines={titleLines} />
 				</div>
 				<div className={styles.hero__content}>

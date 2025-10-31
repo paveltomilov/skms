@@ -8,8 +8,8 @@ const AboutTop: FC = () => {
 		<div className={styles.abouttop}>
 			<div className={`${styles.abouttop__container} container`}>
 				<img
-					className={styles.abouttop__container_img}
-					src="assets/images/line.png"
+					className={styles.abouttop__container__img}
+					src="/assets/images/line.png"
 					alt=""
 				/>
 				<div className={styles.content}>

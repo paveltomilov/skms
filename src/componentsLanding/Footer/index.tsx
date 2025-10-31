@@ -4,45 +4,46 @@ import { FC } from 'react';
 import styles from './styles.module.scss';
 import Navigation from '../Nav';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const Footer: FC = () => {
 	return (
 		<footer className={styles.footer}>
 			<div className={`${styles.footer__container} container`}>
 				<img
-					className={styles.footer__img}
+					className={styles.footer__container__img}
 					src="/assets/images/footer.png"
 					alt=""
 				/>
 				<div className={styles.footer_container__left}>
-					<a href="">
+					<Link href="">
 						<Image
 							src="assets/svg/logo.svg"
 							alt="Логотип"
-							width={315}
+							width={312}
 							height={80}
 							priority // если это важный контент, загружается сразу
 						/>
-					</a>
-					<Navigation gap={16} className={styles.footer__nav} />
-					<a
+					</Link>
+					<Navigation gap={22} className={styles.footer__nav} />
+					<Link
 						href=""
 						target="_blank"
 						className={styles.footer_container_left__link}
 					>
 						Политика обработки персональных данных
-					</a>
-					<a
+					</Link>
+					<Link
 						href=""
 						target="_blank"
 						className={styles.footer_container_left__link}
 					>
 						Политики конфиденциальности
-					</a>
+					</Link>
 				</div>
 				<div className={styles.footer_container__right}>
 					<div className={styles.footer_container_right__top}>
-						<a
+						<Link
 							href="mailto:Skillmanagment@mail.ru"
 							className={styles.footer_container_right_top__mail}
 						>
@@ -62,8 +63,8 @@ const Footer: FC = () => {
 								/>
 							</svg>
 							Skillmanagment@mail.ru
-						</a>
-						<a
+						</Link>
+						<Link
 							href="tel:+78452398636"
 							className={
 								styles.footer_container_right_top__telephone
@@ -88,17 +89,17 @@ const Footer: FC = () => {
 								/>
 							</svg>
 							+7 (845) 239-86-36
-						</a>
+						</Link>
 					</div>
 					<div className={styles.footer_container_right__logo}>
-						<a href="">
+						<Link href="https://controlspace.ru/">
 							<Image
 								src="assets/svg/pointpulse.svg"
 								alt="Логотип"
 								width={120}
 								height={18}
 							/>
-						</a>
+						</Link>
 					</div>
 				</div>
 			</div>

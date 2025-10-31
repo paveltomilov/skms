@@ -6,12 +6,12 @@ import SectionTitle from '../SectionTitle';
 import Button from '../Button';
 
 type FormValues = {
-	title: string; // Заголовок
-	name: string; // ФИО
-	company: string; // Компания
-	email: string; // Почта
-	phone: string; // Телефон
-	consent: boolean; // Согласие на обработку персональных данных
+	title: string;
+	name: string;
+	company: string;
+	email: string;
+	phone: string;
+	consent: boolean;
 };
 
 function FormLanding() {
@@ -24,7 +24,6 @@ function FormLanding() {
 		consent: false,
 	});
 
-	// Обработчик для текстовых полей
 	const handleInputChange =
 		(key: keyof Omit<FormValues, 'consent'>) =>
 		(e: ChangeEvent<HTMLInputElement>) => {
@@ -112,10 +111,7 @@ function FormLanding() {
 					<Button
 						text="отправить"
 						color="var(--lan-very-dark-mostly-black-blue)"
-						bgColor="var(--lan-bright-cyan---lime-green)" // основной цвет кнопки
-						hoverBgColor="var(--lan-moderate-cyan)" // цвет при наведении
-						activeBgColor="var(--lan-gray)" // цвет при нажатии
-						focusOutlineColor="var(--lan-moderate-cyan)" // outline при фокусе
+						bgColor="var(--lan-bright-cyan---lime-green)"
 						width={504}
 						height={40}
 						radius={4}

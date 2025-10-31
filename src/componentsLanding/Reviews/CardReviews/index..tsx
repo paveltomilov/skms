@@ -37,9 +37,7 @@ const CardReviews: FC<CardProps> = ({
 	return (
 		<article className={styles.card}>
 			<div className={styles.card__rating}>{stars}</div>
-
 			<h3 className={styles.title}>{title}</h3>
-
 			<div className={styles.content}>
 				<div className={styles.content__descr}>
 					<p
@@ -49,7 +47,6 @@ const CardReviews: FC<CardProps> = ({
 						{textToShow}
 					</p>
 				</div>
-
 				<div className={styles.content__button}>
 					{fulldescription && fulldescription !== description && (
 						<button

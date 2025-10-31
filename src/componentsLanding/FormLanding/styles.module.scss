@@ -1,5 +1,6 @@
 .form {
 	padding: 48px;
+	padding-bottom: 66px;
 	display: grid;
 	grid-template-columns: repeat(2, 442px);
 	grid-template-rows: repeat(4, auto);
@@ -67,9 +68,6 @@
 		justify-content: center;
 		align-items: center;
 	}
-}
-
-.label {
 }
 
 .input {

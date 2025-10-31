@@ -7,8 +7,8 @@
 		width: 199px;
 		height: 142px;
 		position: absolute;
-		top: 20px;
-		left: -16px;
+		top: 4px;
+		left: 0;
 		background: var(--lan-very-dark-mostly-black-blue);
 	}
 }
@@ -31,7 +31,7 @@
 		padding: 12px 8px;
 		width: 41px;
 
-		&:hover .social__link__svg path {
+		&:hover .social__link__svg path:first-child {
 			fill: var(--lan-bright-cyan---lime-green);
 		}
 
@@ -39,7 +39,7 @@
 			width: 16px;
 			height: 16px;
 
-			path {
+			path:first-child {
 				fill: var(--lan-light-grayish-blue);
 				transition: all 0.2s ease-in-out;
 			}

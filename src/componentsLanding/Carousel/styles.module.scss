@@ -1,14 +1,11 @@
-/* Контейнер карусели */
 .carousel {
 	position: relative;
 }
 
-/* Swiper – сам слайдер */
 .swiper {
-	padding-bottom: 52px; /* место под кнопки */
+	padding-bottom: 52px;
 }
 
-/* Слайды (можно кастомизировать) */
 .slide {
 	display: flex;
 	align-items: center;
@@ -19,7 +16,6 @@
 	height: auto;
 }
 
-/* Кнопки навигации – абсолютное позиционирование в правом нижнем углу */
 .navButtons {
 	position: absolute;
 	display: flex;

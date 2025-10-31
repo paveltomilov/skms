@@ -3,4 +3,14 @@
 		display: flex;
 		gap: var(--gap, 1rem);
 	}
+
+	&__link {
+		&:focus {
+			color: var(--lan-bright-cyan---lime-green);
+		}
+
+		// &:hover {
+		// 	color: var(--lan-bright-cyan---lime-green);
+		// }
+	}
 }

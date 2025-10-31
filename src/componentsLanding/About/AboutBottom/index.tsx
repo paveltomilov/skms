@@ -2,6 +2,7 @@
 import React, { FC } from 'react';
 import styles from './styles.module.scss';
 import SectionTitle from '../../SectionTitle';
+import Image from 'next/image';
 
 const AboutBottom: FC = () => {
 	return (
@@ -9,7 +10,7 @@ const AboutBottom: FC = () => {
 			<div className={`${styles.aboutbottom__container} container`}>
 				<img
 					className={styles.aboutbottom__container_img}
-					src="assets/images/about-bottom.png"
+					src="/assets/images/about-bottom.png"
 					alt=""
 				/>
 				<div className={styles.title}>

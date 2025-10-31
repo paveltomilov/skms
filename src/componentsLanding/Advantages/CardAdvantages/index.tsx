@@ -2,18 +2,10 @@
 import React, { FC } from 'react';
 import styles from './styles.module.scss';
 
-/**
- * Props:
- *  - `title`        – заголовок карточки (обязательный).
- *  - `description` – описание/текст внутри карточки (обязательный).
- *  - `gap`          – отступ между заголовком и описанием.
- *                     Принимает число → px, строку → любые CSS‑единицы
- *                     (rem, em, %, …). По умолчанию 1 rem.
- */
 const Card: FC<{
 	title: string;
 	description: string;
-	gap?: number | string; // отступ между элементами
+	gap?: number | string;
 }> = ({ title, description, gap }) => {
 	const resolvedGap = typeof gap === 'number' ? `${gap}px` : gap ?? '1rem';
 

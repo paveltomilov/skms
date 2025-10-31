@@ -2,14 +2,14 @@
 import { FC } from 'react';
 import styles from './styles.module.scss';
 import cn from 'classnames';
+import Link from 'next/link';
 
 interface Props {
 	className?: string;
-	gap?: number | string; // optional, default handled in CSS
+	gap?: number | string;
 }
 
 const Navigation: FC<Props> = ({ className, gap }) => {
-	/* Передаём значение в переменную `--gap` через инлайн‑стиль */
 	const listStyle = gap
 		? { '--gap': typeof gap === 'number' ? `${gap}px` : gap }
 		: undefined;
@@ -18,14 +18,14 @@ const Navigation: FC<Props> = ({ className, gap }) => {
 		<nav className={cn(className, styles.nav)}>
 			<ul className={styles.nav__list} style={listStyle}>
 				<li className={styles.nav__item}>
-					<a href="#about" className={styles.nav__link}>
+					<Link href="#about" className={styles.nav__link}>
 						Мы
-					</a>
+					</Link>
 				</li>
 				<li className={styles.nav__item}>
-					<a href="#product" className={styles.nav__link}>
+					<Link href="#product" className={styles.nav__link}>
 						Продукт
-					</a>
+					</Link>
 				</li>
 				<li className={styles.nav__item}>
 					<a href="#advantages" className={styles.nav__link}>
@@ -33,9 +33,9 @@ const Navigation: FC<Props> = ({ className, gap }) => {
 					</a>
 				</li>
 				<li className={styles.nav__item}>
-					<a href="#reviews" className={styles.nav__link}>
+					<Link href="#reviews" className={styles.nav__link}>
 						Отзывы
-					</a>
+					</Link>
 				</li>
 			</ul>
 		</nav>

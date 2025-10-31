@@ -1,5 +1,6 @@
 import styles from './styles.module.scss';
 import FormLanding from '../FormLanding';
+import Link from 'next/link';
 
 function FormSection() {
 	return (
@@ -8,10 +9,10 @@ function FormSection() {
 				<FormLanding />
 				<div className={styles.social__form}>
 					<div className={styles.social__form__block}>
-						<a
+						<Link
 							className={styles.link}
-							target="blank"
-							href="https://t.me/"
+							target="_blank"
+							href="https://web.telegram.org/k/"
 						>
 							<svg
 								className={styles.link__svg}
@@ -27,13 +28,13 @@ function FormSection() {
 								/>
 							</svg>
 							Telegram
-						</a>
+						</Link>
 					</div>
 					<div className={styles.social__form__block}>
-						<a
+						<Link
 							className={styles.link}
 							target="_blank"
-							href="https://vk/"
+							href="https://vk.com"
 						>
 							<svg
 								className={styles.link__svg}
@@ -49,13 +50,13 @@ function FormSection() {
 								/>
 							</svg>
 							Вконтакте
-						</a>
+						</Link>
 					</div>
 					<div className={styles.social__form__block}>
-						<a
+						<Link
 							className={styles.link}
 							target="_blank"
-							href="https://vk/"
+							href="https://www.youtube.com/"
 						>
 							<svg
 								className={styles.link__svg}
@@ -73,13 +74,13 @@ function FormSection() {
 								/>
 							</svg>
 							Youtube
-						</a>
+						</Link>
 					</div>
 					<div className={styles.social__form__block}>
-						<a
+						<Link
 							className={styles.link}
 							target="_blank"
-							href="https://vk/"
+							href="https://dzen.ru/"
 						>
 							<svg
 								className={styles.link__svg__dzen}
@@ -91,7 +92,7 @@ function FormSection() {
 							>
 								<path
 									d="M19.918 40H20.082C28.0246 40 32.6316 39.1934 35.8988 36.0355C39.2345 32.6726 40 28.0246 40 20.1094V19.8906C40 11.9754 39.2345 7.36842 35.8988 3.96446C32.6452 0.806562 27.9973 0 20.082 0H19.918C11.9754 0 7.36842 0.806562 4.10116 3.96446C0.76555 7.34108 0 11.9754 0 19.8906V20.1094C0 28.0246 0.76555 32.6316 4.10116 36.0355C7.34108 39.2071 11.9754 40 19.918 40Z"
-									fill="#F9FAFB"
+									fill="none"
 								/>
 								<path
 									d="M35.2431 19.6997C35.2431 19.5493 35.1201 19.4263 34.9697 19.4126C29.5015 19.2076 26.1795 18.5104 23.8419 16.1864C21.5042 13.8487 20.807 10.5268 20.602 5.0449C20.602 4.89452 20.4653 4.77148 20.3149 4.77148H19.686C19.5357 4.77148 19.4126 4.89452 19.399 5.0449C19.1939 10.5268 18.4967 13.8624 16.159 16.1864C13.8351 18.5104 10.4994 19.2076 5.03122 19.4126C4.88085 19.4126 4.75781 19.5493 4.75781 19.6997V20.3422C4.75781 20.4926 4.88085 20.6156 5.03122 20.6293C10.4994 20.8344 13.8214 21.5316 16.159 23.8556C18.4967 26.1796 19.1802 29.5015 19.3853 34.9697C19.3853 35.1201 19.522 35.2431 19.6724 35.2431H20.3149C20.4653 35.2431 20.5883 35.1201 20.602 34.9697C20.807 29.5152 21.5042 26.1932 23.8282 23.8556C26.1522 21.5316 29.4878 20.8344 34.956 20.6293C35.1064 20.6293 35.2294 20.4926 35.2294 20.3422L35.2431 19.6997Z"
@@ -99,7 +100,7 @@ function FormSection() {
 								/>
 							</svg>
 							Дзен
-						</a>
+						</Link>
 					</div>
 				</div>
 			</div>

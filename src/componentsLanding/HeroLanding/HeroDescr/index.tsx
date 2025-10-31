@@ -22,9 +22,11 @@ const HeroDescr: FC = () => {
 			<Button
 				className={styles.wrapper__button}
 				text="попробовать бесплатно"
+				href="/login"
 				width={504}
 				height={40}
 				radius={4}
+				color="var(--lan-very-dark-mostly-black-blue)"
 			/>
 		</div>
 	);

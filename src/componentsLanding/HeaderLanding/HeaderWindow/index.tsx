@@ -1,6 +1,7 @@
 import React from 'react';
 import { FC } from 'react';
 import styles from './styles.module.scss';
+import Link from 'next/link';
 
 const HeaderWindow: FC = () => {
 	return (
@@ -8,15 +9,16 @@ const HeaderWindow: FC = () => {
 			<div className={styles.header__window}>
 				<div className={styles.mail}>
 					<span className={styles.mail__span}>Почта</span>
-					<a
+					<Link
 						className={styles.mail__link}
 						href="mailto:Skillmanagment@mail.ru"
 					>
 						Skillmanagment@mail.ru
-					</a>
+					</Link>
 				</div>
 				<div className={styles.social}>
-					<a
+					<Link
+						target="_blank"
 						className={styles.social__link}
 						href="https://www.whatsapp.com/"
 					>
@@ -33,8 +35,9 @@ const HeaderWindow: FC = () => {
 								fill="none"
 							/>
 						</svg>
-					</a>
-					<a
+					</Link>
+					<Link
+						target="_blank"
 						className={styles.social__link}
 						href="https://web.telegram.org/"
 					>
@@ -58,9 +61,10 @@ const HeaderWindow: FC = () => {
 								</clipPath>
 							</defs>
 						</svg>
-					</a>
+					</Link>
 
-					<a
+					<Link
+						target="_blank"
 						className={styles.social__link}
 						href="https://www.youtube.com/"
 					>
@@ -79,9 +83,14 @@ const HeaderWindow: FC = () => {
 								fill="#F9FAFB"
 							/>
 						</svg>
-					</a>
-					<a className={styles.social__link} href="https://dzen.ru/">
+					</Link>
+					<Link
+						target="_blank"
+						className={styles.social__link}
+						href="https://dzen.ru/"
+					>
 						<svg
+							className={styles.social__link__svg}
 							width="16"
 							height="16"
 							viewBox="0 0 24 24"
@@ -90,15 +99,19 @@ const HeaderWindow: FC = () => {
 						>
 							<path
 								d="M11.9508 24H12.0492C16.8148 24 19.5789 23.5161 21.5393 21.6213C23.5407 19.6036 24 16.8148 24 12.0656V11.9344C24 7.18524 23.5407 4.42105 21.5393 2.37867C19.5872 0.483937 16.7984 0 12.0492 0H11.9508C7.18524 0 4.42105 0.483937 2.4607 2.37867C0.45933 4.40465 0 7.18524 0 11.9344V12.0656C0 16.8148 0.45933 19.5789 2.4607 21.6213C4.40465 23.5243 7.18524 24 11.9508 24Z"
-								fill="#F9FAFB"
+								fill="none"
 							/>
 							<path
 								d="M21.1447 11.8192C21.1447 11.729 21.0709 11.6552 20.9807 11.647C17.6997 11.524 15.7066 11.1056 14.304 9.71125C12.9014 8.30865 12.483 6.31548 12.36 3.02635C12.36 2.93613 12.278 2.8623 12.1878 2.8623H11.8105C11.7202 2.8623 11.6464 2.93613 11.6382 3.02635C11.5152 6.31548 11.0969 8.31685 9.69425 9.71125C8.29986 11.1056 6.29849 11.524 3.01756 11.647C2.92734 11.647 2.85352 11.729 2.85352 11.8192V12.2048C2.85352 12.295 2.92734 12.3688 3.01756 12.377C6.29849 12.5 8.29166 12.9184 9.69425 14.3127C11.0969 15.7071 11.507 17.7003 11.63 20.9812C11.63 21.0715 11.712 21.1453 11.8023 21.1453H12.1878C12.278 21.1453 12.3518 21.0715 12.36 20.9812C12.483 17.7085 12.9014 15.7153 14.2958 14.3127C15.6902 12.9184 17.6915 12.5 20.9724 12.377C21.0627 12.377 21.1365 12.295 21.1365 12.2048L21.1447 11.8192Z"
 								fill="#1A1A24"
 							/>
 						</svg>
-					</a>
-					<a className={styles.social__link} href="https://vk.com">
+					</Link>
+					<Link
+						target="_blank"
+						className={styles.social__link}
+						href="https://vk.com"
+					>
 						<svg
 							className={styles.social__link__svg}
 							width="24"
@@ -119,7 +132,7 @@ const HeaderWindow: FC = () => {
 								</clipPath>
 							</defs>
 						</svg>
-					</a>
+					</Link>
 				</div>
 			</div>
 		</div>

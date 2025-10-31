@@ -1,63 +1,72 @@
 .header {
-	position: sticky; /* оставляем на месте при скролле */
+	position: sticky;
 	top: 0;
 	left: 0;
 	right: 0;
-	z-index: 20; /* выше hero и всего остального */
-
+	z-index: 20;
 	background-color: transparent;
 	transition: all 0.2s ease-in-out;
 
 	&__container {
 		color: var(--lan-light-grayish-cyan);
-		padding-top: 24px;
-		padding-bottom: 24px;
-
+		padding-top: 20px;
+		padding-bottom: 20px;
 		display: flex;
 		align-items: center;
+
+		&__logo {
+			margin-right: 0;
+		}
+
+		&__nav {
+			margin-right: 36px;
+		}
 	}
 
-	&__bit {
-		margin-right: 32px;
-	}
+	&__buttons {
+		&__telephone {
+			font-family: var(--second-family);
+			font-weight: 500;
+			font-size: 15px;
+			line-height: 100%;
+			margin-right: 12px;
+			background-color: inherit;
 
-	&__nav {
-		margin-right: 53px;
-	}
+			&:hover {
+				background-color: inherit;
+			}
 
-	&__telephone {
-		font-family: var(--second-family);
-		font-weight: 500;
-		font-size: 15px;
-		line-height: 100%;
-		color: var(--lan-light-grayish-blue);
-		margin-right: 22px;
+			&__svg {
+				margin-left: 10px;
+			}
+		}
+
+		&__login {
+			font-family: var(--second-family);
+			font-weight: 500;
+			font-size: 15px;
+			line-height: 100%;
+			color: var(--lan-very-dark-mostly-black-blue);
+			background: var(--lan-light-grayish-blue);
+			margin-right: 12px;
+			transition: all 0.2s ease-in-out;
+
+			&:hover {
+				background: var(--lan-light-grayish-cyan);
+			}
+		}
+
+		&__register {
+			font-family: var(--second-family);
+			font-weight: 500;
+			font-size: 15px;
+			line-height: 100%;
+			text-align: center;
+			color: var(--lan-very-dark-mostly-black-blue);
+		}
 	}
 
 	&.scrolled {
 		background-color: var(--lan-very-dark-mostly-black-blue);
-	}
-}
-
-.button {
-	&__login {
-		color: var(--lan-very-dark-mostly-black-blue);
-		background: var(--lan-light-grayish-blue);
-
-		transition: all 0.2s ease-in-out;
-		margin-right: 12px;
-
-		&:hover {
-			background: var(--lan-light-grayish-cyan);
-		}
-	}
-
-	&__register {
-		font-family: var(--second-family);
-		font-weight: 500;
-		font-size: 15px;
-		line-height: 100%;
-		text-align: center;
-		color: var(--lan-very-dark-mostly-black-blue);
 	}
 }

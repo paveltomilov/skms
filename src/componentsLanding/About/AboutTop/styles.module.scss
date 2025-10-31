@@ -1,14 +1,13 @@
 .abouttop {
+	padding-bottom: 180px;
 	&__container {
-		padding-top: 87px;
-		padding-bottom: 86px;
 		position: relative;
 
-		&_img {
+		&__img {
 			position: absolute;
-			content: '';
-			bottom: -100px;
 			left: 0;
+			top: -354px;
+			z-index: 1;
 		}
 	}
 }

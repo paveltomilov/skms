@@ -1,8 +1,8 @@
 .hero {
 	margin-top: -88px;
-	display: flex; // делаем секцию flex‑контейнером
-	justify-content: center; // горизонтальное центрирование
-	align-items: center; // вертикальное центрирование
+	display: flex;
+	justify-content: center;
+	align-items: center;
 
 	&__container {
 		width: 100%;
@@ -10,10 +10,11 @@
 		background: url(/assets/images/hero.png) no-repeat center / cover;
 		padding-top: 169px;
 		color: var(--lan-light-grayish-blue);
+		z-index: 10;
 	}
 
 	&__title {
-		margin-bottom: 84px;
+		margin-bottom: 87px;
 	}
 
 	&__content {
@@ -31,5 +32,3 @@
 .lineRight {
 	align-self: flex-end;
 } /* справа */
-
-/* Дополнительные стили для контейнера и подзаголовка можно оставить как есть */
