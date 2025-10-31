@@ -6,7 +6,6 @@ import HeaderWindow from './HeaderWindow';
 import Navigation from '../Nav';
 import Logo from './Logo';
 import Button from '../Button';
-import Link from 'next/link';
 
 const Header: FC = () => {
 	const [isOpen, setIsOpen] = useState(false);

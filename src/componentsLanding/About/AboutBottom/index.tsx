@@ -2,7 +2,6 @@
 import React, { FC } from 'react';
 import styles from './styles.module.scss';
 import SectionTitle from '../../SectionTitle';
-import Image from 'next/image';
 
 const AboutBottom: FC = () => {
 	return (
