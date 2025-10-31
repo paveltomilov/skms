@@ -28,9 +28,10 @@ export function useLoginForm({ toggleRegisterMode }: UseLoginFormProps) {
 	});
 	const [isValid, setIsValid] = useState(false);
 	const activeFields = useMemo<(keyof LoginFormData)[]>(() => {
-		return toggleRegisterMode ? ['first_name', 'last_name', 'password', 'email'] : ['email', 'password'];
+		return toggleRegisterMode
+			? ['first_name', 'last_name', 'password', 'email']
+			: ['email', 'password'];
 	}, [toggleRegisterMode]);
-
 
 	const configMap = useMemo(() => {
 		const map: Record<string, (typeof config)[number]> = {};
@@ -54,12 +55,25 @@ export function useLoginForm({ toggleRegisterMode }: UseLoginFormProps) {
 		const newValidationStatus = computeValidationStatus(values);
 		setValidationStatus(newValidationStatus);
 		setIsValid(
-			checkFormValidity(values, newValidationStatus, serverErrors, activeFields),
+			checkFormValidity(
+				values,
+				newValidationStatus,
+				serverErrors,
+				activeFields,
+			),
 		);
 	}, [values, serverErrors, activeFields]);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target;
+		const { name } = e.target;
+		let { value } = e.target;
+		// Блокируем кириллицу в email: удаляем символы кириллицы и пробелы, приводим к нижнему регистру
+		if (name === 'email') {
+			value = value
+				.replace(/[а-яёА-ЯЁ]/g, '')
+				.replace(/\s+/g, '')
+				.toLowerCase();
+		}
 		const key = name as keyof LoginFormData;
 
 		if (serverErrors[key]) {

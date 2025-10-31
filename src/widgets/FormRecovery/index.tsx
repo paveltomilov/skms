@@ -1,11 +1,12 @@
 'use client';
 
 import styles from './style.module.scss';
-import {FC, FormEventHandler} from 'react';
+import { FC, FormEventHandler } from 'react';
 import LoginInput from '@/shared/UI/LoginInput';
 import Button from '@/shared/UI/Button';
-import {getDone, getIndicator} from '@/shared/utils/recoveryFunctions/recoveryFunctions';
-import {useRecoveryForm} from '@/shared/hooks/useRecoveryForm';
+import { getDone, getIndicator } from '@/shared/utils/recoveryFunctions/recoveryFunctions';
+import { useRecoveryForm } from '@/shared/hooks/useRecoveryForm';
+import { requestPasswordReset, setNewPassword as apiSetNewPassword } from '@/shared/lib/passwordRecovery';
 
 type FormRecoveryProps = {
     steps?: number,
@@ -13,7 +14,7 @@ type FormRecoveryProps = {
     isOpen?: (value: boolean) => void,
 }
 
-const FormRecovery: FC<FormRecoveryProps> = ({steps, setSteps, isOpen}) => {
+const FormRecovery: FC<FormRecoveryProps> = ({ steps, setSteps, isOpen }) => {
     const {
         values,
         handleChange,
@@ -24,11 +25,29 @@ const FormRecovery: FC<FormRecoveryProps> = ({steps, setSteps, isOpen}) => {
         configMap,
         validateForm,
         resetServerErrors,
-        // setServerErrors,
+        setServerErrors,
     } = useRecoveryForm({ steps });
 
-    const handleOpenPopupRecoveryPassword = () => {
-        if (isOpen && steps === 1) {
+    const handleOpenPopupRecoveryPassword = async () => {
+        if (steps !== 1) return;
+        // отправка кода на e-mail перед открытием попапа
+        const email = values.email?.trim();
+        if (!email) return;
+
+        const res = await requestPasswordReset(email);
+        if (!res.success) {
+            // подсветить ошибку под полем
+            setServerErrors(prev => ({ ...prev, email: true }));
+            return;
+        }
+
+        // сохраняем e-mail и стартовое время таймера для повторной отправки
+        try {
+            localStorage.setItem('recovery:email', email);
+            localStorage.setItem(`recovery:lastSentAt:${email}`, String(Date.now()));
+        } catch { }
+
+        if (isOpen) {
             isOpen(true);
         }
     };
@@ -40,14 +59,33 @@ const FormRecovery: FC<FormRecoveryProps> = ({steps, setSteps, isOpen}) => {
         if (!validateForm()) return;
 
         if (steps === 2) {
-            if (setSteps) {
-                setSteps(3);
+            const password = values.password?.trim();
+            const confirmPassword = values.confirm_password?.trim();
+            try {
+                const sessionToken = localStorage.getItem('recovery:session_token') || '';
+                if (!password || !confirmPassword || !sessionToken) return;
+                const res = await apiSetNewPassword(sessionToken, password, confirmPassword);
+                if (res.success) {
+                    // очистка временных данных
+                    try {
+                        localStorage.removeItem('recovery:session_token');
+                        localStorage.removeItem('recovery:email');
+                        const email = values.email?.trim();
+                        if (email) {
+                            localStorage.removeItem(`recovery:lastSentAt:${email}`);
+                        }
+                    } catch { }
+                    if (setSteps) setSteps(3);
+                } else {
+                    setServerErrors(prev => ({ ...prev, password: true, confirm_password: true }));
+                }
+            } catch {
+                setServerErrors(prev => ({ ...prev, password: true, confirm_password: true }));
             }
-            // Реализация отправки данных на сервер и обработка ошибок
         }
     };
 
-    return(
+    return (
         <form
             onSubmit={handleSubmit}
             className={styles.recoveryForm}
@@ -55,7 +93,7 @@ const FormRecovery: FC<FormRecoveryProps> = ({steps, setSteps, isOpen}) => {
             {steps === 1 && (
                 <LoginInput
                     label={'E-mail'}
-                    type={'text'}
+                    type={'email'}
                     name={'email'}
                     placeholder={'E-mail'}
                     id={'email'}

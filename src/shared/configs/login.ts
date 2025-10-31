@@ -17,7 +17,9 @@ export const config: Login = [
 
 			if (!email) return 0;
 
-			const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+			// Разрешаем только ASCII email: буквы/цифры и ._%+- в локальной части, домен из латиницы/цифр/.-
+			const emailPattern =
+				/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
 			if (!emailPattern.test(email)) return 2;
 
@@ -57,7 +59,8 @@ export const config: Login = [
 		validate: (state: LoginFormData) => {
 			if (!state.first_name.trim()) return 0;
 
-			const latinPattern = /^(?!.*[-\s]{3,})[A-Za-z0-9]+(?:[-\s][A-Za-z0-9]+)*$/;
+			const latinPattern =
+				/^(?!.*[-\s]{3,})[A-Za-z0-9]+(?:[-\s][A-Za-z0-9]+)*$/;
 
 			if (!latinPattern.test(state.first_name.trim())) return 2;
 
@@ -73,7 +76,8 @@ export const config: Login = [
 		validate: (state: LoginFormData) => {
 			if (!state.last_name.trim()) return 0;
 
-			const latinPattern = /^(?!.*[-\s]{3,})[A-Za-z0-9]+(?:[-\s][A-Za-z0-9]+)*$/;
+			const latinPattern =
+				/^(?!.*[-\s]{3,})[A-Za-z0-9]+(?:[-\s][A-Za-z0-9]+)*$/;
 
 			if (!latinPattern.test(state.last_name.trim())) return 2;
 
