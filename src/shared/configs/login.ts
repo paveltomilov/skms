@@ -53,7 +53,7 @@ export const config: Login = [
 		required: true,
 		errorMessage: 'Имя введено неверно',
 		warnMessage:
-			'Поле может содержать только буквы латиницы (но не их смешение), пробел, тире и цифры',
+			'Поле может содержать только буквы латиницы, пробел, тире и цифры',
 		validate: (state: LoginFormData) => {
 			if (!state.first_name.trim()) return 0;
 
@@ -69,7 +69,7 @@ export const config: Login = [
 		required: true,
 		errorMessage: 'Фамилия введена неверно',
 		warnMessage:
-			'Поле может содержать только буквы латиницы (но не их смешение), пробел, тире и цифры',
+			'Поле может содержать только буквы латиницы, пробел, тире и цифры',
 		validate: (state: LoginFormData) => {
 			if (!state.last_name.trim()) return 0;
 
