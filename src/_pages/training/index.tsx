@@ -41,14 +41,14 @@ const Training = () => {
                     </div>
                 </section>
             }
-            <Button
+            {role != 'student' && <Button
                 width={300}
                 height={40}
                 text='создать неисправности'
                 onClick={() => handleCreateMalfunctions()}
-            />
+            />}
             {isLoading && <Loader />}
-            {error && <ErrorMessage message={error} refetch={refetch}/>}
+            {error && <ErrorMessage message={error} refetch={refetch} />}
         </>
     );
 };

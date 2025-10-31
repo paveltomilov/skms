@@ -45,16 +45,6 @@ const Sidebar = () => {
 					<Button
 						width={90}
 						height={34}
-						aria-label="Тренажер"
-						text="Тренажер"
-						className={styles.buttonText}
-						href="/zra"
-						onClick={()=>dispatch(trainingOff())}
-					/>
-
-					<Button
-						width={90}
-						height={34}
 						aria-label="ПТК"
 						text="ПТК"
 						className={styles.buttonText}

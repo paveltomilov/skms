@@ -20,9 +20,13 @@ export async function postSimulation(
 		return true;
 	} catch (error) {
 		const axiosError = error as AxiosError;
-		const message = axiosError.response?.data
-			? JSON.stringify(axiosError.response.data)
-			: 'Failed to fetch';
+		const message =
+			axiosError.response?.data &&
+				axios.isAxiosError<{ simulation: string[] }>(axiosError)
+				? JSON.stringify(axiosError.response.data.simulation[0])
+				: 'Failed to fetch';
+
+		alert(message);
 		throw new Error(message);
 	};
 };
