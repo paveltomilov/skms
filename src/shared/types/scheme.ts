@@ -27,7 +27,7 @@ export type ElementKind =
 	| 'coil'
 	| 'lamp';
 
-// Template types for generating malfunctions and visualization metadata
+// Типы шаблонов для генерации неисправностей и метаданных визуализации
 export type MalfTpl = { suffix: string; name: string };
 
 export interface MetaInfo {
@@ -45,18 +45,18 @@ interface Malfunction {
 export interface CircuitElement {
 	id: string;
 	name: string;
-	// Auto-generated or explicitly provided variable name used in code (camelCase)
+	// Автоматически сгенерированное или явно заданное имя переменной в коде (camelCase)
 	varName?: string;
-	// Semantic kind of the element for UI and behavior
+	// Семантический тип элемента для UI и поведения
 	kind?: ElementKind;
-	// Logical connection points (IDs of points on the drawing)
+	// Логические точки подключения (ID точек на схеме)
 	startPoint?: string;
 	endPoint?: string;
-	// Electrical characteristics
+	// Электрические характеристики
 	resistance: number;
-	// Attached malfunctions for this element
+	// Привязанные неисправности для этого элемента
 	malfunctions: Malfunction[];
-	// Extra metadata for visuals
+	// Дополнительные метаданные для визуализации
 	meta?: MetaInfo;
 }
 
