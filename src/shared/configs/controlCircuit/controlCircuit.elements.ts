@@ -4,29 +4,57 @@
  * Структура аналогична powerCircuit.
  */
 
-import { CircuitElement } from '../../types/scheme';
+import type { CircuitElement } from '@/shared/types/scheme';
 import {
-	BUTTON_KRUZA_P_CLOSE_ID,
-	BUTTON_KRUZA_P_OPEN_ID,
-	COIL_CLOSE_ID,
-	COIL_OPEN_ID,
+	WIRE_POWER_TO_CONTROL_BREAKER_ID,
 	CONTROL_CIRCUIT_BREAKER_ID,
-	INSERT_NDI_CMD_CLOSE_PTK_ID,
-	INSERT_NDI_CMD_OPEN_PTK_ID,
-	INSERT_NDI_NOT_CLOSED_ID,
-	INSERT_NDI_NOT_OPEN_ID,
-	INTERLOCK_CONTACT_CLOSE_ID,
-	INTERLOCK_CONTACT_OPEN_ID,
-	LAMP_KRUZA_P_CLOSED_ID,
-	LAMP_KRUZA_P_OPEN_ID,
-	LIMIT_SWITCH_CLOSE_ID,
+	WIRE_PHASE_AFTER_BREAKER_ID,
+	WIRE_BOX_TO_LIMIT_OPEN_ID,
 	LIMIT_SWITCH_OPEN_ID,
-	CONTROL_MAIN_BUS_POINT_ID,
-	CONTROL_NEUTRAL_POINT_ID,
-	// point constants
+	WIRE_LIMIT_OPEN_TO_TERMINAL_ID,
+	WIRE_TERMINAL_TO_NDI_NOT_OPEN_ID,
+	WIRE_BEFORE_NDI_NOT_OPEN_ID,
+	INSERT_NDI_NOT_OPEN_ID,
+	WIRE_NDI_NOT_OPEN_TO_NEUTRAL_ID,
+	WIRE_BEFORE_NDI_CMD_OPEN_PTK_ID,
+	INSERT_NDI_CMD_OPEN_PTK_ID,
+	WIRE_NDI_CMD_OPEN_PTK_TO_NEUTRAL_ID,
+	WIRE_BEFORE_INTERLOCK_OPEN_ID,
+	INTERLOCK_CONTACT_OPEN_ID,
+	WIRE_AFTER_INTERLOCK_TO_COIL_OPEN_ID,
+	COIL_OPEN_ID,
+	WIRE_BEFORE_BUTTON_KRUZA_P_OPEN_ID,
+	BUTTON_KRUZA_P_OPEN_ID,
+	WIRE_BUTTON_KRUZA_P_OPEN_TO_NEUTRAL_ID,
+	WIRE_BEFORE_LAMP_KRUZA_P_CLOSED_ID,
+	LAMP_KRUZA_P_CLOSED_ID,
+	WIRE_LAMP_KRUZA_P_CLOSED_TO_NEUTRAL_ID,
+	WIRE_BOX_TO_LIMIT_CLOSE_ID,
+	LIMIT_SWITCH_CLOSE_ID,
+	WIRE_LIMIT_CLOSE_TO_TERMINAL_ID,
+	WIRE_TERMINAL_TO_NDI_NOT_CLOSED_ID,
+	WIRE_BEFORE_NDI_NOT_CLOSED_ID,
+	INSERT_NDI_NOT_CLOSED_ID,
+	WIRE_NDI_NOT_CLOSED_TO_NEUTRAL_ID,
+	WIRE_BEFORE_NDI_CMD_CLOSE_PTK_ID,
+	INSERT_NDI_CMD_CLOSE_PTK_ID,
+	WIRE_NDI_CMD_CLOSE_PTK_TO_NEUTRAL_ID,
+	WIRE_BEFORE_INTERLOCK_CLOSE_ID,
+	INTERLOCK_CONTACT_CLOSE_ID,
+	WIRE_AFTER_INTERLOCK_TO_COIL_CLOSE_ID,
+	COIL_CLOSE_ID,
+	WIRE_BEFORE_BUTTON_KRUZA_P_CLOSE_ID,
+	BUTTON_KRUZA_P_CLOSE_ID,
+	WIRE_BUTTON_KRUZA_P_CLOSE_TO_NEUTRAL_ID,
+	WIRE_BEFORE_LAMP_KRUZA_P_OPEN_ID,
+	LAMP_KRUZA_P_OPEN_ID,
+	WIRE_LAMP_KRUZA_P_OPEN_TO_NEUTRAL_ID,
+	// Точки (информативные названия)
 	CONTROL_POWER_FEED_POINT_ID,
 	CONTROL_BREAKER_INPUT_POINT_ID,
 	CONTROL_BREAKER_OUTPUT_POINT_ID,
+	CONTROL_MAIN_BUS_POINT_ID,
+	CONTROL_NEUTRAL_POINT_ID,
 	OPEN_LIMIT_SWITCH_INPUT_POINT_ID,
 	OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID,
 	CLOSED_LAMP_INPUT_POINT_ID,
@@ -37,72 +65,51 @@ import {
 	OPEN_LAMP_INPUT_POINT_ID,
 	CLOSE_COMMAND_MERGE_POINT_ID,
 	CLOSE_INTERLOCK_INPUT_POINT_ID,
-	CONTROL_POINT_C3_0_0,
-	CONTROL_POINT_C3_0_3,
-	CONTROL_POINT_C3_0_4,
-	CONTROL_POINT_C3_0_4_0_0,
-	CONTROL_POINT_C3_0_4_0_1,
-	CONTROL_POINT_C3_0_4_1_0_0_0,
-	CONTROL_POINT_C3_0_4_1_0_0_1,
-	CONTROL_POINT_C3_0_4_1_0_1_1,
-	CONTROL_POINT_C3_0_4_1_0_1_2,
-	CONTROL_POINT_C3_0_4_1_0_1_3,
-	CONTROL_POINT_C3_0_4_1_2_0,
-	CONTROL_POINT_C3_0_4_1_2_1,
-	CONTROL_POINT_C3_0_4_1_2_2,
-	CONTROL_POINT_C3_0_4_2_0,
-	CONTROL_POINT_C3_0_4_2_2,
-	CONTROL_POINT_C3_1_0,
-	CONTROL_POINT_C3_1_3,
-	CONTROL_POINT_C3_1_4,
-	CONTROL_POINT_C3_1_4_0_0,
-	CONTROL_POINT_C3_1_4_0_1,
-	CONTROL_POINT_C3_1_4_0_2,
-	CONTROL_POINT_C3_1_4_1_0_0_0,
-	CONTROL_POINT_C3_1_4_1_0_0_1,
-	CONTROL_POINT_C3_1_4_1_0_0_2,
-	CONTROL_POINT_C3_1_4_1_0_1_1,
-	CONTROL_POINT_C3_1_4_1_0_1_2,
-	CONTROL_POINT_C3_1_4_1_0_1_3,
-	CONTROL_POINT_C3_1_4_1_2_0,
-	CONTROL_POINT_C3_1_4_1_2_1,
-	CONTROL_POINT_C3_1_4_1_2_2,
-	CONTROL_POINT_C3_1_4_2_0,
-	CONTROL_POINT_C3_1_4_2_2,
-	WIRE_AFTER_INTERLOCK_TO_COIL_CLOSE_ID,
-	WIRE_AFTER_INTERLOCK_TO_COIL_OPEN_ID,
-	WIRE_BEFORE_BUTTON_KRUZA_P_CLOSE_ID,
-	WIRE_BEFORE_BUTTON_KRUZA_P_OPEN_ID,
-	WIRE_BEFORE_INTERLOCK_CLOSE_ID,
-	WIRE_BEFORE_INTERLOCK_OPEN_ID,
-	WIRE_BEFORE_LAMP_KRUZA_P_CLOSED_ID,
-	WIRE_BEFORE_LAMP_KRUZA_P_OPEN_ID,
-	WIRE_BEFORE_NDI_CMD_CLOSE_PTK_ID,
-	WIRE_BEFORE_NDI_CMD_OPEN_PTK_ID,
-	WIRE_BEFORE_NDI_NOT_CLOSED_ID,
-	WIRE_BEFORE_NDI_NOT_OPEN_ID,
-	WIRE_BOX_TO_LIMIT_CLOSE_ID,
-	WIRE_BOX_TO_LIMIT_OPEN_ID,
-	WIRE_BUTTON_KRUZA_P_CLOSE_TO_NEUTRAL_ID,
-	WIRE_BUTTON_KRUZA_P_OPEN_TO_NEUTRAL_ID,
-	WIRE_LAMP_KRUZA_P_CLOSED_TO_NEUTRAL_ID,
-	WIRE_LAMP_KRUZA_P_OPEN_TO_NEUTRAL_ID,
-	WIRE_LIMIT_CLOSE_TO_TERMINAL_ID,
-	WIRE_LIMIT_OPEN_TO_TERMINAL_ID,
-	WIRE_NDI_CMD_CLOSE_PTK_TO_NEUTRAL_ID,
-	WIRE_NDI_CMD_OPEN_PTK_TO_NEUTRAL_ID,
-	WIRE_NDI_NOT_CLOSED_TO_NEUTRAL_ID,
-	WIRE_NDI_NOT_OPEN_TO_NEUTRAL_ID,
-	WIRE_PHASE_AFTER_BREAKER_ID,
-	WIRE_POWER_TO_CONTROL_BREAKER_ID,
-	WIRE_TERMINAL_TO_NDI_NOT_CLOSED_ID,
-	WIRE_TERMINAL_TO_NDI_NOT_OPEN_ID,
-} from '../../constants';
+	// Дополнительные точки ветки «ОТКРЫТЬ»
+	OPEN_JUNCTION_BOX_POINT_ID,
+	OPEN_TERMINAL_BLOCK_POINT_ID,
+	OPEN_NDI_SPLIT_POINT_ID,
+	OPEN_NDI_NOT_OPEN_INPUT_POINT_ID,
+	OPEN_NDI_NOT_OPEN_OUTPUT_POINT_ID,
+	OPEN_CMD_PTK_BRANCH_POINT_ID,
+	OPEN_NDI_CMD_PTK_INPUT_POINT_ID,
+	OPEN_INTERLOCK_OUTPUT_POINT_ID,
+	OPEN_COIL_INPUT_POINT_ID,
+	OPEN_COIL_SPLIT_POINT_ID,
+	OPEN_BUTTON_INPUT_POINT_ID,
+	OPEN_BUTTON_OUTPUT_POINT_ID,
+	OPEN_BUTTON_TO_NEUTRAL_POINT_ID,
+	CLOSED_LAMP_BRANCH_POINT_ID,
+	CLOSED_LAMP_TO_NEUTRAL_POINT_ID,
+	// Дополнительные точки ветки «ЗАКРЫТЬ»
+	CLOSE_JUNCTION_BOX_POINT_ID,
+	CLOSE_TERMINAL_BLOCK_POINT_ID,
+	CLOSE_NDI_SPLIT_POINT_ID,
+	CLOSE_NDI_NOT_CLOSED_INPUT_POINT_ID,
+	CLOSE_NDI_NOT_CLOSED_OUTPUT_POINT_ID,
+	CLOSE_NDI_NOT_CLOSED_TO_NEUTRAL_POINT_ID,
+	CLOSE_CMD_PTK_BRANCH_POINT_ID,
+	CLOSE_NDI_CMD_PTK_INPUT_POINT_ID,
+	CLOSE_NDI_CMD_PTK_TO_NEUTRAL_POINT_ID,
+	CLOSE_INTERLOCK_OUTPUT_POINT_ID,
+	CLOSE_COIL_INPUT_POINT_ID,
+	CLOSE_COIL_SPLIT_POINT_ID,
+	CLOSE_BUTTON_INPUT_POINT_ID,
+	CLOSE_BUTTON_OUTPUT_POINT_ID,
+	CLOSE_BUTTON_TO_NEUTRAL_POINT_ID,
+	OPEN_LAMP_BRANCH_POINT_ID,
+	OPEN_LAMP_TO_NEUTRAL_POINT_ID,
+} from './constants';
 import {
+	MALF_TPL_BREAKER,
 	MALF_TPL_BUTTON_CMD,
 	MALF_TPL_COIL,
+	MALF_TPL_INSERT_SIGNAL,
 	MALF_TPL_LAMP,
+	MALF_TPL_LIMIT_SWITCH,
+	MALF_TPL_BLOCKING_CONTACT,
 	MALF_TPL_WIRE_FULL,
+	MALF_TPL_WIRE_GROUND,
 	MALF_TPL_WIRE_GROUND_FULL,
 	buildMalfunctions,
 } from './malfunctionTemplates';
@@ -117,7 +124,10 @@ export const provodOtSilovojChastiSkhemyKAvtomatuPitaniyaUpravleniya: CircuitEle
 		kind: 'wire',
 		startPoint: CONTROL_POWER_FEED_POINT_ID,
 		endPoint: CONTROL_BREAKER_INPUT_POINT_ID,
-		malfunctions: buildMalfunctions('c.0', MALF_TPL_WIRE_GROUND_FULL),
+		malfunctions: buildMalfunctions(
+			WIRE_POWER_TO_CONTROL_BREAKER_ID,
+			MALF_TPL_WIRE_GROUND_FULL,
+		),
 	};
 
 export const avtomatPitaniyaSkhemyUpravleniya: CircuitElement = {
@@ -127,19 +137,10 @@ export const avtomatPitaniyaSkhemyUpravleniya: CircuitElement = {
 	kind: 'breaker',
 	startPoint: CONTROL_BREAKER_INPUT_POINT_ID,
 	endPoint: CONTROL_BREAKER_OUTPUT_POINT_ID,
-	malfunctions: [
-		{
-			id: 'c.1.1',
-			name: 'Плохой контакт на клемме, нет фазы',
-			active: false,
-		},
-		{ id: 'c.1.2', name: 'Ложно выбивает', active: false },
-		{
-			id: 'c.1.3',
-			name: 'Собирается механически, но нет коммутации',
-			active: false,
-		},
-	],
+	malfunctions: buildMalfunctions(
+		CONTROL_CIRCUIT_BREAKER_ID,
+		MALF_TPL_BREAKER,
+	),
 };
 
 export const provodFazyPosleAvtomata: CircuitElement = {
@@ -149,7 +150,10 @@ export const provodFazyPosleAvtomata: CircuitElement = {
 	kind: 'wire',
 	startPoint: CONTROL_BREAKER_OUTPUT_POINT_ID,
 	endPoint: CONTROL_MAIN_BUS_POINT_ID,
-	malfunctions: buildMalfunctions('c.2', MALF_TPL_WIRE_GROUND_FULL),
+	malfunctions: buildMalfunctions(
+		WIRE_PHASE_AFTER_BREAKER_ID,
+		MALF_TPL_WIRE_GROUND_FULL,
+	),
 };
 
 // ======================== Ветка ОТКРЫТЬ (c.3.0.*) ========================
@@ -161,9 +165,12 @@ export const provodOtSoyedinitelnojKorobkiDoKontsevogoVyklyuchatelyaOtkryto: Cir
 		name: 'Провод от соединительной коробки до концевого выключателя открыто',
 		resistance: 0.1,
 		kind: 'wire',
-		startPoint: CONTROL_POINT_C3_0_0,
+		startPoint: OPEN_JUNCTION_BOX_POINT_ID,
 		endPoint: OPEN_LIMIT_SWITCH_INPUT_POINT_ID,
-		malfunctions: buildMalfunctions('c.3.0.0', MALF_TPL_WIRE_GROUND_FULL),
+		malfunctions: buildMalfunctions(
+			WIRE_BOX_TO_LIMIT_OPEN_ID,
+			MALF_TPL_WIRE_GROUND_FULL,
+		),
 	};
 
 export const kontsevojVyklyuchatelOtkryto: CircuitElement = {
@@ -173,11 +180,10 @@ export const kontsevojVyklyuchatelOtkryto: CircuitElement = {
 	kind: 'limitSwitch',
 	startPoint: OPEN_LIMIT_SWITCH_INPUT_POINT_ID,
 	endPoint: OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID,
-	malfunctions: [
-		{ id: 'c.3.0.1.1', name: 'Залипший контакт', active: false },
-		{ id: 'c.3.0.1.2', name: 'Нет контакта', active: false },
-		{ id: 'c.3.0.1.3', name: 'Не настроен', active: false },
-	],
+	malfunctions: buildMalfunctions(
+		LIMIT_SWITCH_OPEN_ID,
+		MALF_TPL_LIMIT_SWITCH,
+	),
 };
 
 // Провод от концевого выключателя до клеммника
@@ -188,8 +194,11 @@ export const provodOtKontsevogoVyklyuchatelyaOtkrytoDoKlemmikaKRUZAP2: CircuitEl
 		resistance: 0.1,
 		kind: 'wire',
 		startPoint: OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID,
-		endPoint: CONTROL_POINT_C3_0_3,
-		malfunctions: buildMalfunctions('c.3.0.2', MALF_TPL_WIRE_GROUND_FULL),
+		endPoint: OPEN_TERMINAL_BLOCK_POINT_ID,
+		malfunctions: buildMalfunctions(
+			WIRE_LIMIT_OPEN_TO_TERMINAL_ID,
+			MALF_TPL_WIRE_GROUND_FULL,
+		),
 	};
 
 // Провод от клеммника до вставки NDI (сигнал не открыто)
@@ -198,9 +207,12 @@ export const provodOtKlemmikaDoVstavkiNDI_signalNeOtkryto: CircuitElement = {
 	name: 'Провод от клеммника до вставки NDI (сигнал не открыто)',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: CONTROL_POINT_C3_0_3,
-	endPoint: CONTROL_POINT_C3_0_4,
-	malfunctions: buildMalfunctions('c.3.0.3', MALF_TPL_WIRE_GROUND_FULL),
+	startPoint: OPEN_TERMINAL_BLOCK_POINT_ID,
+	endPoint: OPEN_NDI_SPLIT_POINT_ID,
+	malfunctions: buildMalfunctions(
+		WIRE_TERMINAL_TO_NDI_NOT_OPEN_ID,
+		MALF_TPL_WIRE_GROUND_FULL,
+	),
 };
 
 // Вставка NDI (сигнал не открыто)
@@ -209,9 +221,12 @@ export const vstavkaNDI_signalNeOtkryto: CircuitElement = {
 	name: 'Провод перед вставкой NDI (сигнал не открыто)',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: CONTROL_POINT_C3_0_4,
-	endPoint: CONTROL_POINT_C3_0_4_0_0,
-	malfunctions: buildMalfunctions('c.3.0.4.0.0', MALF_TPL_WIRE_GROUND_FULL),
+	startPoint: OPEN_NDI_SPLIT_POINT_ID,
+	endPoint: OPEN_NDI_NOT_OPEN_INPUT_POINT_ID,
+	malfunctions: buildMalfunctions(
+		WIRE_BEFORE_NDI_NOT_OPEN_ID,
+		MALF_TPL_WIRE_GROUND_FULL,
+	),
 };
 
 export const vstavkaNDI_signalNeOtkryto_element: CircuitElement = {
@@ -219,20 +234,12 @@ export const vstavkaNDI_signalNeOtkryto_element: CircuitElement = {
 	name: 'Вставка NDI (сигнал «не открыто»)',
 	resistance: 0,
 	kind: 'insert',
-	startPoint: CONTROL_POINT_C3_0_4_0_0,
-	endPoint: CONTROL_POINT_C3_0_4_0_1,
-	malfunctions: [
-		{
-			id: 'c.3.0.4.0.1.1',
-			name: 'Нет контакта, цепь не замыкается',
-			active: false,
-		},
-		{
-			id: 'c.3.0.4.0.1.2',
-			name: 'Ложно сработала, цепь не размыкается',
-			active: false,
-		},
-	],
+	startPoint: OPEN_NDI_NOT_OPEN_INPUT_POINT_ID,
+	endPoint: OPEN_NDI_NOT_OPEN_OUTPUT_POINT_ID,
+	malfunctions: buildMalfunctions(
+		INSERT_NDI_NOT_OPEN_ID,
+		MALF_TPL_INSERT_SIGNAL,
+	),
 };
 
 export const provodOtVstavkiNDI_signalNeOtkrytoDoNejtrali: CircuitElement = {
@@ -240,9 +247,12 @@ export const provodOtVstavkiNDI_signalNeOtkrytoDoNejtrali: CircuitElement = {
 	name: 'Провод от вставки NDI (сигнал не открыто) до нейтрали',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: CONTROL_POINT_C3_0_4_0_1,
+	startPoint: OPEN_NDI_NOT_OPEN_OUTPUT_POINT_ID,
 	endPoint: CONTROL_NEUTRAL_POINT_ID,
-	malfunctions: buildMalfunctions('c.3.0.4.0.2', MALF_TPL_WIRE_GROUND_FULL),
+	malfunctions: buildMalfunctions(
+		WIRE_NDI_NOT_OPEN_TO_NEUTRAL_ID,
+		MALF_TPL_WIRE_GROUND_FULL,
+	),
 };
 
 // Провода и элементы для команды с ПТК (c.3.0.4.1.0.0.*)
@@ -251,10 +261,10 @@ export const provodPeredVstavkojNDI_komandaOtkrytSPTK: CircuitElement = {
 	name: 'Провод перед вставкой NDI (команда открыть с ПТК)',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: CONTROL_POINT_C3_0_4_1_0_0_0,
-	endPoint: CONTROL_POINT_C3_0_4_1_0_0_1,
+	startPoint: OPEN_CMD_PTK_BRANCH_POINT_ID,
+	endPoint: OPEN_NDI_CMD_PTK_INPUT_POINT_ID,
 	malfunctions: buildMalfunctions(
-		'c.3.0.4.1.0.0.0',
+		WIRE_BEFORE_NDI_CMD_OPEN_PTK_ID,
 		MALF_TPL_WIRE_GROUND_FULL,
 	),
 };
@@ -264,20 +274,12 @@ export const vstavkaNDI_komandaOtkrytSPTK: CircuitElement = {
 	name: 'Вставка NDI (команда открыть с ПТК)',
 	resistance: 0,
 	kind: 'insert',
-	startPoint: CONTROL_POINT_C3_0_4_1_0_0_1,
+	startPoint: OPEN_NDI_CMD_PTK_INPUT_POINT_ID,
 	endPoint: OPEN_COMMAND_MERGE_POINT_ID,
-	malfunctions: [
-		{
-			id: 'c.3.0.4.1.0.0.1.1',
-			name: 'Нет контакта, команда не уходит',
-			active: false,
-		},
-		{
-			id: 'c.3.0.4.1.0.0.1.2',
-			name: 'Ложно сработала, команда постоянно висит',
-			active: false,
-		},
-	],
+	malfunctions: buildMalfunctions(
+		INSERT_NDI_CMD_OPEN_PTK_ID,
+		MALF_TPL_INSERT_SIGNAL,
+	),
 };
 
 export const provodOtVstavkiNDI_komandaOtkrytSPTKDoNejtrali: CircuitElement = {
@@ -288,7 +290,7 @@ export const provodOtVstavkiNDI_komandaOtkrytSPTKDoNejtrali: CircuitElement = {
 	startPoint: OPEN_COMMAND_MERGE_POINT_ID,
 	endPoint: CONTROL_NEUTRAL_POINT_ID,
 	malfunctions: buildMalfunctions(
-		'c.3.0.4.1.0.0.2',
+		WIRE_NDI_CMD_OPEN_PTK_TO_NEUTRAL_ID,
 		MALF_TPL_WIRE_GROUND_FULL,
 	),
 };
@@ -300,20 +302,11 @@ export const provodPeredBlokirovkojOtkrytie: CircuitElement = {
 	resistance: 0.1,
 	kind: 'wire',
 	startPoint: OPEN_INTERLOCK_INPUT_POINT_ID,
-	endPoint: CONTROL_POINT_C3_0_4_1_0_1_1,
-	malfunctions: [
-		{ id: 'c.3.0.4.1.1.0.1', name: 'Обрыв провода', active: false },
-		{
-			id: 'c.3.0.4.1.1.0.2',
-			name: 'Короткое замыкание на землю',
-			active: false,
-		},
-		{
-			id: 'c.3.0.4.1.1.0.3',
-			name: 'Короткое замыкание с соседним проводом',
-			active: false,
-		},
-	],
+	endPoint: OPEN_INTERLOCK_OUTPUT_POINT_ID,
+	malfunctions: buildMalfunctions(
+		WIRE_BEFORE_INTERLOCK_OPEN_ID,
+		MALF_TPL_WIRE_GROUND,
+	),
 };
 
 export const blokirovkaVklyucheniaPuskatelyaNaOtkrytie: CircuitElement = {
@@ -321,16 +314,12 @@ export const blokirovkaVklyucheniaPuskatelyaNaOtkrytie: CircuitElement = {
 	name: 'Блокировка включения пускателя на открытие',
 	resistance: 0,
 	kind: 'blockingContact',
-	startPoint: CONTROL_POINT_C3_0_4_1_0_1_1,
-	endPoint: CONTROL_POINT_C3_0_4_1_0_1_2,
-	malfunctions: [
-		{ id: 'c.3.0.4.1.1.1.1', name: 'Нет контакта', active: false },
-		{
-			id: 'c.3.0.4.1.1.1.2',
-			name: 'Ложно замкнутый контакт',
-			active: false,
-		},
-	],
+	startPoint: OPEN_INTERLOCK_OUTPUT_POINT_ID,
+	endPoint: OPEN_COIL_INPUT_POINT_ID,
+	malfunctions: buildMalfunctions(
+		INTERLOCK_CONTACT_OPEN_ID,
+		MALF_TPL_BLOCKING_CONTACT,
+	),
 };
 
 export const provodOtBlokirovkiDoKatushkiOtkrytie: CircuitElement = {
@@ -338,9 +327,12 @@ export const provodOtBlokirovkiDoKatushkiOtkrytie: CircuitElement = {
 	name: 'Провод от блокировки до катушки (открытие)',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: CONTROL_POINT_C3_0_4_1_0_1_2,
-	endPoint: CONTROL_POINT_C3_0_4_1_0_1_3,
-	malfunctions: buildMalfunctions('c.3.0.4.1.1.2', MALF_TPL_WIRE_GROUND_FULL),
+	startPoint: OPEN_COIL_INPUT_POINT_ID,
+	endPoint: OPEN_COIL_SPLIT_POINT_ID,
+	malfunctions: buildMalfunctions(
+		WIRE_AFTER_INTERLOCK_TO_COIL_OPEN_ID,
+		MALF_TPL_WIRE_GROUND_FULL,
+	),
 };
 
 export const katushkaPuskatelyaOtkryt: CircuitElement = {
@@ -348,9 +340,9 @@ export const katushkaPuskatelyaOtkryt: CircuitElement = {
 	name: 'Катушка пускателя открыть',
 	resistance: 6400,
 	kind: 'coil',
-	startPoint: CONTROL_POINT_C3_0_4_1_0_1_3,
+	startPoint: OPEN_COIL_SPLIT_POINT_ID,
 	endPoint: CONTROL_NEUTRAL_POINT_ID,
-	malfunctions: buildMalfunctions('c.3.0.4.1.1.4', MALF_TPL_COIL),
+	malfunctions: buildMalfunctions(COIL_OPEN_ID, MALF_TPL_COIL),
 };
 
 // Кнопка КРУЗА-П (c.3.0.4.1.0.1.*)
@@ -359,9 +351,12 @@ export const provodPeredKnopkojKRUZAP_komandaOtkryt: CircuitElement = {
 	name: 'Провод перед кнопкой КРУЗА-П (открыть)',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: CONTROL_POINT_C3_0_4_1_2_0,
-	endPoint: CONTROL_POINT_C3_0_4_1_2_1,
-	malfunctions: buildMalfunctions('c.3.0.4.1.2.0', MALF_TPL_WIRE_FULL),
+	startPoint: OPEN_BUTTON_INPUT_POINT_ID,
+	endPoint: OPEN_BUTTON_OUTPUT_POINT_ID,
+	malfunctions: buildMalfunctions(
+		WIRE_BEFORE_BUTTON_KRUZA_P_OPEN_ID,
+		MALF_TPL_WIRE_FULL,
+	),
 };
 
 export const knopkaKRUZAP_komandaOtkryt: CircuitElement = {
@@ -369,9 +364,12 @@ export const knopkaKRUZAP_komandaOtkryt: CircuitElement = {
 	name: 'Кнопка КРУЗА-П (команда открыть с КРУЗА-П)',
 	resistance: 0,
 	kind: 'button',
-	startPoint: CONTROL_POINT_C3_0_4_1_2_1,
-	endPoint: CONTROL_POINT_C3_0_4_1_2_2,
-	malfunctions: buildMalfunctions('c.3.0.4.1.2.1', MALF_TPL_BUTTON_CMD),
+	startPoint: OPEN_BUTTON_OUTPUT_POINT_ID,
+	endPoint: OPEN_BUTTON_TO_NEUTRAL_POINT_ID,
+	malfunctions: buildMalfunctions(
+		BUTTON_KRUZA_P_OPEN_ID,
+		MALF_TPL_BUTTON_CMD,
+	),
 };
 
 export const provodOtKnopkiKRUZAP_komandaOtkrytDoNejtrali: CircuitElement = {
@@ -379,9 +377,12 @@ export const provodOtKnopkiKRUZAP_komandaOtkrytDoNejtrali: CircuitElement = {
 	name: 'Провод от кнопки КРУЗА-П (открыть) до нейтрали',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: CONTROL_POINT_C3_0_4_1_2_2,
+	startPoint: OPEN_BUTTON_TO_NEUTRAL_POINT_ID,
 	endPoint: CONTROL_NEUTRAL_POINT_ID,
-	malfunctions: buildMalfunctions('c.3.0.4.1.2.2', MALF_TPL_WIRE_FULL),
+	malfunctions: buildMalfunctions(
+		WIRE_BUTTON_KRUZA_P_OPEN_TO_NEUTRAL_ID,
+		MALF_TPL_WIRE_FULL,
+	),
 };
 
 // Лампа в КРУЗА-П (закрыто) - c.3.0.4.2.*
@@ -390,9 +391,12 @@ export const provodPeredLampojVKRUZAP_zakryto: CircuitElement = {
 	name: 'Провод перед лампой в КРУЗА-П (закрыто)',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: CONTROL_POINT_C3_0_4_2_0,
+	startPoint: CLOSED_LAMP_BRANCH_POINT_ID,
 	endPoint: CLOSED_LAMP_INPUT_POINT_ID,
-	malfunctions: buildMalfunctions('c.3.0.4.2.0', MALF_TPL_WIRE_FULL),
+	malfunctions: buildMalfunctions(
+		WIRE_BEFORE_LAMP_KRUZA_P_CLOSED_ID,
+		MALF_TPL_WIRE_FULL,
+	),
 };
 
 export const lampaVKRUZAP_zakryto: CircuitElement = {
@@ -401,8 +405,8 @@ export const lampaVKRUZAP_zakryto: CircuitElement = {
 	resistance: 4800,
 	kind: 'lamp',
 	startPoint: CLOSED_LAMP_INPUT_POINT_ID,
-	endPoint: CONTROL_POINT_C3_0_4_2_2,
-	malfunctions: buildMalfunctions('c.3.0.4.2.1', MALF_TPL_LAMP),
+	endPoint: CLOSED_LAMP_TO_NEUTRAL_POINT_ID,
+	malfunctions: buildMalfunctions(LAMP_KRUZA_P_CLOSED_ID, MALF_TPL_LAMP),
 };
 
 export const provodOtLampyVKRUZAP_zakrytoDoNejtrali: CircuitElement = {
@@ -410,9 +414,12 @@ export const provodOtLampyVKRUZAP_zakrytoDoNejtrali: CircuitElement = {
 	name: 'Провод от лампы в КРУЗА-П (закрыто) до нейтрали',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: CONTROL_POINT_C3_0_4_2_2,
+	startPoint: CLOSED_LAMP_TO_NEUTRAL_POINT_ID,
 	endPoint: CONTROL_NEUTRAL_POINT_ID,
-	malfunctions: buildMalfunctions('c.3.0.4.2.2', MALF_TPL_WIRE_FULL),
+	malfunctions: buildMalfunctions(
+		WIRE_LAMP_KRUZA_P_CLOSED_TO_NEUTRAL_ID,
+		MALF_TPL_WIRE_FULL,
+	),
 };
 
 // ======================== Ветка ЗАКРЫТЬ (c.3.1.*) ========================
@@ -424,21 +431,12 @@ export const provodOtSoyedinitelnojKorobkiDoKontsevogoVyklyuchatelyaZakryto: Cir
 		name: 'Провод от соединительной коробки до концевого выключателя закрыто',
 		resistance: 0.1,
 		kind: 'wire',
-		startPoint: CONTROL_POINT_C3_1_0,
+		startPoint: CLOSE_JUNCTION_BOX_POINT_ID,
 		endPoint: CLOSE_LIMIT_SWITCH_INPUT_POINT_ID,
-		malfunctions: [
-			{ id: 'c.3.1.0.1', name: 'Обрыв провода', active: false },
-			{
-				id: 'c.3.1.0.2',
-				name: 'Короткое замыкание на землю',
-				active: false,
-			},
-			{
-				id: 'c.3.1.0.3',
-				name: 'Короткое замыкание с соседним проводом',
-				active: false,
-			},
-		],
+		malfunctions: buildMalfunctions(
+			WIRE_BOX_TO_LIMIT_CLOSE_ID,
+			MALF_TPL_WIRE_GROUND,
+		),
 	};
 
 export const kontsevojVyklyuchatelZakryto: CircuitElement = {
@@ -448,11 +446,10 @@ export const kontsevojVyklyuchatelZakryto: CircuitElement = {
 	kind: 'limitSwitch',
 	startPoint: CLOSE_LIMIT_SWITCH_INPUT_POINT_ID,
 	endPoint: CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID,
-	malfunctions: [
-		{ id: 'c.3.1.1.1', name: 'Залипший контакт', active: false },
-		{ id: 'c.3.1.1.2', name: 'Нет контакта', active: false },
-		{ id: 'c.3.1.1.3', name: 'Не настроен', active: false },
-	],
+	malfunctions: buildMalfunctions(
+		LIMIT_SWITCH_CLOSE_ID,
+		MALF_TPL_LIMIT_SWITCH,
+	),
 };
 
 export const provodOtKontsevogoVyklyuchatelyaZakrytoDoKlemmikaKRUZAP2: CircuitElement =
@@ -462,20 +459,11 @@ export const provodOtKontsevogoVyklyuchatelyaZakrytoDoKlemmikaKRUZAP2: CircuitEl
 		resistance: 0.1,
 		kind: 'wire',
 		startPoint: CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID,
-		endPoint: CONTROL_POINT_C3_1_3,
-		malfunctions: [
-			{ id: 'c.3.1.2.1', name: 'Обрыв провода', active: false },
-			{
-				id: 'c.3.1.2.2',
-				name: 'Короткое замыкание на землю',
-				active: false,
-			},
-			{
-				id: 'c.3.1.2.3',
-				name: 'Короткое замыкание с соседним проводом',
-				active: false,
-			},
-		],
+		endPoint: CLOSE_TERMINAL_BLOCK_POINT_ID,
+		malfunctions: buildMalfunctions(
+			WIRE_LIMIT_CLOSE_TO_TERMINAL_ID,
+			MALF_TPL_WIRE_GROUND,
+		),
 	};
 
 export const provodOtKlemmikaDoVstavkiNDI_signalNeZakryto: CircuitElement = {
@@ -483,9 +471,12 @@ export const provodOtKlemmikaDoVstavkiNDI_signalNeZakryto: CircuitElement = {
 	name: 'Провод от клеммника до вставки NDI (сигнал не закрыто)',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: CONTROL_POINT_C3_1_3,
-	endPoint: CONTROL_POINT_C3_1_4,
-	malfunctions: buildMalfunctions('c.3.1.3', MALF_TPL_WIRE_GROUND_FULL),
+	startPoint: CLOSE_TERMINAL_BLOCK_POINT_ID,
+	endPoint: CLOSE_NDI_SPLIT_POINT_ID,
+	malfunctions: buildMalfunctions(
+		WIRE_TERMINAL_TO_NDI_NOT_CLOSED_ID,
+		MALF_TPL_WIRE_GROUND_FULL,
+	),
 };
 
 export const provodPeredVstavkojNDI_signalNeZakryto: CircuitElement = {
@@ -493,9 +484,12 @@ export const provodPeredVstavkojNDI_signalNeZakryto: CircuitElement = {
 	name: 'Провод перед вставкой NDI (сигнал не закрыто)',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: CONTROL_POINT_C3_1_4_0_0,
-	endPoint: CONTROL_POINT_C3_1_4_0_1,
-	malfunctions: buildMalfunctions('c.3.1.4.0.0', MALF_TPL_WIRE_GROUND_FULL),
+	startPoint: CLOSE_NDI_NOT_CLOSED_INPUT_POINT_ID,
+	endPoint: CLOSE_NDI_NOT_CLOSED_OUTPUT_POINT_ID,
+	malfunctions: buildMalfunctions(
+		WIRE_BEFORE_NDI_NOT_CLOSED_ID,
+		MALF_TPL_WIRE_GROUND_FULL,
+	),
 };
 
 export const vstavkaNDI_signalNeZakryto: CircuitElement = {
@@ -503,20 +497,12 @@ export const vstavkaNDI_signalNeZakryto: CircuitElement = {
 	name: 'Вставка NDI (сигнал «не закрыто»)',
 	resistance: 0,
 	kind: 'insert',
-	startPoint: CONTROL_POINT_C3_1_4_0_1,
-	endPoint: CONTROL_POINT_C3_1_4_0_2,
-	malfunctions: [
-		{
-			id: 'c.3.1.4.0.1.1',
-			name: 'Нет контакта, цепь не замыкается',
-			active: false,
-		},
-		{
-			id: 'c.3.1.4.0.1.2',
-			name: 'Ложно сработала, цепь не размыкается',
-			active: false,
-		},
-	],
+	startPoint: CLOSE_NDI_NOT_CLOSED_OUTPUT_POINT_ID,
+	endPoint: CLOSE_NDI_NOT_CLOSED_TO_NEUTRAL_POINT_ID,
+	malfunctions: buildMalfunctions(
+		INSERT_NDI_NOT_CLOSED_ID,
+		MALF_TPL_INSERT_SIGNAL,
+	),
 };
 
 export const provodOtVstavkiNDI_signalNeZakrytoDoNejtrali: CircuitElement = {
@@ -524,9 +510,12 @@ export const provodOtVstavkiNDI_signalNeZakrytoDoNejtrali: CircuitElement = {
 	name: 'Провод от вставки NDI (сигнал не закрыто) до нейтрали',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: CONTROL_POINT_C3_1_4_0_2,
+	startPoint: CLOSE_NDI_NOT_CLOSED_TO_NEUTRAL_POINT_ID,
 	endPoint: CONTROL_NEUTRAL_POINT_ID,
-	malfunctions: buildMalfunctions('c.3.1.4.0.2', MALF_TPL_WIRE_GROUND_FULL),
+	malfunctions: buildMalfunctions(
+		WIRE_NDI_NOT_CLOSED_TO_NEUTRAL_ID,
+		MALF_TPL_WIRE_GROUND_FULL,
+	),
 };
 
 export const provodPeredVstavkojNDI_komandaZakrytSPTK: CircuitElement = {
@@ -534,10 +523,10 @@ export const provodPeredVstavkojNDI_komandaZakrytSPTK: CircuitElement = {
 	name: 'Провод перед вставкой NDI (команда закрыть с ПТК)',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: CONTROL_POINT_C3_1_4_1_0_0_0,
-	endPoint: CONTROL_POINT_C3_1_4_1_0_0_1,
+	startPoint: CLOSE_CMD_PTK_BRANCH_POINT_ID,
+	endPoint: CLOSE_NDI_CMD_PTK_INPUT_POINT_ID,
 	malfunctions: buildMalfunctions(
-		'c.3.1.4.1.0.0.0',
+		WIRE_BEFORE_NDI_CMD_CLOSE_PTK_ID,
 		MALF_TPL_WIRE_GROUND_FULL,
 	),
 };
@@ -547,20 +536,12 @@ export const vstavkaNDI_komandaZakrytSPTK: CircuitElement = {
 	name: 'Вставка NDI (команда закрыть с ПТК)',
 	resistance: 0,
 	kind: 'insert',
-	startPoint: CONTROL_POINT_C3_1_4_1_0_0_1,
-	endPoint: CONTROL_POINT_C3_1_4_1_0_0_2,
-	malfunctions: [
-		{
-			id: 'c.3.1.4.1.0.0.1.1',
-			name: 'Нет контакта, команда не уходит',
-			active: false,
-		},
-		{
-			id: 'c.3.1.4.1.0.0.1.2',
-			name: 'Ложно сработала, команда постоянно висит',
-			active: false,
-		},
-	],
+	startPoint: CLOSE_NDI_CMD_PTK_INPUT_POINT_ID,
+	endPoint: CLOSE_NDI_CMD_PTK_TO_NEUTRAL_POINT_ID,
+	malfunctions: buildMalfunctions(
+		INSERT_NDI_CMD_CLOSE_PTK_ID,
+		MALF_TPL_INSERT_SIGNAL,
+	),
 };
 
 export const provodOtVstavkiNDI_komandaZakrytSPTKDoNejtrali: CircuitElement = {
@@ -571,7 +552,7 @@ export const provodOtVstavkiNDI_komandaZakrytSPTKDoNejtrali: CircuitElement = {
 	startPoint: CLOSE_COMMAND_MERGE_POINT_ID,
 	endPoint: CONTROL_NEUTRAL_POINT_ID,
 	malfunctions: buildMalfunctions(
-		'c.3.1.4.1.0.0.2',
+		WIRE_NDI_CMD_CLOSE_PTK_TO_NEUTRAL_ID,
 		MALF_TPL_WIRE_GROUND_FULL,
 	),
 };
@@ -582,8 +563,11 @@ export const provodPeredBlokirovkojZakrytie: CircuitElement = {
 	resistance: 0.1,
 	kind: 'wire',
 	startPoint: CLOSE_INTERLOCK_INPUT_POINT_ID,
-	endPoint: CONTROL_POINT_C3_1_4_1_0_1_1,
-	malfunctions: buildMalfunctions('c.3.1.4.1.1.0', MALF_TPL_WIRE_GROUND_FULL),
+	endPoint: CLOSE_INTERLOCK_OUTPUT_POINT_ID,
+	malfunctions: buildMalfunctions(
+		WIRE_BEFORE_INTERLOCK_CLOSE_ID,
+		MALF_TPL_WIRE_GROUND_FULL,
+	),
 };
 
 export const blokirovkaVklyucheniaPuskatelyaNaZakrytie: CircuitElement = {
@@ -591,16 +575,12 @@ export const blokirovkaVklyucheniaPuskatelyaNaZakrytie: CircuitElement = {
 	name: 'Блокировка включения пускателя на закрыть',
 	resistance: 0,
 	kind: 'blockingContact',
-	startPoint: CONTROL_POINT_C3_1_4_1_0_1_1,
-	endPoint: CONTROL_POINT_C3_1_4_1_0_1_2,
-	malfunctions: [
-		{ id: 'c.3.1.4.1.1.1.1', name: 'Нет контакта', active: false },
-		{
-			id: 'c.3.1.4.1.1.1.2',
-			name: 'Ложно замкнутый контакт',
-			active: false,
-		},
-	],
+	startPoint: CLOSE_INTERLOCK_OUTPUT_POINT_ID,
+	endPoint: CLOSE_COIL_INPUT_POINT_ID,
+	malfunctions: buildMalfunctions(
+		INTERLOCK_CONTACT_CLOSE_ID,
+		MALF_TPL_BLOCKING_CONTACT,
+	),
 };
 
 export const provodOtBlokirovkiDoKatushkiZakrytie: CircuitElement = {
@@ -608,9 +588,12 @@ export const provodOtBlokirovkiDoKatushkiZakrytie: CircuitElement = {
 	name: 'Провод от блокировки до катушки (закрытие)',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: CONTROL_POINT_C3_1_4_1_0_1_2,
-	endPoint: CONTROL_POINT_C3_1_4_1_0_1_3,
-	malfunctions: buildMalfunctions('c.3.1.4.1.1.2', MALF_TPL_WIRE_GROUND_FULL),
+	startPoint: CLOSE_COIL_INPUT_POINT_ID,
+	endPoint: CLOSE_COIL_SPLIT_POINT_ID,
+	malfunctions: buildMalfunctions(
+		WIRE_AFTER_INTERLOCK_TO_COIL_CLOSE_ID,
+		MALF_TPL_WIRE_GROUND_FULL,
+	),
 };
 
 export const katushkaPuskatelyaZakryt: CircuitElement = {
@@ -618,9 +601,9 @@ export const katushkaPuskatelyaZakryt: CircuitElement = {
 	name: 'Катушка пускателя закрыть',
 	resistance: 6400,
 	kind: 'coil',
-	startPoint: CONTROL_POINT_C3_1_4_1_0_1_3,
+	startPoint: CLOSE_COIL_SPLIT_POINT_ID,
 	endPoint: CONTROL_NEUTRAL_POINT_ID,
-	malfunctions: buildMalfunctions('c.3.1.4.1.1.4', MALF_TPL_COIL),
+	malfunctions: buildMalfunctions(COIL_CLOSE_ID, MALF_TPL_COIL),
 };
 
 export const provodPeredKnopkojKRUZAP_komandaZakryt: CircuitElement = {
@@ -628,9 +611,12 @@ export const provodPeredKnopkojKRUZAP_komandaZakryt: CircuitElement = {
 	name: 'Провод перед кнопкой КРУЗА-П (закрыть)',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: CONTROL_POINT_C3_1_4_1_2_0,
-	endPoint: CONTROL_POINT_C3_1_4_1_2_1,
-	malfunctions: buildMalfunctions('c.3.1.4.1.2.0', MALF_TPL_WIRE_FULL),
+	startPoint: CLOSE_BUTTON_INPUT_POINT_ID,
+	endPoint: CLOSE_BUTTON_OUTPUT_POINT_ID,
+	malfunctions: buildMalfunctions(
+		WIRE_BEFORE_BUTTON_KRUZA_P_CLOSE_ID,
+		MALF_TPL_WIRE_FULL,
+	),
 };
 
 export const knopkaKRUZAP_komandaZakryt: CircuitElement = {
@@ -638,9 +624,12 @@ export const knopkaKRUZAP_komandaZakryt: CircuitElement = {
 	name: 'Кнопка КРУЗА-П (команда закрыть с КРУЗА-П)',
 	resistance: 0,
 	kind: 'button',
-	startPoint: CONTROL_POINT_C3_1_4_1_2_1,
-	endPoint: CONTROL_POINT_C3_1_4_1_2_2,
-	malfunctions: buildMalfunctions('c.3.1.4.1.2.1', MALF_TPL_BUTTON_CMD),
+	startPoint: CLOSE_BUTTON_OUTPUT_POINT_ID,
+	endPoint: CLOSE_BUTTON_TO_NEUTRAL_POINT_ID,
+	malfunctions: buildMalfunctions(
+		BUTTON_KRUZA_P_CLOSE_ID,
+		MALF_TPL_BUTTON_CMD,
+	),
 };
 
 export const provodOtKnopkiKRUZAP_komandaZakrytDoNejtrali: CircuitElement = {
@@ -648,9 +637,12 @@ export const provodOtKnopkiKRUZAP_komandaZakrytDoNejtrali: CircuitElement = {
 	name: 'Провод от кнопки КРУЗА-П (закрыть) до нейтрали',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: CONTROL_POINT_C3_1_4_1_2_2,
+	startPoint: CLOSE_BUTTON_TO_NEUTRAL_POINT_ID,
 	endPoint: CONTROL_NEUTRAL_POINT_ID,
-	malfunctions: buildMalfunctions('c.3.1.4.1.2.2', MALF_TPL_WIRE_FULL),
+	malfunctions: buildMalfunctions(
+		WIRE_BUTTON_KRUZA_P_CLOSE_TO_NEUTRAL_ID,
+		MALF_TPL_WIRE_FULL,
+	),
 };
 
 export const provodPeredLampojVKRUZAP_otkryto: CircuitElement = {
@@ -658,9 +650,12 @@ export const provodPeredLampojVKRUZAP_otkryto: CircuitElement = {
 	name: 'Провод перед лампой в КРУЗА-П (открыто)',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: CONTROL_POINT_C3_1_4_2_0,
+	startPoint: OPEN_LAMP_BRANCH_POINT_ID,
 	endPoint: OPEN_LAMP_INPUT_POINT_ID,
-	malfunctions: buildMalfunctions('c.3.1.4.2.0', MALF_TPL_WIRE_FULL),
+	malfunctions: buildMalfunctions(
+		WIRE_BEFORE_LAMP_KRUZA_P_OPEN_ID,
+		MALF_TPL_WIRE_FULL,
+	),
 };
 
 export const lampaVKRUZAP_otkryto: CircuitElement = {
@@ -669,8 +664,8 @@ export const lampaVKRUZAP_otkryto: CircuitElement = {
 	resistance: 4800,
 	kind: 'lamp',
 	startPoint: OPEN_LAMP_INPUT_POINT_ID,
-	endPoint: CONTROL_POINT_C3_1_4_2_2,
-	malfunctions: buildMalfunctions('c.3.1.4.2.1', MALF_TPL_LAMP),
+	endPoint: OPEN_LAMP_TO_NEUTRAL_POINT_ID,
+	malfunctions: buildMalfunctions(LAMP_KRUZA_P_OPEN_ID, MALF_TPL_LAMP),
 };
 
 export const provodOtLampyVKRUZAP_otkrytoDoNejtrali: CircuitElement = {
@@ -678,7 +673,10 @@ export const provodOtLampyVKRUZAP_otkrytoDoNejtrali: CircuitElement = {
 	name: 'Провод от лампы в КРУЗА-П (открыто) до нейтрали',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: CONTROL_POINT_C3_1_4_2_2,
+	startPoint: OPEN_LAMP_TO_NEUTRAL_POINT_ID,
 	endPoint: CONTROL_NEUTRAL_POINT_ID,
-	malfunctions: buildMalfunctions('c.3.1.4.2.2', MALF_TPL_WIRE_FULL),
+	malfunctions: buildMalfunctions(
+		WIRE_LAMP_KRUZA_P_OPEN_TO_NEUTRAL_ID,
+		MALF_TPL_WIRE_FULL,
+	),
 };

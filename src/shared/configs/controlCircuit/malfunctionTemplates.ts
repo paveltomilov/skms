@@ -3,340 +3,202 @@
  * Каждый элемент имеет тип (kind) и набор шаблонов неисправностей.
  */
 
-import { ElementKind } from '../../types/scheme';
-import {
-	BUTTON_KRUZA_P_CLOSE_ID,
-	BUTTON_KRUZA_P_OPEN_ID,
-	COIL_CLOSE_ID,
-	COIL_OPEN_ID,
-	CONTROL_CIRCUIT_BREAKER_ID,
-	INSERT_NDI_CMD_CLOSE_PTK_ID,
-	INSERT_NDI_CMD_OPEN_PTK_ID,
-	INSERT_NDI_NOT_CLOSED_ID,
-	INSERT_NDI_NOT_OPEN_ID,
-	INTERLOCK_CONTACT_CLOSE_ID,
-	INTERLOCK_CONTACT_OPEN_ID,
-	LAMP_KRUZA_P_CLOSED_ID,
-	LAMP_KRUZA_P_OPEN_ID,
-	LIMIT_SWITCH_CLOSE_ID,
-	LIMIT_SWITCH_OPEN_ID,
-	WIRE_AFTER_INTERLOCK_TO_COIL_CLOSE_ID,
-	WIRE_AFTER_INTERLOCK_TO_COIL_OPEN_ID,
-	WIRE_BEFORE_BUTTON_KRUZA_P_CLOSE_ID,
-	WIRE_BEFORE_BUTTON_KRUZA_P_OPEN_ID,
-	WIRE_BEFORE_INTERLOCK_CLOSE_ID,
-	WIRE_BEFORE_INTERLOCK_OPEN_ID,
-	WIRE_BEFORE_LAMP_KRUZA_P_CLOSED_ID,
-	WIRE_BEFORE_LAMP_KRUZA_P_OPEN_ID,
-	WIRE_BEFORE_NDI_CMD_CLOSE_PTK_ID,
-	WIRE_BEFORE_NDI_CMD_OPEN_PTK_ID,
-	WIRE_BEFORE_NDI_NOT_CLOSED_ID,
-	WIRE_BEFORE_NDI_NOT_OPEN_ID,
-	WIRE_BOX_TO_LIMIT_CLOSE_ID,
-	WIRE_BOX_TO_LIMIT_OPEN_ID,
-	WIRE_BUTTON_KRUZA_P_CLOSE_TO_NEUTRAL_ID,
-	WIRE_BUTTON_KRUZA_P_OPEN_TO_NEUTRAL_ID,
-	WIRE_LAMP_KRUZA_P_CLOSED_TO_NEUTRAL_ID,
-	WIRE_LAMP_KRUZA_P_OPEN_TO_NEUTRAL_ID,
-	WIRE_LIMIT_CLOSE_TO_TERMINAL_ID,
-	WIRE_LIMIT_OPEN_TO_TERMINAL_ID,
-	WIRE_NDI_CMD_CLOSE_PTK_TO_NEUTRAL_ID,
-	WIRE_NDI_CMD_OPEN_PTK_TO_NEUTRAL_ID,
-	WIRE_NDI_NOT_CLOSED_TO_NEUTRAL_ID,
-	WIRE_NDI_NOT_OPEN_TO_NEUTRAL_ID,
-	WIRE_PHASE_AFTER_BREAKER_ID,
+import type { MalfTpl } from '@/shared/types/scheme';
+import type {
 	WIRE_POWER_TO_CONTROL_BREAKER_ID,
-	WIRE_TERMINAL_TO_NDI_NOT_CLOSED_ID,
+	CONTROL_CIRCUIT_BREAKER_ID,
+	WIRE_PHASE_AFTER_BREAKER_ID,
+	WIRE_BOX_TO_LIMIT_OPEN_ID,
+	LIMIT_SWITCH_OPEN_ID,
+	WIRE_LIMIT_OPEN_TO_TERMINAL_ID,
 	WIRE_TERMINAL_TO_NDI_NOT_OPEN_ID,
-} from '@/shared/constants';
+	WIRE_BEFORE_NDI_NOT_OPEN_ID,
+	INSERT_NDI_NOT_OPEN_ID,
+	WIRE_NDI_NOT_OPEN_TO_NEUTRAL_ID,
+	WIRE_BEFORE_NDI_CMD_OPEN_PTK_ID,
+	INSERT_NDI_CMD_OPEN_PTK_ID,
+	WIRE_NDI_CMD_OPEN_PTK_TO_NEUTRAL_ID,
+	WIRE_BEFORE_INTERLOCK_OPEN_ID,
+	INTERLOCK_CONTACT_OPEN_ID,
+	WIRE_AFTER_INTERLOCK_TO_COIL_OPEN_ID,
+	COIL_OPEN_ID,
+	WIRE_BEFORE_BUTTON_KRUZA_P_OPEN_ID,
+	BUTTON_KRUZA_P_OPEN_ID,
+	WIRE_BUTTON_KRUZA_P_OPEN_TO_NEUTRAL_ID,
+	WIRE_BEFORE_LAMP_KRUZA_P_CLOSED_ID,
+	LAMP_KRUZA_P_CLOSED_ID,
+	WIRE_LAMP_KRUZA_P_CLOSED_TO_NEUTRAL_ID,
+	WIRE_BOX_TO_LIMIT_CLOSE_ID,
+	LIMIT_SWITCH_CLOSE_ID,
+	WIRE_LIMIT_CLOSE_TO_TERMINAL_ID,
+	WIRE_TERMINAL_TO_NDI_NOT_CLOSED_ID,
+	WIRE_BEFORE_NDI_NOT_CLOSED_ID,
+	INSERT_NDI_NOT_CLOSED_ID,
+	WIRE_NDI_NOT_CLOSED_TO_NEUTRAL_ID,
+	WIRE_BEFORE_NDI_CMD_CLOSE_PTK_ID,
+	INSERT_NDI_CMD_CLOSE_PTK_ID,
+	WIRE_NDI_CMD_CLOSE_PTK_TO_NEUTRAL_ID,
+	WIRE_BEFORE_INTERLOCK_CLOSE_ID,
+	INTERLOCK_CONTACT_CLOSE_ID,
+	WIRE_AFTER_INTERLOCK_TO_COIL_CLOSE_ID,
+	COIL_CLOSE_ID,
+	WIRE_BEFORE_BUTTON_KRUZA_P_CLOSE_ID,
+	BUTTON_KRUZA_P_CLOSE_ID,
+	WIRE_BUTTON_KRUZA_P_CLOSE_TO_NEUTRAL_ID,
+	WIRE_BEFORE_LAMP_KRUZA_P_OPEN_ID,
+	LAMP_KRUZA_P_OPEN_ID,
+	WIRE_LAMP_KRUZA_P_OPEN_TO_NEUTRAL_ID,
+} from './constants';
 
-type MalfTpl = { suffix: string; name: string };
+/**
+ * Тип для ID элементов схемы управления.
+ * Принимает только валидные константы из './constants'.
+ */
+type ElementId =
+	| typeof WIRE_POWER_TO_CONTROL_BREAKER_ID
+	| typeof CONTROL_CIRCUIT_BREAKER_ID
+	| typeof WIRE_PHASE_AFTER_BREAKER_ID
+	| typeof WIRE_BOX_TO_LIMIT_OPEN_ID
+	| typeof LIMIT_SWITCH_OPEN_ID
+	| typeof WIRE_LIMIT_OPEN_TO_TERMINAL_ID
+	| typeof WIRE_TERMINAL_TO_NDI_NOT_OPEN_ID
+	| typeof WIRE_BEFORE_NDI_NOT_OPEN_ID
+	| typeof INSERT_NDI_NOT_OPEN_ID
+	| typeof WIRE_NDI_NOT_OPEN_TO_NEUTRAL_ID
+	| typeof WIRE_BEFORE_NDI_CMD_OPEN_PTK_ID
+	| typeof INSERT_NDI_CMD_OPEN_PTK_ID
+	| typeof WIRE_NDI_CMD_OPEN_PTK_TO_NEUTRAL_ID
+	| typeof WIRE_BEFORE_INTERLOCK_OPEN_ID
+	| typeof INTERLOCK_CONTACT_OPEN_ID
+	| typeof WIRE_AFTER_INTERLOCK_TO_COIL_OPEN_ID
+	| typeof COIL_OPEN_ID
+	| typeof WIRE_BEFORE_BUTTON_KRUZA_P_OPEN_ID
+	| typeof BUTTON_KRUZA_P_OPEN_ID
+	| typeof WIRE_BUTTON_KRUZA_P_OPEN_TO_NEUTRAL_ID
+	| typeof WIRE_BEFORE_LAMP_KRUZA_P_CLOSED_ID
+	| typeof LAMP_KRUZA_P_CLOSED_ID
+	| typeof WIRE_LAMP_KRUZA_P_CLOSED_TO_NEUTRAL_ID
+	| typeof WIRE_BOX_TO_LIMIT_CLOSE_ID
+	| typeof LIMIT_SWITCH_CLOSE_ID
+	| typeof WIRE_LIMIT_CLOSE_TO_TERMINAL_ID
+	| typeof WIRE_TERMINAL_TO_NDI_NOT_CLOSED_ID
+	| typeof WIRE_BEFORE_NDI_NOT_CLOSED_ID
+	| typeof INSERT_NDI_NOT_CLOSED_ID
+	| typeof WIRE_NDI_NOT_CLOSED_TO_NEUTRAL_ID
+	| typeof WIRE_BEFORE_NDI_CMD_CLOSE_PTK_ID
+	| typeof INSERT_NDI_CMD_CLOSE_PTK_ID
+	| typeof WIRE_NDI_CMD_CLOSE_PTK_TO_NEUTRAL_ID
+	| typeof WIRE_BEFORE_INTERLOCK_CLOSE_ID
+	| typeof INTERLOCK_CONTACT_CLOSE_ID
+	| typeof WIRE_AFTER_INTERLOCK_TO_COIL_CLOSE_ID
+	| typeof COIL_CLOSE_ID
+	| typeof WIRE_BEFORE_BUTTON_KRUZA_P_CLOSE_ID
+	| typeof BUTTON_KRUZA_P_CLOSE_ID
+	| typeof WIRE_BUTTON_KRUZA_P_CLOSE_TO_NEUTRAL_ID
+	| typeof WIRE_BEFORE_LAMP_KRUZA_P_OPEN_ID
+	| typeof LAMP_KRUZA_P_OPEN_ID
+	| typeof WIRE_LAMP_KRUZA_P_OPEN_TO_NEUTRAL_ID;
 
-// ======================== Базовые шаблоны (константы) ========================
-// Провода: детализированный КЗ «на землю»
-export const MALF_TPL_WIRE_GROUND: MalfTpl[] = [
+// ======================== Шаблоны неисправностей ========================
+
+// --- Провода (4 варианта текста для разных контекстов) ---
+export const MALF_TPL_WIRE_GROUND: readonly MalfTpl[] = [
 	{ suffix: '.1', name: 'Обрыв провода' },
 	{ suffix: '.2', name: 'КЗ на землю' },
 	{ suffix: '.3', name: 'КЗ с соседним проводом' },
-];
+] as const;
 
-// Провода: краткое обозначение КЗ
-export const MALF_TPL_WIRE_SHORT: MalfTpl[] = [
+export const MALF_TPL_WIRE_SHORT: readonly MalfTpl[] = [
 	{ suffix: '.1', name: 'Обрыв провода' },
 	{ suffix: '.2', name: 'КЗ' },
 	{ suffix: '.3', name: 'КЗ с соседним проводом' },
-];
+] as const;
 
-// Провода: полная формулировка КЗ (без уточнения "на землю")
-export const MALF_TPL_WIRE_FULL: MalfTpl[] = [
+export const MALF_TPL_WIRE_FULL: readonly MalfTpl[] = [
 	{ suffix: '.1', name: 'Обрыв провода' },
 	{ suffix: '.2', name: 'Короткое замыкание' },
 	{ suffix: '.3', name: 'Короткое замыкание с соседним проводом' },
-];
+] as const;
 
-// Провода: полная формулировка с уточнением "на землю"
-export const MALF_TPL_WIRE_GROUND_FULL: MalfTpl[] = [
+export const MALF_TPL_WIRE_GROUND_FULL: readonly MalfTpl[] = [
 	{ suffix: '.1', name: 'Обрыв провода' },
 	{ suffix: '.2', name: 'Короткое замыкание на землю' },
 	{ suffix: '.3', name: 'Короткое замыкание с соседним проводом' },
-];
+] as const;
 
-// Кнопки: командные контакты
-export const MALF_TPL_BUTTON_CMD: MalfTpl[] = [
+// --- Кнопки ---
+export const MALF_TPL_BUTTON_CMD: readonly MalfTpl[] = [
 	{ suffix: '.1', name: 'Нет контакта, команда не уходит' },
 	{ suffix: '.2', name: 'Ложно сработала, команда постоянно висит' },
-];
+] as const;
 
-// Вставки NDI: сигнальные контакты
-export const MALF_TPL_INSERT_SIGNAL: MalfTpl[] = [
+// --- Вставки NDI ---
+export const MALF_TPL_INSERT_SIGNAL: readonly MalfTpl[] = [
 	{ suffix: '.1', name: 'Нет контакта, цепь не замыкается' },
 	{ suffix: '.2', name: 'Ложно сработала, цепь не размыкается' },
-];
+] as const;
 
-// Концевые выключатели
-export const MALF_TPL_LIMIT_SWITCH: MalfTpl[] = [
+// --- Концевые выключатели ---
+export const MALF_TPL_LIMIT_SWITCH: readonly MalfTpl[] = [
 	{ suffix: '.1', name: 'Залипший контакт' },
 	{ suffix: '.2', name: 'Нет контакта' },
 	{ suffix: '.3', name: 'Не настроен' },
-];
+] as const;
 
-// Блокировочные контакты (межблокировка)
-export const MALF_TPL_BLOCKING_CONTACT: MalfTpl[] = [
+// --- Блокировочные контакты ---
+export const MALF_TPL_BLOCKING_CONTACT: readonly MalfTpl[] = [
 	{ suffix: '.1', name: 'Нет контакта' },
 	{ suffix: '.2', name: 'Ложно замкнутый контакт' },
-];
+] as const;
 
-// Автомат
-export const MALF_TPL_BREAKER: MalfTpl[] = [
+// --- Автоматы ---
+export const MALF_TPL_BREAKER: readonly MalfTpl[] = [
 	{ suffix: '.1', name: 'Плохой контакт на клемме, нет фазы' },
 	{ suffix: '.2', name: 'Ложно выбивает' },
-	{ suffix: '.3', name: 'Механическая проблема, нет коммутации' },
-];
+	{ suffix: '.3', name: 'Собирается механически, но нет коммутации' },
+] as const;
 
-// Катушка пускателя
-export const MALF_TPL_COIL: MalfTpl[] = [
+// --- Катушки пускателей ---
+export const MALF_TPL_COIL: readonly MalfTpl[] = [
 	{ suffix: '.1', name: 'Неисправна катушка, пускатель не подтягивается' },
-];
+] as const;
 
-// Лампа
-export const MALF_TPL_LAMP: MalfTpl[] = [{ suffix: '.1', name: 'Перегорела' }];
+// --- Лампы ---
+export const MALF_TPL_LAMP: readonly MalfTpl[] = [
+	{ suffix: '.1', name: 'Перегорела' },
+] as const;
 
-// Генератор массива неисправностей на основе базового id и шаблонов
+// ======================== Генератор неисправностей ========================
+
+interface Malfunction {
+	id: string;
+	name: string;
+	active: boolean;
+}
+
+/**
+ * Генерирует массив неисправностей на основе базового ID и шаблонов.
+ *
+ * @param baseId - ID элемента, используйте константы из './constants'
+ *   (например, WIRE_POWER_TO_CONTROL_BREAKER_ID, COIL_OPEN_ID, BUTTON_KRUZA_P_OPEN_ID)
+ * @param templates - Массив шаблонов с суффиксами и названиями
+ * @param activeSuffixes - Опционально: список суффиксов, которые должны быть активны
+ * @returns Массив неисправностей с полными ID
+ *
+ * @example
+ *  Используйте существующие константы
+ * import { WIRE_POWER_TO_CONTROL_BREAKER_ID } from './constants';
+ * buildMalfunctions(WIRE_POWER_TO_CONTROL_BREAKER_ID, MALF_TPL_WIRE_GROUND)
+ * => [{ id: 'c.0.1', name: 'Обрыв провода', active: false }, ...]
+ */
 export function buildMalfunctions(
-	baseId: string,
-	templates: MalfTpl[],
-	activeSuffixes?: string[], // Опционально: список суффиксов, которые должны быть активны
-) {
+	baseId: ElementId,
+	templates: readonly MalfTpl[],
+	activeSuffixes?: string[],
+): Malfunction[] {
 	return templates.map(t => ({
 		id: `${baseId}${t.suffix}`,
 		name: t.name,
 		active: activeSuffixes ? activeSuffixes.includes(t.suffix) : false,
 	}));
 }
-
-export const POINT_MALFUNCTION_TEMPLATES: Record<
-	string,
-	{ kind: ElementKind; templates: MalfTpl[] }
-> = {
-	// ======================== Общая часть ========================
-	[WIRE_POWER_TO_CONTROL_BREAKER_ID]: {
-		kind: 'wire',
-		templates: MALF_TPL_WIRE_GROUND,
-	},
-	[CONTROL_CIRCUIT_BREAKER_ID]: {
-		kind: 'breaker',
-		templates: MALF_TPL_BREAKER,
-	},
-	[WIRE_PHASE_AFTER_BREAKER_ID]: {
-		kind: 'wire',
-		templates: MALF_TPL_WIRE_GROUND,
-	},
-
-	// ======================== Ветка ОТКРЫТЬ (c.3.0.*) ========================
-	[WIRE_BOX_TO_LIMIT_OPEN_ID]: {
-		kind: 'wire',
-		templates: MALF_TPL_WIRE_GROUND,
-	},
-	[LIMIT_SWITCH_OPEN_ID]: {
-		kind: 'limitSwitch',
-		templates: MALF_TPL_LIMIT_SWITCH,
-	},
-	[WIRE_LIMIT_OPEN_TO_TERMINAL_ID]: {
-		kind: 'wire',
-		templates: MALF_TPL_WIRE_GROUND,
-	},
-	[WIRE_TERMINAL_TO_NDI_NOT_OPEN_ID]: {
-		kind: 'wire',
-		templates: MALF_TPL_WIRE_GROUND,
-	},
-
-	// Вставка NDI (сигнал не открыто)
-	[WIRE_BEFORE_NDI_NOT_OPEN_ID]: {
-		kind: 'wire',
-		templates: MALF_TPL_WIRE_GROUND,
-	},
-	[INSERT_NDI_NOT_OPEN_ID]: {
-		kind: 'insert',
-		templates: MALF_TPL_INSERT_SIGNAL,
-	},
-	[WIRE_NDI_NOT_OPEN_TO_NEUTRAL_ID]: {
-		kind: 'wire',
-		templates: MALF_TPL_WIRE_GROUND,
-	},
-
-	// Вставка NDI (команда открыть с ПТК)
-	[WIRE_BEFORE_NDI_CMD_OPEN_PTK_ID]: {
-		kind: 'wire',
-		templates: MALF_TPL_WIRE_GROUND,
-	},
-	[INSERT_NDI_CMD_OPEN_PTK_ID]: {
-		kind: 'insert',
-		templates: MALF_TPL_BUTTON_CMD,
-	},
-	[WIRE_NDI_CMD_OPEN_PTK_TO_NEUTRAL_ID]: {
-		kind: 'wire',
-		templates: MALF_TPL_WIRE_GROUND,
-	},
-
-	// Блокировка и катушка (открытие)
-
-	// Блокировка и катушка (открытие) - c.3.0.4.1.1.*
-	[WIRE_BEFORE_INTERLOCK_OPEN_ID]: {
-		kind: 'wire',
-		templates: MALF_TPL_WIRE_GROUND,
-	},
-	[INTERLOCK_CONTACT_OPEN_ID]: {
-		kind: 'blockingContact',
-		templates: MALF_TPL_BLOCKING_CONTACT,
-	},
-	[WIRE_AFTER_INTERLOCK_TO_COIL_OPEN_ID]: {
-		kind: 'wire',
-		templates: MALF_TPL_WIRE_GROUND,
-	},
-	[COIL_OPEN_ID]: {
-		kind: 'coil',
-		templates: MALF_TPL_COIL,
-	},
-
-	// Кнопка КРУЗА-П (открыть) - c.3.0.4.1.2.*
-	[WIRE_BEFORE_BUTTON_KRUZA_P_OPEN_ID]: {
-		kind: 'wire',
-		templates: MALF_TPL_WIRE_SHORT,
-	},
-	[BUTTON_KRUZA_P_OPEN_ID]: {
-		kind: 'button',
-		templates: MALF_TPL_BUTTON_CMD,
-	},
-	[WIRE_BUTTON_KRUZA_P_OPEN_TO_NEUTRAL_ID]: {
-		kind: 'wire',
-		templates: MALF_TPL_WIRE_SHORT,
-	},
-
-	// Лампа в КРУЗА-П (закрыто)
-	[WIRE_BEFORE_LAMP_KRUZA_P_CLOSED_ID]: {
-		kind: 'wire',
-		templates: MALF_TPL_WIRE_SHORT,
-	},
-	[LAMP_KRUZA_P_CLOSED_ID]: {
-		kind: 'lamp',
-		templates: MALF_TPL_LAMP,
-	},
-	[WIRE_LAMP_KRUZA_P_CLOSED_TO_NEUTRAL_ID]: {
-		kind: 'wire',
-		templates: MALF_TPL_WIRE_SHORT,
-	},
-
-	// ======================== Ветка ЗАКРЫТЬ (c.3.1.*) ========================
-	[WIRE_BOX_TO_LIMIT_CLOSE_ID]: {
-		kind: 'wire',
-		templates: MALF_TPL_WIRE_GROUND,
-	},
-	[LIMIT_SWITCH_CLOSE_ID]: {
-		kind: 'limitSwitch',
-		templates: MALF_TPL_LIMIT_SWITCH,
-	},
-	[WIRE_LIMIT_CLOSE_TO_TERMINAL_ID]: {
-		kind: 'wire',
-		templates: MALF_TPL_WIRE_GROUND,
-	},
-	[WIRE_TERMINAL_TO_NDI_NOT_CLOSED_ID]: {
-		kind: 'wire',
-		templates: MALF_TPL_WIRE_GROUND,
-	},
-
-	// Вставка NDI (сигнал не закрыто)
-	[WIRE_BEFORE_NDI_NOT_CLOSED_ID]: {
-		kind: 'wire',
-		templates: MALF_TPL_WIRE_GROUND,
-	},
-	[INSERT_NDI_NOT_CLOSED_ID]: {
-		kind: 'insert',
-		templates: MALF_TPL_INSERT_SIGNAL,
-	},
-	[WIRE_NDI_NOT_CLOSED_TO_NEUTRAL_ID]: {
-		kind: 'wire',
-		templates: MALF_TPL_WIRE_GROUND,
-	},
-
-	// Вставка NDI (команда закрыть с ПТК)
-	[WIRE_BEFORE_NDI_CMD_CLOSE_PTK_ID]: {
-		kind: 'wire',
-		templates: MALF_TPL_WIRE_GROUND,
-	},
-	[INSERT_NDI_CMD_CLOSE_PTK_ID]: {
-		kind: 'insert',
-		templates: MALF_TPL_BUTTON_CMD,
-	},
-	[WIRE_NDI_CMD_CLOSE_PTK_TO_NEUTRAL_ID]: {
-		kind: 'wire',
-		templates: MALF_TPL_WIRE_GROUND,
-	},
-
-	// Блокировка и катушка (закрытие)
-
-	// Блокировка и катушка (закрытие) - c.3.1.4.1.1.*
-	[WIRE_BEFORE_INTERLOCK_CLOSE_ID]: {
-		kind: 'wire',
-		templates: MALF_TPL_WIRE_GROUND,
-	},
-	[INTERLOCK_CONTACT_CLOSE_ID]: {
-		kind: 'blockingContact',
-		templates: MALF_TPL_BLOCKING_CONTACT,
-	},
-	[WIRE_AFTER_INTERLOCK_TO_COIL_CLOSE_ID]: {
-		kind: 'wire',
-		templates: MALF_TPL_WIRE_GROUND,
-	},
-	[COIL_CLOSE_ID]: {
-		kind: 'coil',
-		templates: MALF_TPL_COIL,
-	},
-
-	// Кнопка КРУЗА-П (закрыть) - c.3.1.4.1.2.*
-	[WIRE_BEFORE_BUTTON_KRUZA_P_CLOSE_ID]: {
-		kind: 'wire',
-		templates: MALF_TPL_WIRE_SHORT,
-	},
-	[BUTTON_KRUZA_P_CLOSE_ID]: {
-		kind: 'button',
-		templates: MALF_TPL_BUTTON_CMD,
-	},
-	[WIRE_BUTTON_KRUZA_P_CLOSE_TO_NEUTRAL_ID]: {
-		kind: 'wire',
-		templates: MALF_TPL_WIRE_SHORT,
-	},
-
-	// Лампа в КРУЗА-П (открыто)
-	[WIRE_BEFORE_LAMP_KRUZA_P_OPEN_ID]: {
-		kind: 'wire',
-		templates: MALF_TPL_WIRE_SHORT,
-	},
-	[LAMP_KRUZA_P_OPEN_ID]: {
-		kind: 'lamp',
-		templates: MALF_TPL_LAMP,
-	},
-	[WIRE_LAMP_KRUZA_P_OPEN_TO_NEUTRAL_ID]: {
-		kind: 'wire',
-		templates: MALF_TPL_WIRE_SHORT,
-	},
-};
