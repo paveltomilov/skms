@@ -53,13 +53,12 @@ export const useGateControlButtons = () => {
 		useAppSelector(state => state.circuit),
 	);
 
-	// Если у этих элементов базовое сопротивление (~ 0), то кнопки "Открыть"/"Закрыть" ПТК активны (нажаты)
-	const openPtkActive =
-		openFromPtkElement.resistance ===
-		BASE_RESISTANCE[OPEN_COMMAND_FROM_PTK_INSERT_ID];
-	const closePtkActive =
-		closeFromPtkElement.resistance ===
-		BASE_RESISTANCE[CLOSE_COMMAND_FROM_PTK_INSERT_ID];
+	// Получаем текущее состояние задвижки
+	const gateState = useAppSelector(state => state.gate.gates[gateId].states);
+
+	// Кнопки "Открыть"/"Закрыть" ПТК активны (визуально нажаты) только когда задвижка реально движется
+	const openPtkActive = gateState === GATE_STATE_TYPE.toOpen;
+	const closePtkActive = gateState === GATE_STATE_TYPE.toClose;
 
 	// У кнопок ПТК, когда сопротивление = 1 млрд, кнопка дизейбл
 	const openPtkDisabled = openFromPtkElement.resistance === HIGH_RESISTANCE;
@@ -145,6 +144,14 @@ export const useGateControlButtons = () => {
 						dispatch(setResistance(action));
 					});
 				}
+
+				// Диспатчим обновлённую позицию в Redux store
+				dispatch(
+					setGatePosition({
+						id: gateId,
+						position: gatePosition.current,
+					}),
+				);
 			} else if (button === 'close') {
 				gatePosition.current -= 1;
 				dispatch(
@@ -168,7 +175,17 @@ export const useGateControlButtons = () => {
 						dispatch(setResistance(action));
 					});
 				}
+
+				// Диспатчим обновлённую позицию в Redux store
+				dispatch(
+					setGatePosition({
+						id: gateId,
+						position: gatePosition.current,
+					}),
+				);
 			}
+
+			// Логируем текущее положение задвижки для отладки
 			console.log(`Положение задвижки: ${gatePosition.current}%`);
 		}, 100);
 	};
