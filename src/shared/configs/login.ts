@@ -55,7 +55,7 @@ export const config: Login = [
 		required: true,
 		errorMessage: 'Имя введено неверно',
 		warnMessage:
-			'Имя не должно содержать в себе символы @, #, ! и также кирилицу',
+			'Поле может содержать только буквы латиницы, пробел, тире и цифры',
 		validate: (state: LoginFormData) => {
 			if (!state.first_name.trim()) return 0;
 
@@ -72,7 +72,7 @@ export const config: Login = [
 		required: true,
 		errorMessage: 'Фамилия введена неверно',
 		warnMessage:
-			'Фамилия не должна содержать в себе символы @, #, ! и также кирилицу',
+			'Поле может содержать только буквы латиницы, пробел, тире и цифры',
 		validate: (state: LoginFormData) => {
 			if (!state.last_name.trim()) return 0;
 
