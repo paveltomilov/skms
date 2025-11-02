@@ -15,6 +15,7 @@ import {
 	vstavkaNDI_signalNeOtkryto,
 	vstavkaNDI_signalNeOtkryto_element,
 	provodOtVstavkiNDI_signalNeOtkrytoDoNejtrali,
+	provodPeredVstavkojNDI_komandaOtkrytSPTK,
 	vstavkaNDI_komandaOtkrytSPTK,
 	provodOtVstavkiNDI_komandaOtkrytSPTKDoNejtrali,
 	knopkaKRUZAP_komandaOtkryt,
@@ -29,6 +30,7 @@ import {
 	provodPeredVstavkojNDI_signalNeZakryto,
 	vstavkaNDI_signalNeZakryto,
 	provodOtVstavkiNDI_signalNeZakrytoDoNejtrali,
+	provodPeredVstavkojNDI_komandaZakrytSPTK,
 	vstavkaNDI_komandaZakrytSPTK,
 	provodOtVstavkiNDI_komandaZakrytSPTKDoNejtrali,
 	knopkaKRUZAP_komandaZakryt,
@@ -61,6 +63,7 @@ export const controlCircuit: CircuitBranch[] = [
 				],
 				// 2) Команда открыть с ПТК: вставка -> блокировка -> катушка -> (провод к нейтрали)
 				[
+					provodPeredVstavkojNDI_komandaOtkrytSPTK,
 					vstavkaNDI_komandaOtkrytSPTK,
 					blokirovkaVklyucheniaPuskatelyaNaOtkrytie,
 					katushkaPuskatelyaOtkryt,
@@ -90,6 +93,7 @@ export const controlCircuit: CircuitBranch[] = [
 				],
 				// 2) Команда закрыть с ПТК: вставка -> блокировка -> катушка -> (провод к нейтрали)
 				[
+					provodPeredVstavkojNDI_komandaZakrytSPTK,
 					vstavkaNDI_komandaZakrytSPTK,
 					blokirovkaVklyucheniaPuskatelyaNaZakrytie,
 					katushkaPuskatelyaZakryt,
