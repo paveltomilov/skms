@@ -25,7 +25,7 @@ const Training = () => {
     return (
         <>
             {role === 'student' ?
-                <section>Недоступно для студента</section>
+                <section className={styles.training}>Недоступно для студента</section>
                 :
                 <section className={styles.training}>
                     <div className={styles.training__title}>Обучение</div>

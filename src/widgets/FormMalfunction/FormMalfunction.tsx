@@ -8,6 +8,7 @@ import { useRequestData } from '@/shared/hooks/useRequestData';
 import { postSimulation } from '@/shared/utils/postSimulation/postSimulation';
 import { closeModal } from '@/store/modalSlice';
 import { useRouter } from 'next/navigation';
+import { clearStudentId } from '@/store/trainingSlice';
 
 const FormMalfunction: FC = () => {
 
@@ -26,10 +27,13 @@ const FormMalfunction: FC = () => {
     const { urlBase, access, elements } = useRequestData();
 
     const handleSetSimulation = (malfunctionsArray: string) => {
-        const formData: SimulationFormData = { user: studentId, malfunctions: [{ malfunction_id: malfunctionsArray }] };
-        postSimulation(urlBase, access, formData);
-        dispatch(closeModal('setSimulation'));
-        router.push('/training');
+        if (studentId) {
+            const formData: SimulationFormData = { user: studentId, malfunctions: [{ malfunction_id: malfunctionsArray }] };
+            dispatch(clearStudentId());
+            postSimulation(urlBase, access, formData);
+            dispatch(closeModal('setSimulation'));
+            router.push('/training');
+        };
     };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -85,7 +89,7 @@ const FormMalfunction: FC = () => {
                 height={38}
                 text='Назначить симуляцию'
                 disabled={isButtonDisabled}
-                onClick={() =>handleSetSimulation(malfunctionValue)}
+                onClick={() => handleSetSimulation(malfunctionValue)}
             />
         </form>
     );
