@@ -1,16 +1,18 @@
+
 @use '@/shared/scss/variables.module';
+@use '@/shared/scss/mixins.module';
 
 .popup {
-    width: 343px;
-    height: 318px;
+    width: 400px;
+    height: 150px;
     background: variables.$primary-color;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    align-items: center;
+    align-items:center
 }
 
-.gate {
-    font-size: 20px;
-    font-weight: 500;
+.title {
+    @include mixins.text(20px, 400);
 }
+
