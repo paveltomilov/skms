@@ -24,7 +24,7 @@ import {
 	WIRE_LIMIT_CLOSE_TO_TERMINAL_ID,
 	WIRE_LIMIT_OPEN_TO_TERMINAL_ID,
 	WIRE_PHASE_AFTER_BREAKER_ID,
-} from '@/shared/constants';
+} from '@/shared/configs/controlCircuit/constants';
 
 function calcPoint(
 	idPreviousPoint: boolean,

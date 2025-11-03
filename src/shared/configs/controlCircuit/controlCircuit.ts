@@ -12,12 +12,12 @@ import {
 	provodOtSoyedinitelnojKorobkiDoKontsevogoVyklyuchatelyaOtkryto,
 	kontsevojVyklyuchatelOtkryto,
 	provodOtKontsevogoVyklyuchatelyaOtkrytoDoKlemmikaKRUZAP2,
-	vstavkaNDI_signalNeOtkryto,
-	vstavkaNDI_signalNeOtkryto_element,
-	provodOtVstavkiNDI_signalNeOtkrytoDoNejtrali,
-	provodPeredVstavkojNDI_komandaOtkrytSPTK,
-	vstavkaNDI_komandaOtkrytSPTK,
-	provodOtVstavkiNDI_komandaOtkrytSPTKDoNejtrali,
+	vstavkaNDO_signalNeOtkryto,
+	vstavkaNDO_signalNeOtkryto_element,
+	provodOtVstavkiNDO_signalNeOtkrytoDoNejtrali,
+	provodPeredVstavkojNDO_komandaOtkrytSPTK,
+	vstavkaNDO_komandaOtkrytSPTK,
+	provodOtVstavkiNDO_komandaOtkrytSPTKDoNejtrali,
 	knopkaKRUZAP_komandaOtkryt,
 	provodOtKnopkiKRUZAP_komandaOtkrytDoNejtrali,
 	blokirovkaVklyucheniaPuskatelyaNaOtkrytie,
@@ -27,12 +27,12 @@ import {
 	provodOtSoyedinitelnojKorobkiDoKontsevogoVyklyuchatelyaZakryto,
 	kontsevojVyklyuchatelZakryto,
 	provodOtKontsevogoVyklyuchatelyaZakrytoDoKlemmikaKRUZAP2,
-	provodPeredVstavkojNDI_signalNeZakryto,
-	vstavkaNDI_signalNeZakryto,
-	provodOtVstavkiNDI_signalNeZakrytoDoNejtrali,
-	provodPeredVstavkojNDI_komandaZakrytSPTK,
-	vstavkaNDI_komandaZakrytSPTK,
-	provodOtVstavkiNDI_komandaZakrytSPTKDoNejtrali,
+	provodPeredVstavkojNDO_signalNeZakryto,
+	vstavkaNDO_signalNeZakryto,
+	provodOtVstavkiNDO_signalNeZakrytoDoNejtrali,
+	provodPeredVstavkojNDO_komandaZakrytSPTK,
+	vstavkaNDO_komandaZakrytSPTK,
+	provodOtVstavkiNDO_komandaZakrytSPTKDoNejtrali,
 	knopkaKRUZAP_komandaZakryt,
 	provodOtKnopkiKRUZAP_komandaZakrytDoNejtrali,
 	blokirovkaVklyucheniaPuskatelyaNaZakrytie,
@@ -55,19 +55,19 @@ export const controlCircuit: CircuitBranch[] = [
 			provodOtKontsevogoVyklyuchatelyaOtkrytoDoKlemmikaKRUZAP2,
 			[
 				// Параллельные подветки от клеммника КРУЗА-П (ветка открыть)
-				// 1) Вставка NDI «не открыто»: провод -> вставка -> нейтраль
+				// 1) Вставка NDO «не открыто»: провод -> вставка -> нейтраль
 				[
-					vstavkaNDI_signalNeOtkryto,
-					vstavkaNDI_signalNeOtkryto_element,
-					provodOtVstavkiNDI_signalNeOtkrytoDoNejtrali,
+					vstavkaNDO_signalNeOtkryto,
+					vstavkaNDO_signalNeOtkryto_element,
+					provodOtVstavkiNDO_signalNeOtkrytoDoNejtrali,
 				],
 				// 2) Команда открыть с ПТК: вставка -> блокировка -> катушка -> (провод к нейтрали)
 				[
-					provodPeredVstavkojNDI_komandaOtkrytSPTK,
-					vstavkaNDI_komandaOtkrytSPTK,
+					provodPeredVstavkojNDO_komandaOtkrytSPTK,
+					vstavkaNDO_komandaOtkrytSPTK,
 					blokirovkaVklyucheniaPuskatelyaNaOtkrytie,
 					katushkaPuskatelyaOtkryt,
-					provodOtVstavkiNDI_komandaOtkrytSPTKDoNejtrali,
+					provodOtVstavkiNDO_komandaOtkrytSPTKDoNejtrali,
 				],
 				// 3) Кнопка КРУЗА-П «открыть»: кнопка -> нейтраль
 				[
@@ -85,19 +85,19 @@ export const controlCircuit: CircuitBranch[] = [
 			provodOtKontsevogoVyklyuchatelyaZakrytoDoKlemmikaKRUZAP2,
 			[
 				// Параллельные подветки от клеммника КРУЗА-П (ветка закрыть)
-				// 1) Вставка NDI «не закрыто»: провод -> вставка -> нейтраль
+				// 1) Вставка NDO «не закрыто»: провод -> вставка -> нейтраль
 				[
-					provodPeredVstavkojNDI_signalNeZakryto,
-					vstavkaNDI_signalNeZakryto,
-					provodOtVstavkiNDI_signalNeZakrytoDoNejtrali,
+					provodPeredVstavkojNDO_signalNeZakryto,
+					vstavkaNDO_signalNeZakryto,
+					provodOtVstavkiNDO_signalNeZakrytoDoNejtrali,
 				],
 				// 2) Команда закрыть с ПТК: вставка -> блокировка -> катушка -> (провод к нейтрали)
 				[
-					provodPeredVstavkojNDI_komandaZakrytSPTK,
-					vstavkaNDI_komandaZakrytSPTK,
+					provodPeredVstavkojNDO_komandaZakrytSPTK,
+					vstavkaNDO_komandaZakrytSPTK,
 					blokirovkaVklyucheniaPuskatelyaNaZakrytie,
 					katushkaPuskatelyaZakryt,
-					provodOtVstavkiNDI_komandaZakrytSPTKDoNejtrali,
+					provodOtVstavkiNDO_komandaZakrytSPTKDoNejtrali,
 				],
 				// 3) Кнопка КРУЗА-П «закрыть»: кнопка -> нейтраль
 				[

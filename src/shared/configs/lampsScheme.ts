@@ -5,7 +5,7 @@ import {
 	KRUZAP_CLOSED_STATUS_LAMP_ID,
 	KRUZAP_OPEN_STATUS_LAMP_ID,
 	OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID,
-} from '../constants';
+} from './controlCircuit/constants';
 import { CONTROL_CIRCUIT_NEUTRAL_ID } from './points';
 
 export interface Connection {

@@ -20,7 +20,7 @@ import {
 	WIRE_LIMIT_CLOSE_TO_TERMINAL_ID,
 	WIRE_LIMIT_OPEN_TO_TERMINAL_ID,
 	WIRE_PHASE_AFTER_BREAKER_ID,
-} from '../constants';
+} from './controlCircuit/constants';
 
 export { controlCircuit } from './controlCircuit/controlCircuit';
 export {
@@ -31,7 +31,7 @@ export {
 	OPEN_COMMAND_FROM_KRUZAP_INSERT_ID,
 	CLOSE_COMMAND_FROM_PTK_INSERT_ID,
 	CLOSE_COMMAND_FROM_KRUZAP_INSERT_ID,
-} from '../constants';
+} from './controlCircuit/constants';
 
 export const INPUT_CIRCUIT_BREAKER_ID_PHASE_A_ID = 'p.1.2';
 export const INPUT_CIRCUIT_BREAKER_ID_PHASE_B_ID = 'p.2.2';

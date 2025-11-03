@@ -47,7 +47,7 @@ import {
 	KRUZAP_CLOSED_STATUS_LAMP_ID,
 	KRUZAP_OPEN_STATUS_LAMP_ID,
 	OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID,
-} from '@/shared/constants';
+} from '@/shared/configs/controlCircuit/constants';
 
 const CLOSED_POINT_ID = OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID; // А19 - для лампы "Закрыто"
 const OPEN_POINT_ID = CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID; // А11 - для лампы "Открыто"

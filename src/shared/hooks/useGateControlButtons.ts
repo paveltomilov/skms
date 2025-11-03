@@ -8,7 +8,7 @@ import {
 import {
 	CLOSE_COMMAND_FROM_PTK_INSERT_ID,
 	OPEN_COMMAND_FROM_PTK_INSERT_ID,
-} from '../constants';
+} from '../configs/controlCircuit/constants';
 import { findElementByID } from '../utils/findElementByID/scheme';
 import { useAppDispatch, useAppSelector } from './store';
 import { setResistance } from '@/store/circuitSlice';

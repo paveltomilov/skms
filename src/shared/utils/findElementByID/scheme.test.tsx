@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { initialStateScheme } from '@/shared/configs/scheme';
-import { WIRE_POWER_TO_CONTROL_BREAKER_ID } from '@/shared/constants';
+import { WIRE_POWER_TO_CONTROL_BREAKER_ID } from '@/shared/configs/controlCircuit/constants';
 import { InitialStateScheme } from '@/shared/types/scheme';
 import { findElementByID } from './scheme';
 

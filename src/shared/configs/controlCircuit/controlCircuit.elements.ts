@@ -12,13 +12,13 @@ import {
 	WIRE_BOX_TO_LIMIT_OPEN_ID,
 	LIMIT_SWITCH_OPEN_ID,
 	WIRE_LIMIT_OPEN_TO_TERMINAL_ID,
-	WIRE_TERMINAL_TO_NDI_NOT_OPEN_ID,
-	WIRE_BEFORE_NDI_NOT_OPEN_ID,
-	INSERT_NDI_NOT_OPEN_ID,
-	WIRE_NDI_NOT_OPEN_TO_NEUTRAL_ID,
-	WIRE_BEFORE_NDI_CMD_OPEN_PTK_ID,
-	INSERT_NDI_CMD_OPEN_PTK_ID,
-	WIRE_NDI_CMD_OPEN_PTK_TO_NEUTRAL_ID,
+	WIRE_TERMINAL_TO_NDO_NOT_OPEN_ID,
+	WIRE_BEFORE_NDO_NOT_OPEN_ID,
+	INSERT_NDO_NOT_OPEN_ID,
+	WIRE_NDO_NOT_OPEN_TO_NEUTRAL_ID,
+	WIRE_BEFORE_NDO_CMD_OPEN_PTK_ID,
+	INSERT_NDO_CMD_OPEN_PTK_ID,
+	WIRE_NDO_CMD_OPEN_PTK_TO_NEUTRAL_ID,
 	WIRE_BEFORE_INTERLOCK_OPEN_ID,
 	INTERLOCK_CONTACT_OPEN_ID,
 	WIRE_AFTER_INTERLOCK_TO_COIL_OPEN_ID,
@@ -32,13 +32,13 @@ import {
 	WIRE_BOX_TO_LIMIT_CLOSE_ID,
 	LIMIT_SWITCH_CLOSE_ID,
 	WIRE_LIMIT_CLOSE_TO_TERMINAL_ID,
-	WIRE_TERMINAL_TO_NDI_NOT_CLOSED_ID,
-	WIRE_BEFORE_NDI_NOT_CLOSED_ID,
-	INSERT_NDI_NOT_CLOSED_ID,
-	WIRE_NDI_NOT_CLOSED_TO_NEUTRAL_ID,
-	WIRE_BEFORE_NDI_CMD_CLOSE_PTK_ID,
-	INSERT_NDI_CMD_CLOSE_PTK_ID,
-	WIRE_NDI_CMD_CLOSE_PTK_TO_NEUTRAL_ID,
+	WIRE_TERMINAL_TO_NDO_NOT_CLOSED_ID,
+	WIRE_BEFORE_NDO_NOT_CLOSED_ID,
+	INSERT_NDO_NOT_CLOSED_ID,
+	WIRE_NDO_NOT_CLOSED_TO_NEUTRAL_ID,
+	WIRE_BEFORE_NDO_CMD_CLOSE_PTK_ID,
+	INSERT_NDO_CMD_CLOSE_PTK_ID,
+	WIRE_NDO_CMD_CLOSE_PTK_TO_NEUTRAL_ID,
 	WIRE_BEFORE_INTERLOCK_CLOSE_ID,
 	INTERLOCK_CONTACT_CLOSE_ID,
 	WIRE_AFTER_INTERLOCK_TO_COIL_CLOSE_ID,
@@ -68,11 +68,11 @@ import {
 	// Дополнительные точки ветки «ОТКРЫТЬ»
 	OPEN_JUNCTION_BOX_POINT_ID,
 	OPEN_TERMINAL_BLOCK_POINT_ID,
-	OPEN_NDI_SPLIT_POINT_ID,
-	OPEN_NDI_NOT_OPEN_INPUT_POINT_ID,
-	OPEN_NDI_NOT_OPEN_OUTPUT_POINT_ID,
+	OPEN_NDO_SPLIT_POINT_ID,
+	OPEN_NDO_NOT_OPEN_INPUT_POINT_ID,
+	OPEN_NDO_NOT_OPEN_OUTPUT_POINT_ID,
 	OPEN_CMD_PTK_BRANCH_POINT_ID,
-	OPEN_NDI_CMD_PTK_INPUT_POINT_ID,
+	OPEN_NDO_CMD_PTK_INPUT_POINT_ID,
 	OPEN_INTERLOCK_OUTPUT_POINT_ID,
 	OPEN_COIL_INPUT_POINT_ID,
 	OPEN_COIL_SPLIT_POINT_ID,
@@ -84,13 +84,13 @@ import {
 	// Дополнительные точки ветки «ЗАКРЫТЬ»
 	CLOSE_JUNCTION_BOX_POINT_ID,
 	CLOSE_TERMINAL_BLOCK_POINT_ID,
-	CLOSE_NDI_SPLIT_POINT_ID,
-	CLOSE_NDI_NOT_CLOSED_INPUT_POINT_ID,
-	CLOSE_NDI_NOT_CLOSED_OUTPUT_POINT_ID,
-	CLOSE_NDI_NOT_CLOSED_TO_NEUTRAL_POINT_ID,
+	CLOSE_NDO_SPLIT_POINT_ID,
+	CLOSE_NDO_NOT_CLOSED_INPUT_POINT_ID,
+	CLOSE_NDO_NOT_CLOSED_OUTPUT_POINT_ID,
+	CLOSE_NDO_NOT_CLOSED_TO_NEUTRAL_POINT_ID,
 	CLOSE_CMD_PTK_BRANCH_POINT_ID,
-	CLOSE_NDI_CMD_PTK_INPUT_POINT_ID,
-	CLOSE_NDI_CMD_PTK_TO_NEUTRAL_POINT_ID,
+	CLOSE_NDO_CMD_PTK_INPUT_POINT_ID,
+	CLOSE_NDO_CMD_PTK_TO_NEUTRAL_POINT_ID,
 	CLOSE_INTERLOCK_OUTPUT_POINT_ID,
 	CLOSE_COIL_INPUT_POINT_ID,
 	CLOSE_COIL_SPLIT_POINT_ID,
@@ -201,96 +201,96 @@ export const provodOtKontsevogoVyklyuchatelyaOtkrytoDoKlemmikaKRUZAP2: CircuitEl
 		),
 	};
 
-// Провод от клеммника до вставки NDI (сигнал не открыто)
-export const provodOtKlemmikaDoVstavkiNDI_signalNeOtkryto: CircuitElement = {
-	id: WIRE_TERMINAL_TO_NDI_NOT_OPEN_ID,
-	name: 'Провод от клеммника до вставки NDI (сигнал не открыто)',
+// Провод от клеммника до вставки NDO (сигнал не открыто)
+export const provodOtKlemmikaDoVstavkiNDO_signalNeOtkryto: CircuitElement = {
+	id: WIRE_TERMINAL_TO_NDO_NOT_OPEN_ID,
+	name: 'Провод от клеммника до вставки NDO (сигнал не открыто)',
 	resistance: 0.1,
 	kind: 'wire',
 	startPoint: OPEN_TERMINAL_BLOCK_POINT_ID,
-	endPoint: OPEN_NDI_SPLIT_POINT_ID,
+	endPoint: OPEN_NDO_SPLIT_POINT_ID,
 	malfunctions: buildMalfunctions(
-		WIRE_TERMINAL_TO_NDI_NOT_OPEN_ID,
+		WIRE_TERMINAL_TO_NDO_NOT_OPEN_ID,
 		MALF_TPL_WIRE_GROUND_FULL,
 	),
 };
 
-// Вставка NDI (сигнал не открыто)
-export const vstavkaNDI_signalNeOtkryto: CircuitElement = {
-	id: WIRE_BEFORE_NDI_NOT_OPEN_ID,
-	name: 'Провод перед вставкой NDI (сигнал не открыто)',
+// Вставка NDO (сигнал не открыто)
+export const vstavkaNDO_signalNeOtkryto: CircuitElement = {
+	id: WIRE_BEFORE_NDO_NOT_OPEN_ID,
+	name: 'Провод перед вставкой NDO (сигнал не открыто)',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: OPEN_NDI_SPLIT_POINT_ID,
-	endPoint: OPEN_NDI_NOT_OPEN_INPUT_POINT_ID,
+	startPoint: OPEN_NDO_SPLIT_POINT_ID,
+	endPoint: OPEN_NDO_NOT_OPEN_INPUT_POINT_ID,
 	malfunctions: buildMalfunctions(
-		WIRE_BEFORE_NDI_NOT_OPEN_ID,
+		WIRE_BEFORE_NDO_NOT_OPEN_ID,
 		MALF_TPL_WIRE_GROUND_FULL,
 	),
 };
 
-export const vstavkaNDI_signalNeOtkryto_element: CircuitElement = {
-	id: INSERT_NDI_NOT_OPEN_ID,
-	name: 'Вставка NDI (сигнал «не открыто»)',
+export const vstavkaNDO_signalNeOtkryto_element: CircuitElement = {
+	id: INSERT_NDO_NOT_OPEN_ID,
+	name: 'Вставка NDO (сигнал «не открыто»)',
 	resistance: 0,
 	kind: 'insert',
-	startPoint: OPEN_NDI_NOT_OPEN_INPUT_POINT_ID,
-	endPoint: OPEN_NDI_NOT_OPEN_OUTPUT_POINT_ID,
+	startPoint: OPEN_NDO_NOT_OPEN_INPUT_POINT_ID,
+	endPoint: OPEN_NDO_NOT_OPEN_OUTPUT_POINT_ID,
 	malfunctions: buildMalfunctions(
-		INSERT_NDI_NOT_OPEN_ID,
+		INSERT_NDO_NOT_OPEN_ID,
 		MALF_TPL_INSERT_SIGNAL,
 	),
 };
 
-export const provodOtVstavkiNDI_signalNeOtkrytoDoNejtrali: CircuitElement = {
-	id: WIRE_NDI_NOT_OPEN_TO_NEUTRAL_ID,
-	name: 'Провод от вставки NDI (сигнал не открыто) до нейтрали',
+export const provodOtVstavkiNDO_signalNeOtkrytoDoNejtrali: CircuitElement = {
+	id: WIRE_NDO_NOT_OPEN_TO_NEUTRAL_ID,
+	name: 'Провод от вставки NDO (сигнал не открыто) до нейтрали',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: OPEN_NDI_NOT_OPEN_OUTPUT_POINT_ID,
+	startPoint: OPEN_NDO_NOT_OPEN_OUTPUT_POINT_ID,
 	endPoint: CONTROL_NEUTRAL_POINT_ID,
 	malfunctions: buildMalfunctions(
-		WIRE_NDI_NOT_OPEN_TO_NEUTRAL_ID,
+		WIRE_NDO_NOT_OPEN_TO_NEUTRAL_ID,
 		MALF_TPL_WIRE_GROUND_FULL,
 	),
 };
 
 // Провода и элементы для команды с ПТК (c.3.0.4.1.0.0.*)
-export const provodPeredVstavkojNDI_komandaOtkrytSPTK: CircuitElement = {
-	id: WIRE_BEFORE_NDI_CMD_OPEN_PTK_ID,
-	name: 'Провод перед вставкой NDI (команда открыть с ПТК)',
+export const provodPeredVstavkojNDO_komandaOtkrytSPTK: CircuitElement = {
+	id: WIRE_BEFORE_NDO_CMD_OPEN_PTK_ID,
+	name: 'Провод перед вставкой NDO (команда открыть с ПТК)',
 	resistance: 0.1,
 	kind: 'wire',
 	startPoint: OPEN_CMD_PTK_BRANCH_POINT_ID,
-	endPoint: OPEN_NDI_CMD_PTK_INPUT_POINT_ID,
+	endPoint: OPEN_NDO_CMD_PTK_INPUT_POINT_ID,
 	malfunctions: buildMalfunctions(
-		WIRE_BEFORE_NDI_CMD_OPEN_PTK_ID,
+		WIRE_BEFORE_NDO_CMD_OPEN_PTK_ID,
 		MALF_TPL_WIRE_GROUND_FULL,
 	),
 };
 
-export const vstavkaNDI_komandaOtkrytSPTK: CircuitElement = {
-	id: INSERT_NDI_CMD_OPEN_PTK_ID,
-	name: 'Вставка NDI (команда открыть с ПТК)',
+export const vstavkaNDO_komandaOtkrytSPTK: CircuitElement = {
+	id: INSERT_NDO_CMD_OPEN_PTK_ID,
+	name: 'Вставка NDO (команда открыть с ПТК)',
 	resistance: 0,
 	kind: 'insert',
-	startPoint: OPEN_NDI_CMD_PTK_INPUT_POINT_ID,
+	startPoint: OPEN_NDO_CMD_PTK_INPUT_POINT_ID,
 	endPoint: OPEN_COMMAND_MERGE_POINT_ID,
 	malfunctions: buildMalfunctions(
-		INSERT_NDI_CMD_OPEN_PTK_ID,
+		INSERT_NDO_CMD_OPEN_PTK_ID,
 		MALF_TPL_INSERT_SIGNAL,
 	),
 };
 
-export const provodOtVstavkiNDI_komandaOtkrytSPTKDoNejtrali: CircuitElement = {
-	id: WIRE_NDI_CMD_OPEN_PTK_TO_NEUTRAL_ID,
-	name: 'Провод от вставки NDI (команда открыть с ПТК) до нейтрали',
+export const provodOtVstavkiNDO_komandaOtkrytSPTKDoNejtrali: CircuitElement = {
+	id: WIRE_NDO_CMD_OPEN_PTK_TO_NEUTRAL_ID,
+	name: 'Провод от вставки NDO (команда открыть с ПТК) до нейтрали',
 	resistance: 0.1,
 	kind: 'wire',
 	startPoint: OPEN_COMMAND_MERGE_POINT_ID,
 	endPoint: CONTROL_NEUTRAL_POINT_ID,
 	malfunctions: buildMalfunctions(
-		WIRE_NDI_CMD_OPEN_PTK_TO_NEUTRAL_ID,
+		WIRE_NDO_CMD_OPEN_PTK_TO_NEUTRAL_ID,
 		MALF_TPL_WIRE_GROUND_FULL,
 	),
 };
@@ -466,93 +466,93 @@ export const provodOtKontsevogoVyklyuchatelyaZakrytoDoKlemmikaKRUZAP2: CircuitEl
 		),
 	};
 
-export const provodOtKlemmikaDoVstavkiNDI_signalNeZakryto: CircuitElement = {
-	id: WIRE_TERMINAL_TO_NDI_NOT_CLOSED_ID,
-	name: 'Провод от клеммника до вставки NDI (сигнал не закрыто)',
+export const provodOtKlemmikaDoVstavkiNDO_signalNeZakryto: CircuitElement = {
+	id: WIRE_TERMINAL_TO_NDO_NOT_CLOSED_ID,
+	name: 'Провод от клеммника до вставки NDO (сигнал не закрыто)',
 	resistance: 0.1,
 	kind: 'wire',
 	startPoint: CLOSE_TERMINAL_BLOCK_POINT_ID,
-	endPoint: CLOSE_NDI_SPLIT_POINT_ID,
+	endPoint: CLOSE_NDO_SPLIT_POINT_ID,
 	malfunctions: buildMalfunctions(
-		WIRE_TERMINAL_TO_NDI_NOT_CLOSED_ID,
+		WIRE_TERMINAL_TO_NDO_NOT_CLOSED_ID,
 		MALF_TPL_WIRE_GROUND_FULL,
 	),
 };
 
-export const provodPeredVstavkojNDI_signalNeZakryto: CircuitElement = {
-	id: WIRE_BEFORE_NDI_NOT_CLOSED_ID,
-	name: 'Провод перед вставкой NDI (сигнал не закрыто)',
+export const provodPeredVstavkojNDO_signalNeZakryto: CircuitElement = {
+	id: WIRE_BEFORE_NDO_NOT_CLOSED_ID,
+	name: 'Провод перед вставкой NDO (сигнал не закрыто)',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: CLOSE_NDI_NOT_CLOSED_INPUT_POINT_ID,
-	endPoint: CLOSE_NDI_NOT_CLOSED_OUTPUT_POINT_ID,
+	startPoint: CLOSE_NDO_NOT_CLOSED_INPUT_POINT_ID,
+	endPoint: CLOSE_NDO_NOT_CLOSED_OUTPUT_POINT_ID,
 	malfunctions: buildMalfunctions(
-		WIRE_BEFORE_NDI_NOT_CLOSED_ID,
+		WIRE_BEFORE_NDO_NOT_CLOSED_ID,
 		MALF_TPL_WIRE_GROUND_FULL,
 	),
 };
 
-export const vstavkaNDI_signalNeZakryto: CircuitElement = {
-	id: INSERT_NDI_NOT_CLOSED_ID,
-	name: 'Вставка NDI (сигнал «не закрыто»)',
+export const vstavkaNDO_signalNeZakryto: CircuitElement = {
+	id: INSERT_NDO_NOT_CLOSED_ID,
+	name: 'Вставка NDO (сигнал «не закрыто»)',
 	resistance: 0,
 	kind: 'insert',
-	startPoint: CLOSE_NDI_NOT_CLOSED_OUTPUT_POINT_ID,
-	endPoint: CLOSE_NDI_NOT_CLOSED_TO_NEUTRAL_POINT_ID,
+	startPoint: CLOSE_NDO_NOT_CLOSED_OUTPUT_POINT_ID,
+	endPoint: CLOSE_NDO_NOT_CLOSED_TO_NEUTRAL_POINT_ID,
 	malfunctions: buildMalfunctions(
-		INSERT_NDI_NOT_CLOSED_ID,
+		INSERT_NDO_NOT_CLOSED_ID,
 		MALF_TPL_INSERT_SIGNAL,
 	),
 };
 
-export const provodOtVstavkiNDI_signalNeZakrytoDoNejtrali: CircuitElement = {
-	id: WIRE_NDI_NOT_CLOSED_TO_NEUTRAL_ID,
-	name: 'Провод от вставки NDI (сигнал не закрыто) до нейтрали',
+export const provodOtVstavkiNDO_signalNeZakrytoDoNejtrali: CircuitElement = {
+	id: WIRE_NDO_NOT_CLOSED_TO_NEUTRAL_ID,
+	name: 'Провод от вставки NDO (сигнал не закрыто) до нейтрали',
 	resistance: 0.1,
 	kind: 'wire',
-	startPoint: CLOSE_NDI_NOT_CLOSED_TO_NEUTRAL_POINT_ID,
+	startPoint: CLOSE_NDO_NOT_CLOSED_TO_NEUTRAL_POINT_ID,
 	endPoint: CONTROL_NEUTRAL_POINT_ID,
 	malfunctions: buildMalfunctions(
-		WIRE_NDI_NOT_CLOSED_TO_NEUTRAL_ID,
+		WIRE_NDO_NOT_CLOSED_TO_NEUTRAL_ID,
 		MALF_TPL_WIRE_GROUND_FULL,
 	),
 };
 
-export const provodPeredVstavkojNDI_komandaZakrytSPTK: CircuitElement = {
-	id: WIRE_BEFORE_NDI_CMD_CLOSE_PTK_ID,
-	name: 'Провод перед вставкой NDI (команда закрыть с ПТК)',
+export const provodPeredVstavkojNDO_komandaZakrytSPTK: CircuitElement = {
+	id: WIRE_BEFORE_NDO_CMD_CLOSE_PTK_ID,
+	name: 'Провод перед вставкой NDO (команда закрыть с ПТК)',
 	resistance: 0.1,
 	kind: 'wire',
 	startPoint: CLOSE_CMD_PTK_BRANCH_POINT_ID,
-	endPoint: CLOSE_NDI_CMD_PTK_INPUT_POINT_ID,
+	endPoint: CLOSE_NDO_CMD_PTK_INPUT_POINT_ID,
 	malfunctions: buildMalfunctions(
-		WIRE_BEFORE_NDI_CMD_CLOSE_PTK_ID,
+		WIRE_BEFORE_NDO_CMD_CLOSE_PTK_ID,
 		MALF_TPL_WIRE_GROUND_FULL,
 	),
 };
 
-export const vstavkaNDI_komandaZakrytSPTK: CircuitElement = {
-	id: INSERT_NDI_CMD_CLOSE_PTK_ID,
-	name: 'Вставка NDI (команда закрыть с ПТК)',
+export const vstavkaNDO_komandaZakrytSPTK: CircuitElement = {
+	id: INSERT_NDO_CMD_CLOSE_PTK_ID,
+	name: 'Вставка NDO (команда закрыть с ПТК)',
 	resistance: 0,
 	kind: 'insert',
-	startPoint: CLOSE_NDI_CMD_PTK_INPUT_POINT_ID,
-	endPoint: CLOSE_NDI_CMD_PTK_TO_NEUTRAL_POINT_ID,
+	startPoint: CLOSE_NDO_CMD_PTK_INPUT_POINT_ID,
+	endPoint: CLOSE_NDO_CMD_PTK_TO_NEUTRAL_POINT_ID,
 	malfunctions: buildMalfunctions(
-		INSERT_NDI_CMD_CLOSE_PTK_ID,
+		INSERT_NDO_CMD_CLOSE_PTK_ID,
 		MALF_TPL_INSERT_SIGNAL,
 	),
 };
 
-export const provodOtVstavkiNDI_komandaZakrytSPTKDoNejtrali: CircuitElement = {
-	id: WIRE_NDI_CMD_CLOSE_PTK_TO_NEUTRAL_ID,
-	name: 'Провод от вставки NDI (команда закрыть с ПТК) до нейтрали',
+export const provodOtVstavkiNDO_komandaZakrytSPTKDoNejtrali: CircuitElement = {
+	id: WIRE_NDO_CMD_CLOSE_PTK_TO_NEUTRAL_ID,
+	name: 'Провод от вставки NDO (команда закрыть с ПТК) до нейтрали',
 	resistance: 0.1,
 	kind: 'wire',
 	startPoint: CLOSE_COMMAND_MERGE_POINT_ID,
 	endPoint: CONTROL_NEUTRAL_POINT_ID,
 	malfunctions: buildMalfunctions(
-		WIRE_NDI_CMD_CLOSE_PTK_TO_NEUTRAL_ID,
+		WIRE_NDO_CMD_CLOSE_PTK_TO_NEUTRAL_ID,
 		MALF_TPL_WIRE_GROUND_FULL,
 	),
 };

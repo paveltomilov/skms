@@ -6,7 +6,7 @@ import {
 	LIMIT_SWITCH_OPEN_ID,
 	OPEN_COMMAND_FROM_KRUZAP_INSERT_ID,
 	OPEN_COMMAND_FROM_PTK_INSERT_ID,
-} from '../constants';
+} from './controlCircuit/constants';
 
 export const PTK_BUTTONS_CONFIG = {
 	// Срабатывает сразу после нажатия на кнопку открыть ПТК
