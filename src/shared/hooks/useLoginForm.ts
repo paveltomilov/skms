@@ -65,15 +65,7 @@ export function useLoginForm({ toggleRegisterMode }: UseLoginFormProps) {
 	}, [values, serverErrors, activeFields]);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name } = e.target;
-		let { value } = e.target;
-		// Блокируем кириллицу в email: удаляем символы кириллицы и пробелы, приводим к нижнему регистру
-		if (name === 'email') {
-			value = value
-				.replace(/[а-яёА-ЯЁ]/g, '')
-				.replace(/\s+/g, '')
-				.toLowerCase();
-		}
+		const { name, value } = e.target;
 		const key = name as keyof LoginFormData;
 
 		if (serverErrors[key]) {

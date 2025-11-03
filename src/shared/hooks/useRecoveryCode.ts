@@ -45,17 +45,18 @@ export const useRecoveryCode = (initialCount = 60) => {
 			clearTimer();
 			return;
 		}
-		if (!timerIdRef.current) {
-			timerIdRef.current = setInterval(() => {
-				setCount(prev => {
-					if (prev <= 1) {
-						clearTimer();
-						return 0;
-					}
-					return prev - 1;
-				});
-			}, 1000);
+		if (timerIdRef.current) {
+			clearTimer();
 		}
+		timerIdRef.current = setInterval(() => {
+			setCount(prev => {
+				if (prev <= 1) {
+					return 0;
+				}
+				return prev - 1;
+			});
+		}, 1000);
+		
 		return () => clearTimer();
 	}, [count, clearTimer]);
 
@@ -113,7 +114,7 @@ export const useRecoveryCode = (initialCount = 60) => {
 		const codeStr = code.join('');
 		// Запрос на сервер
 		try {
-			const res = await verifyRecoveryCode(email, codeStr);
+			const res = await verifyRecoveryCode(codeStr);
 			if (res.success && res.data.session_token) {
 				setValidationStatus(true);
 				setErrorMessage('');
@@ -137,7 +138,7 @@ export const useRecoveryCode = (initialCount = 60) => {
 			setErrorMessage('Ошибка проверки кода');
 			return false;
 		}
-	}, [code, isComplete, email]);
+	}, [code, isComplete]);
 
 	const handleRequestCode = useCallback(async () => {
 		if (!email) return;

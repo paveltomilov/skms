@@ -43,13 +43,12 @@ export async function requestPasswordReset(
 }
 
 export async function verifyRecoveryCode(
-	email: string,
 	code: string,
 ): Promise<ApiResult<VerifyCodeResponse>> {
 	try {
 		const { data } = await axios.post<VerifyCodeResponse>(
 			`${urlBase}/password/reset/verify/`,
-			{ email, code },
+			{ code },
 			{
 				headers: { 'Content-Type': 'application/json' },
 			},

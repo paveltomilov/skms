@@ -17,9 +17,7 @@ export const config: Login = [
 
 			if (!email) return 0;
 
-			// Разрешаем только ASCII email: буквы/цифры и ._%+- в локальной части, домен из латиницы/цифр/.-
-			const emailPattern =
-				/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+			const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 			if (!emailPattern.test(email)) return 2;
 
