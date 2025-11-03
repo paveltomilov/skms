@@ -77,12 +77,12 @@ export const SCHEME_ELEMENTS: { id: string; aria: string; type: Modals }[] = [
 	},
 	{
 		id: 'c.3.2.3.1',
-		aria: 'Вставка NDI (сигнал «не закрыто»)',
+		aria: 'Вставка NDI (сигнал НЕ ЗАКРЫТО)',
 		type: 'fusible_insert',
 	},
 	{
 		id: 'c.3.1.3.1',
-		aria: 'Вставка NDI (сигнал «не открыто»)',
+		aria: 'Вставка NDI (сигнал НЕ ОТКРЫТО)',
 		type: 'fusible_insert',
 	},
 	{
@@ -824,7 +824,7 @@ const controlCircuit = [
 			[
 				{
 					id: 'c.3.1.3.1',
-					name: 'Вставка NDI (сигнал «не открыто»)',
+					name: 'Вставка NDI (сигнал НЕ ОТКРЫТО)',
 					resistance: 0,
 					malfunctions: [
 						{
@@ -974,7 +974,7 @@ const controlCircuit = [
 			[
 				{
 					id: 'c.3.2.3.1',
-					name: 'Вставка NDI (сигнал «не закрыто»)',
+					name: 'Вставка NDI (сигнал НЕ ЗАКРЫТО)',
 					resistance: 0,
 					malfunctions: [
 						{

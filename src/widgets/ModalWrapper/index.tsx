@@ -19,6 +19,7 @@ import PopupNotificationDev from '../PopupNotificationDev';
 import { PopupStudentStatistic } from '../PopupStudetnStatistic';
 import { PopupStudentCreate } from '../PopupStudentCreate';
 import { PopupStudentDelete } from '../PopupStudentDelete';
+import { PopupNote } from '../PopupNote';
 
 interface IModals {
 	condition: boolean;
@@ -41,7 +42,8 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		setSimulation,
 		studentStatistics,
 		studentCreate,
-		studentDelete
+		studentDelete,
+		note
 	} = useAppSelector(state => state.modal);
 
 	const isOne =
@@ -57,7 +59,8 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		setSimulation ||
 		studentStatistics ||
 		studentCreate ||
-		studentDelete
+		studentDelete ||
+		note
 ;
 
 	const gateId = useAppSelector(state => state.gate.activeGateId as string);
@@ -153,6 +156,13 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			headerTitle: 'Удаление ученика',
 			gateId: undefined,
 			component: <PopupStudentDelete />,
+		},
+		{
+			condition: note,
+			id: 'note',
+			headerTitle: 'Уведомление',
+			gateId: undefined,
+			component: <PopupNote />,
 		},
 	];
 
