@@ -28,9 +28,10 @@ export function useLoginForm({ toggleRegisterMode }: UseLoginFormProps) {
 	});
 	const [isValid, setIsValid] = useState(false);
 	const activeFields = useMemo<(keyof LoginFormData)[]>(() => {
-		return toggleRegisterMode ? ['first_name', 'last_name', 'password', 'email'] : ['email', 'password'];
+		return toggleRegisterMode
+			? ['first_name', 'last_name', 'password', 'email']
+			: ['email', 'password'];
 	}, [toggleRegisterMode]);
-
 
 	const configMap = useMemo(() => {
 		const map: Record<string, (typeof config)[number]> = {};
@@ -54,7 +55,12 @@ export function useLoginForm({ toggleRegisterMode }: UseLoginFormProps) {
 		const newValidationStatus = computeValidationStatus(values);
 		setValidationStatus(newValidationStatus);
 		setIsValid(
-			checkFormValidity(values, newValidationStatus, serverErrors, activeFields),
+			checkFormValidity(
+				values,
+				newValidationStatus,
+				serverErrors,
+				activeFields,
+			),
 		);
 	}, [values, serverErrors, activeFields]);
 
