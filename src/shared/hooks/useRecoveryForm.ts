@@ -11,6 +11,7 @@ import {
 	checkFormValidity,
 	computeValidationStatus,
 } from '@/shared/utils/recoveryFunctions/recoveryFunctions';
+import { useDebounce } from '@/shared/hooks/useDebounce';
 
 type UseRecoveryFormProps = {
 	steps?: number;
@@ -34,6 +35,9 @@ export const useRecoveryForm = ({ steps }: UseRecoveryFormProps) => {
 	});
 	const [isValid, setIsValid] = useState(false);
 
+	// Дебоунс для значений полей (задержка 300мс)
+	const debouncedValues = useDebounce(values, 300);
+
 	// Формируем активные поля в зависимости от шага
 	const activeFields = useMemo<(keyof RecoveryFormData)[]>(() => {
 		return steps === 2 ? ['password', 'confirm_password'] : ['email'];
@@ -56,32 +60,67 @@ export const useRecoveryForm = ({ steps }: UseRecoveryFormProps) => {
 			password: false,
 			confirm_password: false,
 		});
+		// Сбрасываем валидацию при смене шага
+		setValidationStatus({
+			email: 0,
+			password: 0,
+			confirm_password: 0,
+		});
 	}, [steps]);
 
-	// Обновление статуса валидации и общей валидности при изменении значений, ошибок и активных полей
+	// Мгновенная валидация при вводе (для недопустимых символов)
 	useEffect(() => {
-		const newValidationStatus = computeValidationStatus(values);
+		// Проверяем только активные поля
+		activeFields.forEach(field => {
+			const value = values[field] ?? '';
+
+			// Для email проверяем кириллицу
+			if (field === 'email') {
+				const cyrillicPattern = /[а-яёА-ЯЁ]/;
+				if (cyrillicPattern.test(value)) {
+					setValidationStatus(prev => ({ ...prev, [field]: 2 }));
+				}
+			}
+
+			// Для пароля проверяем кириллицу и запрещённые символы
+			if (field === 'password' || field === 'confirm_password') {
+				const cyrillicPattern = /[а-яёА-ЯЁ]/;
+				const forbiddenSymbolsPattern = /[@#!]/;
+				if (
+					cyrillicPattern.test(value) ||
+					forbiddenSymbolsPattern.test(value)
+				) {
+					setValidationStatus(prev => ({ ...prev, [field]: 2 }));
+				}
+			}
+		});
+	}, [values, activeFields]);
+
+	// Дебоунс-валидация для остальных проверок
+	useEffect(() => {
+		const newValidationStatus = computeValidationStatus(debouncedValues);
 		setValidationStatus(newValidationStatus);
 		setIsValid(
 			checkFormValidity(
-				values,
+				debouncedValues,
 				newValidationStatus,
 				serverErrors,
 				activeFields,
 			),
 		);
-	}, [values, serverErrors, activeFields]);
+	}, [debouncedValues, serverErrors, activeFields]);
 
 	// Обработчик изменения полей формы
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name } = e.target;
 		let { value } = e.target;
+
+		// Для email только удаляем пробелы и приводим к нижнему регистру
+		// НЕ удаляем кириллицу, чтобы валидация могла показать предупреждение
 		if (name === 'email') {
-			value = value
-				.replace(/[а-яёА-ЯЁ]/g, '')
-				.replace(/\s+/g, '')
-				.toLowerCase();
+			value = value.replace(/\s+/g, '').toLowerCase();
 		}
+
 		const key = name as keyof RecoveryFormData;
 
 		if (serverErrors[key]) {

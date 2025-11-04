@@ -41,8 +41,11 @@ const FormRecovery: FC<FormRecoveryProps> = ({ steps, setSteps, isOpen }) => {
             return;
         }
 
-        // сохраняем e-mail и стартовое время таймера для повторной отправки
+        // сохраняем session_token из первого шага (request), e-mail и стартовое время таймера
         try {
+            if (res.data.session_token) {
+                localStorage.setItem('recovery:request_session_token', res.data.session_token);
+            }
             localStorage.setItem('recovery:email', email);
             localStorage.setItem(`recovery:lastSentAt:${email}`, String(Date.now()));
         } catch { }
@@ -66,8 +69,9 @@ const FormRecovery: FC<FormRecoveryProps> = ({ steps, setSteps, isOpen }) => {
                 if (!password || !confirmPassword || !sessionToken) return;
                 const res = await apiSetNewPassword(sessionToken, password, confirmPassword);
                 if (res.success) {
-                    // очистка временных данных
+                    // очистка временных данных восстановления пароля
                     try {
+                        localStorage.removeItem('recovery:request_session_token');
                         localStorage.removeItem('recovery:session_token');
                         localStorage.removeItem('recovery:email');
                         const email = values.email?.trim();

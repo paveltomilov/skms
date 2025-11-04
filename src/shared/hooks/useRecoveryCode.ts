@@ -56,7 +56,7 @@ export const useRecoveryCode = (initialCount = 60) => {
 				return prev - 1;
 			});
 		}, 1000);
-		
+
 		return () => clearTimer();
 	}, [count, clearTimer]);
 
@@ -112,13 +112,26 @@ export const useRecoveryCode = (initialCount = 60) => {
 			return false;
 		}
 		const codeStr = code.join('');
-		// Запрос на сервер
+
+		// Получаем session_token из шага request
+		const requestSessionToken =
+			localStorage.getItem('recovery:request_session_token') || '';
+		if (!requestSessionToken) {
+			setValidationStatus(false);
+			setErrorMessage(
+				'Сессия восстановления не найдена. Запросите код заново.',
+			);
+			return false;
+		}
+
+		// Запрос на сервер с session_token и кодом
 		try {
-			const res = await verifyRecoveryCode(codeStr);
+			const res = await verifyRecoveryCode(requestSessionToken, codeStr);
 			if (res.success && res.data.session_token) {
 				setValidationStatus(true);
 				setErrorMessage('');
 				try {
+					// Сохраняем новый session_token для финального шага (complete)
 					localStorage.setItem(
 						'recovery:session_token',
 						res.data.session_token,
@@ -144,6 +157,15 @@ export const useRecoveryCode = (initialCount = 60) => {
 		if (!email) return;
 		const res = await requestPasswordReset(email);
 		if (res.success) {
+			// Сохраняем session_token из request для последующего verify
+			try {
+				if (res.data.session_token) {
+					localStorage.setItem(
+						'recovery:request_session_token',
+						res.data.session_token,
+					);
+				}
+			} catch {}
 			startTimer();
 		} else {
 			setErrorMessage(res.errors?.detail || 'Не удалось отправить код');

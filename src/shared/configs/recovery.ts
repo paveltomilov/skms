@@ -12,13 +12,21 @@ export const configRecovery: Recovery = [
 		name: 'email',
 		required: true,
 		errorMessage: 'Пользователь с таким E-mail не существует',
-		warnMessage: 'E-mail введён некорректно',
+		warnMessage:
+			'E-mail не может содержать кириллицу и должен быть корректным',
 		validate: (state: RecoveryFormData) => {
 			if (!state.email || !state.email.trim()) return 0;
-			
+
+			// Проверяем кириллицу в email
+			const cyrillicPattern = /[а-яёА-ЯЁ]/;
+			if (cyrillicPattern.test(state.email)) {
+				return 2; // warning
+			}
+
+			// Проверяем формат email
 			const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-			
 			if (!emailPattern.test(state.email)) return 2;
+
 			return 0;
 		},
 	},
@@ -28,15 +36,20 @@ export const configRecovery: Recovery = [
 		errorMessage: 'Пароль введён неверно',
 		warnMessage: 'Пароль не должен содержать символы @, #, ! и кириллицу',
 		validate: (state: RecoveryFormData) => {
-			if (!state.password.trim()) return 0;
-
+			// Проверяем недопустимые символы даже если поле пустое или содержит только пробелы
 			const forbiddenSymbolsPattern = /[@#!]/;
 			const cyrillicPattern = /[а-яёА-ЯЁ]/;
+
 			if (
 				forbiddenSymbolsPattern.test(state.password) ||
 				cyrillicPattern.test(state.password)
-			)
-				return 2;
+			) {
+				return 2; // warning
+			}
+
+			// Если поле пустое и нет недопустимых символов — нейтральное состояние
+			if (!state.password.trim()) return 0;
+
 			return 0;
 		},
 	},

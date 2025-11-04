@@ -9,9 +9,10 @@ export type ApiResult<T> =
 
 export interface RequestResetResponse {
 	message?: string;
+	session_token: string; // Токен сессии для идентификации запроса восстановления
 }
 export interface VerifyCodeResponse {
-	session_token: string;
+	session_token: string; // Новый токен для завершения восстановления
 }
 export interface SetNewPasswordResponse {
 	message?: string;
@@ -43,12 +44,13 @@ export async function requestPasswordReset(
 }
 
 export async function verifyRecoveryCode(
+	sessionToken: string,
 	code: string,
 ): Promise<ApiResult<VerifyCodeResponse>> {
 	try {
 		const { data } = await axios.post<VerifyCodeResponse>(
 			`${urlBase}/password/reset/verify/`,
-			{ code },
+			{ session_token: sessionToken, code },
 			{
 				headers: { 'Content-Type': 'application/json' },
 			},
