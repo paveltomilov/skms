@@ -5,6 +5,7 @@ import multimeterReducer from './multimeterSlice';
 import circuitReducer from './circuitSlice';
 import pointsReducer from './pointsSlice';
 import powerUnitReducer from './powerUnitSlice';
+import trainingReducer from './trainingSlice';
 
 export const store = () => {
 	return configureStore({
@@ -15,6 +16,7 @@ export const store = () => {
 			circuit: circuitReducer,
 			points: pointsReducer,
 			powerUnit: powerUnitReducer,
+			training: trainingReducer,
 		},
 	});
 };

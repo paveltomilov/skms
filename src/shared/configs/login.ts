@@ -53,11 +53,12 @@ export const config: Login = [
 		required: true,
 		errorMessage: 'Имя введено неверно',
 		warnMessage:
-			'Имя не должно содержать в себе символы @, #, ! и также кирилицу',
+			'Поле может содержать только буквы латиницы, пробел, тире и цифры',
 		validate: (state: LoginFormData) => {
 			if (!state.first_name.trim()) return 0;
 
-			const latinPattern = /^(?!.*[-\s]{3,})[A-Za-z0-9]+(?:[-\s][A-Za-z0-9]+)*$/;
+			const latinPattern =
+				/^(?!.*[-\s]{3,})[A-Za-z0-9]+(?:[-\s][A-Za-z0-9]+)*$/;
 
 			if (!latinPattern.test(state.first_name.trim())) return 2;
 
@@ -69,11 +70,12 @@ export const config: Login = [
 		required: true,
 		errorMessage: 'Фамилия введена неверно',
 		warnMessage:
-			'Фамилия не должна содержать в себе символы @, #, ! и также кирилицу',
+			'Поле может содержать только буквы латиницы, пробел, тире и цифры',
 		validate: (state: LoginFormData) => {
 			if (!state.last_name.trim()) return 0;
 
-			const latinPattern = /^(?!.*[-\s]{3,})[A-Za-z0-9]+(?:[-\s][A-Za-z0-9]+)*$/;
+			const latinPattern =
+				/^(?!.*[-\s]{3,})[A-Za-z0-9]+(?:[-\s][A-Za-z0-9]+)*$/;
 
 			if (!latinPattern.test(state.last_name.trim())) return 2;
 
