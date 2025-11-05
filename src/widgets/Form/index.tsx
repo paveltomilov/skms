@@ -2,15 +2,15 @@
 
 import Button from '@/shared/UI/Button';
 import styles from './styles.module.scss';
-import {useRouter} from 'next/navigation';
-import {FC, FormEventHandler} from 'react';
+import { useRouter } from 'next/navigation';
+import { FC, FormEventHandler, useState } from 'react';
 import LoginInput from '../../shared/UI/LoginInput';
 import Link from 'next/link';
-import {getDone, getIndicator,} from '@/shared/utils/loginFunctions/loginFunctions';
-import {useLoginForm} from '@/shared/hooks/useLoginForm';
-import {postAuth} from '@/shared/lib/auth';
-import {postRegistration} from '@/shared/lib/registration';
-import {LoginFormData} from '@/shared/types/login';
+import { getDone, getIndicator, } from '@/shared/utils/loginFunctions/loginFunctions';
+import { useLoginForm } from '@/shared/hooks/useLoginForm';
+import { postAuth } from '@/shared/lib/auth';
+import { postRegistration } from '@/shared/lib/registration';
+import { LoginFormData } from '@/shared/types/login';
 
 interface FormProps {
 	toggleRegisterMode?: boolean;
@@ -39,6 +39,8 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 		validateForm,
 	} = useLoginForm({ toggleRegisterMode });
 
+	const [authErrorText, setAuthErrorText] = useState<string | undefined>(undefined);
+
 	// Конфигурация полей формы
 	const fieldConfigs: FieldConfig[] = [
 		...(toggleRegisterMode ? [
@@ -55,6 +57,7 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 		const hasError = serverErrors[name];
 		const hasWarn = !hasError && validationStatus[name] === 2;
 
+		const customErrorText = name === 'password' ? authErrorText : undefined;
 		return (
 			<LoginInput
 				key={name}
@@ -69,7 +72,7 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 				done={getDone(name, values, validationStatus, serverErrors, activeFields)}
 				error={hasError}
 				warn={hasWarn}
-				errorMessage={hasError ? configMap[name]?.errorMessage : undefined}
+				errorMessage={hasError ? (customErrorText || configMap[name]?.errorMessage) : undefined}
 				warnMessage={hasWarn ? configMap[name]?.warnMessage : undefined}
 				required={configMap[name]?.required}
 			/>
@@ -94,7 +97,6 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 				});
 			}
 		} catch {
-			console.error('Ошибка при регистрации');
 			setServerErrors(PASSWORD_ERROR);
 		}
 	};
@@ -103,13 +105,13 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 	const handleAuth = async () => {
 		try {
 			const response = await postAuth(values);
-			if (response) {
+			if (response.success) {
 				router.push('/ptk');
 			} else {
 				setServerErrors(PASSWORD_ERROR);
+				setAuthErrorText(response.errorText || 'Неверные учётные данные');
 			}
 		} catch {
-			console.error('Ошибка при аутентификации');
 			setServerErrors(PASSWORD_ERROR);
 		}
 	};
