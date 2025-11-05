@@ -5,6 +5,7 @@ import { useAppDispatch } from '@/shared/hooks/store';
 import { useDragging } from '@/shared/hooks/useDragging';
 import { GATES } from '@/shared/configs/gate';
 import ModalHeader from '@/entities/ModalHeader';
+import { clearCurrentStudent } from '@/store/trainingSlice';
 
 interface ModalOverlayProps {
 	id: Modals;
@@ -37,7 +38,12 @@ const ModalOverlay: FC<ModalOverlayProps> = ({
 				handleMouseDown={e => handleMouseDown(e)}
 				headerTitle={headerTitle}
 				gateName={name}
-				handleClose={() => dispatch(closeModal(id))}
+				handleClose={() => {
+					dispatch(closeModal(id));
+					if (id === 'studentDelete') {
+						dispatch(clearCurrentStudent());
+					}
+				}}
 			/>
 			{children}
 		</div>

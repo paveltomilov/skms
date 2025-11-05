@@ -4,7 +4,7 @@ import Button from '@/shared/UI/Button';
 import { openModal } from '@/store/modalSlice';
 import cn from 'classnames';
 import { useRouter } from 'next/navigation';
-import { setStudentId } from '@/store/trainingSlice';
+import { setCurrentStudent, setStudentId } from '@/store/trainingSlice';
 import { useAppDispatch } from '@/shared/hooks/store';
 import { User } from '@/shared/types/users';
 
@@ -65,7 +65,10 @@ const UserCard: FC<Props> = ({ className, data }) => {
 					height={32}
 					text={`Удалить ${textDeleteRole}`}
 					className={styles.card__buttons__button}
-					onClick={() => dispatch(openModal('studentDelete'))}
+					onClick={() => {
+						dispatch(setCurrentStudent(data));
+						dispatch(openModal('studentDelete'));
+					}}
 				/>
 			</div>
 		</div>

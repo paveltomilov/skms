@@ -8,7 +8,7 @@ import { useRequestData } from '@/shared/hooks/useRequestData';
 import Loader from '@/shared/UI/Loader';
 import ErrorMessage from '@/shared/components/ErrorMessage';
 import { useGetUsers } from '@/shared/hooks/useGetUsers';
-import UserCard from '@/entities/StudentCard';
+import UserCard from '@/entities/UserCard';
 
 const Training = () => {
 	const { urlBase, access, elements } = useRequestData();

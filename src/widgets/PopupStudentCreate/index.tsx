@@ -82,7 +82,7 @@ export const PopupStudentCreate: FC = () => {
 						name={'first_name'}
 						onChange={handleChange}
 						value={values.first_name || ''}
-						placeholder={'Фамилия ученика'}
+						placeholder={'Фамилия'}
 						id={'first_name'}
 						indicator={getIndicator('first_name',values,validationStatus,serverErrors)}
 						done={getDone('first_name',values,validationStatus,serverErrors,activeFields)}
@@ -98,7 +98,7 @@ export const PopupStudentCreate: FC = () => {
 						name={'last_name'}
 						onChange={handleChange}
 						value={values.last_name || ''}
-						placeholder={'Имя ученика'}
+						placeholder={'Имя'}
 						id={'last_name'}
 						indicator={getIndicator('last_name',values,validationStatus,serverErrors)}
 						done={getDone('last_name',values,validationStatus,serverErrors,activeFields)}
@@ -109,12 +109,12 @@ export const PopupStudentCreate: FC = () => {
 						required={configMap.last_name?.required}
 					/>
 					<LoginInput
-						label={'Email'}
+						label={'Email ученика'}
 						type={'email'}
 						name={'email'}
 						onChange={handleChange}
 						value={values.email || ''}
-						placeholder={'Email ученика'}
+						placeholder={'Email'}
 						id={'email'}
 						indicator={getIndicator('email',values,validationStatus,serverErrors)}
 						done={getDone('email',values,validationStatus,serverErrors,activeFields)}
