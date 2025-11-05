@@ -7,7 +7,7 @@ import { postMalfunctions } from '@/shared/utils/postMalfunctions/postMalfunctio
 import { useRequestData } from '@/shared/hooks/useRequestData';
 import Loader from '@/shared/UI/Loader';
 import ErrorMessage from '@/shared/components/ErrorMessage';
-import { useUsers } from '@/shared/hooks/useUsers';
+import { useGetUsers } from '@/shared/hooks/useGetUsers';
 import UserCard from '@/entities/StudentCard';
 
 const Training = () => {
@@ -15,7 +15,7 @@ const Training = () => {
 
 	const { role } = useUserCookies();
 
-	const { users, isLoading, error, refetch } = useUsers(role);
+	const { users, isLoading, error, refetch } = useGetUsers(role);
 
 	const handleCreateMalfunctions = () => {
 		postMalfunctions(urlBase, access, elements);

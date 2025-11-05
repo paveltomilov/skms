@@ -5,7 +5,6 @@ import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import useShowModal from '@/shared/hooks/useShowModal';
 import { useDate } from '@/shared/hooks/useDate';
-import { useUserCookies } from '@/shared/hooks/useUserCookies';
 
 const HeaderTraining: FC = () => {
 	const handleModalStudentCreate = useShowModal('studentCreate');
@@ -13,8 +12,6 @@ const HeaderTraining: FC = () => {
 
 	const { formattedDate, formattedTime, dateTimeDate, dateTimeTime } =
 		useDate();
-
-	const { role } = useUserCookies();
 
 	return (
 		<header className={styles.header}>
@@ -24,7 +21,6 @@ const HeaderTraining: FC = () => {
 						className={styles.button}
 						width={213}
 						height={32}
-						disabled={role !== 'teacher'}
 						text="Создать ученика"
 						onClick={() => {
 							handleModalStudentCreate();

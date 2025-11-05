@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { getUsers } from '../utils/getUsers/getUsers';
 import { Role, User } from '../types/users';
 
-export const useUsers = (role: Role) => {
+export const useGetUsers = (role: Role) => {
 	const [users, setUsers] = useState<User[]>([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);

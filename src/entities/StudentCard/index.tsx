@@ -36,23 +36,30 @@ const UserCard: FC<Props> = ({ className, data }) => {
 				</div>
 			</div>
 			<div className={styles.card__buttons}>
-				<Button
-					width={239}
-					height={32}
-					text="Задать симуляцию"
-					className={styles.card__buttons__button}
-					onClick={() => {
-						dispatch(setStudentId(data.id));
-						router.push('/ptk');
-					}}
-				/>
-				<Button
-					width={239}
-					height={32}
-					text="Статистика"
-					className={styles.card__buttons__button}
-					onClick={() => dispatch(openModal('studentStatistics'))}
-				/>
+				{data.role === 'student' ? (
+					<>
+						<Button
+							width={239}
+							height={32}
+							text="Задать симуляцию"
+							className={styles.card__buttons__button}
+							onClick={() => {
+								dispatch(setStudentId(data.id));
+								router.push('/ptk');
+							}}
+						/>
+						<Button
+							width={239}
+							height={32}
+							text="Статистика"
+							className={styles.card__buttons__button}
+							onClick={() =>
+								dispatch(openModal('studentStatistics'))
+							}
+						/>
+					</>
+				) : null}
+
 				<Button
 					width={239}
 					height={32}
