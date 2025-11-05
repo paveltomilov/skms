@@ -1,19 +1,9 @@
 .footer {
-	padding-top: 180px;
-
 	&__container {
-		height: 211px;
-		position: relative;
-		display: flex;
-		justify-content: space-between;
-		z-index: 10;
-
-		&__img {
-			position: absolute;
-			top: -140px;
-			left: 0;
-			z-index: -1;
-		}
+		background-image: url(/assets/images/footer.png);
+		background-position-y: 42px;
+		background-repeat: no-repeat;
+		background-size: auto;
 	}
 
 	&__nav {
@@ -22,6 +12,12 @@
 	}
 
 	&_container {
+		&__content {
+			padding-top: 180px;
+			padding-bottom: 16px;
+			display: flex;
+			justify-content: space-between;
+		}
 		&_left__link {
 			display: block;
 			font-family: var(--second-family);
@@ -37,8 +33,8 @@
 			height: 192px;
 			display: flex;
 			flex-direction: column;
-			justify-content: flex-start;
-			align-items: flex-start;
+			justify-content: space-between;
+			align-items: flex-end;
 		}
 
 		&_right__top {
@@ -49,27 +45,25 @@
 		}
 
 		&_right__logo {
-			margin-top: auto;
-			margin-bottom: 8px;
-			margin-left: auto;
+			padding-bottom: 8px;
 		}
 
 		&_right_top {
-			&_mail__svg {
-				margin-right: 16px;
-			}
-
-			&_telephone__svg {
-				margin-right: 16px;
-			}
-
 			&__mail {
-				display: block;
+				display: inline-flex;
 				font-family: var(--second-family);
 				font-weight: 400;
 				font-size: 17px;
 				line-height: 128%;
 				color: var(--lan-light-grayish-blue);
+
+				&::before {
+					content: url('/assets/svg/mail.svg');
+					width: 19px;
+					height: 15px;
+					margin-right: 16px;
+					flex-shrink: 0;
+				}
 			}
 
 			&__telephone {
@@ -79,6 +73,14 @@
 				font-size: 17px;
 				line-height: 128%;
 				color: var(--lan-light-grayish-blue);
+
+				&::before {
+					content: url('/assets/svg/telephone.svg');
+					width: 19px;
+					height: 19px;
+					margin-right: 16px;
+					flex-shrink: 0;
+				}
 			}
 		}
 	}

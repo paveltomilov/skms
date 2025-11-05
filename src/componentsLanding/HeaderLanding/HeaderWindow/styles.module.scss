@@ -29,16 +29,12 @@
 		background: var(--lan-very-dark-mostly-black-blue-2);
 		border-radius: 12px;
 		padding: 12px 8px;
-		width: 41px;
 
-		&:hover .social__link__svg path:first-child {
+		&:hover .social__link__icon path:first-child {
 			fill: var(--lan-bright-cyan---lime-green);
 		}
 
-		&__svg {
-			width: 16px;
-			height: 16px;
-
+		&__icon {
 			path:first-child {
 				fill: var(--lan-light-grayish-blue);
 				transition: all 0.2s ease-in-out;

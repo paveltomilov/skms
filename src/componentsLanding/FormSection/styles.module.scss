@@ -36,18 +36,17 @@
 	&:hover {
 		color: var(--lan-bright-cyan---lime-green);
 
-		.link__svg path:first-child {
+		.link__icon path:first-child {
 			fill: var(--lan-bright-cyan---lime-green);
 		}
 
-		.link__svg__dzen path:nth-child(1) {
+		.link__icon__dzen path:nth-child(1) {
 			fill: var(--lan-bright-cyan---lime-green);
 		}
 	}
 
-	&__svg {
-		width: 40px;
-		height: 40px;
+	&__icon {
+		color: var(--lan-light-grayish-blue);
 		margin-right: 12px;
 
 		path {
