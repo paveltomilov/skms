@@ -1,5 +1,6 @@
 import { LoginFormData } from '@/shared/types/login';
 import styles from './styles.module.scss';
+import { doFirstLatterBig } from '@/shared/utils/doFirstLatterBig/doFirstLatterBig';
 
 const RegistrationMessage = (data: LoginFormData) => {
 	return (
@@ -12,7 +13,7 @@ const RegistrationMessage = (data: LoginFormData) => {
 					Email ученика: <b>{data.email}</b>
 				</li>
 				<li className={styles.response__item}>
-					ФИО: <b>{data.first_name} {data.last_name}</b>
+					ФИО: <b>{doFirstLatterBig(data.first_name)} {doFirstLatterBig(data.last_name)}</b>
 				</li>
 				<li className={styles.response__item}>
 					Пароль: <b>{data.password}</b>

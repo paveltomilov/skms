@@ -10,7 +10,7 @@ import {
 import { postRegistration } from '@/shared/lib/registration';
 import RegistrationMessage from '../RegistrationMessage/RegistrationMessage';
 import { LoginFormData } from '@/shared/types/login';
-import { generateStringArray } from '@/shared/utils/getRandomPassword/getRandomPassword';
+import { getRandomPassword } from '@/shared/utils/getRandomPassword/getRandomPassword';
 
 const PASSWORD_ERROR = {
 	email: false,
@@ -50,7 +50,7 @@ export const PopupStudentCreate: FC = () => {
 	const handleRegistration = async () => {
 		const dataForm: LoginFormData = {
 			...values,
-			password: generateStringArray(12),
+			password: getRandomPassword(12),
 		};
 		try {
 			const response = await postRegistration(dataForm);
