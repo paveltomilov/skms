@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { setCurrentStudent, setStudentId } from '@/store/trainingSlice';
 import { useAppDispatch } from '@/shared/hooks/store';
 import { User } from '@/shared/types/users';
+import { useSimulationByIdStudent } from '@/shared/hooks/useSimulationByIdStudent';
 
 interface Props {
 	className?: string;
@@ -23,6 +24,10 @@ const UserCard: FC<Props> = ({ className, data }) => {
 			? 'преподават.'
 			: 'пользователя';
 
+	const { deleteSimulation, hasActiveSimulation } = useSimulationByIdStudent(
+		data.id,
+	);
+
 	return (
 		<div className={cn(styles.card, className)}>
 			<div className={styles.card__profile}>
@@ -38,16 +43,26 @@ const UserCard: FC<Props> = ({ className, data }) => {
 			<div className={styles.card__buttons}>
 				{data.role === 'student' ? (
 					<>
-						<Button
-							width={239}
-							height={32}
-							text="Задать симуляцию"
-							className={styles.card__buttons__button}
-							onClick={() => {
-								dispatch(setStudentId(data.id));
-								router.push('/ptk');
-							}}
-						/>
+						{hasActiveSimulation ? (
+							<Button
+								width={239}
+								height={32}
+								text="Удалить симуляцию"
+								className={styles.card__buttons__button}
+								onClick={deleteSimulation}
+							/>
+						) : (
+							<Button
+								width={239}
+								height={32}
+								text="Задать симуляцию"
+								className={styles.card__buttons__button}
+								onClick={() => {
+									dispatch(setStudentId(data.id));
+									router.push('/ptk');
+								}}
+							/>
+						)}
 						<Button
 							width={239}
 							height={32}

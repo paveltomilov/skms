@@ -4,14 +4,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export interface TrainingState {
 	// isTraining: boolean;
 	studentId: number | null;
-	mulfuntionCurrent: string;
+	malfunctionCurrent: string;
 	currentStudent: User | null;
 }
 
 const initialState: TrainingState = {
 	// isTraining: false,
 	studentId: null,
-	mulfuntionCurrent: '',
+	malfunctionCurrent: '',
 	currentStudent: null,
 };
 
@@ -31,13 +31,13 @@ const trainingSlice = createSlice({
 		clearStudentId: state => {
 			state.studentId = null;
 		},
-		setMulfuntionCurrent: (state, action: PayloadAction<string>) => {
-			state.mulfuntionCurrent = action.payload;
+		setMalfunctionCurrent: (state, action: PayloadAction<string>) => {
+			state.malfunctionCurrent = action.payload;
 		},
 	},
 });
 
-export const { setStudentId, clearStudentId, setMulfuntionCurrent, setCurrentStudent, clearCurrentStudent } =
+export const { setStudentId, clearStudentId, setMalfunctionCurrent, setCurrentStudent, clearCurrentStudent } =
 	trainingSlice.actions;
 
 export default trainingSlice.reducer;

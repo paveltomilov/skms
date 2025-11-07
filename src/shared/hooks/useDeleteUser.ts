@@ -29,7 +29,7 @@ export const useDeleteUser = () => {
 		setSuccess(false);
 
 		try {
-			await deleteUser(studentId); // deleteUser уже возвращает данные или выбрасывает ошибку
+			await deleteUser(studentId); 
 			setSuccess(true);
 		} catch (err) {
 			setError(err instanceof Error ? err.message : 'Неизвестная ошибка');

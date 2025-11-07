@@ -2,13 +2,13 @@ import { Malfunction } from '@/shared/types/scheme';
 import { FC, useState } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
-import { SimulationFormData } from '@/shared/types/similation';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import { useRequestData } from '@/shared/hooks/useRequestData';
 import { postSimulation } from '@/shared/utils/postSimulation/postSimulation';
 import { closeModal } from '@/store/modalSlice';
 import { useRouter } from 'next/navigation';
 import { clearStudentId } from '@/store/trainingSlice';
+import { SimulationFormData } from '@/shared/types/simulation';
 
 const FormMalfunction: FC = () => {
 

@@ -4,6 +4,7 @@ import Button from '@/shared/UI/Button';
 import { useAppSelector } from '@/shared/hooks/store';
 import FormMalfunction from '../FormMalfunction/FormMalfunction';
 
+
 export const PopupSetSimulation: FC = () => {
 
     const gates = useAppSelector(state => state.gate);
