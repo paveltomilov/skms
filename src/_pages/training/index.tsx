@@ -30,7 +30,9 @@ const Training = () => {
 			) : (
 				<>
 					<section className={styles.training}>
-						<div className={styles.training__title}>Обучение</div>
+						<div className={styles.training__title}>
+							Список студентов
+						</div>
 						<div className={styles.training__cards}>
 							{users.map(user => (
 								<UserCard

@@ -77,7 +77,7 @@ export const PopupStudentCreate: FC = () => {
 			{!responseData ? (
 				<form onSubmit={handleSubmit} className={styles.form}>
 					<LoginInput
-						label={'Фамилия ученика'}
+						label={'Фамилия'}
 						type={'text'}
 						name={'first_name'}
 						onChange={handleChange}
@@ -93,7 +93,7 @@ export const PopupStudentCreate: FC = () => {
 						required={configMap.first_name?.required}
 					/>
 					<LoginInput
-						label={'Имя ученика'}
+						label={'Имя'}
 						type={'text'}
 						name={'last_name'}
 						onChange={handleChange}
@@ -109,7 +109,7 @@ export const PopupStudentCreate: FC = () => {
 						required={configMap.last_name?.required}
 					/>
 					<LoginInput
-						label={'Email ученика'}
+						label={'Email'}
 						type={'email'}
 						name={'email'}
 						onChange={handleChange}

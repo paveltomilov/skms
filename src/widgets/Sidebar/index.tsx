@@ -4,11 +4,14 @@ import React, { useState } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import Chevron from '@/shared/UI/icons/Chevron';
+import { useUserCookies } from '@/shared/hooks/useUserCookies';
 
 const Sidebar = () => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	const handleToggleSidebar = () => setIsOpen(!isOpen);
+
+	const { role } = useUserCookies();
 
 	return (
 		<>
@@ -27,14 +30,16 @@ const Sidebar = () => {
 						href="/"
 					/>
 
-					<Button
-						width={90}
-						height={34}
-						aria-label="Обучение"
-						text="Обучение"
-						className={styles.buttonText}
-						href="/training"
-					/>
+					{role != 'student' && (
+						<Button
+							width={90}
+							height={34}
+							aria-label="Список студентов"
+							text="Список студ."
+							className={styles.buttonText}
+							href="/training"
+						/>
+					)}
 
 					<Button
 						width={90}
