@@ -1,7 +1,7 @@
-import {RefreshResponse, VerifyResponse} from '@/shared/types/typesAuth';
+import { RefreshResponse, VerifyResponse } from '@/shared/types/typesAuth';
 import axios from 'axios';
-import {deleteCookie, getCookie, setCookie} from 'cookies-next';
-import {LoginFormData, LoginResponse} from '../types/login';
+import { deleteCookie, getCookie, setCookie } from 'cookies-next';
+import { LoginFormData, LoginResponse } from '../types/login';
 
 const urlBase = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -51,7 +51,6 @@ export async function checkAuth(): Promise<{ valid: boolean }> {
 		}
 
 		return { valid: false };
-
 	} catch {
 		// При любой ошибке очищаем хранилища
 		localStorage.removeItem('accessToken');
@@ -60,7 +59,13 @@ export async function checkAuth(): Promise<{ valid: boolean }> {
 	}
 }
 
-export async function postAuth(formData: LoginFormData): Promise<{ success:boolean, role?: string | undefined }> {
+export async function postAuth(
+	formData: LoginFormData,
+): Promise<{
+	success: boolean;
+	role?: string | undefined;
+	errorText?: string;
+}> {
 	try {
 		const response = await axios.post<LoginResponse>(
 			`${urlBase}/auth/`,
@@ -70,7 +75,7 @@ export async function postAuth(formData: LoginFormData): Promise<{ success:boole
 			},
 		);
 
-		const { access, refresh , first_name, last_name, role } = response.data;
+		const { access, refresh, first_name, last_name, role } = response.data;
 
 		if (!access || !refresh) {
 			throw new Error('Токены не получены');
@@ -83,11 +88,22 @@ export async function postAuth(formData: LoginFormData): Promise<{ success:boole
 			setCookie('last_name', last_name);
 			setCookie('role', role);
 
-			return {success:true, role};
+			return { success: true, role };
 		}
-		return {success: false};
-	} catch {
-		return {success: false};
+		return { success: false };
+	} catch (err: unknown) {
+		let errorText: string | undefined;
+		if (axios.isAxiosError(err)) {
+			const data = err.response?.data as unknown;
+			if (data && typeof data === 'object') {
+				const d = data as Record<string, unknown>;
+				const detail =
+					typeof d.detail === 'string' ? d.detail : undefined;
+				const error = typeof d.error === 'string' ? d.error : undefined;
+				errorText = detail || error;
+			}
+		}
+		return { success: false, errorText };
 	}
 }
 

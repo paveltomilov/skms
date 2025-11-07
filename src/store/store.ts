@@ -7,6 +7,8 @@ import multimeterReducer from './multimeterSlice';
 import circuitReducer from './circuitSlice';
 import pointsReducer from './pointsSlice';
 import powerUnitReducer from './powerUnitSlice';
+// <<<<<<< HEAD
+import trainingReducer from './trainingSlice';
 import windowsReducer from './windowsSlice';
 import percentReducer from './percentSlice';
 
@@ -19,6 +21,8 @@ const rootReducer = combineReducers({
 	circuit: circuitReducer,
 	points: pointsReducer,
 	powerUnit: powerUnitReducer,
+	training: trainingReducer,
+
 });
 
 const persistConfig = {
@@ -26,6 +30,22 @@ const persistConfig = {
 	storage,
 	whitelist: ['windows', 'percent'], // cписок reduces сохраняемых в localStorage
 };
+// =======
+
+
+// export const store = () => {
+// 	return configureStore({
+// 		reducer: {
+// 			gate: gateReducer,
+// 			modal: modalReducer,
+// 			multimeter: multimeterReducer,
+// 			circuit: circuitReducer,
+// 			points: pointsReducer,
+// 			powerUnit: powerUnitReducer,
+// 		},
+// 	});
+// >>>>>>> 0c7e2bc0b88bdfbdb851f23b531ce2296704ef65
+// };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
