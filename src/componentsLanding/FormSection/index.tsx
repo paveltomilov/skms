@@ -6,53 +6,55 @@ import VkIcon from '../IconsSvg/vk';
 import YoutubeIcon from '../IconsSvg/youtube';
 import DzenIcon from '../IconsSvg/dzen';
 
+const socialLinks = [
+	{
+		href: 'https://web.telegram.org/k/',
+		icon: TelegramIcon,
+		text: 'Telegram',
+		iconClass: styles.link__icon,
+	},
+	{
+		href: 'https://vk.com',
+		icon: VkIcon,
+		text: 'Вконтакте',
+		iconClass: styles.link__icon,
+	},
+	{
+		href: 'https://www.youtube.com/',
+		icon: YoutubeIcon,
+		text: 'Youtube',
+		iconClass: styles.link__icon,
+	},
+	{
+		href: 'https://dzen.ru/',
+		icon: DzenIcon,
+		text: 'Дзен',
+		iconClass: styles.link__icon__dzen,
+	},
+];
+
 function FormSection() {
 	return (
 		<section className={styles.form__section}>
 			<div className={`${styles.form__container} container`}>
 				<FormLanding />
-				<div className={styles.social__form}>
-					<div className={styles.social__form__block}>
-						<Link
-							className={styles.link}
-							target="_blank"
-							href="https://web.telegram.org/k/"
-						>
-							<TelegramIcon className={styles.link__icon} />
-							Telegram
-						</Link>
-					</div>
-					<div className={styles.social__form__block}>
-						<Link
-							className={styles.link}
-							target="_blank"
-							href="https://vk.com"
-						>
-							<VkIcon className={styles.link__icon} />
-							Вконтакте
-						</Link>
-					</div>
-					<div className={styles.social__form__block}>
-						<Link
-							className={styles.link}
-							target="_blank"
-							href="https://www.youtube.com/"
-						>
-							<YoutubeIcon className={styles.link__icon} />
-							Youtube
-						</Link>
-					</div>
-					<div className={styles.social__form__block}>
-						<Link
-							className={styles.link}
-							target="_blank"
-							href="https://dzen.ru/"
-						>
-							<DzenIcon className={styles.link__icon__dzen} />
-							Дзен
-						</Link>
-					</div>
-				</div>
+				<ul className={styles.social__list}>
+					{socialLinks.map(
+						({ href, icon: IconComponent, text, iconClass }) => (
+							<li key={href} className={styles.social__item}>
+								<Link
+									className={styles.link}
+									target="_blank"
+									href={href}
+									rel="noopener noreferrer"
+								>
+									<IconComponent className={iconClass} />
+									{text}
+								</Link>
+							</li>
+						),
+					)}
+				</ul>
 			</div>
 		</section>
 	);

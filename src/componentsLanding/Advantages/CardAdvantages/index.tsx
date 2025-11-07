@@ -5,20 +5,27 @@ import styles from './styles.module.scss';
 const Card: FC<{
 	title: string;
 	description: string;
+	breakTitle?: boolean;
 	gap?: number | string;
-}> = ({ title, description, gap }) => {
+}> = ({ title, description, gap, breakTitle }) => {
 	const resolvedGap = typeof gap === 'number' ? `${gap}px` : gap ?? '1rem';
 
+	const [firstWord, ...restParts] = title.split(' ');
+	const restText = restParts.join(' ');
+
 	return (
-		<article className={styles.card}>
-			<h3 className={styles.title}>{title}</h3>
-			<p
-				className={styles.description}
-				style={{ marginTop: resolvedGap }}
-			>
-				{description}
-			</p>
-		</article>
+		<div className={styles.card}>
+			<h3 style={{ marginBottom: resolvedGap }} className={styles.title}>
+				<span>{firstWord}</span>
+				{restText && (
+					<span className={breakTitle ? styles.break : ''}>
+						{' '}
+						{restText}
+					</span>
+				)}
+			</h3>
+			<p className={styles.description}>{description}</p>
+		</div>
 	);
 };
 

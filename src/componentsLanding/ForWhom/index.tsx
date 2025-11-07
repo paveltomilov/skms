@@ -1,4 +1,3 @@
-'use client';
 import React, { FC } from 'react';
 import styles from './styles.module.scss';
 import SectionTitle from '../SectionTitle';
@@ -11,44 +10,38 @@ const ForWhom: FC = () => {
 					<SectionTitle title="Для кого подойдет?" />
 				</div>
 				<div className={styles.forwhom__left}></div>
-				<div className={styles.forwhom__right}>
-					<div className={styles.content}>
-						<div className={styles.content__title}>
-							<p>Руководители и методисты</p>
-						</div>
-						<div className={styles.content__description}>
-							<p>
-								Эта группа отвечает за обучение, адаптацию и
-								эффективность команды. Для них тренажёр — это
-								инструмент оценки, контроля и снижения рисков
-							</p>
-						</div>
-					</div>
-					<div className={styles.content}>
-						<div className={styles.content__title}>
-							<p>Опытные инженеры и технические специалисты</p>
-						</div>
-						<div className={styles.content__description}>
-							<p>
-								Инженеры и слесари АСУ ТП могут отрабатывать
-								сложные сценарии и повышать квалификацию без
-								риска для оборудования
-							</p>
-						</div>
-					</div>
-					<div className={styles.content}>
-						<div className={styles.content__title}>
-							<p>Начинающие специалисты и студенты</p>
-						</div>
-						<div className={styles.content__description}>
-							<p>
-								Сюда входят молодые сотрудники и студенты
-								техникумов. Для них тренажёр — это безопасная
-								практика и подготовка к реальной работе
-							</p>
-						</div>
-					</div>
-				</div>
+				<ul className={styles.forwhom__list}>
+					<li className={styles.item}>
+						<p className={styles.item__title}>
+							Руководители и методисты
+						</p>
+						<p className={styles.item__description}>
+							Эта группа отвечает за обучение, адаптацию и
+							эффективность команды. Для них тренажёр — это
+							инструмент оценки, контроля и снижения рисков
+						</p>
+					</li>
+					<li className={styles.item}>
+						<p className={styles.item__title}>
+							Опытные инженеры и технические специалисты
+						</p>
+						<p className={styles.item__description}>
+							Инженеры и слесари АСУ ТП могут отрабатывать сложные
+							сценарии и повышать квалификацию без риска для
+							оборудования
+						</p>
+					</li>
+					<li className={styles.item}>
+						<p className={styles.item__title}>
+							Начинающие специалисты и студенты
+						</p>
+						<p className={styles.item__description}>
+							Сюда входят молодые сотрудники и студенты
+							техникумов. Для них тренажёр — это безопасная
+							практика и подготовка к реальной работе
+						</p>
+					</li>
+				</ul>
 			</div>
 		</section>
 	);

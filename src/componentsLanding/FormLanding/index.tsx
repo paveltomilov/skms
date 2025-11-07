@@ -14,6 +14,59 @@ type FormValues = {
 	consent: boolean;
 };
 
+const fields = [
+	{
+		key: 'name',
+		label: 'Ваше имя',
+		type: 'text',
+		placeholder: 'ФИО',
+		required: true,
+	},
+
+	{
+		key: 'email',
+		label: 'Почта',
+		type: 'email',
+		placeholder: 'Введите Вашу почту',
+		required: true,
+	},
+	{
+		key: 'company',
+		label: 'Компания',
+		type: 'text',
+		placeholder: 'Название компании',
+		required: false,
+	},
+	{
+		key: 'phone',
+		label: 'Телефон',
+		type: 'tel',
+		placeholder: 'Ваш номер телефона',
+		required: false,
+	},
+] as const;
+
+const FormField = ({
+	label,
+	value,
+	onChange,
+	...rest
+}: {
+	label: string;
+	value: string;
+	onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+} & React.ComponentProps<'input'>) => (
+	<div className={styles.form__field}>
+		<label className={styles.label}>{label}</label>
+		<input
+			value={value}
+			onChange={onChange}
+			className={styles.input}
+			{...rest}
+		/>
+	</div>
+);
+
 function FormLanding() {
 	const [form, setForm] = useState<FormValues>({
 		title: '',
@@ -32,6 +85,10 @@ function FormLanding() {
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		if (!form.name.trim() || !form.email.trim()) {
+			alert('Заполните обязательные поля');
+			return; // прерываем дальнейшую обработку
+		}
 		// Здесь можно послать данные на сервер
 		console.log('Отправляем форму', form);
 	};
@@ -44,66 +101,18 @@ function FormLanding() {
 				title="Хотите узнать больше? Мы с вами свяжемся!"
 			/>
 
-			{/* ФИО */}
-			<div className={styles.form__fio}>
-				<label htmlFor="name" className={styles.label}>
-					ФИО
-				</label>
-				<input
-					id="name"
-					type="text"
-					value={form.name}
-					onChange={handleInputChange('name')}
-					className={styles.input}
-					placeholder="ФИО"
-					required
-				/>
-			</div>
-
-			{/* Компания */}
-			<div className={styles.form__company}>
-				<label htmlFor="company" className={styles.label}>
-					Компания
-				</label>
-				<input
-					id="company"
-					type="text"
-					value={form.company}
-					onChange={handleInputChange('company')}
-					className={styles.input}
-					placeholder="Название компании "
-				/>
-			</div>
-
-			{/* Почта */}
-			<div className={styles.form__mail}>
-				<label htmlFor="email" className={styles.label}>
-					Почта
-				</label>
-				<input
-					id="email"
-					type="email"
-					value={form.email}
-					onChange={handleInputChange('email')}
-					className={styles.input}
-					placeholder="Введите Вашу почту "
-					required
-				/>
-			</div>
-
-			{/* Телефон */}
-			<div className={styles.form__telephone}>
-				<label htmlFor="phone" className={styles.label}>
-					Телефон
-				</label>
-				<input
-					id="phone"
-					type="tel"
-					value={form.phone}
-					onChange={handleInputChange('phone')}
-					className={styles.input}
-					placeholder="Ваш номер телефона "
-				/>
+			<div className={styles.form__container}>
+				{fields.map(({ key, label, type, placeholder, required }) => (
+					<FormField
+						key={key}
+						label={label}
+						value={form[key]}
+						onChange={handleInputChange(key)}
+						type={type}
+						placeholder={placeholder}
+						required={required}
+					/>
+				))}
 			</div>
 
 			<div className={styles.form__sogl}>

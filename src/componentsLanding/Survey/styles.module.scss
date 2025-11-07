@@ -9,6 +9,10 @@
 		background: url(/assets/images/survey-bg.png) no-repeat center / cover;
 	}
 
+	&__title {
+		margin-bottom: 12px;
+	}
+
 	&__description {
 		max-width: 434px;
 		font-family: var(--second-family);
@@ -16,7 +20,15 @@
 		font-size: 17px;
 		line-height: 128%;
 		color: var(--lan-light-grayish-cyan);
-		margin-top: 12px;
 		margin-bottom: 24px;
+	}
+
+	&__button {
+		font-family: var(--second-family);
+		font-weight: 600;
+		font-size: 14px;
+		line-height: 136%;
+		text-transform: uppercase;
+		color: var(--lan-very-dark-mostly-black-blue);
 	}
 }

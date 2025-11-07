@@ -4,20 +4,20 @@
 }
 
 .social {
-	&__form {
+	&__list {
 		display: flex;
 		gap: 24px;
 		flex-wrap: wrap;
+	}
 
-		&__block {
-			height: 240px;
-			width: 240px;
-			border: 1px solid var(--lan-very-dark-gray);
-			border-radius: 12px;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
+	&__item {
+		height: 240px;
+		width: 240px;
+		border: 1px solid var(--lan-very-dark-gray);
+		border-radius: 12px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 }
 

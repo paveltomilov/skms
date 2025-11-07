@@ -1,9 +1,6 @@
 'use client';
 import React, { FC } from 'react';
 import styles from './styles.module.scss';
-import 'swiper/css';
-import 'swiper/css/navigation'; // если используете навигацию
-import 'swiper/css/pagination';
 import SectionTitle from '../SectionTitle';
 import Carousel from '../Carousel';
 import CardReviews from './CardReviews/index.';
@@ -66,7 +63,7 @@ const Reviews: FC = () => {
 			<div className={`${styles.reviews__container} container`}>
 				<div className={styles.reviews__title}>
 					<SectionTitle
-						width={390}
+						width={350}
 						title="Результаты глазами наших клиентов"
 					/>
 				</div>
