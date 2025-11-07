@@ -4,16 +4,17 @@ import Button from '@/shared/UI/Button';
 import Window from '@/shared/UI/Window';
 import Gate from '@/shared/UI/Gate';
 import cn from 'classnames';
-import { WINDOWS } from '@/shared/configs/window';
+import { WindowsState } from '@/shared/configs/window';
 import { useAppSelector } from '@/shared/hooks/store';
 import { useOpenGatePopup } from '@/shared/hooks/useOpenGatePopup';
 import useShowModal from '@/shared/hooks/useShowModal';
 
 interface Props {
 	className?: string;
+	windows: WindowsState;
 }
 
-const TALeftTop: FC<Props> = ({ className }) => {
+const TALeftTop: FC<Props> = ({ className, windows }) => {
 	const { g1 } = useAppSelector(state => state.gate.gates);
 	const handleModalNotification = useShowModal('notification');
 
@@ -30,12 +31,12 @@ const TALeftTop: FC<Props> = ({ className }) => {
 			<p className={styles.container__p1}>ГПП</p>
 			<div className={styles.windowTop}>
 				<Window
-					data={WINDOWS.w1}
+					data={windows.w1}
 					right
 					className={styles.windowTop__right}
 				/>
 				<Window
-					data={WINDOWS.w2}
+					data={windows.w2}
 					right
 					className={styles.windowTop__right}
 				/>
@@ -45,8 +46,8 @@ const TALeftTop: FC<Props> = ({ className }) => {
 				<p className={styles.windowMedium__p3}>Свежий пар</p>
 			</div>
 			<div className={styles.windowMedium__left}>
-				<Window data={WINDOWS.w3} right />
-				<Window data={WINDOWS.w5} right />
+				<Window data={windows.w3} right />
+				<Window data={windows.w5} right />
 			</div>
 			<Gate
 				state={g1.states}
@@ -55,37 +56,37 @@ const TALeftTop: FC<Props> = ({ className }) => {
 				className={styles.gate}
 			/>
 			<div className={styles.windowMedium__right}>
-				<Window data={WINDOWS.w4} right />
-				<Window data={WINDOWS.w6} right />
+				<Window data={windows.w4} right />
+				<Window data={windows.w6} right />
 				<p className={styles.windowMedium__right__p}>СКВД-2</p>
 			</div>
 			<div className={styles.windowMediumBottom}>
 				<p className={styles.windowMediumBottom__p1}>ХПП</p>
 				<Window
-					data={WINDOWS.w7}
+					data={windows.w7}
 					right
 					className={styles.windowMediumBottom__one}
 				/>
 				<div className={styles.windowMediumBottom__two}>
-					<Window data={WINDOWS.w8} right />
+					<Window data={windows.w8} right />
 					<Window
-						data={WINDOWS.w9}
+						data={windows.w9}
 						right
 						className={styles.windowMediumBottom__three}
 					/>
 				</div>
 				<div className={styles.windowMediumBottom__four}>
-					<Window data={WINDOWS.w10} right />
-					<Window data={WINDOWS.w11} bottom />
+					<Window data={windows.w10} right />
+					<Window data={windows.w11} bottom />
 					<p className={styles.windowMediumBottom__p2}>ЦВД</p>
 				</div>
 			</div>
 			<div className={styles.windowBottom}>
 				<p>ГПП</p>
 				<div className={styles.windowBottom__right}>
-					<Window data={WINDOWS.w12} right />
+					<Window data={windows.w12} right />
 					<div className={styles.windowBottom__right__bottom}>
-						<Window data={WINDOWS.w13} right />
+						<Window data={windows.w13} right />
 					</div>
 				</div>
 			</div>

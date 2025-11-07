@@ -2,14 +2,12 @@ import { User } from '@/shared/types/users';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface TrainingState {
-	// isTraining: boolean;
 	studentId: number | null;
 	malfunctionCurrent: string;
 	currentStudent: User | null;
 }
 
 const initialState: TrainingState = {
-	// isTraining: false,
 	studentId: null,
 	malfunctionCurrent: '',
 	currentStudent: null,
