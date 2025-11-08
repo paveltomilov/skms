@@ -1,13 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface TrainingState {
-	// isTraining: boolean;
 	studentId: number | null;
 	mulfuntionCurrent: string ;
 }
 
 const initialState: TrainingState = {
-	// isTraining: false,
 	studentId: null,
 	mulfuntionCurrent: '',
 };
