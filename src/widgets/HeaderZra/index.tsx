@@ -10,6 +10,8 @@ import GateWindow from '@/entities/GateWindow';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import { AppDispatch, RootState } from '@/store/store';
 import { setPercent } from '@/store/percentSlice';
+import { logout } from '@/shared/lib/auth';
+import { deleteCookie } from 'cookies-next';
 
 const HeaderZra: FC = () => {
 	// вынести в дальнейшем в отдельный компонент
@@ -28,7 +30,12 @@ const HeaderZra: FC = () => {
 	}, [percentValue]);
 
 	const handleLogout = () => {
-		localStorage.removeItem('token');
+		// Унифицированный выход: удаляем токены и пользовательские cookie
+		logout();
+		localStorage.removeItem('token'); // легаси ключ, оставляем очистку
+		deleteCookie('first_name');
+		deleteCookie('last_name');
+		deleteCookie('role');
 		setIsLoggedIn(false);
 		router.push('/login');
 	};

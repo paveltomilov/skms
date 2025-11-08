@@ -27,6 +27,7 @@ export function useLoginForm({ toggleRegisterMode }: UseLoginFormProps) {
 		last_name: false,
 	});
 	const [isValid, setIsValid] = useState(false);
+	const [rememberMe, setRememberMe] = useState(false);
 	const activeFields = useMemo<(keyof LoginFormData)[]>(() => {
 		return toggleRegisterMode
 			? ['first_name', 'last_name', 'password', 'email']
@@ -98,6 +99,10 @@ export function useLoginForm({ toggleRegisterMode }: UseLoginFormProps) {
 		return !hasLocalErrors && !hasServerErrors;
 	};
 
+	const handleRememberMeChange = (checked: boolean) => {
+		setRememberMe(checked);
+	};
+
 	return {
 		values,
 		validationStatus,
@@ -105,7 +110,9 @@ export function useLoginForm({ toggleRegisterMode }: UseLoginFormProps) {
 		isValid,
 		activeFields,
 		configMap,
+		rememberMe,
 		handleChange,
+		handleRememberMeChange,
 		resetValues,
 		resetServerErrors,
 		setServerErrors,
