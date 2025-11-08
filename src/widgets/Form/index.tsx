@@ -42,8 +42,10 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 		activeFields,
 		configMap,
 		rememberMe,
+		policyAccepted,
 		handleChange,
 		handleRememberMeChange,
+		handlePolicyChange,
 		resetServerErrors,
 		setServerErrors,
 		validateForm,
@@ -188,10 +190,11 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 						type="checkbox"
 						name={toggleRegisterMode ? 'policy' : 'remember'}
 						className={styles.form_inner_label__checkbox}
-						checked={toggleRegisterMode ? false : rememberMe}
+						checked={toggleRegisterMode ? policyAccepted : rememberMe}
 						onChange={e =>
-							!toggleRegisterMode &&
-							handleRememberMeChange(e.target.checked)
+							toggleRegisterMode
+								? handlePolicyChange(e.target.checked)
+								: handleRememberMeChange(e.target.checked)
 						}
 					/>
 					{toggleRegisterMode ? 'Соглашаюсь на' : 'Запомнить'}
