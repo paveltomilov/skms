@@ -22,7 +22,6 @@ export async function stopSimulation(id: number) {
 				},
 			},
 		);
-		console.log(response.data);
 		return response.data;
 	} catch (error) {
 		const axiosError = error as AxiosError<{ detail?: string }>;
