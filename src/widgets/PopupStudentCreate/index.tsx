@@ -11,6 +11,8 @@ import { postRegistration } from '@/shared/lib/registration';
 import RegistrationMessage from '../RegistrationMessage/RegistrationMessage';
 import { LoginFormData } from '@/shared/types/login';
 import { getRandomPassword } from '@/shared/utils/getRandomPassword/getRandomPassword';
+import { useAppDispatch } from '@/shared/hooks/store';
+import { updateList } from '@/store/updateListSlice';
 
 const PASSWORD_ERROR = {
 	email: false,
@@ -32,6 +34,7 @@ export const PopupStudentCreate: FC = () => {
 		validateForm,
 	} = useLoginForm({ toggleRegisterMode: true });
 
+	const dispatch = useAppDispatch();
 	const [responseData, setResponseData] = useState<LoginFormData | null>(
 		null,
 	);
@@ -57,6 +60,7 @@ export const PopupStudentCreate: FC = () => {
 
 			if (response.success) {
 				setResponseData(dataForm);
+				dispatch(updateList());
 			}
 
 			if (response.errors) {

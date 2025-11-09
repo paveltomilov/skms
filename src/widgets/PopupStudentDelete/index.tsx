@@ -4,17 +4,16 @@ import Button from '@/shared/UI/Button';
 import { useAppSelector } from '@/shared/hooks/store';
 import { useDeleteUser } from '@/shared/hooks/useDeleteUser';
 import { useDispatch } from 'react-redux';
-import { clearCurrentStudent } from '@/store/trainingSlice';
+import { updateList } from '@/store/updateListSlice';
 
 export const PopupStudentDelete: FC = () => {
 	const data = useAppSelector(store => store.training.currentStudent);
 	const dispatch = useDispatch();
 	const { deleteUser, isLoading, error, success } = useDeleteUser();
 	function handleDelete() {
-		deleteUser();
-		if (success) {
-			dispatch(clearCurrentStudent());
-		}
+		deleteUser().then(() => {
+			dispatch(updateList());
+		});
 	}
 	if (data) {
 		const role =

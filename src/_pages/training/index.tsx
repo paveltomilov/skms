@@ -9,13 +9,22 @@ import Loader from '@/shared/UI/Loader';
 import ErrorMessage from '@/shared/components/ErrorMessage';
 import { useGetUsers } from '@/shared/hooks/useGetUsers';
 import UserCard from '@/entities/UserCard';
+import { useAppSelector } from '@/shared/hooks/store';
+import { useEffect } from 'react';
 
 const Training = () => {
 	const { urlBase, access, elements } = useRequestData();
+	const updateListNumber = useAppSelector(store => store.updateList);
+
+	useEffect(() => {});
 
 	const { role } = useUserCookies();
 
 	const { users, isLoading, error, refetch } = useGetUsers(role);
+
+	useEffect(() => {
+		refetch();
+	}, [updateListNumber]);
 
 	const handleCreateMalfunctions = () => {
 		postMalfunctions(urlBase, access, elements);
