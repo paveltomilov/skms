@@ -2,15 +2,16 @@ import { FC } from 'react';
 import styles from './styles.module.scss';
 import cn from 'classnames';
 import Window from '@/shared/UI/Window';
-import { WINDOWS } from '@/shared/configs/window';
+import { WindowsState } from '@/shared/configs/window';
 import Button from '@/shared/UI/Button';
 import ArrowPage from '@/shared/UI/icons/ArrowPage';
 import useShowModal from '@/shared/hooks/useShowModal';
 
 interface Props {
 	className?: string;
+	windows: WindowsState;
 }
-const TAMidTop: FC<Props> = ({ className }) => {
+const TAMidTop: FC<Props> = ({ className, windows }) => {
 	const handleModalNotification = useShowModal('notification');
 	return (
 		<div className={cn(className, styles.container)}>
@@ -21,8 +22,8 @@ const TAMidTop: FC<Props> = ({ className }) => {
 						Горячий коллектор уплотнений
 					</span>
 					<div className={styles.windowsTop__collectorSensors}>
-						<Window right data={WINDOWS.w94} />
-						<Window color="yellow" right data={WINDOWS.w95} />
+						<Window right data={windows.w94} />
+						<Window color="yellow" right data={windows.w95} />
 					</div>
 				</div>
 				<div className={styles.windowsTop__collector}>
@@ -30,8 +31,8 @@ const TAMidTop: FC<Props> = ({ className }) => {
 						Холодный коллектор уплотнений
 					</span>
 					<div className={styles.windowsTop__collectorSensors}>
-						<Window right data={WINDOWS.w38} />
-						<Window color="yellow" right data={WINDOWS.w39} />
+						<Window right data={windows.w38} />
+						<Window color="yellow" right data={windows.w39} />
 					</div>
 				</div>
 			</div>
@@ -88,7 +89,7 @@ const TAMidTop: FC<Props> = ({ className }) => {
 						<Window
 							className={styles.windowsBottom__indicators_window}
 							right
-							data={WINDOWS.w40}
+							data={windows.w40}
 						/>
 					</div>
 				</div>
