@@ -77,35 +77,35 @@ export const PopupStudentCreate: FC = () => {
 			{!responseData ? (
 				<form onSubmit={handleSubmit} className={styles.form}>
 					<LoginInput
-						label={'Фамилия ученика'}
+						label={'Фамилия'}
 						type={'text'}
 						name={'first_name'}
 						onChange={handleChange}
 						value={values.first_name || ''}
-						placeholder={'Фамилия ученика'}
+						placeholder={'Фамилия'}
 						id={'first_name'}
 						indicator={getIndicator('first_name',values,validationStatus,serverErrors)}
 						done={getDone('first_name',values,validationStatus,serverErrors,activeFields)}
 						error={serverErrors.first_name}
 						warn={!serverErrors.first_name && validationStatus.first_name === 2}
-						errorMessage={serverErrors.first_name ? configMap.first_name?.errorMessage: undefined}
-						warnMessage={!serverErrors.first_name && validationStatus.first_name === 2 ? configMap.first_name?.warnMessage: undefined}
+						errorMessage={serverErrors.first_name? configMap.first_name?.errorMessage: undefined}
+						warnMessage={!serverErrors.first_name && validationStatus.first_name === 2? configMap.first_name?.warnMessage: undefined}
 						required={configMap.first_name?.required}
 					/>
 					<LoginInput
-						label={'Имя ученика'}
+						label={'Имя'}
 						type={'text'}
 						name={'last_name'}
 						onChange={handleChange}
 						value={values.last_name || ''}
-						placeholder={'Имя ученика'}
+						placeholder={'Имя'}
 						id={'last_name'}
 						indicator={getIndicator('last_name',values,validationStatus,serverErrors)}
 						done={getDone('last_name',values,validationStatus,serverErrors,activeFields)}
 						error={serverErrors.last_name}
 						warn={!serverErrors.last_name && validationStatus.last_name === 2}
 						errorMessage={serverErrors.last_name? configMap.last_name?.errorMessage: undefined}
-						warnMessage={!serverErrors.last_name && validationStatus.last_name === 2 ? configMap.last_name?.warnMessage: undefined}
+						warnMessage={!serverErrors.last_name && validationStatus.last_name === 2? configMap.last_name?.warnMessage: undefined}
 						required={configMap.last_name?.required}
 					/>
 					<LoginInput
@@ -114,14 +114,14 @@ export const PopupStudentCreate: FC = () => {
 						name={'email'}
 						onChange={handleChange}
 						value={values.email || ''}
-						placeholder={'Email ученика'}
+						placeholder={'Email'}
 						id={'email'}
 						indicator={getIndicator('email',values,validationStatus,serverErrors)}
 						done={getDone('email',values,validationStatus,serverErrors,activeFields)}
 						error={serverErrors.email}
 						warn={!serverErrors.email && validationStatus.email === 2}
 						errorMessage={serverErrors.email? configMap.email?.errorMessage: undefined}
-						warnMessage={!serverErrors.email && validationStatus.email === 2 ? configMap.email?.warnMessage : undefined}
+						warnMessage={!serverErrors.email && validationStatus.email === 2? configMap.email?.warnMessage: undefined}
 						required={configMap.email?.required}
 					/>
 					<Button
