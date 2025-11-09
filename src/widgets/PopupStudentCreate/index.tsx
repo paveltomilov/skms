@@ -88,8 +88,8 @@ export const PopupStudentCreate: FC = () => {
 						done={getDone('first_name',values,validationStatus,serverErrors,activeFields)}
 						error={serverErrors.first_name}
 						warn={!serverErrors.first_name && validationStatus.first_name === 2}
-						errorMessage={serverErrors.first_name ? configMap.first_name?.errorMessage: undefined}
-						warnMessage={!serverErrors.first_name && validationStatus.first_name === 2 ? configMap.first_name?.warnMessage: undefined}
+						errorMessage={serverErrors.first_name? configMap.first_name?.errorMessage: undefined}
+						warnMessage={!serverErrors.first_name && validationStatus.first_name === 2? configMap.first_name?.warnMessage: undefined}
 						required={configMap.first_name?.required}
 					/>
 					<LoginInput
@@ -105,7 +105,7 @@ export const PopupStudentCreate: FC = () => {
 						error={serverErrors.last_name}
 						warn={!serverErrors.last_name && validationStatus.last_name === 2}
 						errorMessage={serverErrors.last_name? configMap.last_name?.errorMessage: undefined}
-						warnMessage={!serverErrors.last_name && validationStatus.last_name === 2 ? configMap.last_name?.warnMessage: undefined}
+						warnMessage={!serverErrors.last_name && validationStatus.last_name === 2? configMap.last_name?.warnMessage: undefined}
 						required={configMap.last_name?.required}
 					/>
 					<LoginInput
@@ -121,7 +121,7 @@ export const PopupStudentCreate: FC = () => {
 						error={serverErrors.email}
 						warn={!serverErrors.email && validationStatus.email === 2}
 						errorMessage={serverErrors.email? configMap.email?.errorMessage: undefined}
-						warnMessage={!serverErrors.email && validationStatus.email === 2 ? configMap.email?.warnMessage : undefined}
+						warnMessage={!serverErrors.email && validationStatus.email === 2? configMap.email?.warnMessage: undefined}
 						required={configMap.email?.required}
 					/>
 					<Button
