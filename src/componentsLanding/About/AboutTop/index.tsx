@@ -1,4 +1,3 @@
-'use client';
 import React, { FC } from 'react';
 import styles from './styles.module.scss';
 import SectionTitle from '../../SectionTitle';
@@ -13,24 +12,22 @@ const AboutTop: FC = () => {
 					alt=""
 				/>
 				<div className={styles.content}>
-					<div className={styles.content__title}>
-						<SectionTitle title="Совершенствуем специалистов повышаем эффективность предприятий" />
-					</div>
+					<SectionTitle
+						className={styles.content__title}
+						title="Совершенствуем специалистов повышаем эффективность предприятий"
+					/>
 					<div className={styles.content__descr}>
-						<div>
-							<p>
-								Наша миссия — сделать обучение технического
-								персонала ключевым элементом безопасности и
-								эффективности предприятия
-							</p>
-						</div>
-						<div>
-							<p>
-								Мы стремимся, чтобы каждый инженер был уверен в
-								своих действиях, а предприятие — защищено от
-								ошибок, ведущих к авариям
-							</p>
-						</div>
+						<p>
+							Наша миссия&nbsp;&mdash; сделать обучение
+							технического персонала ключевым элементом
+							безопасности <br /> и&nbsp;эффективности предприятия
+						</p>
+						<p>
+							Мы&nbsp;стремимся, чтобы каждый инженер был уверен
+							 в&nbsp;своих действиях,
+							а&nbsp;предприятие&nbsp;&mdash; защищено
+							от&nbsp;ошибок, ведущих к&nbsp;авариям
+						</p>
 					</div>
 				</div>
 				<div className={styles.block}>
@@ -46,7 +43,8 @@ const AboutTop: FC = () => {
 							Ускоряем адаптацию
 						</h4>
 						<p className={styles.block__description}>
-							Сотрудники осваивают работу в три раза быстрее
+							Сотрудники осваивают работу <br /> в три раза
+							быстрее
 						</p>
 					</div>
 				</div>

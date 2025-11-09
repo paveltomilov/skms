@@ -5,68 +5,68 @@
 	right: 0;
 	z-index: 20;
 	background-color: transparent;
+	// background-color: var(--lan-very-dark-mostly-black-blue);
 	transition: all 0.2s ease-in-out;
 
 	&__container {
-		color: var(--lan-light-grayish-cyan);
-		padding-top: 20px;
-		padding-bottom: 20px;
 		display: flex;
 		align-items: center;
+		justify-content: center;
+		padding-top: 24px;
+		padding-bottom: 24px;
+	}
 
-		&__logo {
-			margin-right: 0;
-		}
+	&__nav {
+		font-family: var(--second-family);
+		font-weight: 500;
+		font-size: 15px;
+		line-height: 100%;
+		color: var(--lan-light-grayish-blue);
+		margin-right: 51px;
+	}
 
-		&__nav {
-			margin-right: 36px;
+	&__link {
+		font-family: var(--second-family);
+		font-weight: 500;
+		font-size: 15px;
+		line-height: 100%;
+		color: var(--lan-light-grayish-blue);
+		margin-right: 12px;
+		transition: all 0.2s ease-in-out;
+
+		&:hover,
+		&:focus {
+			color: var(--lan-bright-cyan---lime-green);
 		}
 	}
 
-	&__buttons {
-		&__telephone {
-			font-family: var(--second-family);
-			font-weight: 500;
-			font-size: 15px;
-			line-height: 100%;
-			margin-right: 12px;
-			background-color: inherit;
+	&__arrow {
+		margin-right: 32px;
+		cursor: pointer;
+	}
 
-			&:hover {
-				background-color: inherit;
-			}
+	&__login {
+		font-family: var(--second-family);
+		font-weight: 500;
+		font-size: 15px;
+		line-height: 100%;
+		color: var(--lan-very-dark-mostly-black-blue);
+		background: var(--lan-light-grayish-blue);
+		margin-right: 12px;
+		transition: all 0.2s ease-in-out;
 
-			&__svg {
-				margin-left: 10px;
-			}
-		}
-
-		&__login {
-			font-family: var(--second-family);
-			font-weight: 500;
-			font-size: 15px;
-			line-height: 100%;
-			color: var(--lan-very-dark-mostly-black-blue);
-			background: var(--lan-light-grayish-blue);
-			margin-right: 12px;
-			transition: all 0.2s ease-in-out;
-
-			&:hover {
-				background: var(--lan-light-grayish-cyan);
-			}
-		}
-
-		&__register {
-			font-family: var(--second-family);
-			font-weight: 500;
-			font-size: 15px;
-			line-height: 100%;
-			text-align: center;
-			color: var(--lan-very-dark-mostly-black-blue);
+		&:hover,
+		&:focus {
+			background: var(--lan-light-grayish-cyan);
 		}
 	}
 
-	&.scrolled {
-		background-color: var(--lan-very-dark-mostly-black-blue);
+	&__register {
+		font-family: var(--second-family);
+		font-weight: 500;
+		font-size: 15px;
+		line-height: 100%;
+		text-align: center;
+		color: var(--lan-very-dark-mostly-black-blue);
 	}
 }

@@ -22,3 +22,15 @@
 	right: 8px;
 	gap: 20px;
 }
+
+.arrow {
+	cursor: pointer;
+	path {
+		stroke: var(--lan-light-grayish-blue);
+		transition: all 0.2s ease-in-out;
+	}
+
+	&:hover path {
+		stroke: var(--lan-bright-cyan---lime-green);
+	}
+}

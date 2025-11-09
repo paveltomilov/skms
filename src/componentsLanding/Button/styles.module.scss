@@ -17,8 +17,12 @@
 	&:hover {
 		background-color: #93f2a8;
 	}
+
+	&:focus {
+		background-color: #93f2a8;
+	}
 	&:active {
-		background-color: var(--bg-active);
+		background-color: #93f2a8;
 	}
 
 	&:focus-visible {

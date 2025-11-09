@@ -22,7 +22,6 @@ const fields = [
 		placeholder: 'ФИО',
 		required: true,
 	},
-
 	{
 		key: 'email',
 		label: 'Почта',
@@ -77,23 +76,35 @@ function FormLanding() {
 		consent: false,
 	});
 
+	/* ---------- Обработчик изменения полей ---------- */
 	const handleInputChange =
 		(key: keyof Omit<FormValues, 'consent'>) =>
 		(e: ChangeEvent<HTMLInputElement>) => {
 			setForm(prev => ({ ...prev, [key]: e.target.value }));
 		};
 
+	/* ---------- Обработчик чекбокса ---------- */
+	const handleConsentChange = () =>
+		setForm(prev => ({ ...prev, consent: !prev.consent }));
+
+	/* ---------- Отправка формы ---------- */
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+
 		if (!form.name.trim() || !form.email.trim()) {
 			alert('Заполните обязательные поля');
-			return; // прерываем дальнейшую обработку
+			return;
 		}
+
+		if (!form.consent) {
+			alert('Необходимо дать согласие на обработку персональных данных');
+			return;
+		}
+
 		// Здесь можно послать данные на сервер
 		console.log('Отправляем форму', form);
 	};
 
-	const [consent, setConsent] = useState(false);
 	return (
 		<form onSubmit={handleSubmit} className={styles.form}>
 			<SectionTitle
@@ -127,17 +138,18 @@ function FormLanding() {
 						border="1px solid var(--lan-very-dark-gray)"
 					/>
 				</div>
+
 				<div className={styles.form__check}>
 					<input
 						className={styles.input__checkbox}
 						id="consent"
 						type="checkbox"
-						checked={consent}
-						onChange={() => setConsent(prev => !prev)}
+						checked={form.consent}
+						onChange={handleConsentChange}
 						required
 					/>
 					<label htmlFor="consent" className={styles.checkbox__descr}>
-						Я даю согласие на обработку &nbsp;
+						Я даю согласие на обработку&nbsp;
 						<span className={styles.checkbox__descr_span}>
 							персональных данных
 						</span>

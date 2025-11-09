@@ -1,30 +1,34 @@
-'use client';
 import React, { FC } from 'react';
 import styles from './styles.module.scss';
 
-const Card: FC<{
+interface CardProps {
 	title: string;
 	description: string;
-	breakTitle?: boolean;
 	gap?: number | string;
-}> = ({ title, description, gap, breakTitle }) => {
+}
+
+const Card: FC<CardProps> = ({ title, description, gap }) => {
 	const resolvedGap = typeof gap === 'number' ? `${gap}px` : gap ?? '1rem';
 
-	const [firstWord, ...restParts] = title.split(' ');
-	const restText = restParts.join(' ');
+	const titleLines = title.split('\n');
+	const descriptionLines = description.split('\n');
 
 	return (
 		<div className={styles.card}>
 			<h3 style={{ marginBottom: resolvedGap }} className={styles.title}>
-				<span>{firstWord}</span>
-				{restText && (
-					<span className={breakTitle ? styles.break : ''}>
-						{' '}
-						{restText}
+				{titleLines.map((line, i) => (
+					<span className={styles.title__string} key={i}>
+						{line}
 					</span>
-				)}
+				))}
 			</h3>
-			<p className={styles.description}>{description}</p>
+			<p className={styles.description}>
+				{descriptionLines.map((line, i) => (
+					<span className={styles.description__string} key={i}>
+						{line}
+					</span>
+				))}
+			</p>
 		</div>
 	);
 };

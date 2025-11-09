@@ -1,11 +1,6 @@
-/* ──────────────────────────────────────────────── */
-/* 2️⃣ HeroTitle.tsx                                 */
-/* ──────────────────────────────────────────────── */
-'use client';
 import React, { FC } from 'react';
 import styles from './styles.module.scss'; // стили для заголовка
 export interface HeroTitleProps {
-	/** Три строки заголовка – массив из трёх элементов. */
 	titleLines: [string, string, string];
 }
 

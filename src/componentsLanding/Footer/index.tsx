@@ -9,24 +9,25 @@ const Footer: FC = () => {
 	return (
 		<footer className={styles.footer}>
 			<div className={`${styles.footer__container} container`}>
-				<div className={styles.footer_container__content}>
-					<div>
+				<div className={styles.footer__content}>
+					<div className={styles.footer__left}>
 						<Image
+							className={styles.footer__logo}
 							src="assets/svg/logo.svg"
 							alt="Логотип"
 							width={312}
 							height={80}
 						/>
-						<Navigation gap={16} className={styles.footer__nav} />
+						<Navigation className={styles.footer__nav} />
 						<Link
-							href=""
+							href="/politic/person"
 							target="_blank"
 							className={styles.footer_container_left__link}
 						>
 							Политика обработки персональных данных
 						</Link>
 						<Link
-							href=""
+							href="/politic/confidential"
 							target="_blank"
 							className={styles.footer_container_left__link}
 						>

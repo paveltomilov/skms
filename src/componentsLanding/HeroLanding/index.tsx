@@ -1,4 +1,3 @@
-'use client';
 import React, { FC } from 'react';
 import styles from './styles.module.scss'; // ваш SCSS‑файл
 import HeroTitle from './HeroTitle';

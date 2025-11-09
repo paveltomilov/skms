@@ -33,7 +33,8 @@
 	color: var(--lan-light-grayish-blue);
 	transition: all 0.2s ease-in-out;
 
-	&:hover {
+	&:hover,
+	&:focus {
 		color: var(--lan-bright-cyan---lime-green);
 
 		.link__icon path:first-child {

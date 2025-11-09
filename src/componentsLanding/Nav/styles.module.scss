@@ -1,16 +1,15 @@
 .nav {
 	&__list {
 		display: flex;
-		gap: var(--gap, 1rem);
+		gap: 16px;
 	}
 
 	&__link {
-		&:focus {
+		transition: all 0.2s ease-in-out;
+
+		&:focus,
+		&:hover {
 			color: var(--lan-bright-cyan---lime-green);
 		}
-
-		// &:hover {
-		// 	color: var(--lan-bright-cyan---lime-green);
-		// }
 	}
 }

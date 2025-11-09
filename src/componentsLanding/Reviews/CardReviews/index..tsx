@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react';
 import styles from './styles.module.scss';
+import Button from '@/componentsLanding/Button';
 
 interface CardProps {
 	title: string;
@@ -14,13 +15,9 @@ const CardReviews: FC<CardProps> = ({
 	title,
 	description,
 	fulldescription,
-	button = 'Читать ещё',
-	gap,
 	rating = 0, // по умолчанию нет активных звезд
 }) => {
-	const resolvedGap = typeof gap === 'number' ? `${gap}px` : gap ?? '0';
 	const [expanded, setExpanded] = useState(false);
-
 	const textToShow = expanded ? fulldescription ?? description : description;
 
 	/* ---------- Рендер звёзд ----------------- */
@@ -39,22 +36,17 @@ const CardReviews: FC<CardProps> = ({
 			<h3 className={styles.title}>{title}</h3>
 			<div className={styles.content}>
 				<div className={styles.content__descr}>
-					<p
-						className={styles.description}
-						style={{ marginTop: resolvedGap }}
-					>
-						{textToShow}
-					</p>
+					<p className={styles.description}>{textToShow}</p>
 				</div>
 				<div className={styles.content__button}>
 					{fulldescription && fulldescription !== description && (
-						<button
-							type="button"
-							className={styles.button}
+						<Button
+							className={styles.card__button}
 							onClick={() => setExpanded(prev => !prev)}
-						>
-							{expanded ? 'Скрыть' : button}
-						</button>
+							width={expanded ? 63 : 96}
+							height={24}
+							text={expanded ? 'Скрыть' : 'Читать еще'}
+						/>
 					)}
 				</div>
 			</div>

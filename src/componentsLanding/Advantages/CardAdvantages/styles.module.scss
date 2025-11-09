@@ -15,6 +15,10 @@
 	text-transform: uppercase;
 	color: var(--lan-moderate-cyan);
 	margin-bottom: 17px;
+
+	&__string {
+		display: block;
+	}
 }
 
 .description {
@@ -23,9 +27,8 @@
 	font-size: 17px;
 	line-height: 128%;
 	color: var(--lan-light-grayish-cyan);
-}
 
-.break {
-	// класс, добавляемый при breakTitle = true
-	display: block; // перенос на новую строку
+	&__string {
+		display: block;
+	}
 }

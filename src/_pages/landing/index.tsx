@@ -17,14 +17,14 @@ const LandingPage: FC = () => {
 			<Header />
 			<main>
 				<HeroLanding />
-				<About />
-				<Product />
-				<Advantages />
-				<ForWhom />
-				<Reviews />
-				<Survey />
-				<FormSection />
 			</main>
+			<About />
+			<Product />
+			<Advantages />
+			<ForWhom />
+			<Reviews />
+			<Survey />
+			<FormSection />
 			<Footer />
 		</div>
 	);

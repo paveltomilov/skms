@@ -1,14 +1,15 @@
-.header {
+.window {
 	position: relative;
-	&__window {
+
+	&__header {
+		position: absolute;
+		top: 28px;
+		left: -9px;
 		border: 1px solid var(--lan-light-grayish-blue);
 		border-radius: 0 0 12px 12px;
 		padding: 16px 12px;
 		width: 199px;
 		height: 142px;
-		position: absolute;
-		top: 4px;
-		left: 0;
 		background: var(--lan-very-dark-mostly-black-blue);
 	}
 }
@@ -18,6 +19,28 @@
 	flex-direction: column;
 	gap: 5px;
 	margin-bottom: 32px;
+
+	&__span {
+		font-family: var(--second-family);
+		font-weight: 500;
+		font-size: 15px;
+		line-height: 100%;
+		color: var(--lan-gray);
+	}
+
+	&__link {
+		font-family: var(--second-family);
+		font-weight: 500;
+		font-size: 15px;
+		line-height: 100%;
+		color: var(--lan-light-grayish-blue);
+		transition: all 0.2s ease-in-out;
+
+		&:focus,
+		&:hover {
+			color: var(--lan-bright-cyan---lime-green);
+		}
+	}
 }
 
 .social {

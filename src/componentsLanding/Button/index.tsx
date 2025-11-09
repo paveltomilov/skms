@@ -8,6 +8,7 @@ export type ButtonProps = {
 	color?: string;
 	bgColor?: string;
 	hoverBgColor?: string;
+	focusBgColor?: string;
 	activeBgColor?: string;
 	icon?: React.ReactNode;
 	focusOutlineColor?: string;
@@ -25,6 +26,7 @@ const Button: React.FC<ButtonProps> = ({
 	color,
 	bgColor,
 	hoverBgColor,
+	focusBgColor,
 	activeBgColor,
 	focusOutlineColor,
 	width = 48,
@@ -43,6 +45,7 @@ const Button: React.FC<ButtonProps> = ({
 		'--h': `${height}px`,
 		'--radius': `${radius ?? height / 2}px`,
 		...(hoverBgColor && { '--bg-hover': hoverBgColor }),
+		...(focusBgColor && { '--bg-focus': focusBgColor }),
 		...(activeBgColor && { '--bg-active': activeBgColor }),
 		...(focusOutlineColor && { '--focus-outline': focusOutlineColor }),
 		...(border && { '--border': border }),

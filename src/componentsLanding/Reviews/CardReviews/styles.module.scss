@@ -4,6 +4,18 @@
 	padding: 24px;
 	padding-top: 26px;
 	border-radius: 12px;
+
+	&__button {
+		color: var(--lan-light-grayish-cyan);
+		background-color: var(--lan-very-dark-mostly-black-blue);
+		transition: color 0.2s ease-in;
+
+		&:hover,
+		&:focus {
+			background-color: var(--lan-very-dark-mostly-black-blue);
+			color: var(--lan-bright-cyan---lime-green);
+		}
+	}
 }
 
 .title {
@@ -19,13 +31,10 @@
 
 .content {
 	display: flex;
-	position: relative;
+	align-items: flex-end;
 	margin: 0;
 
 	&__button {
-		position: absolute;
-		right: 0;
-		bottom: 0;
 		font-family: var(--second-family);
 		font-weight: 400;
 		font-size: 17px;

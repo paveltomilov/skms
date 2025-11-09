@@ -2,7 +2,6 @@
 	width: 632px;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
 	font-family: var(--second-family);
 	font-weight: 800;
 	font-size: 80px;
@@ -13,5 +12,6 @@
 }
 
 .lineRight {
-	margin-left: auto;
+	display: flex;
+	justify-content: flex-end;
 }

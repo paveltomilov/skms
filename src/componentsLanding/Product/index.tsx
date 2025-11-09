@@ -1,30 +1,25 @@
-'use client';
 import React, { FC } from 'react';
 import styles from './styles.module.scss';
 import Button from '../Button';
+import SectionTitle from '../SectionTitle';
 
 const Product: FC = () => {
 	return (
 		<section id="product" className={styles.product}>
 			<div className={`${styles.product__container} container`}>
 				<div className={styles.product__content}>
-					<div className={styles.product__content__title}>
-						<p>
-							Просто начать <br />
-							Легко использовать <br />
-							Эффективно применять
-						</p>
+					<div className={styles.product__title}>
+						<SectionTitle title="Просто начать" />
+						<SectionTitle title=" Легко использовать " />
+						<SectionTitle title="Эффективно применять" />
 					</div>
-					<div className={styles.product__content__description}>
-						<p>
-							Реальная практика в действии. Загляните внутрь
-							тренажера и оцените процесс своими глазами
-						</p>
-					</div>
+					<p className={styles.product__description}>
+						Реальная практика в действии. Загляните внутрь тренажера
+						и оцените процесс своими глазами
+					</p>
 				</div>
 				<div className={styles.product__media}>
 					<Button
-						className={styles.product__media__button}
 						text={''}
 						width={72}
 						height={72}
