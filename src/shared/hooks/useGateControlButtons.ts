@@ -7,7 +7,7 @@ import {
 } from '../configs/scheme';
 import {
 	CLOSE_COMMAND_FROM_PTK_INSERT_ID,
-	OPEN_COMMAND_FROM_PTK_INSERT_ID,
+	INSERT_NDO_CMD_OPEN_PTK_ID,
 } from '../configs/controlCircuit/constants';
 import { findElementByID } from '../utils/findElementByID/scheme';
 import { useAppDispatch, useAppSelector } from './store';
@@ -44,7 +44,7 @@ export const useGateControlButtons = () => {
 		BASE_RESISTANCE[LIMIT_SWITCH_OPEN_ID];
 
 	const openFromPtkElement = findElementByID(
-		OPEN_COMMAND_FROM_PTK_INSERT_ID,
+		INSERT_NDO_CMD_OPEN_PTK_ID,
 		useAppSelector(state => state.circuit),
 	);
 

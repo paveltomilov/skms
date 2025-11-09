@@ -2,8 +2,8 @@ import type { LampIndicatorColor } from '../types/icon';
 import { MarkerName } from '../types/markers';
 import {
 	CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID,
-	KRUZAP_CLOSED_STATUS_LAMP_ID,
-	KRUZAP_OPEN_STATUS_LAMP_ID,
+	LAMP_KRUZA_P_CLOSED_ID,
+	LAMP_KRUZA_P_OPEN_ID,
 	OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID,
 } from './controlCircuit/constants';
 import { CONTROL_CIRCUIT_NEUTRAL_ID } from './points';
@@ -33,7 +33,7 @@ export const columns: LampColumn[] = [
 		title: 'Закрыто',
 		color: 'white',
 		pointIds: [OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID], // А19 - p.c.3.0.2 (выход концевика "Открыто")
-		elementId: KRUZAP_CLOSED_STATUS_LAMP_ID,
+		elementId: LAMP_KRUZA_P_CLOSED_ID,
 		colors: {
 			on: 'lamp_white_on',
 			off: 'lamp_white_off',
@@ -49,7 +49,7 @@ export const columns: LampColumn[] = [
 		title: 'Открыто',
 		color: 'lamp_green',
 		pointIds: [CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID], // А11 - p.c.3.1.2 (выход концевика "Закрыто")
-		elementId: KRUZAP_OPEN_STATUS_LAMP_ID,
+		elementId: LAMP_KRUZA_P_OPEN_ID,
 		colors: {
 			on: 'lamp_green_on',
 			off: 'lamp_green_off',

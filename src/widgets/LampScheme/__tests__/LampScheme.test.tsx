@@ -13,7 +13,8 @@ jest.mock('@/shared/UI/LampIndicator', () => ({
 const mockUseAppSelector = jest.fn();
 const mockDispatch = jest.fn();
 jest.mock('@/shared/hooks/store', () => ({
-	useAppSelector: (selector: typeof mockUseAppSelector) => mockUseAppSelector(selector),
+	useAppSelector: (selector: typeof mockUseAppSelector) =>
+		mockUseAppSelector(selector),
 	useAppDispatch: () => mockDispatch,
 }));
 
@@ -24,7 +25,9 @@ jest.mock('@/shared/UI/Marker', () => ({
 
 jest.mock('@/shared/UI/icons/Channel', () => ({
 	__esModule: true,
-	default: ({ className }: { className?: string }) => <div data-channel className={className} />,
+	default: ({ className }: { className?: string }) => (
+		<div data-channel className={className} />
+	),
 }));
 
 jest.mock('@/shared/UI/ScrewConnection', () => ({
@@ -44,15 +47,15 @@ jest.mock('@/shared/utils/findElementByID/scheme', () => ({
 
 import {
 	CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID,
-	KRUZAP_CLOSED_STATUS_LAMP_ID,
-	KRUZAP_OPEN_STATUS_LAMP_ID,
+	LAMP_KRUZA_P_CLOSED_ID,
+	LAMP_KRUZA_P_OPEN_ID,
 	OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID,
 } from '@/shared/configs/controlCircuit/constants';
 
 const CLOSED_POINT_ID = OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID; // А19 - для лампы "Закрыто"
 const OPEN_POINT_ID = CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID; // А11 - для лампы "Открыто"
-const CLOSED_ELEMENT_ID = KRUZAP_CLOSED_STATUS_LAMP_ID;
-const OPEN_ELEMENT_ID = KRUZAP_OPEN_STATUS_LAMP_ID;
+const CLOSED_ELEMENT_ID = LAMP_KRUZA_P_CLOSED_ID;
+const OPEN_ELEMENT_ID = LAMP_KRUZA_P_OPEN_ID;
 
 type PointValue = boolean | { state?: boolean } | undefined;
 
