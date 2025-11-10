@@ -5,8 +5,14 @@ import {
 	CONTROL_POWER_FEED_POINT_ID,
 	CONTROL_BREAKER_INPUT_POINT_ID,
 	CONTROL_BREAKER_OUTPUT_POINT_ID,
-	OPEN_LIMIT_SWITCH_INPUT_POINT_ID,
 	OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID,
+	WIRE_LIMIT_OPEN_TO_TERMINAL_ID,
+	LIMIT_SWITCH_CLOSE_ID,
+	WIRE_LIMIT_CLOSE_TO_TERMINAL_ID,
+	COMMANDS_CLOSE_POINT_ID,
+	CLOSE_INTERLOCK_OUTPUT_POINT_ID,
+	COMANDS_OPEN_POINT_ID,
+	OPEN_INTERLOCK_OUTPUT_POINT_ID,
 } from './controlCircuit/constants';
 
 export const CONTROL_CIRCUIT_NEUTRAL_ID = 'p.c.n'; // нейтраль цепи управления
@@ -50,15 +56,15 @@ export const SCHEME_POINTS: Record<string, IPoint> = {
 	[CONTROL_BREAKER_INPUT_POINT_ID]: { x: 320, y: 215, state: true },
 	[CONTROL_BREAKER_OUTPUT_POINT_ID]: { x: 371, y: 215, state: true },
 
-	[OPEN_LIMIT_SWITCH_INPUT_POINT_ID]: { x: 518, y: 215, state: true },
-	[OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID]: { x: 595, y: 215, state: true },
-	'p.c.3.0.3.2.1': { x: 776, y: 216, state: false },
-	'p.c.3.0.3.2.2': { x: 847, y: 215, state: false },
+	[OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID]: { x: 518, y: 215, state: true },
+	[WIRE_LIMIT_OPEN_TO_TERMINAL_ID]: { x: 595, y: 215, state: true },
+	[COMANDS_OPEN_POINT_ID]: { x: 776, y: 216, state: false },
+	[OPEN_INTERLOCK_OUTPUT_POINT_ID]: { x: 847, y: 215, state: false },
 
-	'p.c.3.1.1': { x: 518, y: 480, state: true },
-	'p.c.3.1.2': { x: 594, y: 480, state: true },
-	'p.c.3.1.3.2.1': { x: 766, y: 480, state: false },
-	'p.c.3.1.3.2.2': { x: 845, y: 480, state: false },
+	[LIMIT_SWITCH_CLOSE_ID]: { x: 518, y: 480, state: true },
+	[WIRE_LIMIT_CLOSE_TO_TERMINAL_ID]: { x: 594, y: 480, state: true },
+	[COMMANDS_CLOSE_POINT_ID]: { x: 766, y: 480, state: false },
+	[CLOSE_INTERLOCK_OUTPUT_POINT_ID ]: { x: 845, y: 480, state: false },
 
 	[CONTROL_CIRCUIT_NEUTRAL_ID]: { x: 1045, y: 67, state: false },
 };

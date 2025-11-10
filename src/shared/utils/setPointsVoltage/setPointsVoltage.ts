@@ -1,41 +1,110 @@
 import { InitialStateScheme } from '@/shared/types/scheme';
 import { findElementByID } from '../findElementByID/scheme';
+import { CONTROL_NEUTRAL_POINT_ID } from '@/shared/configs/controlCircuit/constants';
 import {
-	BUTTON_KRUZA_P_OPEN_ID,
-	BUTTON_KRUZA_P_CLOSE_ID,
-	CLOSE_INTERLOCK_INPUT_POINT_ID,
-	CLOSE_LIMIT_SWITCH_INPUT_POINT_ID,
-	CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID,
-	INTERLOCK_CLOSE_ID,
-	CONTROL_BREAKER_INPUT_POINT_ID,
-	CONTROL_BREAKER_OUTPUT_POINT_ID,
-	CONTROL_CIRCUIT_BREAKER_ID,
-	CONTROL_POWER_FEED_POINT_ID,
-	INSERT_NDO_CMD_OPEN_PTK_ID,
-	LIMIT_SWITCH_CLOSE_ID,
-	LIMIT_SWITCH_OPEN_ID,
-	OPEN_INTERLOCK_INPUT_POINT_ID,
-	OPEN_LIMIT_SWITCH_INPUT_POINT_ID,
-	OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID,
-	INTERLOCK_OPEN_ID,
-	WIRE_LIMIT_CLOSE_TO_TERMINAL_ID,
-	WIRE_LIMIT_OPEN_TO_TERMINAL_ID,
-	WIRE_PHASE_AFTER_BREAKER_ID,
-} from '@/shared/configs/controlCircuit/constants';
+	VOLTAGE_CALCULATION_CONFIG,
+	VoltageCalculationType,
+} from '@/shared/configs/controlCircuit/voltageCalculationConfig';
 
-function calcPoint(
-	idPreviousPoint: boolean,
+/**
+ * Проверяет, проходит ли ток через элемент
+ */
+function canCurrentFlow(
+	previousPointVoltage: boolean,
 	scheme: InitialStateScheme,
-	idElement: string,
+	elementId: string,
 ): boolean {
-	const element = findElementByID(idElement, scheme);
-	if (idPreviousPoint === true && element.resistance < 1000000) {
-		return true;
-	} else {
-		return false;
+	const element = findElementByID(elementId, scheme);
+	// Ток проходит, если на предыдущей точке есть напряжение и сопротивление элемента не слишком высокое
+	return previousPointVoltage && element.resistance < 1000000;
+}
+
+/**
+ * Рекурсивно рассчитывает напряжение для точки на основе конфигурации
+ */
+function calculatePointVoltage(
+	pointId: string,
+	points: Record<string, boolean>,
+	scheme: InitialStateScheme,
+	config: VoltageCalculationType,
+	visited: Set<string> = new Set(),
+): boolean {
+	// Защита от циклических зависимостей
+	if (visited.has(pointId)) {
+		return points[pointId] ?? false;
+	}
+	visited.add(pointId);
+
+	switch (config.type) {
+		case 'constant':
+			return config.value;
+
+		case 'from_previous': {
+			const previousVoltage = calculatePointVoltage(
+				config.previousPointId,
+				points,
+				scheme,
+				VOLTAGE_CALCULATION_CONFIG[config.previousPointId] ?? {
+					type: 'constant',
+					value: points[config.previousPointId] ?? false,
+				},
+				visited,
+			);
+			return canCurrentFlow(previousVoltage, scheme, config.elementId);
+		}
+
+		case 'from_neutral': {
+			// Для элементов, подключенных к нейтрали, напряжение рассчитывается
+			// как разница между начальной точкой элемента и нейтралью
+			const neutralVoltage = calculatePointVoltage(
+				CONTROL_NEUTRAL_POINT_ID,
+				points,
+				scheme,
+				VOLTAGE_CALCULATION_CONFIG[CONTROL_NEUTRAL_POINT_ID],
+				visited,
+			);
+			// Нейтраль всегда 0V, поэтому напряжение на элементе зависит от его входной точки
+			// Это обрабатывается через 'from_previous' для входной точки элемента
+			return false;
+		}
+
+		case 'merge': {
+			// Объединение нескольких путей (OR логика)
+			// Для merge нужно рассчитать напряжение через каждый путь и объединить результаты
+			// Но для правильной работы нужно найти элемент, который ведет к этой точке
+			// В конфигурации merge используется для точек, к которым ведут несколько путей
+			// Например, COMANDS_OPEN_POINT_ID получает напряжение от двух путей
+			return config.calculations.some(calc => {
+				// Для каждого пути в merge нужно рассчитать напряжение предыдущей точки
+				if (calc.type === 'from_previous') {
+					const previousVoltage = calculatePointVoltage(
+						calc.previousPointId,
+						points,
+						scheme,
+						VOLTAGE_CALCULATION_CONFIG[calc.previousPointId] ?? {
+							type: 'constant',
+							value: points[calc.previousPointId] ?? false,
+						},
+						visited,
+					);
+					return canCurrentFlow(
+						previousVoltage,
+						scheme,
+						calc.elementId,
+					);
+				}
+				return false;
+			});
+		}
+
+		default:
+			return points[pointId] ?? false;
 	}
 }
 
+/**
+ * Рассчитывает напряжение для всех точек схемы на основе конфигурации
+ */
 export function setNewVoltagePoints(
 	scheme: InitialStateScheme,
 	points: Record<string, boolean>,
@@ -46,77 +115,17 @@ export function setNewVoltagePoints(
 		boolean
 	>;
 
-	pointsAcc[CONTROL_BREAKER_INPUT_POINT_ID] = calcPoint(
-		pointsAcc[CONTROL_POWER_FEED_POINT_ID],
-		scheme,
-		CONTROL_CIRCUIT_BREAKER_ID,
-	);
-
-	pointsAcc[CONTROL_BREAKER_OUTPUT_POINT_ID] = calcPoint(
-		pointsAcc[CONTROL_BREAKER_INPUT_POINT_ID],
-		scheme,
-		WIRE_PHASE_AFTER_BREAKER_ID,
-	);
-
-	pointsAcc[OPEN_LIMIT_SWITCH_INPUT_POINT_ID] = calcPoint(
-		pointsAcc[CONTROL_BREAKER_OUTPUT_POINT_ID],
-		scheme,
-		LIMIT_SWITCH_OPEN_ID,
-	);
-
-	pointsAcc[OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID] = calcPoint(
-		pointsAcc[OPEN_LIMIT_SWITCH_INPUT_POINT_ID],
-		scheme,
-		WIRE_LIMIT_OPEN_TO_TERMINAL_ID,
-	);
-
-	pointsAcc[OPEN_COMMAND_MERGE_POINT_ID] =
-		calcPoint(
-			pointsAcc[OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID],
+	// Рассчитываем напряжение для каждой точки из конфигурации
+	for (const [pointId, config] of Object.entries(
+		VOLTAGE_CALCULATION_CONFIG,
+	)) {
+		pointsAcc[pointId] = calculatePointVoltage(
+			pointId,
+			pointsAcc,
 			scheme,
-			INSERT_NDO_CMD_OPEN_PTK_ID,
-		) ||
-		calcPoint(
-			pointsAcc[OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID],
-			scheme,
-			BUTTON_KRUZA_P_OPEN_ID,
+			config,
 		);
-
-	pointsAcc[OPEN_INTERLOCK_INPUT_POINT_ID] = calcPoint(
-		pointsAcc[OPEN_COMMAND_MERGE_POINT_ID],
-		scheme,
-		INTERLOCK_OPEN_ID,
-	);
-
-	pointsAcc[CLOSE_LIMIT_SWITCH_INPUT_POINT_ID] = calcPoint(
-		pointsAcc[CONTROL_BREAKER_OUTPUT_POINT_ID],
-		scheme,
-		LIMIT_SWITCH_CLOSE_ID,
-	);
-
-	pointsAcc[CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID] = calcPoint(
-		pointsAcc[CLOSE_LIMIT_SWITCH_INPUT_POINT_ID],
-		scheme,
-		WIRE_LIMIT_CLOSE_TO_TERMINAL_ID,
-	);
-
-	pointsAcc[CLOSE_COMMAND_MERGE_POINT_ID] =
-		calcPoint(
-			pointsAcc[CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID],
-			scheme,
-			CLOSE_COMMAND_FROM_PTK_INSERT_ID,
-		) ||
-		calcPoint(
-			pointsAcc[CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID],
-			scheme,
-			BUTTON_KRUZA_P_CLOSE_ID,
-		);
-
-	pointsAcc[CLOSE_INTERLOCK_INPUT_POINT_ID] = calcPoint(
-		pointsAcc[CLOSE_COMMAND_MERGE_POINT_ID],
-		scheme,
-		INTERLOCK_CLOSE_ID,
-	);
+	}
 
 	setVoltagePoints(pointsAcc);
 	return pointsAcc;

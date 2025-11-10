@@ -32,9 +32,9 @@ export {
 	BUTTON_KRUZA_P_CLOSE_ID,
 } from './controlCircuit/constants';
 
-export const INPUT_CIRCUIT_BREAKER_ID_PHASE_A_ID = 'p.1.2';
-export const INPUT_CIRCUIT_BREAKER_ID_PHASE_B_ID = 'p.2.2';
-export const INPUT_CIRCUIT_BREAKER_ID_PHASE_C_ID = 'p.3.2';
+export const INPUT_CIRCUIT_BREAKER_ID_PHASE_A_ID = 'p.0.0.1';
+export const INPUT_CIRCUIT_BREAKER_ID_PHASE_B_ID = 'p.0.1.1';
+export const INPUT_CIRCUIT_BREAKER_ID_PHASE_C_ID = 'p.0.2.1';
 export const INPUT_CIRCUIT_BREAKER_ID = [
 	INPUT_CIRCUIT_BREAKER_ID_PHASE_A_ID,
 	INPUT_CIRCUIT_BREAKER_ID_PHASE_B_ID,
@@ -177,7 +177,7 @@ export const SCHEME_ELEMENTS: { id: string; aria: string; type: Modals }[] = [
 const powerCircuit = [
 	[
 		{
-			id: 'p.1.1',
+			id: 'p.0.0.0',
 			name: 'Провод от фазы А до автомата',
 			resistance: 0.1,
 			malfunctions: [
