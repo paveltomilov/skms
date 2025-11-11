@@ -130,4 +130,7 @@ export function logout(): void {
 	localStorage.removeItem('accessToken');
 	localStorage.removeItem('refreshToken');
 	deleteCookie('refreshToken');
+	deleteCookie('first_name');
+	deleteCookie('last_name');
+	deleteCookie('role');
 }
