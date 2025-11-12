@@ -1,8 +1,6 @@
 'use client';
-
 import { useState, ChangeEvent, FormEvent } from 'react';
 import styles from './styles.module.scss';
-import SectionTitle from '../SectionTitle';
 import Button from '../Button';
 
 type FormValues = {
@@ -14,7 +12,17 @@ type FormValues = {
 	consent: boolean;
 };
 
-const fields = [
+type FieldKey = keyof Omit<FormValues, 'consent'>;
+
+interface Field {
+	key: FieldKey;
+	label: string;
+	type: 'text' | 'email' | 'tel';
+	placeholder: string;
+	required: boolean;
+}
+
+const fields: ReadonlyArray<Field> = [
 	{
 		key: 'name',
 		label: 'Ваше имя',
@@ -107,10 +115,9 @@ function FormLanding() {
 
 	return (
 		<form onSubmit={handleSubmit} className={styles.form}>
-			<SectionTitle
-				className={styles.form__title}
-				title="Хотите узнать больше? Мы с вами свяжемся!"
-			/>
+			<h2 className={styles.form__title}>
+				Хотите узнать больше? Мы с вами свяжемся!
+			</h2>
 
 			<div className={styles.form__container}>
 				{fields.map(({ key, label, type, placeholder, required }) => (

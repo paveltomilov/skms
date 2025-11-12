@@ -34,16 +34,22 @@ const CardReviews: FC<CardProps> = ({
 		<article className={styles.card}>
 			<div className={styles.card__rating}>{stars}</div>
 			<h3 className={styles.title}>{title}</h3>
-			<div className={styles.content}>
+			<div
+				className={`${styles.content} ${expanded ? styles.column : ''}`}
+			>
 				<div className={styles.content__descr}>
 					<p className={styles.description}>{textToShow}</p>
 				</div>
-				<div className={styles.content__button}>
+				<div
+					className={`${styles.content__button} ${
+						expanded ? styles.column : ''
+					}`}
+				>
 					{fulldescription && fulldescription !== description && (
 						<Button
 							className={styles.card__button}
 							onClick={() => setExpanded(prev => !prev)}
-							width={expanded ? 63 : 96}
+							width={expanded ? 62 : 96}
 							height={24}
 							text={expanded ? 'Скрыть' : 'Читать еще'}
 						/>

@@ -27,9 +27,10 @@ const Carousel: FC<{ slides: React.ReactNode[] }> = ({ slides }) => {
 				modules={[Autoplay]}
 				spaceBetween={20}
 				slidesPerView={2}
+				slidesPerGroup={2}
 				loop
 				autoplay={{
-					delay: 40000,
+					delay: 50000,
 					disableOnInteraction: false,
 				}}
 				onSwiper={setSwiperInstance}
@@ -42,7 +43,7 @@ const Carousel: FC<{ slides: React.ReactNode[] }> = ({ slides }) => {
 				))}
 			</Swiper>
 
-			<div className={styles.navButtons}>
+			<button className={styles.swiper__button}>
 				<ArrowLeftIcon
 					aria-label="Предыдущий слайд"
 					onClick={() => swiperRef.current?.slidePrev()}
@@ -53,7 +54,7 @@ const Carousel: FC<{ slides: React.ReactNode[] }> = ({ slides }) => {
 					onClick={() => swiperRef.current?.slideNext()}
 					className={`${styles.arrow} ${styles.next}`}
 				/>
-			</div>
+			</button>
 		</div>
 	);
 };

@@ -4,68 +4,71 @@ import SectionTitle from '../../SectionTitle';
 
 const AboutBottom: FC = () => {
 	return (
-		<div className={styles.aboutbottom}>
+		<section className={styles.aboutbottom}>
 			<div className={`${styles.aboutbottom__container} container`}>
-				<img
-					className={styles.aboutbottom__container_img}
-					src="/assets/images/about-bottom.png"
-					alt=""
-				/>
-				<div className={styles.title}>
-					<SectionTitle title="Опросы показали," />
-					<SectionTitle title="что обучение требует изменений" />
-				</div>
-				<div className={styles.content}>
-					<div className={styles.content__left}>
-						<p className={styles.content__left__description}>
-							Недостаток практики, перегрузка теорией и
-							непрозрачная система оценки навыков мешают
-							сотрудникам получать реальные результаты
-						</p>
-						<div className={styles.supervisor}>
-							<span className={styles.supervisor__procent}>
-								~75%
-							</span>
-							<p className={styles.supervisor__descr}>
-								Руководителей считают текущие методы обучения
-								устаревшими
+				<div className={styles.aboutbottom__content}>
+					<SectionTitle
+						className={styles.title}
+						title="Опросы показали, что&nbsp;обучение&nbsp;требует изменений"
+					/>
+					<div className={styles.content}>
+						<div className={styles.content__left}>
+							<p className={styles.content__left__description}>
+								Недостаток практики, перегрузка теорией и
+								непрозрачная система оценки навыков мешают
+								сотрудникам получать реальные результаты
 							</p>
+							<div className={styles.supervisor}>
+								<span className={styles.supervisor__procent}>
+									~75%
+								</span>
+								<p className={styles.supervisor__descr}>
+									Руководителей считают текущие методы
+									обучения устаревшими
+								</p>
+							</div>
 						</div>
-					</div>
-					<div className={styles.content__right}>
-						<p className={styles.content__right__description}>
-							Мы выяснили: ценность тренажёра в практике, которая
-							приближает к реальным условиям
-						</p>
-						<div className={styles.statistic}>
-							<h4 className={styles.statistic__title}>
-								Топ-3 цели при работе с тренажером
-							</h4>
-							<div className={styles.schedule}>
-								<div className={styles.schedule1}>
-									<p className={styles.interest}>41,7%</p>
-									<p className={styles.statistic__descr}>
-										Уверенность в работе
-									</p>
-								</div>
-								<div className={styles.schedule2}>
-									<p className={styles.interest}>25%</p>
-									<p className={styles.statistic__descr}>
-										Подготовкак аттестации
-									</p>
-								</div>
-								<div className={styles.schedule3}>
-									<p className={styles.interest}>16,7%</p>
-									<p className={styles.statistic__descr}>
-										Повышение квалификации
-									</p>
-								</div>
+						<div className={styles.content__right}>
+							<p className={styles.content__right__description}>
+								Мы выяснили: ценность тренажёра в практике,
+								которая приближает к реальным условиям
+							</p>
+							<div className={styles.statistic}>
+								<h4 className={styles.statistic__title}>
+									Топ-3 цели при работе с тренажером
+								</h4>
+								<ul className={styles.schedule__list}>
+									<li className={styles.item1}>
+										<p className={styles.item__interest}>
+											41,7%
+										</p>
+										<p className={styles.item__descr}>
+											Уверенность в&nbsp;работе
+										</p>
+									</li>
+									<li className={styles.item2}>
+										<p className={styles.item__interest}>
+											25%
+										</p>
+										<p className={styles.item__descr}>
+											Подготовка к&nbsp;аттестации
+										</p>
+									</li>
+									<li className={styles.item3}>
+										<p className={styles.item__interest}>
+											16,7%
+										</p>
+										<p className={styles.item__descr}>
+											Повышение квалификации
+										</p>
+									</li>
+								</ul>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</section>
 	);
 };
 

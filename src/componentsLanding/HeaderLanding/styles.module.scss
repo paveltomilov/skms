@@ -5,7 +5,6 @@
 	right: 0;
 	z-index: 20;
 	background-color: transparent;
-	// background-color: var(--lan-very-dark-mostly-black-blue);
 	transition: all 0.2s ease-in-out;
 
 	&__container {
@@ -69,4 +68,8 @@
 		text-align: center;
 		color: var(--lan-very-dark-mostly-black-blue);
 	}
+}
+
+.headerScrolled {
+	background-color: var(--lan-very-dark-mostly-black-blue);
 }

@@ -1,25 +1,20 @@
 .abouttop {
-	padding-bottom: 180px;
 	&__container {
-		position: relative;
-
-		&__img {
-			position: absolute;
-			left: 0;
-			top: -354px;
-			z-index: 1;
-		}
+		background-image: url(/assets/images/line.png);
+		background-position-y: -180px;
 	}
 }
 
 .content {
-	width: 504px;
+	padding-bottom: 90px;
+	padding-top: 172px;
 
 	&__title {
 		margin-bottom: 52px;
 	}
 
 	&__descr {
+		width: 504px;
 		display: flex;
 		flex-direction: column;
 		gap: 12px;
@@ -32,13 +27,15 @@
 	}
 }
 
-.block {
+.card__list {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	grid-template-rows: 1fr;
 	grid-column-gap: 24px;
 	grid-row-gap: 0px;
+}
 
+.item {
 	&__title {
 		font-family: var(--second-family);
 		font-weight: 600;

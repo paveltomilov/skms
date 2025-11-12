@@ -4,6 +4,10 @@
 	box-sizing: border-box;
 }
 
+html {
+	scroll-behavior: smooth;
+}
+
 ul,
 ol {
 	padding: 0; /* убираем внутренние отступы списка */
@@ -73,7 +77,6 @@ dd {
 
 body {
 	min-height: 100vh;
-	scroll-behavior: smooth;
 
 	/* оптимизация рендеринга шрифтов */
 	text-rendering: optimizeSpeed;

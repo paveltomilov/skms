@@ -1,7 +1,8 @@
 .product {
-	padding-top: 172px;
-
 	&__container {
+		background-image: url(/assets/images/about-bottom.png);
+		background-position-y: -884px;
+		background-repeat: no-repeat;
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
 		grid-template-rows: repeat(2, auto);
@@ -40,5 +41,21 @@
 		justify-content: center;
 		align-items: center;
 		background: url(/assets/images/product-bg.png) no-repeat center / cover;
+	}
+
+	&__button {
+		transition: all 0.2s ease-in-out;
+
+		// &:hover .icon__play path,
+		// &:focus .icon__play path {
+		// 	fill: var(--lan-bright-cyan---lime-green);
+		// }
+	}
+}
+
+.icon__play {
+	path {
+		stroke: #0a0a14;
+		fill: #f9fafb;
 	}
 }

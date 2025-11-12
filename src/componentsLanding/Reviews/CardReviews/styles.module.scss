@@ -6,6 +6,10 @@
 	border-radius: 12px;
 
 	&__button {
+		font-family: var(--second-family);
+		font-weight: 400;
+		font-size: 17px;
+		line-height: 128%;
 		color: var(--lan-light-grayish-cyan);
 		background-color: var(--lan-very-dark-mostly-black-blue);
 		transition: color 0.2s ease-in;
@@ -15,6 +19,12 @@
 			background-color: var(--lan-very-dark-mostly-black-blue);
 			color: var(--lan-bright-cyan---lime-green);
 		}
+	}
+
+	&__rating {
+		display: flex;
+		gap: 10px;
+		margin-bottom: 18px;
 	}
 }
 
@@ -30,16 +40,21 @@
 }
 
 .content {
+	position: relative;
 	display: flex;
 	align-items: flex-end;
 	margin: 0;
 
+	&.column {
+		flex-direction: column;
+	}
+
 	&__button {
-		font-family: var(--second-family);
-		font-weight: 400;
-		font-size: 17px;
-		line-height: 128%;
-		color: var(--lan-light-grayish-cyan);
+		&.column {
+			position: absolute;
+			bottom: 0;
+			right: 0;
+		}
 	}
 }
 
@@ -50,12 +65,6 @@
 	font-size: 17px;
 	line-height: 128%;
 	color: var(--lan-light-grayish-cyan);
-}
-
-.card__rating {
-	display: flex;
-	gap: 10px;
-	margin-bottom: 18px;
 }
 
 .rating__star {
