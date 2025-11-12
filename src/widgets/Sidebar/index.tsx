@@ -5,9 +5,12 @@ import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import Chevron from '@/shared/UI/icons/Chevron';
 import { useUserCookies } from '@/shared/hooks/useUserCookies';
+import { useAppDispatch } from '@/shared/hooks/store';
+import { clearCurrentStudent } from '@/store/trainingSlice';
 
 const Sidebar = () => {
 	const [isOpen, setIsOpen] = useState(false);
+	const dispatch = useAppDispatch();
 
 	const handleToggleSidebar = () => setIsOpen(!isOpen);
 
@@ -30,6 +33,7 @@ const Sidebar = () => {
 						text="Главная"
 						className={styles.buttonText}
 						href="/"
+						onClick={() => dispatch(clearCurrentStudent())}
 					/>
 
 					{role != 'student' && (
@@ -42,6 +46,7 @@ const Sidebar = () => {
 							text={isAdmin ? 'Список препод.' : 'Список студ.'}
 							className={styles.buttonText__list}
 							href="/training"
+							onClick={() => dispatch(clearCurrentStudent())}
 						/>
 					)}
 
@@ -52,6 +57,7 @@ const Sidebar = () => {
 						text="ПТК"
 						className={styles.buttonText}
 						href="/ptk"
+						onClick={() => dispatch(clearCurrentStudent())}
 					/>
 				</div>
 				<button
