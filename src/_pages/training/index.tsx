@@ -20,6 +20,12 @@ const Training = () => {
 
 	const { role } = useUserCookies();
 
+	const isAdmin = role === 'admin';
+
+	const nameList = isAdmin
+		? 'Список преподавателей'
+		: 'Список студентов';
+
 	const { users, isLoading, error, refetch } = useGetUsers(role);
 
 	useEffect(() => {
@@ -40,7 +46,7 @@ const Training = () => {
 				<>
 					<section className={styles.training}>
 						<div className={styles.training__title}>
-							Список студентов
+							{nameList}
 						</div>
 						<div className={styles.training__cards}>
 							{users.map(user => (

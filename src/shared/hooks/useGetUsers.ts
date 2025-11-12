@@ -15,7 +15,7 @@ export const useGetUsers = (role: Role) => {
 
 			const usersData =
 				role === 'admin'
-					? users.filter(user => user.role !== 'admin')
+					? users.filter(user => user.role === 'teacher')
 					: users.filter(user => user.role === 'student');
 			setUsers(usersData);
 		} catch (err) {

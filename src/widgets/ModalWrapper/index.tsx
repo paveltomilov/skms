@@ -20,6 +20,7 @@ import { PopupStudentStatistic } from '../PopupStudetnStatistic';
 import { PopupStudentCreate } from '../PopupStudentCreate';
 import { PopupStudentDelete } from '../PopupStudentDelete';
 import { PopupNote } from '../PopupNote';
+import { useUserCookies } from '@/shared/hooks/useUserCookies';
 
 interface IModals {
 	condition: boolean;
@@ -43,8 +44,12 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		studentStatistics,
 		studentCreate,
 		studentDelete,
-		note
+		note,
 	} = useAppSelector(state => state.modal);
+
+	const { role } = useUserCookies();
+
+	const isAdmin = role === 'admin';
 
 	const isOne =
 		automatic ||
@@ -60,9 +65,7 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		studentStatistics ||
 		studentCreate ||
 		studentDelete ||
-		note
-;
-
+		note;
 	const gateId = useAppSelector(state => state.gate.activeGateId as string);
 
 	const modals: IModals[] = [
@@ -127,7 +130,7 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			id: 'notification',
 			headerTitle: 'Дата реализации',
 			gateId: undefined,
-			component: <PopupNotificationDev/>,
+			component: <PopupNotificationDev />,
 		},
 		{
 			condition: setSimulation,
@@ -139,21 +142,21 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		{
 			condition: studentStatistics,
 			id: 'studentStatistics',
-			headerTitle: 'Статистика ученика',
+			headerTitle: `Статистика ${isAdmin ? 'преподавателя' : 'ученика'}`,
 			gateId: undefined,
 			component: <PopupStudentStatistic />,
 		},
 		{
 			condition: studentCreate,
 			id: 'studentCreate',
-			headerTitle: 'Создание ученика',
+			headerTitle: `Создание ${isAdmin ? 'преподавателя' : 'ученика'}`,
 			gateId: undefined,
 			component: <PopupStudentCreate />,
 		},
 		{
 			condition: studentDelete,
 			id: 'studentDelete',
-			headerTitle: 'Удаление ученика',
+			headerTitle: `Удаление ${isAdmin ? 'преподавателя' : 'ученика'}`,
 			gateId: undefined,
 			component: <PopupStudentDelete />,
 		},

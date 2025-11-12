@@ -5,6 +5,7 @@ import { useAppSelector } from '@/shared/hooks/store';
 import { useDeleteUser } from '@/shared/hooks/useDeleteUser';
 import { useDispatch } from 'react-redux';
 import { updateList } from '@/store/updateListSlice';
+import { closeModal } from '@/store/modalSlice';
 
 export const PopupStudentDelete: FC = () => {
 	const data = useAppSelector(store => store.training.currentStudent);
@@ -14,6 +15,7 @@ export const PopupStudentDelete: FC = () => {
 		deleteUser().then(() => {
 			dispatch(updateList());
 		});
+		setTimeout(() => dispatch(closeModal('studentDelete')), 1000);
 	}
 	if (data) {
 		const role =
@@ -26,26 +28,30 @@ export const PopupStudentDelete: FC = () => {
 
 		return (
 			<div className={styles.popup}>
-				<div className={styles.info}>
-					{success ? (
-						<span>Пользователь удален</span>
-					) : (
-						<span>
-							{role} <b>{fullName}</b> будет удален
-						</span>
+				<div className={styles.wrapper}>
+					<div className={styles.info}>
+						{success ? (
+							<span className={styles.info__success}>
+								{role} <b>{fullName}</b> удален
+							</span>
+						) : (
+							<span>
+								{role} <b>{fullName}</b> будет удален
+							</span>
+						)}
+					</div>
+					{!success && (
+						<Button
+							disabled={isLoading}
+							className={styles.button}
+							width={278}
+							height={55}
+							text={isLoading ? 'Удаление...' : 'Подтвердить'}
+							onClick={handleDelete}
+						/>
 					)}
+					{error && <span className={styles.error}>{error}</span>}
 				</div>
-				{!success && (
-					<Button
-						disabled={isLoading}
-						className={styles.button}
-						width={278}
-						height={55}
-						text={isLoading ? 'Удаление...' : 'Подтвердить'}
-						onClick={handleDelete}
-					/>
-				)}
-				{error && <span className={styles.error}>{error}</span>}
 			</div>
 		);
 	}

@@ -5,10 +5,19 @@ import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import useShowModal from '@/shared/hooks/useShowModal';
 import { useDate } from '@/shared/hooks/useDate';
+import { useUserCookies } from '@/shared/hooks/useUserCookies';
+import cn from 'classnames';
 
 const HeaderTraining: FC = () => {
 	const handleModalStudentCreate = useShowModal('studentCreate');
 	const handleModalNotification = useShowModal('notification');
+	const { role } = useUserCookies();
+
+	const isAdmin = role === 'admin';
+
+	const textBtnAddUser = isAdmin
+		? 'СОЗДАТЬ ПРЕПОДАВАТЕЛЯ'
+		: 'СОЗДАТЬ УЧЕНИКА';
 
 	const { formattedDate, formattedTime, dateTimeDate, dateTimeTime } =
 		useDate();
@@ -16,33 +25,31 @@ const HeaderTraining: FC = () => {
 	return (
 		<header className={styles.header}>
 			<div className={styles.wrapper}>
-				<div className={styles.buttons}>
+				<div
+					className={cn(styles.buttons, {
+						[styles.buttons__wide]: isAdmin,
+					})}
+				>
 					<Button
 						className={styles.button}
-						width={213}
+						width={isAdmin ? 270 : 213}
 						height={32}
-						text="Создать ученика"
-						onClick={() => {
-							handleModalStudentCreate();
-						}}
+						text={textBtnAddUser}
+						onClick={handleModalStudentCreate}
 					/>
 					<Button
 						className={styles.button}
 						width={163}
 						height={32}
 						text="Статистика"
-						onClick={() => {
-							handleModalNotification();
-						}}
+						onClick={handleModalNotification}
 					/>
 					<Button
 						className={styles.button}
 						width={32}
 						height={32}
 						text="?"
-						onClick={() => {
-							handleModalNotification();
-						}}
+						onClick={handleModalNotification}
 					/>
 				</div>
 				<div suppressHydrationWarning className={styles.datetime}>

@@ -13,6 +13,8 @@ const Sidebar = () => {
 
 	const { role } = useUserCookies();
 
+	const isAdmin = role === 'admin';
+
 	return (
 		<>
 			<button onClick={handleToggleSidebar} className={styles.openButton}>
@@ -34,9 +36,11 @@ const Sidebar = () => {
 						<Button
 							width={90}
 							height={34}
-							aria-label="Список студентов"
-							text="Список студ."
-							className={styles.buttonText}
+							aria-label={
+								isAdmin ? 'Список препод.' : 'Список студ.'
+							}
+							text={isAdmin ? 'Список препод.' : 'Список студ.'}
+							className={styles.buttonText__list}
 							href="/training"
 						/>
 					)}

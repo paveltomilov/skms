@@ -17,12 +17,8 @@ interface Props {
 const UserCard: FC<Props> = ({ className, data }) => {
 	const dispatch = useAppDispatch();
 	const router = useRouter();
-	const textDeleteRole =
-		data.role === 'student'
-			? 'студента'
-			: data.role === 'teacher'
-			? 'преподават.'
-			: 'пользователя';
+	const textDeleteBtn =
+		data.role === 'student' ? 'УДАЛИТЬ УЧЕНИКА' : 'УДАЛИТЬ ПРЕПОДАВАТЕЛЯ';
 
 	const { deleteSimulation, hasActiveSimulation } = useSimulationByIdStudent(
 		data.id,
@@ -45,16 +41,16 @@ const UserCard: FC<Props> = ({ className, data }) => {
 					<>
 						{hasActiveSimulation ? (
 							<Button
-								width={239}
-								height={32}
+								width={273}
+								height={27}
 								text="Удалить симуляцию"
 								className={styles.card__buttons__button}
 								onClick={deleteSimulation}
 							/>
 						) : (
 							<Button
-								width={239}
-								height={32}
+								width={273}
+								height={27}
 								text="Задать симуляцию"
 								className={styles.card__buttons__button}
 								onClick={() => {
@@ -64,8 +60,8 @@ const UserCard: FC<Props> = ({ className, data }) => {
 							/>
 						)}
 						<Button
-							width={239}
-							height={32}
+							width={273}
+							height={27}
 							text="Статистика"
 							className={styles.card__buttons__button}
 							onClick={() =>
@@ -76,9 +72,9 @@ const UserCard: FC<Props> = ({ className, data }) => {
 				) : null}
 
 				<Button
-					width={239}
-					height={32}
-					text={`Удалить ${textDeleteRole}`}
+					width={273}
+					height={27}
+					text={textDeleteBtn}
 					className={styles.card__buttons__button}
 					onClick={() => {
 						dispatch(setCurrentStudent(data));

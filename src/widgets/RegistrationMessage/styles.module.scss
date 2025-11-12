@@ -5,30 +5,44 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	gap: 24px;
 	padding: 20px;
 	min-height: 300px;
 
+	&__top {
+		display: flex;
+		flex-direction: row;
+		gap: 8px;
+		align-items: flex-start;
+		justify-content: center;
+	}
+
 	&__message {
-		@include mixins.text(24px, 400);
-		color: variables.$success-color;
-		font-weight: 600;
-		text-align: center;
+		line-height: 100%;
+		@include mixins.text(32px, 400);
+		width: 334px;
 	}
 	&__list {
 		display: flex;
 		flex-grow: 1;
 		flex-direction: column;
 		gap: 30px;
-		padding-left: 45px;
 		justify-content: space-evenly;
-        
+		padding-left: 120px;
 	}
 	&__item {
 		@include mixins.text(20px, 400);
 		font-weight: 400;
+		display: flex;
+		flex-direction: row;
+		gap: 32px;
 	}
-	&__warning {
-		@include mixins.text(18px, 400);
-		color: variables.$red-color;
+	&__line {
+		display: block;
+		width: 75px;
 	}
+	&__btn {
+		transform: translateY(-30%);
+	}
+
 }
