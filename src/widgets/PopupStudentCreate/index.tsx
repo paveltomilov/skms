@@ -45,7 +45,9 @@ export const PopupStudentCreate: FC = () => {
 		event.preventDefault();
 		resetServerErrors();
 
-		if (!validateForm()) return;
+		if (!(getDone('first_name',values,validationStatus,serverErrors,activeFields) &&
+			  getDone('last_name',values,validationStatus,serverErrors,activeFields) &&
+			  getDone('email',values,validationStatus,serverErrors,activeFields))) return;
 
 		handleRegistration();
 	};
