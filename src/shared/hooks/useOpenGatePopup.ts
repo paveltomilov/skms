@@ -8,8 +8,8 @@ export const useOpenGatePopup = () => {
 
 	const { role } = useUserCookies();
 
-	const { studentId } = useAppSelector(
-		state => state.training,
+	const studentId = useAppSelector(
+		state => state.training.currentStudent?.id,
 	);
 
 	if (role === 'teacher') {

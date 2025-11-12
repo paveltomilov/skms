@@ -4,7 +4,7 @@ import Button from '@/shared/UI/Button';
 import { openModal } from '@/store/modalSlice';
 import cn from 'classnames';
 import { useRouter } from 'next/navigation';
-import { setCurrentStudent, setStudentId } from '@/store/trainingSlice';
+import { setCurrentStudent } from '@/store/trainingSlice';
 import { useAppDispatch } from '@/shared/hooks/store';
 import { User } from '@/shared/types/users';
 import { useSimulationByIdStudent } from '@/shared/hooks/useSimulationByIdStudent';
@@ -58,7 +58,7 @@ const UserCard: FC<Props> = ({ className, data }) => {
 								text="Задать симуляцию"
 								className={styles.card__buttons__button}
 								onClick={() => {
-									dispatch(setStudentId(data.id));
+									dispatch(setCurrentStudent(data));
 									router.push('/ptk');
 								}}
 							/>
