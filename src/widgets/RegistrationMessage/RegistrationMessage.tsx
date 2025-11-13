@@ -8,12 +8,14 @@ import Copy from '@/shared/UI/icons/Copy/Copy';
 
 const RegistrationMessage = (data: LoginFormData) => {
 	async function handleCopyPassword() {
-		const password = data.password
-		
+		const password = data.password;
+
 		await navigator.clipboard
 			.writeText(password)
 			.then(() => console.log('Пароль скопирован'))
-			.catch((err)=> console.error('Пароль не скопирован, произошла ошибка', err));
+			.catch(err =>
+				console.error('Пароль не скопирован, произошла ошибка', err),
+			);
 	}
 	return (
 		<div className={styles.response}>
