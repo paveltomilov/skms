@@ -6,8 +6,8 @@ import {
 	computeValidationStatus,
 } from '@/shared/utils/loginFunctions/loginFunctions';
 
-interface UseLoginFormProps {
-	toggleRegisterMode?: boolean;
+export interface UseLoginFormProps {
+	toggleRegisterMode: 'register' | 'login' | 'createUser';
 }
 
 export function useLoginForm({ toggleRegisterMode }: UseLoginFormProps) {
@@ -31,9 +31,11 @@ export function useLoginForm({ toggleRegisterMode }: UseLoginFormProps) {
 	// Для регистрации: согласие на обработку персональных данных
 	const [policyAccepted, setPolicyAccepted] = useState(false);
 	const activeFields = useMemo<(keyof LoginFormData)[]>(() => {
-		return toggleRegisterMode
-			? ['first_name', 'last_name', 'password', 'email']
-			: ['email', 'password'];
+		if (toggleRegisterMode === 'register')
+			return ['first_name', 'last_name', 'password', 'email'];
+		if (toggleRegisterMode === 'createUser')
+			return ['first_name', 'last_name', 'email'];
+		return ['email', 'password'];
 	}, [toggleRegisterMode]);
 
 	const configMap = useMemo(() => {
@@ -67,8 +69,22 @@ export function useLoginForm({ toggleRegisterMode }: UseLoginFormProps) {
 			activeFields,
 		);
 		// В режиме регистрации учитываем согласие на обработку данных
-		setIsValid(toggleRegisterMode ? baseValid && policyAccepted : baseValid);
-	}, [values, serverErrors, activeFields, toggleRegisterMode, policyAccepted]);
+		setIsValid(() => {
+			if (
+				toggleRegisterMode === 'login' ||
+				toggleRegisterMode === 'createUser'
+			) {
+				return baseValid;
+			}
+			return baseValid && policyAccepted;
+		});
+	}, [
+		values,
+		serverErrors,
+		activeFields,
+		toggleRegisterMode,
+		policyAccepted,
+	]);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -102,7 +118,14 @@ export function useLoginForm({ toggleRegisterMode }: UseLoginFormProps) {
 		);
 		const hasServerErrors = Object.values(serverErrors).some(Boolean);
 		const base = !hasLocalErrors && !hasServerErrors;
-		return toggleRegisterMode ? base && policyAccepted : base;
+
+		if (
+			toggleRegisterMode === 'login' ||
+			toggleRegisterMode === 'createUser'
+		) {
+			return base;
+		}
+		return base && policyAccepted;
 	};
 
 	const handleRememberMeChange = (checked: boolean) => {

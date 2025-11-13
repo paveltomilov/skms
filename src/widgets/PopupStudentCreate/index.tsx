@@ -13,6 +13,7 @@ import { LoginFormData } from '@/shared/types/login';
 import { getRandomPassword } from '@/shared/utils/getRandomPassword/getRandomPassword';
 import { useAppDispatch } from '@/shared/hooks/store';
 import { updateList } from '@/store/updateListSlice';
+import { FieldConfig } from '../Form';
 
 const PASSWORD_ERROR = {
 	email: false,
@@ -22,7 +23,9 @@ const PASSWORD_ERROR = {
 };
 
 export const PopupStudentCreate: FC = () => {
+	const modeForm = 'createUser' as const;
 	const {
+		isValid,
 		values,
 		validationStatus,
 		serverErrors,
@@ -31,26 +34,78 @@ export const PopupStudentCreate: FC = () => {
 		handleChange,
 		resetServerErrors,
 		setServerErrors,
-	} = useLoginForm({ toggleRegisterMode: true });
+	} = useLoginForm({ toggleRegisterMode: modeForm });
 
 	const dispatch = useAppDispatch();
 	const [responseData, setResponseData] = useState<LoginFormData | null>(
 		null,
 	);
+	const fieldConfigs: FieldConfig[] = [
+		{
+			name: 'last_name',
+			label: 'Фамилия',
+			type: 'text',
+			placeholder: 'Фамилия',
+		},
+		{
+			name: 'first_name',
+			label: 'Имя',
+			type: 'text',
+			placeholder: 'Имя',
+		},
+		{ name: 'email', label: 'Email', type: 'email', placeholder: 'Email' },
+	];
+
+	// Функция для рендеринга поля
+	const renderField = (field: FieldConfig) => {
+		const { name, label, type, placeholder } = field;
+		const hasError = serverErrors[name];
+		const hasWarn = !hasError && validationStatus[name] === 2;
+		const customErrorText = name === 'password' && undefined;
+		return (
+			<LoginInput
+				key={name}
+				label={label}
+				type={type}
+				name={name}
+				onChange={handleChange}
+				value={values[name] || ''}
+				placeholder={placeholder}
+				id={name}
+				indicator={getIndicator(
+					name,
+					values,
+					validationStatus,
+					serverErrors,
+				)}
+				done={getDone(
+					name,
+					values,
+					validationStatus,
+					serverErrors,
+					activeFields,
+				)}
+				error={hasError}
+				warn={hasWarn}
+				errorMessage={
+					hasError
+						? customErrorText || configMap[name]?.errorMessage
+						: undefined
+				}
+				warnMessage={hasWarn ? configMap[name]?.warnMessage : undefined}
+				required={configMap[name]?.required}
+			/>
+		);
+	};
 
 	const handleSubmit: FormEventHandler<HTMLFormElement> = async (
 		event: React.FormEvent<HTMLFormElement>,
 	) => {
 		event.preventDefault();
 		resetServerErrors();
-
-		if (!(getDone('first_name',values,validationStatus,serverErrors,activeFields) &&
-			  getDone('last_name',values,validationStatus,serverErrors,activeFields) &&
-			  getDone('email',values,validationStatus,serverErrors,activeFields))) return;
-
+		if (!isValid) return;
 		handleRegistration();
 	};
-
 	const handleRegistration = async () => {
 		const dataForm: LoginFormData = {
 			...values,
@@ -58,12 +113,10 @@ export const PopupStudentCreate: FC = () => {
 		};
 		try {
 			const response = await postRegistration(dataForm);
-
 			if (response.success) {
 				setResponseData(dataForm);
 				dispatch(updateList());
 			}
-
 			if (response.errors) {
 				setServerErrors({
 					email: !!response.errors.email,
@@ -81,64 +134,13 @@ export const PopupStudentCreate: FC = () => {
 		<div className={styles.popup}>
 			{!responseData ? (
 				<form onSubmit={handleSubmit} className={styles.form}>
-					<LoginInput
-						label={'Фамилия'}
-						type={'text'}
-						name={'first_name'}
-						onChange={handleChange}
-						value={values.first_name || ''}
-						placeholder={'Фамилия'}
-						id={'first_name'}
-						indicator={getIndicator('first_name',values,validationStatus,serverErrors)}
-						done={getDone('first_name',values,validationStatus,serverErrors,activeFields)}
-						error={serverErrors.first_name}
-						warn={!serverErrors.first_name && validationStatus.first_name === 2}
-						errorMessage={serverErrors.first_name? configMap.first_name?.errorMessage: undefined}
-						warnMessage={!serverErrors.first_name && validationStatus.first_name === 2? configMap.first_name?.warnMessage: undefined}
-						required={configMap.first_name?.required}
-					/>
-					<LoginInput
-						label={'Имя'}
-						type={'text'}
-						name={'last_name'}
-						onChange={handleChange}
-						value={values.last_name || ''}
-						placeholder={'Имя'}
-						id={'last_name'}
-						indicator={getIndicator('last_name',values,validationStatus,serverErrors)}
-						done={getDone('last_name',values,validationStatus,serverErrors,activeFields)}
-						error={serverErrors.last_name}
-						warn={!serverErrors.last_name && validationStatus.last_name === 2}
-						errorMessage={serverErrors.last_name? configMap.last_name?.errorMessage: undefined}
-						warnMessage={!serverErrors.last_name && validationStatus.last_name === 2? configMap.last_name?.warnMessage: undefined}
-						required={configMap.last_name?.required}
-					/>
-					<LoginInput
-						label={'Email'}
-						type={'email'}
-						name={'email'}
-						onChange={handleChange}
-						value={values.email || ''}
-						placeholder={'Email'}
-						id={'email'}
-						indicator={getIndicator('email',values,validationStatus,serverErrors)}
-						done={getDone('email',values,validationStatus,serverErrors,activeFields)}
-						error={serverErrors.email}
-						warn={!serverErrors.email && validationStatus.email === 2}
-						errorMessage={serverErrors.email? configMap.email?.errorMessage: undefined}
-						warnMessage={!serverErrors.email && validationStatus.email === 2? configMap.email?.warnMessage: undefined}
-						required={configMap.email?.required}
-					/>
+					{fieldConfigs.map(renderField)}
 					<Button
 						className={styles.button}
 						width={344}
 						height={55}
 						text="Создать ученика"
-						success={
-							getDone('first_name',values,validationStatus,serverErrors,activeFields) &&
-							getDone('last_name',values,validationStatus,serverErrors,activeFields) &&
-							getDone('email',values,validationStatus,serverErrors,activeFields)
-						}
+						success={isValid}
 					/>
 				</form>
 			) : (
