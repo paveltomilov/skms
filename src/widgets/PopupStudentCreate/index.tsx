@@ -31,7 +31,6 @@ export const PopupStudentCreate: FC = () => {
 		handleChange,
 		resetServerErrors,
 		setServerErrors,
-		validateForm,
 	} = useLoginForm({ toggleRegisterMode: true });
 
 	const dispatch = useAppDispatch();

@@ -1,6 +1,7 @@
 import { LoginFormData, LoginResponse } from '@/shared/types/login';
 import axios from 'axios';
 import { doFirstLatterBig } from '@/shared/utils/doFirstLatterBig/doFirstLatterBig';
+import { getAccessToken } from './auth';
 
 const urlBase: string | undefined = process.env.NEXT_PUBLIC_API_BASE_URL;
 interface IResponseRegistration {
@@ -14,11 +15,7 @@ interface IResponseRegistration {
 export async function postRegistration(
 	formData: LoginFormData,
 ): Promise<{ success: boolean; errors?: IResponseRegistration }> {
-	const access =
-		typeof window !== 'undefined'
-			? localStorage.getItem('accessToken')
-			: null;
-
+	const access = getAccessToken();
 	const headers = access
 		? {
 				Authorization: `Bearer ${access}`,
