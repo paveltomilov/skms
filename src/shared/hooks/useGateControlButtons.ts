@@ -6,7 +6,7 @@ import {
 	LIMIT_SWITCH_OPEN_ID,
 } from '../configs/scheme';
 import {
-	CLOSE_COMMAND_FROM_PTK_INSERT_ID,
+	INSERT_NDO_CMD_CLOSE_PTK_ID,
 	INSERT_NDO_CMD_OPEN_PTK_ID,
 } from '../configs/controlCircuit/constants';
 import { findElementByID } from '../utils/findElementByID/scheme';
@@ -49,7 +49,7 @@ export const useGateControlButtons = () => {
 	);
 
 	const closeFromPtkElement = findElementByID(
-		CLOSE_COMMAND_FROM_PTK_INSERT_ID,
+		INSERT_NDO_CMD_CLOSE_PTK_ID,
 		useAppSelector(state => state.circuit),
 	);
 

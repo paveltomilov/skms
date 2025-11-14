@@ -6,8 +6,8 @@ import { findElementByID } from './scheme';
 
 describe('test function findElementById', () => {
 	it('should accept ids starting with "p"', () => {
-		const result = findElementByID('p.1.1', initialStateScheme);
-		expect(result.id).toBe('p.1.1');
+		const result = findElementByID('p.0.0.1', initialStateScheme);
+		expect(result.id).toBe('p.0.0.1');
 	});
 
 	it('should accept ids starting with "c"', () => {
@@ -37,7 +37,10 @@ describe('test function findElementById', () => {
 			controlCircuit: [],
 		} as unknown as InitialStateScheme;
 
-		const result = findElementByID(WIRE_POWER_TO_CONTROL_BREAKER_ID, emptyState);
+		const result = findElementByID(
+			WIRE_POWER_TO_CONTROL_BREAKER_ID,
+			emptyState,
+		);
 		expect(result?.id).toBe(WIRE_POWER_TO_CONTROL_BREAKER_ID);
 	});
 

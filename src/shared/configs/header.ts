@@ -2,7 +2,7 @@
 import {
 	BUTTON_KRUZA_P_OPEN_ID,
 	BUTTON_KRUZA_P_CLOSE_ID,
-	CLOSE_COMMAND_FROM_PTK_INSERT_ID,
+	INSERT_NDO_CMD_CLOSE_PTK_ID,
 	INSERT_NDO_CMD_OPEN_PTK_ID,
 	LIMIT_SWITCH_CLOSE_ID,
 	LIMIT_SWITCH_OPEN_ID,
@@ -15,7 +15,10 @@ export const PTK_BUTTONS_CONFIG = {
 			id: INSERT_NDO_CMD_OPEN_PTK_ID,
 			value: BASE_RESISTANCE[INSERT_NDO_CMD_OPEN_PTK_ID],
 		}, // Замыкаем "открыть"
-		{ id: INSERT_NDO_CMD_CLOSE_PTK_ID, value: HIGH_RESISTANCE }, // Размыкаем "закрыть"
+		{
+			id: INSERT_NDO_CMD_CLOSE_PTK_ID,
+			value: HIGH_RESISTANCE,
+		}, // Размыкаем "закрыть"
 	],
 	// Срабатывает через 10 сек после нажатия на кнопку открыть ПТК (задвижка открылась полностью)
 	opening: [
@@ -33,7 +36,7 @@ export const PTK_BUTTONS_CONFIG = {
 	close: [
 		{
 			id: INSERT_NDO_CMD_CLOSE_PTK_ID,
-			value: BASE_RESISTANCE[CLOSE_COMMAND_FROM_PTK_INSERT_ID],
+			value: BASE_RESISTANCE[INSERT_NDO_CMD_CLOSE_PTK_ID],
 		}, // Замыкаем "закрыть"
 		{ id: INSERT_NDO_CMD_OPEN_PTK_ID, value: HIGH_RESISTANCE }, // Размыкаем "открыть"
 	],

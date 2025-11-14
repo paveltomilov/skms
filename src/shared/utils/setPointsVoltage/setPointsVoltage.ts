@@ -1,6 +1,5 @@
 import { InitialStateScheme } from '@/shared/types/scheme';
 import { findElementByID } from '../findElementByID/scheme';
-import { CONTROL_NEUTRAL_POINT_ID } from '@/shared/configs/controlCircuit/constants';
 import {
 	VOLTAGE_CALCULATION_CONFIG,
 	VoltageCalculationType,
@@ -56,13 +55,7 @@ function calculatePointVoltage(
 		case 'from_neutral': {
 			// Для элементов, подключенных к нейтрали, напряжение рассчитывается
 			// как разница между начальной точкой элемента и нейтралью
-			const neutralVoltage = calculatePointVoltage(
-				CONTROL_NEUTRAL_POINT_ID,
-				points,
-				scheme,
-				VOLTAGE_CALCULATION_CONFIG[CONTROL_NEUTRAL_POINT_ID],
-				visited,
-			);
+
 			// Нейтраль всегда 0V, поэтому напряжение на элементе зависит от его входной точки
 			// Это обрабатывается через 'from_previous' для входной точки элемента
 			return false;

@@ -21,11 +21,11 @@ export type ElementKind =
 	| 'wire'
 	| 'breaker'
 	| 'limitSwitch'
-	| 'insert'
-	| 'button'
 	| 'blockingContact'
 	| 'coil'
-	| 'lamp';
+	| 'lamp'
+	| 'starterContact'
+	| 'motorWinding';
 
 // Типы шаблонов для генерации неисправностей и метаданных визуализации
 export type MalfTpl = { suffix: string; name: string };
