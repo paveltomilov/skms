@@ -1,41 +1,41 @@
-import { WINDOWS } from '@/shared/configs/window';
+import { KeyWindows } from '@/shared/configs/window';
 
 type TildaConfig = {
 	color?: 'white' | 'green';
 	disabled?: boolean;
 };
 
-export const firstWindows = [
-	WINDOWS.w113,
-	WINDOWS.w114,
-	WINDOWS.w115,
-	WINDOWS.w116,
-	WINDOWS.w117,
-	WINDOWS.w118,
+export const firstWindows: KeyWindows[] = [
+	'w113',
+	'w114',
+	'w115',
+	'w116',
+	'w117',
+	'w118',
 ];
-export const secondWindows = [
-	WINDOWS.w119,
-	WINDOWS.w120,
-	WINDOWS.w121,
-	WINDOWS.w122,
-	WINDOWS.w123,
-	WINDOWS.w124,
+export const secondWindows: KeyWindows[] = [
+	'w119',
+	'w120',
+	'w121',
+	'w122',
+	'w123',
+	'w124',
 ];
-export const thirdWindows = [
-	WINDOWS.w125,
-	WINDOWS.w126,
-	WINDOWS.w127,
-	WINDOWS.w128,
-	WINDOWS.w129,
-	WINDOWS.w130,
+export const thirdWindows: KeyWindows[] = [
+	'w125',
+	'w126',
+	'w127',
+	'w128',
+	'w129',
+	'w130',
 ];
-export const fourthWindows = [
-	WINDOWS.w131,
-	WINDOWS.w132,
-	WINDOWS.w133,
-	WINDOWS.w134,
-	WINDOWS.w135,
-	WINDOWS.w136,
+export const fourthWindows: KeyWindows[] = [
+	'w131',
+	'w132',
+	'w133',
+	'w134',
+	'w135',
+	'w136',
 ];
 
 export const buttonsConfig = [

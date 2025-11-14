@@ -1,23 +1,29 @@
 import { FC } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
-import { useDispatch } from 'react-redux';
 import { openModal } from '@/store/modalSlice';
 import cn from 'classnames';
+import { useRouter } from 'next/navigation';
+import { setStudentId } from '@/store/trainingSlice';
+import { useAppDispatch } from '@/shared/hooks/store';
 
 interface Props {
     className?: string,
+    id: number,
+    firstName: string,
+    lastName: string,
 };
 
-const StudentCard: FC<Props> = ({className}) => {
+const StudentCard: FC<Props> = ({className, id, firstName, lastName}) => {
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
+    const router = useRouter();
 
     return (
         <div className={cn(styles.card, className)}>
             <div className={styles.card__profile}>
                 <img className={styles.card__profile__photo} src='/images/user_icon.png' alt="Фото пользователя"></img>
-                <div className={styles.card__profile__name}>Иванов Иван Иванович</div>
+                <div className={styles.card__profile__name}>{firstName} {lastName}</div>
             </div>
             <div className={styles.card__buttons}>
                 <Button
@@ -25,7 +31,10 @@ const StudentCard: FC<Props> = ({className}) => {
                     height={32}
                     text='Задать симуляцию'
                     className={styles.card__buttons__button}
-                    onClick={() => dispatch(openModal('setSimulation'))}
+                    onClick={() => {
+                        dispatch(setStudentId(id));
+                        router.push('/ptk');
+                    }}
                 />
                 <Button
                     width={239}

@@ -57,7 +57,8 @@ export const config: Login = [
 		validate: (state: LoginFormData) => {
 			if (!state.first_name.trim()) return 0;
 
-			const latinPattern = /^(?!.*[-\s]{3,})[A-Za-z0-9]+(?:[-\s][A-Za-z0-9]+)*$/;
+			const latinPattern =
+				/^(?!.*[-\s]{3,})[A-Za-z0-9]+(?:[-\s][A-Za-z0-9]+)*$/;
 
 			if (!latinPattern.test(state.first_name.trim())) return 2;
 
@@ -73,7 +74,8 @@ export const config: Login = [
 		validate: (state: LoginFormData) => {
 			if (!state.last_name.trim()) return 0;
 
-			const latinPattern = /^(?!.*[-\s]{3,})[A-Za-z0-9]+(?:[-\s][A-Za-z0-9]+)*$/;
+			const latinPattern =
+				/^(?!.*[-\s]{3,})[A-Za-z0-9]+(?:[-\s][A-Za-z0-9]+)*$/;
 
 			if (!latinPattern.test(state.last_name.trim())) return 2;
 

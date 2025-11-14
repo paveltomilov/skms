@@ -2,16 +2,11 @@ import { Prefix, UnitsMeasurement } from '@/shared/types/window';
 import styles from './styles.module.scss';
 import cn from 'classnames';
 import { FC } from 'react';
+import { IWindow } from '@/shared/configs/window';
 
-interface IWindowData {
-	currentValue: number | null;
-	minValue: number | undefined;
-	maxValue: number | undefined;
-	unitsMeasurement: UnitsMeasurement | undefined;
-}
 
 interface Props {
-	data: IWindowData;
+	data: IWindow;
 	color?: 'blue' | 'yellow' | 'transparent';
 	colorText?: 'black' | 'white';
 	className?: string;
