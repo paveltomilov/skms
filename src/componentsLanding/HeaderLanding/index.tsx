@@ -68,7 +68,7 @@ const Header: FC = () => {
 				/>
 
 				<Button
-					href="/register" /* поправил ссылку – логин/регистрация */
+					href="/login"
 					className={styles.header__register}
 					text="Зарегистрироваться"
 					width={172}
