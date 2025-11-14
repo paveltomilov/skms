@@ -43,6 +43,7 @@ const initialState: ModalState = {
 	studentStatistics: false,
 	studentCreate: false,
 	studentDelete: false,
+	note: false,
 };
 
 const modalSlice = createSlice({

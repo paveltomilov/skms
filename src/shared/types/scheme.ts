@@ -45,10 +45,7 @@ interface Malfunction {
 export interface CircuitElement {
 	id: string;
 	name: string;
-	// Автоматически сгенерированное или явно заданное имя переменной в коде (camelCase)
-	varName?: string;
-	// Семантический тип элемента для UI и поведения
-	kind?: ElementKind;
+
 	// Логические точки подключения (ID точек на схеме)
 	startPoint?: string;
 	endPoint?: string;
