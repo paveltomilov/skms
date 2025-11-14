@@ -14,7 +14,7 @@ interface Props {
     lastName: string,
 };
 
-const StudentCard: FC<Props> = ({className, id, firstName, lastName}) => {
+const StudentCard: FC<Props> = ({ className, id, firstName, lastName }) => {
 
     const dispatch = useAppDispatch();
     const router = useRouter();
@@ -41,7 +41,11 @@ const StudentCard: FC<Props> = ({className, id, firstName, lastName}) => {
                     height={32}
                     text='Статистика'
                     className={styles.card__buttons__button}
-                    onClick={() => dispatch(openModal('studentStatistics'))}
+                    onClick={() => {
+                        dispatch(setStudentId(id));
+                        dispatch(openModal('studentStatistics'));
+                        console.log(id);
+                    }}
                 />
                 <Button
                     width={239}

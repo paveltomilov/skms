@@ -1,29 +1,18 @@
 import { FC } from 'react';
 import styles from './styles.module.scss';
-
-const dataStatistic: {param: string; quantity: number }[] = [
-    {
-        param: 'Общее количество задач',
-        quantity: 147,
-    },
-    {
-        param: 'Активные задачи',
-        quantity: 2,
-    },
-    {
-        param: 'Завершенные задачи',
-        quantity: 37,
-    },
-    {
-        param: 'Невыполненные задачи',
-        quantity: 15,
-    },
-];
+import { useAppSelector } from '@/shared/hooks/store';
+import { useStudentStatistics } from '@/shared/hooks/useStudentStatistics';
+import { getStudentStatisticsArray } from '@/shared/utils/getStudentStatisticsArray/getStudentStatisticsArray';
 
 export const PopupStudentStatistic: FC = () => {
+
+    const studentId = useAppSelector(state => state.training.studentId);
+    const { statistics }  = useStudentStatistics(studentId!);
+    const dataStatistics = statistics? getStudentStatisticsArray(statistics) : [];
+
     return (
         <ul className={styles.popup}>
-            {dataStatistic.map(({ param, quantity }) => (
+            {dataStatistics.map(({ param, quantity }) => (
                 <li key={param} className={styles.statisticsItem}>
                     <div className={styles.statisticsItem__param}>{param}</div>
                     <div className={styles.statisticsItem__quantity}>{quantity}</div>
