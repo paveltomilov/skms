@@ -20,14 +20,14 @@ const Footer: FC = () => {
 						/>
 						<Navigation className={styles.footer__nav} />
 						<Link
-							href="/politic/person"
+							href="/"
 							target="_blank"
 							className={styles.footer_container_left__link}
 						>
 							Политика обработки персональных данных
 						</Link>
 						<Link
-							href="/politic/confidential"
+							href="/policy"
 							target="_blank"
 							className={styles.footer_container_left__link}
 						>
@@ -54,7 +54,7 @@ const Footer: FC = () => {
 							</Link>
 						</div>
 						<div className={styles.footer_container_right__logo}>
-							<Link href="https://controlspace.ru/">
+							<Link href="/">
 								<Image
 									src="assets/svg/pointpulse.svg"
 									alt="Логотип"
