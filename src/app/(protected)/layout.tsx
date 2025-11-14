@@ -3,7 +3,6 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { checkAuth } from '@/shared/lib/auth';
 import ModalWrapper from '@/widgets/ModalWrapper';
-import useRandomWindowCurrentValue from '@/shared/hooks/useRandomWindowCurrentValue';
 import AuthGuard from '@/shared/components/AuthGuard';
 
 export default function ProtectedLayout({
@@ -13,8 +12,6 @@ export default function ProtectedLayout({
 }) {
 	const router = useRouter();
 	const [checking, setChecking] = useState(true);
-
-	useRandomWindowCurrentValue();
 
 	useEffect(() => {
 		async function verify() {

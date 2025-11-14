@@ -1,0 +1,33 @@
+.wrapper {
+	width: 504px;
+	display: flex;
+	flex-direction: column;
+
+	&__strong {
+		font-family: var(--second-family);
+		font-weight: 600;
+		font-size: 20px;
+		line-height: 136%;
+		text-transform: uppercase;
+		color: var(--lan-light-grayish-blue);
+		margin-bottom: 16px;
+	}
+
+	&__text {
+		max-width: 380px;
+		font-family: var(--second-family);
+		font-weight: 400;
+		font-size: 17px;
+		line-height: 128%;
+		color: var(--lan-light-grayish-cyan);
+		margin-bottom: 20px;
+	}
+
+	&__button {
+		font-family: var(--second-family);
+		font-weight: 600;
+		font-size: 14px;
+		line-height: 136%;
+		text-transform: uppercase;
+	}
+}

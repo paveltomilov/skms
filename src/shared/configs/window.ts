@@ -1,14 +1,5 @@
 import { Prefix, UnitsMeasurement } from '../types/window';
 
-export interface IWindow {
-	currentValue: number | null;
-	minValue: number;
-	maxValue: number;
-	unitsMeasurement: UnitsMeasurement;
-	title?: string;
-	prefix?: Prefix;
-}
-
 export const WINDOWS = {
 	// TA
 	// left_top
@@ -705,14 +696,9 @@ export const WINDOWS = {
 		maxValue: 10000,
 		unitsMeasurement: 'об/мин' as UnitsMeasurement,
 	},
-	w112_1: {
-		currentValue: 407,
-		minValue: 0,
-		maxValue: 1000,
-		unitsMeasurement: 'мм' as UnitsMeasurement,
-	},
-	w112_2: {
-		currentValue: 407,
+	w112: {
+		currentValue1: 407,
+		currentValue2: 407,
 		minValue: 0,
 		maxValue: 1000,
 		unitsMeasurement: 'мм' as UnitsMeasurement,
@@ -1421,24 +1407,4 @@ export const WINDOWS = {
 		maxValue: 100,
 		unitsMeasurement: 'кПа' as UnitsMeasurement,
 	},
-
-	// header тренажер
-
-	w237: {
-		currentValue: 18.8,
-		minValue: 0,
-		maxValue: 100,
-		unitsMeasurement: 'МПа' as UnitsMeasurement,
-	},
-
-	// header птк
-
-	w238: {
-		currentValue: -4,
-		minValue: -1000,
-		maxValue: 1000,
-		unitsMeasurement: '°С' as UnitsMeasurement,
-	},
 };
-export type KeyWindows = keyof typeof WINDOWS;
-export type WindowsState = Record<KeyWindows, IWindow>;

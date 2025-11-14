@@ -2,7 +2,7 @@ import styles from './style.module.scss';
 import { FC } from 'react';
 import cn from 'classnames';
 import Window from '@/shared/UI/Window';
-import { WindowsState } from '@/shared/configs/window';
+import { WINDOWS } from '@/shared/configs/window';
 import Button from '@/shared/UI/Button';
 import Actuator from '@/shared/UI/Actuator';
 import { rightBottomOne } from '@/shared/configs/TAGroupElements';
@@ -10,19 +10,18 @@ import useShowModal from '@/shared/hooks/useShowModal';
 
 interface Props {
 	className?: string;
-	windows: WindowsState;
 }
 
-const TARightDown: FC<Props> = ({ className, windows }) => {
+const TARightDown: FC<Props> = ({ className }) => {
 	const handleModalNotification = useShowModal('notification');
 	return (
 		<div className={cn(className)}>
 			<div className={styles.container}>
 				<div className={styles.container_element}>
 					<div className={styles.container_element_box}>
-						<Window data={windows.w88} right />
+						<Window data={WINDOWS.w88} right />
 						<span className={styles.container_element_box__text}>
-							{windows.w88.title}
+							{WINDOWS.w88.title}
 						</span>
 					</div>
 					<Button
@@ -34,9 +33,9 @@ const TARightDown: FC<Props> = ({ className, windows }) => {
 						onClick={handleModalNotification}
 					/>
 					<div className={styles.container_element_box}>
-						<Window data={windows.w89} right />
+						<Window data={WINDOWS.w89} right />
 						<span className={styles.container_element_box__text}>
-							{windows.w89.title}
+							{WINDOWS.w89.title}
 						</span>
 					</div>
 				</div>
@@ -65,8 +64,8 @@ const TARightDown: FC<Props> = ({ className, windows }) => {
 				<span className={styles.container_element}>к ВПУ</span>
 				<span className={styles.container_element}>мо</span>
 				<div className={styles.container_element}>
-					<Window data={windows.w90} right />
-					<Window data={windows.w92} right />
+					<Window data={WINDOWS.w90} right />
+					<Window data={WINDOWS.w92} right />
 				</div>
 				<span className={styles.container_element}>к подшипникам</span>
 				<div className={styles.container_element}>
@@ -90,8 +89,8 @@ const TARightDown: FC<Props> = ({ className, windows }) => {
 					</span>
 				</div>
 				<div className={styles.container_element}>
-					<Window data={windows.w91} right />
-					<Window data={windows.w93} right />
+					<Window data={WINDOWS.w91} right />
+					<Window data={WINDOWS.w93} right />
 				</div>
 				<span className={styles.container_element}>
 					на регулирование

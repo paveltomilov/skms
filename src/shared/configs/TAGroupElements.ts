@@ -1,8 +1,12 @@
-import { KeyWindows } from '@/shared/configs/window';
+import { WINDOWS } from '@/shared/configs/window';
+import { UnitsMeasurement } from '@/shared/types/window';
 
 interface GroupElements {
 	color: 'blue' | 'yellow' | 'transparent';
-	id: KeyWindows;
+	value: number;
+	text: UnitsMeasurement;
+	maxValue?: number;
+	minValue?: number;
 }
 
 interface GroupElementsArrow {
@@ -16,38 +20,62 @@ interface GroupElementsArrow {
 export const rightMidOne: GroupElements[] = [
 	{
 		color: 'blue',
-		id: 'w75',
+		value: WINDOWS.w75.currentValue,
+		text: WINDOWS.w75.unitsMeasurement,
+		maxValue: WINDOWS.w75.maxValue,
+		minValue: WINDOWS.w75.minValue,
 	},
 	{
 		color: 'blue',
-		id: 'w77',
+		value: WINDOWS.w77.currentValue,
+		text: WINDOWS.w77.unitsMeasurement,
+		maxValue: WINDOWS.w77.maxValue,
+		minValue: WINDOWS.w77.minValue,
 	},
 	{
 		color: 'blue',
-		id: 'w80',
+		value: WINDOWS.w80.currentValue,
+		text: WINDOWS.w80.unitsMeasurement,
+		maxValue: WINDOWS.w80.maxValue,
+		minValue: WINDOWS.w80.minValue,
 	},
 	{
 		color: 'blue',
-		id: 'w82',
+		value: WINDOWS.w82.currentValue,
+		text: WINDOWS.w82.unitsMeasurement,
+		maxValue: WINDOWS.w82.maxValue,
+		minValue: WINDOWS.w82.minValue,
 	},
 ];
 
 export const rightMidTwo: GroupElements[] = [
 	{
 		color: 'blue',
-		id: 'w76',
+		value: WINDOWS.w76.currentValue,
+		text: WINDOWS.w76.unitsMeasurement,
+		maxValue: WINDOWS.w76.maxValue,
+		minValue: WINDOWS.w76.minValue,
 	},
 	{
 		color: 'blue',
-		id: 'w78',
+		value: WINDOWS.w78.currentValue,
+		text: WINDOWS.w78.unitsMeasurement,
+		maxValue: WINDOWS.w78.maxValue,
+		minValue: WINDOWS.w78.minValue,
 	},
 	{
 		color: 'blue',
-		id: 'w81',
+		value: WINDOWS.w81.currentValue,
+		text: WINDOWS.w81.unitsMeasurement,
+		maxValue: WINDOWS.w81.maxValue,
+		minValue: WINDOWS.w81.minValue,
 	},
 	{
 		color: 'blue',
-		id: 'w83',
+		value: WINDOWS.w83.currentValue,
+		text: WINDOWS.w83.unitsMeasurement,
+		maxValue: WINDOWS.w83.maxValue,
+		minValue: WINDOWS.w83.minValue,
 	},
 ];
 

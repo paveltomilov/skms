@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import cn from 'classnames';
 import ModalHeader from '@/entities/ModalHeader';
 import { useUserCookies } from '@/shared/hooks/useUserCookies';
-import { logout } from '@/shared/lib/auth';
 
 interface PopupUserInfoProps {
 	handlePopupClose: () => void;
@@ -23,8 +22,7 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 					'Cтудент';
 
 	const handleLogout = () => {
-		// Централизованный выход: чистим access + refresh и связанные cookie
-		logout();
+		localStorage.removeItem('accessToken');
 		router.push('/');
 	};
 

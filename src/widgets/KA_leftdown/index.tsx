@@ -2,17 +2,16 @@ import { FC } from 'react';
 import styles from './styles.module.scss';
 import cn from 'classnames';
 import Window from '@/shared/UI/Window';
+import { WINDOWS } from '@/shared/configs/window';
 import Button from '@/shared/UI/Button';
 import Gate from '@/shared/UI/Gate';
 import useShowModal from '@/shared/hooks/useShowModal';
-import { WindowsState } from '@/shared/configs/window';
 
 interface Props {
 	className?: string;
-	windows: WindowsState;
 }
 
-const KALeftDown: FC<Props> = ({ className, windows }) => {
+const KALeftDown: FC<Props> = ({ className }) => {
 	const handleModalNotification = useShowModal('notification');
 	return (
 		<div className={cn(className, styles.container)}>
@@ -72,15 +71,15 @@ const KALeftDown: FC<Props> = ({ className, windows }) => {
 			</div>
 			<div className={styles.window}>
 				<div className={styles.window__top}>
-					<Window data={windows.w137} right />
+					<Window data={WINDOWS.w137} right />
 				</div>
 				<div className={styles.window__gate}>
 					<Gate disable position="vertical" power state="open" />
 				</div>
-
+				
 				<div className={styles.window__bottom}>
-					<Window data={windows.w138} right />
-					<Window data={windows.w139} right />
+					<Window data={WINDOWS.w138} right />
+					<Window	data={WINDOWS.w139} right />
 				</div>
 
 				<div className={styles.window__text}>

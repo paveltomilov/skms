@@ -9,14 +9,12 @@ import {
 } from '@/shared/configs/KAGroupElements';
 import Rectangle from '@/shared/UI/icons/Rectangle';
 import useShowModal from '@/shared/hooks/useShowModal';
-import { WindowsState } from '@/shared/configs/window';
 
 interface Props {
 	className?: string;
-	windows: WindowsState;
 }
 
-const KAMidTop: FC<Props> = ({ className, windows }) => {
+const KAMidTop: FC<Props> = ({ className }) => {
 	const handleModalNotification = useShowModal('notification');
 	return (
 		<div className={cn(className, styles.container)}>
@@ -25,11 +23,16 @@ const KAMidTop: FC<Props> = ({ className, windows }) => {
 					<div className={styles.container_element} key={index}>
 						<Window
 							color={element.color}
-							data={windows[element.id]}
-							right={!!windows[element.id].unitsMeasurement}
-							left={!!windows[element.id].prefix}
-							textRight={windows[element.id].unitsMeasurement}
-							textLeft={windows[element.id].prefix}
+							data={{
+								currentValue: element.value,
+								minValue: element.minValue,
+								maxValue: element.maxValue,
+								unitsMeasurement: element.text,
+							}}
+							right={!!element.text}
+							left={!!element.prefix}
+							textRight={element.text}
+							textLeft={element.prefix}
 						/>
 					</div>
 				))}
@@ -39,11 +42,16 @@ const KAMidTop: FC<Props> = ({ className, windows }) => {
 					<div className={styles.container_element} key={index}>
 						<Window
 							color={element.color}
-							data={windows[element.id]}
-							right={!!windows[element.id].unitsMeasurement}
-							left={!!windows[element.id].prefix}
-							textRight={windows[element.id].unitsMeasurement}
-							textLeft={windows[element.id].prefix}
+							data={{
+								currentValue: element.value,
+								minValue: element.minValue,
+								maxValue: element.maxValue,
+								unitsMeasurement: element.text,
+							}}
+							right={!!element.text}
+							left={!!element.prefix}
+							textRight={element.text}
+							textLeft={element.prefix}
 							colorText="white"
 						/>
 					</div>

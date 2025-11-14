@@ -3,17 +3,15 @@ import cn from 'classnames';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import Window from '@/shared/UI/Window';
-import { WindowsState } from '@/shared/configs/window';
+import { WINDOWS } from '@/shared/configs/window';
 import useShowModal from '@/shared/hooks/useShowModal';
 
 interface Props {
 	className?: string;
-	windows: WindowsState;
 }
 
-const KAMidDown: FC<Props> = ({ className, windows }) => {
+const KAMidDown: FC<Props> = ({ className }) => {
 	const handleModalNotification = useShowModal('notification');
-
 	return (
 		<div className={cn(className, styles.container)}>
 			<div className={styles.windowsLeft}>
@@ -50,8 +48,8 @@ const KAMidDown: FC<Props> = ({ className, windows }) => {
 			</div>
 			<div className={styles.windowsMiddle}>
 				<div className={styles.windowsMiddle__wrapper}>
-					<Window data={windows.w179} right />
-					<Window data={windows.w180} right />
+					<Window data={WINDOWS.w179} right />
+					<Window data={WINDOWS.w180} right />
 				</div>
 				<span className={styles.text}>Рециркуляция мазута</span>
 			</div>

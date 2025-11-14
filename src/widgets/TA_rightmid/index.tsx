@@ -3,7 +3,7 @@ import { FC } from 'react';
 import cn from 'classnames';
 import Button from '@/shared/UI/Button';
 import Window from '@/shared/UI/Window';
-import { WindowsState } from '@/shared/configs/window';
+import { WINDOWS } from '@/shared/configs/window';
 import Rectangle from '@/shared/UI/icons/Rectangle';
 import Actuator from '@/shared/UI/Actuator';
 import {
@@ -15,10 +15,9 @@ import useShowModal from '@/shared/hooks/useShowModal';
 
 interface Props {
 	className?: string;
-	windows: WindowsState;
 }
 
-const TARightMid: FC<Props> = ({ className, windows }) => {
+const TARightMid: FC<Props> = ({ className }) => {
 	const handleModalNotification = useShowModal('notification');
 	return (
 		<div className={cn(className)}>
@@ -32,17 +31,22 @@ const TARightMid: FC<Props> = ({ className, windows }) => {
 					onClick={handleModalNotification}
 				/>
 				<span className={styles.container_element}>
-					<Window data={windows.w79} right />
+					<Window data={WINDOWS.w79} right />
 					<span className={styles.text}>Конденсатор</span>
 				</span>
 				<div className={styles.container_element}>
-					<Window data={windows.w84} right />
+					<Window data={WINDOWS.w84} right />
 				</div>
 				{rightMidOne.map((element, index) => (
 					<div className={styles.container_element} key={index}>
 						<Window
 							color={element.color}
-							data={windows[element.id]}
+							data={{
+								currentValue: element.value,
+								maxValue: element.maxValue,
+								minValue: element.minValue,
+								unitsMeasurement: element.text,
+							}}
 							right
 						/>
 					</div>
@@ -54,7 +58,12 @@ const TARightMid: FC<Props> = ({ className, windows }) => {
 					<div className={styles.container_element} key={index}>
 						<Window
 							color={element.color}
-							data={windows[element.id]}
+							data={{
+								currentValue: element.value,
+								maxValue: element.maxValue,
+								minValue: element.minValue,
+								unitsMeasurement: element.text,
+							}}
 							right
 						/>
 					</div>
@@ -81,13 +90,13 @@ const TARightMid: FC<Props> = ({ className, windows }) => {
 					1ок-2
 				</span>
 				<div className={styles.container_element}>
-					<Window data={windows.w85} right />
+					<Window data={WINDOWS.w85} right />
 				</div>
 				<div className={styles.container_element}>
-					<Window data={windows.w86} right />
+					<Window data={WINDOWS.w86} right />
 				</div>
 				<div className={styles.container_element}>
-					<Window data={windows.w87} right />
+					<Window data={WINDOWS.w87} right />
 				</div>
 				<div className={styles.container_element}>
 					<Rectangle />

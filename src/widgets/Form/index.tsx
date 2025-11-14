@@ -6,10 +6,7 @@ import { useRouter } from 'next/navigation';
 import { FC, FormEventHandler, useState } from 'react';
 import LoginInput from '../../shared/UI/LoginInput';
 import Link from 'next/link';
-import {
-	getDone,
-	getIndicator,
-} from '@/shared/utils/loginFunctions/loginFunctions';
+import { getDone, getIndicator, } from '@/shared/utils/loginFunctions/loginFunctions';
 import { useLoginForm } from '@/shared/hooks/useLoginForm';
 import { postAuth } from '@/shared/lib/auth';
 import { postRegistration } from '@/shared/lib/registration';
@@ -19,12 +16,7 @@ interface FormProps {
 	toggleRegisterMode?: boolean;
 	activateModalSuccess?: (value: boolean) => void;
 }
-const PASSWORD_ERROR = {
-	email: false,
-	password: true,
-	first_name: false,
-	last_name: false,
-};
+const PASSWORD_ERROR = { email: false, password: true, first_name: false, last_name: false };
 interface FieldConfig {
 	name: keyof LoginFormData;
 	label: string;
@@ -41,45 +33,22 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 		isValid,
 		activeFields,
 		configMap,
-		rememberMe,
-		policyAccepted,
 		handleChange,
-		handleRememberMeChange,
-		handlePolicyChange,
 		resetServerErrors,
 		setServerErrors,
 		validateForm,
 	} = useLoginForm({ toggleRegisterMode });
 
-	const [authErrorText, setAuthErrorText] = useState<string | undefined>(
-		undefined,
-	);
+	const [authErrorText, setAuthErrorText] = useState<string | undefined>(undefined);
 
 	// Конфигурация полей формы
 	const fieldConfigs: FieldConfig[] = [
-		...((toggleRegisterMode
-			? [
-					{
-						name: 'first_name',
-						label: 'Имя',
-						type: 'text',
-						placeholder: 'Имя',
-					},
-					{
-						name: 'last_name',
-						label: 'Фамилия',
-						type: 'text',
-						placeholder: 'Фамилия',
-					},
-			  ]
-			: []) as FieldConfig[]),
+		...(toggleRegisterMode ? [
+			{ name: 'first_name', label: 'Имя', type: 'text', placeholder: 'Имя' },
+			{ name: 'last_name', label: 'Фамилия', type: 'text', placeholder: 'Фамилия' },
+		] : []) as FieldConfig[],
 		{ name: 'email', label: 'Email', type: 'email', placeholder: 'Email' },
-		{
-			name: 'password',
-			label: 'Пароль',
-			type: 'password',
-			placeholder: 'Пароль',
-		},
+		{ name: 'password', label: 'Пароль', type: 'password', placeholder: 'Пароль' },
 	];
 
 	// Функция для рендеринга поля
@@ -99,26 +68,11 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 				value={values[name] || ''}
 				placeholder={placeholder}
 				id={name}
-				indicator={getIndicator(
-					name,
-					values,
-					validationStatus,
-					serverErrors,
-				)}
-				done={getDone(
-					name,
-					values,
-					validationStatus,
-					serverErrors,
-					activeFields,
-				)}
+				indicator={getIndicator(name, values, validationStatus, serverErrors)}
+				done={getDone(name, values, validationStatus, serverErrors, activeFields)}
 				error={hasError}
 				warn={hasWarn}
-				errorMessage={
-					hasError
-						? customErrorText || configMap[name]?.errorMessage
-						: undefined
-				}
+				errorMessage={hasError ? (customErrorText || configMap[name]?.errorMessage) : undefined}
 				warnMessage={hasWarn ? configMap[name]?.warnMessage : undefined}
 				required={configMap[name]?.required}
 			/>
@@ -150,20 +104,18 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 	// Обработка авторизации
 	const handleAuth = async () => {
 		try {
-			const response = await postAuth(values, rememberMe);
+			const response = await postAuth(values);
 			if (response.success) {
 				router.push('/ptk');
 			} else {
 				setServerErrors(PASSWORD_ERROR);
-				setAuthErrorText(
-					response.errorText || 'Неверные учётные данные',
-				);
+				setAuthErrorText(response.errorText || 'Неверные учётные данные');
 			}
 		} catch {
 			setServerErrors(PASSWORD_ERROR);
 		}
 	};
-	const handleSubmit: FormEventHandler<HTMLFormElement> = async event => {
+	const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
 		event.preventDefault();
 		resetServerErrors();
 
@@ -180,22 +132,12 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 		<form className={styles.form} onSubmit={handleSubmit}>
 			{fieldConfigs.map(renderField)}
 
-			<div
-				className={`${styles.form_inner} ${
-					toggleRegisterMode ? styles.policy : ''
-				}`}
-			>
+			<div className={`${styles.form_inner} ${toggleRegisterMode ? styles.policy : ''}`}>
 				<label className={styles.form_inner_label}>
 					<input
 						type="checkbox"
 						name={toggleRegisterMode ? 'policy' : 'remember'}
 						className={styles.form_inner_label__checkbox}
-						checked={toggleRegisterMode ? policyAccepted : rememberMe}
-						onChange={e =>
-							toggleRegisterMode
-								? handlePolicyChange(e.target.checked)
-								: handleRememberMeChange(e.target.checked)
-						}
 					/>
 					{toggleRegisterMode ? 'Соглашаюсь на' : 'Запомнить'}
 				</label>
@@ -203,9 +145,7 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 					href={toggleRegisterMode ? '/policy' : '/recovery'}
 					className={styles.form_inner__forget}
 				>
-					{toggleRegisterMode
-						? 'обработку персональных данных'
-						: 'Забыли пароль?'}
+					{toggleRegisterMode ? 'обработку персональных данных' : 'Забыли пароль?'}
 				</Link>
 			</div>
 

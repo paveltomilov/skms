@@ -5,19 +5,19 @@ import Window from '@/shared/UI/Window';
 import Gate from '@/shared/UI/Gate';
 import cn from 'classnames';
 import Rectangle from '@/shared/UI/icons/Rectangle';
-import { WindowsState } from '@/shared/configs/window';
+import { WINDOWS } from '@/shared/configs/window';
 import { useAppSelector } from '@/shared/hooks/store';
 import { useOpenGatePopup } from '@/shared/hooks/useOpenGatePopup';
 import useShowModal from '@/shared/hooks/useShowModal';
 
 interface Props {
 	className?: string;
-	windows: WindowsState;
 }
 
-const TAleftmid: FC<Props> = ({ className, windows }) => {
+const TAleftmid: FC<Props> = ({ className }) => {
 	const { g2, g3 } = useAppSelector(state => state.gate.gates);
 	const handleModalNotification = useShowModal('notification');
+
 	const openGatePopup = useOpenGatePopup();
 
 	return (
@@ -40,8 +40,8 @@ const TAleftmid: FC<Props> = ({ className, windows }) => {
 							styles['container__window--left'],
 						)}
 					>
-						<Window data={windows.w14} right />
-						<Window data={windows.w16} right />
+						<Window data={WINDOWS.w14} right />
+						<Window data={WINDOWS.w16} right />
 					</div>
 
 					<Gate
@@ -57,16 +57,16 @@ const TAleftmid: FC<Props> = ({ className, windows }) => {
 							styles['container__window--right'],
 						)}
 					>
-						<Window data={windows.w15} right />
-						<Window data={windows.w17} right />
+						<Window data={WINDOWS.w15} right />
+						<Window data={WINDOWS.w17} right />
 					</div>
 					<p className={styles['container__window-p']}>СКВД-1</p>
 				</div>
 				<div className={styles.containerTwo}>
 					<h3 className={styles['containerTwo__p']}>ХПП</h3>
 					<div className={styles['containerTwo__window']}>
-						<Window data={windows.w18} right />
-						<Window data={windows.w19} right />
+						<Window data={WINDOWS.w18} right />
+						<Window data={WINDOWS.w19} right />
 					</div>
 				</div>
 				<div className={styles.containerThree}>
@@ -81,9 +81,9 @@ const TAleftmid: FC<Props> = ({ className, windows }) => {
 
 				<div className={styles.containerFour}>
 					<div className={styles['containerFour__window']}>
-						<Window data={windows.w20} right />
-						<Window data={windows.w21} right />
-						<Window data={windows.w23} right />
+						<Window data={WINDOWS.w20} right />
+						<Window data={WINDOWS.w21} right />
+						<Window data={WINDOWS.w23} right />
 
 						<Gate
 							position="vertical"
@@ -103,12 +103,12 @@ const TAleftmid: FC<Props> = ({ className, windows }) => {
 					/>
 
 					<div className={styles['containerFour__windowOne']}>
-						<Window data={windows.w24} right />
-						<Window data={windows.w25} right />
+						<Window data={WINDOWS.w24} right />
+						<Window data={WINDOWS.w25} right />
 					</div>
 
 					<div className={styles['containerFour__windowTwo']}>
-						<Window data={windows.w22} right />
+						<Window data={WINDOWS.w22} right />
 						<Rectangle
 							color="white"
 							className={
@@ -122,7 +122,7 @@ const TAleftmid: FC<Props> = ({ className, windows }) => {
 							IV отб.
 						</h5>
 						<div className={styles['containerFour__windowThree-w']}>
-							<Window data={windows.w26} right />
+							<Window data={WINDOWS.w26} right />
 						</div>
 						<h5 className={styles['containerFour__windowThree-p3']}>
 							ДПВ

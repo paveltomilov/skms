@@ -1,0 +1,16 @@
+.advantages {
+	padding-top: 172px;
+	padding-bottom: 86px;
+
+	&__title {
+		margin-bottom: 52px;
+	}
+
+	&__list {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		grid-template-rows: repeat(2, 1fr);
+		grid-column-gap: 24px;
+		grid-row-gap: 26px;
+	}
+}
