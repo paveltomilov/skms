@@ -58,7 +58,7 @@ const Header: FC = () => {
 				)}
 
 				<Button
-					href="/login"
+					href="/auth?mode=login"
 					className={styles.header__login}
 					text="Войти"
 					width={85}
@@ -68,7 +68,7 @@ const Header: FC = () => {
 				/>
 
 				<Button
-					href="/login"
+					href="/auth?mode=signup"
 					className={styles.header__register}
 					text="Зарегистрироваться"
 					width={172}
