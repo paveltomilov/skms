@@ -16,7 +16,7 @@ import { postRegistration } from '@/shared/lib/registration';
 import { LoginFormData } from '@/shared/types/login';
 
 interface FormProps {
-	toggleRegisterMode?: boolean;
+	toggleRegisterMode: 'register' | 'login' | 'createUser';
 	activateModalSuccess?: (value: boolean) => void;
 }
 const PASSWORD_ERROR = {
@@ -25,7 +25,7 @@ const PASSWORD_ERROR = {
 	first_name: false,
 	last_name: false,
 };
-interface FieldConfig {
+export interface FieldConfig {
 	name: keyof LoginFormData;
 	label: string;
 	type: string;
@@ -57,7 +57,7 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 
 	// Конфигурация полей формы
 	const fieldConfigs: FieldConfig[] = [
-		...((toggleRegisterMode
+		...((toggleRegisterMode === 'register'
 			? [
 					{
 						name: 'first_name',
@@ -73,7 +73,11 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 					},
 			  ]
 			: []) as FieldConfig[]),
-		{ name: 'email', label: 'Email', type: 'email', placeholder: 'Email' },
+		{ 	name: 'email', 
+		  	label: 'Email', 
+		  	type: 'email', 
+		  	placeholder: 'Email' 
+		},
 		{
 			name: 'password',
 			label: 'Пароль',
@@ -169,7 +173,7 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 
 		if (!validateForm()) return;
 
-		if (toggleRegisterMode) {
+		if (toggleRegisterMode === 'register') {
 			await handleRegistration();
 		} else {
 			await handleAuth();
@@ -182,38 +186,40 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 
 			<div
 				className={`${styles.form_inner} ${
-					toggleRegisterMode ? styles.policy : ''
+					toggleRegisterMode === 'register' ? styles.policy : ''
 				}`}
 			>
 				<label className={styles.form_inner_label}>
 					<input
 						type="checkbox"
-						name={toggleRegisterMode ? 'policy' : 'remember'}
+						name={toggleRegisterMode === 'register' ? 'policy' : 'remember'}
 						className={styles.form_inner_label__checkbox}
-						checked={toggleRegisterMode ? policyAccepted : rememberMe}
+						checked={
+							toggleRegisterMode === 'register' ? policyAccepted : rememberMe
+						}
 						onChange={e =>
-							toggleRegisterMode
+							toggleRegisterMode === 'register'
 								? handlePolicyChange(e.target.checked)
 								: handleRememberMeChange(e.target.checked)
 						}
 					/>
-					{toggleRegisterMode ? 'Соглашаюсь на' : 'Запомнить'}
+					{toggleRegisterMode === 'register' ? 'Соглашаюсь на' : 'Запомнить'}
 				</label>
 				<Link
-					href={toggleRegisterMode ? '/policy' : '/recovery'}
+					href={toggleRegisterMode === 'register' ? '/policy' : '/recovery'}
 					className={styles.form_inner__forget}
 				>
-					{toggleRegisterMode
+					{toggleRegisterMode === 'register'
 						? 'обработку персональных данных'
 						: 'Забыли пароль?'}
 				</Link>
 			</div>
 
 			<Button
-				width={toggleRegisterMode ? 278 : 171}
+				width={toggleRegisterMode === 'register' ? 278 : 171}
 				height={55}
-				aria-label={toggleRegisterMode ? 'Подтвердить' : 'Войти'}
-				text={toggleRegisterMode ? 'Подтвердить' : 'Войти'}
+				aria-label={toggleRegisterMode === 'register' ? 'Подтвердить' : 'Войти'}
+				text={toggleRegisterMode === 'register' ? 'Подтвердить' : 'Войти'}
 				className={styles.form__button}
 				disabled={!isValid}
 			/>

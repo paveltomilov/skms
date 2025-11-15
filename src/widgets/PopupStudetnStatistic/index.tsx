@@ -6,7 +6,7 @@ import { getStudentStatisticsArray } from '@/shared/utils/getStudentStatisticsAr
 
 export const PopupStudentStatistic: FC = () => {
 
-    const studentId = useAppSelector(state => state.training.studentId);
+    const studentId = useAppSelector(state => state.training.currentStudent?.id);
     const { statistics }  = useStudentStatistics(studentId!);
     const dataStatistics = statistics? getStudentStatisticsArray(statistics) : [];
 

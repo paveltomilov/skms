@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import { SimulationFormData } from '@/shared/types/similation';
+import { SimulationFormData } from '@/shared/types/simulation';
 
 export async function postSimulation(
 	urlBase: string | undefined,
