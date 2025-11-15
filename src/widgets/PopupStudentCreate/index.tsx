@@ -44,16 +44,16 @@ export const PopupStudentCreate: FC = () => {
 	);
 	const fieldConfigs: FieldConfig[] = [
 		{
-			name: 'last_name',
-			label: 'Фамилия',
-			type: 'text',
-			placeholder: 'Фамилия',
-		},
-		{
 			name: 'first_name',
 			label: 'Имя',
 			type: 'text',
 			placeholder: 'Имя',
+		},
+		{
+			name: 'last_name',
+			label: 'Фамилия',
+			type: 'text',
+			placeholder: 'Фамилия',
 		},
 		{ name: 'email', label: 'Email', type: 'email', placeholder: 'Email' },
 	];
