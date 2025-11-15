@@ -27,6 +27,9 @@ export function useLoginForm({ toggleRegisterMode }: UseLoginFormProps) {
 		last_name: false,
 	});
 	const [isValid, setIsValid] = useState(false);
+	const [rememberMe, setRememberMe] = useState(false);
+	// Для регистрации: согласие на обработку персональных данных
+	const [policyAccepted, setPolicyAccepted] = useState(false);
 	const activeFields = useMemo<(keyof LoginFormData)[]>(() => {
 		return toggleRegisterMode
 			? ['first_name', 'last_name', 'password', 'email']
@@ -49,20 +52,23 @@ export function useLoginForm({ toggleRegisterMode }: UseLoginFormProps) {
 			first_name: false,
 			last_name: false,
 		});
+		// Сброс состояния чекбоксов при переключении режимов
+		setRememberMe(false);
+		setPolicyAccepted(false);
 	}, [toggleRegisterMode]);
 
 	useEffect(() => {
 		const newValidationStatus = computeValidationStatus(values);
 		setValidationStatus(newValidationStatus);
-		setIsValid(
-			checkFormValidity(
-				values,
-				newValidationStatus,
-				serverErrors,
-				activeFields,
-			),
+		const baseValid = checkFormValidity(
+			values,
+			newValidationStatus,
+			serverErrors,
+			activeFields,
 		);
-	}, [values, serverErrors, activeFields]);
+		// В режиме регистрации учитываем согласие на обработку данных
+		setIsValid(toggleRegisterMode ? baseValid && policyAccepted : baseValid);
+	}, [values, serverErrors, activeFields, toggleRegisterMode, policyAccepted]);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -95,7 +101,16 @@ export function useLoginForm({ toggleRegisterMode }: UseLoginFormProps) {
 			level => level === 1,
 		);
 		const hasServerErrors = Object.values(serverErrors).some(Boolean);
-		return !hasLocalErrors && !hasServerErrors;
+		const base = !hasLocalErrors && !hasServerErrors;
+		return toggleRegisterMode ? base && policyAccepted : base;
+	};
+
+	const handleRememberMeChange = (checked: boolean) => {
+		setRememberMe(checked);
+	};
+
+	const handlePolicyChange = (checked: boolean) => {
+		setPolicyAccepted(checked);
 	};
 
 	return {
@@ -105,7 +120,11 @@ export function useLoginForm({ toggleRegisterMode }: UseLoginFormProps) {
 		isValid,
 		activeFields,
 		configMap,
+		rememberMe,
+		policyAccepted,
 		handleChange,
+		handleRememberMeChange,
+		handlePolicyChange,
 		resetValues,
 		resetServerErrors,
 		setServerErrors,
