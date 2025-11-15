@@ -42,6 +42,9 @@ export const PopupStudentCreate: FC = () => {
 	const [responseData, setResponseData] = useState<LoginFormData | null>(
 		null,
 	);
+	const textButtonSubmit =
+		role === 'admin' ? 'Создать преподавателя' : 'Создать ученика';
+
 	const fieldConfigs: FieldConfig[] = [
 		{
 			name: 'first_name',
@@ -139,9 +142,9 @@ export const PopupStudentCreate: FC = () => {
 					{fieldConfigs.map(renderField)}
 					<Button
 						className={styles.button}
-						width={344}
+						width={470}
 						height={55}
-						text="Создать ученика"
+						text={textButtonSubmit}
 						success={isValid}
 					/>
 				</form>
