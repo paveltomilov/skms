@@ -1,0 +1,35 @@
+.survey {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 36px;
+    padding-top: 36px;
+    background: url('/images/survey-bg.png') no-repeat center / cover;
+  }
+
+  &__title {
+    margin-bottom: 12px;
+  }
+
+  &__description {
+    max-width: 434px;
+    margin-right: 134px;
+    font-family: var(--second-family);
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 128%;
+    color: var(--lan-light-grayish-cyan);
+    margin-bottom: 24px;
+  }
+
+  &__button {
+    font-family: var(--second-family);
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 136%;
+    text-transform: uppercase;
+    color: var(--lan-very-dark-mostly-black-blue);
+  }
+}
