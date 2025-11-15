@@ -10,8 +10,10 @@ import powerUnitReducer from './powerUnitSlice';
 import trainingReducer from './trainingSlice';
 import windowsReducer from './windowsSlice';
 import percentReducer from './percentSlice';
+import updateListReducer from './updateListSlice';
 
 const rootReducer = combineReducers({
+	updateList: updateListReducer,
 	percent: percentReducer,
 	windows: windowsReducer,
 	gate: gateReducer,

@@ -1,56 +1,76 @@
 'use client';
 
 import styles from './styles.module.scss';
-import StudentCard from '@/entities/StudentCard';
 import { useUserCookies } from '@/shared/hooks/useUserCookies';
 import Button from '@/shared/UI/Button';
 import { postMalfunctions } from '@/shared/utils/postMalfunctions/postMalfunctions';
 import { useRequestData } from '@/shared/hooks/useRequestData';
-import { useStudents } from '@/shared/hooks/useStudents';
 import Loader from '@/shared/UI/Loader';
 import ErrorMessage from '@/shared/components/ErrorMessage';
+import { useGetUsers } from '@/shared/hooks/useGetUsers';
+import UserCard from '@/entities/UserCard';
+import { useAppSelector } from '@/shared/hooks/store';
+import { useEffect } from 'react';
 
 const Training = () => {
+	const { urlBase, access, elements } = useRequestData();
+	const updateListNumber = useAppSelector(store => store.updateList);
 
-    const { urlBase, access, elements } = useRequestData();
+	useEffect(() => {});
 
-    const { role } = useUserCookies();
+	const { role } = useUserCookies();
 
-    const { students, isLoading, error, refetch } = useStudents(role);
+	const isAdmin = role === 'admin';
 
-    const handleCreateMalfunctions = () => {
-        postMalfunctions(urlBase, access, elements);
-    };
+	const nameList = isAdmin
+		? 'Список преподавателей'
+		: 'Список студентов';
 
-    return (
-        <>
-            {role === 'student' ?
-                <section className={styles.training}>Недоступно для студента</section>
-                :
-                <section className={styles.training}>
-                    <div className={styles.training__title}>Обучение</div>
-                    <div className={styles.training__cards}>
-                        {students.map((user) => (
-                            <StudentCard
-                                key={user.id}
-                                id={user.id}
-                                className={styles.training__cards__card}
-                                firstName={user.first_name}
-                                lastName={user.last_name} />
-                        ))}
-                    </div>
-                </section>
-            }
-            {role != 'student' && <Button
-                width={300}
-                height={40}
-                text='создать неисправности'
-                onClick={() => handleCreateMalfunctions()}
-            />}
-            {isLoading && <Loader />}
-            {error && <ErrorMessage message={error} refetch={refetch} />}
-        </>
-    );
+	const { users, isLoading, error, refetch } = useGetUsers(role);
+
+	useEffect(() => {
+		refetch();
+	}, [updateListNumber]);
+
+	const handleCreateMalfunctions = () => {
+		postMalfunctions(urlBase, access, elements);
+	};
+
+	return (
+		<>
+			{role === 'student' ? (
+				<section className={styles.training}>
+					Недоступно для студента
+				</section>
+			) : (
+				<>
+					<section className={styles.training}>
+						<div className={styles.training__title}>
+							{nameList}
+						</div>
+						<div className={styles.training__cards}>
+							{users.map(user => (
+								<UserCard
+									key={user.id}
+									data={user}
+									className={styles.training__cards__card}
+								/>
+							))}
+						</div>
+					</section>
+					<Button
+						width={300}
+						height={40}
+						text="создать неисправности"
+						onClick={() => handleCreateMalfunctions()}
+					/>
+				</>
+			)}
+
+			{isLoading && <Loader />}
+			{error && <ErrorMessage message={error} refetch={refetch} />}
+		</>
+	);
 };
 
 export default Training;

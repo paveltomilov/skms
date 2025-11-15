@@ -4,11 +4,19 @@ import React, { useState } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import Chevron from '@/shared/UI/icons/Chevron';
+import { useUserCookies } from '@/shared/hooks/useUserCookies';
+import { useAppDispatch } from '@/shared/hooks/store';
+import { clearCurrentStudent } from '@/store/trainingSlice';
 
 const Sidebar = () => {
 	const [isOpen, setIsOpen] = useState(false);
+	const dispatch = useAppDispatch();
 
 	const handleToggleSidebar = () => setIsOpen(!isOpen);
+
+	const { role } = useUserCookies();
+
+	const isAdmin = role === 'admin';
 
 	return (
 		<>
@@ -25,16 +33,22 @@ const Sidebar = () => {
 						text="Главная"
 						className={styles.buttonText}
 						href="/"
+						onClick={() => dispatch(clearCurrentStudent())}
 					/>
 
-					<Button
-						width={90}
-						height={34}
-						aria-label="Обучение"
-						text="Обучение"
-						className={styles.buttonText}
-						href="/training"
-					/>
+					{role != 'student' && (
+						<Button
+							width={90}
+							height={34}
+							aria-label={
+								isAdmin ? 'Список препод.' : 'Список студ.'
+							}
+							text={isAdmin ? 'Список препод.' : 'Список студ.'}
+							className={styles.buttonText__list}
+							href="/training"
+							onClick={() => dispatch(clearCurrentStudent())}
+						/>
+					)}
 
 					<Button
 						width={90}
@@ -43,6 +57,7 @@ const Sidebar = () => {
 						text="ПТК"
 						className={styles.buttonText}
 						href="/ptk"
+						onClick={() => dispatch(clearCurrentStudent())}
 					/>
 				</div>
 				<button
