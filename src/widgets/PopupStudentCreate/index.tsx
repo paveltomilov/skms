@@ -14,6 +14,7 @@ import { getRandomPassword } from '@/shared/utils/getRandomPassword/getRandomPas
 import { useAppDispatch } from '@/shared/hooks/store';
 import { updateList } from '@/store/updateListSlice';
 import { FieldConfig } from '../Form';
+import { useUserCookies } from '@/shared/hooks/useUserCookies';
 
 const PASSWORD_ERROR = {
 	email: false,
@@ -24,6 +25,7 @@ const PASSWORD_ERROR = {
 
 export const PopupStudentCreate: FC = () => {
 	const modeForm = 'createUser' as const;
+	const { role } = useUserCookies();
 	const {
 		isValid,
 		values,
@@ -144,7 +146,7 @@ export const PopupStudentCreate: FC = () => {
 					/>
 				</form>
 			) : (
-				RegistrationMessage(responseData)
+				<RegistrationMessage data={responseData} role={role} />
 			)}
 		</div>
 	);

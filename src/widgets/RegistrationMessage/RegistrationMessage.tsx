@@ -5,8 +5,19 @@ import { doFirstLatterBig } from '@/shared/utils/doFirstLatterBig/doFirstLatterB
 import Success from '@/shared/UI/icons/Success';
 import Button from '@/shared/UI/Button';
 import Copy from '@/shared/UI/icons/Copy/Copy';
+import { Role } from '@/shared/types/users';
+import { FC } from 'react';
 
-const RegistrationMessage = (data: LoginFormData) => {
+interface Props {
+	data: LoginFormData;
+	role: Role;
+}
+
+const RegistrationMessage: FC<Props> = ({ data, role }) => {
+	const responseMessage =
+		role === 'admin'
+			? 'Регистрация преподавателя завершена'
+			: 'Регистрация ученика завершена';
 	async function handleCopyPassword() {
 		const password = data.password;
 
@@ -21,9 +32,7 @@ const RegistrationMessage = (data: LoginFormData) => {
 		<div className={styles.response}>
 			<div className={styles.response__top}>
 				<Success />
-				<p className={styles.response__message}>
-					Регистрация ученика завершена
-				</p>
+				<p className={styles.response__message}>{responseMessage}</p>
 			</div>
 
 			<ul className={styles.response__list}>
