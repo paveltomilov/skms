@@ -1,5 +1,5 @@
 export const DASHBOARD_ROUTES = {
-    admin: '/admin-dashboard',
+    admin: '/admin',
     teacher: '/training',
     student: '/ptk'
 } as const;

@@ -11,6 +11,7 @@ import trainingReducer from './trainingSlice';
 import windowsReducer from './windowsSlice';
 import percentReducer from './percentSlice';
 import updateListReducer from './updateListSlice';
+import UserInfoSlice from '@/store/userInfoSlice';
 
 const rootReducer = combineReducers({
 	updateList: updateListReducer,
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
 	points: pointsReducer,
 	powerUnit: powerUnitReducer,
 	training: trainingReducer,
+	userInfo: UserInfoSlice,
 });
 
 const persistConfig = {

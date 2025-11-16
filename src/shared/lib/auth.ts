@@ -1,9 +1,119 @@
 import { RefreshResponse, VerifyResponse } from '@/shared/types/typesAuth';
-import axios from 'axios';
+import axios, {AxiosError, AxiosResponse, InternalAxiosRequestConfig} from 'axios';
 import { deleteCookie, getCookie, setCookie } from 'cookies-next';
 import { LoginFormData, LoginResponse } from '../types/login';
 
 const urlBase = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+interface IPostAuthResponse {
+	success: boolean;
+	role?: string | undefined;
+	errorText?: string;
+}
+
+// Глобальная переменная для хранения access token (в памяти)
+let accessToken: string | null = null;
+
+// Интерцептор для автоматического обновления токенов
+let isRefreshing = false;
+
+interface FailedRequest {
+	resolve: (value: string | null) => void;
+	reject: (error: unknown) => void;
+}
+
+let failedQueue: FailedRequest[] = [];
+
+const processQueue = (error: unknown, token: string | null = null) => {
+	failedQueue.forEach(({ resolve, reject }) => {
+		if (error) {
+			reject(error);
+		} else {
+			resolve(token);
+		}
+	});
+	failedQueue = [];
+};
+
+// Расширяем тип AxiosRequestConfig для добавления кастомного поля
+interface ExtendedAxiosRequestConfig extends InternalAxiosRequestConfig {
+	_retry?: boolean;
+}
+
+axios.interceptors.response.use(
+	(response: AxiosResponse) => response,
+	async (error: AxiosError) => {
+		const originalRequest = error.config as ExtendedAxiosRequestConfig;
+
+		if (error.response?.status === 401 && !originalRequest._retry) {
+			if (isRefreshing) {
+				return new Promise<string | null>((resolve, reject) => {
+					failedQueue.push({ resolve, reject });
+				})
+					.then((token) => {
+						if (token && originalRequest.headers) {
+							originalRequest.headers.Authorization = `Bearer ${token}`;
+						}
+						return axios(originalRequest);
+					})
+					.catch((err) => Promise.reject(err));
+			}
+
+			originalRequest._retry = true;
+			isRefreshing = true;
+
+			try {
+				const refreshToken = getCookie('refreshToken');
+				if (!refreshToken) {
+					throw new Error('Не получен refresh token');
+				}
+
+				const refreshRes = await axios.post<RefreshResponse>(
+					`${urlBase}/auth/refresh/`,
+					{ refresh: refreshToken }
+				);
+
+				if (refreshRes.status === 200 && refreshRes.data.access) {
+					const newAccessToken = refreshRes.data.access;
+
+					// Сохраняем в памяти
+					accessToken = newAccessToken;
+
+					// Обновляем заголовок для оригинального запроса
+					if (originalRequest.headers) {
+						originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+					}
+
+					// Обрабатываем очередь запросов
+					processQueue(null, newAccessToken);
+
+					return axios(originalRequest);
+				}
+				throw new Error('Ошибка получения refresh token');
+			} catch (refreshError) {
+				processQueue(refreshError, null);
+				logout();
+				return Promise.reject(refreshError);
+			} finally {
+				isRefreshing = false;
+			}
+		}
+
+		return Promise.reject(error);
+	}
+);
+
+// Устанавливаем интерцептор для добавления токена в запросы
+axios.interceptors.request.use(
+	(config: InternalAxiosRequestConfig) => {
+		if (accessToken && config.headers) {
+			config.headers.Authorization = `Bearer ${accessToken}`;
+		}
+		return config;
+	},
+	(error: AxiosError) => Promise.reject(error)
+);
+
 
 export async function checkAuth(): Promise<{ valid: boolean }> {
 	const access = localStorage.getItem('accessToken');
@@ -14,52 +124,43 @@ export async function checkAuth(): Promise<{ valid: boolean }> {
 
 	if (!access || !refresh) {
 		// Очищаем оба хранилища при отсутствии токенов
-		localStorage.removeItem('accessToken');
-		localStorage.removeItem('refreshToken');
-		deleteCookie('refreshToken');
+		logout();
 		return { valid: false };
 	}
 
 	try {
 		// 1. Проверяем валидность accessToken
-		const verifyRes = await fetch(`${urlBase}/auth/verify/`, {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ token: access }),
-		});
+		const verifyRes = await axios.post<VerifyResponse>(
+			`${urlBase}/auth/verify/`,
+			{ token: access},
+		);
 
-		if (verifyRes.ok) {
-			const verifyData = (await verifyRes.json()) as VerifyResponse;
-			if (verifyData.token_valid) {
-				return { valid: true }; // AccessToken валиден
-			}
+
+		if (verifyRes.statusText == 'OK' && verifyRes.data.token_valid) {
+			return { valid: true }; // AccessToken валиден
 		}
+
 
 		// 2. Если accessToken невалиден, пробуем обновить через refreshToken
-		const refreshRes = await fetch(`${urlBase}/auth/refresh/`, {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ refresh }),
-		});
+		const refreshRes = await axios.post<RefreshResponse>(
+			`${urlBase}/auth/refresh/`,
+			{refresh},
+		);
 
-		if (!refreshRes.ok) {
-			throw new Error('Refresh token failed');
+		if (refreshRes.statusText == 'OK' && refreshRes.data.access) {
+			localStorage.setItem('accessToken', refreshRes.data.access);
+			return { valid: true };
+
 		}
 
-		const refreshData = (await refreshRes.json()) as RefreshResponse;
-
-		if (refreshData.access) {
-			// Сохраняем новый accessToken
-			localStorage.setItem('accessToken', refreshData.access);
-			return { valid: true };
+		if (refreshRes.statusText !== 'OK') {
+			throw new Error('Refresh token failed');
 		}
 
 		return { valid: false };
 	} catch {
 		// При любой ошибке очищаем хранилища
-		localStorage.removeItem('accessToken');
-		localStorage.removeItem('refreshToken');
-		deleteCookie('refreshToken');
+		logout();
 		return { valid: false };
 	}
 }
@@ -67,18 +168,11 @@ export async function checkAuth(): Promise<{ valid: boolean }> {
 export async function postAuth(
 	formData: LoginFormData,
 	rememberMe: boolean = false,
-): Promise<{
-	success: boolean;
-	role?: string | undefined;
-	errorText?: string;
-}> {
+): Promise<IPostAuthResponse> {
 	try {
 		const response = await axios.post<LoginResponse>(
 			`${urlBase}/auth/`,
 			{ email: formData.email, password: formData.password },
-			{
-				headers: { 'Content-Type': 'application/json' },
-			},
 		);
 
 		const { access, refresh, first_name, last_name, role } = response.data;
@@ -87,7 +181,8 @@ export async function postAuth(
 			throw new Error('Токены не получены');
 		}
 
-		if (response.status === 200) {
+		if (response.statusText == 'OK') {
+			accessToken = access;
 			localStorage.setItem('accessToken', access);
 
 			// Если "Запомнить" включён — сохраняем refresh в localStorage, иначе в cookie
@@ -97,12 +192,14 @@ export async function postAuth(
 				setCookie('refreshToken', refresh);
 			}
 
+			setCookie('refreshToken', refresh);
 			setCookie('first_name', first_name);
 			setCookie('last_name', last_name);
 			setCookie('role', role);
 
 			return { success: true, role };
 		}
+
 		return { success: false };
 	} catch (err: unknown) {
 		let errorText: string | undefined;
@@ -122,7 +219,7 @@ export async function postAuth(
 
 // Вспомогательная функция для получения accessToken
 export function getAccessToken(): string | null {
-	return localStorage.getItem('accessToken');
+	return accessToken;
 }
 
 // Функция для выхода
@@ -133,4 +230,5 @@ export function logout(): void {
 	deleteCookie('first_name');
 	deleteCookie('last_name');
 	deleteCookie('role');
+	accessToken = null;
 }
