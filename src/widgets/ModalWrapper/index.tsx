@@ -16,7 +16,7 @@ import PopupActuator from '@/widgets/PopupActuator';
 import PopupClamp from '../PopupClamp';
 import { PopupSetSimulation } from '../PopupSetSimulation';
 import PopupNotificationDev from '../PopupNotificationDev';
-import { PopupStudentStatistic } from '../PopupStudetnStatistic';
+import { PopupStudentStatistics } from '../PopupStudetnStatistics';
 import { PopupStudentCreate } from '../PopupStudentCreate';
 import { PopupStudentDelete } from '../PopupStudentDelete';
 import { PopupNote } from '../PopupNote';
@@ -144,7 +144,7 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			id: 'studentStatistics',
 			headerTitle: `Статистика ${isAdmin ? 'преподавателя' : 'ученика'}`,
 			gateId: undefined,
-			component: <PopupStudentStatistic />,
+			component: <PopupStudentStatistics />,
 		},
 		{
 			condition: studentCreate,

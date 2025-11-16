@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
-import { getStudentStatistics, StudentStatistics } from '../utils/getStatistics/getStatistics';
+import { getStudentStatistics } from '../utils/getStatistics/getStatistics';
 import { useUserCookies } from './useUserCookies';
+import { StudentStatistics } from '../types/statistics';
 
 export const useStudentStatistics = (id: number) => {
     const [statistics, setStatistics] = useState<StudentStatistics | null>(null);
@@ -14,7 +15,6 @@ export const useStudentStatistics = (id: number) => {
         setError(null);
         try {
             const statisticsData = await getStudentStatistics(id);
-            console.log(statisticsData);
             setStatistics(statisticsData);
         }
         catch (err) {
