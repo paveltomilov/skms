@@ -1,16 +1,21 @@
+@use '@/shared/scss/mixins.module';
 @use '@/shared/scss/variables.module';
 
 .popup {
-    width: 343px;
-    height: 318px;
-    background: variables.$primary-color;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-}
+	position: relative;
+	width: 374px;
+	background: variables.$primary-color;
 
-.gate {
-    font-size: 20px;
-    font-weight: 500;
+	&__wrapper {
+		display: flex;
+		gap: 24px;
+		flex-direction: column;
+		justify-content: space-around;
+		align-items: center;
+		padding: 8px 18px;
+	}
+
+	&__btn span {
+		@include mixins.text(20px, 400);
+	}
 }

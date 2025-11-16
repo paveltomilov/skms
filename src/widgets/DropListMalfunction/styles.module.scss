@@ -1,0 +1,44 @@
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
+
+.list {
+	display: block;
+	position: absolute;
+	overflow: scroll;
+	background-color: variables.$white-color;
+	border: 1px solid #8a8a8a;
+	transform: translateY(62px) translateX(560px);
+	height: auto;
+}
+
+.elementList {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+
+	&__item {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		padding: 10px 24px 10px 16px;
+
+		&:hover {
+			background-color: #110f93;
+			cursor: pointer;
+
+			& span,
+			svg {
+				color: variables.$white-color;
+			}
+		}
+	}
+
+	&__name {
+		@include mixins.text(18px, 400);
+		display: inline-block;
+		width: 450px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+}

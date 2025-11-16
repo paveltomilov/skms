@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, JSX } from 'react';
+import { FC, JSX, useEffect } from 'react';
 import cn from 'classnames';
 import styles from './styles.module.scss';
 import { useAppSelector } from '@/shared/hooks/store';
@@ -67,6 +67,11 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		studentDelete ||
 		note;
 	const gateId = useAppSelector(state => state.gate.activeGateId as string);
+
+	const gates = useAppSelector(state => state.gate);
+	const gateName = gates.activeGateId
+		? gates.gates[gates.activeGateId].name
+		: '';
 
 	const modals: IModals[] = [
 		{
@@ -135,7 +140,7 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		{
 			condition: setSimulation,
 			id: 'setSimulation',
-			headerTitle: 'Задать симуляцию',
+			headerTitle: `Задать симуляцию ${gateName}`,
 			gateId: undefined,
 			component: <PopupSetSimulation />,
 		},
@@ -168,6 +173,18 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			component: <PopupNote />,
 		},
 	];
+	// отключаем скролл страницы
+	useEffect(() => {
+		if (isOne) {
+			document.body.style.overflow = 'hidden';
+		} else {
+			document.body.style.overflow = '';
+		}
+
+		return () => {
+			document.body.style.overflow = '';
+		};
+	}, [isOne]);
 
 	return (
 		<div
