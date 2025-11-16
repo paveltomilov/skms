@@ -1,19 +1,8 @@
-import { getReadings } from '@/shared/utils/getPowerUnitReadings/getPowerUnitReadings';
 import styles from './styles.module.scss';
-import { useAppSelector } from '@/shared/hooks/store';
 import { PowerUnitReadings } from '@/shared/types/powerunit';
 import { FC } from 'react';
 
-const PowerUnit:FC = () => {
-
-    const { isWork } = useAppSelector(
-        state => state.powerUnit,
-    );
-
-    const readings: PowerUnitReadings = isWork ? getReadings() : {
-        frequency: '0',
-        power: '0'
-    };
+const PowerUnit:FC<{readings:PowerUnitReadings}> = ({readings}) => {
 
     return (
         <>

@@ -8,11 +8,13 @@ import PowerUnit from '@/entities/PowerUnit';
 import useShowModal from '@/shared/hooks/useShowModal';
 import { useAppSelector } from '@/shared/hooks/store';
 import { RootState } from '@/store/store';
+import { usePowerUnitReadings } from '@/shared/hooks/usePowerUnitReadings';
 
 const HeaderPtk: FC = () => {
 	const handleModalNotification = useShowModal('notification');
 	const { formattedDate, formattedTime, dateTimeDate, dateTimeTime } =
 		useDate();
+	const readings = usePowerUnitReadings();
 	const windows = useAppSelector((state: RootState) => state.windows);
 
 	return (
@@ -74,7 +76,7 @@ const HeaderPtk: FC = () => {
 						{formattedTime}
 					</time>
 				</div>
-				<PowerUnit />
+				<PowerUnit readings={readings} />
 			</div>
 		</header>
 	);
