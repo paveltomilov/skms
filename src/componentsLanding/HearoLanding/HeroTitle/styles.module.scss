@@ -15,6 +15,12 @@
 		font-weight: 900;
 		font-size: 58px;
 	}
+
+	@media (max-width: 480px) {
+		width: 359px;
+		font-weight: 900;
+		font-size: 45px;
+	}
 }
 
 .lineLeft {

@@ -1,6 +1,6 @@
 .product {
 	&__container {
-		background-image: url(/assets/images/about-bottom.png);
+		background-image: url(/images/about-bottom.png);
 		background-position-y: -884px;
 		background-repeat: no-repeat;
 		display: grid;
@@ -12,10 +12,18 @@
 		@media (max-width: 1024px) {
 			background-position-y: -553px;
 		}
+
+		@media (max-width: 768px) {
+			background-image: none;
+		}
 	}
 
 	&__content {
 		grid-area: 1 / 2 / 2 / 3;
+
+		@media (max-width: 768px) {
+			grid-area: 1 / 1 / 2 / 2;
+		}
 	}
 
 	&__title {
@@ -44,6 +52,10 @@
 		@media (max-width: 1024px) {
 			margin-bottom: 45px;
 		}
+
+		@media (max-width: 480px) {
+			width: 350px;
+		}
 	}
 
 	&__media {
@@ -52,24 +64,32 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		background: url(/assets/images/product-bg.png) no-repeat center / cover;
+		background: url(/images/product-bg.png) no-repeat center / cover;
 
 		@media (max-width: 1024px) {
-			background: url(/assets/images/video.png) no-repeat center / cover;
+			background: url(/images/video.png) no-repeat center / cover;
 		}
-	}
 
-	&__button {
-		transition: all 0.2s ease-in-out;
+		@media (max-width: 768px) {
+			height: 414px;
+		}
 
-		// &:hover .icon__play path,
-		// &:focus .icon__play path {
-		// 	fill: var(--lan-bright-cyan---lime-green);
-		// }
+		@media (max-width: 480px) {
+			width: 359px;
+			height: 216px;
+		}
 	}
 }
 
 .icon__play {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	@media (max-width: 480px) {
+		width: 12px;
+		height: 14px;
+	}
 	path {
 		stroke: #0a0a14;
 		fill: #f9fafb;

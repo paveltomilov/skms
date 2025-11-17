@@ -6,6 +6,11 @@
 		padding-top: 154px;
 		padding-bottom: 176px;
 	}
+
+	@media (max-width: 768px) {
+		padding-bottom: 102px;
+	}
+
 	&__title {
 		margin-bottom: 52px;
 

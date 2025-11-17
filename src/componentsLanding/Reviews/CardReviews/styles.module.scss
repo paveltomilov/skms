@@ -5,6 +5,14 @@
 	padding-top: 26px;
 	border-radius: 12px;
 
+	@media (max-width: 768px) {
+		padding-right: 77px;
+	}
+
+	@media (max-width: 480px) {
+		padding-right: 24px;
+	}
+
 	&__button {
 		font-family: var(--second-family);
 		font-weight: 400;
@@ -45,6 +53,11 @@
 	align-items: flex-end;
 	margin: 0;
 
+	@media (max-width: 480px) {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
 	&.column {
 		flex-direction: column;
 	}
@@ -70,11 +83,11 @@
 .rating__star {
 	width: 15px;
 	height: 15px;
-	background: url('/assets/svg/star.svg') center/contain no-repeat;
+	background: url('/svg/star.svg') center/contain no-repeat;
 }
 
 .is__active {
 	width: 15px;
 	height: 15px;
-	background: url('/assets/svg/star-active.svg') center/contain no-repeat;
+	background: url('/svg/star-active.svg') center/contain no-repeat;
 }
