@@ -2,17 +2,17 @@ import { RefObject, useEffect } from 'react';
 
 export const useClickOutside = (
 	ref: RefObject<HTMLDivElement | null>,
+	refChildren: RefObject<HTMLDivElement | null>,
 	handler: () => void,
 ) => {
 	useEffect(() => {
 		const listener = (event: MouseEvent | TouchEvent) => {
-			if (ref)
-				if (
-					!ref.current ||
-					ref.current.contains(event.target as Node)
-				) {
-					return;
-				}
+			if (
+				ref.current?.contains(event.target as Node) ||
+				refChildren.current?.contains(event.target as Node)
+			) {
+				return;
+			}
 			handler();
 		};
 
@@ -23,5 +23,5 @@ export const useClickOutside = (
 			document.removeEventListener('mousedown', listener);
 			document.removeEventListener('touchstart', listener);
 		};
-	}, [ref, handler]);
+	}, [ref, refChildren, handler]);
 };

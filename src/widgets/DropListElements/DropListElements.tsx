@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, RefObject } from 'react';
 import styles from './styles.module.scss';
 import Side from '@/shared/UI/icons/Side';
 import { CircuitElement } from '@/shared/types/scheme';
@@ -8,15 +8,17 @@ interface Props {
 	data: CircuitElement[];
 	handleChoiceElement: (item: CircuitElement) => void;
 	choiceElement: CircuitElement | null;
+	ref: RefObject<HTMLDivElement | null>;
 }
 
 const DropListElements: FC<Props> = ({
 	data,
 	handleChoiceElement,
 	choiceElement,
+	ref
 }) => {
 	return (
-		<div className={styles.list}>
+		<div className={styles.list} ref={ref}>
 			<ul className={styles.elementList}>
 				{data.map(item => {
 					return (

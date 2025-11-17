@@ -1,3 +1,4 @@
+'use client';
 import { FC, useState } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
@@ -24,7 +25,11 @@ export const PopupSetSimulation: FC = () => {
 	const studentId = useAppSelector(
 		state => state.training.currentStudent?.id,
 	);
-	const [elements, setElements] = useState<CircuitElement[]>(contElem);
+	const [elements, setElements] = useState<CircuitElement[]>(
+		contElem.sort((a, b) =>
+			a.name.toLowerCase().localeCompare(b.name.toLowerCase(), 'ru'),
+		),
+	);
 
 	const [listMalfunction, setListMalfunction] = useState<
 		SimulationItemData[]
@@ -48,14 +53,19 @@ export const PopupSetSimulation: FC = () => {
 			item => item.malfunction_id !== id,
 		);
 		setListMalfunction(filterListMalfunction);
-		const restoredList = [
-			...elements,
-			contElem.find(item => item.id === element_id),
-		] as CircuitElement[];
-		setElements(restoredList);
+		const foundElement = contElem.find(item => item.id === element_id);
+		if (foundElement) {
+			const restoredList = [...elements, foundElement].sort((a, b) =>
+				a.name.toLowerCase().localeCompare(b.name.toLowerCase(), 'ru'),
+			) as CircuitElement[];
+			setElements(restoredList);
+		} else {
+			// Опционально: обработка случая, когда элемент не найден
+			console.warn(`Элемент с данным id ${element_id} не найден`);
+		}
 	}
 
-	const handleSetSimulation = () => {
+	const handleSetSimulation = async () => {
 		if (studentId && !listIsEmpty) {
 			const formData: SimulationFormData = {
 				user: studentId,
@@ -64,11 +74,21 @@ export const PopupSetSimulation: FC = () => {
 				}),
 			};
 			dispatch(clearCurrentStudent());
-			postSimulation(urlBase, access, formData).then(() =>
-				dispatch(closeModal('setSimulation')),
-			);
+			try {
+				const response = await postSimulation(
+					urlBase,
+					access,
+					formData,
+				);
 
-			router.push('/training');
+				if (response.status >= 200 && response.status <= 299) {
+					console.log('Simulation', response.statusText);
+					dispatch(closeModal('setSimulation'));
+					router.push('/training');
+				}
+			} catch (error) {
+				console.log(error);
+			}
 		}
 	};
 
@@ -86,6 +106,7 @@ export const PopupSetSimulation: FC = () => {
 					<ListChoiceMalfunction
 						setMalfun={handleChoiceMalfunction}
 						data={elements}
+						closeList={setShowListMalfunction}
 					/>
 				)}
 				<LineRupture />

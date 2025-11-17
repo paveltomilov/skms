@@ -15,7 +15,7 @@ const ListMalfunction: FC<Props> = ({ data, deleteItem }) => {
 		<>
 			<p className={styles.title}>Выбранные неисправности</p>
 			<ul className={styles.list}>
-				{data.map((item, idx) => {
+				{data.map((item, index) => {
 					return (
 						<li
 							key={item.malfunction_id}
@@ -23,9 +23,9 @@ const ListMalfunction: FC<Props> = ({ data, deleteItem }) => {
 						>
 							<div className={styles.list__item__top}>
 								<span className={styles.list__item__name}>
-									{idx > 9
-										? `Неисправность_0${idx + 1}`
-										: `Неисправность_${idx + 1}`}
+									{index < 9
+										? `Неисправность_0${index + 1}`
+										: `Неисправность_${index + 1}`}
 								</span>
 								<Button
 									width={20}

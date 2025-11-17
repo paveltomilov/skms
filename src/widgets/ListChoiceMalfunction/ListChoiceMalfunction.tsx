@@ -1,6 +1,6 @@
 import { CircuitElement, Malfunction } from '@/shared/types/scheme';
 import { SimulationItemData } from '@/shared/types/simulation';
-import { FC, useRef, useState } from 'react';
+import { Dispatch, FC, SetStateAction, useRef, useState } from 'react';
 import DropListMalfunction from '../DropListMalfunction/DropListMalfunction';
 import DropListElements from '../DropListElements/DropListElements';
 import { useClickOutside } from '@/shared/hooks/useClickOutside';
@@ -8,17 +8,26 @@ import { useClickOutside } from '@/shared/hooks/useClickOutside';
 interface Props {
 	setMalfun: (simulation: SimulationItemData) => void;
 	data: CircuitElement[];
+	closeList: Dispatch<SetStateAction<boolean>>;
 }
 
-const ListChoiceMalfunction: FC<Props> = ({ setMalfun, data }) => {
+const ListChoiceMalfunction: FC<Props> = ({ setMalfun, data, closeList }) => {
 	const [choiceElement, setChoiceElement] = useState<CircuitElement | null>(
 		null,
 	);
 
-	const dropdownRef = useRef<HTMLDivElement>(null);
+	function closeAllList() {
+		closeList(false);
 
-	// Закрываем список ошибок при клике вне его
-	useClickOutside(dropdownRef, () => setChoiceElement(null));
+	}
+
+	const dropListMalfunctionRef = useRef<HTMLDivElement>(null);
+	const dropListElementsRef = useRef<HTMLDivElement>(null);
+
+	// Закрываем список при клике вне его
+	useClickOutside(dropListElementsRef, dropListMalfunctionRef, () =>
+		closeAllList(),
+	);
 
 	function handleChoiceElement(item: CircuitElement) {
 		setChoiceElement(item);
@@ -38,13 +47,14 @@ const ListChoiceMalfunction: FC<Props> = ({ setMalfun, data }) => {
 	return (
 		<>
 			<DropListElements
+				ref={dropListElementsRef}
 				data={data}
 				handleChoiceElement={handleChoiceElement}
 				choiceElement={choiceElement}
 			/>
 			{choiceElement && (
 				<DropListMalfunction
-					ref={dropdownRef}
+					ref={dropListMalfunctionRef}
 					data={data}
 					choiceElement={choiceElement}
 					handleChoice={handleChoice}
