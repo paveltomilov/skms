@@ -2,9 +2,6 @@
 
 import styles from './styles.module.scss';
 import { useUserCookies } from '@/shared/hooks/useUserCookies';
-import Button from '@/shared/UI/Button';
-import { postMalfunctions } from '@/shared/utils/postMalfunctions/postMalfunctions';
-import { useRequestData } from '@/shared/hooks/useRequestData';
 import Loader from '@/shared/UI/Loader';
 import ErrorMessage from '@/shared/components/ErrorMessage';
 import { useGetUsers } from '@/shared/hooks/useGetUsers';
@@ -13,7 +10,6 @@ import { useAppSelector } from '@/shared/hooks/store';
 import { useEffect } from 'react';
 
 const Training = () => {
-	const { urlBase, access, elements } = useRequestData();
 	const updateListNumber = useAppSelector(store => store.updateList);
 
 	useEffect(() => {});
@@ -22,19 +18,13 @@ const Training = () => {
 
 	const isAdmin = role === 'admin';
 
-	const nameList = isAdmin
-		? 'Список преподавателей'
-		: 'Список студентов';
+	const nameList = isAdmin ? 'Список преподавателей' : 'Список студентов';
 
 	const { users, isLoading, error, refetch } = useGetUsers(role);
 
 	useEffect(() => {
 		refetch();
 	}, [updateListNumber]);
-
-	const handleCreateMalfunctions = () => {
-		postMalfunctions(urlBase, access, elements);
-	};
 
 	return (
 		<>
@@ -43,28 +33,18 @@ const Training = () => {
 					Недоступно для студента
 				</section>
 			) : (
-				<>
-					<section className={styles.training}>
-						<div className={styles.training__title}>
-							{nameList}
-						</div>
-						<div className={styles.training__cards}>
-							{users.map(user => (
-								<UserCard
-									key={user.id}
-									data={user}
-									className={styles.training__cards__card}
-								/>
-							))}
-						</div>
-					</section>
-					<Button
-						width={300}
-						height={40}
-						text="создать неисправности"
-						onClick={() => handleCreateMalfunctions()}
-					/>
-				</>
+				<section className={styles.training}>
+					<div className={styles.training__title}>{nameList}</div>
+					<div className={styles.training__cards}>
+						{users.map(user => (
+							<UserCard
+								key={user.id}
+								data={user}
+								className={styles.training__cards__card}
+							/>
+						))}
+					</div>
+				</section>
 			)}
 
 			{isLoading && <Loader />}
