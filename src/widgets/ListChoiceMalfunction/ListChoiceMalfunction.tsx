@@ -12,21 +12,13 @@ interface Props {
 }
 
 const ListChoiceMalfunction: FC<Props> = ({ setMalfun, data, closeList }) => {
-	const [choiceElement, setChoiceElement] = useState<CircuitElement | null>(
-		null,
-	);
-
-	function closeAllList() {
-		closeList(false);
-
-	}
-
+	const [choiceElement, setChoiceElement] = useState<CircuitElement | null>(null);
 	const dropListMalfunctionRef = useRef<HTMLDivElement>(null);
 	const dropListElementsRef = useRef<HTMLDivElement>(null);
 
 	// Закрываем список при клике вне его
 	useClickOutside(dropListElementsRef, dropListMalfunctionRef, () =>
-		closeAllList(),
+		closeList(false),
 	);
 
 	function handleChoiceElement(item: CircuitElement) {

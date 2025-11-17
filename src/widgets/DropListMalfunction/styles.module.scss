@@ -2,12 +2,13 @@
 @use '@/shared/scss/variables.module';
 
 .list {
-	display: block;
 	position: absolute;
+	top: 50px;
+	left: 510px;
+	display: block;
 	overflow: scroll;
 	background-color: variables.$white-color;
 	border: 1px solid #8a8a8a;
-	transform: translateY(62px) translateX(560px);
 	height: auto;
 }
 
