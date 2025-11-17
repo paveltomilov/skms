@@ -2,11 +2,11 @@
 @use '@/shared/scss/variables.module';
 
 .popup {
-	position: relative;
 	width: 374px;
 	background: variables.$primary-color;
 
 	&__wrapper {
+		position: relative;
 		display: flex;
 		gap: 24px;
 		flex-direction: column;

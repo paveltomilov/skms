@@ -34,8 +34,10 @@ export const PopupSetSimulation: FC = () => {
 	const [listMalfunction, setListMalfunction] = useState<
 		SimulationItemData[]
 	>([]);
+
 	const [showListMalfunction, setShowListMalfunction] =
 		useState<boolean>(false);
+
 	const listIsEmpty: boolean = listMalfunction.length === 0;
 
 	function handleChoiceMalfunction(simulation: SimulationItemData): void {
@@ -60,7 +62,6 @@ export const PopupSetSimulation: FC = () => {
 			) as CircuitElement[];
 			setElements(restoredList);
 		} else {
-			// Опционально: обработка случая, когда элемент не найден
 			console.warn(`Элемент с данным id ${element_id} не найден`);
 		}
 	}
