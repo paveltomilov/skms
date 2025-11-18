@@ -26,8 +26,8 @@ const StudentCard: FC<Props> = ({ className, id, firstName, lastName }) => {
 					className={styles.card__profile__photo}
 					src="/images/user_icon.png"
 					alt="Фото пользователя"
-					width={80}
-					height={80}
+					width={64}
+					height={64}
 				/>
 				<div className={styles.card__profile__name}>
 					{firstName} {lastName}
