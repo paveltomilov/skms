@@ -9,7 +9,7 @@ import PopupGateValves from '../PopupGateValves';
 import ModalOverlay from '../ModalOverlay';
 import PopupDiagnostic from '../PopupDiagnostic';
 import { Automatic } from '../Automatic';
-import { Modals } from '@/store/modalSlice';
+import { Modals, type ModalState } from '@/store/modalSlice';
 import PopupBlockSwitches from '../PopupBlockSwitches';
 import { LampScheme } from '../LampScheme';
 import PopupActuator from '@/widgets/PopupActuator';
@@ -43,8 +43,8 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		studentStatistics,
 		studentCreate,
 		studentDelete,
-		note
-	} = useAppSelector(state => state.modal);
+		note,
+	} = useAppSelector((state): ModalState => state.modal);
 
 	const isOne =
 		automatic ||
@@ -60,10 +60,10 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		studentStatistics ||
 		studentCreate ||
 		studentDelete ||
-		note
-;
-
-	const gateId = useAppSelector(state => state.gate.activeGateId as string);
+		note;
+	const gateId = useAppSelector(
+		(state): string | null => state.gate.activeGateId,
+	);
 
 	const modals: IModals[] = [
 		{
@@ -77,21 +77,21 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			condition: gateControl,
 			id: 'gateControl',
 			headerTitle: '',
-			gateId: gateId,
+			gateId: gateId ?? undefined,
 			component: <PopupGateControl />,
 		},
 		{
 			condition: diagnostic,
 			id: 'diagnostic',
 			headerTitle: '',
-			gateId: gateId,
+			gateId: gateId ?? undefined,
 			component: <PopupDiagnostic />,
 		},
 		{
 			condition: gateValves,
 			id: 'gateValves',
 			headerTitle: '',
-			gateId: gateId,
+			gateId: gateId ?? undefined,
 			component: <PopupGateValves />,
 		},
 		{
@@ -127,7 +127,7 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			id: 'notification',
 			headerTitle: 'Дата реализации',
 			gateId: undefined,
-			component: <PopupNotificationDev/>,
+			component: <PopupNotificationDev />,
 		},
 		{
 			condition: setSimulation,

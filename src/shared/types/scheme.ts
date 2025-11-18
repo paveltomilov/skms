@@ -36,7 +36,7 @@ export interface MetaInfo {
 	label?: string;
 }
 
-interface Malfunction {
+export interface Malfunction {
 	id: string;
 	name: string;
 	active: boolean;
@@ -61,6 +61,6 @@ export type CircuitBranch = CircuitElement | CircuitGroup;
 export interface CircuitGroup extends Array<CircuitBranch> {}
 
 export interface InitialStateScheme {
-	powerCircuit: CircuitBranch[][];
+	powerCircuit: CircuitBranch[];
 	controlCircuit: CircuitBranch[];
 }

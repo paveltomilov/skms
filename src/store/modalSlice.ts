@@ -19,7 +19,8 @@ export type Modals =
 	| 'setSimulation'
 	| 'studentStatistics'
 	| 'studentCreate'
-	| 'studentDelete';
+	| 'studentDelete'
+	| 'note';
 
 export type ModalState = Record<Modals, boolean>;
 

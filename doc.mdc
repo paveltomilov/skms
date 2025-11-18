@@ -20,8 +20,12 @@
 
 -   `src/shared/configs/controlCircuit/constants.ts` — исходные ID элементов (провода, вставки, кнопки, лампы, точки схемы). После рефакторинга используются канонические имена без алиасов.
 -   `src/shared/configs/controlCircuit/controlCircuit.ts` — дерево элементов цепи управления (ветки ОТКРЫТЬ/ЗАКРЫТЬ). Содержит структуру для симуляции и отображения, опирается на константы.
--   `src/shared/configs/scheme.ts` — базовые сопротивления (`BASE_RESISTANCE`), список элементов схемы (`SCHEME_ELEMENTS`) и экспорт `controlCircuit`. Здесь же повторная публикация основных ID для потребителей.
--   `src/shared/utils/setPointsVoltage/setPointsVoltage.ts` — расчёт напряжений в точках схемы, используя `findElementByID` и вычисления по элементам.
+-   `src/shared/configs/powerCircuit/constants.ts` — канонические ID силовой части с генератором `getPointId`.
+-   `src/shared/configs/powerCircuit/powerCircuit.ts` — полное описание силовой схемы, включая ветвление и реверсивный пускатель.
+-   `src/shared/configs/malfunctionTemplates.ts` — единый генератор `buildMalfunctions(baseId, kind)` с маппингом `ElementKind → шаблон` (включая `starterContact`, `motorWinding`, `blockingContact`).
+-   `src/shared/configs/controlCircuit/voltageCalculationConfig.ts` — декларативная карта расчёта напряжений для каждой точки.
+-   `src/shared/configs/scheme.ts` — базовые сопротивления (`BASE_RESISTANCE`), список элементов схемы (`SCHEME_ELEMENTS`) и экспорт `powerCircuit`/`controlCircuit`.
+-   `src/shared/utils/setPointsVoltage/setPointsVoltage.ts` — расчёт напряжений в точках схемы на основе указанной конфигурации и проверки прохождения тока.
 
 ### Состояние
 
@@ -48,6 +52,13 @@ npm run export
 ```
 
 > Результат экспорта попасть в `out/`. Для публикации на статическом хостинге используйте содержимое `out`.
+
+## SSR/SSG
+
+-   Приложение собрано вокруг `next export`, поэтому серверных обработчиков нет: в кодовой базе отсутствуют `getServerSideProps`, `getInitialProps`, `headers()`, `cookies()` и т.п.
+-   Все страницы App Router (`src/app/page.tsx`, `(auth)`, `(protected)` и т.д.) работают как клиентские компоненты, критичные участки (например, `StoreProvider.tsx`) помечены `'use client'`.
+-   Любые попытки добавить SSR потребуют отключить `next export` и пересмотреть маршруты; при текущей структуре все данные берутся из Redux/локальных стораджей и могут рендериться заранее.
+-   Ошибки «нельзя использовать SSR при `next export`» возникают, если добавить API/хук, подразумевающий сервер (например, `cookies()`), поэтому при интеграции новых библиотек проверяйте, что они работают в SSG.
 
 ## Особенности и рекомендации
 
