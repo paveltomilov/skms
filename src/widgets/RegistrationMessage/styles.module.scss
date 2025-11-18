@@ -1,0 +1,48 @@
+@use '@/shared/scss/variables.module';
+@use '@/shared/scss/mixins.module';
+
+.response {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 24px;
+	padding: 20px;
+	min-height: 300px;
+
+	&__top {
+		display: flex;
+		flex-direction: row;
+		gap: 8px;
+		align-items: flex-start;
+		justify-content: center;
+	}
+
+	&__message {
+		line-height: 100%;
+		@include mixins.text(32px, 400);
+		width: 334px;
+	}
+	&__list {
+		display: flex;
+		flex-grow: 1;
+		flex-direction: column;
+		gap: 30px;
+		justify-content: space-evenly;
+		padding-left: 120px;
+	}
+	&__item {
+		@include mixins.text(20px, 400);
+		font-weight: 400;
+		display: flex;
+		flex-direction: row;
+		gap: 32px;
+	}
+	&__line {
+		display: block;
+		width: 75px;
+	}
+	&__btn {
+		transform: translateY(-30%);
+	}
+
+}

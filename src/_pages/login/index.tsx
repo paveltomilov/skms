@@ -58,7 +58,7 @@ const Login: FC = () => {
 					{isRegisterMode ? 'Регистрация' : 'Вход'}
 				</h2>
 				<Form
-					toggleRegisterMode={isRegisterMode}
+					toggleRegisterMode={isRegisterMode? 'register': 'login'}
 					activateModalSuccess={setModalSuccess}
 				/>
 				<div className={styles.main_wrap}>

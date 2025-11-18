@@ -5,6 +5,7 @@ import { useAppSelector } from '@/shared/hooks/store';
 import FormMalfunction from '../FormMalfunction/FormMalfunction';
 import type { GateState } from '@/store/gateSlice';
 
+
 export const PopupSetSimulation: FC = () => {
 	const gates = useAppSelector((state): GateState => state.gate);
 
