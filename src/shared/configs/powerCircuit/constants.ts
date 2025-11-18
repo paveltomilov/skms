@@ -109,3 +109,6 @@ export const MERGE_POINT_AFTER_STARTERS_PHASE_C_ID = 'p.p.0.2.3'; // Точка 
 export const JUNCTION_BOX_INPUT_POINT_PHASE_C_ID = 'p.p.0.2.4'; // Контакт подходящий в соединительной коробке фаза C
 export const JUNCTION_BOX_OUTPUT_POINT_PHASE_C_ID = 'p.p.0.2.5'; // Контакт отходящий в соединительной коробке фаза C
 export const MOTOR_WINDING_CONTACT_POINT_PHASE_C_ID = 'p.p.0.2.6'; // Контакт обмотки двигателя фаза C
+
+// --- Нейтраль силовой цепи ---
+export const POWER_CIRCUIT_NEUTRAL_ID = 'p.p.n'; // Нейтраль силовой цепи

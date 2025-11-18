@@ -14,45 +14,72 @@ import {
 	COMANDS_OPEN_POINT_ID,
 	OPEN_INTERLOCK_OUTPUT_POINT_ID,
 } from './controlCircuit/constants';
+import {
+	PHASE_B_POINT_ID,
+	PHASE_C_POINT_ID,
+	PHASE_A_POINT_ID,
+	INPUT_BREAKER_INPUT_POINT_PHASE_C_ID,
+	INPUT_BREAKER_INPUT_POINT_PHASE_B_ID,
+	INPUT_BREAKER_INPUT_POINT_PHASE_A_ID,
+	INPUT_BREAKER_OUTPUT_POINT_PHASE_C_ID,
+	INPUT_BREAKER_OUTPUT_POINT_PHASE_B_ID,
+	INPUT_BREAKER_OUTPUT_POINT_PHASE_A_ID,
+	POINT_BEFORE_STARTER_OPEN_PHASE_A_ID,
+	POINT_BEFORE_STARTER_OPEN_PHASE_B_ID,
+	POINT_BEFORE_STARTER_OPEN_PHASE_C_ID,
+	POINT_BEFORE_STARTER_CLOSE_PHASE_A_ID,
+	POINT_BEFORE_STARTER_CLOSE_PHASE_B_ID,
+	POINT_BEFORE_STARTER_CLOSE_PHASE_C_ID,
+	POINT_AFTER_STARTER_OPEN_PHASE_A_ID,
+	POINT_AFTER_STARTER_OPEN_PHASE_B_ID,
+	POINT_AFTER_STARTER_OPEN_PHASE_C_ID,
+	POINT_AFTER_STARTER_CLOSE_PHASE_A_ID,
+	POINT_AFTER_STARTER_CLOSE_PHASE_B_ID,
+	POINT_AFTER_STARTER_CLOSE_PHASE_C_ID,
+	MOTOR_WINDING_CONTACT_POINT_PHASE_A_ID,
+	MOTOR_WINDING_CONTACT_POINT_PHASE_B_ID,
+	MOTOR_WINDING_CONTACT_POINT_PHASE_C_ID,
+	POWER_CIRCUIT_NEUTRAL_ID,
+} from './powerCircuit/constants';
 
 export const CONTROL_CIRCUIT_NEUTRAL_ID = 'p.c.n'; // нейтраль цепи управления
-export const POWER_CIRCUIT_NEUTRAL_ID = 'p.p.n'; // нейтраль силовой цепи
 
 // Точки для подключения щупов на схеме
 export const SCHEME_POINTS: Record<string, IPoint> = {
-	'p.p.1.0': { x: 87, y: 12, state: true },
-	'p.p.2.0': { x: 129, y: 27, state: true },
-	'p.p.3.0': { x: 171, y: 42, state: true },
+	[PHASE_A_POINT_ID]: { x: 87, y: 12, state: true },
+	[PHASE_B_POINT_ID]: { x: 129, y: 27, state: true },
+	[PHASE_C_POINT_ID]: { x: 171, y: 42, state: true },
 
-	'p.p.1.1': { x: 87, y: 150, state: true },
-	'p.p.2.1': { x: 129, y: 150, state: true },
-	'p.p.3.1': { x: 171, y: 150, state: true },
+	[INPUT_BREAKER_INPUT_POINT_PHASE_A_ID]: { x: 87, y: 150, state: true },
+	[INPUT_BREAKER_INPUT_POINT_PHASE_B_ID]: { x: 129, y: 150, state: true },
+	[INPUT_BREAKER_INPUT_POINT_PHASE_C_ID]: { x: 171, y: 150, state: true },
 
-	'p.p.1.2': { x: 86, y: 188, state: true },
-	'p.p.2.2': { x: 129, y: 187, state: true },
-	'p.p.3.2': { x: 170, y: 187, state: true },
+	[INPUT_BREAKER_OUTPUT_POINT_PHASE_A_ID]: { x: 86, y: 188, state: true },
+	[INPUT_BREAKER_OUTPUT_POINT_PHASE_B_ID]: { x: 129, y: 187, state: true },
+	[INPUT_BREAKER_OUTPUT_POINT_PHASE_C_ID]: { x: 170, y: 187, state: true },
 
-	'p.p.1.3.1': { x: 86, y: 355, state: true },
-	'p.p.2.3.1': { x: 129, y: 355, state: true },
-	'p.p.3.3.1': { x: 170, y: 355, state: true },
-	'p.p.1.3.2': { x: 208, y: 355, state: true },
-	'p.p.2.3.2': { x: 242, y: 355, state: true },
-	'p.p.3.3.2': { x: 276, y: 355, state: true },
+	[POINT_BEFORE_STARTER_OPEN_PHASE_A_ID]: { x: 86, y: 355, state: true },
+	[POINT_BEFORE_STARTER_OPEN_PHASE_B_ID]: { x: 129, y: 355, state: true },
+	[POINT_BEFORE_STARTER_OPEN_PHASE_C_ID]: { x: 170, y: 355, state: true },
+	[POINT_BEFORE_STARTER_CLOSE_PHASE_A_ID]: { x: 208, y: 355, state: true },
+	[POINT_BEFORE_STARTER_CLOSE_PHASE_B_ID]: { x: 242, y: 355, state: true },
+	[POINT_BEFORE_STARTER_CLOSE_PHASE_C_ID]: { x: 276, y: 355, state: true },
 
-	'p.p.1.4.1.1': { x: 87, y: 398, state: false },
-	'p.p.2.4.1': { x: 128, y: 398, state: false },
-	'p.p.3.4.1.1': { x: 171, y: 398, state: false },
-	'p.p.1.4.2.1': { x: 200, y: 398, state: false },
-	'p.p.2.4.2': { x: 240, y: 398, state: false },
-	'p.p.3.4.2.1': { x: 272, y: 398, state: false },
+	[POINT_AFTER_STARTER_OPEN_PHASE_A_ID]: { x: 87, y: 398, state: false },
+	[POINT_AFTER_STARTER_OPEN_PHASE_B_ID]: { x: 128, y: 398, state: false },
+	[POINT_AFTER_STARTER_OPEN_PHASE_C_ID]: { x: 171, y: 398, state: false },
+	[POINT_AFTER_STARTER_CLOSE_PHASE_A_ID]: { x: 200, y: 398, state: false },
+	[POINT_AFTER_STARTER_CLOSE_PHASE_B_ID]: { x: 240, y: 398, state: false },
+	[POINT_AFTER_STARTER_CLOSE_PHASE_C_ID]: { x: 272, y: 398, state: false },
 
-	'p.p.1.4.1.2': { x: 87, y: 578, state: false },
-	'p.p.2.5': { x: 128, y: 578, state: false },
-	'p.p.3.4.1.2': { x: 171, y: 578, state: false },
+	[MOTOR_WINDING_CONTACT_POINT_PHASE_A_ID]: { x: 87, y: 578, state: false },
+	[MOTOR_WINDING_CONTACT_POINT_PHASE_B_ID]: { x: 128, y: 578, state: false },
+	[MOTOR_WINDING_CONTACT_POINT_PHASE_C_ID]: { x: 171, y: 578, state: false },
 
 	[POWER_CIRCUIT_NEUTRAL_ID]: { x: 129, y: 647, state: false },
 
 	[CONTROL_POWER_FEED_POINT_ID]: { x: 86, y: 217, state: true },
+
 	[CONTROL_BREAKER_INPUT_POINT_ID]: { x: 320, y: 215, state: true },
 	[CONTROL_BREAKER_OUTPUT_POINT_ID]: { x: 371, y: 215, state: true },
 
@@ -64,7 +91,7 @@ export const SCHEME_POINTS: Record<string, IPoint> = {
 	[LIMIT_SWITCH_CLOSE_ID]: { x: 518, y: 480, state: true },
 	[WIRE_LIMIT_CLOSE_TO_TERMINAL_ID]: { x: 594, y: 480, state: true },
 	[COMMANDS_CLOSE_POINT_ID]: { x: 766, y: 480, state: false },
-	[CLOSE_INTERLOCK_OUTPUT_POINT_ID ]: { x: 845, y: 480, state: false },
+	[CLOSE_INTERLOCK_OUTPUT_POINT_ID]: { x: 845, y: 480, state: false },
 
 	[CONTROL_CIRCUIT_NEUTRAL_ID]: { x: 1045, y: 67, state: false },
 };

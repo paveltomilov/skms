@@ -88,6 +88,7 @@ import {
 	JUNCTION_BOX_INPUT_POINT_PHASE_C_ID,
 	JUNCTION_BOX_OUTPUT_POINT_PHASE_C_ID,
 	MOTOR_WINDING_CONTACT_POINT_PHASE_C_ID,
+	POWER_CIRCUIT_NEUTRAL_ID,
 } from './constants';
 import { buildMalfunctions } from '../malfunctionTemplates';
 
@@ -229,7 +230,7 @@ export const obmotkaDvigatelyaFazaA: CircuitElement = {
 	name: 'Обмотка двигателя фаза A',
 	resistance: 4100,
 	startPoint: MOTOR_WINDING_CONTACT_POINT_PHASE_A_ID,
-	endPoint: 'p.p.n', // Нейтраль
+	endPoint: POWER_CIRCUIT_NEUTRAL_ID, // Нейтраль
 	malfunctions: buildMalfunctions(MOTOR_WINDING_PHASE_A_ID, 'motorWinding'),
 };
 
@@ -370,7 +371,7 @@ export const obmotkaDvigatelyaFazaB: CircuitElement = {
 	name: 'Обмотка двигателя фаза B',
 	resistance: 4100,
 	startPoint: MOTOR_WINDING_CONTACT_POINT_PHASE_B_ID,
-	endPoint: 'p.p.n', // Нейтраль
+	endPoint: POWER_CIRCUIT_NEUTRAL_ID, // Нейтраль
 	malfunctions: buildMalfunctions(MOTOR_WINDING_PHASE_B_ID, 'motorWinding'),
 };
 
@@ -512,7 +513,7 @@ export const obmotkaDvigatelyaFazaC: CircuitElement = {
 	name: 'Обмотка двигателя фаза C',
 	resistance: 4100,
 	startPoint: MOTOR_WINDING_CONTACT_POINT_PHASE_C_ID,
-	endPoint: 'p.p.n', // Нейтраль
+	endPoint: POWER_CIRCUIT_NEUTRAL_ID, // Нейтраль
 	malfunctions: buildMalfunctions(MOTOR_WINDING_PHASE_C_ID, 'motorWinding'),
 };
 

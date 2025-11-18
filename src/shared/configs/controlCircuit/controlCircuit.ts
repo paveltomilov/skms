@@ -11,6 +11,7 @@
  */
 import { CircuitBranch } from '../../types/scheme';
 import type { CircuitElement } from '@/shared/types/scheme';
+import { INPUT_BREAKER_OUTPUT_POINT_PHASE_A_ID } from '../powerCircuit/constants';
 import {
 	WIRE_POWER_TO_CONTROL_BREAKER_ID,
 	CONTROL_CIRCUIT_BREAKER_ID,
@@ -102,7 +103,7 @@ export const provodOtSilovojChastiSkhemyKAvtomatuPitaniyaUpravleniya: CircuitEle
 		id: WIRE_POWER_TO_CONTROL_BREAKER_ID,
 		name: 'Провод от силовой части схемы к автомату питания управления',
 		resistance: 0.1,
-		startPoint: 'p.p.0.0.1',
+		startPoint: INPUT_BREAKER_OUTPUT_POINT_PHASE_A_ID,
 		endPoint: CONTROL_POWER_FEED_POINT_ID,
 		malfunctions: buildMalfunctions(
 			WIRE_POWER_TO_CONTROL_BREAKER_ID,

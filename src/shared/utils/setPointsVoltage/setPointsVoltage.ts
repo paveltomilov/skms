@@ -13,7 +13,15 @@ function canCurrentFlow(
 	scheme: InitialStateScheme,
 	elementId: string,
 ): boolean {
-	const element = findElementByID(elementId, scheme);
+	let element;
+	try {
+		element = findElementByID(elementId, scheme);
+	} catch (error) {
+		// Если элемент не найден, ток не может протекать
+		console.error(`Element with id "${elementId}" not found in canCurrentFlow: ${error}`);
+		return false;
+	}
+
 	// Ток проходит, если на предыдущей точке есть напряжение и сопротивление элемента не слишком высокое
 	return previousPointVoltage && element.resistance < 1000000;
 }

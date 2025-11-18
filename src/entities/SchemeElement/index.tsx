@@ -15,8 +15,8 @@ interface Prop {
 
 export const SchemeElement: FC<Prop> = ({ id, title, type }) => {
 	const dispatch = useAppDispatch();
-
 	const activeProb = useAppSelector(state => state.multimeter.activeProb);
+	const circuit = useAppSelector(state => state.circuit);
 
 	const handleOpen = () => {
 		dispatch(closeAllModal());
@@ -24,10 +24,13 @@ export const SchemeElement: FC<Prop> = ({ id, title, type }) => {
 	};
 
 	// для визуализации состояния элементов схемы
-	const schemeElement = findElementByID(
-		id,
-		useAppSelector(state => state.circuit),
-	);
+	let schemeElement;
+	try {
+		schemeElement = findElementByID(id, circuit);
+	} catch {
+		// Если элемент не найден, используем дефолтное значение
+		schemeElement = null;
+	}
 
 	const resistance = schemeElement?.resistance === HIGH_RESISTANCE;
 
