@@ -139,3 +139,5 @@ export const CLOSE_COIL_INPUT_POINT_ID = 'p.c.3.1.4.1.3'; // Вход катуш
 
 export const OPEN_LAMP_BRANCH_POINT_ID = 'p.c.3.1.4.2.0'; // Разветвление к лампе "открыто"
 export const OPEN_LAMP_INPUT_POINT_ID = 'p.c.3.1.4.2.1'; // Вход лампы "открыто"
+
+export const CONTROL_CIRCUIT_NEUTRAL_ID = 'p.c.n'; // нейтраль цепи управления

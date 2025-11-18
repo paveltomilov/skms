@@ -13,6 +13,7 @@ import {
 	CLOSE_INTERLOCK_OUTPUT_POINT_ID,
 	COMANDS_OPEN_POINT_ID,
 	OPEN_INTERLOCK_OUTPUT_POINT_ID,
+	CONTROL_CIRCUIT_NEUTRAL_ID,
 } from './controlCircuit/constants';
 import {
 	PHASE_B_POINT_ID,
@@ -42,7 +43,7 @@ import {
 	POWER_CIRCUIT_NEUTRAL_ID,
 } from './powerCircuit/constants';
 
-export const CONTROL_CIRCUIT_NEUTRAL_ID = 'p.c.n'; // нейтраль цепи управления
+
 
 // Точки для подключения щупов на схеме
 export const SCHEME_POINTS: Record<string, IPoint> = {
@@ -108,3 +109,5 @@ function extractStates(SCHEME_POINTS: Record<string, IPoint>) {
 }
 
 export const pointsState = extractStates(SCHEME_POINTS);
+export { CONTROL_CIRCUIT_NEUTRAL_ID };
+
