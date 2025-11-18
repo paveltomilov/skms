@@ -17,7 +17,7 @@ export const SchemeElement: FC<Prop> = ({ id, title, type }) => {
 	const dispatch = useAppDispatch();
 	const activeProb = useAppSelector(state => state.multimeter.activeProb);
 	const circuit = useAppSelector(state => state.circuit);
-
+	console.log('id', id);
 	const handleOpen = () => {
 		dispatch(closeAllModal());
 		dispatch(openModal(type));

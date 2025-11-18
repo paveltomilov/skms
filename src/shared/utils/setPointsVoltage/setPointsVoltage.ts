@@ -18,7 +18,7 @@ function canCurrentFlow(
 		element = findElementByID(elementId, scheme);
 	} catch (error) {
 		// Если элемент не найден, ток не может протекать
-		console.error(`Element with id "${elementId}" not found in canCurrentFlow: ${error}`);
+		console.error(`4 Element with id "${elementId}" not found in canCurrentFlow: ${error}`);
 		return false;
 	}
 

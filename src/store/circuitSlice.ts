@@ -24,7 +24,7 @@ const circuitSlice = createSlice({
 			} catch (error) {
 				// Если элемент не найден, просто выходим без изменений
 				console.error(
-					`Element with id "${elementId}" not found in activateMalfunction: ${error}`,
+					`1 Element with id "${elementId}" not found in activateMalfunction: ${error}`,
 				);
 				return;
 			}
@@ -57,7 +57,7 @@ const circuitSlice = createSlice({
 				element = findElementByID(elementId, state);
 			} catch (error) {
 				console.error(
-					`Element with id "${elementId}" not found in deactivateMalfunction: ${error}`,
+					`2 Element with id "${elementId}" not found in deactivateMalfunction: ${error}`,
 				);
 				// Если элемент не найден, просто выходим без изменений
 				return;
@@ -85,7 +85,7 @@ const circuitSlice = createSlice({
 				element = findElementByID(id, state);
 			} catch (error) {
 				console.error(
-					`Element with id "${id}" not found in setResistance: ${error}	`,
+					`3 Element with id "${id}" not found in setResistance: ${error}	`,
 				);
 				// Если элемент не найден, просто выходим без изменений
 				return;
