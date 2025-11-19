@@ -3,7 +3,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import styles from './styles.module.scss';
-
 import type { Swiper as SwiperCore } from 'swiper';
 import ArrowLeftIcon from '../../IconSvg/arrowLeft';
 import ArrowRightIcon from '../../IconSvg/arrowRight';
@@ -34,6 +33,12 @@ const Carousel: FC<{ slides: React.ReactNode[] }> = ({ slides }) => {
 					disableOnInteraction: false,
 				}}
 				breakpoints={{
+					390: {
+						slidesPerView: 1,
+					},
+					768: {
+						slidesPerView: 1.077,
+					},
 					992: {
 						slidesPerView: 2,
 						slidesPerGroup: 2,

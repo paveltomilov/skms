@@ -5,22 +5,22 @@ import styles from './styles.module.scss';
 import SectionTitle from '../../SectionTitle';
 
 const AboutTop: FC = () => {
-	const isMobile = useMediaQuery({ maxWidth: 479 });
+	const isMobile = useMediaQuery({ maxWidth: 767 });
 	return (
 		<section className={styles.abouttop}>
 			<div className={`${styles.abouttop__container} container`}>
 				<div className={styles.content}>
 					{isMobile ? (
 						<SectionTitle
-							className={styles.advantages__title}
+							className={styles.content__title}
 							width={359}
-							title="Преимущества, которые нельзя игнорировать"
+							title="Совершенствуем специалистов повышаем эффективность предприятий"
 						/>
 					) : (
 						<SectionTitle
-							className={styles.advantages__title}
+							className={styles.content__title}
 							width={503}
-							title="Преимущества, которые нельзя игнорировать"
+							title="Совершенствуем специалистов повышаем эффективность предприятий"
 						/>
 					)}
 					<div className={styles.content__descr}>

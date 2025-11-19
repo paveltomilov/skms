@@ -1,11 +1,12 @@
 .card {
 	min-width: 328px;
+	height: 100%;
 	padding: 24px;
 	padding-right: 38px;
 	border-radius: 12px;
 	border: 2px solid var(--lan-very-dark-gray);
 
-	@media (max-width: 1024px) {
+	@media (max-width: 1279px) {
 		padding-right: 30px;
 		padding-top: 40px;
 		padding-bottom: 40px;
@@ -14,6 +15,11 @@
 	@media (max-width: 768px) {
 		padding-top: 26px;
 		padding-bottom: 30px;
+	}
+
+	@media (max-width: 480px) {
+		padding-top: 21px;
+		padding-bottom: 23px;
 	}
 }
 

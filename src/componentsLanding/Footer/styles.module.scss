@@ -17,11 +17,15 @@
 		padding-bottom: 16px;
 
 		@media (max-width: 1024px) {
-			padding-top: 154px;
+			padding-top: 156px;
 		}
 
 		@media (max-width: 768px) {
 			align-items: center;
+		}
+
+		@media (max-width: 480px) {
+			padding-top: 107px;
 		}
 	}
 

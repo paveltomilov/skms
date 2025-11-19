@@ -42,7 +42,7 @@ const advantagesData = [
 ];
 
 const Advantages: FC = () => {
-	const isMobile = useMediaQuery({ maxWidth: 479 });
+	const isMobile = useMediaQuery({ maxWidth: 767 });
 	return (
 		<section id="advantages" className={styles.advantages}>
 			<div className={`${styles.advantages__container} container`}>
@@ -62,9 +62,10 @@ const Advantages: FC = () => {
 
 				{isMobile ? (
 					<Swiper
-						slidesPerView={1}
+						slidesPerView={1.08}
 						spaceBetween={16}
 						breakpoints={{
+							480: { slidesPerView: 1 },
 							768: { slidesPerView: 2 },
 							1024: { slidesPerView: 3 },
 						}}

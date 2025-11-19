@@ -28,12 +28,20 @@
 		display: block;
 		margin-bottom: 4px;
 	}
+
+	@media (max-width: 480px) {
+		margin-bottom: 0;
+	}
 }
 
 .lineCenter {
 	@media (max-width: 768px) {
 		display: block;
 		margin-bottom: 4px;
+	}
+
+	@media (max-width: 480px) {
+		margin-bottom: 0;
 	}
 }
 

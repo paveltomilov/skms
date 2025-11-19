@@ -7,7 +7,7 @@
 		max-width: 455px;
 	}
 
-	@media (max-width: 393px) {
+	@media (max-width: 480px) {
 		max-width: 359px;
 	}
 
@@ -29,9 +29,9 @@
 			margin-bottom: 16px;
 		}
 
-		@media (max-width: 393px) {
+		@media (max-width: 480px) {
 			font-size: 14px;
-			margin-bottom: 12px;
+			margin-bottom: 16px;
 		}
 	}
 
@@ -43,6 +43,10 @@
 		line-height: 128%;
 		color: var(--lan-light-grayish-cyan);
 		margin-bottom: 20px;
+
+		@media (max-width: 480px) {
+			margin-bottom: 28px;
+		}
 	}
 
 	&__button {

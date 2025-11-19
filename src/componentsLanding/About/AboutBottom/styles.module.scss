@@ -21,6 +21,10 @@
 	@media (max-width: 1024px) {
 		margin-bottom: 45px;
 	}
+
+	@media (max-width: 480px) {
+		margin-bottom: 29px;
+	}
 }
 
 .aboutbottom__content {
@@ -30,6 +34,11 @@
 	@media (max-width: 1024px) {
 		padding-top: 58px;
 		padding-bottom: 149px;
+	}
+
+	@media (max-width: 480px) {
+		padding-top: 10px;
+		padding-bottom: 113px;
 	}
 }
 
@@ -45,6 +54,10 @@
 		grid-template-columns: 1fr;
 		grid-template-rows: repeat(2, auto);
 		grid-row-gap: 47px;
+	}
+
+	@media (max-width: 480px) {
+		grid-row-gap: 34px;
 	}
 
 	&__left {
@@ -77,6 +90,10 @@
 			@media (max-width: 768px) {
 				margin-bottom: 44px;
 			}
+
+			@media (max-width: 480px) {
+				margin-bottom: 29px;
+			}
 		}
 	}
 
@@ -105,6 +122,10 @@
 				max-width: 480px;
 				margin-bottom: 44px;
 			}
+
+			@media (max-width: 480px) {
+				margin-bottom: 26px;
+			}
 		}
 	}
 }
@@ -116,7 +137,7 @@
 		width: 336px;
 	}
 
-	@media (max-width: 480px) {
+	@media (max-width: 767px) {
 		width: 266px;
 	}
 
@@ -129,6 +150,10 @@
 		text-transform: uppercase;
 		color: var(--lan-light-grayish-blue);
 		margin-bottom: 28px;
+
+		@media (max-width: 480px) {
+			margin-bottom: 13px;
+		}
 	}
 }
 
@@ -137,8 +162,16 @@
 	border-radius: 12px;
 	padding: 24px;
 
+	@media (max-width: 767px) {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
 	@media (max-width: 480px) {
 		padding: 12px;
+		padding-top: 21px;
 	}
 
 	&__title {
@@ -150,6 +183,11 @@
 		color: var(--lan-light-grayish-blue);
 		margin-bottom: 24px;
 		max-width: 359px;
+
+		@media (max-width: 767px) {
+			max-width: 202px;
+			margin-bottom: 32px;
+		}
 	}
 }
 
@@ -164,7 +202,7 @@
 		gap: 8px;
 	}
 
-	@media (max-width: 480px) {
+	@media (max-width: 767px) {
 		grid-template-columns: repeat(3, 106px);
 	}
 }
@@ -181,6 +219,8 @@
 
 	@media (max-width: 480px) {
 		padding: 8px;
+		padding-top: 15px;
+		padding-bottom: 20px;
 	}
 }
 
@@ -196,6 +236,9 @@
 
 	@media (max-width: 480px) {
 		padding: 8px;
+		height: 222px;
+		padding-top: 15px;
+		padding-bottom: 20px;
 	}
 }
 
@@ -211,6 +254,9 @@
 
 	@media (max-width: 480px) {
 		padding: 8px;
+		height: 177px;
+		padding-top: 15px;
+		padding-bottom: 20px;
 	}
 }
 

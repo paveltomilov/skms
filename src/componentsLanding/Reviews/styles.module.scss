@@ -11,11 +11,21 @@
 		padding-bottom: 102px;
 	}
 
+	@media (max-width: 480px) {
+		padding-top: 100px;
+		padding-bottom: 58px;
+	}
+
 	&__title {
 		margin-bottom: 52px;
 
 		@media (max-width: 1024px) {
 			margin-bottom: 42px;
+		}
+
+		@media (max-width: 480px) {
+			max-width: 280px;
+			margin-bottom: 26px;
 		}
 	}
 }

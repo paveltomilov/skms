@@ -55,12 +55,11 @@ const Reviews: FC = () => {
 	return (
 		<section id="reviews" className={styles.reviews}>
 			<div className={`${styles.reviews__container} container`}>
-				<div className={styles.reviews__title}>
-					<SectionTitle
-						width={350}
-						title="Результаты глазами наших клиентов"
-					/>
-				</div>
+				<SectionTitle
+					className={styles.reviews__title}
+					width={350}
+					title="Результаты глазами наших клиентов"
+				/>
 				<Carousel slides={slides} />
 			</div>
 		</section>

@@ -108,7 +108,7 @@ const Header: FC = () => {
 					isOpen={isMenuOpen}
 					onToggle={() => setIsMenuOpen(prev => !prev)}
 					color="#fff"
-					size={32}
+					size={40}
 				/>
 			</div>
 			<MobileMenu isOpen={isMenuOpen} />

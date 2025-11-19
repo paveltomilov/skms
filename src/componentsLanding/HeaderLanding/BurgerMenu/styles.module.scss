@@ -1,18 +1,107 @@
-.mobileMenu {
-	position: absolute;
-	right: 44px;
-	background: var(--header-bg, #fff);
-	width: auto;
-	overflow: hidden;
-	max-height: 0;
-	transform: translateY(-20px);
-	opacity: 0;
-	transition: max-height 0.35s ease-out, transform 0.35s ease-out,
-		opacity 0.2s ease-out;
+.mobile {
+	&__menu {
+		position: absolute;
+		right: 44px;
+		width: 245px;
+		background: var(--lan-very-dark-mostly-black-blue);
+		border: 1px solid var(--lan-light-grayish-cyan);
+		border-radius: 0 0 12px 12px;
+		padding: 24px;
+		transform: translateY(-20px);
+		opacity: 0;
+		transition: max-height 0.2s ease-out, transform 0.2s ease-out,
+			opacity 0.2s ease-out;
+
+		@media (max-width: 768px) {
+			right: 36px;
+		}
+
+		@media (max-width: 480px) {
+			right: 17px;
+		}
+	}
+
+	&__list {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		list-style: none;
+		margin-bottom: 24px;
+	}
+
+	&__link {
+		font-family: var(--second-family);
+		font-weight: 500;
+		font-size: 15px;
+		line-height: 100%;
+		color: var(--lan-light-grayish-blue);
+		transition: all 0.2s ease-in-out;
+
+		&:focus,
+		&:hover {
+			color: var(--lan-bright-cyan---lime-green);
+		}
+	}
+
+	&__mail {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+		margin-bottom: 24px;
+
+		&__span {
+			font-family: var(--second-family);
+			font-weight: 500;
+			font-size: 17px;
+			line-height: 100%;
+			color: var(--lan-gray);
+		}
+
+		&__link {
+			font-family: var(--second-family);
+			font-weight: 400;
+			font-size: 17px;
+			line-height: 100%;
+			color: var(--lan-light-grayish-blue);
+			transition: all 0.2s ease-in-out;
+
+			&:focus,
+			&:hover {
+				color: var(--lan-bright-cyan---lime-green);
+			}
+		}
+	}
+
+	&__social {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 4px;
+		transition: all 0.2s ease-in-out;
+
+		&__link {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			background: var(--lan-very-dark-mostly-black-blue-2);
+			border-radius: 12px;
+			padding: 9px 35px;
+
+			&:hover .mobile__social__link__icon path:first-child {
+				fill: var(--lan-bright-cyan---lime-green);
+			}
+
+			&__icon {
+				path:first-child {
+					fill: var(--lan-light-grayish-blue);
+					transition: all 0.2s ease-in-out;
+				}
+			}
+		}
+	}
 }
 
 .open {
-	max-height: 500px;
+	max-height: 346px;
 	transform: translateY(0);
 	opacity: 1;
 }

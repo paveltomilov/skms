@@ -38,6 +38,11 @@
 		@media (max-width: 1024px) {
 			margin-bottom: 45px;
 		}
+
+		@media (max-width: 480px) {
+			font-size: 18px;
+			margin-bottom: 29px;
+		}
 	}
 
 	&__description {
@@ -55,6 +60,7 @@
 
 		@media (max-width: 480px) {
 			width: 350px;
+			margin-bottom: 29px;
 		}
 	}
 
@@ -74,7 +80,7 @@
 			height: 414px;
 		}
 
-		@media (max-width: 480px) {
+		@media (max-width: 767px) {
 			width: 359px;
 			height: 216px;
 		}
@@ -86,7 +92,7 @@
 	justify-content: center;
 	align-items: center;
 
-	@media (max-width: 480px) {
+	@media (max-width: 767px) {
 		width: 12px;
 		height: 14px;
 	}
