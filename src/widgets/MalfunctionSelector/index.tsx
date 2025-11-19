@@ -1,18 +1,23 @@
-import { CircuitElement, Malfunction } from '@/shared/types/scheme';
+import { CircuitElement, CircuitElementSelect, Malfunction } from '@/shared/types/scheme';
 import { SimulationItemData } from '@/shared/types/simulation';
 import { Dispatch, FC, SetStateAction, useRef, useState } from 'react';
-import DropListMalfunction from '../DropListMalfunction/DropListMalfunction';
+import DropListMalfunction from '../DropListMalfunction';
 import DropListElements from '../DropListElements/DropListElements';
 import { useClickOutside } from '@/shared/hooks/useClickOutside';
 
 interface Props {
 	setMalfun: (simulation: SimulationItemData) => void;
-	data: CircuitElement[];
+	data: CircuitElementSelect[];
 	closeList: Dispatch<SetStateAction<boolean>>;
 }
 
-const ListChoiceMalfunction: FC<Props> = ({ setMalfun, data, closeList }) => {
-	const [choiceElement, setChoiceElement] = useState<CircuitElement | null>(null);
+const MalfunctionSelector: FC<Props> = ({ setMalfun, data, closeList }) => {
+	const [choiceElement, setChoiceElement] = useState<CircuitElement | null>(
+		null,
+	);
+	const [choiceMalfunction, setChoiceMalfunction] = useState<
+		Malfunction[] | null
+	>(null);
 	const dropListMalfunctionRef = useRef<HTMLDivElement>(null);
 	const dropListElementsRef = useRef<HTMLDivElement>(null);
 
@@ -23,6 +28,10 @@ const ListChoiceMalfunction: FC<Props> = ({ setMalfun, data, closeList }) => {
 
 	function handleChoiceElement(item: CircuitElement) {
 		setChoiceElement(item);
+		const malfunctionsElement =
+			data.filter(element => element.id === item.id)[0].malfunctions ??
+			null;
+		setChoiceMalfunction(malfunctionsElement);
 	}
 
 	function handleChoice(malfunction: Malfunction) {
@@ -47,8 +56,7 @@ const ListChoiceMalfunction: FC<Props> = ({ setMalfun, data, closeList }) => {
 			{choiceElement && (
 				<DropListMalfunction
 					ref={dropListMalfunctionRef}
-					data={data}
-					choiceElement={choiceElement}
+					malfunctions={choiceMalfunction}
 					handleChoice={handleChoice}
 				/>
 			)}
@@ -56,4 +64,4 @@ const ListChoiceMalfunction: FC<Props> = ({ setMalfun, data, closeList }) => {
 	);
 };
 
-export default ListChoiceMalfunction;
+export default MalfunctionSelector;

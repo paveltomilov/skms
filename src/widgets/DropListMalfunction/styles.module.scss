@@ -34,6 +34,13 @@
 		}
 	}
 
+	&__itemEmpty {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		padding: 10px 24px 10px 16px;
+	}
+
 	&__name {
 		@include mixins.text(18px, 400);
 		display: inline-block;

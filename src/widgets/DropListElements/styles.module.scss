@@ -23,7 +23,8 @@
 		justify-content: space-between;
 		padding: 10px 24px 10px 16px;
 
-		&:hover {
+		&:hover,
+		&:focus-visible {
 			background-color: #110f93;
 			cursor: pointer;
 
@@ -45,11 +46,15 @@
 }
 
 .active {
-	background-color: #110f93;
+	background-color: #0b0962;
 	cursor: pointer;
 
 	& span,
 	svg {
 		color: variables.$white-color;
 	}
+}
+
+.displayNone {
+	display: none;
 }

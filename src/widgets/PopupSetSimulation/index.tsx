@@ -3,7 +3,7 @@ import { FC } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import LineRupture from '@/shared/UI/icons/LineRupture/LineRupture';
-import ListChoiceMalfunction from '../ListChoiceMalfunction/ListChoiceMalfunction';
+import MalfunctionSelector from '../MalfunctionSelector';
 import ListMalfunction from '../ListMalfunction/ListMalfunction';
 import useSetSimulation from '@/shared/hooks/useSetSimulation';
 
@@ -30,7 +30,7 @@ export const PopupSetSimulation: FC = () => {
 					onClick={() => setShowListMalfunction(true)}
 				/>
 				{showListMalfunction && (
-					<ListChoiceMalfunction
+					<MalfunctionSelector
 						setMalfun={handleChoiceMalfunction}
 						data={elements}
 						closeList={setShowListMalfunction}

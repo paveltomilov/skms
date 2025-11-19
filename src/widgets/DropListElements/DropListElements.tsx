@@ -1,11 +1,11 @@
 import { FC, RefObject } from 'react';
 import styles from './styles.module.scss';
 import Side from '@/shared/UI/icons/Side';
-import { CircuitElement } from '@/shared/types/scheme';
+import { CircuitElement, CircuitElementSelect } from '@/shared/types/scheme';
 import cn from 'classnames';
 
 interface Props {
-	data: CircuitElement[];
+	data: CircuitElementSelect[];
 	handleChoiceElement: (item: CircuitElement) => void;
 	choiceElement: CircuitElement | null;
 	ref: RefObject<HTMLDivElement | null>;
@@ -15,19 +15,25 @@ const DropListElements: FC<Props> = ({
 	data,
 	handleChoiceElement,
 	choiceElement,
-	ref
+	ref,
 }) => {
 	return (
 		<div className={styles.list} ref={ref}>
 			<ul className={styles.elementList}>
 				{data.map(item => {
-					return (
+							return (
 						<li
-							key={item.id}
 							className={cn(styles.elementList__item, {
-								[styles.active]:
-									choiceElement?.name === item.name,
+								[styles.active]: choiceElement?.id === item.id,
+								[styles.displayNone]: !item.view,
 							})}
+							key={item.id}
+							role="option"
+							aria-selected={choiceElement?.name === item.name}
+							tabIndex={0}
+							onKeyDown={e =>
+								e.key === 'Enter' && handleChoiceElement(item)
+							}
 							title={
 								item.name.length > 45 ? item.name : undefined
 							}
@@ -38,7 +44,7 @@ const DropListElements: FC<Props> = ({
 							</span>
 							<Side
 								transform={
-									choiceElement?.name === item.name
+									choiceElement?.id === item.id
 										? 'rotate90'
 										: undefined
 								}

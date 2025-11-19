@@ -30,6 +30,14 @@ export interface CircuitElement {
 	malfunctions: Malfunction[];
 }
 
+export interface CircuitElementSelect {
+	id: string;
+	name: string;
+	resistance: number;
+	malfunctions: Malfunction[];
+	view: boolean;
+}
+
 export type CircuitBranch = CircuitElement | CircuitGroup;
 export interface CircuitGroup extends Array<CircuitBranch> {}
 

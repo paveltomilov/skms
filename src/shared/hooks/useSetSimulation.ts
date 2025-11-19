@@ -1,37 +1,42 @@
 import { useRouter } from 'next/navigation';
-import { CircuitElement } from '@/shared/types/scheme';
+import { CircuitElementSelect } from '@/shared/types/scheme';
 import { useAppDispatch, useAppSelector } from './store';
 import { useRequestData } from './useRequestData';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { SimulationFormData, SimulationItemData } from '../types/simulation';
 import { clearCurrentStudent } from '@/store/trainingSlice';
-import { postSimulation } from '../utils/postSimulation/postSimulation';
+import {
+	postSimulation,
+	ResponseData,
+} from '../utils/postSimulation/postSimulation';
 import { closeModal } from '@/store/modalSlice';
 
 interface IResponse {
 	setShowListMalfunction: Dispatch<SetStateAction<boolean>>;
 	showListMalfunction: boolean;
 	handleChoiceMalfunction: (simulation: SimulationItemData) => void;
-	elements: CircuitElement[];
+	elements: CircuitElementSelect[];
 	listMalfunction: SimulationItemData[];
 	handleDeleteItem: (id: string, element_id: string) => void;
 	listIsEmpty: boolean;
 	handleSetSimulation: () => Promise<void>;
+	success: boolean;
+	errors: string | null;
+	data: ResponseData | null;
 }
 
 const useSetSimulation = (): IResponse => {
 	const router = useRouter();
 	const dispatch = useAppDispatch();
+	const [success, setSuccess] = useState<boolean>(false);
+	const [errors, setErrors] = useState<string | null>(null);
+	const [data, setData] = useState<ResponseData | null>(null);
 
 	const { urlBase, access, elements: contElem } = useRequestData();
 	const studentId = useAppSelector(
 		state => state.training.currentStudent?.id,
 	);
-	const [elements, setElements] = useState<CircuitElement[]>(
-		contElem.sort((a, b) =>
-			a.name.toLowerCase().localeCompare(b.name.toLowerCase(), 'ru'),
-		),
-	);
+	const [elements, setElements] = useState<CircuitElementSelect[]>([]);
 
 	const [listMalfunction, setListMalfunction] = useState<
 		SimulationItemData[]
@@ -40,14 +45,21 @@ const useSetSimulation = (): IResponse => {
 	const [showListMalfunction, setShowListMalfunction] =
 		useState<boolean>(false);
 
+	useEffect(() => {
+		if (contElem) {
+			const initialized = contElem.map(item => ({ ...item, view: true }));
+			setElements(initialized);
+		}
+	}, [contElem]);
+
 	const listIsEmpty: boolean = listMalfunction.length === 0;
 
 	function handleChoiceMalfunction(simulation: SimulationItemData): void {
-		const filterElements = elements.filter(
-			item => item.id !== simulation.element_id,
+		const selectElements = elements.map(item =>
+			item.id === simulation.element_id ? { ...item, view: false } : item,
 		);
 		const dataNew = [...listMalfunction, simulation];
-		setElements(filterElements);
+		setElements(selectElements);
 		setListMalfunction(dataNew);
 		setShowListMalfunction(false);
 	}
@@ -57,45 +69,50 @@ const useSetSimulation = (): IResponse => {
 			item => item.malfunction_id !== id,
 		);
 		setListMalfunction(filterListMalfunction);
-		const foundElement = contElem.find(item => item.id === element_id);
-		if (foundElement) {
-			const restoredList = [...elements, foundElement].sort((a, b) =>
-				a.name.toLowerCase().localeCompare(b.name.toLowerCase(), 'ru'),
-			) as CircuitElement[];
-			setElements(restoredList);
-		} else {
-			console.warn(`Элемент с данным id ${element_id} не найден`);
-		}
+
+		setElements(prev =>
+			prev.map(item =>
+				item.id === element_id ? { ...item, view: true } : item,
+			),
+		);
 	}
 
 	const handleSetSimulation = async () => {
-		if (studentId && !listIsEmpty) {
-			const formData: SimulationFormData = {
-				user: studentId,
-				malfunctions: listMalfunction.map(item => {
-					return { malfunction_id: item.malfunction_id };
-				}),
-			};
-			dispatch(clearCurrentStudent());
-			try {
-				const response = await postSimulation(
-					urlBase,
-					access,
-					formData,
-				);
+		if (!studentId || listIsEmpty) {
+			setSuccess(false);
+			setErrors('Нет студента или список неисправностей пуст');
+			setData(null);
+			return;
+		}
 
-				if (response.status >= 200 && response.status <= 299) {
-					console.log('Simulation', response.statusText);
-					dispatch(closeModal('setSimulation'));
-					router.push('/training');
-				}
-			} catch (error) {
-				console.log(error);
-			}
+		const formData: SimulationFormData = {
+			user: studentId,
+			malfunctions: listMalfunction.map(item => {
+				return { malfunction_id: item.malfunction_id };
+			}),
+		};
+		dispatch(clearCurrentStudent());
+		const result = await postSimulation(urlBase, access, formData);
+		if (result.success) {
+			setSuccess(result.success);
+			setErrors(null);
+			setData(result.data);
+			dispatch(closeModal('setSimulation'));
+			router.push('/training');
+		}
+		if (result.errors) {
+			setSuccess(result.success);
+			setErrors(result.errors);
+			setData(null);
+
+			alert(result.errors);
 		}
 	};
 
 	return {
+		success,
+		errors,
+		data,
 		setShowListMalfunction,
 		showListMalfunction,
 		handleChoiceMalfunction,

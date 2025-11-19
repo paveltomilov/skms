@@ -1,26 +1,24 @@
 import { FC, RefObject } from 'react';
 import styles from './styles.module.scss';
-import { CircuitElement, Malfunction } from '@/shared/types/scheme';
+import { Malfunction } from '@/shared/types/scheme';
 
 interface Props {
-	data: CircuitElement[];
-	choiceElement: CircuitElement;
+	malfunctions: Malfunction[] | null;
 	handleChoice: (item: Malfunction) => void;
 	ref: RefObject<HTMLDivElement | null>;
 }
 
 const DropListMalfunction: FC<Props> = ({
-	data,
-	choiceElement,
+	malfunctions,
 	handleChoice,
 	ref,
 }) => {
+	
 	return (
 		<div className={styles.list} ref={ref}>
 			<ul className={styles.elementList}>
-				{data
-					.filter(mal => mal.id === choiceElement.id)[0]
-					.malfunctions.map(item => {
+				{malfunctions ? (
+					malfunctions.map(item => {
 						return (
 							<li
 								key={item.id}
@@ -31,13 +29,25 @@ const DropListMalfunction: FC<Props> = ({
 										: undefined
 								}
 								onClick={() => handleChoice(item)}
+								role="option"
+								tabIndex={0}
+								onKeyDown={e =>
+									e.key === 'Enter' && handleChoice(item)
+								}
 							>
 								<span className={styles.elementList__name}>
 									{item.name}
 								</span>
 							</li>
 						);
-					})}
+					})
+				) : (
+					<li className={styles.elementList__itemEmpty}>
+						<span className={styles.elementList__name}>
+							Неисправности отсутствуют
+						</span>
+					</li>
+				)}
 			</ul>
 		</div>
 	);
