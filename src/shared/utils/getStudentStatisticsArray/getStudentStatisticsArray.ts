@@ -1,4 +1,4 @@
-import { StudentStatistics } from '../getStatistics/getStatistics';
+import { StudentStatistics } from '@/shared/types/statistics';
 
 export const getStudentStatisticsArray = (statistics: StudentStatistics) => {
     return [

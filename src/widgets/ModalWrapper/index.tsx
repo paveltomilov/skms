@@ -67,6 +67,11 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		studentDelete ||
 		note;
 	const gateId = useAppSelector(state => state.gate.activeGateId as string);
+	const student = useAppSelector(state => state.training.currentStudent);
+
+	const fullName = isAdmin
+		? 'Преподаватель'
+		: `${student?.first_name} ${student?.last_name}`;
 
 	const modals: IModals[] = [
 		{
@@ -142,7 +147,7 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		{
 			condition: studentStatistics,
 			id: 'studentStatistics',
-			headerTitle: `Статистика ${isAdmin ? 'преподавателя' : 'ученика'}`,
+			headerTitle: `Статистика: ${fullName}`,
 			gateId: undefined,
 			component: <PopupStudentStatistics />,
 		},
