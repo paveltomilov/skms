@@ -49,6 +49,7 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 		resetServerErrors,
 		setServerErrors,
 		validateForm,
+		getWarnMessage,
 	} = useLoginForm({ toggleRegisterMode });
 
 	const [authErrorText, setAuthErrorText] = useState<string | undefined>(
@@ -123,7 +124,7 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 						? customErrorText || configMap[name]?.errorMessage
 						: undefined
 				}
-				warnMessage={hasWarn ? configMap[name]?.warnMessage : undefined}
+				warnMessage={hasWarn ? getWarnMessage(name) : undefined}
 				required={configMap[name]?.required}
 			/>
 		);

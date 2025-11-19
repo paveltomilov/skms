@@ -17,6 +17,32 @@ type UseRecoveryFormProps = {
 	steps?: number;
 };
 
+const getValidationMessage = (fieldName: keyof RecoveryFormData, value: string): string => {
+	const triggedValue:string = value.trim();
+
+	switch (fieldName) {
+		case 'password':
+		case 'confirm_password':
+			if (triggedValue.length < 12) {
+				return 'Пароль должен содержать не менее 12 символов';
+			}
+			if (triggedValue.length > 20) {
+				return 'Пароль должен содержать не более 20 символов';
+			}
+			if (!/[A-Z]/.test(triggedValue)) {
+				return 'Отсутствует символ в верхнем регистре';
+			}
+			if (/[а-яёА-ЯЁ]/.test(triggedValue)) {
+				return 'Пароль не должен содержать кириллицу';
+			}
+			return 'Пароль должен содержать заглавную и строчную букву, цифру и специальный символ';
+
+		default:
+			const fieldConfig = configRecovery.find(field => field.name === fieldName);
+			return fieldConfig?.warnMessage || '';
+	}
+};
+
 export const useRecoveryForm = ({ steps }: UseRecoveryFormProps) => {
 	const [values, setValues] =
 		useState<RecoveryFormData>(initialStateRecovery);
@@ -51,6 +77,10 @@ export const useRecoveryForm = ({ steps }: UseRecoveryFormProps) => {
 		});
 		return map;
 	}, []);
+
+	const getWarnMessage = (fieldName: keyof RecoveryFormData): string => {
+		return getValidationMessage(fieldName, values[fieldName] || '');
+	};
 
 	// Сброс формы и ошибок при смене шага
 	useEffect(() => {
@@ -157,6 +187,7 @@ export const useRecoveryForm = ({ steps }: UseRecoveryFormProps) => {
 		serverErrors,
 		isValid,
 		activeFields,
+		getWarnMessage,
 		configMap,
 		validateForm,
 		resetServerErrors,
