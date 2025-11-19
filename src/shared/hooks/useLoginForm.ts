@@ -31,8 +31,8 @@ const getValidationMessage = (fieldName: keyof LoginFormData, value: string): st
 
 		case 'first_name':
 		case 'last_name':
-			if (triggedValue.length > 64) {
-				return 'Поле должно содержать не более 64 символов';
+			if (triggedValue.length > 30) {
+				return 'Поле должно содержать не более 30 символов';
 			}
 			return 'Поле может содержать только буквы латиницы, пробел, тире и цифры';
 
