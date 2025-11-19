@@ -59,7 +59,7 @@ export const config: Login = [
 			const name:string = state.first_name.trim();
 
 			if (!name) return 0;
-			if (name.length > 64) return 2;
+			if (name.length > 30) return 2;
 			if (!latinPattern.test(name)) return 2;
 
 			return 3; // OK
@@ -75,7 +75,7 @@ export const config: Login = [
 			const surname: string = state.last_name.trim();
 
 			if (!surname) return 0;
-			if (surname.length > 64) return 2;
+			if (surname.length > 30) return 2;
 			if (!latinPattern.test(surname)) return 2;
 
 			return 3; // OK
