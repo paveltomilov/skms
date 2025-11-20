@@ -9,7 +9,7 @@ interface Props {
 	color?: 'blue' | 'yellow' | 'red';
 	size?: 'sm' | 'lg';
 	title?: string;
-	currentValue: number;
+	currentValue: number | null;
 	unitsMeasurement: UnitsMeasurement;
 	minValue: number;
 	maxValue: number;
@@ -29,8 +29,8 @@ const WindowRectCard: FC<Props> = ({
 	// Создаём градиент, где заполненная часть - это цвет, а остальное - прозрачное
 	const backgroundStyle = {
 		background: getTubFill(
-			(color = 'red'),
-			currentValue,
+			(color ?? 'red'),
+			currentValue ?? 0,
 			minValue,
 			maxValue,
 		),

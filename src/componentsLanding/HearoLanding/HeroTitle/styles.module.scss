@@ -1,0 +1,17 @@
+.title {
+  width: 632px;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--second-family);
+  font-weight: 800;
+  font-size: 80px;
+  line-height: 100%;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--lan-light-grayish-blue);
+}
+
+.lineRight {
+  display: flex;
+  justify-content: flex-end;
+}

@@ -6,11 +6,14 @@ import Window from '@/shared/UI/Window';
 import { useDate } from '@/shared/hooks/useDate';
 import PowerUnit from '@/entities/PowerUnit';
 import useShowModal from '@/shared/hooks/useShowModal';
+import { useAppSelector } from '@/shared/hooks/store';
+import { RootState } from '@/store/store';
 
 const HeaderPtk: FC = () => {
 	const handleModalNotification = useShowModal('notification');
 	const { formattedDate, formattedTime, dateTimeDate, dateTimeTime } =
 		useDate();
+	const windows = useAppSelector((state: RootState) => state.windows);
 
 	return (
 		<header className={styles.header}>
@@ -20,16 +23,7 @@ const HeaderPtk: FC = () => {
 					<div className={styles.windows_defense}>Pабота защит</div>
 					<div className={styles.windows_kpm}>КРМ</div>
 				</div>
-				<Window
-					color="yellow"
-					data={{
-						currentValue: -4,
-						minValue: -1000,
-						maxValue: 1000,
-						unitsMeasurement: '°С',
-					}}
-					right
-				/>
+				<Window color="yellow" data={windows.w238} right />
 				<div className={styles.buttons}>
 					<Button
 						className={styles.button}

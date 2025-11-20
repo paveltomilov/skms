@@ -1,5 +1,4 @@
 @use '@/shared/scss/variables.module';
-@use '@/shared/scss/mixins.module';
 
 /* Указываем box sizing */
 *,
@@ -35,7 +34,6 @@ dd {
 :root {
 	// font
 	--font-family: 'Roboto', Arial, Helvetica, sans-serif;
-
 	--font-line-height: 100%;
 	--font-letter-spacing: 0%;
 }

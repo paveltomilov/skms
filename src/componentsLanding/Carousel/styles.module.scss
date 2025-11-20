@@ -1,36 +1,36 @@
 .carousel {
-	position: relative;
+  position: relative;
 }
 
 .swiper {
-	padding-bottom: 52px;
+  padding-bottom: 52px;
 }
 
 .slide {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	border-radius: 12px;
-	border: 2px solid var(--lan-very-dark-gray);
-	border-radius: 8px;
-	height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  border: 2px solid var(--lan-very-dark-gray);
+  border-radius: 8px;
+  height: auto;
 }
 
 .swiper__button {
-	position: absolute;
-	display: flex;
-	right: 8px;
-	gap: 20px;
+  position: absolute;
+  display: flex;
+  right: 8px;
+  gap: 20px;
 }
 
 .arrow {
-	cursor: pointer;
-	path {
-		stroke: var(--lan-light-grayish-blue);
-		transition: all 0.2s ease-in-out;
-	}
+  cursor: pointer;
+  path {
+    stroke: var(--lan-light-grayish-blue);
+    transition: all 0.2s ease-in-out;
+  }
 
-	&:hover path {
-		stroke: var(--lan-bright-cyan---lime-green);
-	}
+  &:hover path {
+    stroke: var(--lan-bright-cyan---lime-green);
+  }
 }

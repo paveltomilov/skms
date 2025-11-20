@@ -5,6 +5,7 @@ import { Suspense } from 'react';
 import Loading from './loading';
 import './globals.scss';
 
+
 const roboto = Roboto({
 	weight: ['400', '500', '700'],
 	subsets: ['latin'],
@@ -24,7 +25,9 @@ export default function RootLayout({
 		<html lang="ru" className={`${roboto.className}`}>
 			<body>
 				<StoreProvider>
-					<Suspense fallback={<Loading />}>{children}</Suspense>
+					
+						<Suspense fallback={<Loading />}>{children}</Suspense>
+			
 				</StoreProvider>
 			</body>
 		</html>

@@ -1,15 +1,14 @@
-import React, { FC } from 'react';
-import styles from './styles.module.scss';
+import React, {FC} from 'react';
 import AboutBottom from './AboutBottom';
 import AboutTop from './AboutTop';
 
 const About: FC = () => {
-	return (
-		<section id="about" className={styles.about}>
-			<AboutTop />
-			<AboutBottom />
-		</section>
-	);
+    return (
+        <section id="about">
+            <AboutTop />
+            <AboutBottom />
+        </section>
+    );
 };
 
 export default About;

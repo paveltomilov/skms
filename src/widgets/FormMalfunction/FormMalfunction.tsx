@@ -2,13 +2,13 @@ import { Malfunction } from '@/shared/types/scheme';
 import { FC, useState } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
-import { SimulationFormData } from '@/shared/types/similation';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import { useRequestData } from '@/shared/hooks/useRequestData';
 import { postSimulation } from '@/shared/utils/postSimulation/postSimulation';
 import { closeModal } from '@/store/modalSlice';
 import { useRouter } from 'next/navigation';
-import { clearStudentId } from '@/store/trainingSlice';
+import { clearCurrentStudent } from '@/store/trainingSlice';
+import { SimulationFormData } from '@/shared/types/simulation';
 
 const FormMalfunction: FC = () => {
 
@@ -19,7 +19,9 @@ const FormMalfunction: FC = () => {
 
     const [malfunctions, setMalfunctions] = useState<Malfunction[]>([]);
 
-    const studentId = useAppSelector(state => state.training.studentId);
+    const studentId = useAppSelector(
+		state => state.training.currentStudent?.id,
+	);
 
     const dispatch = useAppDispatch();
     const router = useRouter();
@@ -29,7 +31,7 @@ const FormMalfunction: FC = () => {
     const handleSetSimulation = (malfunctionsArray: string) => {
         if (studentId) {
             const formData: SimulationFormData = { user: studentId, malfunctions: [{ malfunction_id: malfunctionsArray }] };
-            dispatch(clearStudentId());
+            dispatch(clearCurrentStudent());
             postSimulation(urlBase, access, formData);
             dispatch(closeModal('setSimulation'));
             router.push('/training');

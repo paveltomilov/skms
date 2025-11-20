@@ -1,14 +1,12 @@
 import {FC, Suspense} from 'react';
 import Loading from './loading';
-import LandingPage from '../_pages/landing';
+import LandingPage from '@/_pages/landing';
 
 const Landing: FC = () => {
+	
 	return (
 		<Suspense fallback={<Loading />}>
-			<LandingPage />
-			{/* <LandingLayout /> */}
-			{/* <h1>Лендинг</h1> */}
-			{/* <Link href="/login">Вход</Link> */}
+			<LandingPage/>
 		</Suspense>
 	);
 };

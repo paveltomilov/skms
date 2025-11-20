@@ -19,6 +19,10 @@
             width: 448px;
             display: flex;
             justify-content: space-between;
+
+            &__wide {
+                width: 501px;
+            }
         }
 
         .button {
