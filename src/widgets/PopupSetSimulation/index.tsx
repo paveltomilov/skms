@@ -6,9 +6,11 @@ import LineRupture from '@/shared/UI/icons/LineRupture/LineRupture';
 import MalfunctionSelector from '../MalfunctionSelector';
 import ListMalfunction from '../ListMalfunction/ListMalfunction';
 import useSetSimulation from '@/shared/hooks/useSetSimulation';
+import ErrorMessageText from '../ErrorMessageText';
 
 export const PopupSetSimulation: FC = () => {
 	const {
+		errors,
 		setShowListMalfunction,
 		showListMalfunction,
 		handleChoiceMalfunction,
@@ -37,13 +39,13 @@ export const PopupSetSimulation: FC = () => {
 					/>
 				)}
 				<LineRupture />
-
 				{listMalfunction.length ? (
 					<ListMalfunction
 						data={listMalfunction}
 						deleteItem={handleDeleteItem}
 					/>
 				) : null}
+				
 				<Button
 					className={styles.popup__btn}
 					width={326}
@@ -52,6 +54,7 @@ export const PopupSetSimulation: FC = () => {
 					text="Назначить симуляцию"
 					onClick={handleSetSimulation}
 				/>
+				{errors && <ErrorMessageText text={errors}/>}
 			</div>
 		</div>
 	);

@@ -2,7 +2,7 @@ import { useRouter } from 'next/navigation';
 import { CircuitElementSelect } from '@/shared/types/scheme';
 import { useAppDispatch, useAppSelector } from './store';
 import { useRequestData } from './useRequestData';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
 import { SimulationFormData, SimulationItemData } from '../types/simulation';
 import { clearCurrentStudent } from '@/store/trainingSlice';
 import {
@@ -31,6 +31,7 @@ const useSetSimulation = (): IResponse => {
 	const [success, setSuccess] = useState<boolean>(false);
 	const [errors, setErrors] = useState<string | null>(null);
 	const [data, setData] = useState<ResponseData | null>(null);
+	const [listIsEmpty, setListIsEmpty] = useState<boolean>(true);
 
 	const { urlBase, access, elements: contElem } = useRequestData();
 	const studentId = useAppSelector(
@@ -52,7 +53,9 @@ const useSetSimulation = (): IResponse => {
 		}
 	}, [contElem]);
 
-	const listIsEmpty: boolean = listMalfunction.length === 0;
+	useEffect(() => {
+		setListIsEmpty(listMalfunction.length === 0);
+	}, [listMalfunction.length]);
 
 	function handleChoiceMalfunction(simulation: SimulationItemData): void {
 		const selectElements = elements.map(item =>
@@ -79,8 +82,11 @@ const useSetSimulation = (): IResponse => {
 
 	const handleSetSimulation = async () => {
 		if (!studentId || listIsEmpty) {
+			const errorText = listIsEmpty
+				? 'Cписок неисправностей пуст'
+				: 'Студент не выбран';
 			setSuccess(false);
-			setErrors('Нет студента или список неисправностей пуст');
+			setErrors(errorText);
 			setData(null);
 			return;
 		}
@@ -95,7 +101,7 @@ const useSetSimulation = (): IResponse => {
 		const result = await postSimulation(urlBase, access, formData);
 		if (result.success) {
 			setSuccess(result.success);
-			setErrors(null);
+			setErrors(result.errors);
 			setData(result.data);
 			dispatch(closeModal('setSimulation'));
 			router.push('/training');
@@ -103,9 +109,7 @@ const useSetSimulation = (): IResponse => {
 		if (result.errors) {
 			setSuccess(result.success);
 			setErrors(result.errors);
-			setData(null);
-
-			alert(result.errors);
+			setData(result.data);
 		}
 	};
 

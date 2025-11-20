@@ -6,6 +6,7 @@ import { useDeleteUser } from '@/shared/hooks/useDeleteUser';
 import { useDispatch } from 'react-redux';
 import { updateList } from '@/store/updateListSlice';
 import { closeModal } from '@/store/modalSlice';
+import ErrorMessageText from '../ErrorMessageText';
 
 export const PopupStudentDelete: FC = () => {
 	const data = useAppSelector(store => store.training.currentStudent);
@@ -50,7 +51,8 @@ export const PopupStudentDelete: FC = () => {
 							onClick={handleDelete}
 						/>
 					)}
-					{error && <span className={styles.error}>{error}</span>}
+
+					{error && <ErrorMessageText text={error} />}
 				</div>
 			</div>
 		);

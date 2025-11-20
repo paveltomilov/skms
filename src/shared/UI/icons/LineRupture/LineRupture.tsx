@@ -7,14 +7,13 @@ interface Props {
 const LineRupture: FC<Props> = ({ className }) => {
 	return (
 		<svg
+			style={{ margin: '24px 0' }}
 			width={326}
 			height={2}
 			preserveAspectRatio="xMidYMid meet"
 			className={className && className}
 		>
-			<use
-				xlinkHref={'/svg/sprite.svg#lineRupture'}
-			/>
+			<use xlinkHref={'/svg/sprite.svg#lineRupture'} />
 		</svg>
 	);
 };
