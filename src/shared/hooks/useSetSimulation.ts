@@ -2,7 +2,7 @@ import { useRouter } from 'next/navigation';
 import { CircuitElementSelect } from '@/shared/types/scheme';
 import { useAppDispatch, useAppSelector } from './store';
 import { useRequestData } from './useRequestData';
-import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { SimulationFormData, SimulationItemData } from '../types/simulation';
 import { clearCurrentStudent } from '@/store/trainingSlice';
 import {
