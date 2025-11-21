@@ -2,7 +2,6 @@
 import styles from './styles.module.scss';
 import { FC, useCallback, useRef } from 'react';
 import {
-	BASE_RESISTANCE,
 	HIGH_RESISTANCE,
 	INPUT_CIRCUIT_BREAKER_ID,
 } from '@/shared/configs/scheme';

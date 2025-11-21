@@ -4,7 +4,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export interface TrainingState {
 	malfunctionCurrent: string;
 	currentStudent: User | null;
-	studentId: number | null;
+	studentId: number | null; 
 }
 
 const initialState: TrainingState = {

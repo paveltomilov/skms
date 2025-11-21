@@ -19,7 +19,6 @@ const circuitSlice = createSlice({
 
 			let element;
 			try {
-				console.log('elementId', elementId);
 				element = findElementByID(elementId, state);
 			} catch (error) {
 				// Если элемент не найден, просто выходим без изменений

@@ -46,6 +46,8 @@ export interface CircuitElement {
 	id: string;
 	name: string;
 
+	// Тип элемента схемы (определяет сопротивление и шаблоны неисправностей)
+	kind: ElementKind;
 	// Логические точки подключения (ID точек на схеме)
 	startPoint?: string;
 	endPoint?: string;
