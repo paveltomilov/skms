@@ -1,7 +1,5 @@
-import {
-	HIGH_RESISTANCE,
-	INPUT_CIRCUIT_BREAKER_ID,
-} from '@/shared/configs/scheme';
+import { INPUT_CIRCUIT_BREAKER_ID } from '@/shared/configs/powerCircuit/constants';
+import { HIGH_RESISTANCE } from '@/shared/configs/elementKind';
 import { useAppSelector } from '@/shared/hooks/store';
 import { findElementByID } from '../findElementByID/scheme';
 

@@ -3,7 +3,7 @@
 import styles from './styles.module.scss';
 import { FC } from 'react';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
-import { HIGH_RESISTANCE } from '@/shared/utils/getResistanceByKind/getResistanceByKind';
+import { HIGH_RESISTANCE } from '@/shared/configs/elementKind';
 import { findElementByID } from '@/shared/utils/findElementByID/scheme';
 import { closeAllModal, Modals, openModal } from '@/store/modalSlice';
 
@@ -17,7 +17,6 @@ export const SchemeElement: FC<Prop> = ({ id, title, type }) => {
 	const dispatch = useAppDispatch();
 	const activeProb = useAppSelector(state => state.multimeter.activeProb);
 	const circuit = useAppSelector(state => state.circuit);
-	console.log('id', id);
 	const handleOpen = () => {
 		dispatch(closeAllModal());
 		dispatch(openModal(type));

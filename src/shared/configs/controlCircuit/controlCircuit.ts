@@ -95,10 +95,8 @@ import {
 	OPEN_LAMP_INPUT_POINT_ID,
 } from './constants';
 import { buildMalfunctions } from '../malfunctionTemplates';
-import {
-	getResistanceByKind,
-	ELEMENT_KIND,
-} from '../../utils/getResistanceByKind/getResistanceByKind';
+import { getResistanceByKind } from '../../utils/getResistanceByKind/getResistanceByKind';
+import { ELEMENT_KIND } from '../elementKind';
 
 // ======================== Общая часть (c.0, c.1, c.2) ========================
 

@@ -3,43 +3,6 @@ import {
 	CircuitBranch,
 	InitialStateScheme,
 } from '@/shared/types/scheme';
-import { initialStateScheme } from '@/shared/configs/scheme';
-
-/**
- * Индекс элементов схемы для быстрого поиска O(1) вместо O(n) рекурсивного обхода.
- * Строится один раз при загрузке модуля из initialStateScheme.
- */
-const elementsIndex = new Map<string, CircuitElement>();
-
-/**
- * Рекурсивно обходит ветви схемы и добавляет элементы в индекс.
- * @param branches - массив ветвей схемы
- */
-const buildIndex = (branches: CircuitBranch[]): void => {
-	for (const branch of branches) {
-		if (Array.isArray(branch)) {
-			// Рекурсивно обрабатываем вложенные массивы (параллельные ветвления)
-			buildIndex(branch);
-		} else {
-			// Это элемент схемы - добавляем в индекс
-			elementsIndex.set(branch.id, branch);
-		}
-	}
-};
-
-/**
- * Инициализация индекса при загрузке модуля.
- * Строим индекс из initialStateScheme один раз.
- */
-const initializeIndex = (): void => {
-	if (elementsIndex.size === 0) {
-		buildIndex(initialStateScheme.powerCircuit);
-		buildIndex(initialStateScheme.controlCircuit);
-	}
-};
-
-// Инициализируем индекс при загрузке модуля
-initializeIndex();
 
 /**
  * Валидация ID элемента схемы.
@@ -61,12 +24,16 @@ const validateId = (id: string): void => {
 };
 
 /**
- * Оптимизированная функция поиска элемента по ID в initialStateScheme.
- * Использует предварительно построенный индекс для поиска O(1).
+ * Функция поиска элемента по ID через путь в структуре схемы.
+ * ID представляет собой путь через массивы: например, "p.0.0.1" означает:
+ * - "p" - powerCircuit
+ * - "0" - первый элемент в powerCircuit (массив)
+ * - "0" - первый элемент в этом массиве (массив)
+ * - "1" - второй элемент в этом массиве (CircuitElement)
  *
- * @param id - идентификатор элемента (должен начинаться с 'p' или 'c')
- * @param state - состояние схемы (используется для обратной совместимости, но поиск всегда в initialStateScheme)
- * @returns найденный элемент схемы
+ * @param id - идентификатор элемента в формате "p.0.0.1" или "c.1.2.3"
+ * @param state - состояние схемы для получения актуальных данных элементов
+ * @returns найденный элемент схемы из текущего состояния
  * @throws {Error} если элемент не найден или ID невалиден
  */
 export const findElementByID = (
@@ -76,20 +43,62 @@ export const findElementByID = (
 	// Валидация ID
 	validateId(id);
 
-	// Определяем тип схемы для сообщений об ошибках
-	const circuitType = id.startsWith('p') ? 'powerCircuit' : 'controlCircuit';
+	// 1. Разбор ID на части
+	const parts = id.split('.');
+	const [prefix, ...indexStrings] = parts;
 
-	// Поиск в индексе - O(1) операция
-	const result = elementsIndex.get(id);
-
-	if (!result) {
-		const errorMessage = `6 - Element with id "${id}" not found in ${circuitType}`;
-		console.error(errorMessage, {
-			id,
-			circuitType,
-		});
-		throw new Error(errorMessage);
+	if (indexStrings.length === 0) {
+		throw new Error(
+			`ID "${id}" must contain at least one index after prefix`,
+		);
 	}
 
-	return result;
+	// 2. Преобразование строковых индексов в числа
+	const indices = indexStrings.map((str, pos) => {
+		const num = Number(str);
+		if (!Number.isInteger(num) || num < 0) {
+			throw new Error(
+				`Invalid non-negative integer index at position ${pos} in ID "${id}": "${str}"`,
+			);
+		}
+		return num;
+	});
+
+	// 3. Выбор корневого массива схемы
+
+	let current: CircuitBranch | CircuitElement =
+		prefix === 'p' ? state.powerCircuit : state.controlCircuit;
+
+	// 4. Проход по пути через индексы
+	for (let i = 0; i < indices.length; i++) {
+		const index = indices[i];
+		const currentPath = `${prefix}.${indices.slice(0, i + 1).join('.')}`;
+
+		// Проверка: на всех шагах, кроме последнего, текущий узел должен быть массивом
+		if (!Array.isArray(current)) {
+			throw new Error(
+				`Expected array at path "${currentPath}", but found a CircuitElement (leaf). Full ID: "${id}"`,
+			);
+		}
+
+		// Проверка границ массива
+		if (index >= current.length) {
+			throw new Error(
+				`Index ${index} out of bounds at path "${currentPath}". Array length: ${current.length}`,
+			);
+		}
+
+		// Переход к следующему узлу
+		current = current[index];
+	}
+
+	// 5. Финальная проверка: результат должен быть CircuitElement, а не массивом
+	if (Array.isArray(current)) {
+		throw new Error(
+			`Path "${id}" resolves to a CircuitGroup (array), but a CircuitElement was expected`,
+		);
+	}
+
+	// 6. Возвращаем найденный элемент
+	return current;
 };

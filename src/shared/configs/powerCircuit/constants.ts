@@ -20,49 +20,49 @@ export const getPointId = (...segments: string[]): string =>
 // ======================== ЭЛЕМЕНТЫ СИЛОВОЙ СХЕМЫ ========================
 
 // --- Фаза A (0.0) ---
-export const WIRE_PHASE_A_TO_INPUT_BREAKER_ID = 'p.0.0.0'; // Провод фазы A до вводного автомата
-export const INPUT_BREAKER_CONTACT_PHASE_A_ID = 'p.0.0.1'; // Контакт вводного автомата фаза A
-export const WIRE_BREAKER_TO_TERMINAL_BEFORE_STARTERS_PHASE_A_ID = 'p.0.0.2'; // Провод от автомата фаза A до клемника перед пускателями
-export const WIRE_TERMINAL_TO_STARTER_OPEN_PHASE_A_ID = 'p.0.0.3.0.0'; // Провод от клемника до пускателя открыто фаза A
-export const WIRE_TERMINAL_TO_STARTER_CLOSE_PHASE_A_ID = 'p.0.0.3.1.0'; // Провод от клемника до пускателя закрыто фаза A
-export const STARTER_CONTACT_OPEN_PHASE_A_ID = 'p.0.0.3.0.1'; // Контакт пускателя открыто фаза A
-export const STARTER_CONTACT_CLOSE_PHASE_A_ID = 'p.0.0.3.1.1'; // Контакт пускателя закрыто фаза A
-export const WIRE_FROM_STARTER_OPEN_PHASE_A_ID = 'p.0.0.3.0.2'; // Провод от пускателя открыто фаза A
-export const WIRE_FROM_STARTER_CLOSE_PHASE_C_ID = 'p.0.0.3.1.2'; // Провод от пускателя закрыто фаза C
-export const WIRE_AFTER_STARTERS_PHASE_A_ID = 'p.0.0.4'; // Провод после пускателей фаза A
-export const WIRE_TO_JUNCTION_BOX_PHASE_A_ID = 'p.0.0.5'; // Провод до соединительной коробки фаза A
-export const WIRE_FROM_JUNCTION_BOX_TO_MOTOR_PHASE_A_ID = 'p.0.0.6'; // Провод от соединительной коробки до двигателя фаза A
-export const MOTOR_WINDING_PHASE_A_ID = 'p.0.0.7'; // Обмотка двигателя фаза A
+export const WIRE_PHASE_A_TO_INPUT_BREAKER_ID = 'p.0.0'; // Провод фазы A до вводного автомата
+export const INPUT_BREAKER_CONTACT_PHASE_A_ID = 'p.0.1'; // Контакт вводного автомата фаза A
+export const WIRE_BREAKER_TO_TERMINAL_BEFORE_STARTERS_PHASE_A_ID = 'p.0.2'; // Провод от автомата фаза A до клемника перед пускателями
+export const WIRE_TERMINAL_TO_STARTER_OPEN_PHASE_A_ID = 'p.0.3.0.0'; // Провод от клемника до пускателя открыто фаза A
+export const WIRE_TERMINAL_TO_STARTER_CLOSE_PHASE_A_ID = 'p.0.3.1.0'; // Провод от клемника до пускателя закрыто фаза A
+export const STARTER_CONTACT_OPEN_PHASE_A_ID = 'p.0.3.0.1'; // Контакт пускателя открыто фаза A
+export const STARTER_CONTACT_CLOSE_PHASE_A_ID = 'p.0.3.1.1'; // Контакт пускателя закрыто фаза A
+export const WIRE_FROM_STARTER_OPEN_PHASE_A_ID = 'p.0.3.0.2'; // Провод от пускателя открыто фаза A
+export const WIRE_FROM_STARTER_CLOSE_PHASE_C_ID = 'p.0.3.1.2'; // Провод от пускателя закрыто фаза C
+export const WIRE_AFTER_STARTERS_PHASE_A_ID = 'p.0.4'; // Провод после пускателей фаза A
+export const WIRE_TO_JUNCTION_BOX_PHASE_A_ID = 'p.0.5'; // Провод до соединительной коробки фаза A
+export const WIRE_FROM_JUNCTION_BOX_TO_MOTOR_PHASE_A_ID = 'p.0.6'; // Провод от соединительной коробки до двигателя фаза A
+export const MOTOR_WINDING_PHASE_A_ID = 'p.0.7'; // Обмотка двигателя фаза A
 
 // --- Фаза B (0.1) ---
-export const WIRE_PHASE_B_TO_INPUT_BREAKER_ID = 'p.0.1.0'; // Провод фазы B до вводного автомата
-export const INPUT_BREAKER_CONTACT_PHASE_B_ID = 'p.0.1.1'; // Контакт вводного автомата фаза B
-export const WIRE_BREAKER_TO_TERMINAL_BEFORE_STARTERS_PHASE_B_ID = 'p.0.1.2'; // Провод от автомата фаза B до клемника перед пускателями
-export const WIRE_TERMINAL_TO_STARTER_OPEN_PHASE_B_ID = 'p.0.1.3.0.0'; // Провод от клемника до пускателя открыто фаза B
-export const WIRE_TERMINAL_TO_STARTER_CLOSE_PHASE_B_ID = 'p.0.1.3.1.0'; // Провод от клемника до пускателя закрыто фаза B
-export const STARTER_CONTACT_OPEN_PHASE_B_ID = 'p.0.1.3.0.1'; // Контакт пускателя открыто фаза B
-export const STARTER_CONTACT_CLOSE_PHASE_B_ID = 'p.0.1.3.1.1'; // Контакт пускателя закрыто фаза B
-export const WIRE_FROM_STARTER_OPEN_PHASE_B_ID = 'p.0.1.3.0.2'; // Провод от пускателя открыто фаза B
-export const WIRE_FROM_STARTER_CLOSE_PHASE_B_ID = 'p.0.1.3.1.2'; // Провод от пускателя закрыто фаза B
-export const WIRE_AFTER_STARTERS_PHASE_B_ID = 'p.0.1.4'; // Провод после пускателей фаза B
-export const WIRE_TO_JUNCTION_BOX_PHASE_B_ID = 'p.0.1.5'; // Провод до соединительной коробки фаза B
-export const WIRE_FROM_JUNCTION_BOX_TO_MOTOR_PHASE_B_ID = 'p.0.1.6'; // Провод от соединительной коробки до двигателя фаза B
-export const MOTOR_WINDING_PHASE_B_ID = 'p.0.1.7'; // Обмотка двигателя фаза B
+export const WIRE_PHASE_B_TO_INPUT_BREAKER_ID = 'p.1.0'; // Провод фазы B до вводного автомата
+export const INPUT_BREAKER_CONTACT_PHASE_B_ID = 'p.1.1'; // Контакт вводного автомата фаза B
+export const WIRE_BREAKER_TO_TERMINAL_BEFORE_STARTERS_PHASE_B_ID = 'p.1.2'; // Провод от автомата фаза B до клемника перед пускателями
+export const WIRE_TERMINAL_TO_STARTER_OPEN_PHASE_B_ID = 'p.1.3.0.0'; // Провод от клемника до пускателя открыто фаза B
+export const WIRE_TERMINAL_TO_STARTER_CLOSE_PHASE_B_ID = 'p.1.3.1.0'; // Провод от клемника до пускателя закрыто фаза B
+export const STARTER_CONTACT_OPEN_PHASE_B_ID = 'p.1.3.0.1'; // Контакт пускателя открыто фаза B
+export const STARTER_CONTACT_CLOSE_PHASE_B_ID = 'p.1.3.1.1'; // Контакт пускателя закрыто фаза B
+export const WIRE_FROM_STARTER_OPEN_PHASE_B_ID = 'p.1.3.0.2'; // Провод от пускателя открыто фаза B
+export const WIRE_FROM_STARTER_CLOSE_PHASE_B_ID = 'p.1.3.1.2'; // Провод от пускателя закрыто фаза B
+export const WIRE_AFTER_STARTERS_PHASE_B_ID = 'p.1.4'; // Провод после пускателей фаза B
+export const WIRE_TO_JUNCTION_BOX_PHASE_B_ID = 'p.1.5'; // Провод до соединительной коробки фаза B
+export const WIRE_FROM_JUNCTION_BOX_TO_MOTOR_PHASE_B_ID = 'p.1.6'; // Провод от соединительной коробки до двигателя фаза B
+export const MOTOR_WINDING_PHASE_B_ID = 'p.1.7'; // Обмотка двигателя фаза B
 
 // --- Фаза C (0.2) ---
-export const WIRE_PHASE_C_TO_INPUT_BREAKER_ID = 'p.0.2.0'; // Провод фазы C до вводного автомата
-export const INPUT_BREAKER_CONTACT_PHASE_C_ID = 'p.0.2.1'; // Контакт вводного автомата фаза C
-export const WIRE_BREAKER_TO_TERMINAL_BEFORE_STARTERS_PHASE_C_ID = 'p.0.2.2'; // Провод от автомата фаза C до клемника перед пускателями
-export const WIRE_TERMINAL_TO_STARTER_OPEN_PHASE_C_ID = 'p.0.2.3.0.0'; // Провод от клемника до пускателя открыто фаза C
-export const WIRE_TERMINAL_TO_STARTER_CLOSE_PHASE_C_ID = 'p.0.2.3.1.0'; // Провод от клемника до пускателя закрыто фаза C
-export const STARTER_CONTACT_OPEN_PHASE_C_ID = 'p.0.2.3.0.1'; // Контакт пускателя открыто фаза C
-export const STARTER_CONTACT_CLOSE_PHASE_C_ID = 'p.0.2.3.1.1'; // Контакт пускателя закрыто фаза C
-export const WIRE_FROM_STARTER_OPEN_PHASE_C_ID = 'p.0.2.3.0.2'; // Провод от пускателя открыто фаза C
-export const WIRE_FROM_STARTER_CLOSE_PHASE_A_ID = 'p.0.2.3.1.2'; // Провод от пускателя закрыто фаза A
-export const WIRE_AFTER_STARTERS_PHASE_C_ID = 'p.0.2.4'; // Провод после пускателей фаза C
-export const WIRE_TO_JUNCTION_BOX_PHASE_C_ID = 'p.0.2.5'; // Провод до соединительной коробки фаза C
-export const WIRE_FROM_JUNCTION_BOX_TO_MOTOR_PHASE_C_ID = 'p.0.2.6'; // Провод от соединительной коробки до двигателя фаза C
-export const MOTOR_WINDING_PHASE_C_ID = 'p.0.2.7'; // Обмотка двигателя фаза C
+export const WIRE_PHASE_C_TO_INPUT_BREAKER_ID = 'p.2.0'; // Провод фазы C до вводного автомата
+export const INPUT_BREAKER_CONTACT_PHASE_C_ID = 'p.2.1'; // Контакт вводного автомата фаза C
+export const WIRE_BREAKER_TO_TERMINAL_BEFORE_STARTERS_PHASE_C_ID = 'p.2.2'; // Провод от автомата фаза C до клемника перед пускателями
+export const WIRE_TERMINAL_TO_STARTER_OPEN_PHASE_C_ID = 'p.2.3.0.0'; // Провод от клемника до пускателя открыто фаза C
+export const WIRE_TERMINAL_TO_STARTER_CLOSE_PHASE_C_ID = 'p.2.3.1.0'; // Провод от клемника до пускателя закрыто фаза C
+export const STARTER_CONTACT_OPEN_PHASE_C_ID = 'p.2.3.0.1'; // Контакт пускателя открыто фаза C
+export const STARTER_CONTACT_CLOSE_PHASE_C_ID = 'p.2.3.1.1'; // Контакт пускателя закрыто фаза C
+export const WIRE_FROM_STARTER_OPEN_PHASE_C_ID = 'p.2.3.0.2'; // Провод от пускателя открыто фаза C
+export const WIRE_FROM_STARTER_CLOSE_PHASE_A_ID = 'p.2.3.1.2'; // Провод от пускателя закрыто фаза A
+export const WIRE_AFTER_STARTERS_PHASE_C_ID = 'p.2.4'; // Провод после пускателей фаза C
+export const WIRE_TO_JUNCTION_BOX_PHASE_C_ID = 'p.2.5'; // Провод до соединительной коробки фаза C
+export const WIRE_FROM_JUNCTION_BOX_TO_MOTOR_PHASE_C_ID = 'p.2.6'; // Провод от соединительной коробки до двигателя фаза C
+export const MOTOR_WINDING_PHASE_C_ID = 'p.2.7'; // Обмотка двигателя фаза C
 
 // ======================== ТОЧКИ СИЛОВОЙ СХЕМЫ ========================
 
@@ -112,3 +112,14 @@ export const MOTOR_WINDING_CONTACT_POINT_PHASE_C_ID = 'p.p.0.2.6'; // Конта
 
 // --- Нейтраль силовой цепи ---
 export const POWER_CIRCUIT_NEUTRAL_ID = 'p.p.n'; // Нейтраль силовой цепи
+
+// --- Массивы ID для удобства ---
+/**
+ * Массив ID контактов вводного автомата для всех трех фаз.
+ * Используется для проверки состояния вводного автомата.
+ */
+export const INPUT_CIRCUIT_BREAKER_ID = [
+	INPUT_BREAKER_CONTACT_PHASE_A_ID,
+	INPUT_BREAKER_CONTACT_PHASE_B_ID,
+	INPUT_BREAKER_CONTACT_PHASE_C_ID,
+] as const;

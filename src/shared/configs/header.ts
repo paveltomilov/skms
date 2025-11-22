@@ -1,4 +1,5 @@
-﻿import { BASE_RESISTANCE, HIGH_RESISTANCE } from './scheme';
+﻿import { BASE_RESISTANCE } from './schemeElements';
+import { HIGH_RESISTANCE } from './elementKind';
 import {
 	BUTTON_KRUZA_P_OPEN_ID,
 	BUTTON_KRUZA_P_CLOSE_ID,

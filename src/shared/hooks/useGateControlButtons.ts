@@ -2,8 +2,6 @@
 import {
 	LIMIT_SWITCH_CLOSE_ID,
 	LIMIT_SWITCH_OPEN_ID,
-} from '../configs/scheme';
-import {
 	INSERT_NDO_CMD_CLOSE_PTK_ID,
 	INSERT_NDO_CMD_OPEN_PTK_ID,
 } from '../configs/controlCircuit/constants';
@@ -13,6 +11,8 @@ import { setResistance } from '@/store/circuitSlice';
 import { KRUZAP_BUTTONS_CONFIG, PTK_BUTTONS_CONFIG } from '../configs/header';
 import { useRef } from 'react';
 import { GATE_STATE_TYPE } from '../types/gate';
+import { BASE_RESISTANCE } from '../configs/schemeElements';
+import { HIGH_RESISTANCE } from '../configs/elementKind';
 
 export const useGateControlButtons = () => {
 	const dispatch = useAppDispatch();

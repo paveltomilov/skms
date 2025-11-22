@@ -16,22 +16,63 @@ import {
 	INSERT_NDO_CMD_CLOSE_PTK_ID,
 	INTERLOCK_OPEN_ID,
 } from './controlCircuit/constants';
+import { initialStateScheme } from './scheme';
+import type { CircuitBranch, CircuitElement } from '../types/scheme';
+
+/**
+ * Рекурсивно извлекает все элементы схемы из ветвей.
+ * @param branches - массив ветвей схемы
+ * @returns массив всех элементов схемы
+ */
+const extractElements = (branches: CircuitBranch[]): CircuitElement[] => {
+	const elements: CircuitElement[] = [];
+
+	for (const branch of branches) {
+		if (Array.isArray(branch)) {
+			// Рекурсивно обрабатываем вложенные массивы (параллельные ветвления)
+			elements.push(...extractElements(branch));
+		} else {
+			// Это элемент схемы
+			elements.push(branch);
+		}
+	}
+
+	return elements;
+};
+
+/**
+ * Базовые сопротивления элементов схемы по их ID.
+ * Создается на основе initialStateScheme и содержит начальные значения сопротивлений.
+ */
+export const BASE_RESISTANCE: Record<string, number> = (() => {
+	const allElements = [
+		...extractElements(initialStateScheme.powerCircuit),
+		...extractElements(initialStateScheme.controlCircuit),
+	];
+
+	const resistanceMap: Record<string, number> = {};
+	for (const element of allElements) {
+		resistanceMap[element.id] = element.resistance;
+	}
+
+	return resistanceMap;
+})();
 
 /**
  * Элементы схемы для отображения в интерфейсе.
  * Каждый элемент содержит id, aria-метку и тип модального окна.
  */
 export const SCHEME_ELEMENTS: { id: string; aria: string; type: Modals }[] = [
-	{
-		id: 'p.1',
-		aria: 'Двигатель',
-		type: 'motor',
-	},
-	{
-		id: 'p.3.1',
-		aria: 'Реверсивный пускатель',
-		type: 'starter',
-	},
+	// {
+	// 	id: 'p.1',
+	// 	aria: 'Двигатель',
+	// 	type: 'motor',
+	// },
+	// {
+	// 	id: 'p.3.1',
+	// 	aria: 'Реверсивный пускатель',
+	// 	type: 'starter',
+	// },
 	// Элементы цепи управления
 	{
 		id: CONTROL_CIRCUIT_BREAKER_ID,

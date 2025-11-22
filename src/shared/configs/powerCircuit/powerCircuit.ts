@@ -91,12 +91,10 @@ import {
 	POWER_CIRCUIT_NEUTRAL_ID,
 } from './constants';
 import { buildMalfunctions } from '../malfunctionTemplates';
-import {
-	getResistanceByKind,
-	ELEMENT_KIND,
-} from '../../utils/getResistanceByKind/getResistanceByKind';
+import { getResistanceByKind } from '../../utils/getResistanceByKind/getResistanceByKind';
+import { ELEMENT_KIND } from '../elementKind';
 
-// ======================== Фаза A (p.0.0.*) ========================
+// ======================== Фаза A (p.0.*) ========================
 
 export const provodFazyADoVvodnogoAvtomata: CircuitElement = {
 	id: WIRE_PHASE_A_TO_INPUT_BREAKER_ID,
@@ -105,7 +103,10 @@ export const provodFazyADoVvodnogoAvtomata: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: PHASE_A_POINT_ID,
 	endPoint: INPUT_BREAKER_INPUT_POINT_PHASE_A_ID,
-	malfunctions: buildMalfunctions(WIRE_PHASE_A_TO_INPUT_BREAKER_ID, ELEMENT_KIND.WIRE),
+	malfunctions: buildMalfunctions(
+		WIRE_PHASE_A_TO_INPUT_BREAKER_ID,
+		ELEMENT_KIND.WIRE,
+	),
 };
 
 export const kontaktVvodnogoAvtomataFazaA: CircuitElement = {
@@ -168,7 +169,10 @@ export const provodOtPuskatelyaOtkrytoFazaA: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: POINT_AFTER_STARTER_OPEN_PHASE_A_ID,
 	endPoint: MERGE_POINT_AFTER_STARTERS_PHASE_A_ID,
-	malfunctions: buildMalfunctions(WIRE_FROM_STARTER_OPEN_PHASE_A_ID, ELEMENT_KIND.WIRE),
+	malfunctions: buildMalfunctions(
+		WIRE_FROM_STARTER_OPEN_PHASE_A_ID,
+		ELEMENT_KIND.WIRE,
+	),
 };
 
 export const provodOtKlemmikaDoPuskatelyaZakrytoFazaA: CircuitElement = {
@@ -205,7 +209,10 @@ export const provodOtKontaktaPuskatelyaZakrytoFazaADoFazyC: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: POINT_AFTER_STARTER_CLOSE_PHASE_A_ID,
 	endPoint: MERGE_POINT_AFTER_STARTERS_PHASE_C_ID, // Идет к фазе C для реверса
-	malfunctions: buildMalfunctions(WIRE_FROM_STARTER_CLOSE_PHASE_A_ID, ELEMENT_KIND.WIRE),
+	malfunctions: buildMalfunctions(
+		WIRE_FROM_STARTER_CLOSE_PHASE_A_ID,
+		ELEMENT_KIND.WIRE,
+	),
 };
 
 export const provodPoslePuskateleyFazaA: CircuitElement = {
@@ -215,7 +222,10 @@ export const provodPoslePuskateleyFazaA: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: MERGE_POINT_AFTER_STARTERS_PHASE_A_ID,
 	endPoint: JUNCTION_BOX_INPUT_POINT_PHASE_A_ID,
-	malfunctions: buildMalfunctions(WIRE_AFTER_STARTERS_PHASE_A_ID, ELEMENT_KIND.WIRE),
+	malfunctions: buildMalfunctions(
+		WIRE_AFTER_STARTERS_PHASE_A_ID,
+		ELEMENT_KIND.WIRE,
+	),
 };
 
 export const provodDoSoyedinitelnojKorobkiFazaA: CircuitElement = {
@@ -225,7 +235,10 @@ export const provodDoSoyedinitelnojKorobkiFazaA: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: JUNCTION_BOX_INPUT_POINT_PHASE_A_ID,
 	endPoint: JUNCTION_BOX_OUTPUT_POINT_PHASE_A_ID,
-	malfunctions: buildMalfunctions(WIRE_TO_JUNCTION_BOX_PHASE_A_ID, ELEMENT_KIND.WIRE),
+	malfunctions: buildMalfunctions(
+		WIRE_TO_JUNCTION_BOX_PHASE_A_ID,
+		ELEMENT_KIND.WIRE,
+	),
 };
 
 export const provodOtSoyedinitelnojKorobkiDoDvigatelyaFazaA: CircuitElement = {
@@ -248,10 +261,13 @@ export const obmotkaDvigatelyaFazaA: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.MOTOR_WINDING),
 	startPoint: MOTOR_WINDING_CONTACT_POINT_PHASE_A_ID,
 	endPoint: POWER_CIRCUIT_NEUTRAL_ID, // Нейтраль
-	malfunctions: buildMalfunctions(MOTOR_WINDING_PHASE_A_ID, ELEMENT_KIND.MOTOR_WINDING),
+	malfunctions: buildMalfunctions(
+		MOTOR_WINDING_PHASE_A_ID,
+		ELEMENT_KIND.MOTOR_WINDING,
+	),
 };
 
-// ======================== Фаза B (p.0.1.*) ========================
+// ======================== Фаза B (p.1.*) ========================
 
 export const provodFazyBDoVvodnogoAvtomata: CircuitElement = {
 	id: WIRE_PHASE_B_TO_INPUT_BREAKER_ID,
@@ -260,7 +276,10 @@ export const provodFazyBDoVvodnogoAvtomata: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: PHASE_B_POINT_ID,
 	endPoint: INPUT_BREAKER_INPUT_POINT_PHASE_B_ID,
-	malfunctions: buildMalfunctions(WIRE_PHASE_B_TO_INPUT_BREAKER_ID, ELEMENT_KIND.WIRE),
+	malfunctions: buildMalfunctions(
+		WIRE_PHASE_B_TO_INPUT_BREAKER_ID,
+		ELEMENT_KIND.WIRE,
+	),
 };
 
 export const kontaktVvodnogoAvtomataFazaB: CircuitElement = {
@@ -323,7 +342,10 @@ export const provodOtPuskatelyaOtkrytoFazaB: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: POINT_AFTER_STARTER_OPEN_PHASE_B_ID,
 	endPoint: MERGE_POINT_AFTER_STARTERS_PHASE_B_ID,
-	malfunctions: buildMalfunctions(WIRE_FROM_STARTER_OPEN_PHASE_B_ID, ELEMENT_KIND.WIRE),
+	malfunctions: buildMalfunctions(
+		WIRE_FROM_STARTER_OPEN_PHASE_B_ID,
+		ELEMENT_KIND.WIRE,
+	),
 };
 
 export const provodOtKlemmikaDoPuskatelyaZakrytoFazaB: CircuitElement = {
@@ -359,7 +381,10 @@ export const provodOtPuskatelyaZakrytoFazaB: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: POINT_AFTER_STARTER_CLOSE_PHASE_B_ID,
 	endPoint: MERGE_POINT_AFTER_STARTERS_PHASE_B_ID,
-	malfunctions: buildMalfunctions(WIRE_FROM_STARTER_CLOSE_PHASE_B_ID, ELEMENT_KIND.WIRE),
+	malfunctions: buildMalfunctions(
+		WIRE_FROM_STARTER_CLOSE_PHASE_B_ID,
+		ELEMENT_KIND.WIRE,
+	),
 };
 
 export const provodPoslePuskateleyFazaB: CircuitElement = {
@@ -369,7 +394,10 @@ export const provodPoslePuskateleyFazaB: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: MERGE_POINT_AFTER_STARTERS_PHASE_B_ID,
 	endPoint: JUNCTION_BOX_INPUT_POINT_PHASE_B_ID,
-	malfunctions: buildMalfunctions(WIRE_AFTER_STARTERS_PHASE_B_ID, ELEMENT_KIND.WIRE),
+	malfunctions: buildMalfunctions(
+		WIRE_AFTER_STARTERS_PHASE_B_ID,
+		ELEMENT_KIND.WIRE,
+	),
 };
 
 export const provodDoSoyedinitelnojKorobkiFazaB: CircuitElement = {
@@ -379,7 +407,10 @@ export const provodDoSoyedinitelnojKorobkiFazaB: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: JUNCTION_BOX_INPUT_POINT_PHASE_B_ID,
 	endPoint: JUNCTION_BOX_OUTPUT_POINT_PHASE_B_ID,
-	malfunctions: buildMalfunctions(WIRE_TO_JUNCTION_BOX_PHASE_B_ID, ELEMENT_KIND.WIRE),
+	malfunctions: buildMalfunctions(
+		WIRE_TO_JUNCTION_BOX_PHASE_B_ID,
+		ELEMENT_KIND.WIRE,
+	),
 };
 
 export const provodOtSoyedinitelnojKorobkiDoDvigatelyaFazaB: CircuitElement = {
@@ -402,10 +433,13 @@ export const obmotkaDvigatelyaFazaB: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.MOTOR_WINDING),
 	startPoint: MOTOR_WINDING_CONTACT_POINT_PHASE_B_ID,
 	endPoint: POWER_CIRCUIT_NEUTRAL_ID, // Нейтраль
-	malfunctions: buildMalfunctions(MOTOR_WINDING_PHASE_B_ID, ELEMENT_KIND.MOTOR_WINDING),
+	malfunctions: buildMalfunctions(
+		MOTOR_WINDING_PHASE_B_ID,
+		ELEMENT_KIND.MOTOR_WINDING,
+	),
 };
 
-// ======================== Фаза C (p.0.2.*) ========================
+// ======================== Фаза C (p.2.*) ========================
 
 export const provodFazyCDoVvodnogoAvtomata: CircuitElement = {
 	id: WIRE_PHASE_C_TO_INPUT_BREAKER_ID,
@@ -414,7 +448,10 @@ export const provodFazyCDoVvodnogoAvtomata: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: PHASE_C_POINT_ID,
 	endPoint: INPUT_BREAKER_INPUT_POINT_PHASE_C_ID,
-	malfunctions: buildMalfunctions(WIRE_PHASE_C_TO_INPUT_BREAKER_ID, ELEMENT_KIND.WIRE),
+	malfunctions: buildMalfunctions(
+		WIRE_PHASE_C_TO_INPUT_BREAKER_ID,
+		ELEMENT_KIND.WIRE,
+	),
 };
 
 export const kontaktVvodnogoAvtomataFazaC: CircuitElement = {
@@ -477,7 +514,10 @@ export const provodOtPuskatelyaOtkrytoFazaC: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: POINT_AFTER_STARTER_OPEN_PHASE_C_ID,
 	endPoint: MERGE_POINT_AFTER_STARTERS_PHASE_C_ID,
-	malfunctions: buildMalfunctions(WIRE_FROM_STARTER_OPEN_PHASE_C_ID, ELEMENT_KIND.WIRE),
+	malfunctions: buildMalfunctions(
+		WIRE_FROM_STARTER_OPEN_PHASE_C_ID,
+		ELEMENT_KIND.WIRE,
+	),
 };
 
 export const provodOtKlemmikaDoPuskatelyaZakrytoFazaC: CircuitElement = {
@@ -514,7 +554,10 @@ export const provodOtKontaktaPuskatelyaZakrytoFazaCDoFazyA: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: POINT_AFTER_STARTER_CLOSE_PHASE_C_ID,
 	endPoint: MERGE_POINT_AFTER_STARTERS_PHASE_A_ID, // Идет к фазе A для реверса
-	malfunctions: buildMalfunctions(WIRE_FROM_STARTER_CLOSE_PHASE_C_ID, ELEMENT_KIND.WIRE),
+	malfunctions: buildMalfunctions(
+		WIRE_FROM_STARTER_CLOSE_PHASE_C_ID,
+		ELEMENT_KIND.WIRE,
+	),
 };
 
 export const provodPoslePuskateleyFazaC: CircuitElement = {
@@ -524,7 +567,10 @@ export const provodPoslePuskateleyFazaC: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: MERGE_POINT_AFTER_STARTERS_PHASE_C_ID,
 	endPoint: JUNCTION_BOX_INPUT_POINT_PHASE_C_ID,
-	malfunctions: buildMalfunctions(WIRE_AFTER_STARTERS_PHASE_C_ID, ELEMENT_KIND.WIRE),
+	malfunctions: buildMalfunctions(
+		WIRE_AFTER_STARTERS_PHASE_C_ID,
+		ELEMENT_KIND.WIRE,
+	),
 };
 
 export const provodDoSoyedinitelnojKorobkiFazaC: CircuitElement = {
@@ -534,7 +580,10 @@ export const provodDoSoyedinitelnojKorobkiFazaC: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: JUNCTION_BOX_INPUT_POINT_PHASE_C_ID,
 	endPoint: JUNCTION_BOX_OUTPUT_POINT_PHASE_C_ID,
-	malfunctions: buildMalfunctions(WIRE_TO_JUNCTION_BOX_PHASE_C_ID, ELEMENT_KIND.WIRE),
+	malfunctions: buildMalfunctions(
+		WIRE_TO_JUNCTION_BOX_PHASE_C_ID,
+		ELEMENT_KIND.WIRE,
+	),
 };
 
 export const provodOtSoyedinitelnojKorobkiDoDvigatelyaFazaC: CircuitElement = {
@@ -557,7 +606,10 @@ export const obmotkaDvigatelyaFazaC: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.MOTOR_WINDING),
 	startPoint: MOTOR_WINDING_CONTACT_POINT_PHASE_C_ID,
 	endPoint: POWER_CIRCUIT_NEUTRAL_ID, // Нейтраль
-	malfunctions: buildMalfunctions(MOTOR_WINDING_PHASE_C_ID, ELEMENT_KIND.MOTOR_WINDING),
+	malfunctions: buildMalfunctions(
+		MOTOR_WINDING_PHASE_C_ID,
+		ELEMENT_KIND.MOTOR_WINDING,
+	),
 };
 
 /**
