@@ -1,9 +1,10 @@
+import { usePowerUnitReadings } from '@/shared/hooks/usePowerUnitReadings';
 import styles from './styles.module.scss';
-import { PowerUnitReadings } from '@/shared/types/powerunit';
 import { FC } from 'react';
+import React from 'react';
 
-const PowerUnit:FC<{readings:PowerUnitReadings}> = ({readings}) => {
-
+const PowerUnit:FC = () => {
+    const readings = usePowerUnitReadings();
     return (
         <>
             <div className={styles.powerUnit}>
