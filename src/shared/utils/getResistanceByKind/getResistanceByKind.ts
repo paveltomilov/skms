@@ -20,15 +20,18 @@ export const ELEMENT_KIND = {
  * Используется для автоматического определения сопротивления элемента на основе его типа.
  */
 export const BASE_RESISTANCE_CONSTANT: Record<ElementKind, number> = {
-	wire: 0.1,
-	breaker: 0,
-	limitSwitch: 0,
-	blockingContact: 0,
-	coil: 6400,
-	lamp: 4800,
-	starterContact: 0,
-	motorWinding: 4100,
+	'wire': 0.1,
+	'breaker': 0,
+	'limitSwitch': 0,
+	'blockingContact': 0,
+	'coil': 6400,
+	'lamp'  : 4800,
+	'starterContact': 0,
+	'motorWinding': 4100,
 } as const;
+
+// Значение сопротивления при обрыве или при размыкании цепи
+export const HIGH_RESISTANCE = 1_000_000_000;
 
 /**
  * Получает базовое сопротивление элемента по его типу.

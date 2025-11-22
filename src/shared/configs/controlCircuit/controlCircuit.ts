@@ -123,7 +123,10 @@ export const avtomatPitaniyaSkhemyUpravleniya: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.BREAKER),
 	startPoint: CONTROL_POWER_FEED_POINT_ID,
 	endPoint: CONTROL_BREAKER_INPUT_POINT_ID,
-	malfunctions: buildMalfunctions(CONTROL_CIRCUIT_BREAKER_ID, ELEMENT_KIND.BREAKER),
+	malfunctions: buildMalfunctions(
+		CONTROL_CIRCUIT_BREAKER_ID,
+		ELEMENT_KIND.BREAKER,
+	),
 };
 
 export const provodFazyPosleAvtomata: CircuitElement = {
@@ -133,7 +136,10 @@ export const provodFazyPosleAvtomata: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: CONTROL_BREAKER_INPUT_POINT_ID,
 	endPoint: CONTROL_BREAKER_OUTPUT_POINT_ID,
-	malfunctions: buildMalfunctions(WIRE_PHASE_AFTER_BREAKER_ID, ELEMENT_KIND.WIRE),
+	malfunctions: buildMalfunctions(
+		WIRE_PHASE_AFTER_BREAKER_ID,
+		ELEMENT_KIND.WIRE,
+	),
 };
 
 // ======================== Ветка ОТКРЫТЬ (c.3.0.*) ========================
@@ -146,7 +152,10 @@ export const jumperOtSoyedinitelnojKorobkiDoKontsevogoVyklyuchatelyaOtkryto: Cir
 		resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 		startPoint: CONTROL_BREAKER_OUTPUT_POINT_ID,
 		endPoint: JUMPER_BOX_TO_LIMIT_OPEN_ID,
-		malfunctions: buildMalfunctions(JUMPER_BOX_TO_LIMIT_OPEN_ID, ELEMENT_KIND.WIRE),
+		malfunctions: buildMalfunctions(
+			JUMPER_BOX_TO_LIMIT_OPEN_ID,
+			ELEMENT_KIND.WIRE,
+		),
 	};
 // Провод из соединительной коробки на ветку открыть до концевого выключателя открыто
 export const provodOtSoyedinitelnojKorobkiDoKontsevogoVyklyuchatelyaOtkryto: CircuitElement =
@@ -157,7 +166,10 @@ export const provodOtSoyedinitelnojKorobkiDoKontsevogoVyklyuchatelyaOtkryto: Cir
 		resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 		startPoint: OPEN_JUNCTION_BOX_POINT_ID,
 		endPoint: OPEN_LIMIT_SWITCH_INPUT_POINT_ID,
-		malfunctions: buildMalfunctions(WIRE_BOX_TO_LIMIT_OPEN_ID, ELEMENT_KIND.WIRE),
+		malfunctions: buildMalfunctions(
+			WIRE_BOX_TO_LIMIT_OPEN_ID,
+			ELEMENT_KIND.WIRE,
+		),
 	};
 
 export const kontsevojVyklyuchatelOtkryto: CircuitElement = {
@@ -167,7 +179,10 @@ export const kontsevojVyklyuchatelOtkryto: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH),
 	startPoint: OPEN_LIMIT_SWITCH_INPUT_POINT_ID,
 	endPoint: OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID,
-	malfunctions: buildMalfunctions(LIMIT_SWITCH_OPEN_ID, ELEMENT_KIND.LIMIT_SWITCH),
+	malfunctions: buildMalfunctions(
+		LIMIT_SWITCH_OPEN_ID,
+		ELEMENT_KIND.LIMIT_SWITCH,
+	),
 };
 
 // Провод от концевого выключателя до клеммника
@@ -179,7 +194,10 @@ export const provodOtKontsevogoVyklyuchatelyaOtkrytoDoKlemmikaKRUZAP: CircuitEle
 		resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 		startPoint: OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID,
 		endPoint: OPEN_TERMINAL_BLOCK_POINT_ID,
-		malfunctions: buildMalfunctions(WIRE_LIMIT_OPEN_TO_TERMINAL_ID, ELEMENT_KIND.WIRE),
+		malfunctions: buildMalfunctions(
+			WIRE_LIMIT_OPEN_TO_TERMINAL_ID,
+			ELEMENT_KIND.WIRE,
+		),
 	};
 
 // Провод от клеммника до вставки NDI (сигнал не открыто)
@@ -190,7 +208,10 @@ export const provodOtKlemmikaDoVstavkiNDI_signalNeOtkryto: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: OPEN_TERMINAL_BLOCK_POINT_ID,
 	endPoint: OPEN_NDI_NOT_OPEN_INPUT_POINT_ID,
-	malfunctions: buildMalfunctions(WIRE_BEFORE_NDI_NOT_OPEN_ID, ELEMENT_KIND.WIRE),
+	malfunctions: buildMalfunctions(
+		WIRE_BEFORE_NDI_NOT_OPEN_ID,
+		ELEMENT_KIND.WIRE,
+	),
 };
 
 // Вставка NDI (сигнал не открыто)
@@ -211,7 +232,10 @@ export const provodOtVstavkiNDI_signalNeOtkrytoDoNejtrali: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: OPEN_NDI_NOT_OPEN_OUTPUT_POINT_ID,
 	endPoint: CONTROL_NEUTRAL_POINT_ID,
-	malfunctions: buildMalfunctions(WIRE_NDI_NOT_OPEN_TO_NEUTRAL_ID, ELEMENT_KIND.WIRE),
+	malfunctions: buildMalfunctions(
+		WIRE_NDI_NOT_OPEN_TO_NEUTRAL_ID,
+		ELEMENT_KIND.WIRE,
+	),
 };
 
 // Провода и элементы для команды с ПТК (c.3.0.4.1.0.0.*)
@@ -222,7 +246,10 @@ export const provodPeredVstavkojNDO_komandaOtkrytSPTK: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: OPEN_TERMINAL_BLOCK_POINT_ID,
 	endPoint: OPEN_CMD_PTK_BRANCH_POINT_ID,
-	malfunctions: buildMalfunctions(WIRE_BEFORE_NDO_CMD_OPEN_PTK_ID, ELEMENT_KIND.WIRE),
+	malfunctions: buildMalfunctions(
+		WIRE_BEFORE_NDO_CMD_OPEN_PTK_ID,
+		ELEMENT_KIND.WIRE,
+	),
 };
 
 export const vstavkaNDO_komandaOtkrytSPTK: CircuitElement = {
@@ -259,7 +286,10 @@ export const provodPeredBlokirovkojOtkrytie: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: COMANDS_OPEN_POINT_ID,
 	endPoint: OPEN_INTERLOCK_INPUT_POINT_ID,
-	malfunctions: buildMalfunctions(WIRE_BEFORE_INTERLOCK_OPEN_ID, ELEMENT_KIND.WIRE),
+	malfunctions: buildMalfunctions(
+		WIRE_BEFORE_INTERLOCK_OPEN_ID,
+		ELEMENT_KIND.WIRE,
+	),
 };
 
 export const blokirovkaVklyucheniaPuskatelyaNaOtkrytie: CircuitElement = {
@@ -269,7 +299,10 @@ export const blokirovkaVklyucheniaPuskatelyaNaOtkrytie: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.BLOCKING_CONTACT),
 	startPoint: OPEN_INTERLOCK_INPUT_POINT_ID,
 	endPoint: OPEN_INTERLOCK_OUTPUT_POINT_ID,
-	malfunctions: buildMalfunctions(INTERLOCK_OPEN_ID, ELEMENT_KIND.BLOCKING_CONTACT),
+	malfunctions: buildMalfunctions(
+		INTERLOCK_OPEN_ID,
+		ELEMENT_KIND.BLOCKING_CONTACT,
+	),
 };
 
 export const provodOtBlokirovkiDoKatushkiOtkrytie: CircuitElement = {
@@ -303,7 +336,10 @@ export const provodPeredKnopkojKRUZAP_komandaOtkryt: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: OPEN_TERMINAL_BLOCK_POINT_ID,
 	endPoint: OPEN_BUTTON_INPUT_POINT_ID,
-	malfunctions: buildMalfunctions(WIRE_BEFORE_BUTTON_KRUZA_P_OPEN_ID, ELEMENT_KIND.WIRE),
+	malfunctions: buildMalfunctions(
+		WIRE_BEFORE_BUTTON_KRUZA_P_OPEN_ID,
+		ELEMENT_KIND.WIRE,
+	),
 };
 
 export const knopkaKRUZAP_komandaOtkryt: CircuitElement = {
@@ -313,7 +349,10 @@ export const knopkaKRUZAP_komandaOtkryt: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.BLOCKING_CONTACT),
 	startPoint: OPEN_BUTTON_INPUT_POINT_ID,
 	endPoint: OPEN_BUTTON_OUTPUT_POINT_ID,
-	malfunctions: buildMalfunctions(BUTTON_KRUZA_P_OPEN_ID, ELEMENT_KIND.BLOCKING_CONTACT),
+	malfunctions: buildMalfunctions(
+		BUTTON_KRUZA_P_OPEN_ID,
+		ELEMENT_KIND.BLOCKING_CONTACT,
+	),
 };
 
 export const provodOtKnopkiKRUZAP_komandaOtkrytDoNejtrali: CircuitElement = {
@@ -337,7 +376,10 @@ export const provodPeredLampojVKRUZAP_zakryto: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: OPEN_TERMINAL_BLOCK_POINT_ID,
 	endPoint: CLOSED_LAMP_BRANCH_POINT_ID,
-	malfunctions: buildMalfunctions(WIRE_BEFORE_LAMP_KRUZA_P_CLOSED_ID, ELEMENT_KIND.WIRE),
+	malfunctions: buildMalfunctions(
+		WIRE_BEFORE_LAMP_KRUZA_P_CLOSED_ID,
+		ELEMENT_KIND.WIRE,
+	),
 };
 
 export const lampaVKRUZAP_zakryto: CircuitElement = {
@@ -372,7 +414,10 @@ export const jumperOtSoyedinitelnojKorobkiDoKontsevogoVyklyuchatelyaZakryto: Cir
 		resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 		startPoint: CONTROL_BREAKER_OUTPUT_POINT_ID,
 		endPoint: CLOSE_JUNCTION_BOX_POINT_ID,
-		malfunctions: buildMalfunctions(JUMPER_BOX_TO_LIMIT_CLOSE_ID, ELEMENT_KIND.WIRE),
+		malfunctions: buildMalfunctions(
+			JUMPER_BOX_TO_LIMIT_CLOSE_ID,
+			ELEMENT_KIND.WIRE,
+		),
 	};
 // Аналогичная структура для ветки закрыть
 export const provodOtSoyedinitelnojKorobkiDoKontsevogoVyklyuchatelyaZakryto: CircuitElement =
@@ -383,7 +428,10 @@ export const provodOtSoyedinitelnojKorobkiDoKontsevogoVyklyuchatelyaZakryto: Cir
 		resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 		startPoint: CLOSE_JUNCTION_BOX_POINT_ID,
 		endPoint: CLOSE_LIMIT_SWITCH_INPUT_POINT_ID,
-		malfunctions: buildMalfunctions(WIRE_BOX_TO_LIMIT_CLOSE_ID, ELEMENT_KIND.WIRE),
+		malfunctions: buildMalfunctions(
+			WIRE_BOX_TO_LIMIT_CLOSE_ID,
+			ELEMENT_KIND.WIRE,
+		),
 	};
 
 export const kontsevojVyklyuchatelZakryto: CircuitElement = {
@@ -393,7 +441,10 @@ export const kontsevojVyklyuchatelZakryto: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH),
 	startPoint: CLOSE_LIMIT_SWITCH_INPUT_POINT_ID,
 	endPoint: CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID,
-	malfunctions: buildMalfunctions(LIMIT_SWITCH_CLOSE_ID, ELEMENT_KIND.LIMIT_SWITCH),
+	malfunctions: buildMalfunctions(
+		LIMIT_SWITCH_CLOSE_ID,
+		ELEMENT_KIND.LIMIT_SWITCH,
+	),
 };
 
 export const provodOtKontsevogoVyklyuchatelyaZakrytoDoKlemmikaKRUZAP: CircuitElement =
@@ -417,7 +468,10 @@ export const provodOtKlemmikaDoVstavkiNDI_signalNeZakryto: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: CLOSE_TERMINAL_BLOCK_POINT_ID,
 	endPoint: CLOSE_NDI_NOT_CLOSED_INPUT_POINT_ID,
-	malfunctions: buildMalfunctions(WIRE_BEFORE_NDI_NOT_CLOSED_ID, ELEMENT_KIND.WIRE),
+	malfunctions: buildMalfunctions(
+		WIRE_BEFORE_NDI_NOT_CLOSED_ID,
+		ELEMENT_KIND.WIRE,
+	),
 };
 
 export const vstavkaNDI_signalNeZakryto: CircuitElement = {
@@ -427,7 +481,10 @@ export const vstavkaNDI_signalNeZakryto: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: CLOSE_NDI_NOT_CLOSED_INPUT_POINT_ID,
 	endPoint: CLOSE_NDI_NOT_CLOSED_OUTPUT_POINT_ID,
-	malfunctions: buildMalfunctions(INSERT_NDI_NOT_CLOSED_ID, ELEMENT_KIND.WIRE),
+	malfunctions: buildMalfunctions(
+		INSERT_NDI_NOT_CLOSED_ID,
+		ELEMENT_KIND.WIRE,
+	),
 };
 
 export const provodOtVstavkiNDI_signalNeZakrytoDoNejtrali: CircuitElement = {
@@ -437,7 +494,10 @@ export const provodOtVstavkiNDI_signalNeZakrytoDoNejtrali: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: CLOSE_NDI_NOT_CLOSED_OUTPUT_POINT_ID,
 	endPoint: CONTROL_NEUTRAL_POINT_ID,
-	malfunctions: buildMalfunctions(WIRE_NDI_NOT_CLOSED_TO_NEUTRAL_ID, ELEMENT_KIND.WIRE),
+	malfunctions: buildMalfunctions(
+		WIRE_NDI_NOT_CLOSED_TO_NEUTRAL_ID,
+		ELEMENT_KIND.WIRE,
+	),
 };
 
 export const provodPeredVstavkojNDO_komandaZakrytSPTK: CircuitElement = {
@@ -447,7 +507,10 @@ export const provodPeredVstavkojNDO_komandaZakrytSPTK: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: CLOSE_TERMINAL_BLOCK_POINT_ID,
 	endPoint: CLOSE_CMD_PTK_BRANCH_POINT_ID,
-	malfunctions: buildMalfunctions(WIRE_BEFORE_NDO_CMD_CLOSE_PTK_ID, ELEMENT_KIND.WIRE),
+	malfunctions: buildMalfunctions(
+		WIRE_BEFORE_NDO_CMD_CLOSE_PTK_ID,
+		ELEMENT_KIND.WIRE,
+	),
 };
 
 export const vstavkaNDO_komandaZakrytSPTK: CircuitElement = {
@@ -483,7 +546,10 @@ export const provodPeredBlokirovkojZakrytie: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: COMMANDS_CLOSE_POINT_ID,
 	endPoint: CLOSE_INTERLOCK_INPUT_POINT_ID,
-	malfunctions: buildMalfunctions(WIRE_BEFORE_INTERLOCK_CLOSE_ID, ELEMENT_KIND.WIRE),
+	malfunctions: buildMalfunctions(
+		WIRE_BEFORE_INTERLOCK_CLOSE_ID,
+		ELEMENT_KIND.WIRE,
+	),
 };
 
 export const blokirovkaVklyucheniaPuskatelyaNaZakrytie: CircuitElement = {
@@ -493,7 +559,10 @@ export const blokirovkaVklyucheniaPuskatelyaNaZakrytie: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.BLOCKING_CONTACT),
 	startPoint: CLOSE_INTERLOCK_INPUT_POINT_ID,
 	endPoint: CLOSE_INTERLOCK_OUTPUT_POINT_ID,
-	malfunctions: buildMalfunctions(INTERLOCK_CLOSE_ID, ELEMENT_KIND.BLOCKING_CONTACT),
+	malfunctions: buildMalfunctions(
+		INTERLOCK_CLOSE_ID,
+		ELEMENT_KIND.BLOCKING_CONTACT,
+	),
 };
 
 export const provodOtBlokirovkiDoKatushkiZakrytie: CircuitElement = {
@@ -539,7 +608,10 @@ export const knopkaKRUZAP_komandaZakryt: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.BLOCKING_CONTACT),
 	startPoint: CLOSE_BUTTON_INPUT_POINT_ID,
 	endPoint: CLOSE_BUTTON_OUTPUT_POINT_ID,
-	malfunctions: buildMalfunctions(BUTTON_KRUZA_P_CLOSE_ID, ELEMENT_KIND.BLOCKING_CONTACT),
+	malfunctions: buildMalfunctions(
+		BUTTON_KRUZA_P_CLOSE_ID,
+		ELEMENT_KIND.BLOCKING_CONTACT,
+	),
 };
 
 export const provodOtKnopkiKRUZAP_komandaZakrytDoNejtrali: CircuitElement = {
@@ -562,7 +634,10 @@ export const provodPeredLampojVKRUZAP_otkryto: CircuitElement = {
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: CLOSE_TERMINAL_BLOCK_POINT_ID,
 	endPoint: OPEN_LAMP_BRANCH_POINT_ID,
-	malfunctions: buildMalfunctions(WIRE_BEFORE_LAMP_KRUZA_P_OPEN_ID, ELEMENT_KIND.WIRE),
+	malfunctions: buildMalfunctions(
+		WIRE_BEFORE_LAMP_KRUZA_P_OPEN_ID,
+		ELEMENT_KIND.WIRE,
+	),
 };
 
 export const lampaVKRUZAP_otkryto: CircuitElement = {

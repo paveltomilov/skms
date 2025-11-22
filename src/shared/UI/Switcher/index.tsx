@@ -11,7 +11,7 @@ import { SWITCHER_ANGLES } from '@/shared/configs/knob';
 import { setResistance } from '@/store/circuitSlice';
 import { SwitchMode } from '@/shared/types/switch';
 import { useRotateKnob } from '@/shared/hooks/useRotateKnob';
-
+import { getResistanceByKind } from '@/shared/utils/getResistanceByKind/getResistanceByKind';
 interface Props {
 	mode: SwitchMode;
 }

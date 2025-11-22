@@ -1,7 +1,5 @@
 ﻿import { setGatePosition, setGateState } from '@/store/gateSlice';
 import {
-	BASE_RESISTANCE,
-	HIGH_RESISTANCE,
 	LIMIT_SWITCH_CLOSE_ID,
 	LIMIT_SWITCH_OPEN_ID,
 } from '../configs/scheme';

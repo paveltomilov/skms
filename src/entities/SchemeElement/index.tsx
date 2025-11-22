@@ -3,7 +3,7 @@
 import styles from './styles.module.scss';
 import { FC } from 'react';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
-import { HIGH_RESISTANCE } from '@/shared/configs/scheme';
+import { HIGH_RESISTANCE } from '@/shared/utils/getResistanceByKind/getResistanceByKind';
 import { findElementByID } from '@/shared/utils/findElementByID/scheme';
 import { closeAllModal, Modals, openModal } from '@/store/modalSlice';
 
