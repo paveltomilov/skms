@@ -18,5 +18,5 @@ export async function postSimulation(
 
 		alert(message);
 		throw new Error(message);
-	};
-};
+	}
+}

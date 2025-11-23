@@ -35,7 +35,7 @@ const FormMalfunction: FC = () => {
             postSimulation(urlBase, formData);
             dispatch(closeModal('setSimulation'));
             router.push('/training');
-        };
+        }
     };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
