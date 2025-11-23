@@ -26,16 +26,16 @@ const FormMalfunction: FC = () => {
     const dispatch = useAppDispatch();
     const router = useRouter();
 
-    const { urlBase, access, elements } = useRequestData();
+    const { urlBase, elements } = useRequestData();
 
     const handleSetSimulation = (malfunctionsArray: string) => {
         if (studentId) {
             const formData: SimulationFormData = { user: studentId, malfunctions: [{ malfunction_id: malfunctionsArray }] };
             dispatch(clearCurrentStudent());
-            postSimulation(urlBase, access, formData);
+            postSimulation(urlBase, formData);
             dispatch(closeModal('setSimulation'));
             router.push('/training');
-        };
+        }
     };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {

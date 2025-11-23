@@ -40,7 +40,7 @@ export async function postRegistration(
 			},
 		);
 
-		if (response.status === 200 || response.status === 201) {
+		if (response.statusText == 'ok') {
 			return { success: true };
 		}
 		return { success: false };
