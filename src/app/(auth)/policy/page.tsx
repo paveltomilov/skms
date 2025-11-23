@@ -1,6 +1,6 @@
 import {FC, Suspense} from 'react';
 import Loading from '../../loading';
-import PolicyPage from '@/_pages/policy';
+import PolicyPage from '@/pages/policy';
 
 const Policy: FC = () => {
     return (

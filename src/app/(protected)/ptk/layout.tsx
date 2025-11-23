@@ -3,7 +3,7 @@
 import FooterPtk from '@/widgets/FooterPtk';
 import HeaderPtk from '@/widgets/HeaderPtk';
 import Sidebar from '@/widgets/Sidebar';
-import styles from '@/_pages/zra/styles.module.scss';
+import styles from '@/pages/zra/styles.module.scss';
 import AuthGuard from '@/shared/components/AuthGuard';
 
 export default function PtkLayout({ children }: { children: React.ReactNode }) {

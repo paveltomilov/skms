@@ -1,5 +1,5 @@
 import { FC, Suspense } from 'react';
-import TurbineUnitPage from '@/_pages/turbine-unit/index';
+import TurbineUnitPage from '@/pages/turbine-unit/index';
 import Loading from '../../loading';
 
 const Ptk: FC = () => {
