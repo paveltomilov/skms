@@ -13,7 +13,7 @@ import { useAppSelector } from '@/shared/hooks/store';
 import { useEffect } from 'react';
 
 const Training = () => {
-	const { urlBase, access, elements } = useRequestData();
+	const { urlBase, elements } = useRequestData();
 	const updateListNumber = useAppSelector(store => store.updateList);
 
 	useEffect(() => {});
@@ -33,7 +33,7 @@ const Training = () => {
 	}, [updateListNumber]);
 
 	const handleCreateMalfunctions = () => {
-		postMalfunctions(urlBase, access, elements);
+		postMalfunctions(urlBase, elements);
 	};
 
 	return (

@@ -2,14 +2,14 @@
 
 import {usePathname} from 'next/navigation';
 import {useEffect, useState} from 'react';
-import {checkAuth, getAccessToken} from '@/shared/lib/auth';
+import {checkAuth, getAccessToken, initAccessFromStorage} from '@/shared/lib/auth';
 import {getCookie} from 'cookies-next';
 import {isPublicRoute, UserRole} from '@/shared/configs/routes';
 import {useAppDispatch} from '@/shared/hooks/store';
 import {clearUserInfo, setUserInfo} from '@/store/userInfoSlice';
 
 
-export const useAuth = (requiredRole?: UserRole) => {
+export const useAuth = () => {
     const pathname = usePathname();
     const dispatch = useAppDispatch();
     const [state, setState] = useState<{
@@ -24,6 +24,7 @@ export const useAuth = (requiredRole?: UserRole) => {
     const currentAccessToken = getAccessToken();
 
     useEffect(() => {
+        initAccessFromStorage();
         let isMounted = true;
 
         const checkAuthAndFetchUser = async () => {
@@ -35,6 +36,7 @@ export const useAuth = (requiredRole?: UserRole) => {
                 const {valid} = await checkAuth();
 
                 if (!valid) {
+
                     if (!isPublicRoute(pathname) && isMounted) {
                         setState({
                             role: null,
@@ -56,7 +58,6 @@ export const useAuth = (requiredRole?: UserRole) => {
                 const cookieRole = getCookie('role');
                 const firstName = getCookie('first_name');
                 const lastName = getCookie('last_name');
-
 
 
                 if (!cookieRole) {
@@ -107,7 +108,7 @@ export const useAuth = (requiredRole?: UserRole) => {
         return () => {
             isMounted = false;
         };
-    }, [pathname, requiredRole, dispatch, currentAccessToken]);
+    }, [pathname, dispatch, currentAccessToken]);
 
     return {
         ...state,

@@ -4,12 +4,13 @@ export const useWebSocket = () => {
 	const wsRef = useRef<WebSocket | null>(null);
 
 	useEffect(() => {
-		const token = localStorage.getItem('token'); // 👈 Получаем токен из localStorage
+		const token = localStorage.getItem('accessToken'); // 👈 Получаем токен из localStorage
+		const wsURL = process.env.NEXT_PUBLIC_WS_URL;
 
 		if (typeof window === 'undefined' || !token) return;
 
 		wsRef.current = new WebSocket(
-			`ws://127.0.0.1:8000/ws/simulation/student/?token=${token}`,
+			`${wsURL}/?token=${token}`,
 		);
 
 		const handleOpen = (event: Event) => {

@@ -3,13 +3,8 @@ import { CircuitElement } from '../../types/scheme';
 
 export const postMalfunctions = async (
     urlBase: string | undefined,
-    access: string | null,
     elements: CircuitElement[]
 ): Promise<boolean[]> => {
-    if (!access) {
-        throw new Error('отсутствует токен');
-    }
-
     const requests = elements.flatMap(element =>
         element.malfunctions.map(async ({ id, name }) => {
             const data = {
@@ -19,12 +14,7 @@ export const postMalfunctions = async (
 
             try {
                 await axios
-                    .post(`${urlBase}/malfunction/`, data, {
-                        headers: {
-                            Authorization: `Bearer ${access}`,
-                            'Content-Type': 'application/json',
-                        },
-                    });
+                    .post(`${urlBase}/malfunction/`, data);
                 return true;
             } catch (error) {
                 const axiosError = error as AxiosError;

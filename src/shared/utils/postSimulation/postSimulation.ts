@@ -3,20 +3,10 @@ import { SimulationFormData } from '@/shared/types/simulation';
 
 export async function postSimulation(
 	urlBase: string | undefined,
-	access: string | null,
 	simulationData: SimulationFormData
 ): Promise<boolean> {
-	if (!access) {
-		throw new Error('отсутствует токен');
-	};
-
 	try {
-		await axios.post(`${urlBase}/simulation/`, simulationData, {
-			headers: {
-				Authorization: `Bearer ${access}`,
-				'Content-Type': 'application/json',
-			},
-		});
+		await axios.post(`${urlBase}/simulation/`, simulationData);
 		return true;
 	} catch (error) {
 		const axiosError = error as AxiosError;
