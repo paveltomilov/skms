@@ -60,7 +60,7 @@ import {
 	CONTROL_POWER_FEED_POINT_ID,
 	CONTROL_BREAKER_INPUT_POINT_ID,
 	CONTROL_BREAKER_OUTPUT_POINT_ID,
-	CONTROL_NEUTRAL_POINT_ID,
+	CONTROL_CIRCUIT_NEUTRAL_ID,
 	OPEN_JUNCTION_BOX_POINT_ID,
 	OPEN_LIMIT_SWITCH_INPUT_POINT_ID,
 	OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID,
@@ -229,7 +229,7 @@ export const provodOtVstavkiNDI_signalNeOtkrytoDoNejtrali: CircuitElement = {
 	kind: ELEMENT_KIND.WIRE,
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: OPEN_NDI_NOT_OPEN_OUTPUT_POINT_ID,
-	endPoint: CONTROL_NEUTRAL_POINT_ID,
+	endPoint: CONTROL_CIRCUIT_NEUTRAL_ID,
 	malfunctions: buildMalfunctions(
 		WIRE_NDI_NOT_OPEN_TO_NEUTRAL_ID,
 		ELEMENT_KIND.WIRE,
@@ -322,7 +322,7 @@ export const katushkaPuskatelyaOtkryt: CircuitElement = {
 	kind: ELEMENT_KIND.COIL,
 	resistance: getResistanceByKind(ELEMENT_KIND.COIL),
 	startPoint: OPEN_COIL_INPUT_POINT_ID,
-	endPoint: CONTROL_NEUTRAL_POINT_ID,
+	endPoint: CONTROL_CIRCUIT_NEUTRAL_ID,
 	malfunctions: buildMalfunctions(COIL_OPEN_ID, ELEMENT_KIND.COIL),
 };
 
@@ -396,7 +396,7 @@ export const provodOtLampyVKRUZAP_zakrytoDoNejtrali: CircuitElement = {
 	kind: ELEMENT_KIND.WIRE,
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: CLOSED_LAMP_TO_NEUTRAL_POINT_ID,
-	endPoint: CONTROL_NEUTRAL_POINT_ID,
+	endPoint: CONTROL_CIRCUIT_NEUTRAL_ID,
 	malfunctions: buildMalfunctions(
 		WIRE_LAMP_KRUZA_P_CLOSED_TO_NEUTRAL_ID,
 		ELEMENT_KIND.WIRE,
@@ -491,7 +491,7 @@ export const provodOtVstavkiNDI_signalNeZakrytoDoNejtrali: CircuitElement = {
 	kind: ELEMENT_KIND.WIRE,
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: CLOSE_NDI_NOT_CLOSED_OUTPUT_POINT_ID,
-	endPoint: CONTROL_NEUTRAL_POINT_ID,
+	endPoint: CONTROL_CIRCUIT_NEUTRAL_ID,
 	malfunctions: buildMalfunctions(
 		WIRE_NDI_NOT_CLOSED_TO_NEUTRAL_ID,
 		ELEMENT_KIND.WIRE,
@@ -582,7 +582,7 @@ export const katushkaPuskatelyaZakryt: CircuitElement = {
 	kind: ELEMENT_KIND.COIL,
 	resistance: getResistanceByKind(ELEMENT_KIND.COIL),
 	startPoint: CLOSE_COIL_INPUT_POINT_ID,
-	endPoint: CONTROL_NEUTRAL_POINT_ID,
+	endPoint: CONTROL_CIRCUIT_NEUTRAL_ID,
 	malfunctions: buildMalfunctions(COIL_CLOSE_ID, ELEMENT_KIND.COIL),
 };
 
@@ -654,7 +654,7 @@ export const provodOtLampyVKRUZAP_otkrytoDoNejtrali: CircuitElement = {
 	kind: ELEMENT_KIND.WIRE,
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: OPEN_LAMP_INPUT_POINT_ID,
-	endPoint: CONTROL_NEUTRAL_POINT_ID,
+	endPoint: CONTROL_CIRCUIT_NEUTRAL_ID,
 	malfunctions: buildMalfunctions(
 		WIRE_LAMP_KRUZA_P_OPEN_TO_NEUTRAL_ID,
 		ELEMENT_KIND.WIRE,

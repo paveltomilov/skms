@@ -12,8 +12,8 @@ export type SchemeIconType =
 	| 'sq3';
 
 export interface IPoint {
-	x: number;
-	y: number;
+	x?: number;
+	y?: number;
 	state: boolean;
 }
 

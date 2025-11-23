@@ -63,16 +63,16 @@ export const BASE_RESISTANCE: Record<string, number> = (() => {
  * Каждый элемент содержит id, aria-метку и тип модального окна.
  */
 export const SCHEME_ELEMENTS: { id: string; aria: string; type: Modals }[] = [
-	// {
-	// 	id: 'p.1',
-	// 	aria: 'Двигатель',
-	// 	type: 'motor',
-	// },
-	// {
-	// 	id: 'p.3.1',
-	// 	aria: 'Реверсивный пускатель',
-	// 	type: 'starter',
-	// },
+	{
+		id: 'p.1',
+		aria: 'Двигатель',
+		type: 'motor',
+	},
+	{
+		id: 'p.3.1',
+		aria: 'Реверсивный пускатель',
+		type: 'starter',
+	},
 	// Элементы цепи управления
 	{
 		id: CONTROL_CIRCUIT_BREAKER_ID,

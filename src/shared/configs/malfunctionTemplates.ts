@@ -33,7 +33,7 @@ interface Malfunction {
  *
  * @example
  * 'c.0.1' - для цепи управления
- * 'p.0.0.1' - для силовой цепи
+ * 'p.0.1' - для силовой цепи
  */
 type ElementId = string;
 

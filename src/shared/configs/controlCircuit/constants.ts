@@ -87,7 +87,6 @@ export const CONTROL_POWER_FEED_POINT_ID = 'p.c.0';
 export const CONTROL_BREAKER_INPUT_POINT_ID = 'p.c.1';
 export const CONTROL_BREAKER_OUTPUT_POINT_ID = 'p.c.2';
 export const CONTROL_MAIN_BUS_POINT_ID = 'p.c.3';
-export const CONTROL_NEUTRAL_POINT_ID = 'p.c.n';
 
 // --- Точки ветки «ОТКРЫТЬ» ---
 export const OPEN_JUNCTION_BOX_POINT_ID = 'p.c.3.0.0'; // Соединительная коробка (ветка открыть)
