@@ -2,13 +2,16 @@
 
 import {usePathname} from 'next/navigation';
 import {useEffect, useState} from 'react';
-import {checkAuth} from '@/shared/lib/auth';
+import {checkAuth, getAccessToken, initAccessFromStorage} from '@/shared/lib/auth';
 import {getCookie} from 'cookies-next';
 import {isPublicRoute, UserRole} from '@/shared/configs/routes';
+import {useAppDispatch} from '@/shared/hooks/store';
+import {clearUserInfo, setUserInfo} from '@/store/userInfoSlice';
 
 
-export const useAuth = (requiredRole?: UserRole) => {
+export const useAuth = () => {
     const pathname = usePathname();
+    const dispatch = useAppDispatch();
     const [state, setState] = useState<{
         role: UserRole | null;
         loading: boolean;
@@ -18,8 +21,10 @@ export const useAuth = (requiredRole?: UserRole) => {
         loading: true,
         error: null,
     });
+    const currentAccessToken = getAccessToken();
 
     useEffect(() => {
+        initAccessFromStorage();
         let isMounted = true;
 
         const checkAuthAndFetchUser = async () => {
@@ -31,23 +36,30 @@ export const useAuth = (requiredRole?: UserRole) => {
                 const {valid} = await checkAuth();
 
                 if (!valid) {
+
                     if (!isPublicRoute(pathname) && isMounted) {
                         setState({
                             role: null,
                             loading: false,
                             error: 'Требуется авторизация',
                         });
+                        dispatch(clearUserInfo());
                     } else if (isMounted) {
                         setState({
                             role: null,
                             loading: false,
                             error: null,
                         });
+                        dispatch(clearUserInfo());
                     }
                     return;
                 }
 
                 const cookieRole = getCookie('role');
+                const firstName = getCookie('first_name');
+                const lastName = getCookie('last_name');
+
+
                 if (!cookieRole) {
                     if (isMounted) {
                         setState({
@@ -55,16 +67,25 @@ export const useAuth = (requiredRole?: UserRole) => {
                             loading: false,
                             error: 'Роль не определена',
                         });
+                        dispatch(clearUserInfo());
                     }
                     return;
                 }
 
                 if (isMounted) {
+                    const userRole = cookieRole as UserRole;
                     setState({
-                        role: cookieRole as UserRole,
+                        role: userRole,
                         loading: false,
                         error: null,
                     });
+
+                    dispatch(setUserInfo({
+                        first_name: typeof firstName === 'string' ? firstName : null,
+                        last_name: typeof lastName === 'string' ? lastName : null,
+                        role: userRole,
+                        accessToken: typeof currentAccessToken === 'string' ? currentAccessToken : null,
+                    }));
                 }
 
             } catch (error) {
@@ -76,6 +97,8 @@ export const useAuth = (requiredRole?: UserRole) => {
                         loading: false,
                         error: 'Ошибка аутентификации',
                     });
+
+                    dispatch(clearUserInfo());
                 }
             }
         };
@@ -85,7 +108,10 @@ export const useAuth = (requiredRole?: UserRole) => {
         return () => {
             isMounted = false;
         };
-    }, [pathname, requiredRole]);
+    }, [pathname, dispatch, currentAccessToken]);
 
-    return state;
+    return {
+        ...state,
+        accessToken: currentAccessToken
+    };
 };
