@@ -11,12 +11,7 @@ export async function getStudentStatistics(id:number): Promise<StudentStatistics
   };
 
   try {
-    const response = await axios.get<StudentStatistics>(`${urlBase}/statistics/student/${id}/`, {
-      headers: {
-        Authorization: `Bearer ${access}`,
-        'Content-Type': 'application/json',
-      },
-    });
+    const response = await axios.get<StudentStatistics>(`${urlBase}/statistics/student/${id}/`);
     return response.data;
   } catch (error) {
     const axiosError = error as AxiosError;
