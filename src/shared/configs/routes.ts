@@ -1,5 +1,5 @@
 export const DASHBOARD_ROUTES = {
-    admin: '/admin-dashboard',
+    admin: '/ptk',
     teacher: '/training',
     student: '/ptk'
 } as const;
@@ -12,12 +12,7 @@ export const PUBLIC_ROUTES = [
 ] as const;
 
 // Вспомогательная функция для получения dashboard по роли
-export const getDashboardRoute = (role: UserRole | null): string => {
-    if (role !== null) {
-        return DASHBOARD_ROUTES[role];
-    }
-    return 'student';
-};
+export const getDashboardRoute = (role: UserRole | null): string => role ? DASHBOARD_ROUTES[role] : '/login';
 
 // Функция проверки публичного маршрута
 export const isPublicRoute = (pathname: string): boolean => {
