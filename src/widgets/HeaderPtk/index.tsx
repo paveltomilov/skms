@@ -2,18 +2,13 @@
 import { FC } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
-import Window from '@/shared/UI/Window';
-import { useDate } from '@/shared/hooks/useDate';
 import PowerUnit from '@/entities/PowerUnit';
 import useShowModal from '@/shared/hooks/useShowModal';
-import { useAppSelector } from '@/shared/hooks/store';
-import { RootState } from '@/store/store';
+import DateTime from '@/entities/DateTime/DateTime';
+import WindowWrapper from '@/entities/WindowWrapper';
 
 const HeaderPtk: FC = () => {
 	const handleModalNotification = useShowModal('notification');
-	const { formattedDate, formattedTime, dateTimeDate, dateTimeTime } =
-		useDate();
-	const windows = useAppSelector((state: RootState) => state.windows);
 
 	return (
 		<header className={styles.header}>
@@ -23,7 +18,7 @@ const HeaderPtk: FC = () => {
 					<div className={styles.windows_defense}>Pабота защит</div>
 					<div className={styles.windows_kpm}>КРМ</div>
 				</div>
-				<Window color="yellow" data={windows.w238} right />
+				<WindowWrapper windowKey='w238' />
 				<div className={styles.buttons}>
 					<Button
 						className={styles.button}
@@ -62,14 +57,7 @@ const HeaderPtk: FC = () => {
 						handleModalNotification();
 					}}
 				/>
-				<div suppressHydrationWarning className={styles.datetime}>
-					<time dateTime={dateTimeDate} suppressHydrationWarning>
-						{formattedDate}
-					</time>{' '}
-					<time dateTime={dateTimeTime} suppressHydrationWarning>
-						{formattedTime}
-					</time>
-				</div>
+				<DateTime />
 				<PowerUnit />
 			</div>
 		</header>

@@ -1,84 +1,44 @@
-import { RefreshResponse, VerifyResponse } from '@/shared/types/typesAuth';
 import axios from 'axios';
-import { deleteCookie, getCookie, setCookie } from 'cookies-next';
-import { LoginFormData, LoginResponse } from '../types/login';
+import {deleteCookie, getCookie, setCookie} from 'cookies-next';
+import {LoginFormData, LoginResponse} from '../types/login';
+import {accessToken, initializeInterceptors, setAccessToken} from '@/shared/lib/authInterceptors';
 
 const urlBase = process.env.NEXT_PUBLIC_API_BASE_URL;
 
+if (urlBase) {
+	initializeInterceptors(urlBase);
+}
+
+interface IPostAuthResponse {
+	success: boolean;
+	role?: string | undefined;
+	errorText?: string;
+}
+
+export function initAccessFromStorage() {
+	const stored = localStorage.getItem('accessToken');
+	if (stored) setAccessToken(stored);
+}
+
 export async function checkAuth(): Promise<{ valid: boolean }> {
 	const access = localStorage.getItem('accessToken');
-	// Проверяем refresh-токен в обоих местах (localStorage и cookie)
-	const refreshFromStorage = localStorage.getItem('refreshToken');
 	const refreshFromCookie = getCookie('refreshToken');
-	const refresh = refreshFromStorage || refreshFromCookie;
 
-	if (!access || !refresh) {
-		// Очищаем оба хранилища при отсутствии токенов
-		localStorage.removeItem('accessToken');
-		localStorage.removeItem('refreshToken');
-		deleteCookie('refreshToken');
+	if (!access || !refreshFromCookie) {
+		logout();
 		return { valid: false };
 	}
 
-	try {
-		// 1. Проверяем валидность accessToken
-		const verifyRes = await fetch(`${urlBase}/auth/verify/`, {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ token: access }),
-		});
-
-		if (verifyRes.ok) {
-			const verifyData = (await verifyRes.json()) as VerifyResponse;
-			if (verifyData.token_valid) {
-				return { valid: true }; // AccessToken валиден
-			}
-		}
-
-		// 2. Если accessToken невалиден, пробуем обновить через refreshToken
-		const refreshRes = await fetch(`${urlBase}/auth/refresh/`, {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ refresh }),
-		});
-
-		if (!refreshRes.ok) {
-			throw new Error('Refresh token failed');
-		}
-
-		const refreshData = (await refreshRes.json()) as RefreshResponse;
-
-		if (refreshData.access) {
-			// Сохраняем новый accessToken
-			localStorage.setItem('accessToken', refreshData.access);
-			return { valid: true };
-		}
-
-		return { valid: false };
-	} catch {
-		// При любой ошибке очищаем хранилища
-		localStorage.removeItem('accessToken');
-		localStorage.removeItem('refreshToken');
-		deleteCookie('refreshToken');
-		return { valid: false };
-	}
+	return { valid: true };
 }
 
 export async function postAuth(
 	formData: LoginFormData,
-	rememberMe: boolean = false,
-): Promise<{
-	success: boolean;
-	role?: string | undefined;
-	errorText?: string;
-}> {
+): Promise<IPostAuthResponse> {
 	try {
 		const response = await axios.post<LoginResponse>(
 			`${urlBase}/auth/`,
 			{ email: formData.email, password: formData.password },
-			{
-				headers: { 'Content-Type': 'application/json' },
-			},
 		);
 
 		const { access, refresh, first_name, last_name, role } = response.data;
@@ -87,22 +47,17 @@ export async function postAuth(
 			throw new Error('Токены не получены');
 		}
 
-		if (response.status === 200) {
+		if (response.statusText == 'OK') {
+			setAccessToken(access);
 			localStorage.setItem('accessToken', access);
-
-			// Если "Запомнить" включён — сохраняем refresh в localStorage, иначе в cookie
-			if (rememberMe) {
-				localStorage.setItem('refreshToken', refresh);
-			} else {
-				setCookie('refreshToken', refresh);
-			}
-
+			setCookie('refreshToken', refresh);
 			setCookie('first_name', first_name);
 			setCookie('last_name', last_name);
 			setCookie('role', role);
 
 			return { success: true, role };
 		}
+
 		return { success: false };
 	} catch (err: unknown) {
 		let errorText: string | undefined;
@@ -122,15 +77,15 @@ export async function postAuth(
 
 // Вспомогательная функция для получения accessToken
 export function getAccessToken(): string | null {
-	return localStorage.getItem('accessToken');
+	return accessToken;
 }
 
 // Функция для выхода
 export function logout(): void {
 	localStorage.removeItem('accessToken');
-	localStorage.removeItem('refreshToken');
 	deleteCookie('refreshToken');
 	deleteCookie('first_name');
 	deleteCookie('last_name');
 	deleteCookie('role');
+	setAccessToken(null);
 }
