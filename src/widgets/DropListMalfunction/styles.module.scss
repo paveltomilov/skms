@@ -23,7 +23,8 @@
 		justify-content: space-between;
 		padding: 10px 24px 10px 16px;
 
-		&:hover {
+		&:hover,
+		&:focus {
 			background-color: #110f93;
 			cursor: pointer;
 

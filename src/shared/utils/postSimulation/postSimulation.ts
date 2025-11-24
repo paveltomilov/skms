@@ -49,13 +49,10 @@ export async function postSimulation(
 			},
 		};
 	} catch (error) {
-		const axiosError = error as AxiosError;
+		const axiosError = error as AxiosError<{ detail?: string }>;
 		const message =
-			axiosError.response?.data &&
-			axios.isAxiosError<{ simulation: string[] }>(axiosError)
-				? JSON.stringify(axiosError.response.data.simulation[0])
-				: 'Ошибка запроса';
-
+			axiosError.response?.data?.detail ??
+			'Не удалось остановить симуляцию';
 		return {
 			success: false,
 			errors: message,

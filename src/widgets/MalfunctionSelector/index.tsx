@@ -1,13 +1,14 @@
-import { CircuitElement, CircuitElementSelect, Malfunction } from '@/shared/types/scheme';
+import { CircuitElement, Malfunction } from '@/shared/types/scheme';
 import { SimulationItemData } from '@/shared/types/simulation';
 import { Dispatch, FC, SetStateAction, useRef, useState } from 'react';
 import DropListMalfunction from '../DropListMalfunction';
-import DropListElements from '../DropListElements/DropListElements';
+import DropListElements from '../DropListElements';
 import { useClickOutside } from '@/shared/hooks/useClickOutside';
+import { useClickEscape } from '@/shared/hooks/useClickEscape';
 
 interface Props {
 	setMalfun: (simulation: SimulationItemData) => void;
-	data: CircuitElementSelect[];
+	data: CircuitElement[];
 	closeList: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -26,11 +27,18 @@ const MalfunctionSelector: FC<Props> = ({ setMalfun, data, closeList }) => {
 		closeList(false),
 	);
 
+	useClickEscape(dropListElementsRef, dropListMalfunctionRef, () => {
+		if (choiceElement) {
+			setChoiceElement(null);
+		} else {
+			closeList(false);
+		}
+	});
+
 	function handleChoiceElement(item: CircuitElement) {
 		setChoiceElement(item);
 		const malfunctionsElement =
-			data.filter(element => element.id === item.id)[0].malfunctions ??
-			null;
+			data.find(element => element.id === item.id)?.malfunctions ?? null;
 		setChoiceMalfunction(malfunctionsElement);
 	}
 

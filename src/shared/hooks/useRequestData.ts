@@ -1,12 +1,12 @@
 import { useMemo } from 'react';
 import { extractMalfunctions } from '../utils/extractMalfunctionIds/extractMalfunctions';
 import { useAppSelector } from './store';
-import { CircuitElementSelect } from '../types/scheme';
+import { CircuitElement } from '../types/scheme';
 
 interface IResponse {
 	urlBase: string | undefined;
 	access: string | null;
-	elements: CircuitElementSelect[];
+	elements: CircuitElement[];
 }
 
 export const useRequestData = (): IResponse => {

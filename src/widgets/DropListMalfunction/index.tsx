@@ -1,6 +1,7 @@
-import { FC, RefObject } from 'react';
+import { FC, RefObject, useEffect } from 'react';
 import styles from './styles.module.scss';
 import { Malfunction } from '@/shared/types/scheme';
+import { useArrowNavigation } from '@/shared/hooks/useArrowNavigation';
 
 interface Props {
 	malfunctions: Malfunction[] | null;
@@ -13,11 +14,26 @@ const DropListMalfunction: FC<Props> = ({
 	handleChoice,
 	ref,
 }) => {
-	
+	useEffect(() => {
+		if (malfunctions && ref.current) {
+			const firstItem =
+				ref.current.querySelector<HTMLElement>('[role="option"]');
+			if (firstItem) {
+				firstItem.focus();
+			}
+		}
+	}, [malfunctions, ref]);
+
+	useArrowNavigation(ref);
+
 	return (
 		<div className={styles.list} ref={ref}>
-			<ul className={styles.elementList}>
-				{malfunctions ? (
+			<ul
+				className={styles.elementList}
+				role="listbox"
+				aria-label="Выберите неисправность"
+			>
+				{malfunctions?.length ? (
 					malfunctions.map(item => {
 						return (
 							<li
@@ -30,10 +46,14 @@ const DropListMalfunction: FC<Props> = ({
 								}
 								onClick={() => handleChoice(item)}
 								role="option"
+								aria-label={`Неисправность ${item.name}`}
 								tabIndex={0}
-								onKeyDown={e =>
-									e.key === 'Enter' && handleChoice(item)
-								}
+								onKeyDown={e => {
+									if (e.key === 'Enter' || e.key === ' ') {
+										e.preventDefault();
+										handleChoice(item);
+									}
+								}}
 							>
 								<span className={styles.elementList__name}>
 									{item.name}

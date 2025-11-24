@@ -18,7 +18,7 @@ const ListMalfunction: FC<Props> = ({ data, deleteItem }) => {
 				{data.map((item, index) => {
 					return (
 						<li
-							key={item.malfunction_id}
+							key={`${item.element_id}:${item.malfunction_id}`}
 							className={styles.list__item}
 						>
 							<div className={styles.list__item__top}>
@@ -34,8 +34,12 @@ const ListMalfunction: FC<Props> = ({ data, deleteItem }) => {
 										<Close size={'xs'} strokeWidth={1.5} />
 									}
 									onClick={() =>
-										deleteItem(item.malfunction_id, item.element_id)
+										deleteItem(
+											item.malfunction_id,
+											item.element_id,
+										)
 									}
+									aria-label={`Удалить симуляцию элемента ${item.element} с неисправностью ${item.malfunctions}`}
 								/>
 							</div>
 							<span className={styles.list__item__description}>

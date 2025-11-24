@@ -1,5 +1,5 @@
 import { useRouter } from 'next/navigation';
-import { CircuitElementSelect } from '@/shared/types/scheme';
+import { CircuitElement } from '@/shared/types/scheme';
 import { useAppDispatch, useAppSelector } from './store';
 import { useRequestData } from './useRequestData';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
@@ -15,10 +15,11 @@ interface IResponse {
 	setShowListMalfunction: Dispatch<SetStateAction<boolean>>;
 	showListMalfunction: boolean;
 	handleChoiceMalfunction: (simulation: SimulationItemData) => void;
-	elements: CircuitElementSelect[];
+	elements: CircuitElement[];
 	listMalfunction: SimulationItemData[];
 	handleDeleteItem: (id: string, element_id: string) => void;
 	listIsEmpty: boolean;
+	isLoading: boolean;
 	handleSetSimulation: () => Promise<void>;
 	success: boolean;
 	errors: string | null;
@@ -29,6 +30,7 @@ const useSetSimulation = (): IResponse => {
 	const router = useRouter();
 	const dispatch = useAppDispatch();
 	const [success, setSuccess] = useState<boolean>(false);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [errors, setErrors] = useState<string | null>(null);
 	const [data, setData] = useState<ResponseData | null>(null);
 	const [listIsEmpty, setListIsEmpty] = useState<boolean>(true);
@@ -37,7 +39,7 @@ const useSetSimulation = (): IResponse => {
 	const studentId = useAppSelector(
 		state => state.training.currentStudent?.id,
 	);
-	const [elements, setElements] = useState<CircuitElementSelect[]>([]);
+	const [elements, setElements] = useState<CircuitElement[]>([]);
 
 	const [listMalfunction, setListMalfunction] = useState<
 		SimulationItemData[]
@@ -65,6 +67,7 @@ const useSetSimulation = (): IResponse => {
 		setElements(selectElements);
 		setListMalfunction(dataNew);
 		setShowListMalfunction(false);
+		setErrors(null);
 	}
 
 	function handleDeleteItem(id: string, element_id: string) {
@@ -72,7 +75,7 @@ const useSetSimulation = (): IResponse => {
 			item => item.malfunction_id !== id,
 		);
 		setListMalfunction(filterListMalfunction);
-
+		setErrors(null);
 		setElements(prev =>
 			prev.map(item =>
 				item.id === element_id ? { ...item, view: true } : item,
@@ -88,6 +91,7 @@ const useSetSimulation = (): IResponse => {
 			setSuccess(false);
 			setErrors(errorText);
 			setData(null);
+			setIsLoading(false);
 			return;
 		}
 
@@ -97,12 +101,15 @@ const useSetSimulation = (): IResponse => {
 				return { malfunction_id: item.malfunction_id };
 			}),
 		};
+		setErrors(null);
+		setIsLoading(true);
 		dispatch(clearCurrentStudent());
 		const result = await postSimulation(urlBase, access, formData);
 		if (result.success) {
 			setSuccess(result.success);
 			setErrors(result.errors);
 			setData(result.data);
+			setIsLoading(!result.success);
 			dispatch(closeModal('setSimulation'));
 			router.push('/training');
 		}
@@ -110,10 +117,12 @@ const useSetSimulation = (): IResponse => {
 			setSuccess(result.success);
 			setErrors(result.errors);
 			setData(result.data);
+			setIsLoading(false);
 		}
 	};
 
 	return {
+		isLoading,
 		success,
 		errors,
 		data,

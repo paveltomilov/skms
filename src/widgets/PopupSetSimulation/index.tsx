@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import LineRupture from '@/shared/UI/icons/LineRupture/LineRupture';
 import MalfunctionSelector from '../MalfunctionSelector';
-import ListMalfunction from '../ListMalfunction/ListMalfunction';
+import ListMalfunction from '../ListMalfunction';
 import useSetSimulation from '@/shared/hooks/useSetSimulation';
 import ErrorMessageText from '../ErrorMessageText';
 
@@ -19,12 +19,14 @@ export const PopupSetSimulation: FC = () => {
 		handleDeleteItem,
 		listIsEmpty,
 		handleSetSimulation,
+		isLoading,
 	} = useSetSimulation();
 
 	return (
 		<div className={styles.popup}>
 			<div className={styles.popup__wrapper}>
 				<Button
+					aria-label={'Добавить неисправность'}
 					className={styles.popup__btn}
 					width={326}
 					height={38}
@@ -45,16 +47,21 @@ export const PopupSetSimulation: FC = () => {
 						deleteItem={handleDeleteItem}
 					/>
 				) : null}
-				
+
 				<Button
+					aria-label={'Назначить симуляцию'}
 					className={styles.popup__btn}
 					width={326}
 					height={38}
-					disabled={listIsEmpty}
-					text="Назначить симуляцию"
+					disabled={listIsEmpty || isLoading}
+					text={
+						isLoading
+							? 'Создание симуляции...'
+							: 'Назначить симуляцию'
+					}
 					onClick={handleSetSimulation}
 				/>
-				{errors && <ErrorMessageText text={errors}/>}
+				{errors && <ErrorMessageText text={errors} />}
 			</div>
 		</div>
 	);

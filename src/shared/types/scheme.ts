@@ -28,14 +28,7 @@ export interface CircuitElement {
 	name: string;
 	resistance: number;
 	malfunctions: Malfunction[];
-}
-
-export interface CircuitElementSelect {
-	id: string;
-	name: string;
-	resistance: number;
-	malfunctions: Malfunction[];
-	view: boolean;
+	view?: boolean;
 }
 
 export type CircuitBranch = CircuitElement | CircuitGroup;
