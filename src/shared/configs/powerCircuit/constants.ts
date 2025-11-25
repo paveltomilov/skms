@@ -87,7 +87,7 @@ export const MOTOR_WINDING_CONTACT_POINT_PHASE_A_ID = 'p.p.0.6'; // Контак
 // --- Точки фазы B (0.1) ---
 export const INPUT_BREAKER_INPUT_POINT_PHASE_B_ID = 'p.p.1.0'; // Входящий контакт вводного автомата фаза B
 export const INPUT_BREAKER_OUTPUT_POINT_PHASE_B_ID = 'p.p.1.1'; // Выходящий контакт вводного автомата фаза B
-export const TERMINAL_BEFORE_STARTERS_POINT_PHASE_B_ID = 'p.p1.2'; // Точка перед пускателями фаза B
+export const TERMINAL_BEFORE_STARTERS_POINT_PHASE_B_ID = 'p.p.1.2'; // Точка перед пускателями фаза B
 export const POINT_BEFORE_STARTER_OPEN_PHASE_B_ID = 'p.p.1.3.0.0'; // Точка перед пускателем открыто фаза B
 export const POINT_BEFORE_STARTER_CLOSE_PHASE_B_ID = 'p.p.1.3.1.0'; // Точка перед пускателем закрыто фаза B
 export const POINT_AFTER_STARTER_OPEN_PHASE_B_ID = 'p.p.1.3.0.1'; // Точка после пускателя открыто фаза B
