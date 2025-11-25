@@ -12,53 +12,53 @@ import ArrowBottomIcon from '../IconSvg/arrowBottomIcon';
 import Link from 'next/link';
 
 const Header: FC = () => {
-    const [isOpen, setIsOpen] = useState(false);
-    const [scrolled, setScrolled] = useState(false);
+	const [isOpen, setIsOpen] = useState(false);
+	const [scrolled, setScrolled] = useState(false);
 
-    //Обработчик прокрутки
-    useEffect(() => {
-        const onScroll = () => {
-            setScrolled(window.scrollY > 50);
-        };
+	//Обработчик прокрутки
+	useEffect(() => {
+		const onScroll = () => {
+			setScrolled(window.scrollY > 50);
+		};
 
-        window.addEventListener('scroll', onScroll);
-        return () => window.removeEventListener('scroll', onScroll);
-    }, []);
+		window.addEventListener('scroll', onScroll);
+		return () => window.removeEventListener('scroll', onScroll);
+	}, []);
 
-    const toggleWindow = () => {
-        setIsOpen(prev => !prev);
-    };
+	const toggleWindow = () => {
+		setIsOpen(prev => !prev);
+	};
 
-    const headerClass = `${styles.header} container ${
-        scrolled ? styles.headerScrolled : ''
-    }`;
+	const headerClass = `${styles.header} container ${
+		scrolled ? styles.headerScrolled : ''
+	}`;
 
-    return (
-        <header className={headerClass}>
-            <div className={styles.header__container}>
-                <Logo />
-                <Navigation className={styles.header__nav} />
+	return (
+		<header className={headerClass}>
+			<div className={styles.header__container}>
+				<Logo />
+				<Navigation className={styles.header__nav} />
 
-                {isOpen && <HeaderWindow />}
+				{isOpen && <HeaderWindow />}
 
-                <Link className={styles.header__link} href="tel:+78452398636">
-                    +7 (8452) 39-86-36
-                </Link>
+				<Link className={styles.header__link} href="tel:+78452398636">
+					+7 (8452) 39-86-36
+				</Link>
 
-                {isOpen ? (
-                    <ArrowBottomIcon
-                        className={styles.header__arrow}
-                        onClick={toggleWindow}
-                    />
-                ) : (
-                    <ArrowTopIcon
-                        className={styles.header__arrow}
-                        onClick={toggleWindow}
-                    />
-                )}
+				{isOpen ? (
+					<ArrowBottomIcon
+						className={styles.header__arrow}
+						onClick={toggleWindow}
+					/>
+				) : (
+					<ArrowTopIcon
+						className={styles.header__arrow}
+						onClick={toggleWindow}
+					/>
+				)}
 
 				<Button
-					href="/auth?mode=login"
+					href="/login?mode=login"
 					className={styles.header__login}
 					text="Войти"
 					width={85}
@@ -66,18 +66,9 @@ const Header: FC = () => {
 					radius={4}
 					icon={<LoginIcon />}
 				/>
-                <Button
-                    href="/login"
-                    className={styles.header__login}
-                    text="Войти"
-                    width={85}
-                    height={40}
-                    radius={4}
-                    icon={<LoginIcon />}
-                />
 
 				<Button
-					href="/auth?mode=signup"
+					href="/login?mode=signup"
 					className={styles.header__register}
 					text="Зарегистрироваться"
 					width={172}
@@ -87,17 +78,6 @@ const Header: FC = () => {
 			</div>
 		</header>
 	);
-                <Button
-                    href="/login"
-                    className={styles.header__register}
-                    text="Зарегистрироваться"
-                    width={172}
-                    height={40}
-                    radius={4}
-                />
-            </div>
-        </header>
-    );
 };
 
 export default Header;

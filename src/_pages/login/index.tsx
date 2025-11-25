@@ -40,7 +40,7 @@ const Login: FC = () => {
 	const toggleMode = () => {
 		setIsRegisterMode(prev => !prev);
 		const newMode = isRegisterMode ? 'login' : 'signup';
-		router.replace(`/auth?mode=${newMode}`);
+		router.replace(`/login?mode=${newMode}`);
 	};
 
 	return (
@@ -68,7 +68,7 @@ const Login: FC = () => {
 					{isRegisterMode ? 'Регистрация' : 'Вход'}
 				</h2>
 				<Form
-					toggleRegisterMode={isRegisterMode? 'register': 'login'}
+					toggleRegisterMode={isRegisterMode ? 'register' : 'login'}
 					activateModalSuccess={setModalSuccess}
 				/>
 				<div className={styles.main_wrap}>

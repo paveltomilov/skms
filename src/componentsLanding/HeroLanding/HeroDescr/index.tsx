@@ -16,7 +16,7 @@ const HeroDescr: FC = () => {
 			<Button
 				className={styles.wrapper__button}
 				text="попробовать бесплатно"
-				href="/auth?mode=signup"
+				href="/login?mode=signup"
 				width={504}
 				height={40}
 				radius={4}
