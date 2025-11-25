@@ -2,7 +2,7 @@
 @use '@/shared/scss/variables.module';
 
 .popup {
-	width: 374px;
+	width: 362px;
 	background: variables.$primary-color;
 
 	&__wrapper {
@@ -11,10 +11,15 @@
 		flex-direction: column;
 		justify-content: space-around;
 		align-items: center;
-		padding: 8px 18px;
+		padding: 6px 18px;
 	}
 
-	&__btn span {
-		@include mixins.text(20px, 400);
+	&__btn {
+		&__first {
+			margin: 0 0 24px;
+		}
+		& span {
+			@include mixins.text(20px, 400);
+		}
 	}
 }

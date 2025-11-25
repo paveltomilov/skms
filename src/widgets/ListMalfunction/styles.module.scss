@@ -3,7 +3,7 @@
 
 .title {
 	@include mixins.text(20px, 500);
-	margin-right: auto;
+	margin: 0 auto 16px 0;
 }
 
 .list {
@@ -12,9 +12,8 @@
 	width: 100%;
 	max-height: 300px;
 	overflow: scroll;
-	padding: 3px;
 
-	&::-webkit-scrollbar {
+	& ::-webkit-scrollbar {
 		display: none;
 	}
 
@@ -22,14 +21,15 @@
 		display: flex;
 		flex-direction: column;
 		gap: 16px;
-		padding: 24px 0;
 		border-top: 1px solid #a4a4a4;
+		padding: 24px 0;
 
 		&__top {
 			display: flex;
 			flex-direction: row;
 			justify-content: space-between;
 			align-items: center;
+			padding: 3px 3px 0 0;
 		}
 		&__name {
 			@include mixins.text(20px, 500);
@@ -41,11 +41,8 @@
 		}
 
 		&:nth-child(1) {
-			padding: 0 0 24px 0;
+			padding: 0 0 24px;
 			border: none;
-		}
-		&:last-child {
-			padding: 24px 0 0 0;
 		}
 	}
 }

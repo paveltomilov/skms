@@ -7,7 +7,7 @@ interface Props {
 const LineRupture: FC<Props> = ({ className }) => {
 	return (
 		<svg
-			style={{ margin: '24px 0' }}
+			style={{ margin: '0 0 24px' }}
 			width={326}
 			height={2}
 			preserveAspectRatio="xMidYMid meet"

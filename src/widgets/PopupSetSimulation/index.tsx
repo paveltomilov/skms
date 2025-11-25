@@ -7,6 +7,7 @@ import MalfunctionSelector from '../MalfunctionSelector';
 import ListMalfunction from '../ListMalfunction';
 import useSetSimulation from '@/shared/hooks/useSetSimulation';
 import ErrorMessageText from '../ErrorMessageText';
+import cn from 'classnames';
 
 export const PopupSetSimulation: FC = () => {
 	const {
@@ -27,7 +28,9 @@ export const PopupSetSimulation: FC = () => {
 			<div className={styles.popup__wrapper}>
 				<Button
 					aria-label={'Добавить неисправность'}
-					className={styles.popup__btn}
+					className={cn(styles.popup__btn, {
+						[styles.popup__btn__first]: !showListMalfunction,
+					})}
 					width={326}
 					height={38}
 					text="+ Добавить неисправность"

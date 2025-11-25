@@ -3,13 +3,13 @@
 
 .list {
 	display: block;
-	position: absolute;
 	height: 173px;
+	width: 326px;
 	overflow: scroll;
 	background-color: variables.$white-color;
 	border: 1px solid #8a8a8a;
-	top: 46px;
-	left: 24px;
+	padding: 16px 0 0;
+	margin: 0 0 24px;
 }
 
 .elementList {
@@ -19,9 +19,10 @@
 
 	&__item {
 		display: flex;
+		align-items: center;
 		flex-direction: row;
 		justify-content: space-between;
-		padding: 10px 24px 10px 16px;
+		padding: 10px 32px 10px 16px;
 
 		&:hover,
 		&:focus {
@@ -37,10 +38,9 @@
 
 	&__name {
 		@include mixins.text(18px, 400);
+		line-height: 18px;
 		display: inline-block;
-		width: 450px;
-		white-space: nowrap;
-		overflow: hidden;
+		width: 260px;
 		text-overflow: ellipsis;
 	}
 }
