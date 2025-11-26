@@ -1,6 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { LoginFormData, ValidationStatus } from '@/shared/types/login';
-import { config, initialState } from '@/shared/configs/login';
+import {
+	config,
+	initialState,
+	NAME_SURNAME_MAX_LENGTH,
+	PASSWORD_MAX_LENGTH,
+	PASSWORD_MIN_LENGTH
+} from '@/shared/configs/login';
 import {
 	checkFormValidity,
 	computeValidationStatus,
@@ -15,11 +21,11 @@ const getValidationMessage = (fieldName: keyof LoginFormData, value: string): st
 
 	switch (fieldName) {
 		case 'password':
-			if (triggedValue.length < 12) {
-				return 'Пароль должен содержать не менее 12 символов';
+			if (triggedValue.length < PASSWORD_MIN_LENGTH) {
+				return `Пароль должен содержать не менее ${PASSWORD_MIN_LENGTH} символов`;
 			}
-			if (triggedValue.length > 20) {
-				return 'Пароль должен содержать не более 20 символов';
+			if (triggedValue.length > PASSWORD_MAX_LENGTH) {
+				return `Пароль должен содержать не более ${PASSWORD_MAX_LENGTH} символов`;
 			}
 			if (!/[A-Z]/.test(triggedValue)) {
 				return 'Отсутствует символ в верхнем регистре';
@@ -31,8 +37,8 @@ const getValidationMessage = (fieldName: keyof LoginFormData, value: string): st
 
 		case 'first_name':
 		case 'last_name':
-			if (triggedValue.length > 30) {
-				return 'Поле должно содержать не более 30 символов';
+			if (triggedValue.length > NAME_SURNAME_MAX_LENGTH) {
+				return `Поле должно содержать не более ${NAME_SURNAME_MAX_LENGTH} символов`;
 			}
 			return 'Поле может содержать только буквы латиницы, пробел, тире и цифры';
 

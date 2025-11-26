@@ -14,6 +14,7 @@ import { useLoginForm } from '@/shared/hooks/useLoginForm';
 import { postAuth } from '@/shared/lib/auth';
 import { postRegistration } from '@/shared/lib/registration';
 import { LoginFormData } from '@/shared/types/login';
+import {EMAIL_MAX_LENGTH, NAME_SURNAME_MAX_LENGTH, PASSWORD_MAX_LENGTH} from '@/shared/configs/login';
 
 interface FormProps {
 	toggleRegisterMode: 'register' | 'login' | 'createUser';
@@ -30,6 +31,7 @@ export interface FieldConfig {
 	label: string;
 	type: string;
 	placeholder: string;
+	maxLength: number,
 }
 
 const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
@@ -65,31 +67,35 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 						label: 'Имя',
 						type: 'text',
 						placeholder: 'Имя',
+						maxLength: NAME_SURNAME_MAX_LENGTH,
 					},
 					{
 						name: 'last_name',
 						label: 'Фамилия',
 						type: 'text',
 						placeholder: 'Фамилия',
+						maxLength: NAME_SURNAME_MAX_LENGTH,
 					},
 			  ]
 			: []) as FieldConfig[]),
 		{ 	name: 'email', 
 		  	label: 'Email', 
 		  	type: 'email', 
-		  	placeholder: 'Email' 
+		  	placeholder: 'Email',
+			maxLength: EMAIL_MAX_LENGTH,
 		},
 		{
 			name: 'password',
 			label: 'Пароль',
 			type: 'password',
 			placeholder: 'Пароль',
+			maxLength: PASSWORD_MAX_LENGTH,
 		},
 	];
 
 	// Функция для рендеринга поля
 	const renderField = (field: FieldConfig) => {
-		const { name, label, type, placeholder } = field;
+		const { name, label, type, placeholder, maxLength } = field;
 		const hasError = serverErrors[name];
 		const hasWarn = !hasError && validationStatus[name] === 2;
 
@@ -126,6 +132,7 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 				}
 				warnMessage={hasWarn ? getWarnMessage(name) : undefined}
 				required={configMap[name]?.required}
+				maxLength={maxLength}
 			/>
 		);
 	};

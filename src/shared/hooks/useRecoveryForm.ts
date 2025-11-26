@@ -26,8 +26,8 @@ const getValidationMessage = (fieldName: keyof RecoveryFormData, value: string):
 			if (triggedValue.length < 12) {
 				return 'Пароль должен содержать не менее 12 символов';
 			}
-			if (triggedValue.length > 20) {
-				return 'Пароль должен содержать не более 20 символов';
+			if (triggedValue.length > 100) {
+				return 'Пароль должен содержать не более 100 символов';
 			}
 			if (!/[A-Z]/.test(triggedValue)) {
 				return 'Отсутствует символ в верхнем регистре';
@@ -146,7 +146,6 @@ export const useRecoveryForm = ({ steps }: UseRecoveryFormProps) => {
 		let { value } = e.target;
 
 		// Для email только удаляем пробелы и приводим к нижнему регистру
-		// НЕ удаляем кириллицу, чтобы валидация могла показать предупреждение
 		if (name === 'email') {
 			value = value.replace(/\s+/g, '').toLowerCase();
 		}

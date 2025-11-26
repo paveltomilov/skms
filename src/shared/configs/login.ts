@@ -9,6 +9,12 @@ type Login = (InputProps & {
 export const emailPattern: RegExp = /^(?![_.-])(?!\s)(?!.*[-.]{2})(?!.*[-]@)(?!.*@[-])(?!.*[.]@)(?!.*@[.])(?!.*\.[.])(?![a-zA-Z0-9._%+-]*[.]@)[a-zA-Z0-9._%+-]+@(?![-])(?![.])[a-zA-Z0-9.-]+(?<![-])(?<![.])\.[a-zA-Z]{2,}(?<!\s)$/;
 export const passwordPattern: RegExp = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[._{}[\]()<>?|~`'"\\/;:+=%$^&*,-@#!])(?!.*[а-яёА-ЯЁ])(?!(.*[^a-zA-Z0-9]){6})[a-zA-Z0-9._{}[\]()<>?|~`'"\\/;:+=%$^&*,-@#!]{12,}$/;
 const latinPattern: RegExp = /^(?!.*[-\s]{2,})[A-Za-z0-9]+(?:[-\s][A-Za-z0-9]+)*$/;
+export const EMAIL_MAX_LENGTH: number = 254;
+export const EMAIL_LOCAL_MAX_LENGTH: number = 64;
+export const EMAIL_DOMAIN_MAX_LENGTH: number = 63;
+export const PASSWORD_MIN_LENGTH: number = 12;
+export const PASSWORD_MAX_LENGTH: number = 100;
+export const NAME_SURNAME_MAX_LENGTH: number = 64;
 
 export const config: Login = [
 	{
@@ -19,20 +25,21 @@ export const config: Login = [
 		validate: (state: LoginFormData) => {
 			const email: string = state.email?.trim();
 
-			if (!email) return 0;
-			if (email.length > 254) return 2;
+			if (!email) return ValidationLevel.EMPTY;
+			if (email.length > EMAIL_MAX_LENGTH) return ValidationLevel.WARN;
 
 			const atIndex:number = email.indexOf('@');
 
-			if (atIndex === -1 || atIndex === 0 || atIndex === email.length - 1) return 2;
+			if (atIndex === -1 || atIndex === 0 || atIndex === email.length - 1) return ValidationLevel.WARN;
 
 			const localPart:string = email.slice(0, atIndex);
 			const domainPart:string = email.slice(atIndex + 1);
 
-			if (localPart.length > 64 || domainPart.length > 63) return 2;
-			if (!emailPattern.test(email)) return 2;
+			if (localPart.length > EMAIL_LOCAL_MAX_LENGTH
+				|| domainPart.length > EMAIL_DOMAIN_MAX_LENGTH) return ValidationLevel.WARN;
+			if (!emailPattern.test(email)) return ValidationLevel.WARN;
 
-			return 3;
+			return ValidationLevel.SUCCESS;
 		},
 	},
 	{
@@ -43,10 +50,10 @@ export const config: Login = [
 		validate: (state: LoginFormData) => {
 			const password:string = state.password.trim();
 
-			if (!password) return 0;
-			if (!passwordPattern.test(password)) return 2;
+			if (!password) return ValidationLevel.EMPTY;
+			if (!passwordPattern.test(password)) return ValidationLevel.WARN;
 
-			return 3; // OK
+			return ValidationLevel.SUCCESS; // OK
 		},
 	},
 	{
@@ -58,11 +65,11 @@ export const config: Login = [
 		validate: (state: LoginFormData) => {
 			const name:string = state.first_name.trim();
 
-			if (!name) return 0;
-			if (name.length > 30) return 2;
-			if (!latinPattern.test(name)) return 2;
+			if (!name) return ValidationLevel.EMPTY;
+			if (name.length > NAME_SURNAME_MAX_LENGTH) return ValidationLevel.WARN;
+			if (!latinPattern.test(name)) return ValidationLevel.WARN;
 
-			return 3; // OK
+			return ValidationLevel.SUCCESS; // OK
 		},
 	},
 	{
@@ -74,11 +81,11 @@ export const config: Login = [
 		validate: (state: LoginFormData) => {
 			const surname: string = state.last_name.trim();
 
-			if (!surname) return 0;
-			if (surname.length > 30) return 2;
-			if (!latinPattern.test(surname)) return 2;
+			if (!surname) return ValidationLevel.EMPTY;
+			if (surname.length > NAME_SURNAME_MAX_LENGTH) return ValidationLevel.WARN;
+			if (!latinPattern.test(surname)) return ValidationLevel.WARN;
 
-			return 3; // OK
+			return ValidationLevel.SUCCESS; // OK
 		},
 	},
 ];

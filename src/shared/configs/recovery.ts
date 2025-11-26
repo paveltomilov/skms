@@ -1,7 +1,7 @@
 import { RecoveryFormData } from '@/shared/types/recovery';
 import { ValidationLevel } from '@/shared/types/login';
 import { InputProps } from '@/shared/types/inputLogin';
-import {emailPattern} from '@/shared/configs/login';
+import {EMAIL_DOMAIN_MAX_LENGTH, EMAIL_LOCAL_MAX_LENGTH, EMAIL_MAX_LENGTH, emailPattern} from '@/shared/configs/login';
 import {passwordPattern} from '@/shared/configs/login';
 
 type Recovery = (InputProps & {
@@ -18,20 +18,21 @@ export const configRecovery: Recovery = [
 			'E-mail не может содержать кириллицу и должен быть корректным',
 		validate: (state: RecoveryFormData) => {
 			const email: string = state.email?.trim();
-			if (!email) return 0;
-			if (email.length > 254) return 2;
+			if (!email) return ValidationLevel.EMPTY;
+			if (email.length > EMAIL_MAX_LENGTH) return ValidationLevel.WARN;
 
 			const atIndex:number = email.indexOf('@');
 
-			if (atIndex === -1 || atIndex === 0 || atIndex === email.length - 1) return 2;
+			if (atIndex === -1 || atIndex === 0 || atIndex === email.length - 1) return ValidationLevel.WARN;
 
 			const localPart:string = email.slice(0, atIndex);
 			const domainPart:string = email.slice(atIndex + 1);
 
-			if (localPart.length > 64 || domainPart.length > 63) return 2;
-			if (!emailPattern.test(email)) return 2;
+			if (localPart.length > EMAIL_LOCAL_MAX_LENGTH
+				|| domainPart.length > EMAIL_DOMAIN_MAX_LENGTH) return ValidationLevel.WARN;
+			if (!emailPattern.test(email)) return ValidationLevel.WARN;
 
-			return 0;
+			return ValidationLevel.EMPTY;
 		},
 	},
 	{
@@ -42,10 +43,10 @@ export const configRecovery: Recovery = [
 		validate: (state: RecoveryFormData) => {
 			const password:string = state.password.trim();
 
-			if (!password) return 0;
-			if (!passwordPattern.test(password)) return 2;
+			if (!password) return ValidationLevel.EMPTY;
+			if (!passwordPattern.test(password)) return ValidationLevel.WARN;
 
-			return 0;
+			return ValidationLevel.EMPTY;
 		},
 	},
 	{
@@ -57,10 +58,10 @@ export const configRecovery: Recovery = [
 			const password:string = state.password.trim();
 			const confirmPassword:string = state.confirm_password.trim();
 			
-			if (!password && !confirmPassword) return 0;
-			if (confirmPassword && state.password !== state.confirm_password) return 2;
+			if (!password && !confirmPassword) return ValidationLevel.EMPTY;
+			if (confirmPassword && state.password !== state.confirm_password) return ValidationLevel.WARN;
 			
-			return 0;
+			return ValidationLevel.EMPTY;
 		},
 	},
 ];
