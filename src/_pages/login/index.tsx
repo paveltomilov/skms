@@ -87,9 +87,7 @@ const Login: FC = () => {
 				{modalSuccess && (
 					<PopupRegistrationDone
 						closeModalSuccess={setModalSuccess}
-						closeRegistrationMode={() =>
-							router.replace('/auth?mode=login')
-						}
+						closeRegistrationMode={setIsRegisterMode}
 					/>
 				)}
 			</div>
