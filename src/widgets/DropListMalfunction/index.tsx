@@ -4,9 +4,9 @@ import { Malfunction } from '@/shared/types/scheme';
 import { useArrowNavigation } from '@/shared/hooks/useArrowNavigation';
 
 interface Props {
-	malfunctions: Malfunction[] | null;
-	handleChoice: (item: Malfunction) => void;
 	ref: RefObject<HTMLDivElement | null>;
+	malfunctions: Malfunction[] | null;
+	handleChoice: (item: Malfunction) => void;	
 }
 
 const DropListMalfunction: FC<Props> = ({
@@ -39,11 +39,6 @@ const DropListMalfunction: FC<Props> = ({
 							<li
 								key={item.id}
 								className={styles.elementList__item}
-								title={
-									item.name.length > 45
-										? item.name
-										: undefined
-								}
 								onClick={() => handleChoice(item)}
 								role="option"
 								aria-label={`Неисправность ${item.name}`}

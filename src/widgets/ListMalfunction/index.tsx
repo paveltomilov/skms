@@ -7,7 +7,7 @@ import LineRupture from '@/shared/UI/icons/LineRupture/LineRupture';
 
 interface Props {
 	data: SimulationItemData[];
-	deleteItem: (id: string, element_id: string) => void;
+	deleteItem: (id: string) => void;
 }
 
 const ListMalfunction: FC<Props> = ({ data, deleteItem }) => {
@@ -34,10 +34,7 @@ const ListMalfunction: FC<Props> = ({ data, deleteItem }) => {
 										<Close size={'xs'} strokeWidth={1.5} />
 									}
 									onClick={() =>
-										deleteItem(
-											item.malfunction_id,
-											item.element_id,
-										)
+										deleteItem(item.malfunction_id)
 									}
 									aria-label={`Удалить симуляцию элемента ${item.element} с неисправностью ${item.malfunctions}`}
 								/>

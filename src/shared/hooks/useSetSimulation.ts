@@ -33,55 +33,62 @@ const useSetSimulation = (): IResponse => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [errors, setErrors] = useState<string | null>(null);
 	const [data, setData] = useState<ResponseData | null>(null);
-	const [listIsEmpty, setListIsEmpty] = useState<boolean>(true);
-
-	const { urlBase, access, elements: contElem } = useRequestData();
-	const studentId = useAppSelector(
-		state => state.training.currentStudent?.id,
-	);
 	const [elements, setElements] = useState<CircuitElement[]>([]);
+	const [listMalfunction, setListMalfunction] = useState<SimulationItemData[]>([]);
+	const [showListMalfunction, setShowListMalfunction] = useState<boolean>(false);
 
-	const [listMalfunction, setListMalfunction] = useState<
-		SimulationItemData[]
-	>([]);
-
-	const [showListMalfunction, setShowListMalfunction] =
-		useState<boolean>(false);
+	const { urlBase, access, elements: defaultElements } = useRequestData();
+	const studentId = useAppSelector(state => state.training.currentStudent?.id);
 
 	useEffect(() => {
-		if (contElem) {
-			const initialized = contElem.map(item => ({ ...item, view: true }));
-			setElements(initialized);
-		}
-	}, [contElem]);
+		if(defaultElements)
+		setElements(defaultElements);
+	}, [defaultElements]);
 
-	useEffect(() => {
-		setListIsEmpty(listMalfunction.length === 0);
-	}, [listMalfunction.length]);
+	const selectedIds = useMemo(
+		() => new Set(listMalfunction.map(item => item.element_id)),
+		[listMalfunction]
+	)
 
-	function handleChoiceMalfunction(simulation: SimulationItemData): void {
-		const selectElements = elements.map(item =>
-			item.id === simulation.element_id ? { ...item, view: false } : item,
-		);
-		const dataNew = [...listMalfunction, simulation];
-		setElements(selectElements);
-		setListMalfunction(dataNew);
+	const visibleElements = useMemo(
+		() => elements.filter(item => !selectedIds.has(item.id)),
+		[elements, selectedIds]
+	)
+
+	const listIsEmpty: boolean = listMalfunction.length === 0;
+
+	const handleChoiceMalfunction = useCallback(
+		(simulation: SimulationItemData): void =>  {
+			if(
+				listMalfunction.some(
+					m => m.malfunction_id === simulation.malfunction_id
+				)
+			) {
+				setErrors('Эта неисправность уже добавлена');
+				return;
+			}
+			
+		setListMalfunction(prev => [...prev, simulation]);
 		setShowListMalfunction(false);
 		setErrors(null);
-	}
+	}, [listMalfunction])
 
-	function handleDeleteItem(id: string, element_id: string) {
-		const filterListMalfunction = listMalfunction.filter(
-			item => item.malfunction_id !== id,
-		);
-		setListMalfunction(filterListMalfunction);
-		setErrors(null);
-		setElements(prev =>
-			prev.map(item =>
-				item.id === element_id ? { ...item, view: true } : item,
-			),
-		);
-	}
+	const  handleDeleteItem = useCallback(
+		() => (id: string) =>  {
+			if(
+				listMalfunction.some(
+					m => m.malfunction_id === id
+				)
+			) {
+				setListMalfunction(prev => 
+					prev.filter(m => m.malfunction_id !== id)
+				);
+				setErrors(null);
+			} else {
+				setErrors('Эта неисправность не найдена в списе');
+				return;
+			}		
+	}, [])
 
 	const handleSetSimulation = async () => {
 		if (!studentId || listIsEmpty) {
@@ -129,7 +136,7 @@ const useSetSimulation = (): IResponse => {
 		setShowListMalfunction,
 		showListMalfunction,
 		handleChoiceMalfunction,
-		elements,
+		elements: visibleElements,
 		listMalfunction,
 		handleDeleteItem,
 		listIsEmpty,

@@ -28,7 +28,6 @@ const DropListElements: FC<Props> = ({
 			}
 		}
 	}, [data, ref]);
-
 	useArrowNavigation(ref);
 
 	return (
@@ -39,9 +38,7 @@ const DropListElements: FC<Props> = ({
 					role="listbox"
 					aria-label="Выберите элемент схемы"
 				>
-					{data
-						.filter(item => item.view)
-						.map(item => {
+					{data.map(item => {
 							return (
 								<li
 									className={cn(styles.elementList__item, {
@@ -64,11 +61,6 @@ const DropListElements: FC<Props> = ({
 											handleChoiceElement(item);
 										}
 									}}
-									title={
-										item.name.length > 45
-											? item.name
-											: undefined
-									}
 									onClick={() => handleChoiceElement(item)}
 								>
 									<span className={styles.elementList__name}>

@@ -13,12 +13,8 @@ interface Props {
 }
 
 const MalfunctionSelector: FC<Props> = ({ setMalfun, data, closeList }) => {
-	const [choiceElement, setChoiceElement] = useState<CircuitElement | null>(
-		null,
-	);
-	const [choiceMalfunction, setChoiceMalfunction] = useState<
-		Malfunction[] | null
-	>(null);
+	const [choiceElement, setChoiceElement] = useState<CircuitElement | null>(null);
+	const [choiceMalfunction, setChoiceMalfunction] = useState<Malfunction[] | null>(null);
 	const dropListMalfunctionRef = useRef<HTMLDivElement>(null);
 	const dropListElementsRef = useRef<HTMLDivElement>(null);
 
@@ -46,12 +42,12 @@ const MalfunctionSelector: FC<Props> = ({ setMalfun, data, closeList }) => {
 		if (choiceElement)
 			setMalfun({
 				malfunction_id: malfunction.id,
-				element: choiceElement.name,
 				malfunctions: malfunction.name,
 				element_id: choiceElement.id,
+				element: choiceElement.name,					
 			});
 		setChoiceElement(null);
-	}
+	}	
 
 	return (
 		<>
