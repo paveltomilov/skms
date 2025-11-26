@@ -4,9 +4,9 @@ import { FC } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import useShowModal from '@/shared/hooks/useShowModal';
-import { useDate } from '@/shared/hooks/useDate';
 import { useUserCookies } from '@/shared/hooks/useUserCookies';
 import cn from 'classnames';
+import DateTime from '@/entities/DateTime/DateTime';
 
 const HeaderTraining: FC = () => {
 	const handleModalStudentCreate = useShowModal('studentCreate');
@@ -18,9 +18,6 @@ const HeaderTraining: FC = () => {
 	const textBtnAddUser = isAdmin
 		? 'СОЗДАТЬ ПРЕПОДАВАТЕЛЯ'
 		: 'СОЗДАТЬ УЧЕНИКА';
-
-	const { formattedDate, formattedTime, dateTimeDate, dateTimeTime } =
-		useDate();
 
 	return (
 		<header className={styles.header}>
@@ -52,14 +49,7 @@ const HeaderTraining: FC = () => {
 						onClick={handleModalNotification}
 					/>
 				</div>
-				<div suppressHydrationWarning className={styles.datetime}>
-					<time dateTime={dateTimeDate} suppressHydrationWarning>
-						{formattedDate}
-					</time>{' '}
-					<time dateTime={dateTimeTime} suppressHydrationWarning>
-						{formattedTime}
-					</time>
-				</div>
+				<DateTime />
 			</div>
 		</header>
 	);

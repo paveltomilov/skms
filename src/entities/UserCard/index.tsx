@@ -64,8 +64,10 @@ const UserCard: FC<Props> = ({ className, data }) => {
 							height={27}
 							text="Статистика"
 							className={styles.card__buttons__button}
-							onClick={() =>
-								dispatch(openModal('studentStatistics'))
+							onClick={() => {
+								dispatch(setCurrentStudent(data));
+								dispatch(openModal('studentStatistics'));
+							}
 							}
 						/>
 					</>
