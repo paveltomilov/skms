@@ -1,7 +1,13 @@
 import { RecoveryFormData } from '@/shared/types/recovery';
 import { ValidationLevel } from '@/shared/types/login';
 import { InputProps } from '@/shared/types/inputLogin';
-import {EMAIL_DOMAIN_MAX_LENGTH, EMAIL_LOCAL_MAX_LENGTH, EMAIL_MAX_LENGTH, emailPattern} from '@/shared/configs/login';
+import {
+	EMAIL_DOMAIN_MAX_LENGTH,
+	EMAIL_LOCAL_MAX_LENGTH,
+	EMAIL_MAX_LENGTH,
+	emailPattern,
+	PASSWORD_MAX_LENGTH
+} from '@/shared/configs/login';
 import {passwordPattern} from '@/shared/configs/login';
 
 type Recovery = (InputProps & {
@@ -44,6 +50,7 @@ export const configRecovery: Recovery = [
 			const password:string = state.password.trim();
 
 			if (!password) return ValidationLevel.EMPTY;
+			if (password.length > PASSWORD_MAX_LENGTH) return ValidationLevel.WARN;
 			if (!passwordPattern.test(password)) return ValidationLevel.WARN;
 
 			return ValidationLevel.EMPTY;

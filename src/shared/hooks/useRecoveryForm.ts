@@ -98,34 +98,6 @@ export const useRecoveryForm = ({ steps }: UseRecoveryFormProps) => {
 		});
 	}, [steps]);
 
-	// Мгновенная валидация при вводе (для недопустимых символов)
-	useEffect(() => {
-		// Проверяем только активные поля
-		activeFields.forEach(field => {
-			const value = values[field] ?? '';
-
-			// Для email проверяем кириллицу
-			if (field === 'email') {
-				const cyrillicPattern = /[а-яёА-ЯЁ]/;
-				if (cyrillicPattern.test(value)) {
-					setValidationStatus(prev => ({ ...prev, [field]: 2 }));
-				}
-			}
-
-			// Для пароля проверяем кириллицу и запрещённые символы
-			if (field === 'password' || field === 'confirm_password') {
-				const cyrillicPattern = /[а-яёА-ЯЁ]/;
-				const forbiddenSymbolsPattern = /[@#!]/;
-				if (
-					cyrillicPattern.test(value) ||
-					forbiddenSymbolsPattern.test(value)
-				) {
-					setValidationStatus(prev => ({ ...prev, [field]: 2 }));
-				}
-			}
-		});
-	}, [values, activeFields]);
-
 	// Дебоунс-валидация для остальных проверок
 	useEffect(() => {
 		const newValidationStatus = computeValidationStatus(debouncedValues);

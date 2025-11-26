@@ -51,6 +51,7 @@ export const config: Login = [
 			const password:string = state.password.trim();
 
 			if (!password) return ValidationLevel.EMPTY;
+			if (password.length > PASSWORD_MAX_LENGTH) return ValidationLevel.WARN;
 			if (!passwordPattern.test(password)) return ValidationLevel.WARN;
 
 			return ValidationLevel.SUCCESS; // OK
