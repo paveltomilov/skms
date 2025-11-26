@@ -106,6 +106,7 @@
 
   &::before {
     max-width: 1100px;
+    clip-path: polygon(0 0, 97% 0, 72% 100%, 0% 100%);
   }
 }
 
