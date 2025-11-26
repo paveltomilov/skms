@@ -70,14 +70,14 @@ const MalfunctionSelector: FC<Props> = ({ setMalfun, data, closeList }) => {
 	return (
 		<>
 			<DropListElements
-				ref={dropListElementsRef}
+				forwardRef={dropListElementsRef}
 				data={data}
 				handleChoiceElement={handleChoiceElement}
 				choiceElement={choiceElement}
 			/>
 			{choiceElement && (
 				<DropListMalfunction
-					ref={dropListMalfunctionRef}
+					forwardRef={dropListMalfunctionRef}
 					malfunctions={choiceMalfunction}
 					handleChoice={handleChoice}
 				/>

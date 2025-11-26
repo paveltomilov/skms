@@ -4,7 +4,7 @@ import { Malfunction } from '@/shared/types/scheme';
 import { useArrowNavigation } from '@/shared/hooks/useArrowNavigation';
 
 interface Props {
-	ref: RefObject<HTMLDivElement | null>;
+	forwardRef: RefObject<HTMLDivElement | null>;
 	malfunctions: Malfunction[] | null;
 	handleChoice: (item: Malfunction) => void;	
 }
@@ -12,22 +12,22 @@ interface Props {
 const DropListMalfunction: FC<Props> = ({
 	malfunctions,
 	handleChoice,
-	ref,
+	forwardRef,
 }) => {
 	useEffect(() => {
-		if (malfunctions && ref.current) {
+		if (malfunctions && forwardRef.current) {
 			const firstItem =
-				ref.current.querySelector<HTMLElement>('[role="option"]');
+				forwardRef.current.querySelector<HTMLElement>('[role="option"]');
 			if (firstItem) {
 				firstItem.focus();
 			}
 		}
-	}, [malfunctions, ref]);
+	}, [malfunctions, forwardRef]);
 
-	useArrowNavigation(ref);
+	useArrowNavigation(forwardRef);
 
 	return (
-		<div className={styles.list} ref={ref}>
+		<div className={styles.list} ref={forwardRef}>
 			<ul
 				className={styles.elementList}
 				role="listbox"

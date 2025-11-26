@@ -10,29 +10,29 @@ interface Props {
 	data: CircuitElement[];
 	handleChoiceElement: (item: CircuitElement) => void;
 	choiceElement: CircuitElement | null;
-	ref: RefObject<HTMLDivElement | null>;
+	forwardRef: RefObject<HTMLDivElement | null>;
 }
 
 const DropListElements: FC<Props> = ({
 	data,
 	handleChoiceElement,
 	choiceElement,
-	ref,
+	forwardRef,
 }) => {
 	useEffect(() => {
-		if (data && ref.current) {
+		if (data && forwardRef.current) {
 			const firstItem =
-				ref.current.querySelector<HTMLElement>('[role="option"]');
+				forwardRef.current.querySelector<HTMLElement>('[role="option"]');
 			if (firstItem) {
 				firstItem.focus();
 			}
 		}
-	}, [data, ref]);
-	useArrowNavigation(ref);
+	}, [data, forwardRef]);
+	useArrowNavigation(forwardRef);
 
 	return (
 		<>
-			<div className={styles.list} ref={ref}>
+			<div className={styles.list} ref={forwardRef}>
 				<ul
 					className={styles.elementList}
 					role="listbox"
