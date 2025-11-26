@@ -13,15 +13,13 @@ export const useRequestData = (): IResponse => {
 	const urlBase = process.env.NEXT_PUBLIC_API_BASE_URL;
 	const access = localStorage.getItem('accessToken');
 	const circuit = useAppSelector(state => state.circuit);
-	const elements = useMemo(() => {
-		return extractMalfunctions(circuit)
-			.sort((a, b) =>
+	const elements = useMemo(
+		() =>
+			extractMalfunctions(circuit).sort((a, b) =>
 				a.name.toLowerCase().localeCompare(b.name.toLowerCase(), 'ru'),
-			)
-			.map(elem => {
-				return { ...elem, view: true };
-			});
-	}, [circuit]);
+			),
+		[circuit],
+	);
 
 	return {
 		urlBase,
