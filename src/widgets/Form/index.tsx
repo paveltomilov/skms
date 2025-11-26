@@ -14,6 +14,7 @@ import { useLoginForm } from '@/shared/hooks/useLoginForm';
 import { postAuth } from '@/shared/lib/auth';
 import { postRegistration } from '@/shared/lib/registration';
 import { LoginFormData } from '@/shared/types/login';
+import {getDashboardRoute, UserRole} from '@/shared/configs/routes';
 import {EMAIL_MAX_LENGTH, NAME_SURNAME_MAX_LENGTH, PASSWORD_MAX_LENGTH} from '@/shared/configs/login';
 
 interface FormProps {
@@ -162,9 +163,9 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 	// Обработка авторизации
 	const handleAuth = async () => {
 		try {
-			const response = await postAuth(values, rememberMe);
+			const response = await postAuth(values);
 			if (response.success) {
-				router.push('/ptk');
+				router.push(getDashboardRoute(response.role as UserRole));
 			} else {
 				setServerErrors(PASSWORD_ERROR);
 				setAuthErrorText(
