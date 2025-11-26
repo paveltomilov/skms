@@ -5,7 +5,8 @@
 	display: block;
 	height: 173px;
 	width: 326px;
-	overflow: scroll;
+	overflow-x: hidden;
+	overflow-y: auto;
 	background-color: variables.$white-color;
 	border: 1px solid #8a8a8a;
 	padding: 16px 0 0;
@@ -46,7 +47,7 @@
 }
 
 .active {
-	background-color: #0b0962;
+	background-color: #110f93;
 	cursor: pointer;
 
 	& span,

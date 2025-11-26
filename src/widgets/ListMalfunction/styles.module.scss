@@ -11,10 +11,13 @@
 	flex-direction: column;
 	width: 100%;
 	max-height: 300px;
-	overflow: scroll;
+	overflow-y: none;
+	overflow-x: auto;
 
-	& ::-webkit-scrollbar {
-		display: none;
+	-ms-overflow-style: none; /* Для IE и Edge */
+	scrollbar-width: none; /* Для Firefox */
+	&::-webkit-scrollbar {
+		display: none; /* Для WebKit */
 	}
 
 	&__item {
