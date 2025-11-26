@@ -1,6 +1,13 @@
 import { CircuitElement, Malfunction } from '@/shared/types/scheme';
 import { SimulationItemData } from '@/shared/types/simulation';
-import { Dispatch, FC, SetStateAction, useRef, useState } from 'react';
+import {
+	Dispatch,
+	FC,
+	SetStateAction,
+	useCallback,
+	useRef,
+	useState,
+} from 'react';
 import DropListMalfunction from '../DropListMalfunction';
 import DropListElements from '../DropListElements';
 import { useClickOutside } from '@/shared/hooks/useClickOutside';
@@ -13,8 +20,12 @@ interface Props {
 }
 
 const MalfunctionSelector: FC<Props> = ({ setMalfun, data, closeList }) => {
-	const [choiceElement, setChoiceElement] = useState<CircuitElement | null>(null);
-	const [choiceMalfunction, setChoiceMalfunction] = useState<Malfunction[] | null>(null);
+	const [choiceElement, setChoiceElement] = useState<CircuitElement | null>(
+		null,
+	);
+	const [choiceMalfunction, setChoiceMalfunction] = useState<
+		Malfunction[] | null
+	>(null);
 	const dropListMalfunctionRef = useRef<HTMLDivElement>(null);
 	const dropListElementsRef = useRef<HTMLDivElement>(null);
 
@@ -31,23 +42,30 @@ const MalfunctionSelector: FC<Props> = ({ setMalfun, data, closeList }) => {
 		}
 	});
 
-	function handleChoiceElement(item: CircuitElement) {
-		setChoiceElement(item);
-		const malfunctionsElement =
-			data.find(element => element.id === item.id)?.malfunctions ?? null;
-		setChoiceMalfunction(malfunctionsElement);
-	}
+	const handleChoiceElement = useCallback(
+		(item: CircuitElement) => {
+			setChoiceElement(item);
+			const malfunctionsElement =
+				data.find(element => element.id === item.id)?.malfunctions ??
+				null;
+			setChoiceMalfunction(malfunctionsElement);
+		},
+		[data],
+	);
 
-	function handleChoice(malfunction: Malfunction) {
-		if (choiceElement)
-			setMalfun({
-				malfunction_id: malfunction.id,
-				malfunctions: malfunction.name,
-				element_id: choiceElement.id,
-				element: choiceElement.name,					
-			});
-		setChoiceElement(null);
-	}	
+	const handleChoice = useCallback(
+		(malfunction: Malfunction) => {
+			if (choiceElement)
+				setMalfun({
+					malfunction_id: malfunction.id,
+					malfunctions: malfunction.name,
+					element_id: choiceElement.id,
+					element: choiceElement.name,
+				});
+			setChoiceElement(null);
+		},
+		[choiceElement],
+	);
 
 	return (
 		<>

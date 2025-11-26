@@ -87,7 +87,7 @@ const useSetSimulation = (): IResponse => {
 	);
 
 	const handleDeleteItem = useCallback(
-		() => (id: string) => {
+		(id: string) => {
 			if (listMalfunction.some(m => m.malfunction_id === id)) {
 				setListMalfunction(prev =>
 					prev.filter(m => m.malfunction_id !== id),
@@ -98,7 +98,7 @@ const useSetSimulation = (): IResponse => {
 				return;
 			}
 		},
-		[],
+		[listMalfunction],
 	);
 
 	const handleSetSimulation = async () => {
