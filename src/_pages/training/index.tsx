@@ -12,8 +12,6 @@ import { useEffect } from 'react';
 const Training = () => {
 	const updateListNumber = useAppSelector(store => store.updateList);
 
-	useEffect(() => {});
-
 	const { role } = useUserCookies();
 
 	const isAdmin = role === 'admin';

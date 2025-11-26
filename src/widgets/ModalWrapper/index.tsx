@@ -16,7 +16,7 @@ import PopupActuator from '@/widgets/PopupActuator';
 import PopupClamp from '../PopupClamp';
 import { PopupSetSimulation } from '../PopupSetSimulation';
 import PopupNotificationDev from '../PopupNotificationDev';
-import { PopupStudentStatistic } from '../PopupStudetnStatistic';
+import { PopupStudentStatistics } from '../PopupStudetnStatistics';
 import { PopupStudentCreate } from '../PopupStudentCreate';
 import { PopupStudentDelete } from '../PopupStudentDelete';
 import { PopupNote } from '../PopupNote';
@@ -67,6 +67,11 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		studentDelete ||
 		note;
 	const gateId = useAppSelector(state => state.gate.activeGateId as string);
+	const student = useAppSelector(state => state.training.currentStudent);
+
+	const fullName = isAdmin
+		? 'Преподаватель'
+		: `${student?.first_name} ${student?.last_name}`;
 
 	const gates = useAppSelector(state => state.gate);
 	const gateName = gates.activeGateId
@@ -147,9 +152,9 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		{
 			condition: studentStatistics,
 			id: 'studentStatistics',
-			headerTitle: `Статистика ${isAdmin ? 'преподавателя' : 'ученика'}`,
+			headerTitle: `Статистика: ${fullName}`,
 			gateId: undefined,
-			component: <PopupStudentStatistic />,
+			component: <PopupStudentStatistics />,
 		},
 		{
 			condition: studentCreate,
