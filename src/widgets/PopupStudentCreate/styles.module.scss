@@ -8,11 +8,15 @@
 }
 
 .form {
-    margin: 16px 19px 16px 26px;
+    margin: 13px 19px 16px 26px;
     display: flex;
-    gap: 25px;
+    gap: 17px;
     flex-direction: column;
     justify-content: space-between;
+
+    & label {
+        margin: 0 0 17px;
+    }
 }
 
 .button {
@@ -22,5 +26,9 @@
     span {
         @include mixins.text(32px, 400);
         line-height: 1;
+    }
+
+    &:disabled {
+        background-color: variables.$secondary-color;
     }
 }

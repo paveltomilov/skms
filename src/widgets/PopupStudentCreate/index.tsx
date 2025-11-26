@@ -145,7 +145,7 @@ export const PopupStudentCreate: FC = () => {
 						width={470}
 						height={55}
 						text={textButtonSubmit}
-						success={isValid}
+						disabled={!isValid}
 					/>
 				</form>
 			) : (
