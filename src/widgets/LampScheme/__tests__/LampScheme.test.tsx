@@ -13,7 +13,8 @@ jest.mock('@/shared/UI/LampIndicator', () => ({
 const mockUseAppSelector = jest.fn();
 const mockDispatch = jest.fn();
 jest.mock('@/shared/hooks/store', () => ({
-	useAppSelector: (selector: typeof mockUseAppSelector) => mockUseAppSelector(selector),
+	useAppSelector: (selector: typeof mockUseAppSelector) =>
+		mockUseAppSelector(selector),
 	useAppDispatch: () => mockDispatch,
 }));
 
@@ -24,7 +25,9 @@ jest.mock('@/shared/UI/Marker', () => ({
 
 jest.mock('@/shared/UI/icons/Channel', () => ({
 	__esModule: true,
-	default: ({ className }: { className?: string }) => <div data-channel className={className} />,
+	default: ({ className }: { className?: string }) => (
+		<div data-channel className={className} />
+	),
 }));
 
 jest.mock('@/shared/UI/ScrewConnection', () => ({
@@ -42,10 +45,17 @@ jest.mock('@/shared/utils/findElementByID/scheme', () => ({
 	findElementByID: (...args: unknown[]) => mockFindElementByID(...args),
 }));
 
-const CLOSED_POINT_ID = 'p.c.3.2.2';
-const OPEN_POINT_ID = 'p.c.3.1.2';
-const CLOSED_ELEMENT_ID = 'c.3.1.3.3';
-const OPEN_ELEMENT_ID = 'c.3.2.3.3';
+import {
+	CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID,
+	LAMP_KRUZA_P_CLOSED_ID,
+	LAMP_KRUZA_P_OPEN_ID,
+	OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID,
+} from '@/shared/configs/controlCircuit/constants';
+
+const CLOSED_POINT_ID = OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID; // А19 - для лампы "Закрыто"
+const OPEN_POINT_ID = CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID; // А11 - для лампы "Открыто"
+const CLOSED_ELEMENT_ID = LAMP_KRUZA_P_CLOSED_ID;
+const OPEN_ELEMENT_ID = LAMP_KRUZA_P_OPEN_ID;
 
 type PointValue = boolean | { state?: boolean } | undefined;
 
@@ -76,7 +86,7 @@ describe('LampScheme', () => {
 		jest.clearAllMocks();
 	});
 
-	it('выключает обе лампы без напряжения', () => {
+	it('выключает обе лампы без питания', () => {
 		const colors = renderLampScheme({
 			[CLOSED_POINT_ID]: false,
 			[OPEN_POINT_ID]: false,
@@ -85,25 +95,25 @@ describe('LampScheme', () => {
 		expect(colors).toEqual(['lamp_white_off', 'lamp_green_off']);
 	});
 
-	it('включает только белую лампу при питании А19', () => {
+	it('включает только индикатор закрыто при питании ветки закрытия', () => {
 		const colors = renderLampScheme({
 			[CLOSED_POINT_ID]: true,
 			[OPEN_POINT_ID]: false,
 		});
 
-		expect(colors).toEqual(['lamp_white_off', 'lamp_green_on']);
+		expect(colors).toEqual(['lamp_white_on', 'lamp_green_off']);
 	});
 
-	it('включает только зелёную лампу при питании А11', () => {
+	it('включает только индикатор открыто при питании ветки открытия', () => {
 		const colors = renderLampScheme({
 			[CLOSED_POINT_ID]: false,
 			[OPEN_POINT_ID]: true,
 		});
 
-		expect(colors).toEqual(['lamp_white_on', 'lamp_green_off']);
+		expect(colors).toEqual(['lamp_white_off', 'lamp_green_on']);
 	});
 
-	it('включает обе лампы при питании А11 и А19', () => {
+	it('включает обе лампы при питании обеих веток', () => {
 		const colors = renderLampScheme({
 			[CLOSED_POINT_ID]: true,
 			[OPEN_POINT_ID]: true,
@@ -112,7 +122,7 @@ describe('LampScheme', () => {
 		expect(colors).toEqual(['lamp_white_on', 'lamp_green_on']);
 	});
 
-	it('гасит белую лампу при высоком сопротивлении её цепи', () => {
+	it('гасит белую лампу закрыто при высоком сопротивлении её цепи', () => {
 		const colors = renderLampScheme(
 			{
 				[CLOSED_POINT_ID]: true,
@@ -124,6 +134,6 @@ describe('LampScheme', () => {
 			},
 		);
 
-		expect(colors).toEqual(['lamp_white_on', 'lamp_green_off']);
+		expect(colors).toEqual(['lamp_white_off', 'lamp_green_on']);
 	});
 });

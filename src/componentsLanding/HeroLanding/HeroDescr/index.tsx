@@ -10,13 +10,13 @@ const HeroDescr: FC = () => {
 				инженерно-технического персонала цехов тепловой автоматики
 			</strong>
 			<p className={styles.wrapper__text}>
-				Отработка штатных и аварийных ситуаций&nbsp;— в безопасной и
-				реалистичной&nbsp;среде
+				Отработка штатных и аварийных ситуаций — в безопасной и
+				реалистичной среде
 			</p>
 			<Button
 				className={styles.wrapper__button}
 				text="попробовать бесплатно"
-				href="/login"
+				href="/login?mode=signup"
 				width={504}
 				height={40}
 				radius={4}

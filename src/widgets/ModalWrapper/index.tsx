@@ -9,14 +9,14 @@ import PopupGateValves from '../PopupGateValves';
 import ModalOverlay from '../ModalOverlay';
 import PopupDiagnostic from '../PopupDiagnostic';
 import { Automatic } from '../Automatic';
-import { Modals } from '@/store/modalSlice';
+import { Modals, type ModalState } from '@/store/modalSlice';
 import PopupBlockSwitches from '../PopupBlockSwitches';
 import { LampScheme } from '../LampScheme';
 import PopupActuator from '@/widgets/PopupActuator';
 import PopupClamp from '../PopupClamp';
 import { PopupSetSimulation } from '../PopupSetSimulation';
 import PopupNotificationDev from '../PopupNotificationDev';
-import { PopupStudentStatistic } from '../PopupStudetnStatistic';
+import { PopupStudentStatistics } from '../PopupStudetnStatistics';
 import { PopupStudentCreate } from '../PopupStudentCreate';
 import { PopupStudentDelete } from '../PopupStudentDelete';
 import { PopupNote } from '../PopupNote';
@@ -45,7 +45,7 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		studentCreate,
 		studentDelete,
 		note,
-	} = useAppSelector(state => state.modal);
+	} = useAppSelector((state): ModalState => state.modal);
 
 	const { role } = useUserCookies();
 
@@ -67,6 +67,11 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		studentDelete ||
 		note;
 	const gateId = useAppSelector(state => state.gate.activeGateId as string);
+	const student = useAppSelector(state => state.training.currentStudent);
+
+	const fullName = isAdmin
+		? 'Преподаватель'
+		: `${student?.first_name} ${student?.last_name}`;
 
 	const modals: IModals[] = [
 		{
@@ -80,21 +85,21 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			condition: gateControl,
 			id: 'gateControl',
 			headerTitle: '',
-			gateId: gateId,
+			gateId: gateId ?? undefined,
 			component: <PopupGateControl />,
 		},
 		{
 			condition: diagnostic,
 			id: 'diagnostic',
 			headerTitle: '',
-			gateId: gateId,
+			gateId: gateId ?? undefined,
 			component: <PopupDiagnostic />,
 		},
 		{
 			condition: gateValves,
 			id: 'gateValves',
 			headerTitle: '',
-			gateId: gateId,
+			gateId: gateId ?? undefined,
 			component: <PopupGateValves />,
 		},
 		{
@@ -142,9 +147,9 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		{
 			condition: studentStatistics,
 			id: 'studentStatistics',
-			headerTitle: `Статистика ${isAdmin ? 'преподавателя' : 'ученика'}`,
+			headerTitle: `Статистика: ${fullName}`,
 			gateId: undefined,
-			component: <PopupStudentStatistic />,
+			component: <PopupStudentStatistics />,
 		},
 		{
 			condition: studentCreate,
