@@ -2,6 +2,8 @@ import { setGatePosition, setGateState } from '@/store/gateSlice';
 import {
 	LIMIT_SWITCH_CLOSE_ID,
 	LIMIT_SWITCH_OPEN_ID,
+	INSERT_NDO_CMD_OPEN_PTK_ID,
+	INSERT_NDO_CMD_CLOSE_PTK_ID,
 } from '../configs/controlCircuit/constants';
 import { findElementByID } from '../utils/findElementByID/scheme';
 import { useAppDispatch, useAppSelector } from './store';
@@ -34,13 +36,30 @@ export const useKruzapButtons = () => {
 		useAppSelector(state => state.circuit),
 	);
 
-	// Кнопки КРУЗАП дизейблены, если соответствующий концевой выключатель разомкнут
+	// Получаем элементы кнопок ПТК из схемы для проверки их состояния
+	const openPtkElement = findElementByID(
+		INSERT_NDO_CMD_OPEN_PTK_ID,
+		useAppSelector(state => state.circuit),
+	);
+
+	const closePtkElement = findElementByID(
+		INSERT_NDO_CMD_CLOSE_PTK_ID,
+		useAppSelector(state => state.circuit),
+	);
+
+	// Проверяем, активна ли какая-либо кнопка ПТК (сопротивление = 0)
+	const isAnyPtkButtonActive =
+		openPtkElement.resistance === 0 || closePtkElement.resistance === 0;
+
+	// Кнопки КРУЗАП дизейблены, если:
+	// - соответствующий концевой выключатель разомкнут ИЛИ
+	// - какая-либо кнопка ПТК активна (сопротивление = 0)
 	const openKruzapDisabled =
 		limitSwitchOpenElement.resistance ===
-		BASE_RESISTANCE_CONSTANT.highResistance;
+			BASE_RESISTANCE_CONSTANT.highResistance || isAnyPtkButtonActive;
 	const closeKruzapDisabled =
 		limitSwitchCloseElement.resistance ===
-		BASE_RESISTANCE_CONSTANT.highResistance;
+			BASE_RESISTANCE_CONSTANT.highResistance || isAnyPtkButtonActive;
 
 	// Определяем состояние задвижки (закрыта/открыта) на основе концевых выключателей
 	const openOn =

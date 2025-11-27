@@ -18,6 +18,7 @@ import {
 } from './controlCircuit/constants';
 import { initialStateScheme } from './scheme';
 import type { CircuitBranch, CircuitElement } from '../types/scheme';
+import { BASE_RESISTANCE_CONSTANT } from './elementKind';
 
 /**
  * Рекурсивно извлекает все элементы схемы из ветвей.
@@ -42,7 +43,7 @@ const extractElements = (branches: CircuitBranch[]): CircuitElement[] => {
 
 /**
  * Базовые сопротивления элементов схемы по их ID.
- * Создается на основе initialStateScheme и содержит начальные значения сопротивлений.
+ * Сопротивление определяется по типу элемента (kind) из BASE_RESISTANCE_CONSTANT.
  */
 export const BASE_RESISTANCE: Record<string, number> = (() => {
 	const allElements = [
@@ -52,9 +53,11 @@ export const BASE_RESISTANCE: Record<string, number> = (() => {
 
 	const resistanceMap: Record<string, number> = {};
 	for (const element of allElements) {
-		resistanceMap[element.id] = element.resistance;
+		// Берем сопротивление из BASE_RESISTANCE_CONSTANT по типу элемента
+		resistanceMap[element.id] =
+			BASE_RESISTANCE_CONSTANT[element.kind] ?? element.resistance;
 	}
-
+	console.log(resistanceMap);
 	return resistanceMap;
 })();
 

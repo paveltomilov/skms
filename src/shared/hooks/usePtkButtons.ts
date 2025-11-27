@@ -1,5 +1,4 @@
 import { setGatePosition, setGateState } from '@/store/gateSlice';
-
 import { findElementByID } from '../utils/findElementByID/scheme';
 import { useAppDispatch, useAppSelector } from './store';
 import { setResistance } from '@/store/circuitSlice';
@@ -132,6 +131,9 @@ export const usePtkButtons = () => {
 	const handlePtkButton = (button: 'close' | 'open') => {
 		// Обновляем сопротивления, которые меняются сразу после нажатия на кнопку "Открыть"/"Закрыть"
 		PTK_BUTTONS_CONFIG[button].forEach(action => {
+			console.log(
+				`Изменение сопротивления для ${action.id}: ${action.value}`,
+			);
 			dispatch(setResistance(action));
 		});
 
