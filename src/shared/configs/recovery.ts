@@ -1,6 +1,14 @@
 import { RecoveryFormData } from '@/shared/types/recovery';
 import { ValidationLevel } from '@/shared/types/login';
 import { InputProps } from '@/shared/types/inputLogin';
+import {
+	EMAIL_DOMAIN_MAX_LENGTH,
+	EMAIL_LOCAL_MAX_LENGTH,
+	EMAIL_MAX_LENGTH,
+	emailPattern,
+	PASSWORD_MAX_LENGTH
+} from '@/shared/configs/login';
+import {passwordPattern} from '@/shared/configs/login';
 
 type Recovery = (InputProps & {
 	validate?: (state: RecoveryFormData) => ValidationLevel;
@@ -15,42 +23,37 @@ export const configRecovery: Recovery = [
 		warnMessage:
 			'E-mail не может содержать кириллицу и должен быть корректным',
 		validate: (state: RecoveryFormData) => {
-			if (!state.email || !state.email.trim()) return 0;
+			const email: string = state.email?.trim();
+			if (!email) return ValidationLevel.EMPTY;
+			if (email.length > EMAIL_MAX_LENGTH) return ValidationLevel.WARN;
 
-			// Проверяем кириллицу в email
-			const cyrillicPattern = /[а-яёА-ЯЁ]/;
-			if (cyrillicPattern.test(state.email)) {
-				return 2; // warning
-			}
+			const atIndex:number = email.indexOf('@');
 
-			// Проверяем формат email
-			const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-			if (!emailPattern.test(state.email)) return 2;
+			if (atIndex === -1 || atIndex === 0 || atIndex === email.length - 1) return ValidationLevel.WARN;
 
-			return 0;
+			const localPart:string = email.slice(0, atIndex);
+			const domainPart:string = email.slice(atIndex + 1);
+
+			if (localPart.length > EMAIL_LOCAL_MAX_LENGTH
+				|| domainPart.length > EMAIL_DOMAIN_MAX_LENGTH) return ValidationLevel.WARN;
+			if (!emailPattern.test(email)) return ValidationLevel.WARN;
+
+			return ValidationLevel.EMPTY;
 		},
 	},
 	{
 		name: 'password',
 		required: true,
 		errorMessage: 'Пароль введён неверно',
-		warnMessage: 'Пароль не должен содержать символы @, #, ! и кириллицу',
+		warnMessage: 'Пароль введен некорректно',
 		validate: (state: RecoveryFormData) => {
-			// Проверяем недопустимые символы даже если поле пустое или содержит только пробелы
-			const forbiddenSymbolsPattern = /[@#!]/;
-			const cyrillicPattern = /[а-яёА-ЯЁ]/;
+			const password:string = state.password.trim();
 
-			if (
-				forbiddenSymbolsPattern.test(state.password) ||
-				cyrillicPattern.test(state.password)
-			) {
-				return 2; // warning
-			}
+			if (!password) return ValidationLevel.EMPTY;
+			if (password.length > PASSWORD_MAX_LENGTH) return ValidationLevel.WARN;
+			if (!passwordPattern.test(password)) return ValidationLevel.WARN;
 
-			// Если поле пустое и нет недопустимых символов — нейтральное состояние
-			if (!state.password.trim()) return 0;
-
-			return 0;
+			return ValidationLevel.EMPTY;
 		},
 	},
 	{
@@ -59,14 +62,13 @@ export const configRecovery: Recovery = [
 		errorMessage: 'Пароли не совпадают',
 		warnMessage: 'Пароли должны совпадать',
 		validate: (state: RecoveryFormData) => {
-			if (!state.password.trim() && !state.confirm_password.trim())
-				return 0;
-			if (
-				state.confirm_password.trim() &&
-				state.password !== state.confirm_password
-			)
-				return 2;
-			return 0;
+			const password:string = state.password.trim();
+			const confirmPassword:string = state.confirm_password.trim();
+			
+			if (!password && !confirmPassword) return ValidationLevel.EMPTY;
+			if (confirmPassword && state.password !== state.confirm_password) return ValidationLevel.WARN;
+			
+			return ValidationLevel.EMPTY;
 		},
 	},
 ];

@@ -21,6 +21,13 @@
       text-align: left;
     }
 
+    &__description {
+      display: block;
+      margin-bottom: 25px;
+      @include mixins.text(20px, 400);
+      color: variables.$black-color;
+    }
+
     &__text {
       @include mixins.text(20px, 400);
       line-height: 1.3;
