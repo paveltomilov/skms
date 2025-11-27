@@ -26,7 +26,6 @@ const HeaderPtk: FC = () => {
 						height={32}
 						text="Гл. меню"
 						onClick={() => {
-							console.log('Нажата кнопка Главное меню');
 							handleModalNotification();
 						}}
 					/>
@@ -36,7 +35,6 @@ const HeaderPtk: FC = () => {
 						height={32}
 						text="Сигналы"
 						onClick={() => {
-							console.log('Нажата кнопка Сигналы');
 							handleModalNotification();
 						}}
 					/>
@@ -46,7 +44,6 @@ const HeaderPtk: FC = () => {
 						height={32}
 						text="Графики"
 						onClick={() => {
-							console.log('Нажата кнопка Графики');
 							handleModalNotification();
 						}}
 					/>
@@ -57,7 +54,6 @@ const HeaderPtk: FC = () => {
 					height={32}
 					text="?"
 					onClick={() => {
-						console.log('Нажата кнопка ?');
 						handleModalNotification();
 					}}
 				/>

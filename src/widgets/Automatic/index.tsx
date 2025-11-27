@@ -7,10 +7,8 @@ import Switcher from '@/shared/UI/Switcher';
 import { AutomatButton } from '@/shared/UI/AutomatButton';
 import { useAppSelector } from '@/shared/hooks/store';
 import { findElementByID } from '@/shared/utils/findElementByID/scheme';
-import {
-	CONTROL_CIRCUIT_BREAKER_ID,
-	HIGH_RESISTANCE,
-} from '@/shared/configs/scheme';
+import { CONTROL_CIRCUIT_BREAKER_ID } from '@/shared/configs/controlCircuit/constants';
+import { HIGH_RESISTANCE } from '@/shared/configs/elementKind';
 import { getInputCircuitBreakerState } from '@/shared/utils/getInputCircuitBreakerState/getInputCircuitBreakerState';
 import { useGateControlButtons } from '@/shared/hooks/useGateControlButtons';
 

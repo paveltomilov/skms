@@ -15,7 +15,7 @@ export const GATES: Record<string, IGate> = {
 		name: 'ГП3-Б',
 		states: GATE_STATE_TYPE.open,
 		position: 100,
-		malfunctions: ['p.1.2.1', 'p.1.1.1'], //массив неисправностей
+		malfunctions: [], //массив неисправностей
 		controlSwitch: false,
 		powerSwitch: false,
 	},

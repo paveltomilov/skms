@@ -9,7 +9,7 @@ import PopupGateValves from '../PopupGateValves';
 import ModalOverlay from '../ModalOverlay';
 import PopupDiagnostic from '../PopupDiagnostic';
 import { Automatic } from '../Automatic';
-import { Modals } from '@/store/modalSlice';
+import { Modals, type ModalState } from '@/store/modalSlice';
 import PopupBlockSwitches from '../PopupBlockSwitches';
 import { LampScheme } from '../LampScheme';
 import PopupActuator from '@/widgets/PopupActuator';
@@ -45,7 +45,7 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		studentCreate,
 		studentDelete,
 		note,
-	} = useAppSelector(state => state.modal);
+	} = useAppSelector((state): ModalState => state.modal);
 
 	const { role } = useUserCookies();
 
@@ -85,21 +85,21 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			condition: gateControl,
 			id: 'gateControl',
 			headerTitle: '',
-			gateId: gateId,
+			gateId: gateId ?? undefined,
 			component: <PopupGateControl />,
 		},
 		{
 			condition: diagnostic,
 			id: 'diagnostic',
 			headerTitle: '',
-			gateId: gateId,
+			gateId: gateId ?? undefined,
 			component: <PopupDiagnostic />,
 		},
 		{
 			condition: gateValves,
 			id: 'gateValves',
 			headerTitle: '',
-			gateId: gateId,
+			gateId: gateId ?? undefined,
 			component: <PopupGateValves />,
 		},
 		{

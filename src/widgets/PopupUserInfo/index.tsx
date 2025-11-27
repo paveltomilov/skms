@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import Image from 'next/image';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import { useRouter } from 'next/navigation';
@@ -18,9 +19,12 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 }) => {
 	const router = useRouter();
 	const { firstName, lastName, role } = useUserCookies();
-	const status = 	role === 'admin' ? 'Администратор' :
-					role === 'teacher' ? 'Преподаватель' : 
-					'Cтудент';
+	const status =
+		role === 'admin'
+			? 'Администратор'
+			: role === 'teacher'
+			? 'Преподаватель'
+			: 'Cтудент';
 
 	const handleLogout = () => {
 		// Централизованный выход: чистим access + refresh и связанные cookie
@@ -37,11 +41,13 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 				handleClose={handlePopupClose}
 			/>
 			<div className={styles.userInfo__profile}>
-				<img
+				<Image
 					className={styles.userInfo__profile__photo}
 					src="/images/user_icon.png"
 					alt="Фото пользователя"
-				></img>
+					width={80}
+					height={80}
+				/>
 				<div className={styles.userInfo__profile__info}>
 					<div className={styles.userInfo__profile__info__name}>
 						{fullName}
@@ -53,15 +59,30 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 			</div>
 			<ul className={styles.userInfo__more}>
 				<li>
-					<img src="/svg/support.svg" alt={'support'} />
+					<Image
+						src="/svg/support.svg"
+						alt="support"
+						width={16}
+						height={16}
+					/>
 					Помощь
 				</li>
 				<li>
-					<img src="/svg/history.svg" alt={'history'} />
+					<Image
+						src="/svg/history.svg"
+						alt="history"
+						width={16}
+						height={16}
+					/>
 					История сессий
 				</li>
 				<li>
-					<img src="/svg/add-account.svg" alt={'add account'} />
+					<Image
+						src="/svg/add-account.svg"
+						alt="add account"
+						width={16}
+						height={16}
+					/>
 					Добавить аккаунт
 				</li>
 			</ul>
