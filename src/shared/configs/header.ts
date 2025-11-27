@@ -1,5 +1,5 @@
 ﻿import { BASE_RESISTANCE } from './schemeElements';
-import { HIGH_RESISTANCE } from './elementKind';
+import { BASE_RESISTANCE_CONSTANT } from './elementKind';
 import {
 	BUTTON_KRUZA_P_OPEN_ID,
 	BUTTON_KRUZA_P_CLOSE_ID,
@@ -16,22 +16,17 @@ export const PTK_BUTTONS_CONFIG = {
 			id: INSERT_NDO_CMD_OPEN_PTK_ID,
 			value: BASE_RESISTANCE[INSERT_NDO_CMD_OPEN_PTK_ID],
 		}, // Замыкаем "открыть"
-		{
-			id: INSERT_NDO_CMD_CLOSE_PTK_ID,
-			value: HIGH_RESISTANCE,
-		}, // Размыкаем "закрыть"
 	],
 	// Срабатывает через 10 сек после нажатия на кнопку открыть ПТК (задвижка открылась полностью)
 	opening: [
 		{
 			id: INSERT_NDO_CMD_OPEN_PTK_ID,
-			value: HIGH_RESISTANCE,
-		}, // Размыкаем "открыть"
-		{ id: LIMIT_SWITCH_OPEN_ID, value: HIGH_RESISTANCE }, // Размыкаем концевой "открыть"
+			value: BASE_RESISTANCE_CONSTANT.highResistance,
+		}, // Размыкаем кнопку ПТК "открыть"
 		{
-			id: LIMIT_SWITCH_CLOSE_ID,
-			value: BASE_RESISTANCE[LIMIT_SWITCH_CLOSE_ID],
-		}, // Замыкаем концевой "закрыть" (задвижка УЖЕ НЕ закрыта)
+			id: LIMIT_SWITCH_OPEN_ID,
+			value: BASE_RESISTANCE_CONSTANT.highResistance,
+		}, // Размыкаем концевой "открыть"
 	],
 	// Срабатывает сразу после нажатия на кнопку закрыть ПТК
 	close: [
@@ -39,23 +34,27 @@ export const PTK_BUTTONS_CONFIG = {
 			id: INSERT_NDO_CMD_CLOSE_PTK_ID,
 			value: BASE_RESISTANCE[INSERT_NDO_CMD_CLOSE_PTK_ID],
 		}, // Замыкаем "закрыть"
-		{ id: INSERT_NDO_CMD_OPEN_PTK_ID, value: HIGH_RESISTANCE }, // Размыкаем "открыть"
 	],
 	// Срабатывает через 10 сек после нажатия на кнопку закрыть ПТК (задвижка закрылась полностью)
 	closing: [
 		{
 			id: INSERT_NDO_CMD_CLOSE_PTK_ID,
-			value: HIGH_RESISTANCE,
-		}, // Размыкаем "закрыть"
-		{ id: LIMIT_SWITCH_CLOSE_ID, value: HIGH_RESISTANCE }, // Размыкаем концевой "закрыть"
+			value: BASE_RESISTANCE_CONSTANT.highResistance,
+		}, // Размыкаем кнопку ПТК "закрыть"
 		{
-			id: LIMIT_SWITCH_OPEN_ID,
-			value: BASE_RESISTANCE[LIMIT_SWITCH_OPEN_ID],
-		}, // Замыкаем концевой "открыть" (задвижка УЖЕ НЕ открыта)
+			id: LIMIT_SWITCH_CLOSE_ID,
+			value: BASE_RESISTANCE_CONSTANT.highResistance,
+		}, // Размыкаем концевой "закрыть"
 	],
 	stop: [
-		{ id: INSERT_NDO_CMD_OPEN_PTK_ID, value: HIGH_RESISTANCE }, // Размыкаем "открыть"
-		{ id: INSERT_NDO_CMD_CLOSE_PTK_ID, value: HIGH_RESISTANCE }, // Размыкаем "закрыть"
+		{
+			id: INSERT_NDO_CMD_OPEN_PTK_ID,
+			value: BASE_RESISTANCE_CONSTANT.highResistance,
+		}, // Размыкаем "открыть"
+		{
+			id: INSERT_NDO_CMD_CLOSE_PTK_ID,
+			value: BASE_RESISTANCE_CONSTANT.highResistance,
+		}, // Размыкаем "закрыть"
 	],
 };
 
@@ -71,9 +70,12 @@ export const KRUZAP_BUTTONS_CONFIG = {
 	opening: [
 		{
 			id: BUTTON_KRUZA_P_OPEN_ID,
-			value: HIGH_RESISTANCE,
+			value: BASE_RESISTANCE_CONSTANT.highResistance,
 		}, // Размыкаем "открыть"
-		{ id: LIMIT_SWITCH_OPEN_ID, value: HIGH_RESISTANCE }, // Размыкаем концевой "открыть"
+		{
+			id: LIMIT_SWITCH_OPEN_ID,
+			value: BASE_RESISTANCE_CONSTANT.highResistance,
+		}, // Размыкаем концевой "открыть"
 		{
 			id: LIMIT_SWITCH_CLOSE_ID,
 			value: BASE_RESISTANCE[LIMIT_SWITCH_CLOSE_ID],
@@ -85,22 +87,34 @@ export const KRUZAP_BUTTONS_CONFIG = {
 			id: BUTTON_KRUZA_P_CLOSE_ID,
 			value: BASE_RESISTANCE[BUTTON_KRUZA_P_CLOSE_ID],
 		}, // Замыкаем "закрыть"
-		{ id: INSERT_NDO_CMD_OPEN_PTK_ID, value: HIGH_RESISTANCE }, // Размыкаем "открыть"
+		{
+			id: INSERT_NDO_CMD_OPEN_PTK_ID,
+			value: BASE_RESISTANCE_CONSTANT.highResistance,
+		}, // Размыкаем "открыть"
 	],
 	// Срабатывает если кнопку закрыть зажать на 10 сек и более (задвижка закрылась полностью)
 	closing: [
 		{
 			id: BUTTON_KRUZA_P_CLOSE_ID,
-			value: HIGH_RESISTANCE,
+			value: BASE_RESISTANCE_CONSTANT.highResistance,
 		}, // Размыкаем "закрыть"
-		{ id: LIMIT_SWITCH_CLOSE_ID, value: HIGH_RESISTANCE }, // Размыкаем концевой "закрыть"
+		{
+			id: LIMIT_SWITCH_CLOSE_ID,
+			value: BASE_RESISTANCE_CONSTANT.highResistance,
+		}, // Размыкаем концевой "закрыть"
 		{
 			id: LIMIT_SWITCH_OPEN_ID,
 			value: BASE_RESISTANCE[LIMIT_SWITCH_OPEN_ID],
 		}, // Замыкаем концевой "открыть" (задвижка УЖЕ НЕ открыта)
 	],
 	stop: [
-		{ id: BUTTON_KRUZA_P_OPEN_ID, value: HIGH_RESISTANCE }, // Размыкаем "открыть"
-		{ id: BUTTON_KRUZA_P_CLOSE_ID, value: HIGH_RESISTANCE }, // Размыкаем "закрыть"
+		{
+			id: BUTTON_KRUZA_P_OPEN_ID,
+			value: BASE_RESISTANCE_CONSTANT.highResistance,
+		}, // Размыкаем "открыть"
+		{
+			id: BUTTON_KRUZA_P_CLOSE_ID,
+			value: BASE_RESISTANCE_CONSTANT.highResistance,
+		}, // Размыкаем "закрыть"
 	],
 };

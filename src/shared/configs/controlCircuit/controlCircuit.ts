@@ -96,7 +96,7 @@ import {
 } from './constants';
 import { buildMalfunctions } from '../malfunctionTemplates';
 import { getResistanceByKind } from '../../utils/getResistanceByKind/getResistanceByKind';
-import { ELEMENT_KIND } from '../elementKind';
+import { BASE_RESISTANCE_CONSTANT, ELEMENT_KIND } from '../elementKind';
 
 // ======================== Общая часть (c.0, c.1, c.2) ========================
 
@@ -254,7 +254,7 @@ export const vstavkaNDO_komandaOtkrytSPTK: CircuitElement = {
 	id: INSERT_NDO_CMD_OPEN_PTK_ID,
 	name: 'Вставка NDO (команда открыть с ПТК)',
 	kind: ELEMENT_KIND.BLOCKING_CONTACT,
-	resistance: getResistanceByKind(ELEMENT_KIND.BLOCKING_CONTACT),
+	resistance: BASE_RESISTANCE_CONSTANT.highResistance,
 	startPoint: OPEN_CMD_PTK_BRANCH_POINT_ID,
 	endPoint: OPEN_NDO_CMD_PTK_INPUT_POINT_ID,
 	malfunctions: buildMalfunctions(
@@ -344,7 +344,7 @@ export const knopkaKRUZAP_komandaOtkryt: CircuitElement = {
 	id: BUTTON_KRUZA_P_OPEN_ID,
 	name: 'Кнопка КРУЗА-П (команда открыть с КРУЗА-П)',
 	kind: ELEMENT_KIND.BLOCKING_CONTACT,
-	resistance: getResistanceByKind(ELEMENT_KIND.BLOCKING_CONTACT),
+	resistance: BASE_RESISTANCE_CONSTANT.highResistance,
 	startPoint: OPEN_BUTTON_INPUT_POINT_ID,
 	endPoint: OPEN_BUTTON_OUTPUT_POINT_ID,
 	malfunctions: buildMalfunctions(
@@ -515,7 +515,7 @@ export const vstavkaNDO_komandaZakrytSPTK: CircuitElement = {
 	id: INSERT_NDO_CMD_CLOSE_PTK_ID,
 	name: 'Вставка NDO (команда закрыть с ПТК)',
 	kind: ELEMENT_KIND.BLOCKING_CONTACT,
-	resistance: getResistanceByKind(ELEMENT_KIND.BLOCKING_CONTACT),
+	resistance: BASE_RESISTANCE_CONSTANT.highResistance,
 	startPoint: CLOSE_CMD_PTK_BRANCH_POINT_ID,
 	endPoint: CLOSE_NDO_CMD_PTK_INPUT_POINT_ID,
 	malfunctions: buildMalfunctions(
@@ -603,7 +603,7 @@ export const knopkaKRUZAP_komandaZakryt: CircuitElement = {
 	id: BUTTON_KRUZA_P_CLOSE_ID,
 	name: 'Кнопка КРУЗА-П (команда закрыть с КРУЗА-П)',
 	kind: ELEMENT_KIND.BLOCKING_CONTACT,
-	resistance: getResistanceByKind(ELEMENT_KIND.BLOCKING_CONTACT),
+	resistance: BASE_RESISTANCE_CONSTANT.highResistance,
 	startPoint: CLOSE_BUTTON_INPUT_POINT_ID,
 	endPoint: CLOSE_BUTTON_OUTPUT_POINT_ID,
 	malfunctions: buildMalfunctions(

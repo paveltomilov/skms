@@ -1,6 +1,7 @@
 // id точек схемы
 
 import { IPoint } from '../types/scheme';
+import { buildPointElementConnections } from '../utils/buildPointElementConnections';
 import {
 	CONTROL_POWER_FEED_POINT_ID,
 	CONTROL_BREAKER_INPUT_POINT_ID,
@@ -82,8 +83,8 @@ import {
 	POWER_CIRCUIT_NEUTRAL_ID,
 } from './powerCircuit/constants';
 
-// Точки для подключения щупов на схеме
-export const SCHEME_POINTS: Record<string, IPoint> = {
+// Базовые точки для подключения щупов на схеме
+const SCHEME_POINTS_BASE: Record<string, IPoint> = {
 	[PHASE_A_POINT_ID]: { x: 87, y: 12, state: true },
 	[PHASE_B_POINT_ID]: { x: 129, y: 27, state: true },
 	[PHASE_C_POINT_ID]: { x: 171, y: 42, state: true },
@@ -177,6 +178,30 @@ export const SCHEME_POINTS: Record<string, IPoint> = {
 	[OPEN_LAMP_BRANCH_POINT_ID]: { state: false },
 	[OPEN_LAMP_INPUT_POINT_ID]: { state: false },
 };
+
+/**
+ * Обогащает точки информацией о подключенных элементах схемы.
+ * Для каждой точки добавляет массив позиционных ID элементов, подключенных к этой точке.
+ */
+function enrichPointsWithElements(
+	points: Record<string, IPoint>,
+): Record<string, IPoint> {
+	const connections = buildPointElementConnections();
+	const enriched: Record<string, IPoint> = {};
+
+	for (const [pointId, point] of Object.entries(points)) {
+		enriched[pointId] = {
+			...point,
+			elements: connections[pointId] || [],
+		};
+	}
+
+	return enriched;
+}
+
+// Точки с информацией о подключенных элементах
+export const SCHEME_POINTS: Record<string, IPoint> =
+	enrichPointsWithElements(SCHEME_POINTS_BASE);
 
 function extractStates(SCHEME_POINTS: Record<string, IPoint>) {
 	const result: Record<string, boolean> = {};

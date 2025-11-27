@@ -4,7 +4,8 @@ import { FC, useEffect } from 'react';
 import { SCHEME_ELEMENTS } from '@/shared/configs/schemeElements';
 import { SchemeElement } from '@/entities/SchemeElement';
 import { SchemePoint } from '@/entities/SchemePoint';
-import { useAppSelector } from '@/shared/hooks/store';
+import { useAppSelector, useAppDispatch } from '@/shared/hooks/store';
+import { setVoltagePoints } from '@/store/pointsSlice';
 import Probe from '@/entities/Probe';
 import { ProbeColor } from '@/shared/types/multimeter';
 import { InputCircuitBreaker } from '@/entities/InputCircuitBreaker';
@@ -13,7 +14,7 @@ import { useGateMalfunctions } from '@/shared/hooks/useGateMalfunctions';
 import { setNewVoltagePoints } from '@/shared/utils/setPointsVoltage/setPointsVoltage';
 
 const Scheme: FC = () => {
-	//const dispatch = useAppDispatch();
+	const dispatch = useAppDispatch();
 
 	// для рендера щупов
 	const activeProbe = useAppSelector(
@@ -32,8 +33,10 @@ const Scheme: FC = () => {
 	const scheme = useAppSelector(state => state.circuit);
 
 	useEffect(() => {
-		setNewVoltagePoints(scheme, points);
-	}, [scheme]);
+		const updatedPoints = setNewVoltagePoints(scheme, points);
+		dispatch(setVoltagePoints(updatedPoints));
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [scheme, dispatch]);
 
 	return (
 		<div className={styles.scheme}>

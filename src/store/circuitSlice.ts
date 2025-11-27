@@ -78,7 +78,8 @@ const circuitSlice = createSlice({
 			action: PayloadAction<{ id: string; value: number }>,
 		) {
 			const { id, value } = action.payload;
-
+			console.log('id', id);
+			console.log('value', value);
 			let element;
 			try {
 				element = findElementByID(id, state);

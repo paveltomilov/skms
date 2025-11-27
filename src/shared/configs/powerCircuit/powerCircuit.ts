@@ -92,7 +92,7 @@ import {
 } from './constants';
 import { buildMalfunctions } from '../malfunctionTemplates';
 import { getResistanceByKind } from '../../utils/getResistanceByKind/getResistanceByKind';
-import { ELEMENT_KIND } from '../elementKind';
+import { ELEMENT_KIND, BASE_RESISTANCE_CONSTANT } from '../elementKind';
 
 // ======================== Фаза A (p.0.*) ========================
 
@@ -153,7 +153,7 @@ export const kontaktPuskatelyaOtkrytoFazaA: CircuitElement = {
 	id: STARTER_CONTACT_OPEN_PHASE_A_ID,
 	name: 'Контакт пускателя открыто фаза A',
 	kind: ELEMENT_KIND.STARTER_CONTACT,
-	resistance: getResistanceByKind(ELEMENT_KIND.STARTER_CONTACT),
+	resistance: BASE_RESISTANCE_CONSTANT.highResistance,
 	startPoint: POINT_BEFORE_STARTER_OPEN_PHASE_A_ID,
 	endPoint: POINT_AFTER_STARTER_OPEN_PHASE_A_ID,
 	malfunctions: buildMalfunctions(
@@ -192,7 +192,7 @@ export const kontaktPuskatelyaZakrytoFazaA: CircuitElement = {
 	id: STARTER_CONTACT_CLOSE_PHASE_A_ID,
 	name: 'Контакт пускателя закрыто фаза A',
 	kind: ELEMENT_KIND.STARTER_CONTACT,
-	resistance: getResistanceByKind(ELEMENT_KIND.STARTER_CONTACT),
+	resistance: BASE_RESISTANCE_CONSTANT.highResistance,
 	startPoint: POINT_BEFORE_STARTER_CLOSE_PHASE_A_ID,
 	endPoint: POINT_AFTER_STARTER_CLOSE_PHASE_A_ID,
 	malfunctions: buildMalfunctions(
@@ -326,7 +326,7 @@ export const kontaktPuskatelyaOtkrytoFazaB: CircuitElement = {
 	id: STARTER_CONTACT_OPEN_PHASE_B_ID,
 	name: 'Контакт пускателя открыто фаза B',
 	kind: ELEMENT_KIND.STARTER_CONTACT,
-	resistance: getResistanceByKind(ELEMENT_KIND.STARTER_CONTACT),
+	resistance: BASE_RESISTANCE_CONSTANT.highResistance,
 	startPoint: POINT_BEFORE_STARTER_OPEN_PHASE_B_ID,
 	endPoint: POINT_AFTER_STARTER_OPEN_PHASE_B_ID,
 	malfunctions: buildMalfunctions(
@@ -365,7 +365,7 @@ export const kontaktPuskatelyaZakrytoFazaB: CircuitElement = {
 	id: STARTER_CONTACT_CLOSE_PHASE_B_ID,
 	name: 'Контакт пускателя закрыто фаза B',
 	kind: ELEMENT_KIND.STARTER_CONTACT,
-	resistance: getResistanceByKind(ELEMENT_KIND.STARTER_CONTACT),
+	resistance: BASE_RESISTANCE_CONSTANT.highResistance,
 	startPoint: POINT_BEFORE_STARTER_CLOSE_PHASE_B_ID,
 	endPoint: POINT_AFTER_STARTER_CLOSE_PHASE_B_ID,
 	malfunctions: buildMalfunctions(
@@ -498,7 +498,7 @@ export const kontaktPuskatelyaOtkrytoFazaC: CircuitElement = {
 	id: STARTER_CONTACT_OPEN_PHASE_C_ID,
 	name: 'Контакт пускателя открыто фаза C',
 	kind: ELEMENT_KIND.STARTER_CONTACT,
-	resistance: getResistanceByKind(ELEMENT_KIND.STARTER_CONTACT),
+	resistance: BASE_RESISTANCE_CONSTANT.highResistance,
 	startPoint: POINT_BEFORE_STARTER_OPEN_PHASE_C_ID,
 	endPoint: POINT_AFTER_STARTER_OPEN_PHASE_C_ID,
 	malfunctions: buildMalfunctions(
@@ -537,7 +537,7 @@ export const kontaktPuskatelyaZakrytoFazaC: CircuitElement = {
 	id: STARTER_CONTACT_CLOSE_PHASE_C_ID,
 	name: 'Контакт пускателя закрыто фаза C',
 	kind: ELEMENT_KIND.STARTER_CONTACT,
-	resistance: getResistanceByKind(ELEMENT_KIND.STARTER_CONTACT),
+	resistance: BASE_RESISTANCE_CONSTANT.highResistance,
 	startPoint: POINT_BEFORE_STARTER_CLOSE_PHASE_C_ID,
 	endPoint: POINT_AFTER_STARTER_CLOSE_PHASE_C_ID,
 	malfunctions: buildMalfunctions(
