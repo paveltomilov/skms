@@ -4,12 +4,12 @@
 	background-color: var(--lan-bright-cyan---lime-green);
 	margin-bottom: 24px;
 
-	@media (max-width: 1024px) {
+	@media (max-width: 1200px) {
 		padding: 44px;
 		padding-bottom: 51px;
 	}
 
-	@media (max-width: 480px) {
+	@media (max-width: 576px) {
 		padding: 33px;
 		padding-left: 16px;
 		padding-right: 16px;
@@ -24,7 +24,7 @@
 		grid-row-gap: 66px;
 		margin-bottom: 43px;
 
-		@media (max-width: 767px) {
+		@media (max-width: 576px) {
 			grid-template-columns: 1fr;
 			grid-row-gap: 44px;
 		}
@@ -44,12 +44,12 @@
 		color: var(--lan-very-dark-mostly-black-blue);
 		margin-bottom: 52px;
 
-		@media (max-width: 1024px) {
+		@media (max-width: 1200px) {
 			max-width: 350px;
 			margin-bottom: 46px;
 		}
 
-		@media (max-width: 767px) {
+		@media (max-width: 576px) {
 			font-size: 20px;
 			margin-bottom: 25px;
 		}
@@ -103,8 +103,12 @@
 		}
 
 		@media (max-width: 767px) {
-			width: 329px;
+			width: 418px;
 			margin-bottom: 12px;
+		}
+
+		@media (max-width: 576px) {
+			width: 329px;
 		}
 	}
 
@@ -114,6 +118,10 @@
 		align-items: center;
 
 		@media (max-width: 767px) {
+			width: 418px;
+		}
+
+		@media (max-width: 576px) {
 			width: 329px;
 		}
 	}
@@ -153,7 +161,7 @@
 /* Базовый стиль чек‑бокса */
 .checkbox__descr {
 	position: relative; /* нужен для ::before */
-	padding-left: 30px; /* отступ, чтобы место на чек‑бокс */
+	padding-left: 37px; /* отступ, чтобы место на чек‑бокс */
 	cursor: pointer;
 	user-select: none;
 	font-family: var(--second-family);

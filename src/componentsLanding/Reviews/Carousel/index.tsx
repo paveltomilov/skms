@@ -33,12 +33,11 @@ const Carousel: FC<{ slides: React.ReactNode[] }> = ({ slides }) => {
 					disableOnInteraction: false,
 				}}
 				breakpoints={{
-					390: {
-						slidesPerView: 1,
-					},
-					768: {
+					576: {
 						slidesPerView: 1.077,
+						slidesPerGroup: 1,
 					},
+
 					992: {
 						slidesPerView: 2,
 						slidesPerGroup: 2,

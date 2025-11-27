@@ -65,7 +65,6 @@ const Advantages: FC = () => {
 						slidesPerView={1.08}
 						spaceBetween={16}
 						breakpoints={{
-							480: { slidesPerView: 1 },
 							768: { slidesPerView: 2 },
 							1024: { slidesPerView: 3 },
 						}}

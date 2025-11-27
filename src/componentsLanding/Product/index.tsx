@@ -8,7 +8,7 @@ import PlayIcon from '../IconSvg/play';
 import { useMediaQuery } from 'react-responsive';
 
 const Product: FC = () => {
-	const isMobile = useMediaQuery({ maxWidth: 479 });
+	const isMobile = useMediaQuery({ maxWidth: 576 });
 	return (
 		<section id="product" className={styles.product}>
 			<div className={`${styles.product__container} container`}>

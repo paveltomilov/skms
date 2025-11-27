@@ -8,7 +8,7 @@
 		padding-top: 36px;
 		background: url('/images/survey-bg.png') no-repeat center / cover;
 
-		@media (max-width: 480px) {
+		@media (max-width: 576px) {
 			justify-content: flex-start;
 			align-items: flex-start;
 			padding-top: 32px;
@@ -19,7 +19,7 @@
 	&__title {
 		margin-bottom: 12px;
 
-		@media (max-width: 480px) {
+		@media (max-width: 576px) {
 			max-width: 280px;
 			margin-bottom: 8px;
 		}
@@ -35,7 +35,8 @@
 		color: var(--lan-light-grayish-cyan);
 		margin-bottom: 24px;
 
-		@media (max-width: 480px) {
+		@media (max-width: 576px) {
+			max-width: 320px;
 			margin-right: 0;
 		}
 	}

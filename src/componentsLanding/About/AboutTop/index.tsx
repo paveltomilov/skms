@@ -5,7 +5,7 @@ import styles from './styles.module.scss';
 import SectionTitle from '../../SectionTitle';
 
 const AboutTop: FC = () => {
-	const isMobile = useMediaQuery({ maxWidth: 767 });
+	const isMobile = useMediaQuery({ maxWidth: 576 });
 	return (
 		<section className={styles.abouttop}>
 			<div className={`${styles.abouttop__container} container`}>

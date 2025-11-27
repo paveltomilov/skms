@@ -31,7 +31,7 @@ const AboutBottom: FC = () => {
 						<div className={styles.content__right}>
 							<p className={styles.content__right__description}>
 								Мы выяснили: ценность тренажёра в практике,
-								которая приближает к реальным условиям
+								которая приближает к&nbsp;реальным условиям
 							</p>
 							<div className={styles.statistic}>
 								<h4 className={styles.statistic__title}>

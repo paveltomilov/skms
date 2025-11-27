@@ -1,7 +1,7 @@
 .burger {
 	display: none;
 
-	@media (max-width: 1279px) {
+	@media (max-width: 1200px) {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;

@@ -2,11 +2,11 @@
 	padding-top: 172px;
 	padding-bottom: 18px;
 
-	@media (max-width: 1279px) {
+	@media (max-width: 1200px) {
 		padding-top: 148px;
 	}
 
-	@media (max-width: 767px) {
+	@media (max-width: 576px) {
 		padding-top: 100px;
 	}
 }
@@ -31,7 +31,7 @@
 		justify-content: center;
 		align-items: center;
 
-		@media (max-width: 1279px) {
+		@media (max-width: 1200px) {
 			height: 214px;
 		}
 
@@ -39,7 +39,7 @@
 			height: 138px;
 		}
 
-		@media (max-width: 767px) {
+		@media (max-width: 576px) {
 			height: 144px;
 		}
 	}

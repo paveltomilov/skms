@@ -1,7 +1,7 @@
 .forwhom {
 	padding-top: 90px;
 
-	@media (max-width: 1024px) {
+	@media (max-width: 1200px) {
 		padding-top: 64px;
 	}
 
@@ -12,47 +12,48 @@
 	&__container {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
-		grid-template-rows: repeat(2, auto);
+		grid-template-rows: repeat(3, auto);
 		grid-column-gap: 24px;
 		grid-row-gap: 0px;
 
-		@media (max-width: 1024px) {
+		@media (max-width: 1200px) {
 			grid-column-gap: 20px;
 		}
 
-		@media (max-width: 767px) {
+		@media (max-width: 768px) {
+			height: 546px;
+			grid-template-rows: repeat(3, 1fr);
+		}
+
+		@media (max-width: 576px) {
+			height: 838px;
 			grid-template-columns: 1fr;
-			grid-template-rows: repeat(3, auto);
+			grid-template-rows: repeat(2, auto);
 			grid-row-gap: 29px;
+			place-items: center;
 		}
 	}
 
 	&__title {
-		grid-area: 1 / 1 / 2 / 3;
-		display: flex;
-		justify-content: flex-end;
-		padding-right: 221px;
+		grid-area: 1 / 2 / 2 / 3;
 		margin-bottom: 52px;
 
-		@media (max-width: 1024px) {
-			padding-right: 166px;
+		@media (max-width: 1200px) {
 			margin-bottom: 44px;
 		}
 
 		@media (max-width: 768px) {
 			grid-area: 1 / 1 / 2 / 2;
-			justify-content: flex-start;
-			padding-right: 20px;
 		}
 
-		@media (max-width: 767px) {
-			grid-area: 1 / 1 / 2 / 2;
+		@media (max-width: 576px) {
 			margin-bottom: 0;
+			margin-right: auto;
 		}
 	}
 
 	&__left {
-		grid-area: 2 / 1 / 3 / 2;
+		grid-area: 2 / 1 / 4 / 2;
 		height: 384px;
 		background: url(/images/img-for.png) no-repeat center / cover;
 		border-radius: 12px;
@@ -62,19 +63,23 @@
 			background: url(/images/img-for768.png) no-repeat center / cover;
 		}
 
-		@media (max-width: 767px) {
-			height: 327px;
+		@media (max-width: 576px) {
+			display: flex;
+			justify-content: center;
+			align-items: center;
 			grid-area: 2 / 1 / 3 / 2;
+			height: 327px;
+			width: 359px;
 		}
 	}
 
 	&__list {
-		grid-area: 2 / 2 / 3 / 3;
+		grid-area: 2 / 2 / 4 / 3;
 		display: flex;
 		flex-direction: column;
 		gap: 48px;
 
-		@media (max-width: 1024px) {
+		@media (max-width: 1200px) {
 			gap: 43px;
 		}
 
@@ -84,7 +89,7 @@
 			gap: 45px;
 		}
 
-		@media (max-width: 767px) {
+		@media (max-width: 576px) {
 			grid-area: 3 / 1 / 4 / 2;
 			padding-top: 0;
 			gap: 29px;
@@ -95,6 +100,10 @@
 .item {
 	display: flex;
 	flex-direction: column;
+
+	@media (max-width: 576px) {
+		width: 359px;
+	}
 
 	&__title {
 		font-family: var(--second-family);
@@ -111,5 +120,6 @@
 		font-size: 17px;
 		line-height: 128%;
 		color: var(--lan-light-grayish-cyan);
+		padding-right: 10px;
 	}
 }

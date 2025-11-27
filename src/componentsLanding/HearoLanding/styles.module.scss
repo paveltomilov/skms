@@ -1,11 +1,11 @@
 .hero {
-	margin-top: -88px;
+	margin-top: -90px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 
-	@media (max-width: 480px) {
-		margin-top: -128px;
+	@media (max-width: 576px) {
+		margin-top: -130px;
 	}
 
 	&__container {
@@ -18,20 +18,21 @@
 		color: var(--lan-light-grayish-blue);
 		z-index: 10;
 
-		@media (max-width: 1024px) {
+		@media (max-width: 1200px) {
 			height: 768px;
+			background: url(/images/1024.png) no-repeat center / cover;
 		}
 
 		@media (max-width: 768px) {
 			height: 1024px;
+			background: url(/images/768.png) no-repeat center / cover;
 			justify-content: center;
 			align-items: center;
 		}
 
-		@media (max-width: 480px) {
-			align-items: flex-start;
-			justify-content: flex-start;
+		@media (max-width: 576px) {
 			height: 852px;
+			background: url(/images/393.png) no-repeat center / cover;
 		}
 	}
 
@@ -39,9 +40,9 @@
 		padding-top: 169px;
 		margin-bottom: 87px;
 
-		@media (max-width: 1024px) {
+		@media (max-width: 1200px) {
 			padding-top: 161px;
-			margin-bottom: 97px;
+			margin-bottom: 93px;
 		}
 
 		@media (max-width: 768px) {
@@ -49,8 +50,8 @@
 			padding: 0;
 		}
 
-		@media (max-width: 480px) {
-			padding-top: 270px;
+		@media (max-width: 576px) {
+			padding-top: 134px;
 			margin-bottom: 105px;
 		}
 	}

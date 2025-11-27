@@ -6,9 +6,11 @@ const ForWhom: FC = () => {
 	return (
 		<section className={styles.forwhom}>
 			<div className={`${styles.forwhom__container} container`}>
-				<div className={styles.forwhom__title}>
-					<SectionTitle title="Для кого подойдет&nbsp;?" />
-				</div>
+				<SectionTitle
+					className={styles.forwhom__title}
+					title="Для кого подойдет&nbsp;?"
+				/>
+
 				<div className={styles.forwhom__left}></div>
 				<ul className={styles.forwhom__list}>
 					<li className={styles.item}>

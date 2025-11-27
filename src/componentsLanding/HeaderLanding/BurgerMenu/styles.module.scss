@@ -9,6 +9,7 @@
 		padding: 24px;
 		transform: translateY(-20px);
 		opacity: 0;
+		pointer-events: none;
 		transition: max-height 0.2s ease-out, transform 0.2s ease-out,
 			opacity 0.2s ease-out;
 
@@ -16,7 +17,7 @@
 			right: 36px;
 		}
 
-		@media (max-width: 480px) {
+		@media (max-width: 576px) {
 			right: 17px;
 		}
 	}
@@ -104,4 +105,5 @@
 	max-height: 346px;
 	transform: translateY(0);
 	opacity: 1;
+	pointer-events: auto;
 }
