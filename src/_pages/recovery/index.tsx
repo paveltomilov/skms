@@ -19,6 +19,11 @@ const Recovery = () => {
 				<h1 className={styles.main_recovery_container__title}>
 					Восстановление пароля
 				</h1>
+				{step === 2 && (
+					<span className={styles.main_recovery_container__description}>
+						Введите новый пароль
+					</span>
+				)}
 				<FormRecovery steps={step} setSteps={setStep} isOpen={setOpenPopup} />
 				{step === 1 && (
 					<p className={styles.main_recovery_container__text}>

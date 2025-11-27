@@ -17,6 +17,32 @@ type UseRecoveryFormProps = {
 	steps?: number;
 };
 
+const getValidationMessage = (fieldName: keyof RecoveryFormData, value: string): string => {
+	const triggedValue:string = value.trim();
+
+	switch (fieldName) {
+		case 'password':
+		case 'confirm_password':
+			if (triggedValue.length < 12) {
+				return 'Пароль должен содержать не менее 12 символов';
+			}
+			if (triggedValue.length > 100) {
+				return 'Пароль должен содержать не более 100 символов';
+			}
+			if (!/[A-Z]/.test(triggedValue)) {
+				return 'Отсутствует символ в верхнем регистре';
+			}
+			if (/[а-яёА-ЯЁ]/.test(triggedValue)) {
+				return 'Пароль не должен содержать кириллицу';
+			}
+			return 'Пароль должен содержать заглавную и строчную букву, цифру и специальный символ';
+
+		default:
+			const fieldConfig = configRecovery.find(field => field.name === fieldName);
+			return fieldConfig?.warnMessage || '';
+	}
+};
+
 export const useRecoveryForm = ({ steps }: UseRecoveryFormProps) => {
 	const [values, setValues] =
 		useState<RecoveryFormData>(initialStateRecovery);
@@ -52,6 +78,10 @@ export const useRecoveryForm = ({ steps }: UseRecoveryFormProps) => {
 		return map;
 	}, []);
 
+	const getWarnMessage = (fieldName: keyof RecoveryFormData): string => {
+		return getValidationMessage(fieldName, values[fieldName] || '');
+	};
+
 	// Сброс формы и ошибок при смене шага
 	useEffect(() => {
 		setValues(initialStateRecovery);
@@ -67,34 +97,6 @@ export const useRecoveryForm = ({ steps }: UseRecoveryFormProps) => {
 			confirm_password: 0,
 		});
 	}, [steps]);
-
-	// Мгновенная валидация при вводе (для недопустимых символов)
-	useEffect(() => {
-		// Проверяем только активные поля
-		activeFields.forEach(field => {
-			const value = values[field] ?? '';
-
-			// Для email проверяем кириллицу
-			if (field === 'email') {
-				const cyrillicPattern = /[а-яёА-ЯЁ]/;
-				if (cyrillicPattern.test(value)) {
-					setValidationStatus(prev => ({ ...prev, [field]: 2 }));
-				}
-			}
-
-			// Для пароля проверяем кириллицу и запрещённые символы
-			if (field === 'password' || field === 'confirm_password') {
-				const cyrillicPattern = /[а-яёА-ЯЁ]/;
-				const forbiddenSymbolsPattern = /[@#!]/;
-				if (
-					cyrillicPattern.test(value) ||
-					forbiddenSymbolsPattern.test(value)
-				) {
-					setValidationStatus(prev => ({ ...prev, [field]: 2 }));
-				}
-			}
-		});
-	}, [values, activeFields]);
 
 	// Дебоунс-валидация для остальных проверок
 	useEffect(() => {
@@ -116,7 +118,6 @@ export const useRecoveryForm = ({ steps }: UseRecoveryFormProps) => {
 		let { value } = e.target;
 
 		// Для email только удаляем пробелы и приводим к нижнему регистру
-		// НЕ удаляем кириллицу, чтобы валидация могла показать предупреждение
 		if (name === 'email') {
 			value = value.replace(/\s+/g, '').toLowerCase();
 		}
@@ -157,6 +158,7 @@ export const useRecoveryForm = ({ steps }: UseRecoveryFormProps) => {
 		serverErrors,
 		isValid,
 		activeFields,
+		getWarnMessage,
 		configMap,
 		validateForm,
 		resetServerErrors,

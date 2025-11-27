@@ -143,12 +143,12 @@ export const useRecoveryCode = (initialCount = 60) => {
 			setErrorMessage(
 				res.success
 					? 'Неверный код'
-					: res.errors?.detail || 'Ошибка проверки кода',
+					: res.errors?.detail || 'Неверный код',
 			);
 			return false;
 		} catch {
 			setValidationStatus(false);
-			setErrorMessage('Ошибка проверки кода');
+			setErrorMessage('Неверный код');
 			return false;
 		}
 	}, [code, isComplete]);
