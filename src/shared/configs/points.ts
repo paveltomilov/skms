@@ -1,7 +1,7 @@
 // id точек схемы
 
 import { IPoint } from '../types/scheme';
-import { buildPointElementConnections } from '../utils/buildPointElementConnections';
+
 import {
 	CONTROL_POWER_FEED_POINT_ID,
 	CONTROL_BREAKER_INPUT_POINT_ID,
@@ -184,18 +184,7 @@ export const SCHEME_POINTS_BASE: Record<string, IPoint> = {
 function enrichPointsWithElements(
 	points: Record<string, IPoint>,
 ): Record<string, IPoint> {
-	const connections = buildPointElementConnections();
-	console.log(connections);
-	const enriched: Record<string, IPoint> = {};
-	console.log(points);
-	for (const [pointId, point] of Object.entries(points)) {
-		enriched[pointId] = {
-			...point,
-			elements: connections[pointId] || [],
-		};
-	}
-	console.log(enriched);
-	return enriched;
+	return points;
 }
 
 // Точки с информацией о подключенных элементах
