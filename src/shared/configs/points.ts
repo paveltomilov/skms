@@ -203,4 +203,4 @@ function extractStates(SCHEME_POINTS: Record<string, IPoint>) {
 }
 
 export const pointsState = extractStates(SCHEME_POINTS);
-export { CONTROL_CIRCUIT_NEUTRAL_ID };
+
