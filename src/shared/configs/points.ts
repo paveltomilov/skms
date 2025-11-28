@@ -8,9 +8,6 @@ import {
 	CONTROL_BREAKER_OUTPUT_POINT_ID,
 	OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID,
 	OPEN_LIMIT_SWITCH_INPUT_POINT_ID,
-	WIRE_LIMIT_OPEN_TO_TERMINAL_ID,
-	LIMIT_SWITCH_CLOSE_ID,
-	WIRE_LIMIT_CLOSE_TO_TERMINAL_ID,
 	COMMANDS_CLOSE_POINT_ID,
 	CLOSE_INTERLOCK_OUTPUT_POINT_ID,
 	CLOSE_INTERLOCK_INPUT_POINT_ID,
@@ -84,7 +81,7 @@ import {
 } from './powerCircuit/constants';
 
 // Базовые точки для подключения щупов на схеме
-const SCHEME_POINTS_BASE: Record<string, IPoint> = {
+export const SCHEME_POINTS_BASE: Record<string, IPoint> = {
 	[PHASE_A_POINT_ID]: { x: 87, y: 12, state: true },
 	[PHASE_B_POINT_ID]: { x: 129, y: 27, state: true },
 	[PHASE_C_POINT_ID]: { x: 171, y: 42, state: true },
@@ -121,14 +118,17 @@ const SCHEME_POINTS_BASE: Record<string, IPoint> = {
 
 	[CONTROL_BREAKER_INPUT_POINT_ID]: { x: 320, y: 215, state: true },
 	[CONTROL_BREAKER_OUTPUT_POINT_ID]: { x: 371, y: 215, state: true },
-
+	//ветка открыть
+	[OPEN_JUNCTION_BOX_POINT_ID]: { state: false },
+	[OPEN_LIMIT_SWITCH_INPUT_POINT_ID]: { state: false },
 	[OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID]: { x: 518, y: 215, state: true },
-	[WIRE_LIMIT_OPEN_TO_TERMINAL_ID]: { x: 595, y: 215, state: true },
+	[OPEN_TERMINAL_BLOCK_POINT_ID]: { x: 595, y: 215, state: true },
+
 	[COMANDS_OPEN_POINT_ID]: { x: 776, y: 216, state: false },
 	[OPEN_INTERLOCK_OUTPUT_POINT_ID]: { x: 847, y: 215, state: false },
 
-	[LIMIT_SWITCH_CLOSE_ID]: { x: 518, y: 480, state: true },
-	[WIRE_LIMIT_CLOSE_TO_TERMINAL_ID]: { x: 594, y: 480, state: true },
+	[CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID]: { x: 518, y: 480, state: true },
+	[CLOSE_TERMINAL_BLOCK_POINT_ID]: { x: 594, y: 480, state: true },
 	[COMMANDS_CLOSE_POINT_ID]: { x: 766, y: 480, state: false },
 	[CLOSE_INTERLOCK_OUTPUT_POINT_ID]: { x: 845, y: 480, state: false },
 
@@ -141,6 +141,7 @@ const SCHEME_POINTS_BASE: Record<string, IPoint> = {
 	[MERGE_POINT_AFTER_STARTERS_PHASE_A_ID]: { state: false },
 	[MERGE_POINT_AFTER_STARTERS_PHASE_B_ID]: { state: false },
 	[MERGE_POINT_AFTER_STARTERS_PHASE_C_ID]: { state: false },
+
 	[JUNCTION_BOX_INPUT_POINT_PHASE_A_ID]: { state: false },
 	[JUNCTION_BOX_INPUT_POINT_PHASE_B_ID]: { state: false },
 	[JUNCTION_BOX_INPUT_POINT_PHASE_C_ID]: { state: false },
@@ -150,9 +151,7 @@ const SCHEME_POINTS_BASE: Record<string, IPoint> = {
 
 	// Control circuit internal points (без координат для отображения)
 	// CONTROL_NEUTRAL_POINT_ID уже определен выше как CONTROL_CIRCUIT_NEUTRAL_ID
-	[OPEN_JUNCTION_BOX_POINT_ID]: { state: false },
-	[OPEN_LIMIT_SWITCH_INPUT_POINT_ID]: { state: false },
-	[OPEN_TERMINAL_BLOCK_POINT_ID]: { state: false },
+
 	[OPEN_NDI_NOT_OPEN_INPUT_POINT_ID]: { state: false },
 	[OPEN_NDI_NOT_OPEN_OUTPUT_POINT_ID]: { state: false },
 	[OPEN_CMD_PTK_BRANCH_POINT_ID]: { state: false },
@@ -163,10 +162,9 @@ const SCHEME_POINTS_BASE: Record<string, IPoint> = {
 	[OPEN_COIL_INPUT_POINT_ID]: { state: false },
 	[CLOSED_LAMP_BRANCH_POINT_ID]: { state: false },
 	[CLOSED_LAMP_TO_NEUTRAL_POINT_ID]: { state: false },
+
 	[CLOSE_JUNCTION_BOX_POINT_ID]: { state: false },
 	[CLOSE_LIMIT_SWITCH_INPUT_POINT_ID]: { state: false },
-	[CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID]: { state: false },
-	[CLOSE_TERMINAL_BLOCK_POINT_ID]: { state: false },
 	[CLOSE_NDI_NOT_CLOSED_INPUT_POINT_ID]: { state: false },
 	[CLOSE_NDI_NOT_CLOSED_OUTPUT_POINT_ID]: { state: false },
 	[CLOSE_CMD_PTK_BRANCH_POINT_ID]: { state: false },
@@ -187,15 +185,16 @@ function enrichPointsWithElements(
 	points: Record<string, IPoint>,
 ): Record<string, IPoint> {
 	const connections = buildPointElementConnections();
+	console.log(connections);
 	const enriched: Record<string, IPoint> = {};
-
+	console.log(points);
 	for (const [pointId, point] of Object.entries(points)) {
 		enriched[pointId] = {
 			...point,
 			elements: connections[pointId] || [],
 		};
 	}
-
+	console.log(enriched);
 	return enriched;
 }
 

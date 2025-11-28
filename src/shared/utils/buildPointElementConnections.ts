@@ -1,5 +1,6 @@
 import { CircuitBranch, CircuitElement } from '@/shared/types/scheme';
 import { initialStateScheme } from '@/shared/configs/scheme';
+import { SCHEME_POINTS_BASE } from '@/shared/configs/points';
 
 /**
  * Рекурсивно извлекает все элементы схемы из ветвей.
@@ -22,7 +23,7 @@ function extractElements(branches: CircuitBranch[]): CircuitElement[] {
 
 /**
  * Создает карту связей: точка -> массив ID элементов, подключенных к этой точке.
- * Элемент считается подключенным к точке, если точка является его startPoint или endPoint.
+ * Элемент считается подключенным к точке, если точка является его endPoint.
  */
 export function buildPointElementConnections(): Record<string, string[]> {
 	const allElements = [
@@ -32,22 +33,18 @@ export function buildPointElementConnections(): Record<string, string[]> {
 
 	const connections: Record<string, string[]> = {};
 
-	for (const element of allElements) {
-		// Добавляем элемент к точке начала
-		if (element.startPoint) {
-			if (!connections[element.startPoint]) {
-				connections[element.startPoint] = [];
-			}
-			connections[element.startPoint].push(element.id);
-		}
+	// Перебираем все точки схемы
+	for (const pointId of Object.keys(SCHEME_POINTS_BASE)) {
+		connections[pointId] = [];
 
-		// Добавляем элемент к точке конца
-		if (element.endPoint) {
-			if (!connections[element.endPoint]) {
-				connections[element.endPoint] = [];
+		// Для каждой точки проверяем все элементы
+		for (const element of allElements) {
+			// Если точка является endPoint элемента, добавляем элемент в массив
+			if (element.endPoint === pointId) {
+				connections[pointId].push(element.id);
 			}
-			connections[element.endPoint].push(element.id);
 		}
 	}
+
 	return connections;
 }
