@@ -15,6 +15,10 @@ import { useAppDispatch } from '@/shared/hooks/store';
 import { updateList } from '@/store/updateListSlice';
 import { FieldConfig } from '../Form';
 import { useUserCookies } from '@/shared/hooks/useUserCookies';
+import {
+	NAME_SURNAME_MAX_LENGTH,
+	PASSWORD_MAX_LENGTH,
+} from '@/shared/configs/login';
 
 const PASSWORD_ERROR = {
 	email: false,
@@ -51,14 +55,22 @@ export const PopupStudentCreate: FC = () => {
 			label: 'Имя',
 			type: 'text',
 			placeholder: 'Имя',
+			maxLength: NAME_SURNAME_MAX_LENGTH,
 		},
 		{
 			name: 'last_name',
 			label: 'Фамилия',
 			type: 'text',
 			placeholder: 'Фамилия',
+			maxLength: NAME_SURNAME_MAX_LENGTH,
 		},
-		{ name: 'email', label: 'Email', type: 'email', placeholder: 'Email' },
+		{
+			name: 'email',
+			label: 'Email',
+			type: 'email',
+			placeholder: 'Email',
+			maxLength: PASSWORD_MAX_LENGTH,
+		},
 	];
 
 	// Функция для рендеринга поля
