@@ -7,11 +7,13 @@ import ProbeHolder from '@/shared/UI/icons/ProbeHolder';
 import Probe from '@/entities/Probe';
 import { useEffect } from 'react';
 import { getMultimeterAction } from '@/store/actions/multimiter/getMultimeterAction';
-import { MultimeterModePropPayload, attachProbe, detachProbe } from '@/store/multimeterSlice';
 import {
-	CONTROL_CIRCUIT_NEUTRAL_ID,
-	POWER_CIRCUIT_NEUTRAL_ID,
-} from '@/shared/configs/points';
+	MultimeterModePropPayload,
+	attachProbe,
+	detachProbe,
+} from '@/store/multimeterSlice';
+import { CONTROL_CIRCUIT_NEUTRAL_ID } from '@/shared/configs/controlCircuit/constants';
+import { POWER_CIRCUIT_NEUTRAL_ID } from '@/shared/configs/powerCircuit/constants';
 
 const Multimeter: React.FC = () => {
 	const dispatch = useAppDispatch();

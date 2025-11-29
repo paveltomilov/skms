@@ -16,7 +16,17 @@ const circuitSlice = createSlice({
 			const id = action.payload;
 			const elementId = id.slice(0, -2); // ID элемента
 			const malfunctionIndex = Number(id.slice(-1)) - 1; // Индекс неисправности (преобразуем в число)
-			const element = findElementByID(elementId, state);
+
+			let element;
+			try {
+				element = findElementByID(elementId, state);
+			} catch (error) {
+				// Если элемент не найден, просто выходим без изменений
+				console.error(
+					`1 Element with id "${elementId}" not found in activateMalfunction: ${error}`,
+				);
+				return;
+			}
 
 			// Проверяем:
 			// 1. Что элемент найден
@@ -40,7 +50,17 @@ const circuitSlice = createSlice({
 			const id = action.payload;
 			const elementId = id.slice(0, -2);
 			const malfunctionIndex = Number(id.slice(-1)) - 1;
-			const element = findElementByID(elementId, state);
+
+			let element;
+			try {
+				element = findElementByID(elementId, state);
+			} catch (error) {
+				console.error(
+					`2 Element with id "${elementId}" not found in deactivateMalfunction: ${error}`,
+				);
+				// Если элемент не найден, просто выходим без изменений
+				return;
+			}
 
 			if (
 				element &&
@@ -58,7 +78,17 @@ const circuitSlice = createSlice({
 			action: PayloadAction<{ id: string; value: number }>,
 		) {
 			const { id, value } = action.payload;
-			const element = findElementByID(id, state);
+
+			let element;
+			try {
+				element = findElementByID(id, state);
+			} catch (error) {
+				console.error(
+					`3 Element with id "${id}" not found in setResistance: ${error}	`,
+				);
+				// Если элемент не найден, просто выходим без изменений
+				return;
+			}
 
 			// Проверяем, что элемент найден и value — число
 			if (element && typeof value === 'number') {

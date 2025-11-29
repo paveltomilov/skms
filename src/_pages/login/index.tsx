@@ -5,17 +5,21 @@ import Form from '@/widgets/Form';
 import { FC, useCallback, useEffect, useState } from 'react';
 import PopupRegistrationDone from '@/entities/PopupRegistrationDone';
 import { checkAuth } from '@/shared/lib/auth';
-import { useRouter } from 'next/navigation';
-import {useAuth} from '@/shared/hooks/useAuth';
-import {getDashboardRoute, UserRole} from '@/shared/configs/routes';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useAuth } from '@/shared/hooks/useAuth';
+import { getDashboardRoute, UserRole } from '@/shared/configs/routes';
 
 const Login: FC = () => {
-	const [isRegisterMode, setIsRegisterMode] = useState<boolean>(false);
 	const [modalSuccess, setModalSuccess] = useState<boolean>(false);
 	const router = useRouter();
 
-	const handleToggleRegisterMode = () => setIsRegisterMode(!isRegisterMode);
-	const {role} = useAuth();
+	const searchParams = useSearchParams();
+	const modeParam = searchParams.get('mode');
+	const [isRegisterMode, setIsRegisterMode] = useState(
+		modeParam === 'signup',
+	);
+
+	const { role } = useAuth();
 
 	const verifyAuth = useCallback(async () => {
 		try {
@@ -25,13 +29,19 @@ const Login: FC = () => {
 				router.push(dashboardRoute);
 			}
 		} catch {
-			console.error('Ошибка проверки аутентификации:');
+			console.error('Ошибка проверки аутентификации');
 		}
 	}, [router, role]);
 
 	useEffect(() => {
 		verifyAuth();
 	}, [verifyAuth]);
+
+	const toggleMode = () => {
+		setIsRegisterMode(prev => !prev);
+		const newMode = isRegisterMode ? 'login' : 'signup';
+		router.replace(`/login?mode=${newMode}`);
+	};
 
 	return (
 		<main
@@ -58,7 +68,7 @@ const Login: FC = () => {
 					{isRegisterMode ? 'Регистрация' : 'Вход'}
 				</h2>
 				<Form
-					toggleRegisterMode={isRegisterMode? 'register': 'login'}
+					toggleRegisterMode={isRegisterMode ? 'register' : 'login'}
 					activateModalSuccess={setModalSuccess}
 				/>
 				<div className={styles.main_wrap}>
@@ -69,7 +79,7 @@ const Login: FC = () => {
 					</span>
 					<button
 						className={styles.main_wrap__link}
-						onClick={handleToggleRegisterMode}
+						onClick={toggleMode}
 					>
 						{isRegisterMode ? 'Войти' : 'Зарегистрироваться!'}
 					</button>

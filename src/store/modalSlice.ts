@@ -13,6 +13,8 @@ export type Modals =
 	| 'starter_coil'
 	| 'blocking_activation'
 	| 'button'
+	| 'input_circuit_breaker'
+	| 'clamp'
 	| 'notification'
 	| 'setSimulation'
 	| 'studentStatistics'
@@ -35,6 +37,8 @@ const initialState: ModalState = {
 	starter_coil: false,
 	blocking_activation: false,
 	button: false,
+	input_circuit_breaker: false,
+	clamp: false,
 	notification: false,
 	setSimulation: false,
 	studentStatistics: false,
