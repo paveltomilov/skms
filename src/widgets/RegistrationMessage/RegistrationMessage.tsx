@@ -30,38 +30,41 @@ const RegistrationMessage: FC<Props> = ({ data, role }) => {
 	}
 	return (
 		<div className={styles.response}>
-			<div className={styles.response__top}>
+			<div className={styles.response__left}>
 				<Success />
-				<p className={styles.response__message}>{responseMessage}</p>
 			</div>
+			<div className={styles.response__right}>
+				<p className={styles.response__message}>{responseMessage}</p>
+				<ul className={styles.response__list}>
+					<li className={styles.response__item}>
+						<span className={styles.response__line}>Имя:</span>
+						<b>{doFirstLatterBig(data.first_name)}</b>
+					</li>
+					<li className={styles.response__item}>
+						<span className={styles.response__line}>Фамилия:</span>
+						<b>{doFirstLatterBig(data.last_name)}</b>
+					</li>
 
-			<ul className={styles.response__list}>
-				<li className={styles.response__item}>
-					<span className={styles.response__line}>Имя:</span>
-					<b>{doFirstLatterBig(data.first_name)}</b>
-				</li>
-				<li className={styles.response__item}>
-					<span className={styles.response__line}>Фамилия:</span>
-					<b>{doFirstLatterBig(data.last_name)}</b>
-				</li>
-
-				<li className={styles.response__item}>
-					<span className={styles.response__line}>Email:</span>
-					<b>{data.email}</b>
-				</li>
-				<li className={styles.response__item}>
-					<span className={styles.response__line}>Пароль:</span>
-					<b id="password">{data.password}</b>
-					<Button
-						title="Скопировать в буфер обмена"
-						className={styles.response__btn}
-						width={32}
-						height={32}
-						onClick={handleCopyPassword}
-						icon={<Copy />}
-					/>
-				</li>
-			</ul>
+					<li className={styles.response__item}>
+						<span className={styles.response__line}>Email:</span>
+						<b>{data.email}</b>
+					</li>
+					<li className={styles.response__item}>
+						<span className={styles.response__line}>Пароль:</span>
+						<span className={styles.response__line__password}>
+							<b id="password">{data.password}</b>
+							<Button
+								title="Скопировать в буфер обмена"
+								className={styles.response__btn}
+								width={32}
+								height={32}
+								onClick={handleCopyPassword}
+								icon={<Copy />}
+							/>
+						</span>
+					</li>
+				</ul>
+			</div>
 		</div>
 	);
 };
