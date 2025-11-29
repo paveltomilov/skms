@@ -149,7 +149,7 @@ export const jumperOtSoyedinitelnojKorobkiDoKontsevogoVyklyuchatelyaOtkryto: Cir
 		kind: ELEMENT_KIND.WIRE,
 		resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 		startPoint: CONTROL_BREAKER_OUTPUT_POINT_ID,
-		endPoint: JUMPER_BOX_TO_LIMIT_OPEN_ID,
+		endPoint: OPEN_JUNCTION_BOX_POINT_ID,
 		malfunctions: buildMalfunctions(
 			JUMPER_BOX_TO_LIMIT_OPEN_ID,
 			ELEMENT_KIND.WIRE,
@@ -703,11 +703,15 @@ export const controlCircuit: CircuitBranch[] = [
 					],
 					provodPeredBlokirovkojOtkrytie,
 					blokirovkaVklyucheniaPuskatelyaNaOtkrytie,
+					provodOtBlokirovkiDoKatushkiOtkrytie,
 					katushkaPuskatelyaOtkryt,
-					provodOtVstavkiNDO_komandaOtkrytSPTKDoNejtrali,
 				],
 				// 4) Лампа «закрыто»: лампа -> нейтраль
-				[lampaVKRUZAP_zakryto, provodOtLampyVKRUZAP_zakrytoDoNejtrali],
+				[
+					provodPeredLampojVKRUZAP_zakryto,
+					lampaVKRUZAP_zakryto,
+					provodOtLampyVKRUZAP_zakrytoDoNejtrali,
+				],
 			],
 		],
 		[
@@ -740,11 +744,15 @@ export const controlCircuit: CircuitBranch[] = [
 					],
 					provodPeredBlokirovkojZakrytie,
 					blokirovkaVklyucheniaPuskatelyaNaZakrytie,
+					provodOtBlokirovkiDoKatushkiZakrytie,
 					katushkaPuskatelyaZakryt,
-					provodOtVstavkiNDO_komandaZakrytSPTKDoNejtrali,
 				],
 				// 3) Лампа «открыто»: лампа -> нейтраль
-				[lampaVKRUZAP_otkryto, provodOtLampyVKRUZAP_otkrytoDoNejtrali],
+				[
+					provodPeredLampojVKRUZAP_otkryto,
+					lampaVKRUZAP_otkryto,
+					provodOtLampyVKRUZAP_otkrytoDoNejtrali,
+				],
 			],
 		],
 	],

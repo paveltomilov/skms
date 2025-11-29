@@ -208,7 +208,7 @@ export const provodOtKontaktaPuskatelyaZakrytoFazaADoFazyC: CircuitElement = {
 	kind: ELEMENT_KIND.WIRE,
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: POINT_AFTER_STARTER_CLOSE_PHASE_A_ID,
-	endPoint: MERGE_POINT_AFTER_STARTERS_PHASE_C_ID, // Идет к фазе C для реверса
+	endPoint: MERGE_POINT_AFTER_STARTERS_PHASE_A_ID, // Идет к фазе C для реверса
 	malfunctions: buildMalfunctions(
 		WIRE_FROM_STARTER_CLOSE_PHASE_A_ID,
 		ELEMENT_KIND.WIRE,
@@ -553,7 +553,7 @@ export const provodOtKontaktaPuskatelyaZakrytoFazaCDoFazyA: CircuitElement = {
 	kind: ELEMENT_KIND.WIRE,
 	resistance: getResistanceByKind(ELEMENT_KIND.WIRE),
 	startPoint: POINT_AFTER_STARTER_CLOSE_PHASE_C_ID,
-	endPoint: MERGE_POINT_AFTER_STARTERS_PHASE_A_ID, // Идет к фазе A для реверса
+	endPoint: MERGE_POINT_AFTER_STARTERS_PHASE_C_ID, // Идет к фазе A для реверса
 	malfunctions: buildMalfunctions(
 		WIRE_FROM_STARTER_CLOSE_PHASE_C_ID,
 		ELEMENT_KIND.WIRE,

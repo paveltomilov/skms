@@ -15,8 +15,6 @@ export interface IPoint {
 	x?: number;
 	y?: number;
 	state: boolean;
-	// Позиционные ID элементов схемы, подключенных к этой точке (где точка является startPoint или endPoint)
-	// Например: ['p.0.0', 'p.0.3.0.2']
 	elements?: string[];
 }
 

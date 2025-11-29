@@ -1,6 +1,7 @@
 // id точек схемы
 
-import { IPoint } from '../types/scheme';
+import { IPoint, CircuitBranch, CircuitElement } from '../types/scheme';
+import { initialStateScheme } from './scheme';
 
 import {
 	CONTROL_POWER_FEED_POINT_ID,
@@ -80,8 +81,165 @@ import {
 	POWER_CIRCUIT_NEUTRAL_ID,
 } from './powerCircuit/constants';
 
-// Базовые точки для подключения щупов на схеме
-export const SCHEME_POINTS_BASE: Record<string, IPoint> = {
+export const pointsMap = [
+	PHASE_A_POINT_ID,
+	PHASE_B_POINT_ID,
+	PHASE_C_POINT_ID,
+	INPUT_BREAKER_INPUT_POINT_PHASE_A_ID,
+	INPUT_BREAKER_INPUT_POINT_PHASE_B_ID,
+	INPUT_BREAKER_INPUT_POINT_PHASE_C_ID,
+	INPUT_BREAKER_OUTPUT_POINT_PHASE_A_ID,
+	INPUT_BREAKER_OUTPUT_POINT_PHASE_B_ID,
+	INPUT_BREAKER_OUTPUT_POINT_PHASE_C_ID,
+	TERMINAL_BEFORE_STARTERS_POINT_PHASE_A_ID,
+	TERMINAL_BEFORE_STARTERS_POINT_PHASE_B_ID,
+	TERMINAL_BEFORE_STARTERS_POINT_PHASE_C_ID,
+	POINT_BEFORE_STARTER_OPEN_PHASE_A_ID,
+	POINT_BEFORE_STARTER_OPEN_PHASE_B_ID,
+	POINT_BEFORE_STARTER_OPEN_PHASE_C_ID,
+	POINT_BEFORE_STARTER_CLOSE_PHASE_A_ID,
+	POINT_BEFORE_STARTER_CLOSE_PHASE_B_ID,
+	POINT_BEFORE_STARTER_CLOSE_PHASE_C_ID,
+	POINT_AFTER_STARTER_OPEN_PHASE_A_ID,
+	POINT_AFTER_STARTER_OPEN_PHASE_B_ID,
+	POINT_AFTER_STARTER_OPEN_PHASE_C_ID,
+	POINT_AFTER_STARTER_CLOSE_PHASE_A_ID,
+	POINT_AFTER_STARTER_CLOSE_PHASE_B_ID,
+	POINT_AFTER_STARTER_CLOSE_PHASE_C_ID,
+	MOTOR_WINDING_CONTACT_POINT_PHASE_A_ID,
+	MOTOR_WINDING_CONTACT_POINT_PHASE_B_ID,
+	MOTOR_WINDING_CONTACT_POINT_PHASE_C_ID,
+	CONTROL_POWER_FEED_POINT_ID,
+	CONTROL_BREAKER_INPUT_POINT_ID,
+	CONTROL_BREAKER_OUTPUT_POINT_ID,
+	//ветка открыть
+	OPEN_JUNCTION_BOX_POINT_ID,
+	OPEN_LIMIT_SWITCH_INPUT_POINT_ID,
+	OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID,
+	OPEN_TERMINAL_BLOCK_POINT_ID,
+	//сигнал не закрыто
+	OPEN_NDI_NOT_OPEN_INPUT_POINT_ID,
+	OPEN_NDI_NOT_OPEN_OUTPUT_POINT_ID,
+
+	//команда открыть с ПТК
+	OPEN_CMD_PTK_BRANCH_POINT_ID,
+	OPEN_NDO_CMD_PTK_INPUT_POINT_ID,
+
+	//команда открыть с кнопки КРУЗА-П
+	OPEN_BUTTON_INPUT_POINT_ID,
+	OPEN_BUTTON_OUTPUT_POINT_ID,
+	//воздействие на пускатель открыть
+	COMANDS_OPEN_POINT_ID,
+	OPEN_INTERLOCK_INPUT_POINT_ID,
+	OPEN_INTERLOCK_OUTPUT_POINT_ID,
+	OPEN_COIL_INPUT_POINT_ID,
+	// лампочка закрыто
+	CLOSED_LAMP_BRANCH_POINT_ID,
+	CLOSED_LAMP_TO_NEUTRAL_POINT_ID,
+
+	//ветка закрыть
+	CLOSE_JUNCTION_BOX_POINT_ID,
+	CLOSE_LIMIT_SWITCH_INPUT_POINT_ID,
+	CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID,
+	CLOSE_TERMINAL_BLOCK_POINT_ID,
+
+	//сигнал не открыто
+	CLOSE_NDI_NOT_CLOSED_INPUT_POINT_ID,
+	CLOSE_NDI_NOT_CLOSED_OUTPUT_POINT_ID,
+
+	//команда закрыть с ПТК
+	CLOSE_CMD_PTK_BRANCH_POINT_ID,
+	CLOSE_NDO_CMD_PTK_INPUT_POINT_ID,
+
+	//команда закрыть с кнопки КРУЗА-П
+	CLOSE_BUTTON_INPUT_POINT_ID,
+	CLOSE_BUTTON_OUTPUT_POINT_ID,
+	//воздействие на пускатель закрыть
+	COMMANDS_CLOSE_POINT_ID,
+	CLOSE_INTERLOCK_INPUT_POINT_ID,
+	CLOSE_INTERLOCK_OUTPUT_POINT_ID,
+	CLOSE_COIL_INPUT_POINT_ID,
+	// лампочка открыто
+	OPEN_LAMP_BRANCH_POINT_ID,
+	OPEN_LAMP_INPUT_POINT_ID,
+
+	MERGE_POINT_AFTER_STARTERS_PHASE_A_ID,
+	MERGE_POINT_AFTER_STARTERS_PHASE_B_ID,
+	MERGE_POINT_AFTER_STARTERS_PHASE_C_ID,
+	JUNCTION_BOX_INPUT_POINT_PHASE_A_ID,
+	JUNCTION_BOX_INPUT_POINT_PHASE_B_ID,
+	JUNCTION_BOX_INPUT_POINT_PHASE_C_ID,
+	JUNCTION_BOX_OUTPUT_POINT_PHASE_A_ID,
+	JUNCTION_BOX_OUTPUT_POINT_PHASE_B_ID,
+	JUNCTION_BOX_OUTPUT_POINT_PHASE_C_ID,
+];
+/**
+ * Рекурсивно извлекает все элементы схемы из ветвей.
+ * @param branches - массив ветвей схемы
+ * @returns массив всех элементов схемы
+ */
+function extractElements(branches: CircuitBranch[]): CircuitElement[] {
+	const elements: CircuitElement[] = [];
+
+	for (const branch of branches) {
+		if (Array.isArray(branch)) {
+			// Рекурсивно обрабатываем вложенные массивы (параллельные ветвления)
+			elements.push(...extractElements(branch));
+		} else {
+			// Это элемент схемы
+			elements.push(branch);
+		}
+	}
+
+	return elements;
+}
+
+/**
+ * Создает индекс элементов по их endPoint.
+ * @returns объект, где ключи - ID точек (endPoint), значения - массивы ID элементов
+ */
+function createElementsByEndpointIndex(): Record<string, string[]> {
+	const allElements = [
+		...extractElements(initialStateScheme.powerCircuit),
+		...extractElements(initialStateScheme.controlCircuit),
+	];
+
+	const index: Record<string, string[]> = {};
+
+	for (const element of allElements) {
+		if (element.endPoint) {
+			if (!index[element.endPoint]) {
+				index[element.endPoint] = [];
+			}
+			index[element.endPoint].push(element.id);
+		}
+	}
+
+	return index;
+}
+
+/**
+ * Обогащает точки информацией об элементах, подключенных к ним как endPoint.
+ * @param points - объект с точками схемы
+ * @returns объект с точками, дополненный полем elements
+ */
+function enrichPointsWithElements(
+	points: Record<string, IPoint>,
+): Record<string, IPoint> {
+	const elementsByEndpoint = createElementsByEndpointIndex();
+	const enrichedPoints: Record<string, IPoint> = {};
+
+	for (const pointId in points) {
+		const point = { ...points[pointId] };
+		point.elements = elementsByEndpoint[pointId] || [];
+		enrichedPoints[pointId] = point;
+	}
+
+	return enrichedPoints;
+}
+
+// Базовые точки для подключения щупов на схеме (без элементов)
+export const SCHEME_POINTS: Record<string, IPoint> = {
 	[PHASE_A_POINT_ID]: { x: 87, y: 12, state: true },
 	[PHASE_B_POINT_ID]: { x: 129, y: 27, state: true },
 	[PHASE_C_POINT_ID]: { x: 171, y: 42, state: true },
@@ -177,30 +335,19 @@ export const SCHEME_POINTS_BASE: Record<string, IPoint> = {
 	[OPEN_LAMP_INPUT_POINT_ID]: { state: false },
 };
 
-/**
- * Обогащает точки информацией о подключенных элементах схемы.
- * Для каждой точки добавляет массив позиционных ID элементов, подключенных к этой точке.
- */
-function enrichPointsWithElements(
-	points: Record<string, IPoint>,
-): Record<string, IPoint> {
-	return points;
-}
+// Базовые точки с обогащением элементов, подключенных как endPoint
+export const SCHEME_POINTS_BASE: Record<string, IPoint> =
+	enrichPointsWithElements(SCHEME_POINTS);
 
-// Точки с информацией о подключенных элементах
-export const SCHEME_POINTS: Record<string, IPoint> =
-	enrichPointsWithElements(SCHEME_POINTS_BASE);
+console.log(SCHEME_POINTS_BASE);
 
 function extractStates(SCHEME_POINTS: Record<string, IPoint>) {
 	const result: Record<string, boolean> = {};
 
 	for (const key in SCHEME_POINTS) {
-		if (SCHEME_POINTS.hasOwnProperty(key)) {
-			result[key] = SCHEME_POINTS[key].state;
-		}
+		result[key] = SCHEME_POINTS[key].state;
 	}
 	return result;
 }
 
-export const pointsState = extractStates(SCHEME_POINTS);
-
+export const pointsState = extractStates(SCHEME_POINTS_BASE);
