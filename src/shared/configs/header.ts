@@ -1,5 +1,4 @@
-﻿import { BASE_RESISTANCE } from './schemeElements';
-import { BASE_RESISTANCE_CONSTANT } from './elementKind';
+﻿import { BASE_RESISTANCE_CONSTANT } from './elementKind';
 import {
 	BUTTON_KRUZA_P_OPEN_ID,
 	BUTTON_KRUZA_P_CLOSE_ID,
@@ -14,8 +13,8 @@ export const PTK_BUTTONS_CONFIG = {
 	open: [
 		{
 			id: INSERT_NDO_CMD_OPEN_PTK_ID,
-			value: BASE_RESISTANCE[INSERT_NDO_CMD_OPEN_PTK_ID],
-		}, // Замыкаем "открыть"
+			value: 0, // Замыкаем "открыть" - сопротивление = 0
+		},
 	],
 	// Срабатывает через 10 сек после нажатия на кнопку открыть ПТК (задвижка открылась полностью)
 	opening: [
@@ -32,8 +31,8 @@ export const PTK_BUTTONS_CONFIG = {
 	close: [
 		{
 			id: INSERT_NDO_CMD_CLOSE_PTK_ID,
-			value: BASE_RESISTANCE[INSERT_NDO_CMD_CLOSE_PTK_ID],
-		}, // Замыкаем "закрыть"
+			value: 0, // Замыкаем "закрыть" - сопротивление = 0
+		},
 	],
 	// Срабатывает через 10 сек после нажатия на кнопку закрыть ПТК (задвижка закрылась полностью)
 	closing: [
@@ -63,8 +62,8 @@ export const KRUZAP_BUTTONS_CONFIG = {
 	open: [
 		{
 			id: BUTTON_KRUZA_P_OPEN_ID,
-			value: BASE_RESISTANCE[BUTTON_KRUZA_P_OPEN_ID],
-		}, // Замыкаем "открыть"
+			value: 0, // Замыкаем "открыть" - сопротивление = 0
+		},
 	],
 	// Срабатывает если кнопку открыть зажать на 10 сек и более (задвижка открылась полностью)
 	opening: [
@@ -78,15 +77,15 @@ export const KRUZAP_BUTTONS_CONFIG = {
 		}, // Размыкаем концевой "открыть"
 		{
 			id: LIMIT_SWITCH_CLOSE_ID,
-			value: BASE_RESISTANCE[LIMIT_SWITCH_CLOSE_ID],
-		}, // Замыкаем концевой "закрыть" (задвижка УЖЕ НЕ закрыта)
+			value: 0, // Замыкаем концевой "закрыть" (задвижка УЖЕ НЕ закрыта) - сопротивление = 0
+		},
 	],
 	// Срабатывает сразу после нажатия на кнопку закрыть крузап
 	close: [
 		{
 			id: BUTTON_KRUZA_P_CLOSE_ID,
-			value: BASE_RESISTANCE[BUTTON_KRUZA_P_CLOSE_ID],
-		}, // Замыкаем "закрыть"
+			value: 0, // Замыкаем "закрыть" - сопротивление = 0
+		},
 		{
 			id: INSERT_NDO_CMD_OPEN_PTK_ID,
 			value: BASE_RESISTANCE_CONSTANT.highResistance,
@@ -104,8 +103,8 @@ export const KRUZAP_BUTTONS_CONFIG = {
 		}, // Размыкаем концевой "закрыть"
 		{
 			id: LIMIT_SWITCH_OPEN_ID,
-			value: BASE_RESISTANCE[LIMIT_SWITCH_OPEN_ID],
-		}, // Замыкаем концевой "открыть" (задвижка УЖЕ НЕ открыта)
+			value: 0, // Замыкаем концевой "открыть" (задвижка УЖЕ НЕ открыта) - сопротивление = 0
+		},
 	],
 	stop: [
 		{
