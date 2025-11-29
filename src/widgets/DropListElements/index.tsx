@@ -40,14 +40,14 @@ const DropListElements: FC<Props> = ({
 					role="listbox"
 					aria-label="Выберите элемент схемы"
 				>
-					{data.map(item => {
+					{data.map((item,idx) => {
 						return (
 							<li
 								className={cn(styles.elementList__item, {
 									[styles.active]:
 										choiceElement?.id === item.id,
 								})}
-								key={item.id}
+								key={`${item.id}:${idx}`}
 								role="option"
 								aria-selected={choiceElement?.id === item.id}
 								aria-label={`Элемент ${item.name}`}
