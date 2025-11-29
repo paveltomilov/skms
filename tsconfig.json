@@ -24,12 +24,12 @@
 		}
 	},
 	"include": [
-		"svgr.d.ts",
-		"next-env.d.ts",
 		"**/*.ts",
 		"**/*.tsx",
+		"next-env.d.ts",
+		"svgr.d.ts",
 		".next/types/**/*.ts"
-, "src/widgets/Environment"	],
+	],
 	"exclude": [
 		"node_modules",
 		"dist",

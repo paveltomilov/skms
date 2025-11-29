@@ -29,7 +29,7 @@ const Login: FC = () => {
 				router.push(dashboardRoute);
 			}
 		} catch {
-			console.error('Ошибка проверки аутентификации:');
+			console.error('Ошибка проверки аутентификации');
 		}
 	}, [router, role]);
 

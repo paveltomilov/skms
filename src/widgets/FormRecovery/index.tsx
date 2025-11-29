@@ -7,6 +7,7 @@ import Button from '@/shared/UI/Button';
 import { getDone, getIndicator } from '@/shared/utils/recoveryFunctions/recoveryFunctions';
 import { useRecoveryForm } from '@/shared/hooks/useRecoveryForm';
 import { requestPasswordReset, setNewPassword as apiSetNewPassword } from '@/shared/lib/passwordRecovery';
+import {EMAIL_MAX_LENGTH, PASSWORD_MAX_LENGTH} from '@/shared/configs/login';
 
 type FormRecoveryProps = {
     steps?: number,
@@ -26,6 +27,7 @@ const FormRecovery: FC<FormRecoveryProps> = ({ steps, setSteps, isOpen }) => {
         validateForm,
         resetServerErrors,
         setServerErrors,
+        getWarnMessage,
     } = useRecoveryForm({ steps });
 
     const handleOpenPopupRecoveryPassword = async () => {
@@ -108,6 +110,7 @@ const FormRecovery: FC<FormRecoveryProps> = ({ steps, setSteps, isOpen }) => {
                     warn={!serverErrors.email && validationStatus.email === 2}
                     errorMessage={serverErrors.email ? configMap.email?.errorMessage : undefined}
                     warnMessage={!serverErrors.email && validationStatus.email === 2 ? configMap.email?.warnMessage : undefined}
+                    maxLength={EMAIL_MAX_LENGTH}
                     required
                 />
             )}
@@ -125,7 +128,8 @@ const FormRecovery: FC<FormRecoveryProps> = ({ steps, setSteps, isOpen }) => {
                         error={serverErrors.password}
                         warn={!serverErrors.password && validationStatus.password === 2}
                         errorMessage={serverErrors.password ? configMap.password?.errorMessage : undefined}
-                        warnMessage={!serverErrors.password && validationStatus.password === 2 ? configMap.password?.warnMessage : undefined}
+                        warnMessage={!serverErrors.password && validationStatus.password === 2 ? getWarnMessage('password') : undefined}
+                        maxLength={PASSWORD_MAX_LENGTH}
                         required
                     />
                     <LoginInput
@@ -140,7 +144,8 @@ const FormRecovery: FC<FormRecoveryProps> = ({ steps, setSteps, isOpen }) => {
                         error={serverErrors.confirm_password}
                         warn={!serverErrors.confirm_password && validationStatus.confirm_password === 2}
                         errorMessage={serverErrors.confirm_password ? configMap.confirm_password?.errorMessage : undefined}
-                        warnMessage={!serverErrors.confirm_password && validationStatus.confirm_password === 2 ? configMap.confirm_password?.warnMessage : undefined}
+                        warnMessage={!serverErrors.confirm_password && validationStatus.confirm_password === 2 ? getWarnMessage('confirm_password') : undefined}
+                        maxLength={PASSWORD_MAX_LENGTH}
                         required
                     />
                 </>
