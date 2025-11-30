@@ -21,7 +21,7 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 	handlePopupClose,
 }) => {
 	const router = useRouter();
-	const dispatch = useAppDispatch()
+	const dispatch = useAppDispatch();
 	const [isActiveStudentSimulation, setIsActiveStudentSimulation] =
 		useState<boolean>(false);
 	const isActiveSimulation: boolean = true; // в будущем статус от websocket
@@ -47,7 +47,7 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 
 	const handleAbortSimulation = () => {
 		handlePopupClose();
-		dispatch(openModal('abortSimulation'))
+		dispatch(openModal('abortSimulation'));
 	};
 
 	return (
