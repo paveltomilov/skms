@@ -1,0 +1,8 @@
+@use '@/shared/scss/variables.module';
+@use '@/shared/scss/mixins.module';
+
+.error {
+    padding: 10px 0 0;
+	@include mixins.text(12px, 400);
+	color: variables.$error-button;
+}

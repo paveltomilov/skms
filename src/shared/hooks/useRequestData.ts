@@ -1,17 +1,25 @@
 import { useMemo } from 'react';
 import { extractMalfunctions } from '../utils/extractMalfunctionIds/extractMalfunctions';
 import { useAppSelector } from './store';
-import type { InitialStateScheme } from '../types/scheme';
+import { CircuitElement } from '../types/scheme';
 
-export const useRequestData = () => {
+interface IResponse {
+	urlBase: string | undefined;
+	access: string | null;
+	elements: CircuitElement[];
+}
+
+export const useRequestData = (): IResponse => {
 	const urlBase = process.env.NEXT_PUBLIC_API_BASE_URL;
 	const access = localStorage.getItem('accessToken');
-	const circuit = useAppSelector(
-		(state): InitialStateScheme => state.circuit,
+	const circuit = useAppSelector(state => state.circuit);
+	const elements = useMemo(
+		() =>
+			extractMalfunctions(circuit).sort((a, b) =>
+				a.name.toLowerCase().localeCompare(b.name.toLowerCase(), 'ru'),
+			),
+		[circuit],
 	);
-	const elements = useMemo(() => {
-		return extractMalfunctions(circuit);
-	}, [circuit]);
 
 	return {
 		urlBase,
