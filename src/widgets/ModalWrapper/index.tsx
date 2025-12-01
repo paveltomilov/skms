@@ -21,6 +21,7 @@ import { PopupStudentCreate } from '../PopupStudentCreate';
 import { PopupStudentDelete } from '../PopupStudentDelete';
 import { PopupNote } from '../PopupNote';
 import { useUserCookies } from '@/shared/hooks/useUserCookies';
+import { PopupAbortSimulation } from '../PopupAbortSimulation';
 
 interface IModals {
 	condition: boolean;
@@ -44,6 +45,7 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		studentStatistics,
 		studentCreate,
 		studentDelete,
+		abortSimulation,
 		note,
 	} = useAppSelector((state): ModalState => state.modal);
 
@@ -65,6 +67,7 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		studentStatistics ||
 		studentCreate ||
 		studentDelete ||
+		abortSimulation ||
 		note;
 	const gateId = useAppSelector(state => state.gate.activeGateId as string);
 	const student = useAppSelector(state => state.training.currentStudent);
@@ -176,6 +179,13 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			headerTitle: 'Уведомление',
 			gateId: undefined,
 			component: <PopupNote />,
+		},
+		{
+			condition: abortSimulation,
+			id: 'abortSimulation',
+			headerTitle: 'Прервать попытку',
+			gateId: undefined,
+			component: <PopupAbortSimulation />,
 		},
 	];
 	// отключаем скролл страницы
