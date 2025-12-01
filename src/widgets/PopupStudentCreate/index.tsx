@@ -15,10 +15,7 @@ import { useAppDispatch } from '@/shared/hooks/store';
 import { updateList } from '@/store/updateListSlice';
 import { FieldConfig } from '../Form';
 import { useUserCookies } from '@/shared/hooks/useUserCookies';
-import {
-	NAME_SURNAME_MAX_LENGTH,
-	PASSWORD_MAX_LENGTH,
-} from '@/shared/configs/login';
+import {EMAIL_MAX_LENGTH, NAME_SURNAME_MAX_LENGTH} from '@/shared/configs/login';
 
 const PASSWORD_ERROR = {
 	email: false,
@@ -64,18 +61,12 @@ export const PopupStudentCreate: FC = () => {
 			placeholder: 'Фамилия',
 			maxLength: NAME_SURNAME_MAX_LENGTH,
 		},
-		{
-			name: 'email',
-			label: 'Email',
-			type: 'email',
-			placeholder: 'Email',
-			maxLength: PASSWORD_MAX_LENGTH,
-		},
+		{ name: 'email', label: 'Email', type: 'email', placeholder: 'Email', maxLength: EMAIL_MAX_LENGTH},
 	];
 
 	// Функция для рендеринга поля
 	const renderField = (field: FieldConfig) => {
-		const { name, label, type, placeholder } = field;
+		const { name, label, type, placeholder, maxLength } = field;
 		const hasError = serverErrors[name];
 		const hasWarn = !hasError && validationStatus[name] === 2;
 		const customErrorText = name === 'password' && undefined;
@@ -111,6 +102,7 @@ export const PopupStudentCreate: FC = () => {
 				}
 				warnMessage={hasWarn ? configMap[name]?.warnMessage : undefined}
 				required={configMap[name]?.required}
+				maxLength={maxLength}
 			/>
 		);
 	};

@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
 	output: 'export',
 	trailingSlash: true,
 	images: {
-		unoptimized: true,
+		 unoptimized: true,
 		// Разрешаем загрузку изображений из локальных источников
 		domains: [], // Добавьте домены, если используете внешние изображения
 		// Опционально: настройка форматов изображений

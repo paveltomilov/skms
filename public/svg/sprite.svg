@@ -84,6 +84,13 @@
         </defs>
     </symbol>
 
+    <symbol
+        id="ellipseCloseThin" width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <circle cx="8" cy="8" r="6.5" stroke="black" />
+        <path d="M11 5L5 11" stroke="black" />
+        <path d="M5 5L11 11" stroke="black" />
+    </symbol>
+
     <!-- крестик -->
     <symbol
         id="close" width="20" height="20" viewBox="0 0 20 20" fill="none">
