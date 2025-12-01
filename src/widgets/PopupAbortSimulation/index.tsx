@@ -13,11 +13,13 @@ export const PopupAbortSimulation: FC = () => {
 
 	const handleChoose = useCallback(() => {
 		setIsAbort(true);
-		setTimeout(() => {
+		const timer = setTimeout(() => {
 			dispatch(closeAllModal());
 			router.push('/ptk');
 		}, 2000);
-	}, []);
+
+		return () => clearTimeout(timer);
+	}, [dispatch, router]);
 
 	const handleCancellation = () => {
 		dispatch(closeAllModal());
