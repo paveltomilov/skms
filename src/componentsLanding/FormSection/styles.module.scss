@@ -17,6 +17,8 @@
 		gap: 24px;
 
 		@media (max-width: 767px) {
+			justify-content: center;
+			align-items: center;
 			flex-wrap: wrap;
 			gap: 16px;
 		}
@@ -25,11 +27,11 @@
 	&__item {
 		height: 240px;
 		width: 47.5%;
-		border: 1px solid var(--lan-very-dark-gray);
-		border-radius: 12px;
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		border: 1px solid var(--lan-very-dark-gray);
+		border-radius: 12px;
 
 		@media (max-width: 1200px) {
 			height: 214px;

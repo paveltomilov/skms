@@ -4,8 +4,22 @@ import { useMediaQuery } from 'react-responsive';
 import styles from './styles.module.scss';
 import SectionTitle from '../../SectionTitle';
 
+const cards = [
+	{
+		title: 'Снижаем риски',
+		description:
+			'Тренажёр снижает инциденты, связанные с человеческим фактором',
+		className: styles.item__left,
+	},
+	{
+		title: 'Ускоряем адаптацию',
+		description: 'Сотрудники осваивают работу в три раза быстрее',
+		className: styles.item__right,
+	},
+];
 const AboutTop: FC = () => {
 	const isMobile = useMediaQuery({ maxWidth: 576 });
+
 	return (
 		<section className={styles.abouttop}>
 			<div className={`${styles.abouttop__container} container`}>
@@ -38,24 +52,16 @@ const AboutTop: FC = () => {
 					</div>
 
 					<ul className={styles.card__list}>
-						<li className={styles.item__left}>
-							<h4 className={styles.item__title}>
-								Снижаем риски
-							</h4>
-							<p className={styles.item__description}>
-								Тренажёр снижает инциденты, связанные с
-								человеческим фактором
-							</p>
-						</li>
-						<li className={styles.item__right}>
-							<h4 className={styles.item__title}>
-								Ускоряем адаптацию
-							</h4>
-							<p className={styles.item__description}>
-								Сотрудники осваивают работу в&nbsp;три&nbsp;раза
-								быстрее
-							</p>
-						</li>
+						{cards.map((card, id) => (
+							<li key={id} className={card.className}>
+								<h4 className={styles.item__title}>
+									{card.title}
+								</h4>
+								<p className={styles.item__description}>
+									{card.description}
+								</p>
+							</li>
+						))}
 					</ul>
 				</div>
 			</div>

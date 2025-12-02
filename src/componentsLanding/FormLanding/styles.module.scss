@@ -5,15 +5,12 @@
 	margin-bottom: 24px;
 
 	@media (max-width: 1200px) {
-		padding: 44px;
-		padding-bottom: 51px;
+		padding: 44px 44px 51px 44px;
 	}
 
 	@media (max-width: 576px) {
-		padding: 33px;
-		padding-left: 16px;
-		padding-right: 16px;
-		margin-bottom: 16px;
+		padding: 33px 16px;
+		margin-bottom: 14px;
 	}
 
 	&__container {
@@ -82,7 +79,6 @@
 	&__button {
 		width: 608px;
 		display: flex;
-		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 		font-family: var(--second-family);
@@ -158,10 +154,9 @@
 	}
 }
 
-/* Базовый стиль чек‑бокса */
 .checkbox__descr {
-	position: relative; /* нужен для ::before */
-	padding-left: 37px; /* отступ, чтобы место на чек‑бокс */
+	position: relative;
+	padding-left: 37px;
 	cursor: pointer;
 	user-select: none;
 	font-family: var(--second-family);
@@ -171,7 +166,6 @@
 	color: var(--lan-very-dark-gray);
 }
 
-/* Сам «чек‑бокс» – псевдоэлемент перед текстом */
 .checkbox__descr::before {
 	content: '';
 	position: absolute;
@@ -180,21 +174,15 @@
 	transform: translateY(-50%);
 	width: 22px;
 	height: 22px;
-
-	/* База (фон, бордер) */
-	background: var(--lan-bright-cyan---lime-green); /* ваш фон по умолчанию */
-	border: 1px solid var(--lan-very-dark-gray); /* цвет границы */
-	border-radius: 4px; /* скругление, если нужно */
-
-	/* Анимация при переходе (необязательно) */
+	background: var(--lan-bright-cyan---lime-green);
+	border: 1px solid var(--lan-very-dark-gray);
+	border-radius: 4px;
 	transition: all 0.2s ease;
 }
 
-/* Состояние «отмечен» – меняем фон/контуру и добавляем галочку */
 .input__checkbox:checked + .checkbox__descr::before {
-	background: #93f2a8; /* цвет при отмеченном состоянии */
+	background: #93f2a8;
 	border-color: #93f2a8;
-	/* Добавляем галочку через псевдо‑элемент ::after */
 }
 
 .checkbox__descr::after {
@@ -207,11 +195,10 @@
 	height: 12px;
 	border-right: 2px solid var(--lan-very-dark-gray);
 	border-bottom: 2px solid var(--lan-very-dark-gray);
-	opacity: 0; /* скрываем по умолчанию */
+	opacity: 0;
 	transition: opacity 0.15s ease;
 }
 
-/* Галочка видна только при checked */
 .input__checkbox:checked + .checkbox__descr::after {
 	opacity: 1;
 }

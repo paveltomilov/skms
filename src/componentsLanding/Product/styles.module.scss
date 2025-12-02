@@ -1,13 +1,13 @@
 .product {
 	&__container {
-		background-image: url(/images/about-bottom.png);
-		background-position-y: -884px;
-		background-repeat: no-repeat;
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
 		grid-template-rows: repeat(2, auto);
 		grid-column-gap: 24px;
 		grid-row-gap: 0px;
+		background-image: url(/images/about-bottom.png);
+		background-position-y: -884px;
+		background-repeat: no-repeat;
 
 		@media (max-width: 1200px) {
 			background-position-y: -553px;

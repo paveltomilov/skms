@@ -2,6 +2,24 @@ import React, { FC } from 'react';
 import SectionTitle from '../../SectionTitle';
 import styles from './styles.module.scss';
 
+const statisticData = [
+	{
+		interest: '41,7%',
+		descr: 'Уверенность в работе',
+		className: styles.item1,
+	},
+	{
+		interest: '25%',
+		descr: 'Подготовка к аттестации',
+		className: styles.item2,
+	},
+	{
+		interest: '16,7%',
+		descr: 'Повышение квалификации',
+		className: styles.item3,
+	},
+];
+
 const AboutBottom: FC = () => {
 	return (
 		<section className={styles.aboutbottom}>
@@ -38,30 +56,23 @@ const AboutBottom: FC = () => {
 									Топ-3 цели при работе с тренажером
 								</h4>
 								<ul className={styles.schedule__list}>
-									<li className={styles.item1}>
-										<p className={styles.item__interest}>
-											41,7%
-										</p>
-										<p className={styles.item__descr}>
-											Уверенность в&nbsp;работе
-										</p>
-									</li>
-									<li className={styles.item2}>
-										<p className={styles.item__interest}>
-											25%
-										</p>
-										<p className={styles.item__descr}>
-											Подготовка к&nbsp;аттестации
-										</p>
-									</li>
-									<li className={styles.item3}>
-										<p className={styles.item__interest}>
-											16,7%
-										</p>
-										<p className={styles.item__descr}>
-											Повышение квалификации
-										</p>
-									</li>
+									{statisticData.map((item, idx) => (
+										<li
+											key={idx}
+											className={item.className}
+										>
+											<p
+												className={
+													styles.item__interest
+												}
+											>
+												{item.interest}
+											</p>
+											<p className={styles.item__descr}>
+												{item.descr}
+											</p>
+										</li>
+									))}
 								</ul>
 							</div>
 						</div>

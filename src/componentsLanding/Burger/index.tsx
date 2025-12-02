@@ -2,10 +2,10 @@
 
 import React from 'react';
 import { FC } from 'react';
-import styles from './styles.module.scss'; // <-- импортируем как модуль
+import styles from './styles.module.scss';
 
 interface BurgerProps {
-	className?: string; // можно опустить, но оставим для кастомных классов
+	className?: string;
 	isOpen: boolean;
 	onToggle: (isOpen: boolean) => void;
 	color?: string;
@@ -21,7 +21,6 @@ const Burger: FC<BurgerProps> = ({
 }) => {
 	return (
 		<button
-			// комбинируем модульный класс, наш класс и состояние открытости
 			className={`${styles.burger} ${className} ${
 				isOpen ? styles['burger--active'] : ''
 			}`}
@@ -30,7 +29,7 @@ const Burger: FC<BurgerProps> = ({
 				{
 					width: size,
 					height: size,
-					'--burger-color': color, // CSS‑переменная
+					'--burger-color': color,
 				} as React.CSSProperties
 			}
 		>

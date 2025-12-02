@@ -4,23 +4,22 @@ import Button from '@/componentsLanding/Button';
 
 interface CardProps {
 	title: string;
-	description: string; // краткое описание
-	fulldescription?: string; // полный текст (может отсутствовать)
-	button?: string; // надпись на кнопке
-	gap?: number | string; // отступ между элементами
-	rating?: number; // сколько звёзд активных (0‑5)
+	description: string;
+	fulldescription?: string;
+	button?: string;
+	gap?: number | string;
+	rating?: number;
 }
 
 const CardReviews: FC<CardProps> = ({
 	title,
 	description,
 	fulldescription,
-	rating = 0, // по умолчанию нет активных звезд
+	rating = 0,
 }) => {
 	const [expanded, setExpanded] = useState(false);
 	const textToShow = expanded ? fulldescription ?? description : description;
 
-	/* ---------- Рендер звёзд ----------------- */
 	const stars = Array.from({ length: 5 }, (_, i) => (
 		<div
 			key={i}

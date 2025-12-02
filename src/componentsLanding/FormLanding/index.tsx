@@ -1,10 +1,9 @@
 'use client';
-import { useState, ChangeEvent, FormEvent } from 'react';
+import { useState, ChangeEvent, FormEvent, useCallback } from 'react';
 import Button from '../Button';
 import styles from './styles.module.scss';
 
 type FormValues = {
-	title: string;
 	name: string;
 	company: string;
 	email: string;
@@ -76,7 +75,6 @@ const FormField = ({
 
 function FormLanding() {
 	const [form, setForm] = useState<FormValues>({
-		title: '',
 		name: '',
 		company: '',
 		email: '',
@@ -84,18 +82,21 @@ function FormLanding() {
 		consent: false,
 	});
 
-	/* ---------- Обработчик изменения полей ---------- */
-	const handleInputChange =
-		(key: keyof Omit<FormValues, 'consent'>) =>
-		(e: ChangeEvent<HTMLInputElement>) => {
-			setForm(prev => ({ ...prev, [key]: e.target.value }));
-		};
+	const handleInputChange = useCallback(
+		(key: keyof Omit<FormValues, 'consent'>) => {
+			return (e: ChangeEvent<HTMLInputElement>) => {
+				setForm(prev => ({
+					...prev,
+					[key]: e.target.value,
+				}));
+			};
+		},
+		[],
+	);
 
-	/* ---------- Обработчик чекбокса ---------- */
 	const handleConsentChange = () =>
 		setForm(prev => ({ ...prev, consent: !prev.consent }));
 
-	/* ---------- Отправка формы ---------- */
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 

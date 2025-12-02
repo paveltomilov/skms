@@ -26,7 +26,6 @@
 	transition: all 0.3s ease;
 }
 
-/* Анимация при активном состоянии */
 .burger--active span:nth-child(1) {
 	transform: rotate(45deg) translate(4px, 3px);
 }

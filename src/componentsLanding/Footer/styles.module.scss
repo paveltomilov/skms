@@ -85,7 +85,6 @@
 
 	&__link {
 		display: block;
-
 		font-family: var(--second-family);
 		font-weight: 400;
 		font-size: 15px;
@@ -108,8 +107,8 @@
 		font-size: 17px;
 		line-height: 128%;
 		color: var(--lan-light-grayish-blue);
-		transition: all 0.2s ease-in-out;
 		margin-bottom: 14px;
+		transition: all 0.2s ease-in-out;
 
 		&:hover,
 		&:focus {
