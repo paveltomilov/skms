@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, JSX } from 'react';
+import { FC, JSX, useEffect } from 'react';
 import cn from 'classnames';
 import styles from './styles.module.scss';
 import { useAppSelector } from '@/shared/hooks/store';
@@ -21,6 +21,7 @@ import { PopupStudentCreate } from '../PopupStudentCreate';
 import { PopupStudentDelete } from '../PopupStudentDelete';
 import { PopupNote } from '../PopupNote';
 import { useUserCookies } from '@/shared/hooks/useUserCookies';
+import { PopupAbortSimulation } from '../PopupAbortSimulation';
 
 interface IModals {
 	condition: boolean;
@@ -44,6 +45,7 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		studentStatistics,
 		studentCreate,
 		studentDelete,
+		abortSimulation,
 		note,
 	} = useAppSelector((state): ModalState => state.modal);
 
@@ -65,6 +67,7 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		studentStatistics ||
 		studentCreate ||
 		studentDelete ||
+		abortSimulation ||
 		note;
 	const gateId = useAppSelector(state => state.gate.activeGateId as string);
 	const student = useAppSelector(state => state.training.currentStudent);
@@ -72,6 +75,11 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 	const fullName = isAdmin
 		? 'Преподаватель'
 		: `${student?.first_name} ${student?.last_name}`;
+
+	const gates = useAppSelector(state => state.gate);
+	const gateName = gates.activeGateId
+		? gates.gates[gates.activeGateId].name
+		: '';
 
 	const modals: IModals[] = [
 		{
@@ -140,7 +148,7 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		{
 			condition: setSimulation,
 			id: 'setSimulation',
-			headerTitle: 'Задать симуляцию',
+			headerTitle: `Задать симуляцию ${gateName}`,
 			gateId: undefined,
 			component: <PopupSetSimulation />,
 		},
@@ -172,7 +180,26 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			gateId: undefined,
 			component: <PopupNote />,
 		},
+		{
+			condition: abortSimulation,
+			id: 'abortSimulation',
+			headerTitle: 'Прервать попытку',
+			gateId: undefined,
+			component: <PopupAbortSimulation />,
+		},
 	];
+	// отключаем скролл страницы
+	useEffect(() => {
+		if (isOne) {
+			document.body.style.overflow = 'hidden';
+		} else {
+			document.body.style.overflow = '';
+		}
+
+		return () => {
+			document.body.style.overflow = '';
+		};
+	}, [isOne]);
 
 	return (
 		<div
