@@ -1,7 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import { setActiveGate } from '@/store/gateSlice';
 import { openModal } from '@/store/modalSlice';
-import type { TrainingState } from '@/store/trainingSlice';
 import { useUserCookies } from './useUserCookies';
 
 export const useOpenGatePopup = () => {
@@ -9,18 +8,18 @@ export const useOpenGatePopup = () => {
 
 	const { role } = useUserCookies();
 
-	const { studentId } = useAppSelector(
-		(state): TrainingState => state.training,
+	const studentId = useAppSelector(
+		state => state.training.currentStudent?.id,
 	);
 
 	if (role === 'teacher') {
 		const openSetsimulationPopup = (id: string) => {
-			if (studentId) {
-				dispatch(openModal('setSimulation'));
-				dispatch(setActiveGate(id));
-			} else {
-				dispatch(openModal('note'));
-			}
+			if(studentId) {
+			dispatch(openModal('setSimulation'));
+			dispatch(setActiveGate(id));
+		} else {
+			dispatch(openModal('note'));
+		}
 		};
 		return openSetsimulationPopup;
 	} else {

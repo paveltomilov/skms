@@ -34,8 +34,3 @@
 		line-height: 1;
 	}
 }
-
-.error {
-	@include mixins.text(12px, 400);
-	color: variables.$error-button;
-}

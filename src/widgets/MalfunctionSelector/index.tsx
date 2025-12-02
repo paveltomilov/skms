@@ -1,0 +1,89 @@
+import { CircuitElement, Malfunction } from '@/shared/types/scheme';
+import { SimulationItemData } from '@/shared/types/simulation';
+import {
+	Dispatch,
+	FC,
+	SetStateAction,
+	useCallback,
+	useRef,
+	useState,
+} from 'react';
+import DropListMalfunction from '../DropListMalfunction';
+import DropListElements from '../DropListElements';
+import { useClickOutside } from '@/shared/hooks/useClickOutside';
+import { useClickEscape } from '@/shared/hooks/useClickEscape';
+
+interface Props {
+	setMalfun: (simulation: SimulationItemData) => void;
+	data: CircuitElement[];
+	closeList: Dispatch<SetStateAction<boolean>>;
+}
+
+const MalfunctionSelector: FC<Props> = ({ setMalfun, data, closeList }) => {
+	const [choiceElement, setChoiceElement] = useState<CircuitElement | null>(
+		null,
+	);
+	const [choiceMalfunction, setChoiceMalfunction] = useState<
+		Malfunction[] | null
+	>(null);
+	const dropListMalfunctionRef = useRef<HTMLDivElement>(null);
+	const dropListElementsRef = useRef<HTMLDivElement>(null);
+
+	// Закрываем список при клике вне его
+	useClickOutside(dropListElementsRef, dropListMalfunctionRef, () =>
+		closeList(false),
+	);
+
+	useClickEscape(dropListElementsRef, dropListMalfunctionRef, () => {
+		if (choiceElement) {
+			setChoiceElement(null);
+		} else {
+			closeList(false);
+		}
+	});
+
+	const handleChoiceElement = useCallback(
+		(item: CircuitElement) => {
+			setChoiceElement(item);
+			const malfunctionsElement =
+				data.find(element => element.id === item.id)?.malfunctions ??
+				null;
+			setChoiceMalfunction(malfunctionsElement);
+		},
+		[data],
+	);
+
+	const handleChoice = useCallback(
+		(malfunction: Malfunction) => {
+			if (choiceElement)
+				setMalfun({
+					malfunction_id: malfunction.id,
+					malfunctions: malfunction.name,
+					element_id: choiceElement.id,
+					element: choiceElement.name,
+				});
+			setChoiceElement(null);
+		},
+		[choiceElement, setMalfun],
+	);
+
+	return (
+		<>
+			<DropListElements
+				forwardRef={dropListElementsRef}
+				data={data}
+				handleChoiceElement={handleChoiceElement}
+				choiceElement={choiceElement}
+			/>
+			{choiceElement && (
+				<DropListMalfunction
+					forwardRef={dropListMalfunctionRef}
+					malfunctions={choiceMalfunction}
+					handleChoice={handleChoice}
+				/>
+			)}
+		</>
+	);
+};
+
+export default MalfunctionSelector;
