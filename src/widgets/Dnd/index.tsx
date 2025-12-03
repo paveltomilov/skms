@@ -1,7 +1,12 @@
 'use client';
 
-import React, { ReactNode } from 'react';
-import { DndContext, DragEndEvent, DragStartEvent } from '@dnd-kit/core';
+import React, { ReactNode, useEffect } from 'react';
+import {
+	DndContext,
+	DragEndEvent,
+	DragStartEvent,
+	UniqueIdentifier,
+} from '@dnd-kit/core';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import {
 	attachProbe,
@@ -33,11 +38,15 @@ export const Dnd: React.FC<Props> = ({ children }) => {
 	const handleDragEnd = ({ active, over }: DragEndEvent) => {
 		const probeColor = active.id as ProbeColor;
 		if (over && over.data.current?.type === 'point') {
-			const pointId = over.id;
+			const pointId =
+				(over.data.current as { pointId?: UniqueIdentifier })
+					?.pointId ?? over.id;
+			const dropId = over.id;
 
 			// Проверяем, не занята ли точка другим щупом
-			const isPointOccupied =
-				Object.values(probeConnections).includes(pointId);
+			const isPointOccupied = Object.values(probeConnections).some(
+				conn => conn && conn.pointId === pointId,
+			);
 
 			if (!isPointOccupied) {
 				// Если если точка не занята - прикрепляем
@@ -45,6 +54,7 @@ export const Dnd: React.FC<Props> = ({ children }) => {
 					attachProbe({
 						probeColor,
 						pointId,
+						dropId,
 					}),
 				);
 			}
@@ -58,10 +68,12 @@ export const Dnd: React.FC<Props> = ({ children }) => {
 	// подключение к вебсокету
 	const { sendMessage } = useWebSocket();
 
-	sendMessage({
-		type: 'start_simulation',
-		studentId: '12345',
-	});
+	useEffect(() => {
+		sendMessage({
+			type: 'start_simulation',
+			studentId: '12345',
+		});
+	}, [sendMessage]);
 
 	return (
 		<DndContext

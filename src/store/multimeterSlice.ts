@@ -18,6 +18,7 @@ const initialState: MultimeterState = {
 interface AttachProbePayload {
 	probeColor: 'red' | 'black';
 	pointId: UniqueIdentifier | null;
+	dropId?: UniqueIdentifier | null;
 }
 
 export interface MultimeterModePropPayload {
@@ -34,8 +35,11 @@ export const multimeterSlice = createSlice({
 		},
 
 		attachProbe: (state, action: PayloadAction<AttachProbePayload>) => {
-			const { probeColor, pointId } = action.payload;
-			state.probeConnections[probeColor] = pointId;
+			const { probeColor, pointId, dropId = null } = action.payload;
+			state.probeConnections[probeColor] = {
+				pointId,
+				dropId,
+			};
 		},
 
 		detachProbe: (state, action: PayloadAction<ProbeColor>) => {

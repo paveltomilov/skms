@@ -21,8 +21,11 @@ const Multimeter: React.FC = () => {
 	const { currentMode, displayValue, activeProb, probeConnections } =
 		useAppSelector(state => state.multimeter);
 
-	const redProbe = probeConnections.red;
-	const blackProbe = probeConnections.black;
+	const redConn = probeConnections.red;
+	const blackConn = probeConnections.black;
+
+	const redProbe = redConn?.pointId ?? null;
+	const blackProbe = blackConn?.pointId ?? null;
 
 	const redIsPowerPoint = useAppSelector(
 		state => state.points[redProbe as string],
@@ -63,6 +66,7 @@ const Multimeter: React.FC = () => {
 			attachProbe({
 				probeColor: 'black',
 				pointId: CONTROL_CIRCUIT_NEUTRAL_ID,
+				dropId: CONTROL_CIRCUIT_NEUTRAL_ID,
 			}),
 		);
 	}, [dispatch, isVoltageMode]);

@@ -9,14 +9,22 @@ import { useAppSelector } from '@/shared/hooks/store';
 interface Props {
 	id: string;
 	position: IPoint;
+	offsetX?: number;
+	offsetY?: number;
 }
 
-export const SchemePoint: React.FC<Props> = ({ id, position }) => {
+export const SchemePoint: React.FC<Props> = ({
+	id,
+	position,
+	offsetX = 0,
+	offsetY = 0,
+}) => {
 	const { setNodeRef, isOver } = useDroppable({
 		id,
 		data: {
 			id,
 			type: 'point',
+			pointId: id,
 			accepts: 'probe',
 		},
 	});
@@ -32,6 +40,10 @@ export const SchemePoint: React.FC<Props> = ({ id, position }) => {
 		<div
 			ref={setNodeRef}
 			id={id}
+			data-drop-id={id}
+			data-droppable-id={id}
+			data-probe-offset-x={offsetX}
+			data-probe-offset-y={offsetY}
 			className={pointClassName}
 			style={{ left: `${position.x}px`, top: `${position.y}px` }}
 		></div>

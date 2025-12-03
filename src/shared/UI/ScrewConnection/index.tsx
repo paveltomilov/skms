@@ -1,9 +1,10 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useId, useState } from 'react';
 import cn from 'classnames';
 import styles from './styles.module.scss';
 import { MarkerName } from '@/shared/types/markers';
 import Screw from '../icons/Screw';
 import Provod from '../Provod';
+import { useDroppable } from '@dnd-kit/core';
 export interface Props {
 	screwStatus?: 'close' | 'open';
 	pointId?: string;
@@ -26,6 +27,22 @@ const ScrewConnection: FC<Props> = ({
 	onToggle,
 }) => {
 	const [deg, setDeg] = useState<90 | 180 | 270 | 0>(0);
+	const generatedId = useId();
+	const droppableId = pointId
+		? `${pointId}-screw-${generatedId}`
+		: generatedId;
+
+	const { setNodeRef } = useDroppable({
+		id: droppableId,
+		disabled: !pointId,
+		data: pointId
+			? {
+					type: 'point',
+					pointId,
+					accepts: 'probe',
+			  }
+			: undefined,
+	});
 
 	useEffect(() => {
 		if (provodLocation === 'left') setDeg(90);
@@ -36,6 +53,12 @@ const ScrewConnection: FC<Props> = ({
 
 	return (
 		<div
+			ref={setNodeRef}
+			data-drop-id={droppableId}
+			data-droppable-id={droppableId}
+			data-point-id={pointId}
+			data-probe-offset-x={1}
+			data-probe-offset-y={-1}
 			className={cn(
 				className,
 				styles.component,

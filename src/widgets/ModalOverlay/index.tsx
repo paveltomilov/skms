@@ -6,6 +6,7 @@ import { useDragging } from '@/shared/hooks/useDragging';
 import { GATES } from '@/shared/configs/gate';
 import ModalHeader from '@/entities/ModalHeader';
 import { clearCurrentStudent } from '@/store/trainingSlice';
+import { detachProbe } from '@/store/multimeterSlice';
 
 interface ModalOverlayProps {
 	id: Modals;
@@ -24,6 +25,15 @@ const ModalOverlay: FC<ModalOverlayProps> = ({
 	const { handleMouseDown, position, setPosition } = useDragging(modalRef);
 	const dispatch = useAppDispatch();
 	const name = GATES[gateId].name;
+
+	const handleClose = () => {
+		dispatch(detachProbe('red'));
+		dispatch(detachProbe('black'));
+		dispatch(closeModal(id));
+		if (id === 'studentDelete') {
+			dispatch(clearCurrentStudent());
+		}
+	};
 
 	useEffect(() => {
 		if (modalRef.current) {
@@ -52,12 +62,7 @@ const ModalOverlay: FC<ModalOverlayProps> = ({
 				handleMouseDown={handleMouseDown}
 				headerTitle={headerTitle}
 				gateName={name}
-				handleClose={() => {
-					dispatch(closeModal(id));
-					if (id === 'studentDelete') {
-						dispatch(clearCurrentStudent());
-					}
-				}}
+				handleClose={handleClose}
 			/>
 			{children}
 		</div>
