@@ -1,5 +1,11 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import {
+	render,
+	screen,
+	fireEvent,
+	waitFor,
+	act,
+} from '@testing-library/react';
 import Sidebar from '@/widgets/Sidebar';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
@@ -30,6 +36,23 @@ jest.mock('@/shared/UI/Toast', () => ({
 jest.mock('@/shared/UI/icons/Chevron', () => ({
 	__esModule: true,
 	default: () => <div data-testid="chevron">Chevron</div>,
+}));
+
+jest.mock('next/link', () => ({
+	__esModule: true,
+	default: ({
+		children,
+		href,
+		...props
+	}: {
+		children: React.ReactNode;
+		href: string;
+		[key: string]: unknown;
+	}) => (
+		<a href={href} {...props}>
+			{children}
+		</a>
+	),
 }));
 
 const createMockStore = (
@@ -196,7 +219,9 @@ describe('handleFinishSimulation', () => {
 			expect(finishButton).toBeDisabled();
 
 			// Ждем 1 секунду
-			jest.advanceTimersByTime(1000);
+			await act(async () => {
+				jest.advanceTimersByTime(1000);
+			});
 
 			await waitFor(() => {
 				expect(finishButton).not.toBeDisabled();
