@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import styles from './styles.module.scss';
 import { closeModal, Modals } from '@/store/modalSlice';
 import { useAppDispatch } from '@/shared/hooks/store';
@@ -22,7 +22,8 @@ const ModalOverlay: FC<ModalOverlayProps> = ({
 	headerTitle,
 	preventClose = false,
 }) => {
-	const { handleMouseDown, position } = useDragging();
+	const modalRef = useRef<HTMLDivElement>(null);
+	const { handleMouseDown, position, setPosition } = useDragging(modalRef);
 	const dispatch = useAppDispatch();
 	const name = GATES[gateId].name;
 
@@ -35,19 +36,31 @@ const ModalOverlay: FC<ModalOverlayProps> = ({
 			dispatch(clearCurrentStudent());
 		}
 	};
+	useEffect(() => {
+		if (modalRef.current) {
+			const rect = modalRef.current.getBoundingClientRect();
+			const x = (window.innerWidth - rect.width) / 2;
+			const y = (window.innerHeight - rect.height) / 2;
+			setPosition({ x: x, y: y });
+		}
+	}, []);
 
 	return (
 		<div
+			ref={modalRef}
 			className={styles.modal__wrapper}
 			onClick={e => e.stopPropagation()}
 			style={{
 				transform: `translate(${position.x}px, ${position.y}px)`,
 				zIndex: '11',
+				position: 'fixed',
+				top: 0,
+				left: 0,
 			}}
 		>
 			<ModalHeader
 				id={id}
-				handleMouseDown={e => handleMouseDown(e)}
+				handleMouseDown={handleMouseDown}
 				headerTitle={headerTitle}
 				gateName={name}
 				handleClose={handleClose}

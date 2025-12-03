@@ -40,7 +40,10 @@ const FormMalfunction: FC = () => {
 
 			try {
 				// Отправляем данные на сервер
-				await postSimulation(urlBase, formData);
+				await postSimulation(urlBase, JSON.stringify(formData), {
+					user: 0,
+					malfunctions: [],
+				});
 
 				// Генерируем уникальный ID симуляции
 				const simulationId = `sim-${Date.now()}`;
