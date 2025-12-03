@@ -1,23 +1,16 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import { useState, useEffect, useCallback, RefObject } from 'react';
 
 interface Position {
 	x: number;
 	y: number;
 }
 
-export function useDragging() {
-	const [position, setPosition] = useState<Position>({
-		x: 0,
-		y: 0,
-	});
+export function useDragging(ref: RefObject<HTMLElement|null>) {
+	const [position, setPosition] = useState<Position>({ x: 0, y: 0 });
+	const [isDragging, setIsDragging] = useState(false);
+	const [startPos, setStartPos] = useState<Position>({ x: 0, y: 0 });
 
-	const [isDragging, setIsDragging] = useState<boolean>(false);
-	const [startPos, setStartPos] = useState<Position>({
-		x: 0,
-		y: 0,
-	});
-
-	const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+	const handleMouseDown = (e: React.MouseEvent) => {
 		setIsDragging(true);
 
 		setStartPos({
@@ -27,13 +20,21 @@ export function useDragging() {
 	};
 
 	const handleMouseMove = useCallback((e: MouseEvent) => {
-		if (!isDragging) return;
+			if (!isDragging || !ref.current) return;
 
-		setPosition({
-			x: e.clientX - startPos.x,
-			y: e.clientY - startPos.y,
-		});
-	}, [isDragging, startPos.x, startPos.y]);
+			const rect = ref.current.getBoundingClientRect();
+			const elementWidth = rect.width;
+			const elementHeight = rect.height;
+
+			let newX = e.clientX - startPos.x;
+			let newY = e.clientY - startPos.y;
+
+			newX = Math.max(0, Math.min(newX, window.innerWidth - elementWidth));
+			newY = Math.max(0, Math.min(newY, window.innerHeight - elementHeight));
+
+			setPosition({ x: newX, y: newY });
+		}, [isDragging, startPos.x, startPos.y, ref]
+	);
 
 	const handleMouseUp = useCallback(() => {
 		setIsDragging(false);
@@ -53,10 +54,11 @@ export function useDragging() {
 			document.removeEventListener('mousemove', handleMouseMove);
 			document.removeEventListener('mouseup', handleMouseUp);
 		};
-	}, [handleMouseMove, handleMouseUp, isDragging, startPos]);
+	}, [isDragging, handleMouseMove, handleMouseUp]);
 
 	return {
 		handleMouseDown,
 		position,
+		setPosition
 	};
-}
+};

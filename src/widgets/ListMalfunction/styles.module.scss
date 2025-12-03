@@ -1,0 +1,51 @@
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
+
+.title {
+	@include mixins.text(20px, 500);
+	margin: 0 auto 16px 0;
+}
+
+.list {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	max-height: 300px;
+	overflow-y: none;
+	overflow-x: auto;
+
+	-ms-overflow-style: none; /* Для IE и Edge */
+	scrollbar-width: none; /* Для Firefox */
+	&::-webkit-scrollbar {
+		display: none; /* Для WebKit */
+	}
+
+	&__item {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		border-top: 1px solid #a4a4a4;
+		padding: 24px 0;
+
+		&__top {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+			padding: 3px 3px 0 0;
+		}
+		&__name {
+			@include mixins.text(20px, 500);
+		}
+
+		&__description {
+			width: 310px;
+			@include mixins.text(16px, 400);
+		}
+
+		&:nth-child(1) {
+			padding: 0 0 24px;
+			border: none;
+		}
+	}
+}
