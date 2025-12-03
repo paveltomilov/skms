@@ -84,13 +84,13 @@ const KALeftTop: FC<Props> = ({ className, windows }) => {
 						state={g11.states}
 						position="vertical"
 						textRight={g11.name}
-						onClick={() => openGatePopup('g7')}
+						onClick={() => openGatePopup('g11')}
 					/>
 					<Gate
 						state={g12.states}
 						position="vertical"
 						textRight={g12.name}
-						onClick={() => openGatePopup('g6')}
+						onClick={() => openGatePopup('g12')}
 					/>
 				</div>
 				<span className={styles.windowGateContainer__text}>

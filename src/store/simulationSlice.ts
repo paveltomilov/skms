@@ -50,10 +50,17 @@ const simulationSlice = createSlice({
 		completeSimulation: state => {
 			state.isCompleted = true;
 		},
+		resetSimulation: () => {
+			return initialState;
+		},
 	},
 });
 
-export const { startSimulation, markMalfunctionAsFound, completeSimulation } =
-	simulationSlice.actions;
+export const {
+	startSimulation,
+	markMalfunctionAsFound,
+	completeSimulation,
+	resetSimulation,
+} = simulationSlice.actions;
 
 export default simulationSlice.reducer;

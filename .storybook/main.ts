@@ -18,7 +18,7 @@ const config: StorybookConfig = {
 	webpackFinal: async config => {
 		config.resolve ??= {};
 		config.resolve.alias ??= {};
-		config.resolve.alias['@'] = path.resolve(__dirname, '../src');
+		config.resolve.alias['@'] = path.resolve(import.meta.dirname, '../src');
 		return config;
 	},
 };

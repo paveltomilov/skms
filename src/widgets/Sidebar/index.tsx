@@ -7,15 +7,27 @@ import Chevron from '@/shared/UI/icons/Chevron';
 import { useUserCookies } from '@/shared/hooks/useUserCookies';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import { clearCurrentStudent } from '@/store/trainingSlice';
-import { completeSimulation } from '@/store/simulationSlice';
+import {
+	completeSimulation,
+	startSimulation,
+	resetSimulation,
+} from '@/store/simulationSlice';
 import { useToast } from '@/shared/hooks/useToast';
 import Toast from '@/shared/UI/Toast';
 import { openModal } from '@/store/modalSlice';
+import { setActiveGate } from '@/store/gateSlice';
+import {
+	activateMalfunction,
+	deactivateMalfunction,
+} from '@/store/circuitSlice';
+import { SIMULATION_MALFUNCTIONS } from '@/shared/configs/simulationMalfunctions';
+import { findElementByID } from '@/shared/utils/findElementByID/scheme';
 
 const Sidebar = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const dispatch = useAppDispatch();
 	const simulation = useAppSelector(state => state.simulation);
+	const circuit = useAppSelector(state => state.circuit);
 	const { toasts, showToast, removeToast } = useToast();
 	const [isProcessing, setIsProcessing] = useState(false);
 
@@ -24,6 +36,133 @@ const Sidebar = () => {
 	const { role } = useUserCookies();
 
 	const isAdmin = role === 'admin';
+
+	const handleStartSimulation = useCallback(() => {
+		// Проверка: симуляция уже активна
+		if (simulation.isInitialized && !simulation.isCompleted) {
+			showToast(
+				'Симуляция уже активна. Завершите текущую перед началом новой.',
+				'info',
+			);
+			return;
+		}
+
+		// Генерируем уникальный ID симуляции
+		const simulationId = `sim-${Date.now()}`;
+
+		// Инициализируем симуляцию с неисправностями из константы
+		dispatch(
+			startSimulation({
+				simulationId,
+				originalMalfunctions: SIMULATION_MALFUNCTIONS.malfunctions,
+			}),
+		);
+
+		// Устанавливаем активную задвижку из константы
+		dispatch(setActiveGate(SIMULATION_MALFUNCTIONS.gateId));
+
+		// Активируем неисправности в схеме
+		console.info(
+			'Активация неисправностей из SIMULATION_MALFUNCTIONS:',
+			SIMULATION_MALFUNCTIONS.malfunctions,
+		);
+		SIMULATION_MALFUNCTIONS.malfunctions.forEach(malfunction => {
+			console.info(`Диспатч активации неисправности: ${malfunction.id}`);
+			dispatch(activateMalfunction(malfunction.id));
+		});
+
+		// Показываем уведомление о запуске симуляции
+		showToast(
+			'Получена новая неисправность. Симуляция запущена.',
+			'success',
+		);
+	}, [simulation, dispatch, showToast]);
+
+	const handleLogCircuitState = useCallback(() => {
+		console.info('=== Состояние схемы ===');
+		console.info('Power Circuit:', circuit.powerCircuit);
+		console.info('Control Circuit:', circuit.controlCircuit);
+
+		// Проверяем активные неисправности из симуляции
+		console.info('=== Проверка неисправностей из симуляции ===');
+		if (simulation.originalMalfunctions.length > 0) {
+			simulation.originalMalfunctions.forEach(malfunction => {
+				const malfunctionId = malfunction.id;
+				const lastDotIndex = malfunctionId.lastIndexOf('.');
+				if (lastDotIndex === -1) {
+					console.error(
+						`Неверный формат ID неисправности: "${malfunctionId}"`,
+					);
+					return;
+				}
+
+				const elementId = malfunctionId.substring(0, lastDotIndex);
+				const suffix = malfunctionId.substring(lastDotIndex + 1);
+				const malfunctionIndex = Number(suffix) - 1;
+
+				try {
+					// Используем findElementByID для поиска элемента
+					const element = findElementByID(elementId, circuit);
+
+					if (
+						element &&
+						Array.isArray(element.malfunctions) &&
+						malfunctionIndex >= 0 &&
+						malfunctionIndex < element.malfunctions.length
+					) {
+						const schemeMalfunction =
+							element.malfunctions[malfunctionIndex];
+						console.info(
+							`${
+								schemeMalfunction.active ? '✓' : '✗'
+							} Неисправность "${malfunctionId}" (${
+								malfunction.name
+							}):`,
+							{
+								elementId,
+								malfunctionIndex: malfunctionIndex + 1,
+								active: schemeMalfunction.active,
+								elementName: element.name,
+							},
+						);
+					} else {
+						console.error(
+							`✗ Неисправность "${malfunctionId}" не найдена в элементе "${elementId}"`,
+						);
+					}
+				} catch (error) {
+					console.error(
+						`✗ Ошибка при поиске элемента "${elementId}" для неисправности "${malfunctionId}":`,
+						error,
+					);
+				}
+			});
+		} else {
+			console.info('Нет неисправностей в симуляции');
+		}
+
+		console.info('=== Состояние симуляции ===');
+		console.info('Simulation ID:', simulation.simulationId);
+		console.info('Original Malfunctions:', simulation.originalMalfunctions);
+		console.info('Found Malfunction IDs:', simulation.foundMalfunctionIds);
+		console.info('Is Completed:', simulation.isCompleted);
+		console.info('Is Initialized:', simulation.isInitialized);
+	}, [circuit, simulation]);
+
+	const handleStopSimulation = useCallback(() => {
+		// Деактивируем все неисправности из симуляции
+		if (simulation.originalMalfunctions.length > 0) {
+			simulation.originalMalfunctions.forEach(malfunction => {
+				dispatch(deactivateMalfunction(malfunction.id));
+			});
+		}
+
+		// Сбрасываем состояние симуляции до дефолтного
+		dispatch(resetSimulation());
+
+		// Показываем уведомление об остановке симуляции
+		showToast('Симуляция остановлена', 'info');
+	}, [simulation, dispatch, showToast]);
 
 	const handleFinishSimulation = useCallback(() => {
 		// Проверка: симуляция инициализирована
@@ -100,25 +239,56 @@ const Sidebar = () => {
 						/>
 					)}
 
-				<Button
-					width={90}
-					height={34}
-					aria-label="ПТК"
-					text="ПТК"
-					className={styles.buttonText}
-					href="/ptk"
-					onClick={() => dispatch(clearCurrentStudent())}
-				/>
+					<Button
+						width={90}
+						height={34}
+						aria-label="ПТК"
+						text="ПТК"
+						className={styles.buttonText}
+						href="/ptk"
+						onClick={() => dispatch(clearCurrentStudent())}
+					/>
 
-				<Button
-					width={90}
-					height={34}
-					aria-label="Завершить"
-					text="Завершить"
-					className={styles.buttonText}
-					disabled={isProcessing}
-					onClick={handleFinishSimulation}
-				/>
+					<Button
+						width={90}
+						height={34}
+						aria-label="Начать симуляцию"
+						text="Начать симуляцию"
+						className={styles.buttonText}
+						disabled={
+							simulation.isInitialized && !simulation.isCompleted
+						}
+						onClick={handleStartSimulation}
+					/>
+
+					<Button
+						width={90}
+						height={34}
+						aria-label="Остановить симуляцию"
+						text="Остановить симуляцию"
+						className={styles.buttonText}
+						disabled={!simulation.isInitialized}
+						onClick={handleStopSimulation}
+					/>
+
+					<Button
+						width={90}
+						height={34}
+						aria-label="Завершить"
+						text="Завершить"
+						className={styles.buttonText}
+						disabled={isProcessing}
+						onClick={handleFinishSimulation}
+					/>
+
+					<Button
+						width={90}
+						height={34}
+						aria-label="Лог схемы"
+						text="Лог схемы"
+						className={styles.buttonText}
+						onClick={handleLogCircuitState}
+					/>
 				</div>
 				<button
 					onClick={handleToggleSidebar}

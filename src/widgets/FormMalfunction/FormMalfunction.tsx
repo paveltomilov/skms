@@ -9,6 +9,10 @@ import { closeModal } from '@/store/modalSlice';
 import { useRouter } from 'next/navigation';
 import { clearCurrentStudent } from '@/store/trainingSlice';
 import { SimulationFormData } from '@/shared/types/simulation';
+import { startSimulation } from '@/store/simulationSlice';
+import { setActiveGate } from '@/store/gateSlice';
+import { activateMalfunction } from '@/store/circuitSlice';
+import { SIMULATION_MALFUNCTIONS } from '@/shared/configs/simulationMalfunctions';
 
 const FormMalfunction: FC = () => {
 	const [elementValue, setElementValue] = useState('');
@@ -27,16 +31,43 @@ const FormMalfunction: FC = () => {
 
 	const { urlBase, elements } = useRequestData();
 
-	const handleSetSimulation = (malfunctionsArray: string) => {
+	const handleSetSimulation = async (malfunctionsArray: string) => {
 		if (studentId) {
 			const formData: SimulationFormData = {
 				user: studentId,
 				malfunctions: [{ malfunction_id: malfunctionsArray }],
 			};
-			dispatch(clearCurrentStudent());
-			postSimulation(urlBase, formData);
-			dispatch(closeModal('setSimulation'));
-			router.push('/training');
+
+			try {
+				// Отправляем данные на сервер
+				await postSimulation(urlBase, formData);
+
+				// Генерируем уникальный ID симуляции
+				const simulationId = `sim-${Date.now()}`;
+
+				// Инициализируем симуляцию с неисправностями из константы
+				dispatch(
+					startSimulation({
+						simulationId,
+						originalMalfunctions:
+							SIMULATION_MALFUNCTIONS.malfunctions,
+					}),
+				);
+
+				// Устанавливаем активную задвижку из константы
+				dispatch(setActiveGate(SIMULATION_MALFUNCTIONS.gateId));
+
+				// Активируем неисправности в схеме
+				SIMULATION_MALFUNCTIONS.malfunctions.forEach(malfunction => {
+					dispatch(activateMalfunction(malfunction.id));
+				});
+
+				dispatch(clearCurrentStudent());
+				dispatch(closeModal('setSimulation'));
+				router.push('/ptk');
+			} catch (error) {
+				console.error('Ошибка при создании симуляции:', error);
+			}
 		}
 	};
 
