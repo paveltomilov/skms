@@ -1,25 +1,29 @@
-import { LampIndicatorColor } from '../types/icon';
+import type { LampIndicatorColor } from '../types/icon';
 import { MarkerName } from '../types/markers';
+import {
+	CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID,
+	LAMP_KRUZA_P_CLOSED_ID,
+	LAMP_KRUZA_P_OPEN_ID,
+	OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID,
+} from './controlCircuit/constants';
 import { CONTROL_CIRCUIT_NEUTRAL_ID } from './points';
 
-export const LAMP_PALETTES = {
-	white: { on: 'lamp_open_on', off: 'lamp_white_off' },
-	green: { on: 'lamp_green_on', off: 'lamp_closed_off' },
-} as const;
-
-export type LampPalette = keyof typeof LAMP_PALETTES;
-
-export interface LampPin {
-	code: MarkerName;
-	pointId: string;
+export interface Connection {
+	marker: MarkerName;
+	point: string;
 }
 
 export interface LampColumn {
 	id: 'closed' | 'open';
-	title: string;
-	pins: LampPin[];
+	title: 'Закрыто' | 'Открыто';
+	color: 'white' | 'lamp_green';
+	pointIds: string[];
 	elementId: string;
-	palette: LampPalette;
+	colors: {
+		on: LampIndicatorColor;
+		off: LampIndicatorColor;
+	};
+	points: Connection[];
 	position: 'left' | 'right';
 }
 
@@ -27,45 +31,33 @@ export const columns: LampColumn[] = [
 	{
 		id: 'closed',
 		title: 'Закрыто',
-		pins: [
-			{ code: 'A', pointId: 'p.c.3.1.2' },
-			{ code: 'N', pointId: CONTROL_CIRCUIT_NEUTRAL_ID },
+		color: 'white',
+		pointIds: [OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID], // А19 - p.c.3.0.2 (выход концевика "Открыто")
+		elementId: LAMP_KRUZA_P_CLOSED_ID,
+		colors: {
+			on: 'lamp_white_on',
+			off: 'lamp_white_off',
+		},
+		points: [
+			{ marker: 'A', point: OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID }, // А19
+			{ marker: 'N', point: CONTROL_CIRCUIT_NEUTRAL_ID },
 		],
-		elementId: 'c.3.1.3.3',
-		palette: 'white',
 		position: 'left',
 	},
 	{
 		id: 'open',
 		title: 'Открыто',
-		pins: [
-			{ code: 'A', pointId: 'p.c.3.2.2' },
-			{ code: 'N', pointId: CONTROL_CIRCUIT_NEUTRAL_ID },
+		color: 'lamp_green',
+		pointIds: [CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID], // А11 - p.c.3.1.2 (выход концевика "Закрыто")
+		elementId: LAMP_KRUZA_P_OPEN_ID,
+		colors: {
+			on: 'lamp_green_on',
+			off: 'lamp_green_off',
+		},
+		points: [
+			{ marker: 'A', point: CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID }, // А11
+			{ marker: 'N', point: CONTROL_CIRCUIT_NEUTRAL_ID },
 		],
-		elementId: 'c.3.2.3.3',
-		palette: 'green',
 		position: 'right',
 	},
 ];
-
-export type LampColorConfig = {
-	on: LampIndicatorColor;
-	off: LampIndicatorColor;
-};
-export type LampVariant = 'white' | 'green';
-
-export const PALETTES: Record<LampVariant, LampColorConfig> = {
-	white: { on: 'lamp_open_on', off: 'lamp_white_off' },
-	green: { on: 'lamp_green_on', off: 'lamp_closed_off' },
-};
-
-// Отображение ламп по состоянию; если нужно — поменять цвет:
-export const lampVariants: Record<'closed' | 'open', LampVariant> = {
-	closed: 'white', // можно заменить на 'green', если понадобится
-	open: 'green', // и наоборот
-};
-
-// Тип точки: boolean или объект, содержащий состояние
-export type PointObj = { state?: boolean; voltage?: number };
-export const isPointObj = (v: unknown): v is PointObj =>
-	!!v && typeof v === 'object';

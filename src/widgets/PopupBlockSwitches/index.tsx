@@ -1,4 +1,4 @@
-﻿import { cloneElement, FC, ReactElement, ReactNode } from 'react';
+import { cloneElement, FC, ReactElement, ReactNode } from 'react';
 import styles from './styles.module.scss';
 import cn from 'classnames';
 import Provod from '@/shared/UI/Provod';
@@ -72,7 +72,3 @@ const PopupBlockSwitches: FC<Props> = ({ className }) => {
 };
 
 export default PopupBlockSwitches;
-
-
-
-

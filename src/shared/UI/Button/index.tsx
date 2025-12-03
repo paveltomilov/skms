@@ -11,6 +11,7 @@ interface ImageProps {
 }
 
 interface ButtonProps {
+	title?: string;
 	href?: string;
 	width: number;
 	height: number;
@@ -29,6 +30,7 @@ interface ButtonProps {
 }
 
 const Button = ({
+	title,
 	href,
 	width,
 	height,
@@ -72,6 +74,7 @@ const Button = ({
 		</Link>
 	) : (
 		<button
+			title={title}
 			className={`${styles.button} ${className && className}
 			${active && styles.active}
 			${success && styles.success}`}

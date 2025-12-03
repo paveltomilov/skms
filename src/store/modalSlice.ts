@@ -13,7 +13,15 @@ export type Modals =
 	| 'starter_coil'
 	| 'blocking_activation'
 	| 'button'
-	| 'notification';
+	| 'input_circuit_breaker'
+	| 'clamp'
+	| 'notification'
+	| 'setSimulation'
+	| 'studentStatistics'
+	| 'studentCreate'
+	| 'studentDelete'
+	| 'abortSimulation'
+	| 'note';
 
 export type ModalState = Record<Modals, boolean>;
 
@@ -30,7 +38,15 @@ const initialState: ModalState = {
 	starter_coil: false,
 	blocking_activation: false,
 	button: false,
+	input_circuit_breaker: false,
+	clamp: false,
 	notification: false,
+	setSimulation: false,
+	studentStatistics: false,
+	studentCreate: false,
+	studentDelete: false,
+	abortSimulation: false,
+	note: false,
 };
 
 const modalSlice = createSlice({

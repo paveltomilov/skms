@@ -1,4 +1,4 @@
-﻿import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import Multimeter from '.';
 import { configureStore } from '@reduxjs/toolkit';
 import multimeterReducer, {
@@ -18,7 +18,7 @@ const mockStore = configureStore({
 });
 
 interface Prop {
-	displayValue: number | string | null;
+	displayValue: number | null;
 	currentMode: MultimeterMode;
 }
 

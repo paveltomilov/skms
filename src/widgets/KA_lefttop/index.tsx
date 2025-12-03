@@ -13,16 +13,24 @@ import Window from '@/shared/UI/Window';
 import Tilde from '@/shared/UI/icons/Tilde';
 import Button from '@/shared/UI/Button';
 import WindowCircleCard from '@/shared/UI/WindowCircleCard';
-import { WINDOWS } from '@/shared/configs/window';
+import { WindowsState } from '@/shared/configs/window';
 import Gate from '@/shared/UI/Gate';
 import ShapeComponent from '@/shared/UI/icons/ShapeComponent';
+import { useAppSelector } from '@/shared/hooks/store';
+import { useOpenGatePopup } from '@/shared/hooks/useOpenGatePopup';
 import useShowModal from '@/shared/hooks/useShowModal';
+import { RootState } from '@/store/store';
 
 interface Props {
 	className?: string;
+	windows: WindowsState;
 }
 
-const KALeftTop: FC<Props> = ({ className }) => {
+const KALeftTop: FC<Props> = ({ className, windows }) => {
+	const { g11, g12 } = useAppSelector((state: RootState) => state.gate.gates);
+
+	const openGatePopup = useOpenGatePopup();
+
 	const handleModalNotification = useShowModal('notification');
 	return (
 		<div className={cn(className, styles.container)}>
@@ -30,8 +38,8 @@ const KALeftTop: FC<Props> = ({ className }) => {
 				<ShapeComponent text="БСУ" shape="trapezoid" />
 			</div>
 			<div className={styles.thirdWindows}>
-				{thirdWindowsTop.map((window, index) => (
-					<Window key={index} data={window} right />
+				{thirdWindowsTop.map(id => (
+					<Window key={id} data={windows[id]} right />
 				))}
 			</div>
 			<div className={styles.lettersRow}>
@@ -41,8 +49,8 @@ const KALeftTop: FC<Props> = ({ className }) => {
 			</div>
 			<div className={styles.windowsGrid}>
 				<div className={styles.firstWindows}>
-					{firstWindowsTop.map((window, index) => (
-						<Window key={index} data={window} right />
+					{firstWindowsTop.map(id => (
+						<Window key={id} data={windows[id]} right />
 					))}
 				</div>
 				<div className={styles.tildaContainer}>
@@ -56,31 +64,33 @@ const KALeftTop: FC<Props> = ({ className }) => {
 					))}
 				</div>
 				<div className={styles.secondWindows}>
-					{secondWindowsTop.map((window, index) => (
-						<div key={index}>
-							<Window data={window} right />
+					{secondWindowsTop.map(id => (
+						<div key={id}>
+							<Window data={windows[id]} right />
 						</div>
 					))}
 				</div>
 			</div>
 			<div className={styles.windowGateContainer}>
 				<WindowCircleCard
-					maxValue={WINDOWS.w112.maxValue}
-					minValue={WINDOWS.w112.minValue}
-					value1={WINDOWS.w112.currentValue1}
-					value2={WINDOWS.w112.currentValue2}
+					maxValue={windows.w112_1.maxValue}
+					minValue={windows.w112_2.minValue}
+					value1={windows.w112_1.currentValue}
+					value2={windows.w112_2.currentValue}
 					color="blue"
 				/>
 				<div className={styles.gateContainer}>
 					<Gate
-						state="close"
+						state={g11.states}
 						position="vertical"
-						textRight="1АСБ-1"
+						textRight={g11.name}
+						onClick={() => openGatePopup('g7')}
 					/>
 					<Gate
-						state="close"
+						state={g12.states}
 						position="vertical"
-						textRight="1АСБ-2"
+						textRight={g12.name}
+						onClick={() => openGatePopup('g6')}
 					/>
 				</div>
 				<span className={styles.windowGateContainer__text}>
@@ -99,7 +109,7 @@ const KALeftTop: FC<Props> = ({ className }) => {
 				</div>
 				<div className={styles.sumBlock}>
 					<span className={styles.sumLabel}>Сум.</span>
-					<Window data={WINDOWS.w111} right />
+					<Window data={windows.w111} right />
 				</div>
 			</div>
 			<div className={styles.buttonsContainer}>

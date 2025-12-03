@@ -22,26 +22,20 @@ export type MultimeterMode =
 	| 'DCV_2000m'
 	| 'DCV_200m';
 
-export interface ProbeAttachment {
-	pointId: UniqueIdentifier | null;
-	dropId: string | null;
-}
-
 export interface ProbeConnection {
-	red: ProbeAttachment;
-	black: ProbeAttachment;
+	red: UniqueIdentifier | null;
+	black: UniqueIdentifier | null;
 }
 
 /** Состояние щупа */
 export interface ProbStateProps {
 	isNeutral: boolean;
 	isPower: boolean;
-	pointId: UniqueIdentifier | null;
 }
 
 export interface MultimeterState {
 	currentMode: MultimeterMode;
-	displayValue: number | string | null;
+	displayValue: number | null;
 	probeConnections: ProbeConnection;
 	activeProb: UniqueIdentifier | null;
 }

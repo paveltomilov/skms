@@ -1,0 +1,122 @@
+.footer {
+  &__container {
+    background-image: url('/images/footer.png');
+    background-position-y: 42px;
+    background-repeat: no-repeat;
+    background-size: auto;
+  }
+
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 180px;
+    padding-bottom: 16px;
+  }
+
+  &__logo {
+    margin-bottom: 24px;
+  }
+
+  &__nav {
+    font-family: var(--second-family);
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 128%;
+    color: var(--lan-light-grayish-blue);
+    margin-bottom: 20px;
+  }
+
+  &_container {
+    &_left__link {
+      display: block;
+      font-family: var(--second-family);
+      font-weight: 400;
+      font-size: 15px;
+      line-height: 100%;
+      color: var(--lan-gray);
+      margin-bottom: 8px;
+      transition: all 0.2s ease-in-out;
+
+      &:hover,
+      &:focus {
+        color: var(--lan-bright-cyan---lime-green);
+      }
+    }
+
+    &__right {
+      width: 237px;
+      height: 192px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    &_right__top {
+      display: flex;
+      flex-direction: column;
+      padding-top: 12px;
+      gap: 12px;
+    }
+
+    &_right__logo {
+      padding-bottom: 8px;
+    }
+
+    &_right_top {
+      &__mail {
+        display: inline-flex;
+        font-family: var(--second-family);
+        font-weight: 400;
+        font-size: 17px;
+        line-height: 128%;
+        color: var(--lan-light-grayish-blue);
+        transition: all 0.2s ease-in-out;
+
+        &:hover,
+        &:focus {
+          color: var(--lan-bright-cyan---lime-green);
+        }
+
+        &::before {
+          content: url('/svg/mail.svg');
+          width: 19px;
+          height: 15px;
+          margin-right: 16px;
+          flex-shrink: 0;
+        }
+      }
+
+      &__telephone {
+        display: block;
+        font-family: var(--second-family);
+        font-weight: 400;
+        font-size: 17px;
+        line-height: 128%;
+        color: var(--lan-light-grayish-blue);
+        transition: all 0.2s ease-in-out;
+
+        &:hover,
+        &:focus {
+          color: var(--lan-bright-cyan---lime-green);
+        }
+
+        &::before {
+          content: url('/svg/telephone.svg');
+          width: 19px;
+          height: 19px;
+          margin-right: 16px;
+          flex-shrink: 0;
+        }
+      }
+    }
+  }
+
+  &__nav {
+    font-family: var(--second-family);
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 128%;
+    color: var(--lan-light-grayish-blue);
+  }
+}

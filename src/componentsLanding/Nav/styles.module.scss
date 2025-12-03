@@ -1,0 +1,15 @@
+.nav {
+  &__list {
+    display: flex;
+    gap: 16px;
+  }
+
+  &__link {
+    transition: all 0.2s ease-in-out;
+
+    &:focus,
+    &:hover {
+      color: var(--lan-bright-cyan---lime-green);
+    }
+  }
+}

@@ -40,15 +40,15 @@ export interface IconColor {
 	electric_green: string;
 	dark_green: string;
 	lamp_white_off: string;
-	lamp_open_on: string;
-	lamp_closed_off: string;
+	lamp_white_on: string;
+	lamp_green_off: string;
 	lamp_green_on: string;
 }
 
 export type LampIndicatorColor =
 	| 'lamp_white_off'
-	| 'lamp_open_on'
-	| 'lamp_closed_off'
+	| 'lamp_white_on'
+	| 'lamp_green_off'
 	| 'lamp_green_on';
 
 export interface IconTransform {

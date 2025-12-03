@@ -2,7 +2,7 @@ import { GATES } from '@/shared/configs/gate';
 import { GATE_STATE_TYPE, IGate } from '@/shared/types/gate';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface GateState {
+export interface GateState {
 	gates: Record<string, IGate>;
 	activeGateId: string | null;
 }

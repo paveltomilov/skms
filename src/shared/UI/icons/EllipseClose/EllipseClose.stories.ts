@@ -10,8 +10,9 @@ const meta: Meta<typeof EllipseClose> = {
 	tags: ['autodocs'],
 	argTypes: {
 		size: {
-			description: 'Размеры иконки: sm - 20x20 px, lg - 28x28 px',
-			options: ['sm', 'lg'],
+			description:
+				'Размеры иконки: sm - 20x20 px, lg - 28x28 px, xs - 16x16 px',
+			options: ['sm', 'lg', 'xs'],
 			control: {
 				type: 'radio',
 			},
@@ -26,6 +27,13 @@ const meta: Meta<typeof EllipseClose> = {
 		className: {
 			description:
 				'Для передачи дополнительных стилей (для позиционирования)',
+		},
+		typeWidth: {
+			description: 'Ширина линий иконуи: fat - жирная, thin - тонкая',
+			options: ['thin', 'fat'],
+			control: {
+				type: 'radio',
+			},
 		},
 	},
 };
@@ -46,3 +54,17 @@ export const Disabled: Story = {
 		color: 'disabled',
 	},
 };
+
+export const SmallThin: Story = {
+	args: {
+		typeWidth: 'thin',
+	}
+};
+
+export const LargeThin: Story = {
+	args: {
+		typeWidth: 'thin',
+		size: 'lg',
+	},
+};
+

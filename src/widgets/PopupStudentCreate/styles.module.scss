@@ -1,0 +1,26 @@
+@use '@/shared/scss/variables.module';
+@use '@/shared/scss/mixins.module';
+
+
+.popup {
+    width: 572px;
+    background: variables.$primary-color;
+}
+
+.form {
+    margin: 16px 19px 16px 26px;
+    display: flex;
+    gap: 25px;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.button {
+    background-color: variables.$secondary-color;
+    margin: 10px 0 0;
+
+    span {
+        @include mixins.text(32px, 400);
+        line-height: 1;
+    }
+}

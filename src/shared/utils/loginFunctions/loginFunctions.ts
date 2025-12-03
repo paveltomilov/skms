@@ -51,7 +51,7 @@ export function getDone(
 	values: LoginFormData,
 	validationStatus: ValidationStatus,
 	serverErrors: Record<keyof LoginFormData, boolean>,
-	activeFields: (keyof LoginFormData)[] = ['email', 'password'],
+	activeFields: (keyof LoginFormData)[],
 ): boolean {
 	if (!activeFields.includes(field)) {
 		return true;

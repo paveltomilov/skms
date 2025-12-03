@@ -11,22 +11,22 @@ const meta: Meta<typeof LampIndicator> = {
 	argTypes: {
 		color: {
 			description:
-				'Состояния верхней части лампы: белая — lamp_white_off зелёная — lamp_open_on,  белая — lamp_closed_off зелёная — lamp_green_on.',
+				'Цвет верхней части лампы. Доступные значения: `lamp_white_off`, `lamp_white_on`, `lamp_green_off`, `lamp_green_on`.',
 			options: [
 				'lamp_white_off',
-				'lamp_open_on',
-				'lamp_closed_off',
+				'lamp_white_on',
+				'lamp_green_off',
 				'lamp_green_on',
 			],
 			control: { type: 'radio' },
 		},
 		className: {
 			description:
-				'Дополнительный CSS-класс контейнера. Обычно не требуется.',
+				'Дополнительные классы для позиционирования или кастомного стайлинга.',
 			control: false,
 		},
 		style: {
-			description: 'Inline-стили для SVG.',
+			description: 'Inline-стили для SVG-элемента.',
 			control: false,
 		},
 	},
@@ -35,30 +35,58 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const WhiteOff: Story = {
+export const WhiteActive: Story = {
+	args: {
+		type: 'lamp',
+		color: 'lamp_white_on',
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: 'Состояние: **Активна**.',
+			},
+		},
+	},
+};
+
+export const WhiteInactive: Story = {
 	args: {
 		type: 'lamp',
 		color: 'lamp_white_off',
 	},
-};
-
-export const WhiteOn: Story = {
-	args: {
-		type: 'lamp',
-		color: 'lamp_open_on',
+	parameters: {
+		docs: {
+			description: {
+				story: 'Состояние: **Отключена**.',
+			},
+		},
 	},
 };
 
-export const GreenOff: Story = {
-	args: {
-		type: 'lamp',
-		color: 'lamp_closed_off',
-	},
-};
-
-export const GreenOn: Story = {
+export const GreenActive: Story = {
 	args: {
 		type: 'lamp',
 		color: 'lamp_green_on',
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: 'Состояние: **Активна**.',
+			},
+		},
+	},
+};
+
+export const GreenInactive: Story = {
+	args: {
+		type: 'lamp',
+		color: 'lamp_green_off',
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: 'Состояние: **Неактивна**.',
+			},
+		},
 	},
 };

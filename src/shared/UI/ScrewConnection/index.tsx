@@ -1,5 +1,4 @@
-﻿import { FC, useEffect, useState } from 'react';
-import { useDroppable } from '@dnd-kit/core';
+import { FC, useEffect, useState } from 'react';
 import cn from 'classnames';
 import styles from './styles.module.scss';
 import { MarkerName } from '@/shared/types/markers';
@@ -19,7 +18,6 @@ export interface Props {
 const ScrewConnection: FC<Props> = ({
 	screwStatus = 'close',
 	pointId,
-	dropId,
 	className,
 	textRight,
 	textTop,
@@ -27,18 +25,6 @@ const ScrewConnection: FC<Props> = ({
 	provodLocation,
 	onToggle,
 }) => {
-	const dropTargetId = dropId ?? pointId;
-
-	const { setNodeRef, isOver } = useDroppable({
-		id: dropTargetId,
-		data: {
-			type: 'point',
-			accepts: ['probe'],
-			pointId,
-			dropId: dropTargetId,
-		},
-	});
-
 	const [deg, setDeg] = useState<90 | 180 | 270 | 0>(0);
 
 	useEffect(() => {
@@ -82,4 +68,3 @@ const ScrewConnection: FC<Props> = ({
 };
 
 export default ScrewConnection;
-

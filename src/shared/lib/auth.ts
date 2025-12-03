@@ -1,90 +1,91 @@
-import { RefreshResponse, VerifyResponse } from '@/shared/types/typesAuth';
 import axios from 'axios';
-import { getCookie, setCookie } from 'cookies-next';
-import { LoginFormData, LoginResponse } from '../types/login';
+import {deleteCookie, getCookie, setCookie} from 'cookies-next';
+import {LoginFormData, LoginResponse} from '../types/login';
+import {accessToken, initializeInterceptors, setAccessToken} from '@/shared/lib/authInterceptors';
 
 const urlBase = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-export async function checkAuth(): Promise<{ valid: boolean }> {
-	const access = localStorage.getItem('accessToken');
-	const refresh = getCookie('refreshToken');
-
-	if (!access || !refresh) {
-		return { valid: false };
-	}
-
-	try {
-		const verifyRes = await fetch(`${urlBase}/auth/verify/`, {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ token: access }),
-		});
-
-		if (!verifyRes.ok) {
-			return { valid: false };
-		}
-
-		// Properly typed response
-		const verifyData = (await verifyRes.json()) as VerifyResponse;
-
-		if (verifyData.token_valid) {
-			return { valid: true };
-		}
-
-		if (!refresh) {
-			return { valid: false };
-		}
-
-		const refreshRes = await fetch(`${urlBase}/auth/refresh/`, {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ refresh }),
-		});
-
-		if (!refreshRes.ok) {
-			return { valid: false };
-		}
-
-		// Properly typed response
-		const refreshData = (await refreshRes.json()) as RefreshResponse;
-
-		if (refreshData.access) {
-			localStorage.setItem('accessToken', refreshData.access);
-			return { valid: true };
-		}
-
-		return { valid: false };
-	} catch {
-		return { valid: false };
-	}
+if (urlBase) {
+	initializeInterceptors(urlBase);
 }
 
-export async function postAuth(formData: LoginFormData): Promise<boolean> {
+interface IPostAuthResponse {
+	success: boolean;
+	role?: string | undefined;
+	errorText?: string;
+}
+
+export function initAccessFromStorage() {
+	const stored = localStorage.getItem('accessToken');
+	if (stored) setAccessToken(stored);
+}
+
+export async function checkAuth(): Promise<{ valid: boolean }> {
+	const access = localStorage.getItem('accessToken');
+	const refreshFromCookie = getCookie('refreshToken');
+
+	if (!access || !refreshFromCookie) {
+		logout();
+		return { valid: false };
+	}
+
+	return { valid: true };
+}
+
+export async function postAuth(
+	formData: LoginFormData,
+): Promise<IPostAuthResponse> {
 	try {
 		const response = await axios.post<LoginResponse>(
 			`${urlBase}/auth/`,
 			{ email: formData.email, password: formData.password },
-			{
-				headers: { 'Content-Type': 'application/json' },
-			},
 		);
 
 		const { access, refresh, first_name, last_name, role } = response.data;
 
 		if (!access || !refresh) {
-			// throw new Error('Токены не получены');
-			throw new Error('Данные некорректны');
+			throw new Error('Токены не получены');
 		}
-		if (response.status == 200) {
+
+		if (response.statusText == 'OK') {
+			setAccessToken(access);
 			localStorage.setItem('accessToken', access);
 			setCookie('refreshToken', refresh);
 			setCookie('first_name', first_name);
 			setCookie('last_name', last_name);
 			setCookie('role', role);
-			return true;
+
+			return { success: true, role };
 		}
-		return false;
-	} catch {
-		return false;
+
+		return { success: false };
+	} catch (err: unknown) {
+		let errorText: string | undefined;
+		if (axios.isAxiosError(err)) {
+			const data = err.response?.data as unknown;
+			if (data && typeof data === 'object') {
+				const d = data as Record<string, unknown>;
+				const detail =
+					typeof d.detail === 'string' ? d.detail : undefined;
+				const error = typeof d.error === 'string' ? d.error : undefined;
+				errorText = detail || error;
+			}
+		}
+		return { success: false, errorText };
 	}
+}
+
+// Вспомогательная функция для получения accessToken
+export function getAccessToken(): string | null {
+	return accessToken;
+}
+
+// Функция для выхода
+export function logout(): void {
+	localStorage.removeItem('accessToken');
+	deleteCookie('refreshToken');
+	deleteCookie('first_name');
+	deleteCookie('last_name');
+	deleteCookie('role');
+	setAccessToken(null);
 }

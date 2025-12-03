@@ -1,16 +1,16 @@
-﻿'use client';
+'use client';
 
 import React, { ReactNode } from 'react';
 import { DndContext, DragEndEvent, DragStartEvent } from '@dnd-kit/core';
-import { restrictToParentElement } from '@dnd-kit/modifiers';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import {
 	attachProbe,
 	detachProbe,
 	setActiveProb,
 } from '@/store/multimeterSlice';
-import { ProbeColor } from '@/shared/types/multimeter';
 import { probeTipCollisionDetection } from '@/shared/lib/probeTipCollisionDetection';
+import { restrictToParentElement } from '@dnd-kit/modifiers';
+import { ProbeColor } from '@/shared/types/multimeter';
 import { useWebSocket } from '@/shared/hooks/useWebSocket';
 
 interface Props {
@@ -23,50 +23,39 @@ export const Dnd: React.FC<Props> = ({ children }) => {
 	const probeConnections = useAppSelector(
 		state => state.multimeter.probeConnections,
 	);
-	const currentMode = useAppSelector(state => state.multimeter.currentMode);
 
 	const handleDragStart = ({ active }: DragStartEvent) => {
-		const probeColor = active.id as ProbeColor;
+		const probeColor = active.id as 'red' | 'black';
 		dispatch(setActiveProb(probeColor));
 		dispatch(detachProbe(probeColor));
 	};
 
 	const handleDragEnd = ({ active, over }: DragEndEvent) => {
 		const probeColor = active.id as ProbeColor;
-
-		if (currentMode === 'OFF') {
-			dispatch(detachProbe(probeColor));
-			dispatch(setActiveProb(null));
-			return;
-		}
-
 		if (over && over.data.current?.type === 'point') {
-			const pointId =
-				(over.data.current?.pointId as string | undefined) ??
-				(over.id as string);
-			const dropId =
-				(over.data.current?.dropId as string | undefined) ?? null;
+			const pointId = over.id;
 
-			const isPointOccupied = Object.values(probeConnections).some(
-				connection => connection.pointId === pointId,
-			);
+			// Проверяем, не занята ли точка другим щупом
+			const isPointOccupied =
+				Object.values(probeConnections).includes(pointId);
 
 			if (!isPointOccupied) {
+				// Если если точка не занята - прикрепляем
 				dispatch(
 					attachProbe({
 						probeColor,
 						pointId,
-						dropId,
 					}),
 				);
 			}
 		} else {
+			// Если щуп отпустили не над точкой - открепляем
 			dispatch(detachProbe(probeColor));
 		}
-
 		dispatch(setActiveProb(null));
 	};
 
+	// подключение к вебсокету
 	const { sendMessage } = useWebSocket();
 
 	sendMessage({
@@ -87,5 +76,3 @@ export const Dnd: React.FC<Props> = ({ children }) => {
 };
 
 export default Dnd;
-
-

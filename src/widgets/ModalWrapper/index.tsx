@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, JSX } from 'react';
+import { FC, JSX, useEffect } from 'react';
 import cn from 'classnames';
 import styles from './styles.module.scss';
 import { useAppSelector } from '@/shared/hooks/store';
@@ -9,12 +9,19 @@ import PopupGateValves from '../PopupGateValves';
 import ModalOverlay from '../ModalOverlay';
 import PopupDiagnostic from '../PopupDiagnostic';
 import { Automatic } from '../Automatic';
-import { Modals } from '@/store/modalSlice';
+import { Modals, type ModalState } from '@/store/modalSlice';
 import PopupBlockSwitches from '../PopupBlockSwitches';
 import { LampScheme } from '../LampScheme';
 import PopupActuator from '@/widgets/PopupActuator';
 import PopupClamp from '../PopupClamp';
+import { PopupSetSimulation } from '../PopupSetSimulation';
 import PopupNotificationDev from '../PopupNotificationDev';
+import { PopupStudentStatistics } from '../PopupStudetnStatistics';
+import { PopupStudentCreate } from '../PopupStudentCreate';
+import { PopupStudentDelete } from '../PopupStudentDelete';
+import { PopupNote } from '../PopupNote';
+import { useUserCookies } from '@/shared/hooks/useUserCookies';
+import { PopupAbortSimulation } from '../PopupAbortSimulation';
 
 interface IModals {
 	condition: boolean;
@@ -34,7 +41,17 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		block_switches,
 		motor,
 		notification,
-	} = useAppSelector(state => state.modal);
+		setSimulation,
+		studentStatistics,
+		studentCreate,
+		studentDelete,
+		abortSimulation,
+		note,
+	} = useAppSelector((state): ModalState => state.modal);
+
+	const { role } = useUserCookies();
+
+	const isAdmin = role === 'admin';
 
 	const isOne =
 		automatic ||
@@ -45,9 +62,24 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		motor ||
 		block_switches ||
 		starter ||
-		notification;
-
+		notification ||
+		setSimulation ||
+		studentStatistics ||
+		studentCreate ||
+		studentDelete ||
+		abortSimulation ||
+		note;
 	const gateId = useAppSelector(state => state.gate.activeGateId as string);
+	const student = useAppSelector(state => state.training.currentStudent);
+
+	const fullName = isAdmin
+		? 'Преподаватель'
+		: `${student?.first_name} ${student?.last_name}`;
+
+	const gates = useAppSelector(state => state.gate);
+	const gateName = gates.activeGateId
+		? gates.gates[gates.activeGateId].name
+		: '';
 
 	const modals: IModals[] = [
 		{
@@ -61,21 +93,21 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			condition: gateControl,
 			id: 'gateControl',
 			headerTitle: '',
-			gateId: gateId,
+			gateId: gateId ?? undefined,
 			component: <PopupGateControl />,
 		},
 		{
 			condition: diagnostic,
 			id: 'diagnostic',
 			headerTitle: '',
-			gateId: gateId,
+			gateId: gateId ?? undefined,
 			component: <PopupDiagnostic />,
 		},
 		{
 			condition: gateValves,
 			id: 'gateValves',
 			headerTitle: '',
-			gateId: gateId,
+			gateId: gateId ?? undefined,
 			component: <PopupGateValves />,
 		},
 		{
@@ -111,9 +143,63 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			id: 'notification',
 			headerTitle: 'Дата реализации',
 			gateId: undefined,
-			component: <PopupNotificationDev/>,
+			component: <PopupNotificationDev />,
+		},
+		{
+			condition: setSimulation,
+			id: 'setSimulation',
+			headerTitle: `Задать симуляцию ${gateName}`,
+			gateId: undefined,
+			component: <PopupSetSimulation />,
+		},
+		{
+			condition: studentStatistics,
+			id: 'studentStatistics',
+			headerTitle: `Статистика: ${fullName}`,
+			gateId: undefined,
+			component: <PopupStudentStatistics />,
+		},
+		{
+			condition: studentCreate,
+			id: 'studentCreate',
+			headerTitle: `Создание ${isAdmin ? 'преподавателя' : 'ученика'}`,
+			gateId: undefined,
+			component: <PopupStudentCreate />,
+		},
+		{
+			condition: studentDelete,
+			id: 'studentDelete',
+			headerTitle: `Удаление ${isAdmin ? 'преподавателя' : 'ученика'}`,
+			gateId: undefined,
+			component: <PopupStudentDelete />,
+		},
+		{
+			condition: note,
+			id: 'note',
+			headerTitle: 'Уведомление',
+			gateId: undefined,
+			component: <PopupNote />,
+		},
+		{
+			condition: abortSimulation,
+			id: 'abortSimulation',
+			headerTitle: 'Прервать попытку',
+			gateId: undefined,
+			component: <PopupAbortSimulation />,
 		},
 	];
+	// отключаем скролл страницы
+	useEffect(() => {
+		if (isOne) {
+			document.body.style.overflow = 'hidden';
+		} else {
+			document.body.style.overflow = '';
+		}
+
+		return () => {
+			document.body.style.overflow = '';
+		};
+	}, [isOne]);
 
 	return (
 		<div
