@@ -41,7 +41,6 @@ const ModalOverlay: FC<ModalOverlayProps> = ({
 			onClick={e => e.stopPropagation()}
 			style={{
 				transform: `translate(${position.x}px, ${position.y}px)`,
-				zIndex: '3',
 			}}
 		>
 			<ModalHeader
