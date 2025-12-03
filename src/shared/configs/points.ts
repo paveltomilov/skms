@@ -339,8 +339,6 @@ export const SCHEME_POINTS: Record<string, IPoint> = {
 export const SCHEME_POINTS_BASE: Record<string, IPoint> =
 	enrichPointsWithElements(SCHEME_POINTS);
 
-console.log(SCHEME_POINTS_BASE);
-
 function extractStates(SCHEME_POINTS: Record<string, IPoint>) {
 	const result: Record<string, boolean> = {};
 

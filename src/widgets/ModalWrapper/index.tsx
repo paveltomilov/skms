@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, JSX } from 'react';
+import { FC, JSX, useEffect } from 'react';
 import cn from 'classnames';
 import styles from './styles.module.scss';
 import { useAppSelector } from '@/shared/hooks/store';
@@ -20,6 +20,7 @@ import { PopupStudentStatistics } from '../PopupStudetnStatistics';
 import { PopupStudentCreate } from '../PopupStudentCreate';
 import { PopupStudentDelete } from '../PopupStudentDelete';
 import { PopupNote } from '../PopupNote';
+import { PopupSimulationComplete } from '../PopupSimulationComplete';
 import { useUserCookies } from '@/shared/hooks/useUserCookies';
 
 interface IModals {
@@ -45,6 +46,7 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		studentCreate,
 		studentDelete,
 		note,
+		simulationComplete,
 	} = useAppSelector((state): ModalState => state.modal);
 
 	const { role } = useUserCookies();
@@ -65,7 +67,8 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		studentStatistics ||
 		studentCreate ||
 		studentDelete ||
-		note;
+		note ||
+		simulationComplete;
 	const gateId = useAppSelector(state => state.gate.activeGateId as string);
 	const student = useAppSelector(state => state.training.currentStudent);
 
@@ -172,7 +175,41 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			gateId: undefined,
 			component: <PopupNote />,
 		},
+		{
+			condition: simulationComplete,
+			id: 'simulationComplete',
+			headerTitle: '',
+			gateId: undefined,
+			component: <PopupSimulationComplete />,
+		},
 	];
+
+	// Блокировка закрытия модальных окон setSimulation и simulationComplete через Esc
+	useEffect(() => {
+		if (!setSimulation && !simulationComplete) return;
+
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (e.key === 'Escape') {
+				e.preventDefault();
+				e.stopPropagation();
+			}
+		};
+
+		window.addEventListener('keydown', handleKeyDown);
+		return () => {
+			window.removeEventListener('keydown', handleKeyDown);
+		};
+	}, [setSimulation, simulationComplete]);
+
+	// Обработчик клика вне модального окна
+	const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
+		// Блокируем закрытие для setSimulation и simulationComplete
+		if (setSimulation || simulationComplete) {
+			e.stopPropagation();
+			return;
+		}
+		// Для остальных модальных окон можно добавить логику закрытия, если нужно
+	};
 
 	return (
 		<div
@@ -180,6 +217,7 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 				[styles.modal]: isOne,
 				[styles.modal_isBlur]: automatic,
 			})}
+			onClick={handleOverlayClick}
 		>
 			{modals.map(
 				({ condition, id, headerTitle, gateId, component }) =>
@@ -189,6 +227,7 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 							gateId={gateId}
 							id={id}
 							headerTitle={headerTitle}
+							preventClose={id === 'setSimulation' || id === 'simulationComplete'}
 						>
 							{component}
 						</ModalOverlay>

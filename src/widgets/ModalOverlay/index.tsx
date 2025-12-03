@@ -12,6 +12,7 @@ interface ModalOverlayProps {
 	gateId?: string;
 	children: React.ReactNode;
 	headerTitle?: string;
+	preventClose?: boolean;
 }
 
 const ModalOverlay: FC<ModalOverlayProps> = ({
@@ -19,10 +20,21 @@ const ModalOverlay: FC<ModalOverlayProps> = ({
 	gateId = 'g1',
 	children,
 	headerTitle,
+	preventClose = false,
 }) => {
 	const { handleMouseDown, position } = useDragging();
 	const dispatch = useAppDispatch();
 	const name = GATES[gateId].name;
+
+	const handleClose = () => {
+		if (preventClose) {
+			return;
+		}
+		dispatch(closeModal(id));
+		if (id === 'studentDelete') {
+			dispatch(clearCurrentStudent());
+		}
+	};
 
 	return (
 		<div
@@ -38,12 +50,8 @@ const ModalOverlay: FC<ModalOverlayProps> = ({
 				handleMouseDown={e => handleMouseDown(e)}
 				headerTitle={headerTitle}
 				gateName={name}
-				handleClose={() => {
-					dispatch(closeModal(id));
-					if (id === 'studentDelete') {
-						dispatch(clearCurrentStudent());
-					}
-				}}
+				handleClose={handleClose}
+				preventClose={preventClose}
 			/>
 			{children}
 		</div>

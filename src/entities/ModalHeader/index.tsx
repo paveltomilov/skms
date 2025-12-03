@@ -10,6 +10,7 @@ interface ModalHeaderProps {
     headerTitle?: string;
     gateName?: string;
     handleClose: () => void;
+    preventClose?: boolean;
 };
 
 const ModalHeader: FC<ModalHeaderProps> = ({
@@ -17,8 +18,16 @@ const ModalHeader: FC<ModalHeaderProps> = ({
     handleMouseDown,
     headerTitle,
     gateName,
-    handleClose
+    handleClose,
+    preventClose = false,
 }) => {
+    // Скрываем заголовок, если он пустой и закрытие заблокировано
+    const shouldHideHeader = preventClose && !headerTitle && !gateName;
+
+    if (shouldHideHeader) {
+        return null;
+    }
+
     return (
         <div
             id={id}
@@ -28,13 +37,15 @@ const ModalHeader: FC<ModalHeaderProps> = ({
             <span className={styles.header__title}>
                 {headerTitle || gateName}
             </span>
-            <Button
-                width={26}
-                height={26}
-                onClick={handleClose}
-                aria-label="Закрыть"
-                icon={<Close size="sm" />}
-            />
+            {!preventClose && (
+                <Button
+                    width={26}
+                    height={26}
+                    onClick={handleClose}
+                    aria-label="Закрыть"
+                    icon={<Close size="sm" />}
+                />
+            )}
         </div>
     );
 };

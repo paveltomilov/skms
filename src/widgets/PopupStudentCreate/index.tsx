@@ -51,14 +51,19 @@ export const PopupStudentCreate: FC = () => {
 			label: 'Имя',
 			type: 'text',
 			placeholder: 'Имя',
+			maxLength: 0
 		},
 		{
 			name: 'last_name',
 			label: 'Фамилия',
 			type: 'text',
 			placeholder: 'Фамилия',
+			maxLength: 0
 		},
-		{ name: 'email', label: 'Email', type: 'email', placeholder: 'Email' },
+		{
+			name: 'email', label: 'Email', type: 'email', placeholder: 'Email',
+			maxLength: 0
+		},
 	];
 
 	// Функция для рендеринга поля
