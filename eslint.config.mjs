@@ -42,7 +42,10 @@ const eslintConfig = [
 			quotes: ['error', 'single'],
 			'prefer-arrow-callback': ['error'],
 			'prefer-template': ['error'],
-			'no-console': 'warn', // Или 'error' для строгого запрета
+			'no-console': [
+				'warn',
+				{ allow: ['warn', 'error', 'info', 'debug', 'table', 'trace'] },
+			], // Запрещает только console.log, разрешает остальные методы
 			'no-var': 'error',
 			'prefer-const': 'error', // Запреь на использование let, когда нужен const
 			'@typescript-eslint/no-unused-vars': 'error', // Ошибка при написании неиспользуемых переменных
