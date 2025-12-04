@@ -20,15 +20,15 @@
             @include mixins.text(38px, 500);
             line-height: 100%;
             display: flex;
-        }
+            gap: 12px;
 
-        &__malfunctions::before {
-            content: url('/svg/sprite.svg#error');
-            width: 28px;
-            height: 103px;
-            margin-top: 3px;
-            display: block;
-            margin-right: 12px;
+            &__text {
+                width: 416px;
+            }
+
+            &__img {
+                margin-top: 3px;
+            }
         }
     }
 }
