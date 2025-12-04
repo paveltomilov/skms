@@ -4,7 +4,6 @@ import {
 	screen,
 	fireEvent,
 	waitFor,
-	act,
 } from '@testing-library/react';
 import Sidebar from '@/widgets/Sidebar';
 import { configureStore } from '@reduxjs/toolkit';
@@ -90,8 +89,10 @@ const createMockStore = (
 				studentDelete: false,
 				note: false,
 				simulationComplete: false,
+				startSimulation: false,
+				abortSimulation: false,
 				...modalState,
-			},
+			} as ModalState,
 			gate: {
 				gates: {},
 				activeGateId: null,
@@ -173,8 +174,8 @@ describe('handleFinishSimulation', () => {
 		});
 	});
 
-	describe('неполный → toast', () => {
-		it('должен показать toast при неполном решении', async () => {
+	describe('неполный → попап', () => {
+		it('должен открыть попап при неполном решении', async () => {
 			const store = createMockStore({
 				simulationId: 'sim-123',
 				originalMalfunctions: mockMalfunctions,
@@ -191,15 +192,13 @@ describe('handleFinishSimulation', () => {
 			fireEvent.click(finishButton);
 
 			await waitFor(() => {
-				const toast = screen.getByText(
-					'Найдены не все неисправности. Продолжите поиск.',
-				);
-				expect(toast).toBeInTheDocument();
+				const state = store.getState();
+				expect(state.simulation.isCompleted).toBe(true);
+				expect(state.modal.simulationComplete).toBe(true);
 			});
 		});
 
-		it('должен разблокировать кнопку после показа toast', async () => {
-			jest.useFakeTimers();
+		it('кнопка остается заблокированной после клика', async () => {
 			const store = createMockStore({
 				simulationId: 'sim-123',
 				originalMalfunctions: mockMalfunctions,
@@ -215,22 +214,11 @@ describe('handleFinishSimulation', () => {
 			});
 			fireEvent.click(finishButton);
 
-			// Кнопка должна быть заблокирована сразу после клика
+			// Кнопка должна быть заблокирована после клика
 			expect(finishButton).toBeDisabled();
-
-			// Ждем 1 секунду
-			await act(async () => {
-				jest.advanceTimersByTime(1000);
-			});
-
-			await waitFor(() => {
-				expect(finishButton).not.toBeDisabled();
-			});
-
-			jest.useRealTimers();
 		});
 
-		it('не должен вызывать completeSimulation при неполном решении', async () => {
+		it('должен вызывать completeSimulation при любом решении', async () => {
 			const store = createMockStore({
 				simulationId: 'sim-123',
 				originalMalfunctions: mockMalfunctions,
@@ -248,8 +236,8 @@ describe('handleFinishSimulation', () => {
 
 			await waitFor(() => {
 				const state = store.getState();
-				expect(state.simulation.isCompleted).toBe(false);
-				expect(state.modal.simulationComplete).toBe(false);
+				expect(state.simulation.isCompleted).toBe(true);
+				expect(state.modal.simulationComplete).toBe(true);
 			});
 		});
 	});
@@ -276,7 +264,7 @@ describe('handleFinishSimulation', () => {
 			expect(finishButton).toBeDisabled();
 		});
 
-		it('должен показать toast об ошибке, если симуляция не инициализирована', async () => {
+		it('должен открыть попап, даже если симуляция не инициализирована', async () => {
 			const store = createMockStore({
 				simulationId: null,
 				originalMalfunctions: [],
@@ -293,12 +281,13 @@ describe('handleFinishSimulation', () => {
 			fireEvent.click(finishButton);
 
 			await waitFor(() => {
-				const toast = screen.getByText('Симуляция не инициализирована');
-				expect(toast).toBeInTheDocument();
+				const state = store.getState();
+				expect(state.simulation.isCompleted).toBe(true);
+				expect(state.modal.simulationComplete).toBe(true);
 			});
 		});
 
-		it('должен показать toast об ошибке, если не найдено ни одной неисправности', async () => {
+		it('должен открыть попап, даже если не найдено ни одной неисправности', async () => {
 			const store = createMockStore({
 				simulationId: 'sim-123',
 				originalMalfunctions: mockMalfunctions,
@@ -315,10 +304,9 @@ describe('handleFinishSimulation', () => {
 			fireEvent.click(finishButton);
 
 			await waitFor(() => {
-				const toast = screen.getByText(
-					'Необходимо найти хотя бы одну неисправность',
-				);
-				expect(toast).toBeInTheDocument();
+				const state = store.getState();
+				expect(state.simulation.isCompleted).toBe(true);
+				expect(state.modal.simulationComplete).toBe(true);
 			});
 		});
 	});

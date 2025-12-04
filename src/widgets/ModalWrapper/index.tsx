@@ -21,8 +21,9 @@ import { PopupStudentCreate } from '../PopupStudentCreate';
 import { PopupStudentDelete } from '../PopupStudentDelete';
 import { PopupNote } from '../PopupNote';
 import { PopupSimulationComplete } from '../PopupSimulationComplete';
+import { PopupAbortSimulation } from '../PopupAbortSimulation';
+import { PopupStartSimulation } from '../PopupStartSimulation';
 import { useUserCookies } from '@/shared/hooks/useUserCookies';
-
 
 interface IModals {
 	condition: boolean;
@@ -49,6 +50,7 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		abortSimulation,
 		note,
 		simulationComplete,
+		startSimulation,
 	} = useAppSelector((state): ModalState => state.modal);
 
 	const { role } = useUserCookies();
@@ -71,8 +73,9 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		studentDelete ||
 		simulationComplete ||
 		abortSimulation ||
+		startSimulation ||
 		note;
-		
+
 	const gateId = useAppSelector(state => state.gate.activeGateId as string);
 	const student = useAppSelector(state => state.training.currentStudent);
 
@@ -187,9 +190,23 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		{
 			condition: simulationComplete,
 			id: 'simulationComplete',
-			headerTitle: '',
+			headerTitle: 'Завершение симуляции',
 			gateId: undefined,
 			component: <PopupSimulationComplete />,
+		},
+		{
+			condition: abortSimulation,
+			id: 'abortSimulation',
+			headerTitle: 'Прервать симуляцию',
+			gateId: undefined,
+			component: <PopupAbortSimulation />,
+		},
+		{
+			condition: startSimulation,
+			id: 'startSimulation',
+			headerTitle: 'Симуляция запущена',
+			gateId: undefined,
+			component: <PopupStartSimulation />,
 		},
 	];
 	// отключаем скролл страницы
@@ -205,9 +222,9 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		};
 	}, [isOne]);
 
-	// Блокировка закрытия модальных окон setSimulation и simulationComplete через Esc
+	// Блокировка закрытия модальных окон setSimulation, simulationComplete и abortSimulation через Esc
 	useEffect(() => {
-		if (!setSimulation && !simulationComplete) return;
+		if (!setSimulation && !simulationComplete && !abortSimulation) return;
 
 		const handleKeyDown = (e: KeyboardEvent) => {
 			if (e.key === 'Escape') {
@@ -248,7 +265,10 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 							gateId={gateId}
 							id={id}
 							headerTitle={headerTitle}
-							preventClose={id === 'setSimulation' || id === 'simulationComplete'}
+							preventClose={
+								id === 'setSimulation' ||
+								id === 'simulationComplete'
+							}
 						>
 							{component}
 						</ModalOverlay>

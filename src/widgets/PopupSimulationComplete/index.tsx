@@ -1,35 +1,23 @@
 'use client';
 
 import { FC } from 'react';
-import { useRouter } from 'next/navigation';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
-import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
+import { useAppDispatch } from '@/shared/hooks/store';
 import { closeModal } from '@/store/modalSlice';
 import { useSubscription } from '@/shared/hooks/useSubscription';
 
 export const PopupSimulationComplete: FC = () => {
 	const dispatch = useAppDispatch();
-	const router = useRouter();
 	const subscriptionType = useSubscription();
-	const simulationId = useAppSelector(state => state.simulation.simulationId);
 
-	const handleButtonClick = () => {
-		// Закрываем модальное окно при клике на кнопку
+	const handleMainButtonClick = () => {
+		console.warn('редирект на страницу опроса');
 		dispatch(closeModal('simulationComplete'));
-		
-		// Переход на соответствующую страницу
-		if (subscriptionType === 'free') {
-			// Переход на опрос для бесплатной подписки
-			if (simulationId) {
-				router.push(`/simulation/${simulationId}/survey`);
-			}
-		} else {
-			// Переход на статистику для платной подписки
-			if (simulationId) {
-				router.push(`/simulation/${simulationId}/stats`);
-			}
-		}
+	};
+
+	const handleChangePlanClick = () => {
+		console.warn('менять план');
 	};
 
 	const buttonText =
@@ -39,16 +27,23 @@ export const PopupSimulationComplete: FC = () => {
 		<div className={styles.popup}>
 			<div className={styles.popup__content}>
 				<p className={styles.popup__text}>
-					Поздравляем! Все неисправности успешно устранены.
+					Вы закончили, что бы узнать результат пройдите опрос
 				</p>
-				<Button
-					width={307}
-					height={38}
-					text={buttonText}
-					onClick={handleButtonClick}
-				/>
+				<div className={styles.popup__buttons}>
+					<Button
+						width={307}
+						height={38}
+						text={buttonText}
+						onClick={handleMainButtonClick}
+					/>
+					<Button
+						width={307}
+						height={38}
+						text="Менять план"
+						onClick={handleChangePlanClick}
+					/>
+				</div>
 			</div>
 		</div>
 	);
 };
-

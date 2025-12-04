@@ -7,19 +7,12 @@ import Chevron from '@/shared/UI/icons/Chevron';
 import { useUserCookies } from '@/shared/hooks/useUserCookies';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import { clearCurrentStudent } from '@/store/trainingSlice';
-import {
-	completeSimulation,
-	startSimulation,
-	resetSimulation,
-} from '@/store/simulationSlice';
+import { completeSimulation, startSimulation } from '@/store/simulationSlice';
 import { useToast } from '@/shared/hooks/useToast';
 import Toast from '@/shared/UI/Toast';
 import { openModal } from '@/store/modalSlice';
 import { setActiveGate } from '@/store/gateSlice';
-import {
-	activateMalfunction,
-	deactivateMalfunction,
-} from '@/store/circuitSlice';
+import { activateMalfunction } from '@/store/circuitSlice';
 import { SIMULATION_MALFUNCTIONS } from '@/shared/configs/simulationMalfunctions';
 import { findElementByID } from '@/shared/utils/findElementByID/scheme';
 
@@ -71,12 +64,9 @@ const Sidebar = () => {
 			dispatch(activateMalfunction(malfunction.id));
 		});
 
-		// Показываем уведомление о запуске симуляции
-		showToast(
-			'Получена новая неисправность. Симуляция запущена.',
-			'success',
-		);
-	}, [simulation, dispatch, showToast]);
+		// Открываем попап с уведомлением о запуске симуляции
+		dispatch(openModal('startSimulation'));
+	}, [simulation, dispatch]);
 
 	const handleLogCircuitState = useCallback(() => {
 		console.info('=== Состояние схемы ===');
@@ -150,61 +140,51 @@ const Sidebar = () => {
 	}, [circuit, simulation]);
 
 	const handleStopSimulation = useCallback(() => {
-		// Деактивируем все неисправности из симуляции
-		if (simulation.originalMalfunctions.length > 0) {
-			simulation.originalMalfunctions.forEach(malfunction => {
-				dispatch(deactivateMalfunction(malfunction.id));
-			});
-		}
-
-		// Сбрасываем состояние симуляции до дефолтного
-		dispatch(resetSimulation());
-
-		// Показываем уведомление об остановке симуляции
-		showToast('Симуляция остановлена', 'info');
-	}, [simulation, dispatch, showToast]);
+		// Открываем попап об остановке симуляции
+		dispatch(openModal('abortSimulation'));
+	}, [dispatch]);
 
 	const handleFinishSimulation = useCallback(() => {
-		// Проверка: симуляция инициализирована
-		if (!simulation.isInitialized) {
-			showToast('Симуляция не инициализирована', 'error');
-			return;
-		}
+		// // Проверка: симуляция инициализирована
+		// if (!simulation.isInitialized) {
+		// 	showToast('Симуляция не инициализирована', 'error');
+		// 	return;
+		// }
 
-		// Проверка: найден хотя бы один дефект
-		if (simulation.foundMalfunctionIds.length === 0) {
-			showToast('Необходимо найти хотя бы одну неисправность', 'error');
-			return;
-		}
+		// // Проверка: найден хотя бы один дефект
+		// if (simulation.foundMalfunctionIds.length === 0) {
+		// 	showToast('Необходимо найти хотя бы одну неисправность', 'error');
+		// 	return;
+		// }
 
 		// Блокируем кнопку после клика
 		setIsProcessing(true);
 
-		// Проверка: найдены все неисправности
-		// Проверяем, что все ID из originalMalfunctions присутствуют в foundMalfunctionIds
-		const originalIds = simulation.originalMalfunctions.map(m => m.id);
-		const allMalfunctionsFound = originalIds.every(id =>
-			simulation.foundMalfunctionIds.includes(id),
-		);
+		// // Проверка: найдены все неисправности
+		// // Проверяем, что все ID из originalMalfunctions присутствуют в foundMalfunctionIds
+		// const originalIds = simulation.originalMalfunctions.map(m => m.id);
+		// const allMalfunctionsFound = originalIds.every(id =>
+		// 	simulation.foundMalfunctionIds.includes(id),
+		// );
 
-		if (allMalfunctionsFound) {
-			// Успешный сценарий: все неисправности найдены
-			dispatch(completeSimulation());
-			// Показываем модальное окно завершения
-			dispatch(openModal('simulationComplete'));
-			// Кнопка остается заблокированной после успешного завершения
-			// Toast не показываем, так как показывается модальное окно
-		} else {
-			// Неполное решение: показываем toast и продолжаем симуляцию
-			showToast(
-				'Найдены не все неисправности. Продолжите поиск.',
-				'info',
-			);
-			// Разблокируем кнопку после небольшой задержки
-			setTimeout(() => {
-				setIsProcessing(false);
-			}, 1000);
-		}
+		// if (allMalfunctionsFound) {
+		// Успешный сценарий: все неисправности найдены
+		dispatch(completeSimulation());
+		// Показываем модальное окно завершения
+		dispatch(openModal('simulationComplete'));
+		// Кнопка остается заблокированной после успешного завершения
+		// Toast не показываем, так как показывается модальное окно
+		// } else {
+		// 	// Неполное решение: показываем toast и продолжаем симуляцию
+		// 	showToast(
+		// 		'Найдены не все неисправности. Продолжите поиск.',
+		// 		'info',
+		// 	);
+		// 	// Разблокируем кнопку после небольшой задержки
+		// 	setTimeout(() => {
+		// 		setIsProcessing(false);
+		// 	}, 1000);
+		// }
 	}, [simulation, dispatch, showToast]);
 
 	return (

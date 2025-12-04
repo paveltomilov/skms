@@ -1,11 +1,11 @@
 import styles from './styles.module.scss';
 import { FC } from 'react';
 
-export const PopupAbortSimulation: FC = () => {
+export const PopupStartSimulation: FC = () => {
 	return (
 		<div className={styles.popup}>
 			<div className={styles.message}>
-				Ты сдался, не унывай, попробуй еще раз!!!
+				Получена новая неисправность. Симуляция запущена.
 			</div>
 		</div>
 	);
