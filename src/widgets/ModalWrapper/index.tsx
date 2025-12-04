@@ -222,9 +222,9 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		};
 	}, [isOne]);
 
-	// Блокировка закрытия модальных окон setSimulation, simulationComplete и abortSimulation через Esc
+	// Блокировка закрытия модального окна setSimulation через Esc
 	useEffect(() => {
-		if (!setSimulation && !simulationComplete && !abortSimulation) return;
+		if (!setSimulation) return;
 
 		const handleKeyDown = (e: KeyboardEvent) => {
 			if (e.key === 'Escape') {
@@ -237,12 +237,12 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		return () => {
 			window.removeEventListener('keydown', handleKeyDown);
 		};
-	}, [setSimulation, simulationComplete]);
+	}, [setSimulation]);
 
 	// Обработчик клика вне модального окна
 	const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
-		// Блокируем закрытие для setSimulation и simulationComplete
-		if (setSimulation || simulationComplete) {
+		// Блокируем закрытие для setSimulation
+		if (setSimulation) {
 			e.stopPropagation();
 			return;
 		}
@@ -265,10 +265,7 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 							gateId={gateId}
 							id={id}
 							headerTitle={headerTitle}
-							preventClose={
-								id === 'setSimulation' ||
-								id === 'simulationComplete'
-							}
+							preventClose={id === 'setSimulation'}
 						>
 							{component}
 						</ModalOverlay>
