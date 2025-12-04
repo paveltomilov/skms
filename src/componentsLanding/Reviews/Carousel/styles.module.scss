@@ -1,0 +1,46 @@
+.carousel {
+	position: relative;
+}
+
+.swiper {
+	margin-bottom: 52px;
+
+	@media (max-width: 1200px) {
+		margin-bottom: 46px;
+	}
+}
+
+.slide {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 2px solid var(--lan-very-dark-gray);
+	border-radius: 8px;
+}
+
+.swiper__button {
+	position: absolute;
+	display: flex;
+	right: 8px;
+	gap: 20px;
+
+	@media (max-width: 1200px) {
+		right: 40px;
+	}
+
+	@media (max-width: 992px) {
+		display: none;
+	}
+}
+
+.arrow {
+	cursor: pointer;
+	path {
+		stroke: var(--lan-light-grayish-blue);
+		transition: all 0.2s ease-in-out;
+	}
+
+	&:hover path {
+		stroke: var(--lan-bright-cyan---lime-green);
+	}
+}

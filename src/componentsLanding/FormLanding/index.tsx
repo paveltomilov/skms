@@ -1,7 +1,7 @@
 'use client';
-import { useState, ChangeEvent, FormEvent } from 'react';
-import styles from './styles.module.scss';
+import { useState, ChangeEvent, FormEvent, useCallback } from 'react';
 import Button from '../Button';
+import styles from './styles.module.scss';
 
 type FormValues = {
 	name: string;
@@ -82,18 +82,21 @@ function FormLanding() {
 		consent: false,
 	});
 
-	/* ---------- Обработчик изменения полей ---------- */
-	const handleInputChange =
-		(key: keyof Omit<FormValues, 'consent'>) =>
-		(e: ChangeEvent<HTMLInputElement>) => {
-			setForm(prev => ({ ...prev, [key]: e.target.value }));
-		};
+	const handleInputChange = useCallback(
+		(key: keyof Omit<FormValues, 'consent'>) => {
+			return (e: ChangeEvent<HTMLInputElement>) => {
+				setForm(prev => ({
+					...prev,
+					[key]: e.target.value,
+				}));
+			};
+		},
+		[],
+	);
 
-	/* ---------- Обработчик чекбокса ---------- */
 	const handleConsentChange = () =>
 		setForm(prev => ({ ...prev, consent: !prev.consent }));
 
-	/* ---------- Отправка формы ---------- */
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
@@ -106,48 +109,13 @@ function FormLanding() {
 			alert('Необходимо дать согласие на обработку персональных данных');
 			return;
 		}
-
-		const payload = {
-			full_name: form.name,
-			company: form.company,
-			email: form.email,
-			phone: form.phone,
-		};
-
-		try {
-			const apiUrl = 'http://127.0.0.1:8000/api/leads/';
-
-			const res = await fetch(apiUrl, {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(payload),
-			});
-
-			if (!res.ok) throw new Error(`Server error ${res.status}`);
-
-			// const data = await res.json();
-			// console.log('Response:', data);
-
-			alert('Спасибо! Мы свяжемся с вами в ближайшее время.');
-			setForm({
-				name: '',
-				company: '',
-				email: '',
-				phone: '',
-				consent: false,
-			});
-		} catch (err) {
-			console.error(err);
-			alert(
-				'При отправке возникла ошибка. Пожалуйста, попробуйте позже.',
-			);
-		}
+		alert('Форма не отправлена');
 	};
 
 	return (
 		<form onSubmit={handleSubmit} className={styles.form}>
 			<h2 className={styles.form__title}>
-				Хотите узнать больше? Мы с вами свяжемся!
+				Хотите&nbsp;узнать&nbsp;больше? Мы&nbsp;с вами свяжемся!
 			</h2>
 
 			<div className={styles.form__container}>
@@ -170,7 +138,7 @@ function FormLanding() {
 						text="отправить"
 						color="var(--lan-very-dark-mostly-black-blue)"
 						bgColor="var(--lan-bright-cyan---lime-green)"
-						width={504}
+						width={0}
 						height={40}
 						radius={4}
 						border="1px solid var(--lan-very-dark-gray)"
