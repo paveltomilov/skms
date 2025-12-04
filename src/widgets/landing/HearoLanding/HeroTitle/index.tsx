@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import styles from './styles.module.scss'; // стили для заголовка
+import styles from './styles.module.scss';
 export interface HeroTitleProps {
     titleLines: [string, string, string];
 }

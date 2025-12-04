@@ -1,33 +1,51 @@
-import { FC, useRef } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import styles from './styles.module.scss';
-
 import type { Swiper as SwiperCore } from 'swiper';
 import ArrowLeftIcon from '../IconSvg/arrowLeft';
 import ArrowRightIcon from '../IconSvg/arrowRight';
 
+
+
 const Carousel: FC<{ slides: React.ReactNode[] }> = ({ slides }) => {
+	const [swiperInstance, setSwiperInstance] = useState<SwiperCore | null>(
+		null,
+	);
+
 	const swiperRef = useRef<SwiperCore | null>(null);
 
-	const handleSwiper = (swiper: SwiperCore) => {
-		swiperRef.current = swiper;
-	};
+	useEffect(() => {
+		if (swiperInstance) {
+			swiperRef.current = swiperInstance;
+		}
+	}, [swiperInstance]);
 
 	return (
 		<div className={styles.carousel}>
 			<Swiper
 				modules={[Autoplay]}
 				spaceBetween={20}
-				slidesPerView={2}
-				slidesPerGroup={2}
+				slidesPerView={1}
+				slidesPerGroup={1}
 				loop
 				autoplay={{
 					delay: 50000,
 					disableOnInteraction: false,
 				}}
-				onSwiper={handleSwiper}
+				breakpoints={{
+					576: {
+						slidesPerView: 1.077,
+						slidesPerGroup: 1,
+					},
+
+					992: {
+						slidesPerView: 2,
+						slidesPerGroup: 2,
+					},
+				}}
+				onSwiper={setSwiperInstance}
 				className={styles.swiper}
 			>
 				{slides.map((content, i) => (
