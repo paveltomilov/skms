@@ -54,7 +54,7 @@ const Footer: FC = () => {
 								Политики конфиденциальности
 							</Link>
 						</div>
-						<Link href="https://controlspace.ru/">
+						<Link href="/">
 							<Image
 								className={styles.footer__pointpulse}
 								src="/svg/pointpulse.svg"
