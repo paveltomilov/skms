@@ -1,0 +1,34 @@
+@use '@/shared/scss/variables.module';
+@use '@/shared/scss/mixins.module';
+
+.popup {
+    width: 540px;
+    height: 542px;
+    background: variables.$primary-color;
+    @include mixins.flex-center;
+
+    &__content {
+        width: 456px;
+        height: 103px;
+        text-align: center;
+        @include mixins.text(38px, 500);
+        line-height: 100%;
+
+        &__malfunctions {
+            width: 456px;
+            text-align: start;
+            @include mixins.text(38px, 500);
+            line-height: 100%;
+            display: flex;
+        }
+
+        &__malfunctions::before {
+            content: url('/svg/sprite.svg#error');
+            width: 28px;
+            height: 103px;
+            margin-top: 3px;
+            display: block;
+            margin-right: 12px;
+        }
+    }
+}

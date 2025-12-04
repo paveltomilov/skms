@@ -22,6 +22,7 @@ import { PopupStudentDelete } from '../PopupStudentDelete';
 import { PopupNote } from '../PopupNote';
 import { useUserCookies } from '@/shared/hooks/useUserCookies';
 import { PopupAbortSimulation } from '../PopupAbortSimulation';
+import { PopupInfo } from '../PopupInfo';
 
 interface IModals {
 	condition: boolean;
@@ -47,6 +48,9 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		studentDelete,
 		abortSimulation,
 		note,
+		infoStartSimulation,
+		infoSimulationIsActive,
+		infoUnfinished,
 	} = useAppSelector((state): ModalState => state.modal);
 
 	const { role } = useUserCookies();
@@ -68,7 +72,10 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		studentCreate ||
 		studentDelete ||
 		abortSimulation ||
-		note;
+		note ||
+		infoStartSimulation ||
+		infoSimulationIsActive ||
+		infoUnfinished;
 	const gateId = useAppSelector(state => state.gate.activeGateId as string);
 	const student = useAppSelector(state => state.training.currentStudent);
 
@@ -186,6 +193,27 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			headerTitle: 'Прервать попытку',
 			gateId: undefined,
 			component: <PopupAbortSimulation />,
+		},
+		{
+			condition: infoStartSimulation,
+			id: 'infoStartSimulation',
+			headerTitle: 'Симуляция запущена',
+			gateId: undefined,
+			component: <PopupInfo content='start' />,
+		},
+		{
+			condition: infoSimulationIsActive,
+			id: 'infoSimulationIsActive',
+			headerTitle: 'Завершить симуляцию',
+			gateId: undefined,
+			component: <PopupInfo content='current' />,
+		},
+		{
+			condition: infoUnfinished,
+			id: 'infoUnfinished',
+			headerTitle: 'Незавершенные неисправности',
+			gateId: undefined,
+			component: <PopupInfo content='malfunctions' />,
 		},
 	];
 	// отключаем скролл страницы

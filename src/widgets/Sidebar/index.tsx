@@ -7,6 +7,7 @@ import Chevron from '@/shared/UI/icons/Chevron';
 import { useUserCookies } from '@/shared/hooks/useUserCookies';
 import { useAppDispatch } from '@/shared/hooks/store';
 import { clearCurrentStudent } from '@/store/trainingSlice';
+import SimulationAttributes from '@/entities/SimulationAttributes';
 
 const Sidebar = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -60,6 +61,7 @@ const Sidebar = () => {
 						onClick={() => dispatch(clearCurrentStudent())}
 					/>
 				</div>
+				{role === 'student' && <SimulationAttributes />}
 				<button
 					onClick={handleToggleSidebar}
 					className={styles.closeButton}

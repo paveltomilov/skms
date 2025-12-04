@@ -1,0 +1,15 @@
+@use '@/shared/scss/variables.module';
+@use '@/shared/scss/mixins.module';
+
+.timer {
+    width: 89px;
+    height: 40px;
+    background-color: variables.$white-color;
+    border: solid 1px rgba(138, 138, 138, 1);
+    box-shadow:
+        -1px -1px 0 1px black,
+        0px 0px 0px 2px white;
+    @include mixins.text(12px, 500);
+    line-height: 40px;
+    text-align: center;
+}
