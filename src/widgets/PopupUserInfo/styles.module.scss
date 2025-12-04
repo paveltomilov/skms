@@ -1,7 +1,7 @@
 @use '@/shared/scss/variables.module';
 
 .userInfo {
-    width: 318px;
+    width: 330px;
     min-height: 323px;
     background-color: variables.$primary-color ;
     font-size: 20px;
@@ -10,8 +10,14 @@
 
     z-index: 2;
 
+    &__wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        padding: 34px 20px 38px;
+    }
+
     &__profile {
-        margin: 30px 14px;
         display: flex;
 
         &__photo {
@@ -31,18 +37,22 @@
     }
 
     &__more {
-        margin-left: 14px;
-        list-style-type: none;
-        line-height: 36px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+
+        &__item {
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+            align-items: center;
+            cursor: pointer;
+        }
 
         li img {
             width: 16px;
             margin-right: 8px;
             display: inline;
         }
-    }
-
-    &__logout {
-        margin: 20px auto;
     }
 }

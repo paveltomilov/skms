@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import { useAppSelector } from '@/shared/hooks/store';
@@ -6,16 +6,31 @@ import { useDeleteUser } from '@/shared/hooks/useDeleteUser';
 import { useDispatch } from 'react-redux';
 import { updateList } from '@/store/updateListSlice';
 import { closeModal } from '@/store/modalSlice';
+import ErrorMessageText from '../ErrorMessageText';
 
 export const PopupStudentDelete: FC = () => {
 	const data = useAppSelector(store => store.training.currentStudent);
 	const dispatch = useDispatch();
 	const { deleteUser, isLoading, error, success } = useDeleteUser();
+
+	useEffect(() => {
+		let timeoutId: NodeJS.Timeout | null = null;
+
+		if (success) {
+			timeoutId = setTimeout(
+				() => dispatch(closeModal('studentDelete')),
+				1000,
+			);
+		}
+
+		return () => {
+			if (timeoutId) clearTimeout(timeoutId);
+		};
+	}, [success]);
 	function handleDelete() {
 		deleteUser().then(() => {
 			dispatch(updateList());
 		});
-		setTimeout(() => dispatch(closeModal('studentDelete')), 1000);
 	}
 	if (data) {
 		const role =
@@ -50,7 +65,8 @@ export const PopupStudentDelete: FC = () => {
 							onClick={handleDelete}
 						/>
 					)}
-					{error && <span className={styles.error}>{error}</span>}
+
+					{error && <ErrorMessageText text={error} />}
 				</div>
 			</div>
 		);

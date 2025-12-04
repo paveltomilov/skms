@@ -106,11 +106,12 @@
 
   &::before {
     max-width: 1100px;
+    clip-path: polygon(0 0, 97% 0, 72% 100%, 0% 100%);
   }
 }
 
 .right_registration {
-  width: 6vw;
+  width: 5.5vw;
 
   &:before {
     max-width: 105px;

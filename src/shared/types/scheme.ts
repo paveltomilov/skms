@@ -12,9 +12,28 @@ export type SchemeIconType =
 	| 'sq3';
 
 export interface IPoint {
-	x: number;
-	y: number;
+	x?: number;
+	y?: number;
 	state: boolean;
+}
+
+export type ElementKind =
+	| 'wire'
+	| 'breaker'
+	| 'limitSwitch'
+	| 'blockingContact'
+	| 'coil'
+	| 'lamp'
+	| 'starterContact'
+	| 'motorWinding';
+
+// Типы шаблонов для генерации неисправностей и метаданных визуализации
+export type MalfTpl = { suffix: string; name: string };
+
+export interface MetaInfo {
+	color?: string;
+	shape?: 'rect' | 'circle' | 'rounded-rect' | 'diamond';
+	label?: string;
 }
 
 export interface Malfunction {
@@ -26,14 +45,24 @@ export interface Malfunction {
 export interface CircuitElement {
 	id: string;
 	name: string;
+
+	// Тип элемента схемы (определяет сопротивление и шаблоны неисправностей)
+	kind: ElementKind;
+	// Логические точки подключения (ID точек на схеме)
+	startPoint?: string;
+	endPoint?: string;
+	// Электрические характеристики
 	resistance: number;
+	// Привязанные неисправности для этого элемента
 	malfunctions: Malfunction[];
+	// Дополнительные метаданные для визуализации
+	meta?: MetaInfo;
 }
 
 export type CircuitBranch = CircuitElement | CircuitGroup;
 export interface CircuitGroup extends Array<CircuitBranch> {}
 
 export interface InitialStateScheme {
-	powerCircuit: CircuitBranch[][];
+	powerCircuit: CircuitBranch[];
 	controlCircuit: CircuitBranch[];
 }

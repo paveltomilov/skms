@@ -3,7 +3,7 @@ import { StudentStatistics } from '@/shared/types/statistics';
 export const getStudentStatisticsArray = (statistics: StudentStatistics) => {
     return [
                 {
-            param: 'Общее количество задач',
+            param: 'Общее ко-во задач',
             quantity: statistics.total_simulations,
         },
         {
