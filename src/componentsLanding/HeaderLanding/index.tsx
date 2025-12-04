@@ -43,7 +43,7 @@ const Header: FC = () => {
 		};
 	}, [isMenuOpen]);
 
-	//Обработчик прокрутки
+
 	useEffect(() => {
 		const onScroll = () => {
 			setScrolled(window.scrollY > 50);
