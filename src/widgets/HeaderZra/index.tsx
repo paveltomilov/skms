@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import style from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import { useGateControlButtons } from '@/shared/hooks/useGateControlButtons';
@@ -11,12 +11,7 @@ import { setPercent } from '@/store/percentSlice';
 
 const HeaderZra: FC = () => {
 	const dispatch = useAppDispatch<AppDispatch>();
-	const [percentDef, setPercentDef] = useState<number>(0);
 	const percentValue = useAppSelector((state: RootState) => state.percent);
-
-	useEffect(() => {
-		setPercentDef(percentValue);
-	}, [percentValue]);
 
 	const {
 		handleButton,
@@ -69,7 +64,7 @@ const HeaderZra: FC = () => {
 					<select
 						size={2}
 						className={style.hideScrollbar}
-						value={percentDef}
+						value={percentValue}
 						onChange={e =>
 							dispatch(setPercent(Number(e.target.value)))
 						}

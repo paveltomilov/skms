@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-	render,
-	screen,
-	fireEvent,
-	waitFor,
-} from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import Sidebar from '@/widgets/Sidebar';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
@@ -14,6 +9,7 @@ import simulationReducer, {
 import modalReducer, { type ModalState } from '@/store/modalSlice';
 import gateReducer from '@/store/gateSlice';
 import trainingReducer from '@/store/trainingSlice';
+import circuitReducer from '@/store/circuitSlice';
 import { Malfunction } from '@/shared/types/scheme';
 
 // Мокаем зависимости
@@ -64,6 +60,7 @@ const createMockStore = (
 			modal: modalReducer,
 			gate: gateReducer,
 			training: trainingReducer,
+			circuit: circuitReducer,
 		},
 		preloadedState: {
 			simulation: simulationState as SimulationState,
@@ -97,6 +94,7 @@ const createMockStore = (
 				gates: {},
 				activeGateId: null,
 			},
+			circuit: circuitReducer(undefined, { type: 'unknown' }),
 		},
 	});
 };
@@ -264,7 +262,7 @@ describe('handleFinishSimulation', () => {
 			expect(finishButton).toBeDisabled();
 		});
 
-		it('должен открыть попап, даже если симуляция не инициализирована', async () => {
+		it('должен заблокировать кнопку, если симуляция не инициализирована', () => {
 			const store = createMockStore({
 				simulationId: null,
 				originalMalfunctions: [],
@@ -278,13 +276,14 @@ describe('handleFinishSimulation', () => {
 			const finishButton = screen.getByRole('button', {
 				name: 'Завершить',
 			});
-			fireEvent.click(finishButton);
 
-			await waitFor(() => {
-				const state = store.getState();
-				expect(state.simulation.isCompleted).toBe(true);
-				expect(state.modal.simulationComplete).toBe(true);
-			});
+			// Кнопка должна быть заблокирована, когда симуляция не инициализирована
+			expect(finishButton).toBeDisabled();
+
+			// Состояние не должно измениться, так как обработчик не вызывается для заблокированной кнопки
+			const state = store.getState();
+			expect(state.simulation.isCompleted).toBe(false);
+			expect(state.modal.simulationComplete).toBe(false);
 		});
 
 		it('должен открыть попап, даже если не найдено ни одной неисправности', async () => {
