@@ -127,8 +127,6 @@ describe('handleFinishSimulation', () => {
 				simulationId: 'sim-123',
 				originalMalfunctions: mockMalfunctions,
 				foundMalfunctionIds: ['m1', 'm2'],
-				isCompleted: false,
-				isInitialized: true,
 			});
 
 			renderWithStore(store);
@@ -140,7 +138,7 @@ describe('handleFinishSimulation', () => {
 
 			await waitFor(() => {
 				const state = store.getState();
-				expect(state.simulation.isCompleted).toBe(true);
+				expect(state.simulation.simulationId).toBeNull();
 				expect(state.modal.simulationComplete).toBe(true);
 			});
 
@@ -153,8 +151,6 @@ describe('handleFinishSimulation', () => {
 				simulationId: 'sim-123',
 				originalMalfunctions: mockMalfunctions,
 				foundMalfunctionIds: ['m1', 'm2'],
-				isCompleted: false,
-				isInitialized: true,
 			});
 
 			renderWithStore(store);
@@ -178,8 +174,6 @@ describe('handleFinishSimulation', () => {
 				simulationId: 'sim-123',
 				originalMalfunctions: mockMalfunctions,
 				foundMalfunctionIds: ['m1'], // Найдена только одна из двух
-				isCompleted: false,
-				isInitialized: true,
 			});
 
 			renderWithStore(store);
@@ -191,7 +185,7 @@ describe('handleFinishSimulation', () => {
 
 			await waitFor(() => {
 				const state = store.getState();
-				expect(state.simulation.isCompleted).toBe(true);
+				expect(state.simulation.simulationId).toBeNull();
 				expect(state.modal.simulationComplete).toBe(true);
 			});
 		});
@@ -201,8 +195,6 @@ describe('handleFinishSimulation', () => {
 				simulationId: 'sim-123',
 				originalMalfunctions: mockMalfunctions,
 				foundMalfunctionIds: ['m1'],
-				isCompleted: false,
-				isInitialized: true,
 			});
 
 			renderWithStore(store);
@@ -221,8 +213,6 @@ describe('handleFinishSimulation', () => {
 				simulationId: 'sim-123',
 				originalMalfunctions: mockMalfunctions,
 				foundMalfunctionIds: ['m1'],
-				isCompleted: false,
-				isInitialized: true,
 			});
 
 			renderWithStore(store);
@@ -234,7 +224,7 @@ describe('handleFinishSimulation', () => {
 
 			await waitFor(() => {
 				const state = store.getState();
-				expect(state.simulation.isCompleted).toBe(true);
+				expect(state.simulation.simulationId).toBeNull();
 				expect(state.modal.simulationComplete).toBe(true);
 			});
 		});
@@ -246,8 +236,6 @@ describe('handleFinishSimulation', () => {
 				simulationId: 'sim-123',
 				originalMalfunctions: mockMalfunctions,
 				foundMalfunctionIds: ['m1', 'm2'],
-				isCompleted: false,
-				isInitialized: true,
 			});
 
 			renderWithStore(store);
@@ -267,8 +255,6 @@ describe('handleFinishSimulation', () => {
 				simulationId: null,
 				originalMalfunctions: [],
 				foundMalfunctionIds: [],
-				isCompleted: false,
-				isInitialized: false,
 			});
 
 			renderWithStore(store);
@@ -282,7 +268,7 @@ describe('handleFinishSimulation', () => {
 
 			// Состояние не должно измениться, так как обработчик не вызывается для заблокированной кнопки
 			const state = store.getState();
-			expect(state.simulation.isCompleted).toBe(false);
+			expect(state.simulation.simulationId).toBeNull();
 			expect(state.modal.simulationComplete).toBe(false);
 		});
 
@@ -291,8 +277,6 @@ describe('handleFinishSimulation', () => {
 				simulationId: 'sim-123',
 				originalMalfunctions: mockMalfunctions,
 				foundMalfunctionIds: [],
-				isCompleted: false,
-				isInitialized: true,
 			});
 
 			renderWithStore(store);
@@ -304,7 +288,7 @@ describe('handleFinishSimulation', () => {
 
 			await waitFor(() => {
 				const state = store.getState();
-				expect(state.simulation.isCompleted).toBe(true);
+				expect(state.simulation.simulationId).toBeNull();
 				expect(state.modal.simulationComplete).toBe(true);
 			});
 		});

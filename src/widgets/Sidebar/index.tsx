@@ -38,7 +38,7 @@ const Sidebar = () => {
 
 	const handleStartSimulation = useCallback(() => {
 		// Проверка: симуляция уже активна
-		if (simulation.isInitialized && !simulation.isCompleted) {
+		if (simulation.simulationId !== null) {
 			showToast(
 				'Симуляция уже активна. Завершите текущую перед началом новой.',
 				'info',
@@ -126,28 +126,8 @@ const Sidebar = () => {
 	}, [simulation, dispatch]);
 
 	const handleFinishSimulation = useCallback(() => {
-		// // Проверка: симуляция инициализирована
-		// if (!simulation.isInitialized) {
-		// 	showToast('Симуляция не инициализирована', 'error');
-		// 	return;
-		// }
-
-		// // Проверка: найден хотя бы один дефект
-		// if (simulation.foundMalfunctionIds.length === 0) {
-		// 	showToast('Необходимо найти хотя бы одну неисправность', 'error');
-		// 	return;
-		// }
-
-		// // Проверка: найдены все неисправности
-		// // Проверяем, что все ID из originalMalfunctions присутствуют в foundMalfunctionIds
-		// const originalIds = simulation.originalMalfunctions.map(m => m.id);
-		// const allMalfunctionsFound = originalIds.every(id =>
-		// 	simulation.foundMalfunctionIds.includes(id),
-		// );
-
-		// if (allMalfunctionsFound) {
-		// Успешный сценарий: все неисправности найдены
-		dispatch(completeSimulation());
+		// Сохраняем simulationId перед сбросом для редиректа
+		const currentSimulationId = simulation.simulationId;
 
 		// Автоматически деактивируем все неисправности из симуляции
 		if (simulation.originalMalfunctions.length > 0) {
@@ -156,21 +136,20 @@ const Sidebar = () => {
 			});
 		}
 
+		// Сбрасываем состояние симуляции (включая simulationId в null)
+		dispatch(completeSimulation());
+
 		// Показываем модальное окно завершения
 		dispatch(openModal('simulationComplete'));
-		// Toast не показываем, так как показывается модальное окно
-		// } else {
-		// 	// Неполное решение: показываем toast и продолжаем симуляцию
-		// 	showToast(
-		// 		'Найдены не все неисправности. Продолжите поиск.',
-		// 		'info',
-		// 	);
-		// 	// Разблокируем кнопку после небольшой задержки
-		// 	setTimeout(() => {
-		// 		setIsProcessing(false);
-		// 	}, 1000);
-		// }
-	}, [simulation, dispatch, showToast]);
+
+		// Сохраняем simulationId в sessionStorage для использования в модальном окне
+		if (currentSimulationId) {
+			sessionStorage.setItem(
+				'completedSimulationId',
+				currentSimulationId,
+			);
+		}
+	}, [simulation, dispatch]);
 
 	return (
 		<>
@@ -220,9 +199,7 @@ const Sidebar = () => {
 						aria-label="Начать симуляцию"
 						text="Начать симуляцию"
 						className={styles.buttonText}
-						disabled={
-							simulation.isInitialized && !simulation.isCompleted
-						}
+						disabled={simulation.simulationId !== null}
 						onClick={handleStartSimulation}
 					/>
 
@@ -232,7 +209,7 @@ const Sidebar = () => {
 						aria-label="Остановить симуляцию"
 						text="Остановить симуляцию"
 						className={styles.buttonText}
-						disabled={!simulation.isInitialized}
+						disabled={simulation.simulationId === null}
 						onClick={handleStopSimulation}
 					/>
 
@@ -242,9 +219,7 @@ const Sidebar = () => {
 						aria-label="Завершить"
 						text="Завершить"
 						className={styles.buttonText}
-						disabled={
-							!simulation.isInitialized || simulation.isCompleted
-						}
+						disabled={simulation.simulationId === null}
 						onClick={handleFinishSimulation}
 					/>
 

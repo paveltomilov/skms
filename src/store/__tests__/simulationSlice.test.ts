@@ -11,8 +11,6 @@ describe('simulationSlice', () => {
 		simulationId: null,
 		originalMalfunctions: [],
 		foundMalfunctionIds: [],
-		isCompleted: false,
-		isInitialized: false,
 	};
 
 	const mockMalfunctions: Malfunction[] = [
@@ -38,10 +36,11 @@ describe('simulationSlice', () => {
 
 			expect(newState.simulationId).toBe('sim-123');
 			expect(newState.originalMalfunctions).toHaveLength(3);
-			expect(newState.originalMalfunctions[0]).toEqual(mockMalfunctions[0]);
+			expect(newState.originalMalfunctions[0]).toEqual(
+				mockMalfunctions[0],
+			);
 			expect(newState.foundMalfunctionIds).toEqual([]);
-			expect(newState.isCompleted).toBe(false);
-			expect(newState.isInitialized).toBe(true);
+			expect(newState.simulationId).not.toBeNull();
 		});
 
 		it('должен создать глубокую копию originalMalfunctions', () => {
@@ -59,7 +58,9 @@ describe('simulationSlice', () => {
 				mockMalfunctions[0],
 			);
 			// Но содержимое идентично
-			expect(newState.originalMalfunctions[0]).toEqual(mockMalfunctions[0]);
+			expect(newState.originalMalfunctions[0]).toEqual(
+				mockMalfunctions[0],
+			);
 		});
 	});
 
@@ -69,7 +70,6 @@ describe('simulationSlice', () => {
 				...initialState,
 				simulationId: 'sim-123',
 				originalMalfunctions: mockMalfunctions,
-				isInitialized: true,
 			};
 
 			const action = markMalfunctionAsFound('m1');
@@ -84,7 +84,6 @@ describe('simulationSlice', () => {
 				...initialState,
 				simulationId: 'sim-123',
 				originalMalfunctions: mockMalfunctions,
-				isInitialized: true,
 			};
 
 			let newState = simulationReducer(
@@ -106,7 +105,6 @@ describe('simulationSlice', () => {
 				...initialState,
 				simulationId: 'sim-123',
 				originalMalfunctions: mockMalfunctions,
-				isInitialized: true,
 				foundMalfunctionIds: ['m1'],
 			};
 
@@ -119,21 +117,20 @@ describe('simulationSlice', () => {
 	});
 
 	describe('завершение', () => {
-		it('должен пометить симуляцию как завершенную', () => {
+		it('должен сбросить симуляцию при завершении', () => {
 			const stateWithSimulation: SimulationState = {
 				...initialState,
 				simulationId: 'sim-123',
 				originalMalfunctions: mockMalfunctions,
-				isInitialized: true,
 				foundMalfunctionIds: ['m1', 'm2', 'm3'],
 			};
 
 			const action = completeSimulation();
 			const newState = simulationReducer(stateWithSimulation, action);
 
-			expect(newState.isCompleted).toBe(true);
-			expect(newState.simulationId).toBe('sim-123');
-			expect(newState.foundMalfunctionIds).toHaveLength(3);
+			expect(newState.simulationId).toBeNull();
+			expect(newState.originalMalfunctions).toEqual([]);
+			expect(newState.foundMalfunctionIds).toEqual([]);
 		});
 	});
 
@@ -143,15 +140,13 @@ describe('simulationSlice', () => {
 				simulationId: 'sim-456',
 				originalMalfunctions: mockMalfunctions,
 				foundMalfunctionIds: ['m1'],
-				isCompleted: false,
-				isInitialized: true,
 			};
 
 			// Проверяем, что состояние корректно
 			expect(persistedState.simulationId).toBe('sim-456');
 			expect(persistedState.originalMalfunctions).toHaveLength(3);
 			expect(persistedState.foundMalfunctionIds).toContain('m1');
-			expect(persistedState.isInitialized).toBe(true);
+			expect(persistedState.simulationId).not.toBeNull();
 		});
 
 		it('должен сохранить originalMalfunctions без изменений после восстановления', () => {
@@ -159,14 +154,13 @@ describe('simulationSlice', () => {
 				simulationId: 'sim-456',
 				originalMalfunctions: mockMalfunctions,
 				foundMalfunctionIds: ['m1', 'm2'],
-				isCompleted: true,
-				isInitialized: true,
 			};
 
 			// Проверяем, что originalMalfunctions не изменились
-			expect(persistedState.originalMalfunctions).toEqual(mockMalfunctions);
+			expect(persistedState.originalMalfunctions).toEqual(
+				mockMalfunctions,
+			);
 			expect(persistedState.originalMalfunctions[0].id).toBe('m1');
 		});
 	});
 });
-
