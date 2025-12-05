@@ -1,5 +1,6 @@
 'use client';
 import { useState, ChangeEvent, FormEvent, useCallback } from 'react';
+import axios from 'axios';
 import Button from '../Button';
 import styles from './styles.module.scss';
 
@@ -41,14 +42,14 @@ const fields: ReadonlyArray<Field> = [
 		label: 'Компания',
 		type: 'text',
 		placeholder: 'Название компании',
-		required: false,
+		required: true,
 	},
 	{
 		key: 'phone',
 		label: 'Телефон',
 		type: 'tel',
 		placeholder: 'Ваш номер телефона',
-		required: false,
+		required: true,
 	},
 ] as const;
 
@@ -73,21 +74,29 @@ const FormField = ({
 	</div>
 );
 
+const initialForm: FormValues = {
+	name: '',
+	company: '',
+	email: '',
+	phone: '',
+	consent: false,
+};
+
 function FormLanding() {
-	const [form, setForm] = useState<FormValues>({
-		name: '',
-		company: '',
-		email: '',
-		phone: '',
-		consent: false,
-	});
+	const [form, setForm] = useState<FormValues>(initialForm);
 
 	const handleInputChange = useCallback(
 		(key: keyof Omit<FormValues, 'consent'>) => {
 			return (e: ChangeEvent<HTMLInputElement>) => {
+				let value = e.target.value;
+
+				if (key === 'phone') {
+					value = value.replace(/\D/g, '');
+				}
+
 				setForm(prev => ({
 					...prev,
-					[key]: e.target.value,
+					[key]: value,
 				}));
 			};
 		},
@@ -100,8 +109,13 @@ function FormLanding() {
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		if (!form.name.trim() || !form.email.trim()) {
-			alert('Заполните обязательные поля');
+		if (
+			!form.name.trim() ||
+			!form.email.trim() ||
+			!form.company.trim() ||
+			!form.phone.trim()
+		) {
+			alert('Заполните все поля');
 			return;
 		}
 
@@ -109,7 +123,34 @@ function FormLanding() {
 			alert('Необходимо дать согласие на обработку персональных данных');
 			return;
 		}
-		alert('Форма не отправлена');
+
+		const payload = {
+			full_name: form.name,
+			company: form.company,
+			email: form.email,
+			phone: form.phone,
+		};
+
+		const apiUrl = 'http://127.0.0.1:8000/api/leads/';
+		try {
+			const response = await axios.post(apiUrl, payload, {
+				headers: { 'Content-Type': 'application/json' },
+			});
+
+			setForm(initialForm);
+
+			console.log('Response data:', response.data);
+			alert('Форма успешно отправлена. Мы скоро с вами свяжемся');
+		} catch (err) {
+			if (axios.isAxiosError(err)) {
+				console.error('Server error:', err.response?.data);
+			} else {
+				console.error('Unexpected error:', err);
+			}
+
+			setForm(initialForm);
+			alert('Форма не отправлена');
+		}
 	};
 
 	return (
@@ -136,6 +177,7 @@ function FormLanding() {
 				<div className={styles.form__button}>
 					<Button
 						text="отправить"
+						onClick={handleSubmit}
 						color="var(--lan-very-dark-mostly-black-blue)"
 						bgColor="var(--lan-bright-cyan---lime-green)"
 						width={0}
