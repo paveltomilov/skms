@@ -20,6 +20,9 @@ const Multimeter: React.FC = () => {
 
 	const { currentMode, displayValue, activeProb, probeConnections } =
 		useAppSelector(state => state.multimeter);
+	const isAnyModalOpen = useAppSelector(state =>
+		Object.values(state.modal).some(Boolean),
+	);
 
 	const redConn = probeConnections.red;
 	const blackConn = probeConnections.black;
@@ -57,7 +60,7 @@ const Multimeter: React.FC = () => {
 
 	//Фиксируем черный щуп на нейтрали при измерении напряжения
 	useEffect(() => {
-		if (!isVoltageMode) {
+		if (!isVoltageMode || isAnyModalOpen) {
 			dispatch(detachProbe('black'));
 			return;
 		}
@@ -69,7 +72,7 @@ const Multimeter: React.FC = () => {
 				dropId: CONTROL_CIRCUIT_NEUTRAL_ID,
 			}),
 		);
-	}, [dispatch, isVoltageMode]);
+	}, [dispatch, isAnyModalOpen, isVoltageMode]);
 
 	useEffect(() => {
 		dispatch(modeAction(probeState));

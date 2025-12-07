@@ -28,6 +28,9 @@ export const Dnd: React.FC<Props> = ({ children }) => {
 	const probeConnections = useAppSelector(
 		state => state.multimeter.probeConnections,
 	);
+	const isAnyModalOpen = useAppSelector(state =>
+		Object.values(state.modal).some(Boolean),
+	);
 
 	const handleDragStart = ({ active }: DragStartEvent) => {
 		const probeColor = active.id as 'red' | 'black';
@@ -74,6 +77,13 @@ export const Dnd: React.FC<Props> = ({ children }) => {
 			studentId: '12345',
 		});
 	}, [sendMessage]);
+
+	useEffect(() => {
+		if (!isAnyModalOpen) return;
+		dispatch(detachProbe('red'));
+		dispatch(detachProbe('black'));
+		dispatch(setActiveProb(null));
+	}, [dispatch, isAnyModalOpen]);
 
 	return (
 		<DndContext
