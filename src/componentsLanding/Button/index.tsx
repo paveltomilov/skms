@@ -16,6 +16,7 @@ export type ButtonProps = {
 	radius?: number;
 	className?: string;
 	onClick?: () => void;
+	type?: 'button' | 'submit';
 	href?: string;
 	border?: string;
 };
@@ -33,6 +34,7 @@ const Button: React.FC<ButtonProps> = ({
 	radius,
 	icon,
 	onClick,
+
 	href,
 	className,
 	border,

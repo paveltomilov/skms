@@ -1,80 +1,40 @@
 'use client';
+
 import { useState, ChangeEvent, FormEvent, useCallback } from 'react';
 import axios from 'axios';
+import Popup from '../Popup';
 import Button from '../Button';
 import styles from './styles.module.scss';
 
-type FormValues = {
-	name: string;
-	company: string;
-	email: string;
-	phone: string;
-	consent: boolean;
-};
-
-type FieldKey = keyof Omit<FormValues, 'consent'>;
-
-interface Field {
-	key: FieldKey;
-	label: string;
-	type: 'text' | 'email' | 'tel';
-	placeholder: string;
-	required: boolean;
-}
-
-const fields: ReadonlyArray<Field> = [
+/* ----------  Данные формы ---------------------------------------- */
+const fields = [
 	{
 		key: 'name',
 		label: 'Ваше имя',
 		type: 'text',
 		placeholder: 'ФИО',
-		required: true,
 	},
 	{
 		key: 'email',
 		label: 'Почта',
 		type: 'email',
 		placeholder: 'Введите Вашу почту',
-		required: true,
 	},
 	{
 		key: 'company',
 		label: 'Компания',
 		type: 'text',
 		placeholder: 'Название компании',
-		required: true,
 	},
 	{
 		key: 'phone',
 		label: 'Телефон',
 		type: 'tel',
 		placeholder: 'Ваш номер телефона',
-		required: true,
 	},
-] as const;
+];
 
-const FormField = ({
-	label,
-	value,
-	onChange,
-	...rest
-}: {
-	label: string;
-	value: string;
-	onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-} & React.ComponentProps<'input'>) => (
-	<div className={styles.form__field}>
-		<label className={styles.label}>{label}</label>
-		<input
-			value={value}
-			onChange={onChange}
-			className={styles.input}
-			{...rest}
-		/>
-	</div>
-);
-
-const initialForm: FormValues = {
+const initialForm = {
 	name: '',
 	company: '',
 	email: '',
@@ -82,23 +42,54 @@ const initialForm: FormValues = {
 	consent: false,
 };
 
+interface FormFieldProps {
+	label: string; // заголовок поля
+	value: string | number; // текущее значение, может быть строкой или числом
+	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	type?: string; // тип input – text, email, tel … (необязательно)
+	placeholder?: string; // плейсхолдер (необязательно)
+	// любые остальные атрибуты HTML‑input могут передаваться через rest
+}
+
+// 2️⃣ Функциональный компонент с явно указанным типом пропсов
+const FormField: React.FC<FormFieldProps> = ({
+	label,
+	value,
+	onChange,
+	...rest
+}) => (
+	<div className={styles.form__field}>
+		<label className={styles.label}>{label}</label>
+		<input
+			value={value}
+			onChange={onChange}
+			className={styles.input}
+			{...rest} // остальные атрибуты, например type="email"
+		/>
+	</div>
+);
+
+/* ----------  Основной компонент --------------------------------- */
 function FormLanding() {
-	const [form, setForm] = useState<FormValues>(initialForm);
+	const [form, setForm] = useState(initialForm);
 
+	/* -----------  Модальное окно ----------------------------- */
+	const [popup, setPopup] = useState({
+		visible: false,
+		message: '',
+		variant: undefined, // success | error | info
+	});
+
+	const showPopup = (msg, v) => {
+		setPopup({ visible: true, message: msg, variant: v });
+	};
+
+	/* -----------  Обработчики полей --------------------------- */
 	const handleInputChange = useCallback(
-		(key: keyof Omit<FormValues, 'consent'>) => {
-			return (e: ChangeEvent<HTMLInputElement>) => {
-				let value = e.target.value;
-
-				if (key === 'phone') {
-					value = value.replace(/\D/g, '');
-				}
-
-				setForm(prev => ({
-					...prev,
-					[key]: value,
-				}));
-			};
+		key => e => {
+			let value = e.target.value;
+			if (key === 'phone') value = value.replace(/\D/g, '');
+			setForm(prev => ({ ...prev, [key]: value }));
 		},
 		[],
 	);
@@ -106,7 +97,8 @@ function FormLanding() {
 	const handleConsentChange = () =>
 		setForm(prev => ({ ...prev, consent: !prev.consent }));
 
-	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+	/* -----------  Отправка формы ------------------------------ */
+	const handleSubmit = async e => {
 		e.preventDefault();
 
 		if (
@@ -115,12 +107,14 @@ function FormLanding() {
 			!form.company.trim() ||
 			!form.phone.trim()
 		) {
-			alert('Заполните все поля');
+			showPopup('Заполните все поля формы');
 			return;
 		}
 
 		if (!form.consent) {
-			alert('Необходимо дать согласие на обработку персональных данных');
+			showPopup(
+				'Необходимо дать согласие на обработку персональных данных',
+			);
 			return;
 		}
 
@@ -131,80 +125,93 @@ function FormLanding() {
 			phone: form.phone,
 		};
 
-		const apiUrl = 'http://127.0.0.1:8000/api/leads/';
 		try {
-			const response = await axios.post(apiUrl, payload, {
+			await axios.post('http://127.0.0.1:8000/api/leads/', payload, {
 				headers: { 'Content-Type': 'application/json' },
 			});
 
 			setForm(initialForm);
-
-			console.log('Response data:', response.data);
-			alert('Форма успешно отправлена. Мы скоро с вами свяжемся');
+			showPopup(
+				'Заявка успешно отправлена. Мы скоро с вами свяжемся',
+				'success',
+			);
 		} catch (err) {
-			if (axios.isAxiosError(err)) {
-				console.error('Server error:', err.response?.data);
-			} else {
-				console.error('Unexpected error:', err);
-			}
-
+			console.error(err);
+			showPopup('Ошибка при отправке заявки', 'error');
 			setForm(initialForm);
-			alert('Форма не отправлена');
 		}
 	};
 
 	return (
-		<form onSubmit={handleSubmit} className={styles.form}>
-			<h2 className={styles.form__title}>
-				Хотите&nbsp;узнать&nbsp;больше? Мы&nbsp;с вами свяжемся!
-			</h2>
+		<>
+			<form onSubmit={handleSubmit} className={styles.form}>
+				<h2 className={styles.form__title}>
+					Хотите&nbsp;узнать&nbsp;больше? Мы&nbsp;с вами свяжемся!
+				</h2>
 
-			<div className={styles.form__container}>
-				{fields.map(({ key, label, type, placeholder, required }) => (
-					<FormField
-						key={key}
-						label={label}
-						value={form[key]}
-						onChange={handleInputChange(key)}
-						type={type}
-						placeholder={placeholder}
-						required={required}
-					/>
-				))}
-			</div>
-
-			<div className={styles.form__sogl}>
-				<div className={styles.form__button}>
-					<Button
-						text="отправить"
-						onClick={handleSubmit}
-						color="var(--lan-very-dark-mostly-black-blue)"
-						bgColor="var(--lan-bright-cyan---lime-green)"
-						width={0}
-						height={40}
-						radius={4}
-						border="1px solid var(--lan-very-dark-gray)"
-					/>
+				<div className={styles.form__container}>
+					{fields.map(({ key, label, type, placeholder }) => (
+						<FormField
+							key={key}
+							label={label}
+							value={form[key]}
+							onChange={handleInputChange(key)}
+							type={type}
+							placeholder={placeholder}
+						/>
+					))}
 				</div>
 
-				<div className={styles.form__check}>
-					<input
-						className={styles.input__checkbox}
-						id="consent"
-						type="checkbox"
-						checked={form.consent}
-						onChange={handleConsentChange}
-						required
-					/>
-					<label htmlFor="consent" className={styles.checkbox__descr}>
-						Я даю согласие на обработку&nbsp;
-						<span className={styles.checkbox__descr_span}>
-							персональных данных
-						</span>
-					</label>
+				<div className={styles.form__sogl}>
+					<div className={styles.form__button}>
+						<Button
+							text="отправить"
+							type="submit"
+							color="var(--lan-very-dark-mostly-black-blue)"
+							bgColor="var(--lan-bright-cyan---lime-green)"
+							width={604}
+							height={40}
+							radius={4}
+							border="1px solid var(--lan-very-dark-gray)"
+						/>
+					</div>
+
+					<div className={styles.form__check}>
+						<input
+							className={styles.input__checkbox}
+							id="consent"
+							type="checkbox"
+							checked={form.consent}
+							onChange={handleConsentChange}
+						/>
+						<label
+							htmlFor="consent"
+							className={styles.checkbox__descr}
+						>
+							Я даю согласие на обработку&nbsp;
+							<span className={styles.checkbox__descr_span}>
+								персональных данных
+							</span>
+						</label>
+					</div>
 				</div>
-			</div>
-		</form>
+			</form>
+
+			{popup.visible && (
+				<Popup
+					message={popup.message}
+					variant={popup.variant}
+					onClose={() =>
+						setPopup({
+							visible: false,
+							message: '',
+							variant: undefined,
+						})
+					}
+					timeout={0} // можно менять по желанию
+				/>
+			)}
+		</>
 	);
 }
 
