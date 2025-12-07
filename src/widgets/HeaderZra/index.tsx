@@ -5,13 +5,8 @@ import style from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import { useGateControlButtons } from '@/shared/hooks/useGateControlButtons';
 import GateWindow from '@/entities/GateWindow';
-import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
-import { AppDispatch, RootState } from '@/store/store';
-import { setPercent } from '@/store/percentSlice';
 
 const HeaderZra: FC = () => {
-	const dispatch = useAppDispatch<AppDispatch>();
-	const percentValue = useAppSelector((state: RootState) => state.percent);
 
 	const {
 		handleButton,
@@ -60,24 +55,6 @@ const HeaderZra: FC = () => {
 				<GateWindow />
 
 				<div className={style.part}>
-					{/* временный интерфейс для изменения базовых параметров window */}
-					<select
-						size={2}
-						className={style.hideScrollbar}
-						value={percentValue}
-						onChange={e =>
-							dispatch(setPercent(Number(e.target.value)))
-						}
-					>
-						{Array.from({ length: 101 }, (_, idx) => (
-							<option key={idx} value={idx}>
-								{idx}
-							</option>
-						))}
-						<option key={'default'} value={-1}>
-							DEF
-						</option>
-					</select>
 					<Button
 						width={105}
 						height={38}
