@@ -1,23 +1,32 @@
 'use client';
 
-import { useState, ChangeEvent, FormEvent, useCallback } from 'react';
+import { useState, ChangeEvent, useCallback } from 'react';
 import axios from 'axios';
+
 import Popup from '../Popup';
 import Button from '../Button';
 import styles from './styles.module.scss';
+import ConsentCheckbox from '../ConsentCheckbox';
 
-/* ----------  Данные формы ---------------------------------------- */
+interface PopupState {
+	visible: boolean;
+	message: string;
+	variant?: 'success' | 'error' | 'info';
+}
+
+type FormValues = {
+	name: string;
+	company: string;
+	email: string;
+	phone: string;
+};
+
 const fields = [
-	{
-		key: 'name',
-		label: 'Ваше имя',
-		type: 'text',
-		placeholder: 'ФИО',
-	},
+	{ key: 'name', label: 'Ваше имя', type: 'text', placeholder: 'ФИО' },
 	{
 		key: 'email',
 		label: 'Почта',
-		type: 'email',
+		type: 'text',
 		placeholder: 'Введите Вашу почту',
 	},
 	{
@@ -32,73 +41,97 @@ const fields = [
 		type: 'tel',
 		placeholder: 'Ваш номер телефона',
 	},
-];
-
-const initialForm = {
-	name: '',
-	company: '',
-	email: '',
-	phone: '',
-	consent: false,
-};
+] as const;
 
 interface FormFieldProps {
-	label: string; // заголовок поля
-	value: string | number; // текущее значение, может быть строкой или числом
+	label: string;
+	value: string | number;
 	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-	type?: string; // тип input – text, email, tel … (необязательно)
-	placeholder?: string; // плейсхолдер (необязательно)
-	// любые остальные атрибуты HTML‑input могут передаваться через rest
+	type?: string;
+	placeholder?: string;
+	error?: string | null;
 }
 
-// 2️⃣ Функциональный компонент с явно указанным типом пропсов
 const FormField: React.FC<FormFieldProps> = ({
 	label,
 	value,
 	onChange,
+	error,
 	...rest
 }) => (
 	<div className={styles.form__field}>
-		<label className={styles.label}>{label}</label>
+		<label htmlFor={label} className={styles.label}>
+			{label}
+		</label>
+
 		<input
+			id={label}
 			value={value}
 			onChange={onChange}
-			className={styles.input}
-			{...rest} // остальные атрибуты, например type="email"
+			aria-invalid={!!error}
+			aria-describedby={error ? `${label}-error` : undefined}
+			className={`${styles.input} ${error ? styles.inputError : ''}`}
+			{...rest}
 		/>
+
+		{error && (
+			<p id={`${label}-error`} className={styles.errorMsg}>
+				{error}
+			</p>
+		)}
 	</div>
 );
 
-/* ----------  Основной компонент --------------------------------- */
 function FormLanding() {
-	const [form, setForm] = useState(initialForm);
+	const [form, setForm] = useState<FormValues>({
+		name: '',
+		company: '',
+		email: '',
+		phone: '',
+	});
+	const [consent, setConsent] = useState<boolean>(false);
 
-	/* -----------  Модальное окно ----------------------------- */
-	const [popup, setPopup] = useState({
+	const [popup, setPopup] = useState<PopupState>({
 		visible: false,
 		message: '',
-		variant: undefined, // success | error | info
+		variant: undefined,
 	});
 
-	const showPopup = (msg, v) => {
-		setPopup({ visible: true, message: msg, variant: v });
+	const showPopup = (msg: string, variant: PopupState['variant'] = 'info') =>
+		setPopup({ visible: true, message: msg, variant });
+
+	const [emailError, setEmailError] = useState<string | null>(null);
+
+	const isValidEmailDomain = (email: string): boolean => {
+		const atIndex = email.lastIndexOf('@');
+		if (atIndex === -1) return false;
+		const domainPart = email.slice(atIndex + 1);
+		const domainRegex = /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+		return domainRegex.test(domainPart);
 	};
 
-	/* -----------  Обработчики полей --------------------------- */
 	const handleInputChange = useCallback(
-		key => e => {
-			let value = e.target.value;
-			if (key === 'phone') value = value.replace(/\D/g, '');
+		(key: keyof FormValues) => (e: ChangeEvent<HTMLInputElement>) => {
+			const rawValue = e.target.value;
+			const value =
+				key === 'phone' ? rawValue.replace(/\D/g, '') : rawValue;
+
 			setForm(prev => ({ ...prev, [key]: value }));
+
+			if (key === 'email') {
+				if (!value.includes('@')) {
+					setEmailError('Поле должно содержать @');
+				} else if (!isValidEmailDomain(value)) {
+					setEmailError('Неверный формат домена после @');
+				} else {
+					setEmailError(null);
+				}
+			}
 		},
 		[],
 	);
 
-	const handleConsentChange = () =>
-		setForm(prev => ({ ...prev, consent: !prev.consent }));
-
-	/* -----------  Отправка формы ------------------------------ */
-	const handleSubmit = async e => {
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		if (
@@ -111,7 +144,7 @@ function FormLanding() {
 			return;
 		}
 
-		if (!form.consent) {
+		if (!consent) {
 			showPopup(
 				'Необходимо дать согласие на обработку персональных данных',
 			);
@@ -125,20 +158,27 @@ function FormLanding() {
 			phone: form.phone,
 		};
 
+		const apiUrl = 'http://127.0.0.1:8000/api/leads/';
+
 		try {
-			await axios.post('http://127.0.0.1:8000/api/leads/', payload, {
+			await axios.post(apiUrl, payload, {
 				headers: { 'Content-Type': 'application/json' },
 			});
 
-			setForm(initialForm);
+			setForm({ name: '', company: '', email: '', phone: '' });
+			setConsent(false);
 			showPopup(
 				'Заявка успешно отправлена. Мы скоро с вами свяжемся',
 				'success',
 			);
 		} catch (err) {
 			console.error(err);
-			showPopup('Ошибка при отправке заявки', 'error');
-			setForm(initialForm);
+			setForm({ name: '', company: '', email: '', phone: '' });
+			setConsent(false);
+			showPopup(
+				'Ошибка при отправке заявки. Пожалуйста попробуйте позже',
+				'error',
+			);
 		}
 	};
 
@@ -158,6 +198,7 @@ function FormLanding() {
 							onChange={handleInputChange(key)}
 							type={type}
 							placeholder={placeholder}
+							error={key === 'email' ? emailError : undefined}
 						/>
 					))}
 				</div>
@@ -175,25 +216,7 @@ function FormLanding() {
 							border="1px solid var(--lan-very-dark-gray)"
 						/>
 					</div>
-
-					<div className={styles.form__check}>
-						<input
-							className={styles.input__checkbox}
-							id="consent"
-							type="checkbox"
-							checked={form.consent}
-							onChange={handleConsentChange}
-						/>
-						<label
-							htmlFor="consent"
-							className={styles.checkbox__descr}
-						>
-							Я даю согласие на обработку&nbsp;
-							<span className={styles.checkbox__descr_span}>
-								персональных данных
-							</span>
-						</label>
-					</div>
+					<ConsentCheckbox value={consent} onChange={setConsent} />
 				</div>
 			</form>
 
@@ -208,7 +231,7 @@ function FormLanding() {
 							variant: undefined,
 						})
 					}
-					timeout={0} // можно менять по желанию
+					timeout={4000}
 				/>
 			)}
 		</>

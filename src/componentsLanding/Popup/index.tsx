@@ -1,4 +1,3 @@
-// src/components/Popup/index.tsx
 'use client';
 import { FC, useEffect } from 'react';
 import styles from './styles.module.scss';
@@ -6,15 +5,10 @@ import styles from './styles.module.scss';
 type PopupVariant = 'success' | 'error' | 'info';
 
 interface PopupProps {
-	/** Текст сообщения */
 	message: string;
-	/** Вид модалки – влияет на цвет и иконку */
-	variant?: PopupVariant; // default: 'info'
-	/** Функция закрытия (вызывается после клика по кнопке/офферу либо таймаута) */
+	variant?: PopupVariant;
 	onClose: () => void;
-	/** Время в мс, через которое модалка закроется автоматически.
-	 * Если `0` – не будет автозакрытия. */
-	timeout?: number; // default: 4000
+	timeout?: number;
 }
 
 const variantClasses = {
@@ -27,16 +21,14 @@ const Popup: FC<PopupProps> = ({
 	message,
 	variant = 'info',
 	onClose,
-	timeout = 400000, // 4 с по умолчанию
+	timeout = 4000,
 }) => {
-	/* ===== автозакрытие ===== */
 	useEffect(() => {
 		if (timeout <= 0) return;
 		const id = setTimeout(onClose, timeout);
-		return () => clearTimeout(id); // очистка при размонтировании
+		return () => clearTimeout(id);
 	}, [timeout, onClose]);
 
-	/* ===== рендер ===== */
 	return (
 		<div className={styles.overlay} onClick={onClose}>
 			<div
@@ -44,9 +36,6 @@ const Popup: FC<PopupProps> = ({
 				onClick={e => e.stopPropagation()}
 			>
 				<p>{message}</p>
-				<button type="button" onClick={onClose} className={styles.btn}>
-					OK
-				</button>
 			</div>
 		</div>
 	);
