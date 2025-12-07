@@ -120,9 +120,9 @@ function FormLanding() {
 
 			if (key === 'email') {
 				if (!value.includes('@')) {
-					setEmailError('Поле должно содержать @');
+					setEmailError('Email введен не корректно');
 				} else if (!isValidEmailDomain(value)) {
-					setEmailError('Неверный формат домена после @');
+					setEmailError('Email введен не корректно');
 				} else {
 					setEmailError(null);
 				}
