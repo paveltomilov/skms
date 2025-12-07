@@ -5,6 +5,8 @@ import { useDroppable } from '@dnd-kit/core';
 import styles from './styles.module.scss';
 import { IPoint } from '@/shared/types/scheme';
 import { useAppSelector } from '@/shared/hooks/store';
+import { canProbeAttach } from '@/shared/lib/probeRules';
+import { ProbeColor } from '@/shared/types/multimeter';
 
 interface Props {
 	id: string;
@@ -19,6 +21,17 @@ export const SchemePoint: React.FC<Props> = ({
 	offsetX = 0,
 	offsetY = 0,
 }) => {
+	const isAnyModalOpen = useAppSelector(state =>
+		Object.values(state.modal).some(Boolean),
+	);
+	const activeProbe = useAppSelector(
+		state => state.multimeter.activeProb,
+	) as ProbeColor | null;
+
+	const isDisabledByProbe =
+		!!activeProbe && !canProbeAttach(activeProbe, id);
+	const isDisabled = isAnyModalOpen || isDisabledByProbe;
+
 	const { setNodeRef, isOver } = useDroppable({
 		id,
 		data: {
@@ -27,14 +40,15 @@ export const SchemePoint: React.FC<Props> = ({
 			pointId: id,
 			accepts: 'probe',
 		},
+		disabled: isDisabled,
 	});
 
 	// для визуализации состояния точек
 	const schemePoint = useAppSelector(state => state.points[id]);
 
 	const pointClassName = `${styles.point} ${isOver && styles.point_over} ${
-		schemePoint ? styles.point__active : styles.point__inactive
-	}`;
+		isDisabled && styles.point__disabled
+	} ${schemePoint ? styles.point__active : styles.point__inactive}`;
 
 	return (
 		<div

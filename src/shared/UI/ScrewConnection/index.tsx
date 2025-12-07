@@ -5,6 +5,9 @@ import { MarkerName } from '@/shared/types/markers';
 import Screw from '../icons/Screw';
 import Provod from '../Provod';
 import { useDroppable } from '@dnd-kit/core';
+import { useAppSelector } from '@/shared/hooks/store';
+import { ProbeColor } from '@/shared/types/multimeter';
+import { canProbeAttach } from '@/shared/lib/probeRules';
 export interface Props {
 	screwStatus?: 'close' | 'open';
 	pointId?: string;
@@ -32,9 +35,17 @@ const ScrewConnection: FC<Props> = ({
 		? `${pointId}-screw-${generatedId}`
 		: generatedId;
 
+	const activeProbe = useAppSelector(
+		state => state.multimeter.activeProb,
+	) as ProbeColor | null;
+
+	const isDroppableDisabled =
+		!pointId || (activeProbe && !canProbeAttach(activeProbe, pointId));
+	const showDisabledState = !!activeProbe && isDroppableDisabled;
+
 	const { setNodeRef } = useDroppable({
 		id: droppableId,
-		disabled: !pointId,
+		disabled: isDroppableDisabled,
 		data: pointId
 			? {
 					type: 'point',
@@ -64,6 +75,9 @@ const ScrewConnection: FC<Props> = ({
 				styles.component,
 				pointId,
 				`${screwStatus}`,
+				{
+					[styles.componentDroppableDisabled]: showDisabledState,
+				},
 			)}
 		>
 			<Screw

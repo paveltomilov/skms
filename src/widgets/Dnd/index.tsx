@@ -17,6 +17,7 @@ import { probeTipCollisionDetection } from '@/shared/lib/probeTipCollisionDetect
 import { restrictToParentElement } from '@dnd-kit/modifiers';
 import { ProbeColor } from '@/shared/types/multimeter';
 import { useWebSocket } from '@/shared/hooks/useWebSocket';
+import { canProbeAttach } from '@/shared/lib/probeRules';
 
 interface Props {
 	children: ReactNode;
@@ -42,6 +43,12 @@ export const Dnd: React.FC<Props> = ({ children }) => {
 				(over.data.current as { pointId?: UniqueIdentifier })
 					?.pointId ?? over.id;
 			const dropId = over.id;
+
+			if (!canProbeAttach(probeColor, pointId)) {
+				dispatch(detachProbe(probeColor));
+				dispatch(setActiveProb(null));
+				return;
+			}
 
 			// Проверяем, не занята ли точка другим щупом
 			const isPointOccupied = Object.values(probeConnections).some(
