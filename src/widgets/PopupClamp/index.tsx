@@ -67,7 +67,7 @@ const PopupClamp = () => {
 									: 'open'
 							}
 							className={styles.top__connect}
-							provodLocation="left"
+							provodLocation="right"
 							onToggle={() =>
 								dispatch(
 									togglePointState(POWER_CIRCUIT_NEUTRAL_ID),
@@ -122,7 +122,7 @@ const PopupClamp = () => {
 									: 'open'
 							}
 							className={styles.center__connect}
-							provodLocation="left"
+							provodLocation="right"
 							onToggle={() =>
 								dispatch(
 									togglePointState(POWER_CIRCUIT_NEUTRAL_ID),
@@ -167,7 +167,7 @@ const PopupClamp = () => {
 									: 'open'
 							}
 							className={styles.bottom__connect}
-							provodLocation="left"
+							provodLocation="right"
 							onToggle={() =>
 								dispatch(
 									togglePointState(POWER_CIRCUIT_NEUTRAL_ID),
