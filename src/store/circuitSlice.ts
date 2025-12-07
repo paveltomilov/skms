@@ -5,11 +5,6 @@ import { initialStateScheme } from '@/shared/configs/scheme';
 
 const initialState: InitialStateScheme = initialStateScheme;
 
-// Выводим в консоль состояние схемы (элементы), которое попадет в Redux store
-console.log(
-	'[circuitSlice.ts] Начальное состояние схемы (элементы) для Redux store:',
-	initialStateScheme,
-);
 const circuitSlice = createSlice({
 	name: 'circuit',
 	initialState,

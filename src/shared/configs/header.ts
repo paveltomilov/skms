@@ -4,8 +4,6 @@ import {
 	BUTTON_KRUZA_P_CLOSE_ID,
 	INSERT_NDO_CMD_CLOSE_PTK_ID,
 	INSERT_NDO_CMD_OPEN_PTK_ID,
-	LIMIT_SWITCH_CLOSE_ID,
-	LIMIT_SWITCH_OPEN_ID,
 } from './controlCircuit/constants';
 
 export const PTK_BUTTONS_CONFIG = {
@@ -22,10 +20,7 @@ export const PTK_BUTTONS_CONFIG = {
 			id: INSERT_NDO_CMD_OPEN_PTK_ID,
 			value: BASE_RESISTANCE_CONSTANT.highResistance,
 		}, // Размыкаем кнопку ПТК "открыть"
-		{
-			id: LIMIT_SWITCH_OPEN_ID,
-			value: BASE_RESISTANCE_CONSTANT.highResistance,
-		}, // Размыкаем концевой "открыть"
+		// Концевой "открыто" управляется динамически в хуке на основе положения задвижки
 	],
 	// Срабатывает сразу после нажатия на кнопку закрыть ПТК
 	close: [
@@ -40,10 +35,7 @@ export const PTK_BUTTONS_CONFIG = {
 			id: INSERT_NDO_CMD_CLOSE_PTK_ID,
 			value: BASE_RESISTANCE_CONSTANT.highResistance,
 		}, // Размыкаем кнопку ПТК "закрыть"
-		{
-			id: LIMIT_SWITCH_CLOSE_ID,
-			value: BASE_RESISTANCE_CONSTANT.highResistance,
-		}, // Размыкаем концевой "закрыть"
+		// Концевой "закрыто" управляется динамически в хуке на основе положения задвижки
 	],
 	stop: [
 		{
@@ -71,14 +63,7 @@ export const KRUZAP_BUTTONS_CONFIG = {
 			id: BUTTON_KRUZA_P_OPEN_ID,
 			value: BASE_RESISTANCE_CONSTANT.highResistance,
 		}, // Размыкаем "открыть"
-		{
-			id: LIMIT_SWITCH_OPEN_ID,
-			value: BASE_RESISTANCE_CONSTANT.highResistance,
-		}, // Размыкаем концевой "открыть"
-		{
-			id: LIMIT_SWITCH_CLOSE_ID,
-			value: 0, // Замыкаем концевой "закрыть" (задвижка УЖЕ НЕ закрыта) - сопротивление = 0
-		},
+		// Концевые выключатели управляются динамически в хуке на основе положения задвижки
 	],
 	// Срабатывает сразу после нажатия на кнопку закрыть крузап
 	close: [
@@ -97,14 +82,7 @@ export const KRUZAP_BUTTONS_CONFIG = {
 			id: BUTTON_KRUZA_P_CLOSE_ID,
 			value: BASE_RESISTANCE_CONSTANT.highResistance,
 		}, // Размыкаем "закрыть"
-		{
-			id: LIMIT_SWITCH_CLOSE_ID,
-			value: BASE_RESISTANCE_CONSTANT.highResistance,
-		}, // Размыкаем концевой "закрыть"
-		{
-			id: LIMIT_SWITCH_OPEN_ID,
-			value: 0, // Замыкаем концевой "открыть" (задвижка УЖЕ НЕ открыта) - сопротивление = 0
-		},
+		// Концевые выключатели управляются динамически в хуке на основе положения задвижки
 	],
 	stop: [
 		{
