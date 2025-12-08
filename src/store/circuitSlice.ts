@@ -4,6 +4,7 @@ import { InitialStateScheme } from '@/shared/types/scheme';
 import { initialStateScheme } from '@/shared/configs/scheme';
 
 const initialState: InitialStateScheme = initialStateScheme;
+
 const circuitSlice = createSlice({
 	name: 'circuit',
 	initialState,
@@ -78,7 +79,8 @@ const circuitSlice = createSlice({
 			action: PayloadAction<{ id: string; value: number }>,
 		) {
 			const { id, value } = action.payload;
-
+			console.log('id', id);
+			console.log('value', value);
 			let element;
 			try {
 				element = findElementByID(id, state);

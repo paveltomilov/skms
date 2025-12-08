@@ -1,7 +1,31 @@
 .reviews {
-  padding-top: 172px;
-  padding-bottom: 202px;
-  &__title {
-    margin-bottom: 52px;
-  }
+	padding-top: 172px;
+	padding-bottom: 202px;
+
+	@media (max-width: 1200px) {
+		padding-top: 154px;
+		padding-bottom: 176px;
+	}
+
+	@media (max-width: 768px) {
+		padding-bottom: 102px;
+	}
+
+	@media (max-width: 576px) {
+		padding-top: 100px;
+		padding-bottom: 58px;
+	}
+
+	&__title {
+		margin-bottom: 52px;
+
+		@media (max-width: 1200px) {
+			margin-bottom: 42px;
+		}
+
+		@media (max-width: 576px) {
+			max-width: 280px;
+			margin-bottom: 26px;
+		}
+	}
 }
