@@ -1,6 +1,7 @@
 'use client';
 
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import { useAppDispatch } from '@/shared/hooks/store';
@@ -9,15 +10,36 @@ import { useSubscription } from '@/shared/hooks/useSubscription';
 
 export const PopupSimulationComplete: FC = () => {
 	const dispatch = useAppDispatch();
+	const router = useRouter();
 	const subscriptionType = useSubscription();
+	const [simulationId, setSimulationId] = useState<string | null>(null);
+
+	// Получаем simulationId из sessionStorage при открытии модального окна
+	useEffect(() => {
+		const savedSimulationId = sessionStorage.getItem(
+			'completedSimulationId',
+		);
+		if (savedSimulationId) {
+			setSimulationId(savedSimulationId);
+			// Очищаем после использования
+			sessionStorage.removeItem('completedSimulationId');
+		}
+	}, []);
 
 	const handleMainButtonClick = () => {
-		console.warn('редирект на страницу опроса');
 		dispatch(closeModal('simulationComplete'));
-	};
 
-	const handleChangePlanClick = () => {
-		console.warn('менять план');
+		if (subscriptionType === 'free') {
+			// Редирект на страницу опроса для бесплатных пользователей
+			if (simulationId) {
+				router.push('/survey');
+			}
+		} else {
+			// Редирект на страницу статистики для платных пользователей
+			if (simulationId) {
+				router.push('/stats');
+			}
+		}
 	};
 
 	const buttonText =
@@ -35,12 +57,6 @@ export const PopupSimulationComplete: FC = () => {
 						height={38}
 						text={buttonText}
 						onClick={handleMainButtonClick}
-					/>
-					<Button
-						width={307}
-						height={38}
-						text="Менять план"
-						onClick={handleChangePlanClick}
 					/>
 				</div>
 			</div>

@@ -1,22 +1,12 @@
 'use client';
 
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import style from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import { useGateControlButtons } from '@/shared/hooks/useGateControlButtons';
 import GateWindow from '@/entities/GateWindow';
-import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
-import { AppDispatch, RootState } from '@/store/store';
-import { setPercent } from '@/store/percentSlice';
 
 const HeaderZra: FC = () => {
-	const dispatch = useAppDispatch<AppDispatch>();
-	const [percentDef, setPercentDef] = useState<number>(0);
-	const percentValue = useAppSelector((state: RootState) => state.percent);
-
-	useEffect(() => {
-		setPercentDef(percentValue);
-	}, [percentValue]);
 
 	const {
 		handleButton,
@@ -65,24 +55,6 @@ const HeaderZra: FC = () => {
 				<GateWindow />
 
 				<div className={style.part}>
-					{/* временный интерфейс для изменения базовых параметров window */}
-					<select
-						size={2}
-						className={style.hideScrollbar}
-						value={percentDef}
-						onChange={e =>
-							dispatch(setPercent(Number(e.target.value)))
-						}
-					>
-						{Array.from({ length: 101 }, (_, idx) => (
-							<option key={idx} value={idx}>
-								{idx}
-							</option>
-						))}
-						<option key={'default'} value={-1}>
-							DEF
-						</option>
-					</select>
 					<Button
 						width={105}
 						height={38}

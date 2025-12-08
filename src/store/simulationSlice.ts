@@ -5,16 +5,12 @@ export interface SimulationState {
 	simulationId: string | null;
 	originalMalfunctions: Malfunction[];
 	foundMalfunctionIds: string[];
-	isCompleted: boolean;
-	isInitialized: boolean;
 }
 
 const initialState: SimulationState = {
 	simulationId: null,
 	originalMalfunctions: [],
 	foundMalfunctionIds: [],
-	isCompleted: false,
-	isInitialized: false,
 };
 
 interface StartSimulationPayload {
@@ -37,8 +33,6 @@ const simulationSlice = createSlice({
 					...malfunction,
 				}));
 			state.foundMalfunctionIds = [];
-			state.isCompleted = false;
-			state.isInitialized = true;
 		},
 		markMalfunctionAsFound: (state, action: PayloadAction<string>) => {
 			const malfunctionId = action.payload;
@@ -48,7 +42,9 @@ const simulationSlice = createSlice({
 			}
 		},
 		completeSimulation: state => {
-			state.isCompleted = true;
+			state.simulationId = null;
+			state.originalMalfunctions = [];
+			state.foundMalfunctionIds = [];
 		},
 		resetSimulation: () => {
 			return initialState;
