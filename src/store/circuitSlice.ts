@@ -5,6 +5,7 @@ import { initialStateScheme } from '@/shared/configs/scheme';
 import { BASE_RESISTANCE_CONSTANT } from '@/shared/configs/elementKind';
 
 const initialState: InitialStateScheme = initialStateScheme;
+
 const circuitSlice = createSlice({
 	name: 'circuit',
 	initialState,

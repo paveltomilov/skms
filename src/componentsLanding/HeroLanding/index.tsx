@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import styles from './styles.module.scss'; // ваш SCSS‑файл
+import styles from './styles.module.scss';
 import HeroTitle from './HeroTitle';
 import HeroDescr from './HeroDescr';
 import { Inter } from 'next/font/google';
