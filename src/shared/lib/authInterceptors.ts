@@ -66,15 +66,13 @@ export const setupResponseInterceptor = (urlBase: string) => {
 
                 try {
                     const refreshToken = getCookie('refreshToken');
-
                     if (!refreshToken) {
                         throw new Error('Не получен refresh token');
                     }
 
                     const refreshRes = await axios.post<RefreshResponse>(
                         `${urlBase}/auth/refresh/`,
-                        { refresh: refreshToken },
-                        { withCredentials: true }
+                        { refresh: refreshToken }
                     );
 
                     if (refreshRes.status === 200 && refreshRes.data.access) {
@@ -124,7 +122,6 @@ export const setupRequestInterceptor = () => {
 };
 
 export const initializeInterceptors = (urlBase: string): void => {
-    axios.defaults.withCredentials = true;
     setupRequestInterceptor();
     setupResponseInterceptor(urlBase);
 };
