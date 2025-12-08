@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState, useCallback } from 'react';
 import Image from 'next/image';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
@@ -7,9 +7,11 @@ import cn from 'classnames';
 import ModalHeader from '@/entities/ModalHeader';
 import { useUserCookies } from '@/shared/hooks/useUserCookies';
 import { logout } from '@/shared/lib/auth';
-import EllipseClose from '@/shared/UI/icons/EllipseClose';
-import { useAppDispatch } from '@/shared/hooks/store';
+
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import { openModal } from '@/store/modalSlice';
+import { deactivateMalfunction } from '@/store/circuitSlice';
+import { resetSimulation } from '@/store/simulationSlice';
 
 interface PopupUserInfoProps {
 	handlePopupClose: () => void;
@@ -20,10 +22,26 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 	className,
 	handlePopupClose,
 }) => {
+	const simulation = useAppSelector(state => state.simulation);
 	const router = useRouter();
 	const dispatch = useAppDispatch();
 	const [isActiveStudentSimulation, setIsActiveStudentSimulation] =
 		useState<boolean>(false);
+
+	const handleStopSimulation = useCallback(() => {
+		// Деактивируем все неисправности из симуляции
+		if (simulation.originalMalfunctions.length > 0) {
+			simulation.originalMalfunctions.forEach(malfunction => {
+				dispatch(deactivateMalfunction(malfunction.id));
+			});
+		}
+
+		// Сбрасываем состояние симуляции до дефолтного
+		dispatch(resetSimulation());
+
+		// Открываем попап об остановке симуляции
+		dispatch(openModal('abortSimulation'));
+	}, [simulation, dispatch]);
 	const isActiveSimulation: boolean = true; // в будущем статус от websocket
 	const { firstName, lastName, role } = useUserCookies();
 	const status =
@@ -44,11 +62,6 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 	};
 
 	const fullName = firstName && lastName ? `${firstName} ${lastName}` : '—';
-
-	const handleAbortSimulation = () => {
-		handlePopupClose();
-		dispatch(openModal('abortSimulationConfirm'));
-	};
 
 	return (
 		<div className={cn(className, styles.userInfo)}>
@@ -77,16 +90,31 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 				<ul className={styles.userInfo__more}>
 					{isActiveStudentSimulation && (
 						<li>
-							<div
-								className={styles.userInfo__more__item}
-								aria-label="Прервать попытку"
-								onClick={handleAbortSimulation}
-							>
-								<EllipseClose size="xs" typeWidth="think" />
-								Прервать попытку
-							</div>
+							<Image
+								src="/svg/abortSim.svg"
+								alt="history"
+								width={16}
+								height={16}
+							/>
+							История сессий
 						</li>
 					)}
+					<li>
+						<Button
+							width={90}
+							height={34}
+							aria-label="Прервать попытку"
+							text="Прервать попытку"
+							className={styles.buttonText}
+							disabled={simulation.simulationId === null}
+							onClick={handleStopSimulation}
+							image={{
+								src: '/svg/abortSim.svg',
+								width: 16,
+								height: 16,
+							}}
+						/>
+					</li>
 					<li>
 						<Image
 							src="/svg/history.svg"

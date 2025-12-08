@@ -1,58 +1,68 @@
 @use '@/shared/scss/variables.module';
 
 .userInfo {
-    width: 330px;
-    min-height: 323px;
-    background-color: variables.$primary-color ;
-    font-size: 20px;
-    box-shadow: variables.$pop-up-box-shadow,
-        variables.$realistic-drop-shadow;
+	width: 330px;
+	min-height: 323px;
+	background-color: variables.$primary-color;
+	font-size: 20px;
+	box-shadow: variables.$pop-up-box-shadow, variables.$realistic-drop-shadow;
 
-    z-index: 2;
+	z-index: 2;
 
-    &__wrapper {
-        display: flex;
-        flex-direction: column;
-        gap: 25px;
-        padding: 34px 20px 38px;
-    }
+	&__wrapper {
+		display: flex;
+		flex-direction: column;
+		gap: 25px;
+		padding: 34px 20px 38px;
+	}
 
-    &__profile {
-        display: flex;
+	&__profile {
+		display: flex;
 
-        &__photo {
-            width: 80px;
-            height: 80px;
-            background-color: variables.$primary-color;
-        }
+		&__photo {
+			width: 80px;
+			height: 80px;
+			background-color: variables.$primary-color;
+		}
 
-        &__info {
-            margin: 10px 12px;
-            line-height: 30px;
+		&__info {
+			margin: 10px 12px;
+			line-height: 30px;
 
-            &__name {
-                font-weight: 500;
-            }
-        }
-    }
+			&__name {
+				font-weight: 500;
+			}
+		}
+	}
 
-    &__more {
-        display: flex;
-        flex-direction: column;
-        gap: 18px;
+	&__more {
+		display: flex;
+		flex-direction: column;
+		gap: 18px;
 
-        &__item {
-            display: flex;
-            flex-direction: row;
-            gap: 8px;
-            align-items: center;
-            cursor: pointer;
-        }
+		&__item {
+			display: flex;
+			flex-direction: row;
+			gap: 8px;
+			align-items: center;
+			cursor: pointer;
+		}
 
-        li img {
-            width: 16px;
-            margin-right: 8px;
-            display: inline;
-        }
-    }
+		li img {
+			width: 16px;
+			margin-right: 8px;
+			display: inline;
+		}
+	}
+	.buttonText {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		cursor: pointer;
+		width: 250px !important;
+		height: 17px !important;
+		border: none;
+		box-shadow: none;
+		justify-content: flex-start;
+	}
 }

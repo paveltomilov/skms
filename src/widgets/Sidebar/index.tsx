@@ -7,7 +7,11 @@ import Chevron from '@/shared/UI/icons/Chevron';
 import { useUserCookies } from '@/shared/hooks/useUserCookies';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import { clearCurrentStudent } from '@/store/trainingSlice';
-import { completeSimulation, startSimulation } from '@/store/simulationSlice';
+import {
+	completeSimulation,
+	startSimulation,
+	resetSimulation,
+} from '@/store/simulationSlice';
 import { useToast } from '@/shared/hooks/useToast';
 import Toast from '@/shared/UI/Toast';
 import { openModal } from '@/store/modalSlice';
@@ -107,9 +111,19 @@ const Sidebar = () => {
 	}, [circuit, simulation]);
 
 	const handleStopSimulation = useCallback(() => {
-		// Открываем окно подтверждения
-		dispatch(openModal('abortSimulationConfirm'));
-	}, [dispatch]);
+		// Деактивируем все неисправности из симуляции
+		if (simulation.originalMalfunctions.length > 0) {
+			simulation.originalMalfunctions.forEach(malfunction => {
+				dispatch(deactivateMalfunction(malfunction.id));
+			});
+		}
+
+		// Сбрасываем состояние симуляции до дефолтного
+		dispatch(resetSimulation());
+
+		// Открываем попап об остановке симуляции
+		dispatch(openModal('abortSimulation'));
+	}, [simulation, dispatch]);
 
 	const handleFinishSimulation = useCallback(() => {
 		// Сохраняем simulationId перед сбросом для редиректа
