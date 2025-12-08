@@ -1,4 +1,3 @@
-import { SCHEME_POINTS_BASE } from '@/shared/configs/points';
 import {
 	PHASE_A_POINT_ID,
 	PHASE_B_POINT_ID,
@@ -7,37 +6,33 @@ import {
 } from '@/shared/configs/powerCircuit/constants';
 import { CONTROL_CIRCUIT_NEUTRAL_ID } from '@/shared/configs/controlCircuit/constants';
 import { InitialStateScheme } from '@/shared/types/scheme';
+import { calculatePointsState } from '@/shared/configs/points';
 
+/**
+ * Вычисляет новые состояния точек на основе текущего состояния схемы.
+ * Сначала устанавливает базовые точки (фазы и нейтрали),
+ * затем вычисляет состояния остальных точек на основе элементов схемы.
+ * @param currentScheme - текущее состояние схемы с элементами
+ * @param points - текущие состояния точек
+ * @returns объект с обновленными состояниями точек
+ */
 export function setNewVoltagePoints(
-currentScheme: InitialStateScheme, points: Record<string, boolean>,
+	currentScheme: InitialStateScheme,
+	points: Record<string, boolean>,
 ): Record<string, boolean> {
 	// Создаем копию текущего состояния точек
 	const updatedPoints = { ...points };
 
-	// Обрабатываем каждую точку из SCHEME_POINTS_BASE
-	for (const [pointId] of Object.entries(SCHEME_POINTS_BASE)) {
-		// Фазы A, B, C всегда под напряжением
-		if (
-			pointId === PHASE_A_POINT_ID ||
-			pointId === PHASE_B_POINT_ID ||
-			pointId === PHASE_C_POINT_ID
-		) {
-			updatedPoints[pointId] = true;
-			continue;
-		}
+	// Шаг 1: Устанавливаем базовые точки
+	// Фазы A, B, C всегда под напряжением
+	updatedPoints[PHASE_A_POINT_ID] = true;
+	updatedPoints[PHASE_B_POINT_ID] = true;
+	updatedPoints[PHASE_C_POINT_ID] = true;
 
-		// Нейтрали всегда без напряжения
-		if (
-			pointId === POWER_CIRCUIT_NEUTRAL_ID ||
-			pointId === CONTROL_CIRCUIT_NEUTRAL_ID
-		) {
-			updatedPoints[pointId] = false;
-			continue;
-		}
+	// Нейтрали всегда без напряжения
+	updatedPoints[POWER_CIRCUIT_NEUTRAL_ID] = false;
+	updatedPoints[CONTROL_CIRCUIT_NEUTRAL_ID] = false;
 
-		// Обновляем состояние точки
-		updatedPoints[pointId] = false;
-	}
-
-	return updatedPoints;
+	// Шаг 2: Вычисляем состояния остальных точек на основе элементов схемы
+	return calculatePointsState(updatedPoints, currentScheme);
 }

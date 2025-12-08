@@ -1,12 +1,9 @@
-﻿import { BASE_RESISTANCE } from './schemeElements';
-import { BASE_RESISTANCE_CONSTANT } from './elementKind';
+﻿import { BASE_RESISTANCE_CONSTANT } from './elementKind';
 import {
 	BUTTON_KRUZA_P_OPEN_ID,
 	BUTTON_KRUZA_P_CLOSE_ID,
 	INSERT_NDO_CMD_CLOSE_PTK_ID,
 	INSERT_NDO_CMD_OPEN_PTK_ID,
-	LIMIT_SWITCH_CLOSE_ID,
-	LIMIT_SWITCH_OPEN_ID,
 } from './controlCircuit/constants';
 
 export const PTK_BUTTONS_CONFIG = {
@@ -14,8 +11,8 @@ export const PTK_BUTTONS_CONFIG = {
 	open: [
 		{
 			id: INSERT_NDO_CMD_OPEN_PTK_ID,
-			value: BASE_RESISTANCE[INSERT_NDO_CMD_OPEN_PTK_ID],
-		}, // Замыкаем "открыть"
+			value: 0, // Замыкаем "открыть" - сопротивление = 0
+		},
 	],
 	// Срабатывает через 10 сек после нажатия на кнопку открыть ПТК (задвижка открылась полностью)
 	opening: [
@@ -23,17 +20,14 @@ export const PTK_BUTTONS_CONFIG = {
 			id: INSERT_NDO_CMD_OPEN_PTK_ID,
 			value: BASE_RESISTANCE_CONSTANT.highResistance,
 		}, // Размыкаем кнопку ПТК "открыть"
-		{
-			id: LIMIT_SWITCH_OPEN_ID,
-			value: BASE_RESISTANCE_CONSTANT.highResistance,
-		}, // Размыкаем концевой "открыть"
+		// Концевой "открыто" управляется динамически в хуке на основе положения задвижки
 	],
 	// Срабатывает сразу после нажатия на кнопку закрыть ПТК
 	close: [
 		{
 			id: INSERT_NDO_CMD_CLOSE_PTK_ID,
-			value: BASE_RESISTANCE[INSERT_NDO_CMD_CLOSE_PTK_ID],
-		}, // Замыкаем "закрыть"
+			value: 0, // Замыкаем "закрыть" - сопротивление = 0
+		},
 	],
 	// Срабатывает через 10 сек после нажатия на кнопку закрыть ПТК (задвижка закрылась полностью)
 	closing: [
@@ -41,10 +35,7 @@ export const PTK_BUTTONS_CONFIG = {
 			id: INSERT_NDO_CMD_CLOSE_PTK_ID,
 			value: BASE_RESISTANCE_CONSTANT.highResistance,
 		}, // Размыкаем кнопку ПТК "закрыть"
-		{
-			id: LIMIT_SWITCH_CLOSE_ID,
-			value: BASE_RESISTANCE_CONSTANT.highResistance,
-		}, // Размыкаем концевой "закрыть"
+		// Концевой "закрыто" управляется динамически в хуке на основе положения задвижки
 	],
 	stop: [
 		{
@@ -63,8 +54,8 @@ export const KRUZAP_BUTTONS_CONFIG = {
 	open: [
 		{
 			id: BUTTON_KRUZA_P_OPEN_ID,
-			value: BASE_RESISTANCE[BUTTON_KRUZA_P_OPEN_ID],
-		}, // Замыкаем "открыть"
+			value: 0, // Замыкаем "открыть" - сопротивление = 0
+		},
 	],
 	// Срабатывает если кнопку открыть зажать на 10 сек и более (задвижка открылась полностью)
 	opening: [
@@ -72,21 +63,14 @@ export const KRUZAP_BUTTONS_CONFIG = {
 			id: BUTTON_KRUZA_P_OPEN_ID,
 			value: BASE_RESISTANCE_CONSTANT.highResistance,
 		}, // Размыкаем "открыть"
-		{
-			id: LIMIT_SWITCH_OPEN_ID,
-			value: BASE_RESISTANCE_CONSTANT.highResistance,
-		}, // Размыкаем концевой "открыть"
-		{
-			id: LIMIT_SWITCH_CLOSE_ID,
-			value: BASE_RESISTANCE[LIMIT_SWITCH_CLOSE_ID],
-		}, // Замыкаем концевой "закрыть" (задвижка УЖЕ НЕ закрыта)
+		// Концевые выключатели управляются динамически в хуке на основе положения задвижки
 	],
 	// Срабатывает сразу после нажатия на кнопку закрыть крузап
 	close: [
 		{
 			id: BUTTON_KRUZA_P_CLOSE_ID,
-			value: BASE_RESISTANCE[BUTTON_KRUZA_P_CLOSE_ID],
-		}, // Замыкаем "закрыть"
+			value: 0, // Замыкаем "закрыть" - сопротивление = 0
+		},
 		{
 			id: INSERT_NDO_CMD_OPEN_PTK_ID,
 			value: BASE_RESISTANCE_CONSTANT.highResistance,
@@ -98,14 +82,7 @@ export const KRUZAP_BUTTONS_CONFIG = {
 			id: BUTTON_KRUZA_P_CLOSE_ID,
 			value: BASE_RESISTANCE_CONSTANT.highResistance,
 		}, // Размыкаем "закрыть"
-		{
-			id: LIMIT_SWITCH_CLOSE_ID,
-			value: BASE_RESISTANCE_CONSTANT.highResistance,
-		}, // Размыкаем концевой "закрыть"
-		{
-			id: LIMIT_SWITCH_OPEN_ID,
-			value: BASE_RESISTANCE[LIMIT_SWITCH_OPEN_ID],
-		}, // Замыкаем концевой "открыть" (задвижка УЖЕ НЕ открыта)
+		// Концевые выключатели управляются динамически в хуке на основе положения задвижки
 	],
 	stop: [
 		{

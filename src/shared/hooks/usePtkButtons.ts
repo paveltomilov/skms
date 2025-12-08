@@ -5,14 +5,14 @@ import { setResistance } from '@/store/circuitSlice';
 import { PTK_BUTTONS_CONFIG } from '../configs/header';
 import { useRef } from 'react';
 import { GATE_STATE_TYPE } from '../types/gate';
-import { BASE_RESISTANCE_CONSTANT } from '../configs/elementKind';
+import { BASE_RESISTANCE_CONSTANT, ELEMENT_KIND } from '../configs/elementKind';
 import {
 	LIMIT_SWITCH_CLOSE_ID,
 	LIMIT_SWITCH_OPEN_ID,
 	CLOSE_CMD_PTK_BRANCH_POINT_ID,
 	OPEN_CMD_PTK_BRANCH_POINT_ID,
 } from '../configs/controlCircuit/constants';
-import { BASE_RESISTANCE } from '../configs/schemeElements';
+import { getResistanceByKind } from '../utils/getResistanceByKind/getResistanceByKind';
 import store from '@/store/store';
 
 /**
@@ -113,6 +113,47 @@ export const usePtkButtons = () => {
 		if (gateInterval.current) {
 			clearInterval(gateInterval.current);
 			gateInterval.current = null;
+
+			// Обновляем концевые выключатели на основе текущего положения при остановке
+			const currentCircuit = store.getState().circuit;
+			const currentPosition = gatePosition.current;
+
+			// Концевой "открыто": разомкнут если position === 100%, иначе замкнут
+			const limitSwitchOpen = findElementByID(
+				LIMIT_SWITCH_OPEN_ID,
+				currentCircuit,
+			);
+			const shouldOpenBeOpen =
+				currentPosition >= 100
+					? BASE_RESISTANCE_CONSTANT.highResistance
+					: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
+			if (limitSwitchOpen.resistance !== shouldOpenBeOpen) {
+				dispatch(
+					setResistance({
+						id: LIMIT_SWITCH_OPEN_ID,
+						value: shouldOpenBeOpen,
+					}),
+				);
+			}
+
+			// Концевой "закрыто": разомкнут если position === 0%, иначе замкнут
+			const limitSwitchClose = findElementByID(
+				LIMIT_SWITCH_CLOSE_ID,
+				currentCircuit,
+			);
+			const shouldCloseBeOpen =
+				currentPosition <= 0
+					? BASE_RESISTANCE_CONSTANT.highResistance
+					: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
+			if (limitSwitchClose.resistance !== shouldCloseBeOpen) {
+				dispatch(
+					setResistance({
+						id: LIMIT_SWITCH_CLOSE_ID,
+						value: shouldCloseBeOpen,
+					}),
+				);
+			}
+
 			dispatch(
 				setGatePosition({ id: gateId, position: gatePosition.current }),
 			); // Диспатчим текущее положение при остановке
@@ -150,23 +191,6 @@ export const usePtkButtons = () => {
 
 			// Обновляем положение задвижки
 			if (button === 'open') {
-				// Проверяем и замыкаем концевой "закрыть", если он разомкнут
-				const limitSwitchClose = findElementByID(
-					LIMIT_SWITCH_CLOSE_ID,
-					currentCircuit,
-				);
-				if (
-					limitSwitchClose.resistance ===
-					BASE_RESISTANCE_CONSTANT.highResistance
-				) {
-					dispatch(
-						setResistance({
-							id: LIMIT_SWITCH_CLOSE_ID,
-							value: BASE_RESISTANCE[LIMIT_SWITCH_CLOSE_ID],
-						}),
-					);
-				}
-
 				gatePosition.current += 1;
 				dispatch(
 					setGateState({
@@ -174,6 +198,43 @@ export const usePtkButtons = () => {
 						states: GATE_STATE_TYPE.toOpen,
 					}),
 				);
+
+				// Обновляем концевые выключатели на основе текущего положения
+				// Концевой "открыто": разомкнут если position === 100%, иначе замкнут
+				const limitSwitchOpen = findElementByID(
+					LIMIT_SWITCH_OPEN_ID,
+					currentCircuit,
+				);
+				const shouldOpenBeOpen =
+					gatePosition.current >= 100
+						? BASE_RESISTANCE_CONSTANT.highResistance
+						: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
+				if (limitSwitchOpen.resistance !== shouldOpenBeOpen) {
+					dispatch(
+						setResistance({
+							id: LIMIT_SWITCH_OPEN_ID,
+							value: shouldOpenBeOpen,
+						}),
+					);
+				}
+
+				// Концевой "закрыто": разомкнут если position === 0%, иначе замкнут
+				const limitSwitchClose = findElementByID(
+					LIMIT_SWITCH_CLOSE_ID,
+					currentCircuit,
+				);
+				const shouldCloseBeOpen =
+					gatePosition.current <= 0
+						? BASE_RESISTANCE_CONSTANT.highResistance
+						: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
+				if (limitSwitchClose.resistance !== shouldCloseBeOpen) {
+					dispatch(
+						setResistance({
+							id: LIMIT_SWITCH_CLOSE_ID,
+							value: shouldCloseBeOpen,
+						}),
+					);
+				}
 
 				if (gatePosition.current >= 100) {
 					gatePosition.current = 100;
@@ -184,9 +245,11 @@ export const usePtkButtons = () => {
 						gateInterval.current = null;
 					}
 
-					// При достижении 100% размыкаем кнопку ПТК "открыть" и концевой "открыть"
+					// При достижении 100% размыкаем кнопку ПТК "открыть"
 					PTK_BUTTONS_CONFIG.opening.forEach(action => {
-						dispatch(setResistance(action));
+						if (action.id !== LIMIT_SWITCH_OPEN_ID) {
+							dispatch(setResistance(action));
+						}
 					});
 
 					// Обновляем состояние задвижки
@@ -216,23 +279,6 @@ export const usePtkButtons = () => {
 					}),
 				);
 			} else if (button === 'close') {
-				// Проверяем и замыкаем концевой "открыть", если он разомкнут
-				const limitSwitchOpen = findElementByID(
-					LIMIT_SWITCH_OPEN_ID,
-					currentCircuit,
-				);
-				if (
-					limitSwitchOpen.resistance ===
-					BASE_RESISTANCE_CONSTANT.highResistance
-				) {
-					dispatch(
-						setResistance({
-							id: LIMIT_SWITCH_OPEN_ID,
-							value: BASE_RESISTANCE[LIMIT_SWITCH_OPEN_ID],
-						}),
-					);
-				}
-
 				gatePosition.current -= 1;
 				dispatch(
 					setGateState({
@@ -240,6 +286,43 @@ export const usePtkButtons = () => {
 						states: GATE_STATE_TYPE.toClose,
 					}),
 				);
+
+				// Обновляем концевые выключатели на основе текущего положения
+				// Концевой "открыто": разомкнут если position === 100%, иначе замкнут
+				const limitSwitchOpen = findElementByID(
+					LIMIT_SWITCH_OPEN_ID,
+					currentCircuit,
+				);
+				const shouldOpenBeOpen =
+					gatePosition.current >= 100
+						? BASE_RESISTANCE_CONSTANT.highResistance
+						: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
+				if (limitSwitchOpen.resistance !== shouldOpenBeOpen) {
+					dispatch(
+						setResistance({
+							id: LIMIT_SWITCH_OPEN_ID,
+							value: shouldOpenBeOpen,
+						}),
+					);
+				}
+
+				// Концевой "закрыто": разомкнут если position === 0%, иначе замкнут
+				const limitSwitchClose = findElementByID(
+					LIMIT_SWITCH_CLOSE_ID,
+					currentCircuit,
+				);
+				const shouldCloseBeOpen =
+					gatePosition.current <= 0
+						? BASE_RESISTANCE_CONSTANT.highResistance
+						: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
+				if (limitSwitchClose.resistance !== shouldCloseBeOpen) {
+					dispatch(
+						setResistance({
+							id: LIMIT_SWITCH_CLOSE_ID,
+							value: shouldCloseBeOpen,
+						}),
+					);
+				}
 
 				if (gatePosition.current <= 0) {
 					gatePosition.current = 0;
@@ -250,9 +333,11 @@ export const usePtkButtons = () => {
 						gateInterval.current = null;
 					}
 
-					// При достижении 0% размыкаем кнопку ПТК "закрыть" и концевой "закрыть"
+					// При достижении 0% размыкаем кнопку ПТК "закрыть"
 					PTK_BUTTONS_CONFIG.closing.forEach(action => {
-						dispatch(setResistance(action));
+						if (action.id !== LIMIT_SWITCH_CLOSE_ID) {
+							dispatch(setResistance(action));
+						}
 					});
 
 					// Обновляем состояние задвижки
