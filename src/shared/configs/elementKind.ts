@@ -13,6 +13,7 @@ export const ELEMENT_KIND = {
 	LAMP: 'lamp',
 	STARTER_CONTACT: 'starterContact',
 	MOTOR_WINDING: 'motorWinding',
+	HIGH_RESISTANCE: 'highResistance',
 } as const satisfies Record<string, ElementKind>;
 
 /**
@@ -28,9 +29,5 @@ export const BASE_RESISTANCE_CONSTANT: Record<ElementKind, number> = {
 	lamp: 4800,
 	starterContact: 0,
 	motorWinding: 4100,
+	highResistance: 1_000_000_000,
 } as const;
-
-/**
- * Значение сопротивления при обрыве или при размыкании цепи.
- */
-export const HIGH_RESISTANCE = 1_000_000_000;
