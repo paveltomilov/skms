@@ -117,8 +117,8 @@ const renderWithStore = (store: ReturnType<typeof createMockStore>) => {
 
 describe('handleFinishSimulation', () => {
 	const mockMalfunctions: Malfunction[] = [
-		{ id: 'm1', name: 'Неисправность 1', active: true },
-		{ id: 'm2', name: 'Неисправность 2', active: true },
+		{ id: 'c.0.1', name: 'Неисправность 1', active: true },
+		{ id: 'c.0.2', name: 'Неисправность 2', active: true },
 	];
 
 	describe('полный набор → успех', () => {
@@ -126,7 +126,7 @@ describe('handleFinishSimulation', () => {
 			const store = createMockStore({
 				simulationId: 'sim-123',
 				originalMalfunctions: mockMalfunctions,
-				foundMalfunctionIds: ['m1', 'm2'],
+				foundMalfunctionIds: ['c.0.1', 'c.0.2'],
 			});
 
 			renderWithStore(store);
@@ -150,7 +150,7 @@ describe('handleFinishSimulation', () => {
 			const store = createMockStore({
 				simulationId: 'sim-123',
 				originalMalfunctions: mockMalfunctions,
-				foundMalfunctionIds: ['m1', 'm2'],
+				foundMalfunctionIds: ['c.0.1', 'c.0.2'],
 			});
 
 			renderWithStore(store);
@@ -173,7 +173,7 @@ describe('handleFinishSimulation', () => {
 			const store = createMockStore({
 				simulationId: 'sim-123',
 				originalMalfunctions: mockMalfunctions,
-				foundMalfunctionIds: ['m1'], // Найдена только одна из двух
+				foundMalfunctionIds: ['c.0.1'], // Найдена только одна из двух
 			});
 
 			renderWithStore(store);
@@ -194,7 +194,7 @@ describe('handleFinishSimulation', () => {
 			const store = createMockStore({
 				simulationId: 'sim-123',
 				originalMalfunctions: mockMalfunctions,
-				foundMalfunctionIds: ['m1'],
+				foundMalfunctionIds: ['c.0.1'],
 			});
 
 			renderWithStore(store);
@@ -212,7 +212,7 @@ describe('handleFinishSimulation', () => {
 			const store = createMockStore({
 				simulationId: 'sim-123',
 				originalMalfunctions: mockMalfunctions,
-				foundMalfunctionIds: ['m1'],
+				foundMalfunctionIds: ['c.0.1'],
 			});
 
 			renderWithStore(store);
@@ -235,7 +235,7 @@ describe('handleFinishSimulation', () => {
 			const store = createMockStore({
 				simulationId: 'sim-123',
 				originalMalfunctions: mockMalfunctions,
-				foundMalfunctionIds: ['m1', 'm2'],
+				foundMalfunctionIds: ['c.0.1', 'c.0.2'],
 			});
 
 			renderWithStore(store);
