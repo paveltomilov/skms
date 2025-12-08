@@ -19,6 +19,7 @@ export type ButtonProps = {
 	type?: 'button' | 'submit';
 	href?: string;
 	border?: string;
+	disabled: boolean;
 };
 
 const Button: React.FC<ButtonProps> = ({
@@ -34,7 +35,6 @@ const Button: React.FC<ButtonProps> = ({
 	radius,
 	icon,
 	onClick,
-
 	href,
 	className,
 	border,

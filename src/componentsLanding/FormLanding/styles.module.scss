@@ -128,7 +128,7 @@
 }
 
 .inputError {
-	border-color: #e74c3c; // красная рамка при ошибке
+	border-color: var(--basic-error);
 }
 .errorMsg {
 	position: absolute;

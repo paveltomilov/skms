@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, ChangeEvent, useCallback } from 'react';
+import { useState, ChangeEvent, useCallback, useRef, useEffect } from 'react';
 import axios from 'axios';
 
 import Popup from '../Popup';
 import Button from '../Button';
-import styles from './styles.module.scss';
 import ConsentCheckbox from '../ConsentCheckbox';
+import styles from './styles.module.scss';
 
 interface PopupState {
 	visible: boolean;
@@ -43,10 +43,18 @@ const fields = [
 	},
 ] as const;
 
+const isValidEmailDomain = (email: string): boolean => {
+	const atIndex = email.lastIndexOf('@');
+	if (atIndex === -1) return false;
+	const domainPart = email.slice(atIndex + 1);
+	const domainRegex = /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+	return domainRegex.test(domainPart);
+};
+
 interface FormFieldProps {
 	label: string;
 	value: string | number;
-	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 	type?: string;
 	placeholder?: string;
 	error?: string | null;
@@ -89,7 +97,8 @@ function FormLanding() {
 		email: '',
 		phone: '',
 	});
-	const [consent, setConsent] = useState<boolean>(false);
+
+	const [consent, setConsent] = useState(false);
 
 	const [popup, setPopup] = useState<PopupState>({
 		visible: false,
@@ -97,37 +106,56 @@ function FormLanding() {
 		variant: undefined,
 	});
 
+	const [emailError, setEmailError] = useState<string | null>(null);
+	const [phoneError, setPhoneError] = useState<string | null>(null);
+	const [submitted, setSubmitted] = useState(false);
+	const [submitting, setSubmitting] = useState(false);
+	const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+	const startTimer = useCallback(() => {
+		if (timerRef.current) clearTimeout(timerRef.current);
+		timerRef.current = setTimeout(() => {
+			setSubmitted(false);
+			setPopup(prev => ({ ...prev, visible: false }));
+		}, 4000);
+	}, []);
+
+	useEffect(() => {
+		return () => {
+			if (timerRef.current) clearTimeout(timerRef.current);
+		};
+	}, []);
+
 	const showPopup = (msg: string, variant: PopupState['variant'] = 'info') =>
 		setPopup({ visible: true, message: msg, variant });
-
-	const [emailError, setEmailError] = useState<string | null>(null);
-
-	const isValidEmailDomain = (email: string): boolean => {
-		const atIndex = email.lastIndexOf('@');
-		if (atIndex === -1) return false;
-		const domainPart = email.slice(atIndex + 1);
-		const domainRegex = /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-		return domainRegex.test(domainPart);
-	};
 
 	const handleInputChange = useCallback(
 		(key: keyof FormValues) => (e: ChangeEvent<HTMLInputElement>) => {
 			const rawValue = e.target.value;
-			const value =
+			const rawDigits =
 				key === 'phone' ? rawValue.replace(/\D/g, '') : rawValue;
+
+			const value = key === 'phone' ? rawDigits.slice(0, 11) : rawValue;
 
 			setForm(prev => ({ ...prev, [key]: value }));
 
 			if (key === 'email') {
-				if (!value.includes('@')) {
-					setEmailError('Email введен не корректно');
-				} else if (!isValidEmailDomain(value)) {
-					setEmailError('Email введен не корректно');
-				} else {
-					setEmailError(null);
-				}
+				if (
+					!value ||
+					!value.includes('@') ||
+					!isValidEmailDomain(value)
+				)
+					setEmailError('Email введен некорректно');
+				else setEmailError(null);
+			}
+
+			if (key === 'phone') {
+				if (!value.startsWith('7'))
+					setPhoneError('Номер должен начинаться с 7');
+				else setPhoneError(null);
 			}
 		},
+
 		[],
 	);
 
@@ -151,6 +179,8 @@ function FormLanding() {
 			return;
 		}
 
+		setSubmitting(true);
+
 		const payload = {
 			full_name: form.name,
 			company: form.company,
@@ -158,10 +188,8 @@ function FormLanding() {
 			phone: form.phone,
 		};
 
-		const apiUrl = 'http://127.0.0.1:8000/api/leads/';
-
 		try {
-			await axios.post(apiUrl, payload, {
+			await axios.post('http://127.0.0.1:8000/api/leads/', payload, {
 				headers: { 'Content-Type': 'application/json' },
 			});
 
@@ -171,6 +199,9 @@ function FormLanding() {
 				'Заявка успешно отправлена. Мы скоро с вами свяжемся',
 				'success',
 			);
+
+			setSubmitted(true);
+			startTimer();
 		} catch (err) {
 			console.error(err);
 			setForm({ name: '', company: '', email: '', phone: '' });
@@ -179,6 +210,8 @@ function FormLanding() {
 				'Ошибка при отправке заявки. Пожалуйста попробуйте позже',
 				'error',
 			);
+		} finally {
+			setSubmitting(false); // запрос завершён
 		}
 	};
 
@@ -198,7 +231,13 @@ function FormLanding() {
 							onChange={handleInputChange(key)}
 							type={type}
 							placeholder={placeholder}
-							error={key === 'email' ? emailError : undefined}
+							error={
+								key === 'email'
+									? emailError
+									: key === 'phone'
+									? phoneError
+									: undefined
+							}
 						/>
 					))}
 				</div>
@@ -206,8 +245,9 @@ function FormLanding() {
 				<div className={styles.form__sogl}>
 					<div className={styles.form__button}>
 						<Button
-							text="отправить"
+							text={submitted ? 'Отправлено' : 'отправить'}
 							type="submit"
+							disabled={submitting || submitted}
 							color="var(--lan-very-dark-mostly-black-blue)"
 							bgColor="var(--lan-bright-cyan---lime-green)"
 							width={604}
@@ -231,7 +271,6 @@ function FormLanding() {
 							variant: undefined,
 						})
 					}
-					timeout={4000}
 				/>
 			)}
 		</>
