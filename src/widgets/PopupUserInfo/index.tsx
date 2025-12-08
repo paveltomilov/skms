@@ -47,7 +47,7 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 
 	const handleAbortSimulation = () => {
 		handlePopupClose();
-		dispatch(openModal('abortSimulation'));
+		dispatch(openModal('abortSimulationConfirm'));
 	};
 
 	return (

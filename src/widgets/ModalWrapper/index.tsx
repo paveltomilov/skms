@@ -22,6 +22,7 @@ import { PopupStudentDelete } from '../PopupStudentDelete';
 import { PopupNote } from '../PopupNote';
 import { PopupSimulationComplete } from '../PopupSimulationComplete';
 import { PopupAbortSimulation } from '../PopupAbortSimulation';
+import { PopupAbortSimulationConfirm } from '../PopupAbortSimulationConfirm';
 import { PopupStartSimulation } from '../PopupStartSimulation';
 import { useUserCookies } from '@/shared/hooks/useUserCookies';
 
@@ -48,6 +49,7 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		studentCreate,
 		studentDelete,
 		abortSimulation,
+		abortSimulationConfirm,
 		note,
 		simulationComplete,
 		startSimulation,
@@ -73,6 +75,7 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		studentDelete ||
 		simulationComplete ||
 		abortSimulation ||
+		abortSimulationConfirm ||
 		startSimulation ||
 		note;
 
@@ -195,9 +198,16 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			component: <PopupSimulationComplete />,
 		},
 		{
+			condition: abortSimulationConfirm,
+			id: 'abortSimulationConfirm',
+			headerTitle: 'Прервать попытку',
+			gateId: undefined,
+			component: <PopupAbortSimulationConfirm />,
+		},
+		{
 			condition: abortSimulation,
 			id: 'abortSimulation',
-			headerTitle: 'Прервать симуляцию',
+			headerTitle: 'Попытка прервана',
 			gateId: undefined,
 			component: <PopupAbortSimulation />,
 		},

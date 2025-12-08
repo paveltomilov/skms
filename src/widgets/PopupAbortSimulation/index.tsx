@@ -5,7 +5,8 @@ export const PopupAbortSimulation: FC = () => {
 	return (
 		<div className={styles.popup}>
 			<div className={styles.message}>
-				Ты сдался, не унывай, попробуй еще раз!!!
+				Вы прервали попытку. Результат будет засчитан, как
+				отрицательный.
 			</div>
 		</div>
 	);

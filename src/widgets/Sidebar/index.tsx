@@ -111,19 +111,9 @@ const Sidebar = () => {
 	}, [circuit, simulation]);
 
 	const handleStopSimulation = useCallback(() => {
-		// Деактивируем все неисправности из симуляции
-		if (simulation.originalMalfunctions.length > 0) {
-			simulation.originalMalfunctions.forEach(malfunction => {
-				dispatch(deactivateMalfunction(malfunction.id));
-			});
-		}
-
-		// Сбрасываем состояние симуляции до дефолтного
-		dispatch(resetSimulation());
-
-		// Открываем попап об остановке симуляции
-		dispatch(openModal('abortSimulation'));
-	}, [simulation, dispatch]);
+		// Открываем окно подтверждения
+		dispatch(openModal('abortSimulationConfirm'));
+	}, [dispatch]);
 
 	const handleFinishSimulation = useCallback(() => {
 		// Сохраняем simulationId перед сбросом для редиректа
