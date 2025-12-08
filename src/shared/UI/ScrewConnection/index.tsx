@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 import { MarkerName } from '@/shared/types/markers';
 import Screw from '../icons/Screw';
 import Provod from '../Provod';
-import { useDroppable } from '@dnd-kit/core';
+import { useDndContext, useDroppable } from '@dnd-kit/core';
 export interface Props {
 	screwStatus?: 'close' | 'open';
 	pointId?: string;
@@ -32,7 +32,8 @@ const ScrewConnection: FC<Props> = ({
 		? `${pointId}-screw-${generatedId}`
 		: generatedId;
 
-	const { setNodeRef } = useDroppable({
+	const { active } = useDndContext();
+	const { setNodeRef, isOver } = useDroppable({
 		id: droppableId,
 		disabled: !pointId,
 		data: pointId
@@ -43,6 +44,9 @@ const ScrewConnection: FC<Props> = ({
 			  }
 			: undefined,
 	});
+
+	const isProbeOver =
+		isOver && active?.data?.current?.type === 'probe';
 
 	useEffect(() => {
 		if (provodLocation === 'left') setDeg(90);
@@ -72,6 +76,7 @@ const ScrewConnection: FC<Props> = ({
 				textLeft={textLeft}
 				textRight={textRight}
 				textTop={textTop}
+				isProbeOver={isProbeOver}
 				onClick={onToggle}
 			/>
 			<Provod
