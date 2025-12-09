@@ -4,7 +4,7 @@ import { FC, useEffect, useRef } from 'react';
 import { useSwitchingTumbler } from '@/shared/hooks/useSwitchingTumbler';
 import { BASE_RESISTANCE } from '@/shared/configs/schemeElements';
 import { CONTROL_CIRCUIT_BREAKER_ID } from '@/shared/configs/controlCircuit/constants';
-import { HIGH_RESISTANCE } from '@/shared/configs/elementKind';
+import { BASE_RESISTANCE_CONSTANT } from '@/shared/configs/elementKind';
 import { useDebounce } from '@/shared/hooks/useDebounce';
 import { useAppDispatch } from '@/shared/hooks/store';
 import { setResistance } from '@/store/circuitSlice';
@@ -29,7 +29,7 @@ const Tumbler: FC<Props> = ({ mode }) => {
 		const resistance =
 			debouncedMode === 'on'
 				? BASE_RESISTANCE[CONTROL_CIRCUIT_BREAKER_ID]
-				: HIGH_RESISTANCE;
+				: BASE_RESISTANCE_CONSTANT.highResistance;
 		dispatch(
 			setResistance({
 				id: CONTROL_CIRCUIT_BREAKER_ID,

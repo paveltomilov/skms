@@ -1,210 +1,58 @@
-﻿import { setGatePosition, setGateState } from '@/store/gateSlice';
-import {
-	LIMIT_SWITCH_CLOSE_ID,
-	LIMIT_SWITCH_OPEN_ID,
-	INSERT_NDO_CMD_CLOSE_PTK_ID,
-	INSERT_NDO_CMD_OPEN_PTK_ID,
-} from '../configs/controlCircuit/constants';
-import { findElementByID } from '../utils/findElementByID/scheme';
-import { useAppDispatch, useAppSelector } from './store';
-import { setResistance } from '@/store/circuitSlice';
-import { KRUZAP_BUTTONS_CONFIG, PTK_BUTTONS_CONFIG } from '../configs/header';
-import { useRef } from 'react';
-import { GATE_STATE_TYPE } from '../types/gate';
-import { BASE_RESISTANCE } from '../configs/schemeElements';
-import { HIGH_RESISTANCE } from '../configs/elementKind';
+﻿import { usePtkButtons } from './usePtkButtons';
+import { useKruzapButtons } from './useKruzapButtons';
+import { useAppSelector } from './store';
 
+/**
+ * Объединяющий хук для управления кнопками задвижки.
+ * Использует отдельные хуки для ПТК и КРУЗАП, обеспечивая обратную совместимость.
+ */
 export const useGateControlButtons = () => {
-	const dispatch = useAppDispatch();
+	const ptkButtons = usePtkButtons();
+	const kruzapButtons = useKruzapButtons();
 
 	// Получаем id активной задвижки из стора
 	const gateId = useAppSelector(state => state.gate.activeGateId) ?? 'g1';
 
-	const limitSwitchOpenElement = findElementByID(
-		LIMIT_SWITCH_OPEN_ID,
-		useAppSelector(state => state.circuit),
-	);
-
-	const limitSwitchCloseElement = findElementByID(
-		LIMIT_SWITCH_CLOSE_ID,
-		useAppSelector(state => state.circuit),
-	);
-
-	const openDisabled = limitSwitchOpenElement.resistance === HIGH_RESISTANCE;
-	const closeDisabled =
-		limitSwitchCloseElement.resistance === HIGH_RESISTANCE;
-
-	const openOn =
-		limitSwitchCloseElement.resistance ===
-		BASE_RESISTANCE[LIMIT_SWITCH_CLOSE_ID];
-	const closeOn =
-		limitSwitchOpenElement.resistance ===
-		BASE_RESISTANCE[LIMIT_SWITCH_OPEN_ID];
-
-	const openFromPtkElement = findElementByID(
-		INSERT_NDO_CMD_OPEN_PTK_ID,
-		useAppSelector(state => state.circuit),
-	);
-
-	const closeFromPtkElement = findElementByID(
-		INSERT_NDO_CMD_CLOSE_PTK_ID,
-		useAppSelector(state => state.circuit),
-	);
-
-	// Получаем текущее состояние задвижки
-	const gateState = useAppSelector(state => state.gate.gates[gateId].states);
-
-	// Кнопки "Открыть"/"Закрыть" ПТК активны (визуально нажаты) только когда задвижка реально движется
-	const openPtkActive = gateState === GATE_STATE_TYPE.toOpen;
-	const closePtkActive = gateState === GATE_STATE_TYPE.toClose;
-
-	// У кнопок ПТК, когда сопротивление = 1 млрд, кнопка дизейбл
-	const openPtkDisabled = openFromPtkElement.resistance === HIGH_RESISTANCE;
-	const closePtkDisabled = closeFromPtkElement.resistance === HIGH_RESISTANCE;
-
-	// Кнопка "Стоп" дизейблена, когда не нажаты кнопки "Открыть" и "Закрыть" ПТК
-	const stopPtkDisabled = !openPtkActive && !closePtkActive;
-
-	// Получаем положение задвижки из стора
-	const gatePosition = useRef(
-		useAppSelector(state => state.gate.gates[gateId].position),
-	);
-
-	// Создаём интервал в глобальной ОВ, чтобы к нему можно было обращаться и изменять его в функциях stopGateMovement и handleButton
-	const gateInterval = useRef<NodeJS.Timeout | null>(null);
-
-	// Функция для остановки движения задвижки
-	const stopGateMovement = (type: 'ptk' | 'kruzap') => {
-		const config =
-			type === 'ptk' ? PTK_BUTTONS_CONFIG : KRUZAP_BUTTONS_CONFIG;
-
-		// Обновляем сопротивления, которые меняются сразу после нажатия на кнопку "Стоп"
-		config.stop.forEach(action => {
-			dispatch(setResistance(action));
-		});
-
-		if (gateInterval.current) {
-			clearInterval(gateInterval.current);
-			gateInterval.current = null;
-			dispatch(
-				setGatePosition({ id: gateId, position: gatePosition.current }),
-			); // Диспатчим текущее положение при остановке
-			dispatch(
-				setGateState({
-					id: gateId,
-					states: GATE_STATE_TYPE.intermediate,
-				}),
-			);
-			console.log(
-				`Задвижка остановилась в положении: ${gatePosition.current}%`,
-			);
+	// Объединяющая функция для обратной совместимости
+	// При нажатии на один тип кнопок, останавливаем движение другого типа
+	const handleButton = (type: 'ptk' | 'kruzap', button: 'close' | 'open') => {
+		if (type === 'ptk') {
+			// Останавливаем движение КРУЗАП, если оно активно
+			kruzapButtons.stopKruzapMovement();
+			ptkButtons.handlePtkButton(button);
+		} else {
+			// Останавливаем движение ПТК, если оно активно
+			ptkButtons.stopPtkMovement();
+			kruzapButtons.handleKruzapButton(button);
 		}
 	};
 
-	const handleButton = (type: 'ptk' | 'kruzap', button: 'close' | 'open') => {
-		const config =
-			type === 'ptk' ? PTK_BUTTONS_CONFIG : KRUZAP_BUTTONS_CONFIG;
-
-		// Обновляем сопротивления, которые меняются сразу после нажатия на кнопку "Открыть"/"Закрыть"
-		config[button].forEach(action => {
-			dispatch(setResistance(action));
-		});
-
-		// Очищаем предыдущий интервал
-		if (gateInterval.current) {
-			clearInterval(gateInterval.current);
-			gateInterval.current = null;
+	// Объединяющая функция для остановки движения
+	const stopGateMovement = (type: 'ptk' | 'kruzap') => {
+		if (type === 'ptk') {
+			ptkButtons.stopPtkMovement();
+		} else {
+			kruzapButtons.stopKruzapMovement();
 		}
-
-		// Запускаем новый интервал
-		gateInterval.current = setInterval(() => {
-			// Обновляем положение задвижки
-			if (button === 'open') {
-				gatePosition.current += 1;
-				dispatch(
-					setGateState({
-						id: gateId,
-						states: GATE_STATE_TYPE.toOpen,
-					}),
-				);
-
-				if (gatePosition.current >= 100) {
-					gatePosition.current = 100;
-					stopGateMovement(type);
-					dispatch(
-						setGateState({
-							id: gateId,
-							states: GATE_STATE_TYPE.open,
-						}),
-					);
-
-					config.opening.forEach(action => {
-						dispatch(setResistance(action));
-					});
-				}
-
-				// Диспатчим обновлённую позицию в Redux store
-				dispatch(
-					setGatePosition({
-						id: gateId,
-						position: gatePosition.current,
-					}),
-				);
-			} else if (button === 'close') {
-				gatePosition.current -= 1;
-				dispatch(
-					setGateState({
-						id: gateId,
-						states: GATE_STATE_TYPE.toClose,
-					}),
-				);
-
-				if (gatePosition.current <= 0) {
-					gatePosition.current = 0;
-					stopGateMovement(type);
-					dispatch(
-						setGateState({
-							id: gateId,
-							states: GATE_STATE_TYPE.close,
-						}),
-					);
-
-					config.closing.forEach(action => {
-						dispatch(setResistance(action));
-					});
-				}
-
-				// Диспатчим обновлённую позицию в Redux store
-				dispatch(
-					setGatePosition({
-						id: gateId,
-						position: gatePosition.current,
-					}),
-				);
-			}
-
-			// Логируем текущее положение задвижки для отладки
-			console.log(`Положение задвижки: ${gatePosition.current}%`);
-		}, 100);
 	};
 
 	return {
 		handleButton,
 		stopGateMovement,
-		// Когда кнопки Крузап в хедере дизейблены
-		openKruzapDisabled: openDisabled,
-		closeKruzapDisabled: closeDisabled,
-		// Когда кнопки на автомате в модалке включены
-		openOn: openOn,
-		closeOn: closeOn,
-		// Когда кнопки ПТК в хедере дизейблены
-		openPtkDisabled: openDisabled || (openPtkDisabled && closePtkActive),
-		closePtkDisabled: closeDisabled || (closePtkDisabled && openPtkActive),
-		stopPtkDisabled,
-		// Когда кнопки ПТК в хедере нажаты
-		openPtkActive,
-		closePtkActive,
-
-		currentPosition: gatePosition.current,
+		// Состояния кнопок КРУЗАП
+		openKruzapDisabled: kruzapButtons.openKruzapDisabled,
+		closeKruzapDisabled: kruzapButtons.closeKruzapDisabled,
+		// Состояния кнопок на автомате в модалке
+		openOn: kruzapButtons.openOn,
+		closeOn: kruzapButtons.closeOn,
+		// Состояния кнопок ПТК (используем значения напрямую из хука)
+		openPtkDisabled: ptkButtons.openPtkDisabled,
+		closePtkDisabled: ptkButtons.closePtkDisabled,
+		stopPtkDisabled: ptkButtons.stopPtkDisabled,
+		openPtkActive: ptkButtons.openPtkActive,
+		closePtkActive: ptkButtons.closePtkActive,
+		currentPosition: useAppSelector(
+			state => state.gate.gates[gateId].position,
+		),
 	};
 };

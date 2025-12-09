@@ -3,7 +3,7 @@
 import styles from './styles.module.scss';
 import { FC } from 'react';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
-import { HIGH_RESISTANCE } from '@/shared/configs/elementKind';
+import { BASE_RESISTANCE_CONSTANT } from '@/shared/configs/elementKind';
 import { findElementByID } from '@/shared/utils/findElementByID/scheme';
 import { closeAllModal, Modals, openModal } from '@/store/modalSlice';
 
@@ -31,7 +31,8 @@ export const SchemeElement: FC<Prop> = ({ id, title, type }) => {
 		schemeElement = null;
 	}
 
-	const resistance = schemeElement?.resistance === HIGH_RESISTANCE;
+	const resistance =
+		schemeElement?.resistance === BASE_RESISTANCE_CONSTANT.highResistance;
 
 	const elementClassName = `${styles.element} ${styles[id]} ${
 		!activeProb && styles.element_hover

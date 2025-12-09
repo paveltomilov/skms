@@ -15,6 +15,7 @@ export interface IPoint {
 	x?: number;
 	y?: number;
 	state: boolean;
+	elements?: string[];
 }
 
 export type ElementKind =
@@ -25,7 +26,8 @@ export type ElementKind =
 	| 'coil'
 	| 'lamp'
 	| 'starterContact'
-	| 'motorWinding';
+	| 'motorWinding'
+	| 'highResistance';
 
 // Типы шаблонов для генерации неисправностей и метаданных визуализации
 export type MalfTpl = { suffix: string; name: string };

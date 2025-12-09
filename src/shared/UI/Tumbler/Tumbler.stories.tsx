@@ -6,7 +6,7 @@ import { FC, useEffect } from 'react';
 import { getInputCircuitBreakerState } from '@/shared/utils/getInputCircuitBreakerState/getInputCircuitBreakerState';
 import { BASE_RESISTANCE } from '@/shared/configs/schemeElements';
 import { INPUT_CIRCUIT_BREAKER_ID } from '@/shared/configs/powerCircuit/constants';
-import { HIGH_RESISTANCE } from '@/shared/configs/elementKind';
+import { BASE_RESISTANCE_CONSTANT } from '@/shared/configs/elementKind';
 import { Provider } from 'react-redux';
 
 interface SwitchProps {
@@ -47,7 +47,7 @@ const meta: Meta<typeof Switch> = {
 							mockStore.dispatch(
 								setResistance({
 									id,
-									value: HIGH_RESISTANCE,
+									value: BASE_RESISTANCE_CONSTANT.highResistance,
 								}),
 							);
 						}
