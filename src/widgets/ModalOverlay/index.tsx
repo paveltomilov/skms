@@ -40,7 +40,7 @@ const ModalOverlay: FC<ModalOverlayProps> = ({
 			const rect = modalRef.current.getBoundingClientRect();
 			const x = (window.innerWidth - rect.width) / 2;
 			const y = (window.innerHeight - rect.height) / 2;
-			setPosition({ x: x, y: y });
+			setPosition({ x, y });
 		}
 	}, []);
 
@@ -51,10 +51,6 @@ const ModalOverlay: FC<ModalOverlayProps> = ({
 			onClick={e => e.stopPropagation()}
 			style={{
 				transform: `translate(${position.x}px, ${position.y}px)`,
-				zIndex: '11',
-				position: 'fixed',
-				top: 0,
-				left: 0,
 			}}
 		>
 			<ModalHeader

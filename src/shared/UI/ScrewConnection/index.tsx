@@ -1,4 +1,4 @@
-import { FC, useEffect, useId, useState } from 'react';
+import { FC, useId, useMemo } from 'react';
 import cn from 'classnames';
 import styles from './styles.module.scss';
 import { MarkerName } from '@/shared/types/markers';
@@ -26,11 +26,11 @@ const ScrewConnection: FC<Props> = ({
 	provodLocation,
 	onToggle,
 }) => {
-	const [deg, setDeg] = useState<90 | 180 | 270 | 0>(0);
 	const generatedId = useId();
-	const droppableId = pointId
-		? `${pointId}-screw-${generatedId}`
-		: generatedId;
+	const droppableId = useMemo(
+		() => `${pointId ?? 'screw'}-${generatedId}`,
+		[generatedId, pointId],
+	);
 
 	const { active } = useDndContext();
 	const { setNodeRef, isOver } = useDroppable({
@@ -48,17 +48,23 @@ const ScrewConnection: FC<Props> = ({
 	const isProbeOver =
 		isOver && active?.data?.current?.type === 'probe';
 
-	useEffect(() => {
-		if (provodLocation === 'left') setDeg(90);
-		if (provodLocation === 'top') setDeg(180);
-		if (provodLocation === 'right') setDeg(270);
-		if (provodLocation === 'bottom') setDeg(0);
+	const deg = useMemo<90 | 180 | 270 | 0>(() => {
+		const rotationByLocation: Record<
+			NonNullable<Props['provodLocation']>,
+			90 | 180 | 270 | 0
+		> = {
+			left: 90,
+			top: 180,
+			right: 270,
+			bottom: 0,
+		};
+
+		return rotationByLocation[provodLocation ?? 'bottom'];
 	}, [provodLocation]);
 
 	return (
 		<div
 			ref={setNodeRef}
-			data-drop-id={droppableId}
 			data-droppable-id={droppableId}
 			data-point-id={pointId}
 			data-probe-offset-x={1}

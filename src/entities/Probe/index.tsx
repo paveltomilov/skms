@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useLayoutEffect, useState } from 'react';
-import { useDraggable } from '@dnd-kit/core';
+import { useDndContext, useDraggable } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
 import styles from './styles.module.scss';
 import ProbeIcon from '@/shared/UI/icons/Probe';
@@ -28,6 +28,7 @@ export const Probe: React.FC<ProbeProps> = ({ color }) => {
 	const [posStyle, setPosStyle] = useState<Record<string, string> | null>(
 		null,
 	);
+	const { droppableContainers } = useDndContext();
 
 	const {
 		attributes,
@@ -50,13 +51,11 @@ export const Probe: React.FC<ProbeProps> = ({ color }) => {
 			return;
 		}
 
-		let raf = 0;
 		const updatePosition = () => {
 			const droppableElement =
 				dropId !== null
-					? (document.querySelector(
-							`[data-droppable-id="${dropId}"]`,
-					  ) as HTMLElement | null)
+					? ((droppableContainers.get(dropId)?.node
+							.current ?? null) as HTMLElement | null)
 					: null;
 
 			if (droppableElement) {
@@ -86,10 +85,10 @@ export const Probe: React.FC<ProbeProps> = ({ color }) => {
 					prev &&
 					prev.left === nextStyle.left &&
 					prev.top === nextStyle.top &&
-					prev.position === nextStyle.position
-						? prev
-						: nextStyle,
-				);
+						prev.position === nextStyle.position
+							? prev
+							: nextStyle,
+					);
 			} else {
 				const schemePoint = SCHEME_POINTS[pointId as string];
 
@@ -122,16 +121,17 @@ export const Probe: React.FC<ProbeProps> = ({ color }) => {
 					setPosStyle(null);
 				}
 			}
-
-			raf = requestAnimationFrame(updatePosition);
 		};
 
 		updatePosition();
+		window.addEventListener('resize', updatePosition);
+		document.addEventListener('scroll', updatePosition, true);
 
 		return () => {
-			cancelAnimationFrame(raf);
+			window.removeEventListener('resize', updatePosition);
+			document.removeEventListener('scroll', updatePosition, true);
 		};
-	}, [dropId, pointId]);
+	}, [dropId, droppableContainers, pointId]);
 
 	const style = posStyle
 		? posStyle

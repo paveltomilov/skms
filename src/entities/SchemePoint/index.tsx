@@ -1,6 +1,7 @@
 'use client';
 
-import React from 'react';
+import React, { memo } from 'react';
+import cn from 'classnames';
 import { useDroppable } from '@dnd-kit/core';
 import styles from './styles.module.scss';
 import { IPoint } from '@/shared/types/scheme';
@@ -13,11 +14,11 @@ interface Props {
 	offsetY?: number;
 }
 
-export const SchemePoint: React.FC<Props> = ({
+const SchemePointComponent: React.FC<Props> = ({
 	id,
 	position,
 	offsetX = 0,
-offsetY = 0,
+	offsetY = 0,
 }) => {
 	const isAnyModalOpen = useAppSelector(state =>
 		Object.values(state.modal).some(Boolean),
@@ -34,18 +35,18 @@ offsetY = 0,
 		disabled: isAnyModalOpen,
 	});
 
-	// для визуализации состояния точек
 	const schemePoint = useAppSelector(state => state.points[id]);
 
-	const pointClassName = `${styles.point} ${isOver && styles.point_over} ${
-		schemePoint ? styles.point__active : styles.point__inactive
-	}`;
+	const pointClassName = cn(styles.point, {
+		[styles.point_over]: isOver,
+		[styles.point__active]: schemePoint,
+		[styles.point__inactive]: !schemePoint,
+	});
 
 	return (
 		<div
 			ref={setNodeRef}
 			id={id}
-			data-drop-id={id}
 			data-droppable-id={id}
 			data-probe-offset-x={offsetX}
 			data-probe-offset-y={offsetY}
@@ -54,3 +55,5 @@ offsetY = 0,
 		></div>
 	);
 };
+
+export const SchemePoint = memo(SchemePointComponent);
