@@ -176,8 +176,13 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 					response.errorText || 'Неверные учётные данные',
 				);
 			}
-		} catch {
+		} catch (error) {
 			setServerErrors(PASSWORD_ERROR);
+			const errorMessage =
+				error instanceof Error
+					? error.message
+					: 'Произошла ошибка при авторизации';
+			setAuthErrorText(errorMessage);
 		}
 	};
 	const handleSubmit: FormEventHandler<HTMLFormElement> = async event => {
