@@ -67,10 +67,8 @@ export const probeTipCollisionDetection: CollisionDetection = ({
 		}
 	}
 
-	// If there are multiple intersections, prefer the droppable whose center
-	// is closest to the probe tip center. This avoids always picking the
-	// first-registered droppable (which can be a schema point) when a popup
-	// point is visually closer.
+// Если пересечений несколько, берем дроппабл с центром ближе всего к кончику щупа.
+// Так не схватится первый зарегистрированный дроппабл (например, схема), если ближе попап-точка.
 	if (collisions.length <= 1) return collisions;
 
 	const tipCenterX = probeTipRect.left + probeTipRect.width / 2;

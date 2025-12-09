@@ -13,7 +13,7 @@ interface ProbeProps {
 	color: ProbeColor;
 }
 
-// Probe tip offset relative to the SVG bounding box
+// Смещение кончика щупа относительно SVG-бокса
 const PROBE_TIP_OFFSET_X = 9;
 const PROBE_TIP_OFFSET_Y = 1;
 const SCHEME_POINT_SIZE = 24;
@@ -44,7 +44,7 @@ export const Probe: React.FC<ProbeProps> = ({ color }) => {
 		},
 	});
 
-	// Keep the probe tip aligned with the center of the droppable point
+	// Держим кончик щупа по центру активной точки
 	useLayoutEffect(() => {
 		if (!pointId) {
 			setPosStyle(null);
