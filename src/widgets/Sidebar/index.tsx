@@ -161,7 +161,7 @@ const Sidebar = () => {
 				<div className={styles.sidebarContent}>
 					<Button
 						width={90}
-						height={34}
+						height={24}
 						aria-label="Главная"
 						text="Главная"
 						className={styles.buttonText}
@@ -172,7 +172,7 @@ const Sidebar = () => {
 					{role != 'student' && (
 						<Button
 							width={90}
-							height={34}
+							height={24}
 							aria-label={
 								isAdmin ? 'Список препод.' : 'Список студ.'
 							}
@@ -185,7 +185,7 @@ const Sidebar = () => {
 
 					<Button
 						width={90}
-						height={34}
+						height={24}
 						aria-label="ПТК"
 						text="ПТК"
 						className={styles.buttonText}

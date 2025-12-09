@@ -1,7 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import type { FC } from 'react';
-import styles from './styles.module.scss';
 import HeaderWindow from './HeaderWindow';
 import Navigation from '../Nav';
 import Logo from './Logo';
@@ -10,12 +9,41 @@ import LoginIcon from '../IconSvg/login';
 import ArrowTopIcon from '../IconSvg/arrowTop';
 import ArrowBottomIcon from '../IconSvg/arrowBottomIcon';
 import Link from 'next/link';
+import Burger from '../Burger';
+import styles from './styles.module.scss';
+import MobileMenu from './BurgerMenu';
 
 const Header: FC = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [scrolled, setScrolled] = useState(false);
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-	//Обработчик прокрутки
+	useEffect(() => {
+		const handleClickOutside = (e: MouseEvent) => {
+			if (
+				isMenuOpen &&
+				!(e.target as HTMLElement).closest(`.${styles.header}`)
+			) {
+				setIsMenuOpen(false);
+			}
+		};
+
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (isMenuOpen && e.key === 'Escape') {
+				setIsMenuOpen(false);
+			}
+		};
+
+		document.addEventListener('mousedown', handleClickOutside);
+		document.addEventListener('keydown', handleKeyDown);
+
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+			document.removeEventListener('keydown', handleKeyDown);
+		};
+	}, [isMenuOpen]);
+
+
 	useEffect(() => {
 		const onScroll = () => {
 			setScrolled(window.scrollY > 50);
@@ -75,7 +103,15 @@ const Header: FC = () => {
 					height={40}
 					radius={4}
 				/>
+				<Burger
+					className={styles.header__burger}
+					isOpen={isMenuOpen}
+					onToggle={() => setIsMenuOpen(prev => !prev)}
+					color="#fff"
+					size={40}
+				/>
 			</div>
+			<MobileMenu isOpen={isMenuOpen} />
 		</header>
 	);
 };

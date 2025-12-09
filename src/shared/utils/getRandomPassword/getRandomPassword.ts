@@ -5,6 +5,7 @@ import {
 	SPECIAL_CHARS,
 } from '@/shared/configs/DataForPassword';
 import { getRandomNumber } from '../getRandomNumber/getRandomNumber';
+import { passwordPattern } from '@/shared/configs/login';
 
 export const getRandomPassword = (length: number): string => {
 	function generate(): string {
@@ -15,21 +16,13 @@ export const getRandomPassword = (length: number): string => {
 			const word = charset[num];
 			str += word;
 		}
-		if (
-			containsSubstring(str, DIGITS) &&
-			containsSubstring(str, LETTERS_LOW) &&
-			containsSubstring(str, LETTERS_UP) &&
-			containsSubstring(str, SPECIAL_CHARS)
-		) {
+		if (passwordPattern.test(str)) {
 			return str;
 		}
 		return generate();
 	}
 
 	const password = generate();
+	console.log(password);
 	return password;
-};
-
-const containsSubstring = (text: string, substring: string): boolean => {
-	return substring.split('').some(word => text.includes(word));
 };
