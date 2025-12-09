@@ -24,6 +24,7 @@ import { PopupSimulationComplete } from '../PopupSimulationComplete';
 import { PopupAbortSimulation } from '../PopupAbortSimulation';
 import { PopupAbortSimulationConfirm } from '../PopupAbortSimulationConfirm';
 import { PopupStartSimulation } from '../PopupStartSimulation';
+import { PopupNotAllMalfunctionsFound } from '../PopupNotAllMalfunctionsFound';
 import { useUserCookies } from '@/shared/hooks/useUserCookies';
 
 interface IModals {
@@ -53,6 +54,7 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		note,
 		simulationComplete,
 		startSimulation,
+		notAllMalfunctionsFound,
 	} = useAppSelector((state): ModalState => state.modal);
 
 	const { role } = useUserCookies();
@@ -77,6 +79,7 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		abortSimulation ||
 		abortSimulationConfirm ||
 		startSimulation ||
+		notAllMalfunctionsFound ||
 		note;
 
 	const gateId = useAppSelector(state => state.gate.activeGateId as string);
@@ -217,6 +220,13 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			headerTitle: 'Симуляция запущена',
 			gateId: undefined,
 			component: <PopupStartSimulation />,
+		},
+		{
+			condition: notAllMalfunctionsFound,
+			id: 'notAllMalfunctionsFound',
+			headerTitle: 'Не все дефекты найдены',
+			gateId: undefined,
+			component: <PopupNotAllMalfunctionsFound />,
 		},
 	];
 	// отключаем скролл страницы

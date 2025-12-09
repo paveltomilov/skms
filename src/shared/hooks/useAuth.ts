@@ -6,7 +6,7 @@ import {
 	checkAuth,
 	getAccessToken,
 	initAccessFromStorage,
-} from '@/shared/lib/auth';
+} from '@/shared/api';
 import { getCookie } from 'cookies-next';
 import { isPublicRoute, UserRole } from '@/shared/configs/routes';
 import { useAppDispatch } from '@/shared/hooks/store';

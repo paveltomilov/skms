@@ -88,6 +88,8 @@ const createMockStore = (
 				simulationComplete: false,
 				startSimulation: false,
 				abortSimulation: false,
+				abortSimulationConfirm: false,
+				notAllMalfunctionsFound: false,
 				...modalState,
 			} as ModalState,
 			gate: {
@@ -185,12 +187,16 @@ describe('handleFinishSimulation', () => {
 
 			await waitFor(() => {
 				const state = store.getState();
-				expect(state.simulation.simulationId).toBeNull();
-				expect(state.modal.simulationComplete).toBe(true);
+				// При неполном решении simulationId остается, симуляция не завершается
+				expect(state.simulation.simulationId).toBe('sim-123');
+				// Открывается попап "Не все дефекты найдены"
+				expect(state.modal.notAllMalfunctionsFound).toBe(true);
+				// simulationComplete не открывается
+				expect(state.modal.simulationComplete).toBe(false);
 			});
 		});
 
-		it('кнопка остается заблокированной после клика', async () => {
+		it('кнопка не блокируется после клика при неполном решении', async () => {
 			const store = createMockStore({
 				simulationId: 'sim-123',
 				originalMalfunctions: mockMalfunctions,
@@ -204,11 +210,13 @@ describe('handleFinishSimulation', () => {
 			});
 			fireEvent.click(finishButton);
 
-			// Кнопка должна быть заблокирована после клика
-			expect(finishButton).toBeDisabled();
+			await waitFor(() => {
+				// Кнопка не должна быть заблокирована, так как симуляция продолжается
+				expect(finishButton).not.toBeDisabled();
+			});
 		});
 
-		it('должен вызывать completeSimulation при любом решении', async () => {
+		it('не должен вызывать completeSimulation при неполном решении', async () => {
 			const store = createMockStore({
 				simulationId: 'sim-123',
 				originalMalfunctions: mockMalfunctions,
@@ -224,8 +232,10 @@ describe('handleFinishSimulation', () => {
 
 			await waitFor(() => {
 				const state = store.getState();
-				expect(state.simulation.simulationId).toBeNull();
-				expect(state.modal.simulationComplete).toBe(true);
+				// completeSimulation не вызывается, simulationId остается
+				expect(state.simulation.simulationId).toBe('sim-123');
+				// Открывается попап "Не все дефекты найдены"
+				expect(state.modal.notAllMalfunctionsFound).toBe(true);
 			});
 		});
 	});
@@ -272,7 +282,7 @@ describe('handleFinishSimulation', () => {
 			expect(state.modal.simulationComplete).toBe(false);
 		});
 
-		it('должен открыть попап, даже если не найдено ни одной неисправности', async () => {
+		it('должен открыть попап "Не все дефекты найдены", если не найдено ни одной неисправности', async () => {
 			const store = createMockStore({
 				simulationId: 'sim-123',
 				originalMalfunctions: mockMalfunctions,
@@ -288,8 +298,12 @@ describe('handleFinishSimulation', () => {
 
 			await waitFor(() => {
 				const state = store.getState();
-				expect(state.simulation.simulationId).toBeNull();
-				expect(state.modal.simulationComplete).toBe(true);
+				// При отсутствии найденных неисправностей simulationId остается
+				expect(state.simulation.simulationId).toBe('sim-123');
+				// Открывается попап "Не все дефекты найдены"
+				expect(state.modal.notAllMalfunctionsFound).toBe(true);
+				// simulationComplete не открывается
+				expect(state.modal.simulationComplete).toBe(false);
 			});
 		});
 	});

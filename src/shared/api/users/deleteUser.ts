@@ -21,3 +21,5 @@ export async function deleteUser(id: number) {
 		throw new Error(message);
 	}
 }
+
+

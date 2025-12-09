@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import { useRequestData } from '@/shared/hooks/useRequestData';
-import { postSimulation } from '@/shared/utils/postSimulation/postSimulation';
+import { postSimulation } from '@/shared/api';
 import { closeModal } from '@/store/modalSlice';
 import { useRouter } from 'next/navigation';
 import { clearCurrentStudent } from '@/store/trainingSlice';
@@ -29,7 +29,7 @@ const FormMalfunction: FC = () => {
 	const dispatch = useAppDispatch();
 	const router = useRouter();
 
-	const { urlBase, elements } = useRequestData();
+	const { urlBase, access, elements } = useRequestData();
 
 	const handleSetSimulation = async (malfunctionsArray: string) => {
 		if (studentId) {
@@ -40,10 +40,7 @@ const FormMalfunction: FC = () => {
 
 			try {
 				// Отправляем данные на сервер
-				await postSimulation(urlBase, JSON.stringify(formData), {
-					user: 0,
-					malfunctions: [],
-				});
+				await postSimulation(urlBase, access, formData);
 
 				// Генерируем уникальный ID симуляции
 				const simulationId = `sim-${Date.now()}`;

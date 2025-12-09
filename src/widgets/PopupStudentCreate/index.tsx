@@ -7,7 +7,7 @@ import {
 	getDone,
 	getIndicator,
 } from '@/shared/utils/loginFunctions/loginFunctions';
-import { postRegistration } from '@/shared/lib/registration';
+import { postRegistration } from '@/shared/api';
 import RegistrationMessage from '../RegistrationMessage/RegistrationMessage';
 import { LoginFormData } from '@/shared/types/login';
 import { getRandomPassword } from '@/shared/utils/getRandomPassword/getRandomPassword';

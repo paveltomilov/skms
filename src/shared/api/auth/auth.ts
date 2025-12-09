@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {deleteCookie, getCookie, setCookie} from 'cookies-next';
-import {LoginFormData, LoginResponse} from '../types/login';
-import {accessToken, initializeInterceptors, setAccessToken} from '@/shared/lib/authInterceptors';
+import {LoginFormData, LoginResponse} from '@/shared/types/login';
+import {accessToken, initializeInterceptors, setAccessToken} from '@/shared/api/config/interceptors';
 
 const urlBase = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -89,3 +89,5 @@ export function logout(): void {
 	deleteCookie('role');
 	setAccessToken(null);
 }
+
+

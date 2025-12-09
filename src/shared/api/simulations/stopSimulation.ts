@@ -32,3 +32,5 @@ export async function stopSimulation(id: number) {
 		throw new Error(message);
 	}
 }
+
+

@@ -32,12 +32,12 @@ export const PopupSimulationComplete: FC = () => {
 		if (subscriptionType === 'free') {
 			// Редирект на страницу опроса для бесплатных пользователей
 			if (simulationId) {
-				router.push('/survey');
+				router.push(`/survey/?simulationId=${simulationId}`);
 			}
 		} else {
 			// Редирект на страницу статистики для платных пользователей
 			if (simulationId) {
-				router.push('/stats');
+				router.push(`/stats/?simulationId=${simulationId}`);
 			}
 		}
 	};

@@ -7,11 +7,7 @@ import Chevron from '@/shared/UI/icons/Chevron';
 import { useUserCookies } from '@/shared/hooks/useUserCookies';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import { clearCurrentStudent } from '@/store/trainingSlice';
-import {
-	completeSimulation,
-	startSimulation,
-	resetSimulation,
-} from '@/store/simulationSlice';
+import { completeSimulation, startSimulation } from '@/store/simulationSlice';
 import { useToast } from '@/shared/hooks/useToast';
 import Toast from '@/shared/UI/Toast';
 import { openModal } from '@/store/modalSlice';
@@ -21,13 +17,11 @@ import {
 	deactivateMalfunction,
 } from '@/store/circuitSlice';
 import { SIMULATION_MALFUNCTIONS } from '@/shared/configs/simulationMalfunctions';
-import { findElementByID } from '@/shared/utils/findElementByID/scheme';
 
 const Sidebar = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const dispatch = useAppDispatch();
 	const simulation = useAppSelector(state => state.simulation);
-	const circuit = useAppSelector(state => state.circuit);
 	const { toasts, showToast, removeToast } = useToast();
 
 	const handleToggleSidebar = () => setIsOpen(!isOpen);
@@ -69,63 +63,34 @@ const Sidebar = () => {
 		dispatch(openModal('startSimulation'));
 	}, [simulation, dispatch, showToast]);
 
-	const handleLogCircuitState = useCallback(() => {
-		// Проверяем активные неисправности из симуляции
-		if (simulation.originalMalfunctions.length > 0) {
-			simulation.originalMalfunctions.forEach(malfunction => {
-				const malfunctionId = malfunction.id;
-				const lastDotIndex = malfunctionId.lastIndexOf('.');
-				if (lastDotIndex === -1) {
-					console.error(
-						`Неверный формат ID неисправности: "${malfunctionId}"`,
-					);
-					return;
-				}
-
-				const elementId = malfunctionId.substring(0, lastDotIndex);
-				const suffix = malfunctionId.substring(lastDotIndex + 1);
-				const malfunctionIndex = Number(suffix) - 1;
-
-				try {
-					// Используем findElementByID для поиска элемента
-					const element = findElementByID(elementId, circuit);
-
-					if (
-						!element ||
-						!Array.isArray(element.malfunctions) ||
-						malfunctionIndex < 0 ||
-						malfunctionIndex >= element.malfunctions.length
-					) {
-						console.error(
-							`✗ Неисправность "${malfunctionId}" не найдена в элементе "${elementId}"`,
-						);
-					}
-				} catch (error) {
-					console.error(
-						`✗ Ошибка при поиске элемента "${elementId}" для неисправности "${malfunctionId}":`,
-						error,
-					);
-				}
-			});
-		}
-	}, [circuit, simulation]);
-
-	const handleStopSimulation = useCallback(() => {
-		// Деактивируем все неисправности из симуляции
-		if (simulation.originalMalfunctions.length > 0) {
-			simulation.originalMalfunctions.forEach(malfunction => {
-				dispatch(deactivateMalfunction(malfunction.id));
-			});
-		}
-
-		// Сбрасываем состояние симуляции до дефолтного
-		dispatch(resetSimulation());
-
-		// Открываем попап об остановке симуляции
-		dispatch(openModal('abortSimulation'));
-	}, [simulation, dispatch]);
-
 	const handleFinishSimulation = useCallback(() => {
+		// Валидация: проверяем наличие активной симуляции
+		if (!simulation.simulationId) {
+			showToast('Нет активной симуляции для завершения', 'error');
+			return;
+		}
+
+		// Валидация: проверяем, что есть неисправности для поиска
+		if (simulation.originalMalfunctions.length === 0) {
+			showToast('В симуляции нет неисправностей для поиска', 'error');
+			return;
+		}
+
+		// Проверяем, все ли неисправности найдены
+		const originalMalfunctionIds = simulation.originalMalfunctions.map(
+			m => m.id,
+		);
+		const allMalfunctionsFound = originalMalfunctionIds.every(id =>
+			simulation.foundMalfunctionIds.includes(id),
+		);
+
+		if (!allMalfunctionsFound) {
+			// Если не все неисправности найдены, показываем попап с предупреждением
+			dispatch(openModal('notAllMalfunctionsFound'));
+			return;
+		}
+
+		// Если все неисправности найдены, продолжаем с завершением симуляции
 		// Сохраняем simulationId перед сбросом для редиректа
 		const currentSimulationId = simulation.simulationId;
 
@@ -149,7 +114,7 @@ const Sidebar = () => {
 				currentSimulationId,
 			);
 		}
-	}, [simulation, dispatch]);
+	}, [simulation, dispatch, showToast]);
 
 	return (
 		<>
@@ -206,30 +171,11 @@ const Sidebar = () => {
 					<Button
 						width={90}
 						height={34}
-						aria-label="Остановить симуляцию"
-						text="Остановить симуляцию"
-						className={styles.buttonText}
-						disabled={simulation.simulationId === null}
-						onClick={handleStopSimulation}
-					/>
-
-					<Button
-						width={90}
-						height={34}
 						aria-label="Завершить"
 						text="Завершить"
 						className={styles.buttonText}
 						disabled={simulation.simulationId === null}
 						onClick={handleFinishSimulation}
-					/>
-
-					<Button
-						width={90}
-						height={34}
-						aria-label="Лог схемы"
-						text="Лог схемы"
-						className={styles.buttonText}
-						onClick={handleLogCircuitState}
 					/>
 				</div>
 				<button

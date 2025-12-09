@@ -33,7 +33,10 @@ const config: Config = {
 	testEnvironment: 'jsdom',
 
 	// Игнорируем e2e тесты (они запускаются через Playwright)
-	testPathIgnorePatterns: ['/node_modules/', '/e2e/'],
+	testPathIgnorePatterns: ['/node_modules/', '/e2e/', '/.next/'],
+
+	// Игнорируем папки при сканировании модулей
+	modulePathIgnorePatterns: ['/.next/', '/node_modules/'],
 };
 
 const jestConfigWithOverrides = async () => {

@@ -62,7 +62,16 @@
 		width: 250px !important;
 		height: 17px !important;
 		border: none;
-		box-shadow: none;
+		box-shadow: none !important;
 		justify-content: flex-start;
+
+		&:hover {
+			cursor: pointer !important;
+			box-shadow: none !important;
+		}
+
+		&:hover:enabled {
+			box-shadow: none !important;
+		}
 	}
 }

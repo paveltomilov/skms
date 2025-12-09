@@ -181,7 +181,9 @@ const circuitSlice = createSlice({
 				});
 
 				// Если деактивируем "Обрыв провода", возвращаем исходное сопротивление
-				if (malfunctionName === 'Обрыв провода') {
+				// Используем trim() для удаления возможных пробелов, как при активации
+				const trimmedName = malfunctionName.trim();
+				if (trimmedName === 'Обрыв провода') {
 					try {
 						// Получаем исходный элемент из начального состояния схемы
 						const originalElement = findElementByID(

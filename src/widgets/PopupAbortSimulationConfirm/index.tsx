@@ -1,16 +1,44 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import { closeModal, openModal } from '@/store/modalSlice';
 import { resetSimulation } from '@/store/simulationSlice';
 import { deactivateMalfunction } from '@/store/circuitSlice';
+import { stopSimulation, getActiveSimulation } from '@/shared/api';
+import { useToast } from '@/shared/hooks/useToast';
 
 export const PopupAbortSimulationConfirm: FC = () => {
 	const dispatch = useAppDispatch();
 	const simulation = useAppSelector(state => state.simulation);
+	const { showToast } = useToast();
+	const [isLoading, setIsLoading] = useState(false);
 
-	const handleConfirm = () => {
+	const handleConfirm = async () => {
+		setIsLoading(true);
+
+		try {
+			// Получаем ID активной симуляции с бэкенда
+			const simulationId = await getActiveSimulation();
+
+			if (simulationId === null) {
+				showToast('Активная симуляция не найдена', 'error');
+				setIsLoading(false);
+				return;
+			}
+
+			// Отправляем PATCH запрос на бэкенд для завершения симуляции
+			await stopSimulation(simulationId);
+		} catch (error) {
+			const errorMessage =
+				error instanceof Error
+					? error.message
+					: 'Не удалось прервать симуляцию';
+			showToast(errorMessage, 'error');
+			setIsLoading(false);
+			return;
+		}
+
 		// Деактивируем все неисправности из симуляции
 		if (simulation.originalMalfunctions.length > 0) {
 			simulation.originalMalfunctions.forEach(malfunction => {
@@ -26,6 +54,7 @@ export const PopupAbortSimulationConfirm: FC = () => {
 
 		// Открываем финальное окно
 		dispatch(openModal('abortSimulation'));
+		setIsLoading(false);
 	};
 
 	const handleCancel = () => {
@@ -45,6 +74,7 @@ export const PopupAbortSimulationConfirm: FC = () => {
 						text="Да, прервать"
 						onClick={handleConfirm}
 						className={styles.button}
+						disabled={isLoading}
 					/>
 					<Button
 						width={276}
@@ -52,6 +82,7 @@ export const PopupAbortSimulationConfirm: FC = () => {
 						text="Отмена"
 						onClick={handleCancel}
 						className={styles.button}
+						disabled={isLoading}
 					/>
 				</div>
 			</div>

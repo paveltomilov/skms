@@ -15,7 +15,7 @@ import { clearCurrentStudent } from '@/store/trainingSlice';
 import {
 	postSimulation,
 	ResponseData,
-} from '../utils/postSimulation/postSimulation';
+} from '../api';
 import { closeModal } from '@/store/modalSlice';
 
 interface IResponse {

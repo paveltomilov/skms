@@ -1,7 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { checkAuth } from '@/shared/lib/auth';
+import { checkAuth } from '@/shared/api';
 import ModalWrapper from '@/widgets/ModalWrapper';
 import useRandomWindowCurrentValue from '@/shared/hooks/useRandomWindowCurrentValue';
 import AuthGuard from '@/shared/components/AuthGuard';
