@@ -91,11 +91,8 @@ $transition: all $transition-time ease;
 	0% {
 		outline: 2px solid $error-input;
 	}
-	50% {
-		outline: 2px solid transparent;
-	}
 	100% {
-		outline: 2px solid $error-input;
+		outline: 2px solid transparent;
 	}
 }
 
