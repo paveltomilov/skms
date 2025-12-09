@@ -14,16 +14,16 @@ const PopupNotificationDev: FC<Props> = ({ className }) => {
 				className={styles.modal__img}
 				src="/images/worker.png"
 				alt="Изображение рабочего"
-				width={200}
-				height={200}
+				width={240}
+				height={310}
 			/>
 			<div className={styles.modal__background} />
 			<div className={styles.modal__info}>
 				<Image
 					src="/images/date_release.png"
 					alt="Изображение даты релиза"
-					width={100}
-					height={100}
+					width={193}
+					height={53}
 				/>
 				<span className={styles.modal__info__text}>
 					Планируемая дата реальзации

@@ -165,7 +165,7 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		{
 			condition: studentStatistics,
 			id: 'studentStatistics',
-			headerTitle: `Статистика: ${fullName}`,
+			headerTitle: `Статистика ${fullName}`,
 			gateId: undefined,
 			component: <PopupStudentStatistics />,
 		},
