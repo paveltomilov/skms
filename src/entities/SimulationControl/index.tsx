@@ -10,8 +10,8 @@ const SimulationControl: FC<{ className?: string }> = ({ className }) => {
     const dispatch = useDispatch();
 
     const openUnfinished = () => {
-        dispatch(openModal('infoUnfinished'))
-    }
+        dispatch(openModal('infoUnfinished'));
+    };
 
     return (
         <div className={cn(styles.control, className)}>
