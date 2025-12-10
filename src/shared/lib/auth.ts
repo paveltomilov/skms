@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { deleteCookie, setCookie } from 'cookies-next';
+import { deleteCookie, getCookie, setCookie } from 'cookies-next';
 import { LoginFormData, LoginResponse } from '../types/login';
 import {
 	accessToken,
@@ -8,8 +8,6 @@ import {
 } from '@/shared/lib/authInterceptors';
 
 const urlBase = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-axios.defaults.withCredentials = true;
 
 if (urlBase) {
 	initializeInterceptors(urlBase);
@@ -28,8 +26,9 @@ export function initAccessFromStorage() {
 
 export async function checkAuth(): Promise<{ valid: boolean }> {
 	const access = localStorage.getItem('accessToken');
+	const refreshFromCookie = getCookie('refreshToken');
 
-	if (!access) {
+	if (!access || !refreshFromCookie) {
 		logout();
 		return { valid: false };
 	}
@@ -41,24 +40,21 @@ export async function postAuth(
 	formData: LoginFormData,
 ): Promise<IPostAuthResponse> {
 	try {
-		const response = await axios.post<LoginResponse>(
-			`${urlBase}/auth/`,
-			{ email: formData.email, password: formData.password },
-			{ withCredentials: true },
-		);
+		const response = await axios.post<LoginResponse>(`${urlBase}/auth/`, {
+			email: formData.email,
+			password: formData.password,
+		});
 
 		const { access, refresh, first_name, last_name, role } = response.data;
 
-		if (!access) {
+		if (!access || !refresh) {
 			throw new Error('Токены не получены');
 		}
 
 		if (response.statusText == 'OK') {
 			setAccessToken(access);
 			localStorage.setItem('accessToken', access);
-			if (refresh) {
-				setCookie('refreshToken', refresh);
-			}
+			setCookie('refreshToken', refresh);
 			setCookie('first_name', first_name);
 			setCookie('last_name', last_name);
 			setCookie('role', role);
