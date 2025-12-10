@@ -54,6 +54,7 @@ const TALeftTop: FC<Props> = ({ className, windows }) => {
 				textBottom={g1.name}
 				onClick={() => openGatePopup('g1')}
 				className={styles.gate}
+				malfunctions={g1.malfunctions}
 			/>
 			<div className={styles.windowMedium__right}>
 				<Window data={windows.w4} right />

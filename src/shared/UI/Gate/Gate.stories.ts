@@ -57,6 +57,14 @@ const meta: Meta<typeof Gate> = {
 			description: 'Текст справа задвижки',
 			control: { type: 'text' },
 		},
+		malfunctions: {
+			description: 'Массив идентификаторов неисправностей',
+			control: { type: 'select' },
+			options: ['id.1.1', 'id.1.2', ''],
+			table: {
+				disable: true,  
+			},
+		},
 		className: {
 			description:
 				'Для передачи дополнительных стилей (для позиционирования)',
@@ -121,5 +129,12 @@ export const Powered: Story = {
 	args: {
 		state: 'open',
 		power: true,
+	},
+};
+
+export const Error: Story = {
+	args: {
+		state: 'open',
+		malfunctions: ['id.1.1'],
 	},
 };

@@ -62,6 +62,7 @@ const TAMidDown: FC<Props> = ({ className, windows}) => {
 						textRight={g9.name}
 						position="vertical"
 						onClick={() => openGatePopup('g9')}
+						malfunctions={g9.malfunctions}
 					/>
 				</div>
 				<div className={styles.windowsBottom__pump}>
@@ -89,6 +90,7 @@ const TAMidDown: FC<Props> = ({ className, windows}) => {
 						textRight={g10.name}
 						position="vertical"
 						onClick={() => openGatePopup('g10')}
+						malfunctions={g10.malfunctions}
 					/>
 				</div>
 				<div className={styles.windowsBottom__info}>
