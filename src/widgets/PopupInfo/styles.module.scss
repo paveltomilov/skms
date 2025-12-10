@@ -11,14 +11,10 @@
         width: 456px;
         height: 103px;
         text-align: center;
-        @include mixins.text(38px, 500);
-        line-height: 100%;
 
         &__malfunctions {
             width: 456px;
             text-align: start;
-            @include mixins.text(38px, 500);
-            line-height: 100%;
             display: flex;
             gap: 12px;
 
@@ -30,5 +26,10 @@
                 margin-top: 3px;
             }
         }
+    }
+
+    h2 {
+        @include mixins.text(38px, 500);
+        line-height: 100%;
     }
 }

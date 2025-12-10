@@ -1,7 +1,7 @@
 @use '@/shared/scss/variables.module';
 @use '@/shared/scss/mixins.module';
 
-.attributes {
+.control {
     width: 89px;
     height: 110px;
     position: absolute;
@@ -9,14 +9,7 @@
     @include mixins.flex-space-between;
     flex-direction: column;
 
-    .line {
-        width: 89px;
-        height: 2px;
-        background-color: variables.$black-color;
-        box-shadow: -2px -1.46px 0px 0px rgba(255, 255, 255, 1) inset;
-    }
-
-    .button__finish span {
+    &__buttonFinish span {
         @include mixins.text(14px,400);
         white-space: normal;
     }
