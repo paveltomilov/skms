@@ -2,11 +2,11 @@ import type { LampIndicatorColor } from '../types/icon';
 import { MarkerName } from '../types/markers';
 import {
 	CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID,
+	CONTROL_CIRCUIT_NEUTRAL_ID,
 	LAMP_KRUZA_P_CLOSED_ID,
 	LAMP_KRUZA_P_OPEN_ID,
 	OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID,
 } from './controlCircuit/constants';
-import { CONTROL_CIRCUIT_NEUTRAL_ID } from './points';
 
 export interface Connection {
 	marker: MarkerName;

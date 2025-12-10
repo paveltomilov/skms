@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import { FC, useCallback, useRef } from 'react';
 import { INPUT_CIRCUIT_BREAKER_ID } from '@/shared/configs/powerCircuit/constants';
 import { BASE_RESISTANCE } from '@/shared/configs/schemeElements';
-import { HIGH_RESISTANCE } from '@/shared/configs/elementKind';
+import { BASE_RESISTANCE_CONSTANT } from '@/shared/configs/elementKind';
 import { useAppDispatch } from '@/shared/hooks/store';
 import SwitchHandle from '../icons/SwitchHandle';
 import { SWITCHER_ANGLES } from '@/shared/configs/knob';
@@ -31,7 +31,7 @@ const Switcher: FC<Props> = ({ mode }) => {
 				const resistance =
 					selectedMode === 'on'
 						? BASE_RESISTANCE[id]
-						: HIGH_RESISTANCE;
+						: BASE_RESISTANCE_CONSTANT.highResistance;
 				dispatch(setResistance({ id, value: resistance }));
 			}
 		}

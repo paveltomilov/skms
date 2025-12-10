@@ -42,7 +42,8 @@ const extractElements = (branches: CircuitBranch[]): CircuitElement[] => {
 
 /**
  * Базовые сопротивления элементов схемы по их ID.
- * Создается на основе initialStateScheme и содержит начальные значения сопротивлений.
+ * Используются явно указанные сопротивления из определений элементов (element.resistance).
+ * Это значения, которые должны быть установлены при "сбросе" элемента к исходному состоянию.
  */
 export const BASE_RESISTANCE: Record<string, number> = (() => {
 	const allElements = [
@@ -52,6 +53,9 @@ export const BASE_RESISTANCE: Record<string, number> = (() => {
 
 	const resistanceMap: Record<string, number> = {};
 	for (const element of allElements) {
+		// Используем явно указанное сопротивление элемента
+		// Это гарантирует, что элементы с явно указанным highResistance
+		// (контакты пускателя, кнопки) будут иметь правильное начальное значение
 		resistanceMap[element.id] = element.resistance;
 	}
 

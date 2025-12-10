@@ -11,7 +11,7 @@ import ScrewConnection from '@/shared/UI/ScrewConnection';
 import ProvodLine from '@/shared/UI/icons/ProvodLine';
 import { findElementByID } from '@/shared/utils/findElementByID/scheme';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
-import { HIGH_RESISTANCE } from '@/shared/configs/elementKind';
+import { BASE_RESISTANCE_CONSTANT } from '@/shared/configs/elementKind';
 import type { LampIndicatorColor } from '@/shared/types/icon';
 import type { AppDispatch, RootState } from '@/store/store';
 import { togglePointState } from '@/store/pointsSlice';
@@ -66,7 +66,8 @@ export const LampScheme: FC = () => {
 				const hasNormalResistance =
 					typeof element?.resistance === 'number' &&
 					isFinite(element.resistance) &&
-					element.resistance < HIGH_RESISTANCE;
+					element.resistance <
+						BASE_RESISTANCE_CONSTANT.highResistance;
 
 				return hasNormalResistance ? colors.on : colors.off;
 			} catch {
