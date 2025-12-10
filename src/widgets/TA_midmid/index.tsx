@@ -152,6 +152,7 @@ const TAMidMId: FC<Props> = ({ className, windows }) => {
 					textTopLeft={g4.name}
 					position="vertical"
 					onClick={() => openGatePopup('g4')}
+					malfunctions={g4.malfunctions}
 				/>
 
 				<section className={styles.bottomSelect}>
@@ -171,6 +172,7 @@ const TAMidMId: FC<Props> = ({ className, windows }) => {
 					textTopLeft={g5.name}
 					position="vertical"
 					onClick={() => openGatePopup('g5')}
+					malfunctions={g5.malfunctions}
 				/>
 
 				<section className={styles.bottomSelect}>

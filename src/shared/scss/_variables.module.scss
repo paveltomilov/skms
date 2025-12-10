@@ -87,4 +87,15 @@ $transition: all $transition-time ease;
 	}
 }
 
+@keyframes blinkingBorder {
+	0% {
+		outline: 2px solid $error-input;
+	}
+	100% {
+		outline: 2px solid transparent;
+	}
+}
+
+
 $blink: blink 1s infinite;
+$blinkingBorder: blinkingBorder 1s infinite; 
