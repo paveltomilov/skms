@@ -81,6 +81,89 @@ import {
 	POWER_CIRCUIT_NEUTRAL_ID,
 } from './powerCircuit/constants';
 
+// ======================== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ========================
+
+/**
+ * Рекурсивно извлекает все элементы схемы из ветвей.
+ * @param branches - массив ветвей схемы
+ * @returns массив всех элементов схемы
+ */
+function extractElements(branches: CircuitBranch[]): CircuitElement[] {
+	const elements: CircuitElement[] = [];
+
+	for (const branch of branches) {
+		if (Array.isArray(branch)) {
+			// Рекурсивно обрабатываем вложенные массивы (параллельные ветвления)
+			elements.push(...extractElements(branch));
+		} else {
+			// Это элемент схемы
+			elements.push(branch);
+		}
+	}
+
+	return elements;
+}
+
+/**
+ * Создает индекс элементов по их endPoint.
+ * @returns объект, где ключи - ID точек (endPoint), значения - массивы ID элементов
+ */
+function createElementsByEndpointIndex(): Record<string, string[]> {
+	const allElements = [
+		...extractElements(initialStateScheme.powerCircuit),
+		...extractElements(initialStateScheme.controlCircuit),
+	];
+
+	const index: Record<string, string[]> = {};
+
+	for (const element of allElements) {
+		if (element.endPoint) {
+			if (!index[element.endPoint]) {
+				index[element.endPoint] = [];
+			}
+			index[element.endPoint].push(element.id);
+		}
+	}
+
+	return index;
+}
+
+/**
+ * Обогащает точки информацией об элементах, подключенных к ним как endPoint.
+ * @param points - объект с точками схемы
+ * @returns объект с точками, дополненный полем elements
+ */
+function enrichPointsWithElements(
+	points: Record<string, IPoint>,
+): Record<string, IPoint> {
+	const elementsByEndpoint = createElementsByEndpointIndex();
+	const enrichedPoints: Record<string, IPoint> = {};
+
+	for (const pointId in points) {
+		const point = { ...points[pointId] };
+		point.elements = elementsByEndpoint[pointId] || [];
+		enrichedPoints[pointId] = point;
+	}
+
+	return enrichedPoints;
+}
+
+/**
+ * Извлекает состояния из объектов точек.
+ * @param SCHEME_POINTS - объект с точками схемы
+ * @returns объект с состояниями точек (ключ - ID точки, значение - состояние)
+ */
+function extractStates(SCHEME_POINTS: Record<string, IPoint>) {
+	const result: Record<string, boolean> = {};
+
+	for (const key in SCHEME_POINTS) {
+		result[key] = SCHEME_POINTS[key].state;
+	}
+	return result;
+}
+
+// ======================== КОНСТАНТЫ И ДАННЫЕ ========================
+
 export const pointsMap = [
 	PHASE_A_POINT_ID,
 	PHASE_B_POINT_ID,
@@ -173,70 +256,6 @@ export const pointsMap = [
 	JUNCTION_BOX_OUTPUT_POINT_PHASE_B_ID,
 	JUNCTION_BOX_OUTPUT_POINT_PHASE_C_ID,
 ];
-/**
- * Рекурсивно извлекает все элементы схемы из ветвей.
- * @param branches - массив ветвей схемы
- * @returns массив всех элементов схемы
- */
-function extractElements(branches: CircuitBranch[]): CircuitElement[] {
-	const elements: CircuitElement[] = [];
-
-	for (const branch of branches) {
-		if (Array.isArray(branch)) {
-			// Рекурсивно обрабатываем вложенные массивы (параллельные ветвления)
-			elements.push(...extractElements(branch));
-		} else {
-			// Это элемент схемы
-			elements.push(branch);
-		}
-	}
-
-	return elements;
-}
-
-/**
- * Создает индекс элементов по их endPoint.
- * @returns объект, где ключи - ID точек (endPoint), значения - массивы ID элементов
- */
-function createElementsByEndpointIndex(): Record<string, string[]> {
-	const allElements = [
-		...extractElements(initialStateScheme.powerCircuit),
-		...extractElements(initialStateScheme.controlCircuit),
-	];
-
-	const index: Record<string, string[]> = {};
-
-	for (const element of allElements) {
-		if (element.endPoint) {
-			if (!index[element.endPoint]) {
-				index[element.endPoint] = [];
-			}
-			index[element.endPoint].push(element.id);
-		}
-	}
-
-	return index;
-}
-
-/**
- * Обогащает точки информацией об элементах, подключенных к ним как endPoint.
- * @param points - объект с точками схемы
- * @returns объект с точками, дополненный полем elements
- */
-function enrichPointsWithElements(
-	points: Record<string, IPoint>,
-): Record<string, IPoint> {
-	const elementsByEndpoint = createElementsByEndpointIndex();
-	const enrichedPoints: Record<string, IPoint> = {};
-
-	for (const pointId in points) {
-		const point = { ...points[pointId] };
-		point.elements = elementsByEndpoint[pointId] || [];
-		enrichedPoints[pointId] = point;
-	}
-
-	return enrichedPoints;
-}
 
 // Базовые точки для подключения щупов на схеме (без элементов)
 export const SCHEME_POINTS: Record<string, IPoint> = {
@@ -308,8 +327,6 @@ export const SCHEME_POINTS: Record<string, IPoint> = {
 	[JUNCTION_BOX_OUTPUT_POINT_PHASE_C_ID]: { state: false },
 
 	// Control circuit internal points (без координат для отображения)
-	// CONTROL_NEUTRAL_POINT_ID уже определен выше как CONTROL_CIRCUIT_NEUTRAL_ID
-
 	[OPEN_NDI_NOT_OPEN_INPUT_POINT_ID]: { state: false },
 	[OPEN_NDI_NOT_OPEN_OUTPUT_POINT_ID]: { state: false },
 	[OPEN_CMD_PTK_BRANCH_POINT_ID]: { state: false },
@@ -339,13 +356,6 @@ export const SCHEME_POINTS: Record<string, IPoint> = {
 export const SCHEME_POINTS_BASE: Record<string, IPoint> =
 	enrichPointsWithElements(SCHEME_POINTS);
 
-function extractStates(SCHEME_POINTS: Record<string, IPoint>) {
-	const result: Record<string, boolean> = {};
-
-	for (const key in SCHEME_POINTS) {
-		result[key] = SCHEME_POINTS[key].state;
-	}
-	return result;
-}
-
+// Состояния точек (только boolean значения без координат и элементов)
+// Вычисляются на основе начальной схемы перед помещением в Redux store
 export const pointsState = extractStates(SCHEME_POINTS_BASE);
