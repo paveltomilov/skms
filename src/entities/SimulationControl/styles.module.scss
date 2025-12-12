@@ -1,0 +1,16 @@
+@use '@/shared/scss/variables.module';
+@use '@/shared/scss/mixins.module';
+
+.control {
+    width: 89px;
+    height: 110px;
+    position: absolute;
+    bottom: 8px;
+    @include mixins.flex-space-between;
+    flex-direction: column;
+
+    &__buttonFinish span {
+        @include mixins.text(14px,400);
+        white-space: normal;
+    }
+}

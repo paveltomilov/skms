@@ -31,6 +31,7 @@ const TALeftDown: FC<Props> = ({ className, windows }) => {
 					position="vertical"
 					textLeft={g7.name}
 					onClick={() => openGatePopup('g7')}
+					malfunctions={g7.malfunctions}
 				/>
 				<Gate
 					className={styles.gates__mid}
@@ -38,6 +39,7 @@ const TALeftDown: FC<Props> = ({ className, windows }) => {
 					position="vertical"
 					textLeft={g6.name}
 					onClick={() => openGatePopup('g6')}
+					malfunctions={g6.malfunctions}
 				/>
 				<Gate
 					className={styles.gates__right}
@@ -45,6 +47,7 @@ const TALeftDown: FC<Props> = ({ className, windows }) => {
 					position="vertical"
 					textRight={g8.name}
 					onClick={() => openGatePopup('g8')}
+					malfunctions={g8.malfunctions}
 				/>
 			</div>
 			<div className={styles.cards}>

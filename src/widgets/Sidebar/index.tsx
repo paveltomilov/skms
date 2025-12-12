@@ -7,6 +7,7 @@ import Chevron from '@/shared/UI/icons/Chevron';
 import { useUserCookies } from '@/shared/hooks/useUserCookies';
 import { useAppDispatch } from '@/shared/hooks/store';
 import { clearCurrentStudent } from '@/store/trainingSlice';
+import SimulationControl from '@/entities/SimulationControl';
 
 const Sidebar = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -26,39 +27,42 @@ const Sidebar = () => {
 
 			<div className={`${styles.sidebar} ${isOpen && styles.open}`}>
 				<div className={styles.sidebarContent}>
-					<Button
-						width={90}
-						height={24}
-						aria-label="Главная"
-						text="Главная"
-						className={styles.buttonText}
-						href="/"
-						onClick={() => dispatch(clearCurrentStudent())}
-					/>
-
-					{role != 'student' && (
+					<div className={styles.sidebarButtons}>
 						<Button
 							width={90}
 							height={24}
-							aria-label={
-								isAdmin ? 'Список препод.' : 'Список студ.'
-							}
-							text={isAdmin ? 'Список препод.' : 'Список студ.'}
-							className={styles.buttonText__list}
-							href="/training"
+							aria-label="Главная"
+							text="Главная"
+							className={styles.buttonText}
+							href="/"
 							onClick={() => dispatch(clearCurrentStudent())}
 						/>
-					)}
 
-					<Button
-						width={90}
-						height={24}
-						aria-label="ПТК"
-						text="ПТК"
-						className={styles.buttonText}
-						href="/ptk"
-						onClick={() => dispatch(clearCurrentStudent())}
-					/>
+						{role != 'student' && (
+							<Button
+								width={90}
+								height={24}
+								aria-label={
+									isAdmin ? 'Список препод.' : 'Список студ.'
+								}
+								text={isAdmin ? 'Список препод.' : 'Список студ.'}
+								className={styles.buttonText__list}
+								href="/training"
+								onClick={() => dispatch(clearCurrentStudent())}
+							/>
+						)}
+
+						<Button
+							width={90}
+							height={24}
+							aria-label="ПТК"
+							text="ПТК"
+							className={styles.buttonText}
+							href="/ptk"
+							onClick={() => dispatch(clearCurrentStudent())}
+						/>
+					</div>
+					{role === 'student' && <SimulationControl />}
 				</div>
 				<button
 					onClick={handleToggleSidebar}

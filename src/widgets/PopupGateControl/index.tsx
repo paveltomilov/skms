@@ -39,7 +39,11 @@ export const PopupGateControl: FC = () => {
 			<div className={styles.gate}>
 				<div className={styles.percent}>{gate.position}</div>
 				<div className={styles.percentSymbol}>%Откр.</div>
-				<Gate className={styles.symbol} state={gate.states} />
+				<Gate
+					className={styles.symbol}
+					state={gate.states}
+					malfunctions={gate.malfunctions}
+				/>
 			</div>
 			<div className={styles.buttons}>
 				<Button

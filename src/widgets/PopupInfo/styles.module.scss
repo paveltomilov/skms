@@ -1,0 +1,35 @@
+@use '@/shared/scss/variables.module';
+@use '@/shared/scss/mixins.module';
+
+.popup {
+    width: 540px;
+    height: 542px;
+    background: variables.$primary-color;
+    @include mixins.flex-center;
+
+    &__content {
+        width: 456px;
+        height: 103px;
+        text-align: center;
+
+        &__malfunctions {
+            width: 456px;
+            text-align: start;
+            display: flex;
+            gap: 12px;
+
+            &__text {
+                width: 416px;
+            }
+
+            &__img {
+                margin-top: 3px;
+            }
+        }
+    }
+
+    h2 {
+        @include mixins.text(38px, 500);
+        line-height: 100%;
+    }
+}
