@@ -10,6 +10,7 @@ interface Props {
 	textRight?: MarkerName;
 	textTop?: MarkerName;
 	textLeft?: MarkerName;
+	isProbeOver?: boolean;
 	onClick: () => void;
 }
 
@@ -19,12 +20,17 @@ const Screw: FC<Props> = ({
 	textRight,
 	textTop,
 	textLeft,
+	isProbeOver = false,
 	onClick,
 }) => {
 	const sizes = ICON_SIZE.sm;
 
 	return (
-		<div className={cn(styles.wrapper, className)}>
+		<div
+			className={cn(styles.wrapper, className, {
+				[styles.wrapperProbeOver]: isProbeOver,
+			})}
+		>
 			{textTop && <span className={styles.top}>{textTop}</span>}
 			{textLeft && <span className={styles.left}>{textLeft}</span>}
 			<svg
