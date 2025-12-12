@@ -1,7 +1,14 @@
 // id точек схемы
 
-import { IPoint, CircuitBranch, CircuitElement } from '../types/scheme';
+import {
+	IPoint,
+	CircuitBranch,
+	CircuitElement,
+	InitialStateScheme,
+} from '../types/scheme';
 import { initialStateScheme } from './scheme';
+import { findElementByID } from '../utils/findElementByID/scheme';
+import { BASE_RESISTANCE_CONSTANT } from './elementKind';
 
 import {
 	CONTROL_POWER_FEED_POINT_ID,
@@ -146,6 +153,83 @@ function enrichPointsWithElements(
 	}
 
 	return enrichedPoints;
+}
+
+/**
+ * Вычисляет состояние точек на основе элементов, подключенных к ним.
+ * Точка считается активной (true), если хотя бы один элемент, подключенный к ней как endPoint,
+ * имеет активный startPoint (true) и сопротивление меньше высокого сопротивления.
+ * Базовые точки (фазы и нейтрали) пропускаются - они должны быть установлены заранее.
+ * @param currentPoints - текущие состояния точек
+ * @param scheme - текущее состояние схемы с элементами
+ * @returns объект с обновленными состояниями точек
+ */
+export function calculatePointsState(
+	currentPoints: Record<string, boolean>,
+	scheme: InitialStateScheme,
+): Record<string, boolean> {
+	const result: Record<string, boolean> = { ...currentPoints };
+
+	// Проходим по всем точкам из pointsMap
+	for (const pointId of pointsMap) {
+		// Пропускаем базовые точки (фазы и нейтрали) - они устанавливаются отдельно
+		if (
+			pointId === PHASE_A_POINT_ID ||
+			pointId === PHASE_B_POINT_ID ||
+			pointId === PHASE_C_POINT_ID ||
+			pointId === POWER_CIRCUIT_NEUTRAL_ID ||
+			pointId === CONTROL_CIRCUIT_NEUTRAL_ID
+		) {
+			continue;
+		}
+
+		// Находим точку в SCHEME_POINTS_BASE
+		const point = SCHEME_POINTS_BASE[pointId];
+		if (!point) {
+			continue;
+		}
+
+		// Получаем массив элементов, подключенных к этой точке
+		const elements = point.elements || [];
+		if (elements.length === 0) {
+			// Если к точке не подключено элементов, состояние не меняется
+			// (она может быть начальной точкой для других элементов)
+			continue;
+		}
+
+		// Проверяем, есть ли хотя бы один активный элемент
+		let hasActiveElement = false;
+
+		for (const elementId of elements) {
+			try {
+				// Находим элемент в схеме
+				const element = findElementByID(elementId, scheme);
+
+				// Проверяем условия:
+				// 1. startPoint должен иметь состояние true
+				// 2. сопротивление должно быть меньше высокого сопротивления
+				if (
+					element.startPoint &&
+					currentPoints[element.startPoint] === true &&
+					element.resistance < BASE_RESISTANCE_CONSTANT.highResistance
+				) {
+					hasActiveElement = true;
+					break; // Достаточно одного активного элемента
+				}
+			} catch (error) {
+				// Если элемент не найден, пропускаем его
+				console.warn(
+					`Element with id "${elementId}" not found: ${error}`,
+				);
+				continue;
+			}
+		}
+
+		// Устанавливаем состояние точки на основе наличия активного элемента
+		result[pointId] = hasActiveElement;
+	}
+
+	return result;
 }
 
 /**
