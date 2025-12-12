@@ -14,12 +14,22 @@ export function extractMalfunctions(scheme: InitialStateScheme): CircuitElement[
   }
 
   // Обход powerCircuit: CircuitBranch[][]
-  scheme.powerCircuit.forEach(group => {
-    group.forEach(traverse);
+  scheme.powerCircuit.forEach((group) => {
+    if (Array.isArray(group)) {
+      group.forEach(traverse);
+    } else {
+      // если по ошибке не массив, обрабатываем как элемент
+      traverse(group);
+    }
   });
 
   // Обход controlCircuit: CircuitBranch[]
-  scheme.controlCircuit.forEach(traverse);
+  if (Array.isArray(scheme.controlCircuit)) {
+    scheme.controlCircuit.forEach(traverse);
+  } else if (scheme.controlCircuit) {
+    // если controlCircuit по ошибке не массив, обрабатываем как элемент
+    traverse(scheme.controlCircuit);
+  }
 
   return result;
 }

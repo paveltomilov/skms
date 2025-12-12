@@ -30,14 +30,14 @@ const HeaderTraining: FC = () => {
 					<Button
 						className={styles.button}
 						width={isAdmin ? 270 : 213}
-						height={32}
+						height={27}
 						text={textBtnAddUser}
 						onClick={handleModalStudentCreate}
 					/>
 					<Button
 						className={styles.button}
 						width={163}
-						height={32}
+						height={27}
 						text="Статистика"
 						onClick={handleModalNotification}
 					/>

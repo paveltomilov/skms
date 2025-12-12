@@ -9,38 +9,47 @@ import Micro from '@/shared/UI/icons/Micro';
 import ArrowChange from '@/shared/UI/icons/ArrowChange';
 import OperatorPanel from '@/entities/OperatorPanel';
 import useShowModal from '@/shared/hooks/useShowModal';
+import {
+	configButtonListBottom,
+	configButtonListTop,
+} from '@/shared/configs/listButtonFooterPtk';
 
 const FooterPtk: FC = () => {
 	const handleModalNotification = useShowModal('notification');
+
 	return (
 		<footer className={styles.footer} aria-label="Панель управления">
 			<nav
 				className={styles.footer__leftPanel}
 				aria-label="Кнопки управления"
 			>
-				<Button
-					width={88}
-					height={28}
-					aria-label={'Кнопка КА'}
-					text="КА"
-					href="/ptk/boiler"
-				/>
-				<Button
-					width={88}
-					height={28}
-					aria-label={'Кнопка ТА'}
-					text="ТА"
-					href="/ptk"
-				/>
-				{Array.from({ length: 14 }).map((_, i) => (
-					<Button
-						key={i}
-						width={88}
-						height={28}
-						aria-label={`Кнопка ${i}`}
-						disabled
-					/>
-				))}
+				<div className={styles.footer__leftPanel__top}>
+					{configButtonListTop.map((item, idx) => (
+						<Button
+							key={idx}
+							{...item}
+							ariaLabel={
+								item.ariaLabel
+									? `${item.ariaLabel}`
+									: `Кнопка ${idx + 1} верхней панели`
+							}
+						/>
+					))}
+				</div>
+
+				<div className={styles.footer__leftPanel__bottom}>
+					{configButtonListBottom.map((item, idx) => (
+						<Button
+							key={idx}
+							{...item}
+							ariaLabel={
+								item.ariaLabel
+									? `${item.ariaLabel}`
+									: `Кнопка ${idx + 1} нижней панели`
+							}
+						/>
+					))}
+				</div>
 			</nav>
 
 			<div className={styles.footer__centralPanel}>
