@@ -4,17 +4,22 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export interface TrainingState {
 	malfunctionCurrent: string;
 	currentStudent: User | null;
+	studentId: number | null;
 }
 
 const initialState: TrainingState = {
 	malfunctionCurrent: '',
 	currentStudent: null,
+	studentId: null,
 };
 
 const trainingSlice = createSlice({
 	name: 'training',
 	initialState,
 	reducers: {
+		setStudentId: (state, {payload}: PayloadAction<number>) => {
+			state.studentId = payload;
+		},
 		setCurrentStudent: (state, { payload }: PayloadAction<User>) => {
 			state.currentStudent = payload;
 		},
@@ -27,7 +32,7 @@ const trainingSlice = createSlice({
 	},
 });
 
-export const { setMalfunctionCurrent, setCurrentStudent, clearCurrentStudent } =
+export const { setMalfunctionCurrent, setCurrentStudent, clearCurrentStudent, setStudentId } =
 	trainingSlice.actions;
 
 export default trainingSlice.reducer;
