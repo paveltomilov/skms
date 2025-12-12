@@ -12,5 +12,6 @@
     &__buttonFinish span {
         @include mixins.text(14px,400);
         white-space: normal;
+        text-align: center;
     }
 }
