@@ -1,5 +1,5 @@
 import { INPUT_CIRCUIT_BREAKER_ID } from '@/shared/configs/powerCircuit/constants';
-import { HIGH_RESISTANCE } from '@/shared/configs/elementKind';
+import { BASE_RESISTANCE_CONSTANT } from '@/shared/configs/elementKind';
 import { useAppSelector } from '@/shared/hooks/store';
 import { findElementByID } from '../findElementByID/scheme';
 
@@ -15,7 +15,8 @@ export const getInputCircuitBreakerState = (): 'on' | 'off' => {
 
 	// проверяем сопротивление контактов автомата
 	const isContactOpen = inputCircuitBreakerElements.some(
-		element => element.resistance === HIGH_RESISTANCE,
+		element =>
+			element.resistance === BASE_RESISTANCE_CONSTANT.highResistance,
 	);
 
 	// если хотябы 1 контакт разомкнут, то автомат выключен, иначе включен

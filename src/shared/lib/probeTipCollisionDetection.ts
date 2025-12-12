@@ -67,5 +67,29 @@ export const probeTipCollisionDetection: CollisionDetection = ({
 		}
 	}
 
+// Если пересечений несколько, берем дроппабл с центром ближе всего к кончику щупа.
+// Так не схватится первый зарегистрированный дроппабл (например, схема), если ближе попап-точка.
+	if (collisions.length <= 1) return collisions;
+
+	const tipCenterX = probeTipRect.left + probeTipRect.width / 2;
+	const tipCenterY = probeTipRect.top + probeTipRect.height / 2;
+
+	collisions.sort((a, b) => {
+		const aRect = droppableRects.get(a.id as string)!;
+		const bRect = droppableRects.get(b.id as string)!;
+
+		const aCenterX = (aRect.left + aRect.right) / 2;
+		const aCenterY = (aRect.top + aRect.bottom) / 2;
+		const bCenterX = (bRect.left + bRect.right) / 2;
+		const bCenterY = (bRect.top + bRect.bottom) / 2;
+
+		const aDist =
+			(aCenterX - tipCenterX) ** 2 + (aCenterY - tipCenterY) ** 2;
+		const bDist =
+			(bCenterX - tipCenterX) ** 2 + (bCenterY - tipCenterY) ** 2;
+
+		return aDist - bDist;
+	});
+
 	return collisions;
 };
