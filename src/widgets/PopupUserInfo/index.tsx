@@ -30,6 +30,7 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 		// Открываем попап подтверждения прерывания симуляции
 		dispatch(openModal('abortSimulationConfirm'));
 	}, [dispatch]);
+
 	const isActiveSimulation: boolean = true; // в будущем статус от websocket
 	const { firstName, lastName, role } = useUserCookies();
 	const status =
@@ -76,17 +77,6 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 					</div>
 				</div>
 				<ul className={styles.userInfo__more}>
-					{isActiveStudentSimulation && (
-						<li>
-							<Image
-								src="/svg/abortSim.svg"
-								alt="history"
-								width={16}
-								height={16}
-							/>
-							История сессий
-						</li>
-					)}
 					{simulation.simulationId !== null && (
 						<li>
 							<Button
@@ -104,15 +94,17 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 							/>
 						</li>
 					)}
-					<li>
-						<Image
-							src="/svg/history.svg"
-							alt="history"
-							width={16}
-							height={16}
-						/>
-						История сессий
-					</li>
+					{isActiveStudentSimulation && (
+						<li>
+							<Image
+								src="/svg/history.svg"
+								alt="history"
+								width={16}
+								height={16}
+							/>
+							История сессий
+						</li>
+					)}
 					<li>
 						<Image
 							src="/svg/support.svg"

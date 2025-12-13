@@ -1,6 +1,6 @@
 import {Suspense} from 'react';
 import Loading from '@/app/loading';
-import Login from '@/_pages/login';
+import Login from '@/pages/login';
 
 export default function LoginPage() {
     return (

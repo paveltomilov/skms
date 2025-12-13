@@ -1,6 +1,6 @@
 import { FC, Suspense } from 'react';
 import Loading from '../../loading';
-import TrainingPage from '@/_pages/training';
+import TrainingPage from '@/pages/training';
 
 const Training: FC = () => {
 	return (

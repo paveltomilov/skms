@@ -5,6 +5,7 @@ import { checkAuth } from '@/shared/api';
 import ModalWrapper from '@/widgets/ModalWrapper';
 import useRandomWindowCurrentValue from '@/shared/hooks/useRandomWindowCurrentValue';
 import AuthGuard from '@/shared/components/AuthGuard';
+import Dnd from '@/widgets/Dnd';
 
 export default function ProtectedLayout({
 	children,
@@ -32,8 +33,10 @@ export default function ProtectedLayout({
 
 	return (
 		<AuthGuard>
-			<ModalWrapper />
-			{children}
+			<Dnd>
+				<ModalWrapper />
+				{children}
+			</Dnd>
 		</AuthGuard>
 	);
 }

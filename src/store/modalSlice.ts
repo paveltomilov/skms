@@ -24,7 +24,9 @@ export type Modals =
 	| 'simulationComplete'
 	| 'abortSimulation'
 	| 'abortSimulationConfirm'
-	| 'startSimulation'
+	| 'infoStartSimulation'
+	| 'infoSimulationIsActive'
+	| 'infoUnfinished'
 	| 'notAllMalfunctionsFound';
 
 export type ModalState = Record<Modals, boolean>;
@@ -53,7 +55,9 @@ const initialState: ModalState = {
 	abortSimulationConfirm: false,
 	note: false,
 	simulationComplete: false,
-	startSimulation: false,
+	infoStartSimulation: false,
+	infoSimulationIsActive: false,
+	infoUnfinished: false,
 	notAllMalfunctionsFound: false,
 };
 

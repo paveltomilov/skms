@@ -27,12 +27,14 @@ const KARightTop: FC<Props> = ({ className, windows }) => {
 						textTop={GATES.g14.name}
 						disable
 						onClick={() => openGatePopup('g14')}
+						malfunctions={GATES.g14.malfunctions}
 					/>
 					<Gate
 						state={GATES.g15.states}
 						textTop={GATES.g15.name}
 						disable
 						onClick={() => openGatePopup('g15')}
+						malfunctions={GATES.g15.malfunctions}
 					/>
 				</div>
 				<span className={styles.windowTop__text}>

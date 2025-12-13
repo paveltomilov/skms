@@ -180,7 +180,7 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 			setServerErrors(PASSWORD_ERROR);
 			const errorMessage =
 				error instanceof Error
-					? error.message
+					? error.message 
 					: 'Произошла ошибка при авторизации';
 			setAuthErrorText(errorMessage);
 		}

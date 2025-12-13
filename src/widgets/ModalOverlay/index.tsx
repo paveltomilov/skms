@@ -6,6 +6,7 @@ import { useDragging } from '@/shared/hooks/useDragging';
 import { GATES } from '@/shared/configs/gate';
 import ModalHeader from '@/entities/ModalHeader';
 import { clearCurrentStudent } from '@/store/trainingSlice';
+import { detachProbe } from '@/store/multimeterSlice';
 
 interface ModalOverlayProps {
 	id: Modals;
@@ -20,7 +21,6 @@ const ModalOverlay: FC<ModalOverlayProps> = ({
 	gateId = 'g1',
 	children,
 	headerTitle,
-	preventClose = false,
 }) => {
 	const modalRef = useRef<HTMLDivElement>(null);
 	const { handleMouseDown, position, setPosition } = useDragging(modalRef);
@@ -28,20 +28,20 @@ const ModalOverlay: FC<ModalOverlayProps> = ({
 	const name = GATES[gateId].name;
 
 	const handleClose = () => {
-		if (preventClose) {
-			return;
-		}
+		dispatch(detachProbe('red'));
+		dispatch(detachProbe('black'));
 		dispatch(closeModal(id));
 		if (id === 'studentDelete') {
 			dispatch(clearCurrentStudent());
 		}
 	};
+
 	useEffect(() => {
 		if (modalRef.current) {
 			const rect = modalRef.current.getBoundingClientRect();
 			const x = (window.innerWidth - rect.width) / 2;
 			const y = (window.innerHeight - rect.height) / 2;
-			setPosition({ x: x, y: y });
+			setPosition({ x, y });
 		}
 	}, []);
 
@@ -60,7 +60,6 @@ const ModalOverlay: FC<ModalOverlayProps> = ({
 				headerTitle={headerTitle}
 				gateName={name}
 				handleClose={handleClose}
-				preventClose={preventClose}
 			/>
 			{children}
 		</div>

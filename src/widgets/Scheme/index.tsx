@@ -123,7 +123,7 @@ const Scheme: FC = () => {
 			{/* если щуп перетаскивается, его рендерит схема */}
 			{activeProbe && <Probe color={activeProbe} />}
 
-			{/* если щуп прикреплен к схеме, его рендерит схема */}
+			{/* если щуп прикреплен к схеме или попапу, его рендерит схема */}
 			{probeConnections['black'] && <Probe color="black" />}
 			{probeConnections['red'] && <Probe color="red" />}
 		</div>

@@ -23,9 +23,9 @@ import { PopupNote } from '../PopupNote';
 import { PopupSimulationComplete } from '../PopupSimulationComplete';
 import { PopupAbortSimulation } from '../PopupAbortSimulation';
 import { PopupAbortSimulationConfirm } from '../PopupAbortSimulationConfirm';
-import { PopupStartSimulation } from '../PopupStartSimulation';
 import { PopupNotAllMalfunctionsFound } from '../PopupNotAllMalfunctionsFound';
 import { useUserCookies } from '@/shared/hooks/useUserCookies';
+import { PopupInfo } from '../PopupInfo';
 
 interface IModals {
 	condition: boolean;
@@ -53,7 +53,9 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		abortSimulationConfirm,
 		note,
 		simulationComplete,
-		startSimulation,
+		infoStartSimulation,
+		infoSimulationIsActive,
+		infoUnfinished,
 		notAllMalfunctionsFound,
 	} = useAppSelector((state): ModalState => state.modal);
 
@@ -78,9 +80,11 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		simulationComplete ||
 		abortSimulation ||
 		abortSimulationConfirm ||
-		startSimulation ||
-		notAllMalfunctionsFound ||
-		note;
+		note ||
+		infoStartSimulation ||
+		infoSimulationIsActive ||
+		infoUnfinished ||
+		notAllMalfunctionsFound;
 
 	const gateId = useAppSelector(state => state.gate.activeGateId as string);
 	const student = useAppSelector(state => state.training.currentStudent);
@@ -215,11 +219,25 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			component: <PopupAbortSimulation />,
 		},
 		{
-			condition: startSimulation,
-			id: 'startSimulation',
+			condition: infoStartSimulation,
+			id: 'infoStartSimulation',
 			headerTitle: 'Симуляция запущена',
 			gateId: undefined,
-			component: <PopupStartSimulation />,
+			component: <PopupInfo content="start" />,
+		},
+		{
+			condition: infoSimulationIsActive,
+			id: 'infoSimulationIsActive',
+			headerTitle: 'Завершить симуляцию',
+			gateId: undefined,
+			component: <PopupInfo content="current" />,
+		},
+		{
+			condition: infoUnfinished,
+			id: 'infoUnfinished',
+			headerTitle: 'Незавершенные неисправности',
+			gateId: undefined,
+			component: <PopupInfo content="malfunctions" />,
 		},
 		{
 			condition: notAllMalfunctionsFound,

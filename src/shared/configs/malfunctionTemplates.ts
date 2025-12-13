@@ -150,6 +150,7 @@ const KIND_TO_TEMPLATE_MAP: Record<ElementKind, readonly MalfTpl[]> = {
 	lamp: MALF_TPL_LAMP,
 	starterContact: MALF_TPL_STARTER_CONTACT,
 	motorWinding: MALF_TPL_MOTOR_WINDING,
+	highResistance: [],
 } as const;
 
 // ======================== Генератор неисправностей ========================

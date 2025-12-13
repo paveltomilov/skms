@@ -1,6 +1,6 @@
 import {FC, Suspense} from 'react';
 import Loading from '@/app/loading';
-import StudentPage from '@/_pages/student-page';
+import StudentPage from '@/pages/student-page';
 
 const StudentDashboardPage:FC = () => {
     return (

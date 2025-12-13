@@ -21,14 +21,12 @@ export const PopupAbortSimulationConfirm: FC = () => {
 			// Получаем ID активной симуляции с бэкенда
 			const simulationId = await getActiveSimulation();
 
-			if (simulationId === null) {
-				showToast('Активная симуляция не найдена', 'error');
-				setIsLoading(false);
-				return;
+			// Если симуляция есть на бэкенде, останавливаем её
+			if (simulationId !== null) {
+				await stopSimulation(simulationId);
 			}
-
-			// Отправляем PATCH запрос на бэкенд для завершения симуляции
-			await stopSimulation(simulationId);
+			// Если симуляции нет на бэкенде (локальная симуляция),
+			// просто продолжаем с очисткой локального состояния
 		} catch (error) {
 			const errorMessage =
 				error instanceof Error

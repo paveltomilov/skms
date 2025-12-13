@@ -79,6 +79,7 @@ export async function postAuth(
 
 		return { success: false };
 	} catch (err: unknown) {
+		console.log(err);
 		let errorText: string | undefined;
 		if (axios.isAxiosError(err)) {
 			// Обработка ошибок подключения
@@ -86,8 +87,10 @@ export async function postAuth(
 			const isConnectionError =
 				err.code === 'ECONNREFUSED' ||
 				err.code === 'ERR_FAILED' ||
+				err.code === 'ERR_NETWORK' ||
 				errorMessage.includes('ERR_CONNECTION_REFUSED') ||
 				errorMessage.includes('ERR_FAILED') ||
+				errorMessage.includes('ERR_NETWORK') ||
 				errorMessage.includes('Network Error');
 
 			// Обработка CORS ошибок

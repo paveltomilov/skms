@@ -13,7 +13,7 @@ const GateWindow: FC = () => {
 
 	return (
 		<div className={styles.window}>
-			<Gate state={gate.states} shadow />
+			<Gate state={gate.states} shadow malfunctions={gate.malfunctions} />
 			<Window
 				color="blue"
 				data={windows.w237}

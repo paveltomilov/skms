@@ -48,8 +48,15 @@
 	.sidebarContent {
 		display: flex;
 		flex-direction: column;
-		gap: 4px;
-		margin-right: -20px;
+		justify-content: space-between;
+
+		.sidebarButtons {
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+			margin-right: -20px;
+		}
+
 	}
 }
 
@@ -59,10 +66,8 @@
 	cursor: pointer;
 	padding: 0;
 	margin: 0;
-	background: linear-gradient(
-		variables.$primary-color,
-		variables.$gray-disabled-color
-	);
+	background: linear-gradient(variables.$primary-color,
+			variables.$gray-disabled-color);
 	@include mixins.flex-center;
 	width: 20px;
 	height: 90px;
