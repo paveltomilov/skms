@@ -1,7 +1,13 @@
 'use client';
 
-import React, { ReactNode } from 'react';
-import { DndContext, DragEndEvent, DragStartEvent } from '@dnd-kit/core';
+import React, { ReactNode, useCallback, useEffect } from 'react';
+import {
+	DndContext,
+	DragEndEvent,
+	DragStartEvent,
+	UniqueIdentifier,
+} from '@dnd-kit/core';
+import { restrictToParentElement } from '@dnd-kit/modifiers';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import {
 	attachProbe,
@@ -9,7 +15,6 @@ import {
 	setActiveProb,
 } from '@/store/multimeterSlice';
 import { probeTipCollisionDetection } from '@/shared/lib/probeTipCollisionDetection';
-import { restrictToParentElement } from '@dnd-kit/modifiers';
 import { ProbeColor } from '@/shared/types/multimeter';
 import { useWebSocket } from '@/shared/hooks/useWebSocket';
 
@@ -23,45 +28,66 @@ export const Dnd: React.FC<Props> = ({ children }) => {
 	const probeConnections = useAppSelector(
 		state => state.multimeter.probeConnections,
 	);
+	const isAnyModalOpen = useAppSelector(state =>
+		Object.values(state.modal).some(Boolean),
+	);
 
-	const handleDragStart = ({ active }: DragStartEvent) => {
-		const probeColor = active.id as 'red' | 'black';
-		dispatch(setActiveProb(probeColor));
-		dispatch(detachProbe(probeColor));
-	};
-
-	const handleDragEnd = ({ active, over }: DragEndEvent) => {
-		const probeColor = active.id as ProbeColor;
-		if (over && over.data.current?.type === 'point') {
-			const pointId = over.id;
-
-			// Проверяем, не занята ли точка другим щупом
-			const isPointOccupied =
-				Object.values(probeConnections).includes(pointId);
-
-			if (!isPointOccupied) {
-				// Если если точка не занята - прикрепляем
-				dispatch(
-					attachProbe({
-						probeColor,
-						pointId,
-					}),
-				);
-			}
-		} else {
-			// Если щуп отпустили не над точкой - открепляем
+	const handleDragStart = useCallback(
+		({ active }: DragStartEvent) => {
+			const probeColor = active.id as ProbeColor;
+			dispatch(setActiveProb(probeColor));
 			dispatch(detachProbe(probeColor));
-		}
-		dispatch(setActiveProb(null));
-	};
+		},
+		[dispatch],
+	);
 
-	// подключение к вебсокету
+	const handleDragEnd = useCallback(
+		({ active, over }: DragEndEvent) => {
+			const probeColor = active.id as ProbeColor;
+			const dropData = over?.data.current;
+			const isPointTarget = dropData?.type === 'point';
+
+			if (isPointTarget && over) {
+				const pointId =
+					(dropData as { pointId?: UniqueIdentifier })
+						?.pointId ?? over.id;
+				const isPointOccupied = Object.values(
+					probeConnections,
+				).some(conn => conn && conn.pointId === pointId);
+
+				if (!isPointOccupied) {
+					dispatch(
+						attachProbe({
+							probeColor,
+							pointId,
+							dropId: over.id,
+						}),
+					);
+				}
+			} else {
+				dispatch(detachProbe(probeColor));
+			}
+
+			dispatch(setActiveProb(null));
+		},
+		[dispatch, probeConnections],
+	);
+
 	const { sendMessage } = useWebSocket();
 
-	sendMessage({
-		type: 'start_simulation',
-		studentId: '12345',
-	});
+	useEffect(() => {
+		sendMessage({
+			type: 'start_simulation',
+			studentId: '12345',
+		});
+	}, [sendMessage]);
+
+	useEffect(() => {
+		if (!isAnyModalOpen) return;
+		dispatch(detachProbe('red'));
+		dispatch(detachProbe('black'));
+		dispatch(setActiveProb(null));
+	}, [dispatch, isAnyModalOpen]);
 
 	return (
 		<DndContext

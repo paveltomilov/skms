@@ -22,8 +22,8 @@ import { PopupStudentDelete } from '../PopupStudentDelete';
 import { PopupNote } from '../PopupNote';
 import { PopupSimulationComplete } from '../PopupSimulationComplete';
 import { PopupAbortSimulation } from '../PopupAbortSimulation';
-import { PopupStartSimulation } from '../PopupStartSimulation';
 import { useUserCookies } from '@/shared/hooks/useUserCookies';
+import { PopupInfo } from '../PopupInfo';
 
 interface IModals {
 	condition: boolean;
@@ -50,7 +50,9 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		abortSimulation,
 		note,
 		simulationComplete,
-		startSimulation,
+		infoStartSimulation,
+		infoSimulationIsActive,
+		infoUnfinished,
 	} = useAppSelector((state): ModalState => state.modal);
 
 	const { role } = useUserCookies();
@@ -73,8 +75,10 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		studentDelete ||
 		simulationComplete ||
 		abortSimulation ||
-		startSimulation ||
-		note;
+		note ||
+		infoStartSimulation ||
+		infoSimulationIsActive ||
+		infoUnfinished;
 
 	const gateId = useAppSelector(state => state.gate.activeGateId as string);
 	const student = useAppSelector(state => state.training.currentStudent);
@@ -202,11 +206,25 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			component: <PopupAbortSimulation />,
 		},
 		{
-			condition: startSimulation,
-			id: 'startSimulation',
+			condition: infoStartSimulation,
+			id: 'infoStartSimulation',
 			headerTitle: 'Симуляция запущена',
 			gateId: undefined,
-			component: <PopupStartSimulation />,
+			component: <PopupInfo content='start' />,
+		},
+		{
+			condition: infoSimulationIsActive,
+			id: 'infoSimulationIsActive',
+			headerTitle: 'Завершить симуляцию',
+			gateId: undefined,
+			component: <PopupInfo content='current' />,
+		},
+		{
+			condition: infoUnfinished,
+			id: 'infoUnfinished',
+			headerTitle: 'Незавершенные неисправности',
+			gateId: undefined,
+			component: <PopupInfo content='malfunctions' />,
 		},
 	];
 	// отключаем скролл страницы

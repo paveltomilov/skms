@@ -1,6 +1,6 @@
 import { FC, Suspense } from 'react';
 import Loading from '../../loading';
-import RecoveryPage from '@/_pages/recovery';
+import RecoveryPage from '@/pages/recovery';
 
 const Recovery: FC = () => {
 	return (

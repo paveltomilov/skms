@@ -1,6 +1,6 @@
 import { FC, Suspense } from 'react';
 import Loading from '@/app/loading';
-import BoilerUnitPage from '@/_pages/boiler-unit';
+import BoilerUnitPage from '@/pages/boiler-unit';
 
 const Turbine: FC = () => {
 	return (

@@ -19,6 +19,7 @@ const config: StorybookConfig = {
 		config.resolve ??= {};
 		config.resolve.alias ??= {};
 		config.resolve.alias['@'] = path.resolve(import.meta.dirname, '../src');
+		config.resolve.alias['@/pages'] = path.resolve(import.meta.dirname, '../src/page-views');
 		return config;
 	},
 };

@@ -46,6 +46,7 @@ const KARightMid: FC<Props> = ({ className, windows }) => {
 						position="vertical"
 						textLeft={g16.name}
 						onClick={() => openGatePopup('g16')}
+						malfunctions={g16.malfunctions}
 					/>
 					<div className={styles.columnLeft__right_bottom}>
 						<Window data={windows.w204} right />

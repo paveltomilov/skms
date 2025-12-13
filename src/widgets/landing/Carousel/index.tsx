@@ -1,11 +1,13 @@
-import { FC, useState, useEffect, useRef } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import styles from './styles.module.scss';
 import type { Swiper as SwiperCore } from 'swiper';
-import ArrowLeftIcon from '../../IconSvg/arrowLeft';
-import ArrowRightIcon from '../../IconSvg/arrowRight';
+import ArrowLeftIcon from '../IconSvg/arrowLeft';
+import ArrowRightIcon from '../IconSvg/arrowRight';
+
+
 
 const Carousel: FC<{ slides: React.ReactNode[] }> = ({ slides }) => {
 	const [swiperInstance, setSwiperInstance] = useState<SwiperCore | null>(

@@ -2,7 +2,7 @@
 import React, { FC } from 'react';
 import styles from './styles.module.scss';
 import SectionTitle from '../SectionTitle';
-import Carousel from './Carousel';
+import Carousel from '../Carousel';
 import CardReviews from './CardReviews/index';
 
 const slides = [

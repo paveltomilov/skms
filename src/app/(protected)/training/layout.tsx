@@ -2,7 +2,7 @@
 
 import FooterPtk from '@/widgets/FooterPtk';
 import Sidebar from '@/widgets/Sidebar';
-import styles from '@/_pages/zra/styles.module.scss';
+import styles from '@/pages/zra/styles.module.scss';
 import HeaderTraining from '@/widgets/HeaderTraining';
 import AuthGuard from '@/shared/components/AuthGuard';
 

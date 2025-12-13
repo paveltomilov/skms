@@ -10,7 +10,6 @@ import { clearCurrentStudent } from '@/store/trainingSlice';
 import {
 	completeSimulation,
 	startSimulation,
-	resetSimulation,
 } from '@/store/simulationSlice';
 import { useToast } from '@/shared/hooks/useToast';
 import Toast from '@/shared/UI/Toast';
@@ -22,6 +21,7 @@ import {
 } from '@/store/circuitSlice';
 import { SIMULATION_MALFUNCTIONS } from '@/shared/configs/simulationMalfunctions';
 import { findElementByID } from '@/shared/utils/findElementByID/scheme';
+import SimulationControl from '@/entities/SimulationControl';
 
 const Sidebar = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -66,7 +66,7 @@ const Sidebar = () => {
 		});
 
 		// Открываем попап с уведомлением о запуске симуляции
-		dispatch(openModal('startSimulation'));
+		dispatch(openModal('infoStartSimulation'));
 	}, [simulation, dispatch, showToast]);
 
 	const handleLogCircuitState = useCallback(() => {
@@ -110,20 +110,10 @@ const Sidebar = () => {
 		}
 	}, [circuit, simulation]);
 
-	const handleStopSimulation = useCallback(() => {
-		// Деактивируем все неисправности из симуляции
-		if (simulation.originalMalfunctions.length > 0) {
-			simulation.originalMalfunctions.forEach(malfunction => {
-				dispatch(deactivateMalfunction(malfunction.id));
-			});
-		}
-
-		// Сбрасываем состояние симуляции до дефолтного
-		dispatch(resetSimulation());
-
+	const handleStopSimulation = () => {
 		// Открываем попап об остановке симуляции
 		dispatch(openModal('abortSimulation'));
-	}, [simulation, dispatch]);
+	};
 
 	const handleFinishSimulation = useCallback(() => {
 		// Сохраняем simulationId перед сбросом для редиректа
@@ -159,78 +149,82 @@ const Sidebar = () => {
 
 			<div className={`${styles.sidebar} ${isOpen && styles.open}`}>
 				<div className={styles.sidebarContent}>
-					<Button
-						width={90}
-						height={24}
-						aria-label="Главная"
-						text="Главная"
-						className={styles.buttonText}
-						href="/"
-						onClick={() => dispatch(clearCurrentStudent())}
-					/>
-
-					{role != 'student' && (
+					<div className={styles.sidebarButtons}>
 						<Button
 							width={90}
 							height={24}
-							aria-label={
-								isAdmin ? 'Список препод.' : 'Список студ.'
-							}
-							text={isAdmin ? 'Список препод.' : 'Список студ.'}
-							className={styles.buttonText__list}
-							href="/training"
+							aria-label="Главная"
+							text="Главная"
+							className={styles.buttonText}
+							href="/"
 							onClick={() => dispatch(clearCurrentStudent())}
 						/>
-					)}
 
-					<Button
-						width={90}
-						height={24}
-						aria-label="ПТК"
-						text="ПТК"
-						className={styles.buttonText}
-						href="/ptk"
-						onClick={() => dispatch(clearCurrentStudent())}
-					/>
+						<Button
+							width={90}
+							height={24}
+							aria-label="ПТК"
+							text="ПТК"
+							className={styles.buttonText}
+							href="/ptk"
+							onClick={() => dispatch(clearCurrentStudent())}
+						/>
+						{role != 'student' && (
+							<Button
+								width={90}
+								height={24}
+								aria-label={
+									isAdmin ? 'Список препод.' : 'Список студ.'
+								}
+								text={isAdmin ? 'Список препод.' : 'Список студ.'}
+								className={styles.buttonText__list}
+								href="/training"
+								onClick={() => dispatch(clearCurrentStudent())}
+							/>
+						)}
 
-					<Button
-						width={90}
-						height={34}
-						aria-label="Начать симуляцию"
-						text="Начать симуляцию"
-						className={styles.buttonText}
-						disabled={simulation.simulationId !== null}
-						onClick={handleStartSimulation}
-					/>
+						<Button
+							width={90}
+							height={34}
+							aria-label="Начать симуляцию"
+							text="Начать симуляцию"
+							className={styles.buttonText}
+							disabled={simulation.simulationId !== null}
+							onClick={handleStartSimulation}
+						/>
 
-					<Button
-						width={90}
-						height={34}
-						aria-label="Остановить симуляцию"
-						text="Остановить симуляцию"
-						className={styles.buttonText}
-						disabled={simulation.simulationId === null}
-						onClick={handleStopSimulation}
-					/>
+						<Button
+							width={90}
+							height={34}
+							aria-label="Остановить симуляцию"
+							text="Остановить симуляцию"
+							className={styles.buttonText}
+							disabled={simulation.simulationId === null}
+							onClick={handleStopSimulation}
+						/>
 
-					<Button
-						width={90}
-						height={34}
-						aria-label="Завершить"
-						text="Завершить"
-						className={styles.buttonText}
-						disabled={simulation.simulationId === null}
-						onClick={handleFinishSimulation}
-					/>
+						<Button
+							width={90}
+							height={34}
+							aria-label="Завершить"
+							text="Завершить"
+							className={styles.buttonText}
+							disabled={simulation.simulationId === null}
+							onClick={handleFinishSimulation}
+						/>
 
-					<Button
-						width={90}
-						height={34}
-						aria-label="Лог схемы"
-						text="Лог схемы"
-						className={styles.buttonText}
-						onClick={handleLogCircuitState}
-					/>
+						<Button
+							width={90}
+							height={34}
+							aria-label="Лог схемы"
+							text="Лог схемы"
+							className={styles.buttonText}
+							onClick={handleLogCircuitState}
+						/>
+
+
+					</div>
+					{role === 'student' && <SimulationControl />}
 				</div>
 				<button
 					onClick={handleToggleSidebar}

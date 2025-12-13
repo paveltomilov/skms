@@ -49,6 +49,7 @@ const TAleftmid: FC<Props> = ({ className, windows }) => {
 						textBottom={g2.name}
 						className={styles.gate}
 						onClick={() => openGatePopup('g2')}
+						malfunctions={g2.malfunctions}
 					/>
 
 					<div
@@ -91,6 +92,7 @@ const TAleftmid: FC<Props> = ({ className, windows }) => {
 							textLeft={g3.name}
 							onClick={() => openGatePopup('g3')}
 							className={styles['containerFour__window-gate']}
+							malfunctions={g3.malfunctions}
 						/>
 					</div>
 
