@@ -2,6 +2,7 @@ import { User } from '@/shared/types/users';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface TrainingState {
+	studentId: number | null;
 	malfunctionCurrent: string;
 	currentStudent: User | null;
 	studentId: number | null;

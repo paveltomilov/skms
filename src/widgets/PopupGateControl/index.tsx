@@ -24,7 +24,7 @@ export const PopupGateControl: FC = () => {
 
 	return (
 		<div className={styles.popup}>
-			<div className={styles.message}>3и до слива из ПВД-5 в конд-р</div>
+			<div className={styles.message}>{gate.description}</div>
 			<div className={styles.diagnostic}>
 				<div className={styles.hash}>#</div>
 				<Button
