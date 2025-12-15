@@ -2,15 +2,12 @@
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-
 	width: var(--w);
 	height: var(--h);
 	border-radius: var(--radius);
-
 	background-color: var(--lan-bright-cyan---lime-green);
 	color: var(--color);
-
-	border: none;
+	border: var(--border, none);
 	cursor: pointer;
 	transition: background-color 0.2s, outline 0.2s;
 

@@ -135,3 +135,10 @@
 	top: 70px;
 	color: var(--basic-error);
 }
+
+.buttonDisabled {
+	background: #ffffff !important;
+	color: var(--lan-very-dark-gray) !important;
+	border-color: var(--lan-very-dark-gray) !important;
+	cursor: not-allowed !important;
+}

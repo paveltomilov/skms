@@ -44,6 +44,7 @@ const Button: React.FC<ButtonProps> = ({
 		'--bg': bgColor,
 		'--w': `${width}px`,
 		'--h': `${height}px`,
+
 		'--radius': `${radius ?? height / 2}px`,
 		...(hoverBgColor && { '--bg-hover': hoverBgColor }),
 		...(focusBgColor && { '--bg-focus': focusBgColor }),

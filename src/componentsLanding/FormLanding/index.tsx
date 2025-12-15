@@ -1,6 +1,13 @@
 'use client';
 
-import { useState, ChangeEvent, useCallback, useRef, useEffect } from 'react';
+import {
+	useState,
+	ChangeEvent,
+	useCallback,
+	useRef,
+	useEffect,
+	useMemo,
+} from 'react';
 import axios from 'axios';
 
 import Popup from '../Popup';
@@ -107,15 +114,11 @@ function FormLanding() {
 	});
 
 	const [emailError, setEmailError] = useState<string | null>(null);
-	const [phoneError, setPhoneError] = useState<string | null>(null);
-	const [submitted, setSubmitted] = useState(false);
-	const [submitting, setSubmitting] = useState(false);
 	const timerRef = useRef<NodeJS.Timeout | null>(null);
 
 	const startTimer = useCallback(() => {
 		if (timerRef.current) clearTimeout(timerRef.current);
 		timerRef.current = setTimeout(() => {
-			setSubmitted(false);
 			setPopup(prev => ({ ...prev, visible: false }));
 		}, 4000);
 	}, []);
@@ -129,13 +132,18 @@ function FormLanding() {
 	const showPopup = (msg: string, variant: PopupState['variant'] = 'info') =>
 		setPopup({ visible: true, message: msg, variant });
 
+	const isFormValid = useMemo(() => {
+		const allFieldsFilled = Object.values(form).some(v => v.trim() !== '');
+		return allFieldsFilled && consent;
+	}, [form, consent]);
+
 	const handleInputChange = useCallback(
 		(key: keyof FormValues) => (e: ChangeEvent<HTMLInputElement>) => {
+			// const rawValue = e.target.value;
+			// const value =
+			// 	key === 'phone' ? rawValue.replace(/\D/g, '') : rawValue;
 			const rawValue = e.target.value;
-			const rawDigits =
-				key === 'phone' ? rawValue.replace(/\D/g, '') : rawValue;
-
-			const value = key === 'phone' ? rawDigits.slice(0, 11) : rawValue;
+			const value = key === 'phone' ? rawValue : rawValue;
 
 			setForm(prev => ({ ...prev, [key]: value }));
 
@@ -148,12 +156,6 @@ function FormLanding() {
 					setEmailError('Email введен некорректно');
 				else setEmailError(null);
 			}
-
-			if (key === 'phone') {
-				if (!value.startsWith('7'))
-					setPhoneError('Номер должен начинаться с 7');
-				else setPhoneError(null);
-			}
 		},
 
 		[],
@@ -161,25 +163,7 @@ function FormLanding() {
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-
-		if (
-			!form.name.trim() ||
-			!form.email.trim() ||
-			!form.company.trim() ||
-			!form.phone.trim()
-		) {
-			showPopup('Заполните все поля формы');
-			return;
-		}
-
-		if (!consent) {
-			showPopup(
-				'Необходимо дать согласие на обработку персональных данных',
-			);
-			return;
-		}
-
-		setSubmitting(true);
+		if (!isFormValid) return;
 
 		const payload = {
 			full_name: form.name,
@@ -200,7 +184,6 @@ function FormLanding() {
 				'success',
 			);
 
-			setSubmitted(true);
 			startTimer();
 		} catch (err) {
 			console.error(err);
@@ -210,8 +193,6 @@ function FormLanding() {
 				'Ошибка при отправке заявки. Пожалуйста попробуйте позже',
 				'error',
 			);
-		} finally {
-			setSubmitting(false); // запрос завершён
 		}
 	};
 
@@ -231,31 +212,24 @@ function FormLanding() {
 							onChange={handleInputChange(key)}
 							type={type}
 							placeholder={placeholder}
-							error={
-								key === 'email'
-									? emailError
-									: key === 'phone'
-									? phoneError
-									: undefined
-							}
+							error={key === 'email' ? emailError : undefined}
 						/>
 					))}
 				</div>
 
 				<div className={styles.form__sogl}>
-					<div className={styles.form__button}>
-						<Button
-							text={submitted ? 'Отправлено' : 'отправить'}
-							type="submit"
-							disabled={submitting || submitted}
-							color="var(--lan-very-dark-mostly-black-blue)"
-							bgColor="var(--lan-bright-cyan---lime-green)"
-							width={604}
-							height={40}
-							radius={4}
-							border="1px solid var(--lan-very-dark-gray)"
-						/>
-					</div>
+					<Button
+						className={`${styles.form__button} ${
+							!isFormValid ? styles.buttonDisabled : ''
+						}`}
+						text={'ОТПРАВИТЬ'}
+						type="submit"
+						disabled={!isFormValid}
+						width={604}
+						height={40}
+						radius={4}
+						border="1px solid var(--lan-very-dark-gray)"
+					/>
 					<ConsentCheckbox value={consent} onChange={setConsent} />
 				</div>
 			</form>
