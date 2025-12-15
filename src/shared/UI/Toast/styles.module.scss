@@ -1,0 +1,37 @@
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
+
+.toast {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	padding: 16px 24px;
+	border-radius: 8px;
+	box-shadow: variables.$pop-up-box-shadow;
+	z-index: 10000;
+	max-width: 400px;
+	word-wrap: break-word;
+	transition: opacity 0.3s ease, transform 0.3s ease;
+	transform: translateX(0);
+	opacity: 1;
+
+	&_hidden {
+		opacity: 0;
+		transform: translateX(100%);
+	}
+
+	&_error {
+		background-color: #f44336;
+		color: white;
+	}
+
+	&_success {
+		background-color: #4caf50;
+		color: white;
+	}
+
+	&_info {
+		background-color: #2196f3;
+		color: white;
+	}
+}

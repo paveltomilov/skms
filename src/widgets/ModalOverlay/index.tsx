@@ -6,12 +6,14 @@ import { useDragging } from '@/shared/hooks/useDragging';
 import { GATES } from '@/shared/configs/gate';
 import ModalHeader from '@/entities/ModalHeader';
 import { clearCurrentStudent } from '@/store/trainingSlice';
+import { detachProbe } from '@/store/multimeterSlice';
 
 interface ModalOverlayProps {
 	id: Modals;
 	gateId?: string;
 	children: React.ReactNode;
 	headerTitle?: string;
+	preventClose?: boolean;
 }
 
 const ModalOverlay: FC<ModalOverlayProps> = ({
@@ -25,12 +27,21 @@ const ModalOverlay: FC<ModalOverlayProps> = ({
 	const dispatch = useAppDispatch();
 	const name = GATES[gateId].name;
 
+	const handleClose = () => {
+		dispatch(detachProbe('red'));
+		dispatch(detachProbe('black'));
+		dispatch(closeModal(id));
+		if (id === 'studentDelete') {
+			dispatch(clearCurrentStudent());
+		}
+	};
+
 	useEffect(() => {
 		if (modalRef.current) {
 			const rect = modalRef.current.getBoundingClientRect();
 			const x = (window.innerWidth - rect.width) / 2;
 			const y = (window.innerHeight - rect.height) / 2;
-			setPosition({ x: x, y: y });
+			setPosition({ x, y });
 		}
 	}, []);
 
@@ -48,12 +59,7 @@ const ModalOverlay: FC<ModalOverlayProps> = ({
 				handleMouseDown={handleMouseDown}
 				headerTitle={headerTitle}
 				gateName={name}
-				handleClose={() => {
-					dispatch(closeModal(id));
-					if (id === 'studentDelete') {
-						dispatch(clearCurrentStudent());
-					}
-				}}
+				handleClose={handleClose}
 			/>
 			{children}
 		</div>

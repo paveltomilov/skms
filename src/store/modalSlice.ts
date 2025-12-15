@@ -20,8 +20,14 @@ export type Modals =
 	| 'studentStatistics'
 	| 'studentCreate'
 	| 'studentDelete'
+	| 'note'
+	| 'simulationComplete'
 	| 'abortSimulation'
-	| 'note';
+	| 'note'
+	| 'infoStartSimulation'
+	| 'infoSimulationIsActive' 
+	| 'infoUnfinished'
+	;
 
 export type ModalState = Record<Modals, boolean>;
 
@@ -47,6 +53,10 @@ const initialState: ModalState = {
 	studentDelete: false,
 	abortSimulation: false,
 	note: false,
+	simulationComplete: false,
+	infoStartSimulation: false,
+	infoSimulationIsActive: false,
+	infoUnfinished: false,
 };
 
 const modalSlice = createSlice({

@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import styles from './styles.module.scss';
-import Button from '@/componentsLanding/Button';
+import Button from '@/widgets/landing/Button';
 
 interface CardProps {
 	title: string;
@@ -50,7 +50,7 @@ const CardReviews: FC<CardProps> = ({
 							onClick={() => setExpanded(prev => !prev)}
 							width={expanded ? 62 : 96}
 							height={24}
-							text={expanded ? 'Скрыть' : 'Читать еще'}
+							text={expanded ? 'Свернуть' : 'Читать ещё'}
 						/>
 					)}
 				</div>

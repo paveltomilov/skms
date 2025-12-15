@@ -2,7 +2,8 @@
 @use '@/shared/scss/variables.module';
 
 .popup {
-	width: 362px;
+	width: 552px;
+	height: 600px;
 	background: variables.$primary-color;
 
 	&__wrapper {

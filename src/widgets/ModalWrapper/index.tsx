@@ -20,8 +20,10 @@ import { PopupStudentStatistics } from '../PopupStudetnStatistics';
 import { PopupStudentCreate } from '../PopupStudentCreate';
 import { PopupStudentDelete } from '../PopupStudentDelete';
 import { PopupNote } from '../PopupNote';
-import { useUserCookies } from '@/shared/hooks/useUserCookies';
+import { PopupSimulationComplete } from '../PopupSimulationComplete';
 import { PopupAbortSimulation } from '../PopupAbortSimulation';
+import { useUserCookies } from '@/shared/hooks/useUserCookies';
+import { PopupInfo } from '../PopupInfo';
 
 interface IModals {
 	condition: boolean;
@@ -47,6 +49,10 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		studentDelete,
 		abortSimulation,
 		note,
+		simulationComplete,
+		infoStartSimulation,
+		infoSimulationIsActive,
+		infoUnfinished,
 	} = useAppSelector((state): ModalState => state.modal);
 
 	const { role } = useUserCookies();
@@ -67,8 +73,13 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		studentStatistics ||
 		studentCreate ||
 		studentDelete ||
+		simulationComplete ||
 		abortSimulation ||
-		note;
+		note ||
+		infoStartSimulation ||
+		infoSimulationIsActive ||
+		infoUnfinished;
+
 	const gateId = useAppSelector(state => state.gate.activeGateId as string);
 	const student = useAppSelector(state => state.training.currentStudent);
 
@@ -181,11 +192,39 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			component: <PopupNote />,
 		},
 		{
+			condition: simulationComplete,
+			id: 'simulationComplete',
+			headerTitle: 'Завершение симуляции',
+			gateId: undefined,
+			component: <PopupSimulationComplete />,
+		},
+		{
 			condition: abortSimulation,
 			id: 'abortSimulation',
-			headerTitle: 'Прервать попытку',
+			headerTitle: 'Прервать симуляцию',
 			gateId: undefined,
 			component: <PopupAbortSimulation />,
+		},
+		{
+			condition: infoStartSimulation,
+			id: 'infoStartSimulation',
+			headerTitle: 'Симуляция запущена',
+			gateId: undefined,
+			component: <PopupInfo content='start' />,
+		},
+		{
+			condition: infoSimulationIsActive,
+			id: 'infoSimulationIsActive',
+			headerTitle: 'Завершить симуляцию',
+			gateId: undefined,
+			component: <PopupInfo content='current' />,
+		},
+		{
+			condition: infoUnfinished,
+			id: 'infoUnfinished',
+			headerTitle: 'Незавершенные неисправности',
+			gateId: undefined,
+			component: <PopupInfo content='malfunctions' />,
 		},
 	];
 	// отключаем скролл страницы
@@ -201,12 +240,40 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		};
 	}, [isOne]);
 
+	// Блокировка закрытия модального окна setSimulation через Esc
+	useEffect(() => {
+		if (!setSimulation) return;
+
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (e.key === 'Escape') {
+				e.preventDefault();
+				e.stopPropagation();
+			}
+		};
+
+		window.addEventListener('keydown', handleKeyDown);
+		return () => {
+			window.removeEventListener('keydown', handleKeyDown);
+		};
+	}, [setSimulation]);
+
+	// Обработчик клика вне модального окна
+	const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
+		// Блокируем закрытие для setSimulation
+		if (setSimulation) {
+			e.stopPropagation();
+			return;
+		}
+		// Для остальных модальных окон можно добавить логику закрытия, если нужно
+	};
+
 	return (
 		<div
 			className={cn(className, styles.modal__displayNone, {
 				[styles.modal]: isOne,
 				[styles.modal_isBlur]: automatic,
 			})}
+			onClick={handleOverlayClick}
 		>
 			{modals.map(
 				({ condition, id, headerTitle, gateId, component }) =>
@@ -216,6 +283,7 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 							gateId={gateId}
 							id={id}
 							headerTitle={headerTitle}
+							preventClose={id === 'setSimulation'}
 						>
 							{component}
 						</ModalOverlay>

@@ -7,16 +7,55 @@
 	align-items: center;
 	justify-content: center;
 	z-index: 1;
+
+	&::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		margin: auto;
+		width: 100%;
+		height: 100%;
+		border-radius: 50%;
+		border: 1.5px solid transparent; // базовая подложка поверх внешнего кольца
+		pointer-events: none;
+		z-index: 0;
+		transform: scale(1);
+		transition: transform 0.18s ease, border-color 0.18s ease,
+			border-width 0.18s ease;
+	}
 }
 
 .icon {
+	position: relative;
+	z-index: 1; // svg над псевдоэлементом
 	transform: rotate(0);
-	transition: transform 0.3s ease-in;
+	transition: transform 0.2s ease;
 	cursor: url('/images/CURSOR_screwdriver.png') 4 40, pointer;
+
+	:global(path:first-of-type) {
+		transform-origin: center;
+		transform-box: fill-box;
+		transition: transform 0.18s ease, stroke 0.18s ease,
+			stroke-width 0.18s ease;
+	}
 
 	&_open {
 		transform: rotate(-135deg);
 	}
+}
+
+.wrapperProbeOver::before {
+	transform: scale(1.06);
+	border-width: 2px;
+	border-color: #111;
+}
+
+.wrapperProbeOver .icon :global(path:first-of-type) {
+	transform: scale(1.08);
+	transform-origin: center;
+	transform-box: fill-box;
+	stroke: #111;
+	stroke-width: 2px;
 }
 
 .top,

@@ -97,3 +97,4 @@ export const initialState: LoginFormData = {
 	first_name: '',
 	last_name: '',
 };
+

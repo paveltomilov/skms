@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import Image from 'next/image';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import { openModal } from '@/store/modalSlice';
@@ -27,11 +28,13 @@ const UserCard: FC<Props> = ({ className, data }) => {
 	return (
 		<div className={cn(styles.card, className)}>
 			<div className={styles.card__profile}>
-				<img
+				<Image
 					className={styles.card__profile__photo}
 					src="/images/user_icon.png"
 					alt="Фото пользователя"
-				></img>
+					width={80}
+					height={80}
+				/>
 				<div className={styles.card__profile__name}>
 					{data.first_name} {data.last_name}
 				</div>
@@ -67,8 +70,7 @@ const UserCard: FC<Props> = ({ className, data }) => {
 							onClick={() => {
 								dispatch(setCurrentStudent(data));
 								dispatch(openModal('studentStatistics'));
-							}
-							}
+							}}
 						/>
 					</>
 				) : null}

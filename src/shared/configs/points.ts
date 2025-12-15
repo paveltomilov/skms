@@ -156,20 +156,6 @@ function enrichPointsWithElements(
 }
 
 /**
- * Извлекает состояния из объектов точек.
- * @param SCHEME_POINTS - объект с точками схемы
- * @returns объект с состояниями точек (ключ - ID точки, значение - состояние)
- */
-function extractStates(SCHEME_POINTS: Record<string, IPoint>) {
-	const result: Record<string, boolean> = {};
-
-	for (const key in SCHEME_POINTS) {
-		result[key] = SCHEME_POINTS[key].state;
-	}
-	return result;
-}
-
-/**
  * Вычисляет состояние точек на основе элементов, подключенных к ним.
  * Точка считается активной (true), если хотя бы один элемент, подключенный к ней как endPoint,
  * имеет активный startPoint (true) и сопротивление меньше высокого сопротивления.
@@ -243,6 +229,20 @@ export function calculatePointsState(
 		result[pointId] = hasActiveElement;
 	}
 
+	return result;
+}
+
+/**
+ * Извлекает состояния из объектов точек.
+ * @param SCHEME_POINTS - объект с точками схемы
+ * @returns объект с состояниями точек (ключ - ID точки, значение - состояние)
+ */
+function extractStates(SCHEME_POINTS: Record<string, IPoint>) {
+	const result: Record<string, boolean> = {};
+
+	for (const key in SCHEME_POINTS) {
+		result[key] = SCHEME_POINTS[key].state;
+	}
 	return result;
 }
 
@@ -411,8 +411,6 @@ export const SCHEME_POINTS: Record<string, IPoint> = {
 	[JUNCTION_BOX_OUTPUT_POINT_PHASE_C_ID]: { state: false },
 
 	// Control circuit internal points (без координат для отображения)
-	// CONTROL_NEUTRAL_POINT_ID уже определен выше как CONTROL_CIRCUIT_NEUTRAL_ID
-
 	[OPEN_NDI_NOT_OPEN_INPUT_POINT_ID]: { state: false },
 	[OPEN_NDI_NOT_OPEN_OUTPUT_POINT_ID]: { state: false },
 	[OPEN_CMD_PTK_BRANCH_POINT_ID]: { state: false },
@@ -442,31 +440,6 @@ export const SCHEME_POINTS: Record<string, IPoint> = {
 export const SCHEME_POINTS_BASE: Record<string, IPoint> =
 	enrichPointsWithElements(SCHEME_POINTS);
 
-/**
- * Вычисляет начальное состояние точек на основе начальной схемы.
- * Используется для инициализации Redux store.
- * @returns объект с начальными состояниями точек
- */
-function calculateInitialPointsState(): Record<string, boolean> {
-	// Создаем объект с начальными состояниями из статических значений
-	const initialPoints = extractStates(SCHEME_POINTS_BASE);
-
-	// Устанавливаем базовые точки
-	initialPoints[PHASE_A_POINT_ID] = true;
-	initialPoints[PHASE_B_POINT_ID] = true;
-	initialPoints[PHASE_C_POINT_ID] = true;
-	initialPoints[POWER_CIRCUIT_NEUTRAL_ID] = false;
-	initialPoints[CONTROL_CIRCUIT_NEUTRAL_ID] = false;
-
-	// Вычисляем состояния остальных точек на основе начальной схемы
-	const calculatedState = calculatePointsState(
-		initialPoints,
-		initialStateScheme,
-	);
-
-	return calculatedState;
-}
-
 // Состояния точек (только boolean значения без координат и элементов)
 // Вычисляются на основе начальной схемы перед помещением в Redux store
-export const pointsState = calculateInitialPointsState();
+export const pointsState = extractStates(SCHEME_POINTS_BASE);

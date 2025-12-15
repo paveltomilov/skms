@@ -5,25 +5,39 @@ import Button from '@/shared/UI/Button';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { closeAllModal } from '@/store/modalSlice';
+import { useAppSelector } from '@/shared/hooks/store';
+import { deactivateMalfunction } from '@/store/circuitSlice';
+import { resetSimulation } from '@/store/simulationSlice';
 
 export const PopupAbortSimulation: FC = () => {
 	const [isAbort, setIsAbort] = useState<boolean>(false);
 	const router = useRouter();
 	const dispatch = useDispatch();
+	const simulation = useAppSelector(state => state.simulation);
 
-	const handleChoose = useCallback(() => {
+	const handleCancellation = () => {
+		dispatch(closeAllModal());
+	};
+
+	const handleStopSimulation = useCallback(() => {
+		// Деактивируем все неисправности из симуляции
+		if (simulation.originalMalfunctions.length > 0) {
+			simulation.originalMalfunctions.forEach(malfunction => {
+				dispatch(deactivateMalfunction(malfunction.id));
+			});
+		}
+
+		// Сбрасываем состояние симуляции до дефолтного
+		dispatch(resetSimulation());
+
 		setIsAbort(true);
 		const timer = setTimeout(() => {
 			dispatch(closeAllModal());
 			router.push('/ptk');
 		}, 2000);
-
 		return () => clearTimeout(timer);
-	}, [dispatch, router]);
 
-	const handleCancellation = () => {
-		dispatch(closeAllModal());
-	};
+	}, [simulation, dispatch, router]);
 
 	return (
 		<div className={styles.popup}>
@@ -38,7 +52,7 @@ export const PopupAbortSimulation: FC = () => {
 							width={276}
 							height={55}
 							text="Да, прервать"
-							onClick={handleChoose}
+							onClick={handleStopSimulation}
 						/>
 						<Button
 							className={styles.button}
