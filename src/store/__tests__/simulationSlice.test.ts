@@ -1,7 +1,7 @@
 import simulationReducer, {
 	startSimulation,
 	markMalfunctionAsFound,
-	completeSimulation,
+	resetSimulation,
 	SimulationState,
 } from '../simulationSlice';
 import { Malfunction } from '@/shared/types/scheme';
@@ -105,7 +105,7 @@ describe('simulationSlice', () => {
 				foundMalfunctionIds: ['m1', 'm2', 'm3'],
 			};
 
-			const action = completeSimulation();
+			const action = resetSimulation();
 			const newState = simulationReducer(stateWithSimulation, action);
 
 			expect(newState.simulationId).toBeNull();

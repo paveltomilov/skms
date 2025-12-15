@@ -19,7 +19,7 @@ import {
 } from '@/store/gateSlice';
 import { setVoltagePoints } from '@/store/pointsSlice';
 import { GATE_STATE_TYPE } from '@/shared/types/gate';
-import { setSimulation, finishSimulation } from '@/store/simulationSlice';
+import { setSimulation, resetSimulation } from '@/store/simulationSlice';
 
 /**
  * Обработчик входящих WebSocket сообщений
@@ -83,8 +83,8 @@ export function createMessageHandler(dispatch: AppDispatch) {
 					| SimulationFinishedTeacherMessage;
 
 				// Обрабатываем завершение симуляции
-				// finishSimulation не принимает параметры, просто очищает состояние
-				dispatch(finishSimulation());
+				// resetSimulation возвращает начальное состояние
+				dispatch(resetSimulation());
 
 				console.info(
 					'[WebSocket] Симуляция завершена:',

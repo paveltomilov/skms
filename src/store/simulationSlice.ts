@@ -24,7 +24,7 @@ interface SetSimulationPayload {
 	gate?: string;
 	malfunctions: Array<{
 		malfunction_id: string;
-		description: string;
+		description?: string;
 	}>;
 }
 
@@ -64,20 +64,8 @@ const simulationSlice = createSlice({
 				state.foundMalfunctionIds.push(malfunctionId);
 			}
 		},
-		finishSimulation: state => {
-			// Завершение симуляции - очищаем состояние
-			state.simulationId = null;
-			state.gate = null;
-			state.originalMalfunctions = [];
-			state.foundMalfunctionIds = [];
-		},
-		completeSimulation: state => {
-			state.simulationId = null;
-			state.gate = null;
-			state.originalMalfunctions = [];
-			state.foundMalfunctionIds = [];
-		},
 		resetSimulation: () => {
+			// Сброс/завершение симуляции - возвращаем начальное состояние
 			return initialState;
 		},
 	},
@@ -87,8 +75,6 @@ export const {
 	startSimulation,
 	setSimulation,
 	markMalfunctionAsFound,
-	finishSimulation,
-	completeSimulation,
 	resetSimulation,
 } = simulationSlice.actions;
 
