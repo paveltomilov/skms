@@ -5,37 +5,15 @@ import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import { closeModal, openModal } from '@/store/modalSlice';
 import { resetSimulation } from '@/store/simulationSlice';
 import { deactivateMalfunction } from '@/store/circuitSlice';
-import { stopSimulation, getActiveSimulation } from '@/shared/api';
-import { useToast } from '@/shared/hooks/useToast';
+import { setActiveGate } from '@/store/gateSlice';
 
 export const PopupAbortSimulationConfirm: FC = () => {
 	const dispatch = useAppDispatch();
 	const simulation = useAppSelector(state => state.simulation);
-	const { showToast } = useToast();
 	const [isLoading, setIsLoading] = useState(false);
 
 	const handleConfirm = async () => {
 		setIsLoading(true);
-
-		try {
-			// Получаем ID активной симуляции с бэкенда
-			const simulationId = await getActiveSimulation();
-
-			// Если симуляция есть на бэкенде, останавливаем её
-			if (simulationId !== null) {
-				await stopSimulation(simulationId);
-			}
-			// Если симуляции нет на бэкенде (локальная симуляция),
-			// просто продолжаем с очисткой локального состояния
-		} catch (error) {
-			const errorMessage =
-				error instanceof Error
-					? error.message
-					: 'Не удалось прервать симуляцию';
-			showToast(errorMessage, 'error');
-			setIsLoading(false);
-			return;
-		}
 
 		// Деактивируем все неисправности из симуляции
 		if (simulation.originalMalfunctions.length > 0) {
@@ -44,13 +22,18 @@ export const PopupAbortSimulationConfirm: FC = () => {
 			});
 		}
 
+		// Сбрасываем активную задвижку
+		dispatch(setActiveGate(null));
+
 		// Сбрасываем состояние симуляции до дефолтного
+		// Используем resetSimulation(), который возвращает initialState
+		// Это должно установить simulationId в null, что разблокирует кнопку "Начать симуляцию"
 		dispatch(resetSimulation());
 
 		// Закрываем окно подтверждения
 		dispatch(closeModal('abortSimulationConfirm'));
 
-		// Открываем финальное окно
+		// Открываем финальное окно с сообщением о негативном результате
 		dispatch(openModal('abortSimulation'));
 		setIsLoading(false);
 	};

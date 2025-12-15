@@ -13,13 +13,24 @@ export async function getActiveSimulation(): Promise<number | null> {
 			`${urlBase}/simulation/`,
 		);
 		const simulations = response.data;
-		
+
 		// Находим активную симуляцию
 		const activeSimulation = simulations.find(sim => sim.active === true);
-		
+
 		return activeSimulation ? activeSimulation.id : null;
 	} catch (error) {
 		const axiosError = error as AxiosError;
+
+		// Если 403 или 404 - это нормальная ситуация (нет активной симуляции или нет доступа)
+		// Возвращаем null, чтобы продолжить с локальной очисткой состояния
+		if (
+			axiosError.response?.status === 403 ||
+			axiosError.response?.status === 404
+		) {
+			return null;
+		}
+
+		// Для других ошибок пробрасываем исключение
 		const message = axiosError.response?.data
 			? typeof axiosError.response.data === 'string'
 				? axiosError.response.data
@@ -28,5 +39,3 @@ export async function getActiveSimulation(): Promise<number | null> {
 		throw new Error(message);
 	}
 }
-
-

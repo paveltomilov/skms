@@ -3,7 +3,8 @@
 import { FC, JSX, useEffect } from 'react';
 import cn from 'classnames';
 import styles from './styles.module.scss';
-import { useAppSelector } from '@/shared/hooks/store';
+import { useAppSelector, useAppDispatch } from '@/shared/hooks/store';
+import { closeModal } from '@/store/modalSlice';
 import { PopupGateControl } from '../PopupGateControl';
 import PopupGateValves from '../PopupGateValves';
 import ModalOverlay from '../ModalOverlay';
@@ -20,7 +21,6 @@ import { PopupStudentStatistics } from '../PopupStudetnStatistics';
 import { PopupStudentCreate } from '../PopupStudentCreate';
 import { PopupStudentDelete } from '../PopupStudentDelete';
 import { PopupNote } from '../PopupNote';
-import { PopupSimulationComplete } from '../PopupSimulationComplete';
 import { PopupAbortSimulation } from '../PopupAbortSimulation';
 import { PopupAbortSimulationConfirm } from '../PopupAbortSimulationConfirm';
 import { PopupNotAllMalfunctionsFound } from '../PopupNotAllMalfunctionsFound';
@@ -35,6 +35,7 @@ interface IModals {
 	component: JSX.Element;
 }
 const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
+	const dispatch = useAppDispatch();
 	const {
 		automatic,
 		gateValves,
@@ -52,7 +53,6 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		abortSimulation,
 		abortSimulationConfirm,
 		note,
-		simulationComplete,
 		infoStartSimulation,
 		infoSimulationIsActive,
 		infoUnfinished,
@@ -77,7 +77,6 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		studentStatistics ||
 		studentCreate ||
 		studentDelete ||
-		simulationComplete ||
 		abortSimulation ||
 		abortSimulationConfirm ||
 		note ||
@@ -198,13 +197,6 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			component: <PopupNote />,
 		},
 		{
-			condition: simulationComplete,
-			id: 'simulationComplete',
-			headerTitle: 'Завершение симуляции',
-			gateId: undefined,
-			component: <PopupSimulationComplete />,
-		},
-		{
 			condition: abortSimulationConfirm,
 			id: 'abortSimulationConfirm',
 			headerTitle: 'Прервать попытку',
@@ -260,14 +252,22 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		};
 	}, [isOne]);
 
-	// Блокировка закрытия модального окна setSimulation через Esc
+	// Обработка закрытия модальных окон через Esc
 	useEffect(() => {
-		if (!setSimulation) return;
-
 		const handleKeyDown = (e: KeyboardEvent) => {
 			if (e.key === 'Escape') {
-				e.preventDefault();
-				e.stopPropagation();
+				// Блокируем закрытие для setSimulation
+				if (setSimulation) {
+					e.preventDefault();
+					e.stopPropagation();
+					return;
+				}
+
+				// Закрываем abortSimulation по Escape
+				if (abortSimulation) {
+					e.preventDefault();
+					dispatch(closeModal('abortSimulation'));
+				}
 			}
 		};
 
@@ -275,7 +275,7 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		return () => {
 			window.removeEventListener('keydown', handleKeyDown);
 		};
-	}, [setSimulation]);
+	}, [setSimulation, abortSimulation, dispatch]);
 
 	// Обработчик клика вне модального окна
 	const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -284,7 +284,11 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			e.stopPropagation();
 			return;
 		}
-		// Для остальных модальных окон можно добавить логику закрытия, если нужно
+
+		// Закрываем abortSimulation по клику на оверлей
+		if (abortSimulation) {
+			dispatch(closeModal('abortSimulation'));
+		}
 	};
 
 	return (

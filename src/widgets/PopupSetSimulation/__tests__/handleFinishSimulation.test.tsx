@@ -10,7 +10,7 @@ import modalReducer, { type ModalState } from '@/store/modalSlice';
 import gateReducer from '@/store/gateSlice';
 import trainingReducer from '@/store/trainingSlice';
 import circuitReducer from '@/store/circuitSlice';
-import { Malfunction } from '@/shared/types/scheme';
+
 
 // Мокаем зависимости
 jest.mock('@/shared/hooks/useUserCookies', () => ({
@@ -85,10 +85,9 @@ const createMockStore = (
 				studentCreate: false,
 				studentDelete: false,
 				note: false,
-				simulationComplete: false,
-				startSimulation: false,
-				abortSimulation: false,
-				abortSimulationConfirm: false,
+				infoStartSimulation: false,
+				infoSimulationIsActive: false,
+				infoUnfinished: false,
 				notAllMalfunctionsFound: false,
 				...modalState,
 			} as ModalState,
@@ -117,150 +116,45 @@ const renderWithStore = (store: ReturnType<typeof createMockStore>) => {
 	return result;
 };
 
-describe('handleFinishSimulation', () => {
-	const mockMalfunctions: Malfunction[] = [
-		{ id: 'c.0.1', name: 'Неисправность 1', active: true },
-		{ id: 'c.0.2', name: 'Неисправность 2', active: true },
-	];
-
-	describe('полный набор → успех', () => {
-		it('должен вызвать completeSimulation и openModal при полном решении', async () => {
+describe('SimulationControl', () => {
+	describe('кнопка "Задвижка исправна"', () => {
+		it('должен открыть модалку infoUnfinished при клике', async () => {
 			const store = createMockStore({
-				simulationId: 'sim-123',
-				originalMalfunctions: mockMalfunctions,
-				foundMalfunctionIds: ['c.0.1', 'c.0.2'],
+				simulationId: 123,
+				originalMalfunctions: [],
+				foundMalfunctionIds: [],
 			});
 
 			renderWithStore(store);
 
-			const finishButton = screen.getByRole('button', {
-				name: 'Завершить',
+			const button = screen.getByRole('button', {
+				name: 'Задвижка исправна',
 			});
-			fireEvent.click(finishButton);
+			fireEvent.click(button);
 
 			await waitFor(() => {
 				const state = store.getState();
-				expect(state.simulation.simulationId).toBeNull();
-				expect(state.modal.simulationComplete).toBe(true);
+				expect(state.modal.infoUnfinished).toBe(true);
 			});
-
-			// Кнопка должна быть заблокирована
-			expect(finishButton).toBeDisabled();
 		});
 
-		it('не должен показывать toast при успешном завершении', async () => {
+		it('кнопка должна быть доступна, когда симуляция инициализирована', () => {
 			const store = createMockStore({
-				simulationId: 'sim-123',
-				originalMalfunctions: mockMalfunctions,
-				foundMalfunctionIds: ['c.0.1', 'c.0.2'],
+				simulationId: 123,
+				originalMalfunctions: [],
+				foundMalfunctionIds: [],
 			});
 
 			renderWithStore(store);
 
-			const finishButton = screen.getByRole('button', {
-				name: 'Завершить',
-			});
-			fireEvent.click(finishButton);
-
-			await waitFor(() => {
-				// Toast не должен появиться при успешном завершении
-				const toasts = screen.queryAllByTestId('toast');
-				expect(toasts.length).toBe(0);
-			});
-		});
-	});
-
-	describe('неполный → попап', () => {
-		it('должен открыть попап при неполном решении', async () => {
-			const store = createMockStore({
-				simulationId: 'sim-123',
-				originalMalfunctions: mockMalfunctions,
-				foundMalfunctionIds: ['c.0.1'], // Найдена только одна из двух
+			const button = screen.getByRole('button', {
+				name: 'Задвижка исправна',
 			});
 
-			renderWithStore(store);
-
-			const finishButton = screen.getByRole('button', {
-				name: 'Завершить',
-			});
-			fireEvent.click(finishButton);
-
-			await waitFor(() => {
-				const state = store.getState();
-				// При неполном решении simulationId остается, симуляция не завершается
-				expect(state.simulation.simulationId).toBe('sim-123');
-				// Открывается попап "Не все дефекты найдены"
-				expect(state.modal.notAllMalfunctionsFound).toBe(true);
-				// simulationComplete не открывается
-				expect(state.modal.simulationComplete).toBe(false);
-			});
+			expect(button).not.toBeDisabled();
 		});
 
-		it('кнопка не блокируется после клика при неполном решении', async () => {
-			const store = createMockStore({
-				simulationId: 'sim-123',
-				originalMalfunctions: mockMalfunctions,
-				foundMalfunctionIds: ['c.0.1'],
-			});
-
-			renderWithStore(store);
-
-			const finishButton = screen.getByRole('button', {
-				name: 'Завершить',
-			});
-			fireEvent.click(finishButton);
-
-			await waitFor(() => {
-				// Кнопка не должна быть заблокирована, так как симуляция продолжается
-				expect(finishButton).not.toBeDisabled();
-			});
-		});
-
-		it('не должен вызывать completeSimulation при неполном решении', async () => {
-			const store = createMockStore({
-				simulationId: 'sim-123',
-				originalMalfunctions: mockMalfunctions,
-				foundMalfunctionIds: ['c.0.1'],
-			});
-
-			renderWithStore(store);
-
-			const finishButton = screen.getByRole('button', {
-				name: 'Завершить',
-			});
-			fireEvent.click(finishButton);
-
-			await waitFor(() => {
-				const state = store.getState();
-				// completeSimulation не вызывается, simulationId остается
-				expect(state.simulation.simulationId).toBe('sim-123');
-				// Открывается попап "Не все дефекты найдены"
-				expect(state.modal.notAllMalfunctionsFound).toBe(true);
-			});
-		});
-	});
-
-	describe('блокировка кнопки', () => {
-		it('должен заблокировать кнопку после клика', () => {
-			const store = createMockStore({
-				simulationId: 'sim-123',
-				originalMalfunctions: mockMalfunctions,
-				foundMalfunctionIds: ['c.0.1', 'c.0.2'],
-			});
-
-			renderWithStore(store);
-
-			const finishButton = screen.getByRole('button', {
-				name: 'Завершить',
-			});
-			expect(finishButton).not.toBeDisabled();
-
-			fireEvent.click(finishButton);
-
-			expect(finishButton).toBeDisabled();
-		});
-
-		it('должен заблокировать кнопку, если симуляция не инициализирована', () => {
+		it('кнопка должна быть доступна, когда симуляция не инициализирована', () => {
 			const store = createMockStore({
 				simulationId: null,
 				originalMalfunctions: [],
@@ -269,42 +163,11 @@ describe('handleFinishSimulation', () => {
 
 			renderWithStore(store);
 
-			const finishButton = screen.getByRole('button', {
-				name: 'Завершить',
+			const button = screen.getByRole('button', {
+				name: 'Задвижка исправна',
 			});
 
-			// Кнопка должна быть заблокирована, когда симуляция не инициализирована
-			expect(finishButton).toBeDisabled();
-
-			// Состояние не должно измениться, так как обработчик не вызывается для заблокированной кнопки
-			const state = store.getState();
-			expect(state.simulation.simulationId).toBeNull();
-			expect(state.modal.simulationComplete).toBe(false);
-		});
-
-		it('должен открыть попап "Не все дефекты найдены", если не найдено ни одной неисправности', async () => {
-			const store = createMockStore({
-				simulationId: 'sim-123',
-				originalMalfunctions: mockMalfunctions,
-				foundMalfunctionIds: [],
-			});
-
-			renderWithStore(store);
-
-			const finishButton = screen.getByRole('button', {
-				name: 'Завершить',
-			});
-			fireEvent.click(finishButton);
-
-			await waitFor(() => {
-				const state = store.getState();
-				// При отсутствии найденных неисправностей simulationId остается
-				expect(state.simulation.simulationId).toBe('sim-123');
-				// Открывается попап "Не все дефекты найдены"
-				expect(state.modal.notAllMalfunctionsFound).toBe(true);
-				// simulationComplete не открывается
-				expect(state.modal.simulationComplete).toBe(false);
-			});
+			expect(button).not.toBeDisabled();
 		});
 	});
 });

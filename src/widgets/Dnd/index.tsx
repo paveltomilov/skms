@@ -16,7 +16,6 @@ import {
 } from '@/store/multimeterSlice';
 import { probeTipCollisionDetection } from '@/shared/lib/probeTipCollisionDetection';
 import { ProbeColor } from '@/shared/types/multimeter';
-import { useWebSocket } from '@/shared/hooks/useWebSocket';
 
 interface Props {
 	children: ReactNode;
@@ -49,11 +48,11 @@ export const Dnd: React.FC<Props> = ({ children }) => {
 
 			if (isPointTarget && over) {
 				const pointId =
-					(dropData as { pointId?: UniqueIdentifier })
-						?.pointId ?? over.id;
-				const isPointOccupied = Object.values(
-					probeConnections,
-				).some(conn => conn && conn.pointId === pointId);
+					(dropData as { pointId?: UniqueIdentifier })?.pointId ??
+					over.id;
+				const isPointOccupied = Object.values(probeConnections).some(
+					conn => conn && conn.pointId === pointId,
+				);
 
 				if (!isPointOccupied) {
 					dispatch(
@@ -73,14 +72,10 @@ export const Dnd: React.FC<Props> = ({ children }) => {
 		[dispatch, probeConnections],
 	);
 
-	const { sendMessage } = useWebSocket();
-
-	useEffect(() => {
-		sendMessage({
-			type: 'start_simulation',
-			studentId: '12345',
-		});
-	}, [sendMessage]);
+	// ⚠️ УДАЛЕНО: Отправка сообщений через WebSocket
+	// Бэкенд не обрабатывает входящие сообщения через WebSocket
+	// Все действия должны выполняться через REST API
+	// При подключении к WebSocket сервер автоматически отправляет активную симуляцию (если есть)
 
 	useEffect(() => {
 		if (!isAnyModalOpen) return;

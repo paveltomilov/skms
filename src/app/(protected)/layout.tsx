@@ -6,6 +6,7 @@ import ModalWrapper from '@/widgets/ModalWrapper';
 import useRandomWindowCurrentValue from '@/shared/hooks/useRandomWindowCurrentValue';
 import AuthGuard from '@/shared/components/AuthGuard';
 import Dnd from '@/widgets/Dnd';
+import { useWebSocket } from '@/shared/hooks/useWebSocket';
 
 export default function ProtectedLayout({
 	children,
@@ -16,6 +17,9 @@ export default function ProtectedLayout({
 	const [checking, setChecking] = useState(true);
 
 	useRandomWindowCurrentValue();
+
+	// Инициализация WebSocket соединения
+	useWebSocket();
 
 	useEffect(() => {
 		async function verify() {

@@ -21,3 +21,6 @@ export * from './statistics/getStatistics';
 
 // Malfunctions
 export * from './malfunctions/postMalfunctions';
+
+// UserLog
+export * from './userlog/postUserLog';
