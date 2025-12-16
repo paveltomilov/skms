@@ -1,25 +1,13 @@
 'use client';
 
-import {
-	useState,
-	ChangeEvent,
-	useCallback,
-	useRef,
-	useEffect,
-	useMemo,
-} from 'react';
+import { useState, ChangeEvent, useCallback } from 'react';
 import axios from 'axios';
+import Image from 'next/image';
 
-import Popup from '../Popup';
+// import Popup from '../Popup';
 import Button from '../Button';
 import ConsentCheckbox from '../ConsentCheckbox';
 import styles from './styles.module.scss';
-
-interface PopupState {
-	visible: boolean;
-	message: string;
-	variant?: 'success' | 'error' | 'info';
-}
 
 type FormValues = {
 	name: string;
@@ -49,6 +37,8 @@ const fields = [
 		placeholder: 'Ваш номер телефона',
 	},
 ] as const;
+
+type SubmitStatus = 'idle' | 'sending' | 'success' | 'error';
 
 const isValidEmailDomain = (email: string): boolean => {
 	const atIndex = email.lastIndexOf('@');
@@ -106,52 +96,20 @@ function FormLanding() {
 	});
 
 	const [consent, setConsent] = useState(false);
-
-	const [popup, setPopup] = useState<PopupState>({
-		visible: false,
-		message: '',
-		variant: undefined,
-	});
-
 	const [emailError, setEmailError] = useState<string | null>(null);
-	const timerRef = useRef<NodeJS.Timeout | null>(null);
-
-	const startTimer = useCallback(() => {
-		if (timerRef.current) clearTimeout(timerRef.current);
-		timerRef.current = setTimeout(() => {
-			setPopup(prev => ({ ...prev, visible: false }));
-		}, 4000);
-	}, []);
-
-	useEffect(() => {
-		return () => {
-			if (timerRef.current) clearTimeout(timerRef.current);
-		};
-	}, []);
-
-	const showPopup = (msg: string, variant: PopupState['variant'] = 'info') =>
-		setPopup({ visible: true, message: msg, variant });
-
-	const isFormValid = useMemo(() => {
-		const allFieldsFilled = Object.values(form).some(v => v.trim() !== '');
-		return allFieldsFilled && consent;
-	}, [form, consent]);
+	const [status, setStatus] = useState<SubmitStatus>('idle');
 
 	const handleInputChange = useCallback(
 		(key: keyof FormValues) => (e: ChangeEvent<HTMLInputElement>) => {
-			// const rawValue = e.target.value;
-			// const value =
-			// 	key === 'phone' ? rawValue.replace(/\D/g, '') : rawValue;
 			const rawValue = e.target.value;
-			const value = key === 'phone' ? rawValue : rawValue;
 
-			setForm(prev => ({ ...prev, [key]: value }));
+			setForm(prev => ({ ...prev, [key]: rawValue }));
 
 			if (key === 'email') {
 				if (
-					!value ||
-					!value.includes('@') ||
-					!isValidEmailDomain(value)
+					!rawValue ||
+					!rawValue.includes('@') ||
+					!isValidEmailDomain(rawValue)
 				)
 					setEmailError('Email введен некорректно');
 				else setEmailError(null);
@@ -161,9 +119,19 @@ function FormLanding() {
 		[],
 	);
 
+	const isFormValid = () => {
+		const { name, company, email, phone } = form;
+		return (
+			!!name && !!company && !!email && !!phone && !emailError && consent
+		);
+	};
+
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		if (!isFormValid) return;
+
+		if (!isFormValid()) return;
+
+		setStatus('sending');
 
 		const payload = {
 			full_name: form.name,
@@ -176,78 +144,89 @@ function FormLanding() {
 			await axios.post('http://127.0.0.1:8000/api/leads/', payload, {
 				headers: { 'Content-Type': 'application/json' },
 			});
-
-			setForm({ name: '', company: '', email: '', phone: '' });
+			setStatus('success');
+			// setForm({
+			// 	name: '',
+			// 	company: '',
+			// 	email: '',
+			// 	phone: '',
+			// });
 			setConsent(false);
-			showPopup(
-				'Заявка успешно отправлена. Мы скоро с вами свяжемся',
-				'success',
-			);
-
-			startTimer();
 		} catch (err) {
 			console.error(err);
-			setForm({ name: '', company: '', email: '', phone: '' });
+			setStatus('error');
 			setConsent(false);
-			showPopup(
-				'Ошибка при отправке заявки. Пожалуйста попробуйте позже',
-				'error',
-			);
+		} finally {
+			setTimeout(() => setStatus('idle'), 30000);
 		}
 	};
 
-	return (
-		<>
-			<form onSubmit={handleSubmit} className={styles.form}>
-				<h2 className={styles.form__title}>
-					Хотите&nbsp;узнать&nbsp;больше? Мы&nbsp;с вами свяжемся!
-				</h2>
-
-				<div className={styles.form__container}>
-					{fields.map(({ key, label, type, placeholder }) => (
-						<FormField
-							key={key}
-							label={label}
-							value={form[key]}
-							onChange={handleInputChange(key)}
-							type={type}
-							placeholder={placeholder}
-							error={key === 'email' ? emailError : undefined}
+	return status === 'success' || status === 'error' ? (
+		<div className={styles.successContainer}>
+			{status === 'success' ? (
+				<div className={`${styles.form} ${styles.succes}`}>
+					<div className={styles.succes__info}>
+						<h2 className={styles.succes__title}>
+							Спасибо,мы получили вашу заявку
+						</h2>
+						<p className={styles.succes__descr}>
+							Наш специалист свяжется с вами в ближайшее время,
+							чтобы уточнить детали и помочь с выбором решения
+						</p>
+					</div>
+					<div className={styles.succes__img}>
+						<Image
+							src="/images/succes.png"
+							alt=""
+							width={268}
+							height={274}
 						/>
-					))}
+					</div>
 				</div>
-
-				<div className={styles.form__sogl}>
-					<Button
-						className={`${styles.form__button} ${
-							!isFormValid ? styles.buttonDisabled : ''
-						}`}
-						text={'ОТПРАВИТЬ'}
-						type="submit"
-						disabled={!isFormValid}
-						width={604}
-						height={40}
-						radius={4}
-						border="1px solid var(--lan-very-dark-gray)"
-					/>
-					<ConsentCheckbox value={consent} onChange={setConsent} />
+			) : (
+				<div className={styles.form}>
+					<h2 className={styles.form__title}>Ошибка при отправке</h2>
+					<p>
+						Попробуйте ещё раз позже или свяжитесь с нами напрямую.
+					</p>
 				</div>
-			</form>
-
-			{popup.visible && (
-				<Popup
-					message={popup.message}
-					variant={popup.variant}
-					onClose={() =>
-						setPopup({
-							visible: false,
-							message: '',
-							variant: undefined,
-						})
-					}
-				/>
 			)}
-		</>
+		</div>
+	) : (
+		<form onSubmit={handleSubmit} className={styles.form}>
+			<h2 className={styles.form__title}>
+				Хотите&nbsp;узнать&nbsp;больше? Мы&nbsp;с вами свяжемся!
+			</h2>
+			<div className={styles.form__container}>
+				{fields.map(({ key, label, type, placeholder }) => (
+					<FormField
+						key={key}
+						label={label}
+						value={form[key]}
+						onChange={handleInputChange(key)}
+						type={type}
+						placeholder={placeholder}
+						error={key === 'email' ? emailError : undefined}
+					/>
+				))}
+			</div>
+
+			<div className={styles.form__sogl}>
+				<Button
+					className={`${styles.form__button} ${
+						isFormValid() ? styles.btnValid : styles.btnInvalid
+					}`}
+					text={'ОТПРАВИТЬ'}
+					type="submit"
+					disabled={!isFormValid() || status === 'sending'}
+					width={604}
+					height={40}
+					radius={4}
+					border="1px solid var(--lan-very-dark-gray)"
+				/>
+				<ConsentCheckbox value={consent} onChange={setConsent} />
+			</div>
+		</form>
 	);
 }
 
