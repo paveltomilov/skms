@@ -52,13 +52,24 @@ class WebSocketManager {
 			return;
 		}
 
-		// Если уже подключены к тому же URL с тем же токеном, не переподключаемся
+		// Если уже подключены или подключаемся к тому же URL с тем же токеном, не переподключаемся
 		if (
 			this.ws &&
-			this.ws.readyState === WebSocket.OPEN &&
+			(this.ws.readyState === WebSocket.OPEN ||
+				this.ws.readyState === WebSocket.CONNECTING) &&
 			this.url === url &&
 			this.token === token
 		) {
+			console.info(
+				'[WebSocket] Соединение уже активно или подключается, пропускаем',
+				{
+					readyState:
+						this.ws.readyState === WebSocket.OPEN
+							? 'OPEN'
+							: 'CONNECTING',
+					url: url.replace(/\?token=.*/, '?token=***'),
+				},
+			);
 			return;
 		}
 
@@ -78,14 +89,35 @@ class WebSocketManager {
 			return;
 		}
 
-		// Закрываем существующее соединение, если есть
+		// Проверяем существующее соединение
 		if (this.ws) {
-			this.ws.close();
-			this.ws = null;
+			const state = this.ws.readyState;
+			// Если соединение уже открыто или подключается, не создаем новое
+			if (state === WebSocket.OPEN || state === WebSocket.CONNECTING) {
+				console.info(
+					'[WebSocket] Соединение уже активно или подключается, пропускаем создание нового',
+					{
+						readyState:
+							state === WebSocket.OPEN ? 'OPEN' : 'CONNECTING',
+					},
+				);
+				return;
+			}
+			// Закрываем только если соединение закрыто или закрывается
+			if (state === WebSocket.CLOSED || state === WebSocket.CLOSING) {
+				this.ws = null;
+			} else {
+				// Для других состояний закрываем соединение
+				this.ws.close();
+				this.ws = null;
+			}
 		}
 
 		this.setStatus(WebSocketStatus.CONNECTING);
-		console.info('[WebSocket] ⟳ Попытка подключения к:', this.url);
+		console.info(
+			'[WebSocket] ⟳ Попытка подключения к:',
+			this.url.replace(/\?token=.*/, '?token=***'),
+		);
 
 		try {
 			// Убираем завершающий слэш, если есть, чтобы избежать двойного слэша
