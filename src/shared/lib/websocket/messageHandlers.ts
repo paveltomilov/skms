@@ -10,7 +10,6 @@ import {
 	PointsUpdateMessage,
 	SimulationStatusMessage,
 	ErrorMessage,
-	GateMalfunctionsUpdateMessage,
 } from '@/shared/types/websocket';
 import {
 	setGatePosition,
@@ -221,29 +220,6 @@ export function createMessageHandler(dispatch: AppDispatch) {
 			}
 
 			default: {
-				// Обработка устаревшего формата GateMalfunctionsUpdateMessage
-				if ('gate' in messageAny && 'malfunctions' in messageAny) {
-					const malfunctionsMessage =
-						message as unknown as GateMalfunctionsUpdateMessage;
-					// Преобразуем массив объектов в массив строк (ID неисправностей)
-					const malfunctionIds: string[] =
-						malfunctionsMessage.malfunctions.flatMap(malfunction =>
-							Object.values(malfunction),
-						);
-					dispatch(
-						setGateMalfunctions({
-							id: malfunctionsMessage.gate,
-							malfunctions: malfunctionIds,
-						}),
-					);
-					console.info(
-						'[WebSocket] Обновлены неисправности задвижки (устаревший формат):',
-						malfunctionsMessage.gate,
-						malfunctionIds,
-					);
-					break;
-				}
-
 				// Неизвестное сообщение
 				const unknownMessage = message as { type?: string };
 				console.warn(

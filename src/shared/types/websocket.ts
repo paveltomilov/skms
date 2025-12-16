@@ -32,13 +32,12 @@ export interface OutgoingMessage {
  */
 export interface SimulationInitMessage {
 	gate?: string;
-	malfunctions: Array<
-		| {
-				malfunction_id: string;
-				description?: string;
-		  }
-		| Record<string, string>
-	>;
+	// Поддерживает два формата:
+	// 1. { malfunction_id: "c.0.1", description?: "..." }
+	// 2. { [key: string]: string } - динамические ключи (например, {"additionalProp1": "c.0.1"})
+	//    Используется когда бэкенд отправляет объект с произвольными ключами,
+	//    где значение - это ID неисправности
+	malfunctions: Array<Record<string, string>>;
 }
 
 /**
@@ -128,16 +127,6 @@ export interface SimulationStatusMessage {
 }
 
 /**
- * Сообщение об обновлении неисправностей задвижки
- * Формат: {"gate": "g1", "malfunctions": [{"malfunction_id": "c.0.1", "description": "..."}]}
- * ⚠️ Устаревший формат, используется SimulationInitMessage
- */
-export interface GateMalfunctionsUpdateMessage {
-	gate: string;
-	malfunctions: Array<Record<string, string>>;
-}
-
-/**
  * Тип для всех возможных входящих сообщений
  */
 export type WebSocketIncomingMessage =
@@ -150,8 +139,7 @@ export type WebSocketIncomingMessage =
 	| CircuitUpdateMessage
 	| PointsUpdateMessage
 	| ErrorMessage
-	| SimulationStatusMessage
-	| GateMalfunctionsUpdateMessage;
+	| SimulationStatusMessage;
 
 /**
  * Callback для обработки входящих сообщений
