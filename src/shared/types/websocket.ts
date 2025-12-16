@@ -26,17 +26,12 @@ export interface OutgoingMessage {
 /**
  * Сообщение инициализации симуляции (без поля type)
  * Отправляется при подключении или создании симуляции
- * Поддерживает два формата:
- * 1. {"gate": "g2", "malfunctions": [{"malfunction_id": "c.0.1", "description": "..."}]}
- * 2. {"gate": "g2", "malfunctions": [{"additionalProp1": "c.0.1"}]}
+ * Поддерживает  формат:
+ *  {"gate": "g2", "malfunctions": [{"additionalProp1": "c.0.1"}]}
  */
 export interface SimulationInitMessage {
 	gate?: string;
-	// Поддерживает два формата:
-	// 1. { malfunction_id: "c.0.1", description?: "..." }
-	// 2. { [key: string]: string } - динамические ключи (например, {"additionalProp1": "c.0.1"})
-	//    Используется когда бэкенд отправляет объект с произвольными ключами,
-	//    где значение - это ID неисправности
+	
 	malfunctions: Array<Record<string, string>>;
 }
 
