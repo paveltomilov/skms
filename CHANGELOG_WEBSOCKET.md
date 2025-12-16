@@ -33,7 +33,7 @@
 
 ```typescript
 export interface SimulationInitMessage {
-	gate?: string;
+	gate: string;
 	malfunctions: Array<
 		| {
 				malfunction_id: string;
