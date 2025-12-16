@@ -26,13 +26,19 @@ export interface OutgoingMessage {
 /**
  * Сообщение инициализации симуляции (без поля type)
  * Отправляется при подключении или создании симуляции
+ * Поддерживает два формата:
+ * 1. {"gate": "g2", "malfunctions": [{"malfunction_id": "c.0.1", "description": "..."}]}
+ * 2. {"gate": "g2", "malfunctions": [{"additionalProp1": "c.0.1"}]}
  */
 export interface SimulationInitMessage {
 	gate?: string;
-	malfunctions: Array<{
-		malfunction_id: string;
-		description: string;
-	}>;
+	malfunctions: Array<
+		| {
+				malfunction_id: string;
+				description?: string;
+		  }
+		| Record<string, string>
+	>;
 }
 
 /**

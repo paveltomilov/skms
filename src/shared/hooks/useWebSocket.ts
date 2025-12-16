@@ -33,9 +33,11 @@ export const useWebSocket = () => {
 			return;
 		}
 
+		// Убираем проверку isConnected() - логика предотвращения дублирования
+		// уже есть в manager.connect(), который проверяет состояние CONNECTING и OPEN
+
 		// Определяем роль пользователя для выбора правильного эндпоинта
 		const role = getCookie('role') as UserRole | undefined;
-
 		// Формируем URL в зависимости от роли
 		// Студент: /ws/simulation/student/
 		// Учитель: /ws/simulation/teacher/
@@ -46,6 +48,14 @@ export const useWebSocket = () => {
 		const urlMatch = baseWsURL.match(/^(wss?:\/\/[^\/]+)/);
 		const baseHost = urlMatch ? urlMatch[1] : baseWsURL;
 
+		if (!baseHost) {
+			console.error(
+				'[WebSocket] Не удалось извлечь базовый хост из NEXT_PUBLIC_WS_URL:',
+				baseWsURL,
+			);
+			return;
+		}
+
 		// Формируем полный путь в зависимости от роли
 		if (role === 'teacher') {
 			wsURL = `${baseHost}/ws/simulation/teacher/`;
@@ -53,6 +63,28 @@ export const useWebSocket = () => {
 			// По умолчанию для студентов (и admin)
 			wsURL = `${baseHost}/ws/simulation/student/`;
 		}
+
+		// Валидация URL
+		try {
+			new URL(wsURL);
+		} catch (urlError) {
+			console.error(
+				'[WebSocket] Невалидный URL WebSocket:',
+				wsURL,
+				'Ошибка:',
+				urlError,
+			);
+			return;
+		}
+
+		console.info('[WebSocket] Формируем WebSocket URL:', {
+			baseWsURL,
+			baseHost,
+			role: role || 'не определена',
+			finalURL: wsURL.replace(/\?token=.*/, '?token=***'),
+			hasToken: !!token,
+			tokenLength: token?.length || 0,
+		});
 
 		// Подключаемся к WebSocket
 		manager.connect(wsURL, token);
@@ -69,7 +101,7 @@ export const useWebSocket = () => {
 
 			// Логируем изменения статуса для отладки
 			if (prevStatusRef.current !== newStatus) {
-				console.log(
+				console.info(
 					`WebSocket status changed: ${prevStatusRef.current} -> ${newStatus}`,
 				);
 				prevStatusRef.current = newStatus;

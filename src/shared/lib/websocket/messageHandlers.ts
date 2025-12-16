@@ -16,10 +16,12 @@ import {
 	setGatePosition,
 	setGateState,
 	setGateMalfunctions,
+	setActiveGate,
 } from '@/store/gateSlice';
 import { setVoltagePoints } from '@/store/pointsSlice';
 import { GATE_STATE_TYPE } from '@/shared/types/gate';
 import { setSimulation, resetSimulation } from '@/store/simulationSlice';
+import { activateMalfunction } from '@/store/circuitSlice';
 
 /**
  * Обработчик входящих WebSocket сообщений
@@ -35,13 +37,59 @@ export function createMessageHandler(dispatch: AppDispatch) {
 			// Проверяем наличие полей gate и malfunctions
 			if ('gate' in messageAny && 'malfunctions' in messageAny) {
 				const initMessage = message as SimulationInitMessage;
-				// Преобразуем массив объектов с malfunction_id и description в массив ID
-				const malfunctionIds: string[] = initMessage.malfunctions.map(
-					m => m.malfunction_id,
-				);
 
-				// Обновляем неисправности задвижки
+				// Преобразуем массив объектов в массив ID неисправностей
+				// Поддерживаем два формата:
+				// 1. [{"malfunction_id": "c.0.1", "description": "..."}]
+				// 2. [{"additionalProp1": "c.0.1"}] - динамические ключи
+				const malfunctionIds: string[] = initMessage.malfunctions
+					.map(m => {
+						// Если есть поле malfunction_id, используем его
+						if (
+							'malfunction_id' in m &&
+							typeof m.malfunction_id === 'string'
+						) {
+							return m.malfunction_id;
+						}
+						// Иначе извлекаем все значения из объекта (для формата с динамическими ключами)
+						return (
+							Object.values(m).find(
+								(v): v is string => typeof v === 'string',
+							) || ''
+						);
+					})
+					.filter(Boolean);
+
+				// Преобразуем в формат для setSimulation
+				const malfunctionsForState = initMessage.malfunctions.map(m => {
+					// Если есть поле malfunction_id, используем его
+					if (
+						'malfunction_id' in m &&
+						typeof m.malfunction_id === 'string'
+					) {
+						return {
+							malfunction_id: m.malfunction_id,
+							description:
+								'description' in m &&
+								typeof m.description === 'string'
+									? m.description
+									: m.malfunction_id,
+						};
+					}
+					// Иначе извлекаем значение из объекта
+					const malfunctionId =
+						Object.values(m).find(
+							(v): v is string => typeof v === 'string',
+						) || '';
+					return {
+						malfunction_id: malfunctionId,
+						description: malfunctionId,
+					};
+				});
+
+				// Обновляем неисправности задвижки и устанавливаем активную задвижку
 				if (initMessage.gate) {
+					dispatch(setActiveGate(initMessage.gate));
 					dispatch(
 						setGateMalfunctions({
 							id: initMessage.gate,
@@ -54,11 +102,16 @@ export function createMessageHandler(dispatch: AppDispatch) {
 				dispatch(
 					setSimulation({
 						gate: initMessage.gate,
-						malfunctions: initMessage.malfunctions,
+						malfunctions: malfunctionsForState,
 					}),
 				);
 
-				console.log(
+				// Активируем неисправности в схеме
+				malfunctionIds.forEach(malfunctionId => {
+					dispatch(activateMalfunction(malfunctionId));
+				});
+
+				console.info(
 					'[WebSocket] Инициализация симуляции:',
 					initMessage.gate,
 					malfunctionIds,
@@ -100,7 +153,7 @@ export function createMessageHandler(dispatch: AppDispatch) {
 				const userLogMessage = message as UserLogMessage;
 				// TODO: Добавить обработку лога действия в userLogSlice (для учителя)
 				// dispatch(addUserLog(userLogMessage.data));
-				console.log(
+				console.info(
 					'[WebSocket] Лог действия студента:',
 					userLogMessage.data,
 				);
@@ -149,7 +202,7 @@ export function createMessageHandler(dispatch: AppDispatch) {
 			case 'simulation_status': {
 				const statusMessage = message as SimulationStatusMessage;
 				// TODO: Добавить обработку статуса симуляции в simulationSlice
-				console.log('Simulation status update:', statusMessage);
+				console.info('Simulation status update:', statusMessage);
 				break;
 			}
 
@@ -163,7 +216,7 @@ export function createMessageHandler(dispatch: AppDispatch) {
 
 			case 'circuit_update': {
 				// TODO: Добавить обработку обновления схемы
-				console.log('Circuit update received:', message);
+				console.info('Circuit update received:', message);
 				break;
 			}
 
@@ -183,7 +236,7 @@ export function createMessageHandler(dispatch: AppDispatch) {
 							malfunctions: malfunctionIds,
 						}),
 					);
-					console.log(
+					console.info(
 						'[WebSocket] Обновлены неисправности задвижки (устаревший формат):',
 						malfunctionsMessage.gate,
 						malfunctionIds,
