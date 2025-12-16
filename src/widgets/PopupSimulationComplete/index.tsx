@@ -7,6 +7,7 @@ import Button from '@/shared/UI/Button';
 import { useAppDispatch } from '@/shared/hooks/store';
 import { closeModal } from '@/store/modalSlice';
 import { useSubscription } from '@/shared/hooks/useSubscription';
+import Image from 'next/image';
 
 export const PopupSimulationComplete: FC = () => {
 	const dispatch = useAppDispatch();
@@ -42,24 +43,43 @@ export const PopupSimulationComplete: FC = () => {
 		}
 	};
 
-	const buttonText =
-		subscriptionType === 'free' ? 'Пройти опрос' : 'Узнать результат';
+	const subConfig =
+		subscriptionType === 'free' ?
+			{
+				messageText: 'Вы закончили, чтобы узнать результат пройдите опрос',
+				buttonText: 'Пройти опрос',
+				buttonWidth: 290,
+				width: '540px'
+			} :
+			{
+				messageText: 'Вы успешно справились c\u00A0заданием! Ознакомьтесь c\u00A0вашим результатом.',
+				buttonText: 'Узнать результат',
+				buttonWidth: 341,
+				width: '590px'
+			};
 
 	return (
-		<div className={styles.popup}>
+		<div className={styles.popup} style={{ width: subConfig.width }}>
 			<div className={styles.popup__content}>
+				<Image
+					className={styles.popup__img}
+					src='/svg/success.svg'
+					width={145}
+					height={145}
+					alt='успешно'
+				/>
 				<p className={styles.popup__text}>
-					Вы закончили, что бы узнать результат пройдите опрос
+					{subConfig.messageText}
 				</p>
-				<div className={styles.popup__buttons}>
-					<Button
-						width={307}
-						height={38}
-						text={buttonText}
-						onClick={handleMainButtonClick}
-					/>
-				</div>
+				<Button
+					className={styles.popup__button}
+					width={subConfig.buttonWidth}
+					height={55}
+					style={{ backgroundColor: '#B0B0B0' }}
+					text={subConfig.buttonText}
+					onClick={handleMainButtonClick}
+				/>
 			</div>
 		</div>
 	);
-};
+}; 
