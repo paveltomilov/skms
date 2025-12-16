@@ -1,4 +1,4 @@
-import { useAppDispatch } from '@/shared/hooks/store';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import { FC } from 'react';
@@ -6,6 +6,8 @@ import { closeAllModal, openModal } from '@/store/modalSlice';
 
 const PopupDiagnostic: FC = () => {
 	const dispatch = useAppDispatch();
+	const gateId = useAppSelector(state => state.gate.activeGateId) ?? 'g1';
+	const gate = useAppSelector(state => state.gate.gates[gateId]);
 	// Для теста
 	const mass = [
 		{
@@ -46,7 +48,7 @@ const PopupDiagnostic: FC = () => {
 			</ul>
 			<div className={styles.popupDiagnostic_bottom}>
 				<span className={styles.popupDiagnostic_bottom__name}>
-					Какой-то Name
+					{gate.kks}
 				</span>
 				<Button
 					width={250}

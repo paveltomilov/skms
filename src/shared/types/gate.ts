@@ -17,6 +17,8 @@ export enum GATE_STATE_TYPE {
 
 export interface IGate {
 	name: string;
+	description: string; // описание задвижки
+	kks: string; // код конструктивного обозначения (KKS)
 	states: GATE_STATE_TYPE;
 	position: number; // на какой % открыта задвижка
 	malfunctions: string[]; //массив неисправностей (приходит с бека)

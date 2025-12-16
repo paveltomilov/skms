@@ -13,6 +13,7 @@ interface ModalOverlayProps {
 	gateId?: string;
 	children: React.ReactNode;
 	headerTitle?: string;
+	preventClose?: boolean;
 }
 
 const ModalOverlay: FC<ModalOverlayProps> = ({

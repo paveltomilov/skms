@@ -20,6 +20,8 @@ export type Modals =
 	| 'studentStatistics'
 	| 'studentCreate'
 	| 'studentDelete'
+	| 'note'
+	| 'simulationComplete'
 	| 'abortSimulation'
 	| 'note'
 	| 'infoStartSimulation'
@@ -51,6 +53,7 @@ const initialState: ModalState = {
 	studentDelete: false,
 	abortSimulation: false,
 	note: false,
+	simulationComplete: false,
 	infoStartSimulation: false,
 	infoSimulationIsActive: false,
 	infoUnfinished: false,
