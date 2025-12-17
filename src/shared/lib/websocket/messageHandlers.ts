@@ -22,6 +22,7 @@ import { setVoltagePoints } from '@/store/pointsSlice';
 import { GATE_STATE_TYPE } from '@/shared/types/gate';
 import { setSimulation, resetSimulation } from '@/store/simulationSlice';
 import { activateMalfunction } from '@/store/circuitSlice';
+import { openModal } from '@/store/modalSlice';
 
 /**
  * Обработчик входящих WebSocket сообщений
@@ -100,9 +101,20 @@ export function createMessageHandler(dispatch: AppDispatch) {
 					| SimulationFinishedStudentMessage
 					| SimulationFinishedTeacherMessage;
 
+				// Сохраняем simulation_id в sessionStorage для PopupSimulationComplete
+				if (finishedMessage.simulation_id) {
+					sessionStorage.setItem(
+						'completedSimulationId',
+						String(finishedMessage.simulation_id),
+					);
+				}
+
 				// Обрабатываем завершение симуляции
 				// resetSimulation возвращает начальное состояние
 				dispatch(resetSimulation());
+
+				// Открываем модалку о завершении симуляции
+				dispatch(openModal('simulationComplete'));
 
 				console.info(
 					'[WebSocket] Симуляция завершена:',
