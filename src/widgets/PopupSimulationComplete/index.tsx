@@ -4,13 +4,13 @@ import { FC, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
+import { useSubscription } from '@/shared/hooks/useSubscription';
 import { useAppDispatch } from '@/shared/hooks/store';
 import { closeModal } from '@/store/modalSlice';
-import { useSubscription } from '@/shared/hooks/useSubscription';
 
 export const PopupSimulationComplete: FC = () => {
-	const dispatch = useAppDispatch();
 	const router = useRouter();
+	const dispatch = useAppDispatch();
 	const subscriptionType = useSubscription();
 	const [simulationId, setSimulationId] = useState<string | null>(null);
 
@@ -27,6 +27,7 @@ export const PopupSimulationComplete: FC = () => {
 	}, []);
 
 	const handleMainButtonClick = () => {
+		// Закрываем модалку перед редиректом
 		dispatch(closeModal('simulationComplete'));
 
 		if (subscriptionType === 'free') {

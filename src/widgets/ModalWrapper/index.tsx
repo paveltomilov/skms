@@ -23,9 +23,9 @@ import { PopupStudentDelete } from '../PopupStudentDelete';
 import { PopupNote } from '../PopupNote';
 import { PopupAbortSimulation } from '../PopupAbortSimulation';
 import { PopupAbortSimulationConfirm } from '../PopupAbortSimulationConfirm';
-import { PopupNotAllMalfunctionsFound } from '../PopupNotAllMalfunctionsFound';
 import { useUserCookies } from '@/shared/hooks/useUserCookies';
 import { PopupInfo } from '../PopupInfo';
+import { PopupSimulationComplete } from '../PopupSimulationComplete';
 
 interface IModals {
 	condition: boolean;
@@ -54,9 +54,8 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		abortSimulationConfirm,
 		note,
 		infoStartSimulation,
-		infoSimulationIsActive,
 		infoUnfinished,
-		notAllMalfunctionsFound,
+		simulationComplete,
 	} = useAppSelector((state): ModalState => state.modal);
 
 	const { role } = useUserCookies();
@@ -81,9 +80,8 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		abortSimulationConfirm ||
 		note ||
 		infoStartSimulation ||
-		infoSimulationIsActive ||
 		infoUnfinished ||
-		notAllMalfunctionsFound;
+		simulationComplete;
 
 	const gateId = useAppSelector(state => state.gate.activeGateId as string);
 	const student = useAppSelector(state => state.training.currentStudent);
@@ -218,13 +216,6 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			component: <PopupInfo content="start" />,
 		},
 		{
-			condition: infoSimulationIsActive,
-			id: 'infoSimulationIsActive',
-			headerTitle: 'Завершить симуляцию',
-			gateId: undefined,
-			component: <PopupInfo content="current" />,
-		},
-		{
 			condition: infoUnfinished,
 			id: 'infoUnfinished',
 			headerTitle: 'Незавершенные неисправности',
@@ -232,11 +223,11 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			component: <PopupInfo content="malfunctions" />,
 		},
 		{
-			condition: notAllMalfunctionsFound,
-			id: 'notAllMalfunctionsFound',
-			headerTitle: 'Не все дефекты найдены',
+			condition: simulationComplete,
+			id: 'simulationComplete',
+			headerTitle: 'Симуляция завершена',
 			gateId: undefined,
-			component: <PopupNotAllMalfunctionsFound />,
+			component: <PopupSimulationComplete />,
 		},
 	];
 	// отключаем скролл страницы

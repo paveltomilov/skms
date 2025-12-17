@@ -29,9 +29,12 @@ export interface OutgoingMessage {
  * Поддерживает  формат:
  *  {"gate": "g2", "malfunctions": [{"additionalProp1": "c.0.1"}]}
  */
+/**
+ * Сообщение инициализации симуляции
+ * Формат: {"gate":"g2","malfunctions":[{"additionalProp1":"c.0.1"}]}
+ */
 export interface SimulationInitMessage {
 	gate?: string;
-	
 	malfunctions: Array<Record<string, string>>;
 }
 

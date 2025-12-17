@@ -20,7 +20,7 @@ export const useWebSocket = () => {
 	const [status, setStatus] = useState<WebSocketStatus>(
 		WebSocketStatus.DISCONNECTED,
 	);
-	const manager = WebSocketManager.getInstance();
+	const managerRef = useRef(WebSocketManager.getInstance());
 
 	// Отслеживаем предыдущий статус для определения изменений
 	const prevStatusRef = useRef<WebSocketStatus>(WebSocketStatus.DISCONNECTED);
@@ -87,26 +87,28 @@ export const useWebSocket = () => {
 		});
 
 		// Подключаемся к WebSocket
-		manager.connect(wsURL, token);
+		managerRef.current.connect(wsURL, token);
 
 		// Создаем обработчик сообщений с диспатчем в Redux
 		const messageHandler = createMessageHandler(dispatch);
 
 		// Подписываемся на сообщения
-		const unsubscribeMessage = manager.onMessage(messageHandler);
+		const unsubscribeMessage = managerRef.current.onMessage(messageHandler);
 
 		// Подписываемся на изменения статуса
-		const unsubscribeStatus = manager.onStatusChange(newStatus => {
-			setStatus(newStatus);
+		const unsubscribeStatus = managerRef.current.onStatusChange(
+			newStatus => {
+				setStatus(newStatus);
 
-			// Логируем изменения статуса для отладки
-			if (prevStatusRef.current !== newStatus) {
-				console.info(
-					`WebSocket status changed: ${prevStatusRef.current} -> ${newStatus}`,
-				);
-				prevStatusRef.current = newStatus;
-			}
-		});
+				// Логируем изменения статуса для отладки
+				if (prevStatusRef.current !== newStatus) {
+					console.info(
+						`WebSocket status changed: ${prevStatusRef.current} -> ${newStatus}`,
+					);
+					prevStatusRef.current = newStatus;
+				}
+			},
+		);
 
 		// Очистка при размонтировании
 		return () => {
@@ -114,10 +116,11 @@ export const useWebSocket = () => {
 			unsubscribeStatus();
 			// Не отключаемся при размонтировании, так как соединение общее для всего приложения
 		};
-	}, [dispatch, manager]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []); // Пустой массив зависимостей, так как manager - singleton, а dispatch стабилен
 
 	return {
 		status,
-		isConnected: manager.isConnected(),
+		isConnected: managerRef.current.isConnected(),
 	};
 };

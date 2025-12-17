@@ -11,7 +11,6 @@ import gateReducer from '@/store/gateSlice';
 import trainingReducer from '@/store/trainingSlice';
 import circuitReducer from '@/store/circuitSlice';
 
-
 // Мокаем зависимости
 jest.mock('@/shared/hooks/useUserCookies', () => ({
 	useUserCookies: () => ({
@@ -77,8 +76,6 @@ const createMockStore = (
 				starter_coil: false,
 				blocking_activation: false,
 				button: false,
-				input_circuit_breaker: false,
-				clamp: false,
 				notification: false,
 				setSimulation: true,
 				studentStatistics: false,
@@ -86,9 +83,7 @@ const createMockStore = (
 				studentDelete: false,
 				note: false,
 				infoStartSimulation: false,
-				infoSimulationIsActive: false,
 				infoUnfinished: false,
-				notAllMalfunctionsFound: false,
 				...modalState,
 			} as ModalState,
 			gate: {

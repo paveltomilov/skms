@@ -53,7 +53,7 @@ class WebSocketManager {
 			return;
 		}
 
-		// Если уже подключены к тому же URL с тем же токеном, не переподключаемся
+		// Если уже подключены или подключаемся к тому же URL с тем же токеном, не переподключаемся
 		if (
 			this.ws &&
 			(this.ws.readyState === WebSocket.OPEN ||
@@ -61,7 +61,7 @@ class WebSocketManager {
 			this.url === url &&
 			this.token === token
 		) {
-			console.log(
+			console.info(
 				'[WebSocket] Соединение уже активно или подключается, пропускаем',
 				{
 					readyState:
@@ -93,21 +93,13 @@ class WebSocketManager {
 			return;
 		}
 
-		// Закрываем существующее соединение только если оно закрыто или закрывается
-		// Не закрываем активные или подключающиеся соединения - это уже проверено в connect()
+		// Проверяем существующее соединение
 		if (this.ws) {
 			const state = this.ws.readyState;
-			if (state === WebSocket.CLOSED || state === WebSocket.CLOSING) {
-				// Соединение уже закрыто или закрывается, просто очищаем ссылку
-				this.ws = null;
-			} else if (
-				state === WebSocket.OPEN ||
-				state === WebSocket.CONNECTING
-			) {
-				// Не должно происходить, так как это проверяется в connect()
-				// Но на всякий случай логируем и не закрываем
-				console.warn(
-					'[WebSocket] Попытка создать соединение при активном соединении',
+			// Если соединение уже открыто или подключается, не создаем новое
+			if (state === WebSocket.OPEN || state === WebSocket.CONNECTING) {
+				console.info(
+					'[WebSocket] Соединение уже активно или подключается, пропускаем создание нового',
 					{
 						readyState:
 							state === WebSocket.OPEN ? 'OPEN' : 'CONNECTING',
@@ -115,9 +107,21 @@ class WebSocketManager {
 				);
 				return;
 			}
+			// Закрываем только если соединение закрыто или закрывается
+			if (state === WebSocket.CLOSED || state === WebSocket.CLOSING) {
+				this.ws = null;
+			} else {
+				// Для других состояний закрываем соединение
+				this.ws.close();
+				this.ws = null;
+			}
 		}
 
 		this.setStatus(WebSocketStatus.CONNECTING);
+		console.info(
+			'[WebSocket] ⟳ Попытка подключения к:',
+			this.url.replace(/\?token=.*/, '?token=***'),
+		);
 
 		try {
 			// Убираем завершающий слэш, если есть, чтобы избежать двойного слэша

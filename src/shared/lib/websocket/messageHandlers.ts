@@ -21,6 +21,7 @@ import { setVoltagePoints } from '@/store/pointsSlice';
 import { GATE_STATE_TYPE } from '@/shared/types/gate';
 import { setSimulation, resetSimulation } from '@/store/simulationSlice';
 import { activateMalfunction } from '@/store/circuitSlice';
+import { openModal } from '@/store/modalSlice';
 
 /**
  * Обработчик входящих WebSocket сообщений
@@ -37,56 +38,21 @@ export function createMessageHandler(dispatch: AppDispatch) {
 			if ('gate' in messageAny && 'malfunctions' in messageAny) {
 				const initMessage = message as SimulationInitMessage;
 
-				// Преобразуем массив объектов в массив ID неисправностей
-				// Поддерживаем два формата:
-				// 1. [{"malfunction_id": "c.0.1", "description": "..."}]
-				// 2. [{"additionalProp1": "c.0.1"}] - динамические ключи
-				const malfunctionIds: string[] = initMessage.malfunctions
-					.map(m => {
-						// Если есть поле malfunction_id, используем его
-						if (
-							'malfunction_id' in m &&
-							typeof m.malfunction_id === 'string'
-						) {
-							return m.malfunction_id;
-						}
-						// Иначе извлекаем все значения из объекта (для формата с динамическими ключами)
-						return (
-							Object.values(m).find(
-								(v): v is string => typeof v === 'string',
-							) || ''
-						);
-					})
-					.filter(Boolean);
+				// Извлекаем ID неисправностей: каждый объект содержит один ключ со строковым значением
+				// Формат: [{"additionalProp1":"c.0.1"}, {"additionalProp2":"c.3.0.3.0"}]
+				const malfunctionIds = initMessage.malfunctions
+					.map(m => Object.values(m)[0])
+					.filter((id): id is string => typeof id === 'string');
 
-				// Преобразуем в формат для setSimulation
-				const malfunctionsForState = initMessage.malfunctions.map(m => {
-					// Если есть поле malfunction_id, используем его
-					if (
-						'malfunction_id' in m &&
-						typeof m.malfunction_id === 'string'
-					) {
-						return {
-							malfunction_id: m.malfunction_id,
-							description:
-								'description' in m &&
-								typeof m.description === 'string'
-									? m.description
-									: m.malfunction_id,
-						};
-					}
-					// Иначе извлекаем значение из объекта
-					const malfunctionId =
-						Object.values(m).find(
-							(v): v is string => typeof v === 'string',
-						) || '';
-					return {
+				// Преобразуем для состояния симуляции
+				const malfunctionsForState = malfunctionIds.map(
+					malfunctionId => ({
 						malfunction_id: malfunctionId,
 						description: malfunctionId,
-					};
-				});
+					}),
+				);
 
-				// Обновляем неисправности задвижки и устанавливаем активную задвижку
+				// Обновляем активную задвижку и неисправности задвижки
 				if (initMessage.gate) {
 					dispatch(setActiveGate(initMessage.gate));
 					dispatch(
@@ -134,9 +100,20 @@ export function createMessageHandler(dispatch: AppDispatch) {
 					| SimulationFinishedStudentMessage
 					| SimulationFinishedTeacherMessage;
 
+				// Сохраняем simulation_id в sessionStorage для PopupSimulationComplete
+				if (finishedMessage.simulation_id) {
+					sessionStorage.setItem(
+						'completedSimulationId',
+						String(finishedMessage.simulation_id),
+					);
+				}
+
 				// Обрабатываем завершение симуляции
 				// resetSimulation возвращает начальное состояние
 				dispatch(resetSimulation());
+
+				// Открываем модалку о завершении симуляции
+				dispatch(openModal('simulationComplete'));
 
 				console.info(
 					'[WebSocket] Симуляция завершена:',
