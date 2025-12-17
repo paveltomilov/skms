@@ -13,6 +13,7 @@ import percentReducer from './percentSlice';
 import updateListReducer from './updateListSlice';
 import UserInfoSlice from '@/store/userInfoSlice';
 import simulationReducer from './simulationSlice';
+import emergencyStatusReducer from './emergencyStatusSlice';
 
 const rootReducer = combineReducers({
 	updateList: updateListReducer,
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
 	training: trainingReducer,
 	userInfo: UserInfoSlice,
 	simulation: simulationReducer,
+	emergencyStatus: emergencyStatusReducer,
 });
 
 const persistConfig = {

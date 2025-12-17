@@ -7,10 +7,7 @@ import Chevron from '@/shared/UI/icons/Chevron';
 import { useUserCookies } from '@/shared/hooks/useUserCookies';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import { clearCurrentStudent } from '@/store/trainingSlice';
-import {
-	completeSimulation,
-	startSimulation,
-} from '@/store/simulationSlice';
+import { completeSimulation, startSimulation } from '@/store/simulationSlice';
 import { useToast } from '@/shared/hooks/useToast';
 import Toast from '@/shared/UI/Toast';
 import { openModal } from '@/store/modalSlice';
@@ -22,6 +19,7 @@ import {
 import { SIMULATION_MALFUNCTIONS } from '@/shared/configs/simulationMalfunctions';
 import { findElementByID } from '@/shared/utils/findElementByID/scheme';
 import SimulationControl from '@/entities/SimulationControl';
+import { toggleEmergency } from '@/store/emergencyStatusSlice';
 
 const Sidebar = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -176,7 +174,9 @@ const Sidebar = () => {
 								aria-label={
 									isAdmin ? 'Список препод.' : 'Список студ.'
 								}
-								text={isAdmin ? 'Список препод.' : 'Список студ.'}
+								text={
+									isAdmin ? 'Список препод.' : 'Список студ.'
+								}
 								className={styles.buttonText__list}
 								href="/training"
 								onClick={() => dispatch(clearCurrentStudent())}
@@ -188,7 +188,7 @@ const Sidebar = () => {
 							height={34}
 							aria-label="Начать симуляцию"
 							text="Начать симуляцию"
-							className={styles.buttonText}
+							className={styles.buttonHigh}
 							disabled={simulation.simulationId !== null}
 							onClick={handleStartSimulation}
 						/>
@@ -198,7 +198,7 @@ const Sidebar = () => {
 							height={34}
 							aria-label="Остановить симуляцию"
 							text="Остановить симуляцию"
-							className={styles.buttonText}
+							className={styles.buttonHigh}
 							disabled={simulation.simulationId === null}
 							onClick={handleStopSimulation}
 						/>
@@ -222,7 +222,14 @@ const Sidebar = () => {
 							onClick={handleLogCircuitState}
 						/>
 
-
+						<Button
+							width={90}
+							height={38}
+							aria-label="Аварийный останов"
+							text="Аварийный останов"
+							className={styles.buttonHigh}
+							onClick={() => dispatch(toggleEmergency())}
+						/>
 					</div>
 					{role === 'student' && <SimulationControl />}
 				</div>
