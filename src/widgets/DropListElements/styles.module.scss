@@ -2,11 +2,11 @@
 @use '@/shared/scss/variables.module';
 
 .list {
+	position: relative;
 	display: block;
 	height: 173px;
 	width: 326px;
-	overflow-x: hidden;
-	overflow-y: auto;
+	overflow-y: hidden;
 	background-color: variables.$white-color;
 	border: 1px solid #8a8a8a;
 	padding: 16px 0 0;
@@ -17,12 +17,14 @@
 	display: flex;
 	flex-direction: column;
 	gap: 4px;
+	height: 155px;
 
 	&__item {
 		display: flex;
 		align-items: center;
 		flex-direction: row;
 		justify-content: space-between;
+		margin-right: 16px;
 		padding: 10px 32px 10px 16px;
 
 		&:hover,
@@ -58,4 +60,39 @@
 
 .displayNone {
 	display: none;
+}
+
+.wrap {
+	position: relative;
+}
+
+.scroll_button_top,
+.scroll_button_bottom {
+	position: absolute;
+	right: 0;
+	width: 16px;
+	height: 16px;
+	border: none;
+	padding: unset;
+	background-color: transparent;
+	z-index: 2;
+	cursor: pointer;
+}
+
+.scroll_button_top[disabled],
+.scroll_button_bottom[disabled] {
+	cursor: default;
+
+	svg path {
+		fill: variables.$gray-disabled-color;
+	}
+}
+
+.scroll_button_top {
+	top: 0;
+	transform: rotate(180deg);
+}
+
+.scroll_button_bottom {
+	bottom: 0;
 }

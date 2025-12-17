@@ -103,3 +103,40 @@ body.modal-open {
 	overflow: hidden;
 	padding-right: 15px;
 }
+
+// кастомный скролл в задать симуляцию
+.simplbarTop,
+.simplbarBottom{
+	height: 100%;
+
+	.simplebar-track.simplebar-vertical {
+		top: 50%;
+		padding: 2px;
+		width: 16px;
+		background-color: variables.$secondary-color;
+		transform: translateY(-50%);
+
+		.simplebar-scrollbar:before {
+			border-radius: 0;
+			background-color: variables.$primary-color;
+		}
+	}
+}
+
+.simplbarTop {
+	max-height: 155px;
+
+	.simplebar-track.simplebar-vertical {
+		top: 0;
+		height: 90%;
+		transform: unset;
+	}
+}
+
+.simplbarBottom {
+	max-height: 310px;
+
+	.simplebar-track.simplebar-vertical {
+		height: 90%;
+	}
+}
