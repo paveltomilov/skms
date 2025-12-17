@@ -20,6 +20,7 @@ import { SIMULATION_MALFUNCTIONS } from '@/shared/configs/simulationMalfunctions
 import { findElementByID } from '@/shared/utils/findElementByID/scheme';
 import SimulationControl from '@/entities/SimulationControl';
 import { toggleEmergency } from '@/store/emergencyStatusSlice';
+import cn from 'classnames';
 
 const Sidebar = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -27,6 +28,7 @@ const Sidebar = () => {
 	const simulation = useAppSelector(state => state.simulation);
 	const circuit = useAppSelector(state => state.circuit);
 	const { toasts, showToast, removeToast } = useToast();
+	const emergencyStatus = useAppSelector(store => store.emergencyStatus);
 
 	const handleToggleSidebar = () => setIsOpen(!isOpen);
 
@@ -227,7 +229,9 @@ const Sidebar = () => {
 							height={38}
 							aria-label="Аварийный останов"
 							text="Аварийный останов"
-							className={styles.buttonHigh}
+							className={cn(styles.buttonHigh, {
+								[styles.buttonHigh__attention]: emergencyStatus,
+							})}
 							onClick={() => dispatch(toggleEmergency())}
 						/>
 					</div>

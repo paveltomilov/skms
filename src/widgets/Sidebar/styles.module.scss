@@ -96,8 +96,14 @@
 	}
 }
 
-.buttonHigh span {
-	@include mixins.text(14px, 400);
-	white-space: normal;
-	text-align: center;
+.buttonHigh {
+	&__attention span {
+		color: variables.$error-button;
+	}
+
+	span {
+		@include mixins.text(14px, 400);
+		white-space: normal;
+		text-align: center;
+	}
 }
