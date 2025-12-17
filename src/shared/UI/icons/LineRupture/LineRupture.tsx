@@ -8,7 +8,7 @@ const LineRupture: FC<Props> = ({ className }) => {
 	return (
 		<svg
 			style={{ margin: '0 0 24px' }}
-			width={326}
+			width={286}
 			height={2}
 			preserveAspectRatio="xMidYMid meet"
 			className={className && className}
