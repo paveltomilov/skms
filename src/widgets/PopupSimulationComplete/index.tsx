@@ -8,11 +8,13 @@ import { useAppDispatch } from '@/shared/hooks/store';
 import { closeModal } from '@/store/modalSlice';
 import { useSubscription } from '@/shared/hooks/useSubscription';
 import Image from 'next/image';
+import { useSimulationCompleteConfig } from '@/shared/hooks/useSimulationCompleteConfig';
 
 export const PopupSimulationComplete: FC = () => {
 	const dispatch = useAppDispatch();
 	const router = useRouter();
 	const subscriptionType = useSubscription();
+	const config = useSimulationCompleteConfig(subscriptionType);
 	const [simulationId, setSimulationId] = useState<string | null>(null);
 
 	// Получаем simulationId из sessionStorage при открытии модального окна
@@ -43,23 +45,8 @@ export const PopupSimulationComplete: FC = () => {
 		}
 	};
 
-	const subConfig =
-		subscriptionType === 'free' ?
-			{
-				messageText: 'Вы закончили, чтобы узнать результат пройдите опрос',
-				buttonText: 'Пройти опрос',
-				buttonWidth: 290,
-				width: '540px'
-			} :
-			{
-				messageText: 'Вы успешно справились c\u00A0заданием! Ознакомьтесь c\u00A0вашим результатом.',
-				buttonText: 'Узнать результат',
-				buttonWidth: 341,
-				width: '590px'
-			};
-
 	return (
-		<div className={styles.popup} style={{ width: subConfig.width }}>
+		<div className={styles.popup} style={{ width: config.width }}>
 			<div className={styles.popup__content}>
 				<Image
 					className={styles.popup__img}
@@ -69,14 +56,13 @@ export const PopupSimulationComplete: FC = () => {
 					alt='успешно'
 				/>
 				<p className={styles.popup__text}>
-					{subConfig.messageText}
+					{config.messageText}
 				</p>
 				<Button
 					className={styles.popup__button}
-					width={subConfig.buttonWidth}
+					width={config.buttonWidth}
 					height={55}
-					style={{ backgroundColor: '#B0B0B0' }}
-					text={subConfig.buttonText}
+					text={config.buttonText}
 					onClick={handleMainButtonClick}
 				/>
 			</div>
