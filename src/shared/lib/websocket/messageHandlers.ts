@@ -16,10 +16,12 @@ import {
 	setGatePosition,
 	setGateState,
 	setGateMalfunctions,
+	setActiveGate,
 } from '@/store/gateSlice';
 import { setVoltagePoints } from '@/store/pointsSlice';
 import { GATE_STATE_TYPE } from '@/shared/types/gate';
 import { setSimulation, resetSimulation } from '@/store/simulationSlice';
+import { activateMalfunction } from '@/store/circuitSlice';
 
 /**
  * Обработчик входящих WebSocket сообщений
@@ -35,13 +37,24 @@ export function createMessageHandler(dispatch: AppDispatch) {
 			// Проверяем наличие полей gate и malfunctions
 			if ('gate' in messageAny && 'malfunctions' in messageAny) {
 				const initMessage = message as SimulationInitMessage;
-				// Преобразуем массив объектов с malfunction_id и description в массив ID
-				const malfunctionIds: string[] = initMessage.malfunctions.map(
-					m => m.malfunction_id,
+
+				// Извлекаем ID неисправностей: каждый объект содержит один ключ со строковым значением
+				// Формат: [{"additionalProp1":"c.0.1"}, {"additionalProp2":"c.3.0.3.0"}]
+				const malfunctionIds = initMessage.malfunctions
+					.map(m => Object.values(m)[0])
+					.filter((id): id is string => typeof id === 'string');
+
+				// Преобразуем для состояния симуляции
+				const malfunctionsForState = malfunctionIds.map(
+					malfunctionId => ({
+						malfunction_id: malfunctionId,
+						description: malfunctionId,
+					}),
 				);
 
-				// Обновляем неисправности задвижки
+				// Обновляем активную задвижку и неисправности задвижки
 				if (initMessage.gate) {
+					dispatch(setActiveGate(initMessage.gate));
 					dispatch(
 						setGateMalfunctions({
 							id: initMessage.gate,
@@ -54,11 +67,16 @@ export function createMessageHandler(dispatch: AppDispatch) {
 				dispatch(
 					setSimulation({
 						gate: initMessage.gate,
-						malfunctions: initMessage.malfunctions,
+						malfunctions: malfunctionsForState,
 					}),
 				);
 
-				console.log(
+				// Активируем неисправности в схеме
+				malfunctionIds.forEach(malfunctionId => {
+					dispatch(activateMalfunction(malfunctionId));
+				});
+
+				console.info(
 					'[WebSocket] Инициализация симуляции:',
 					initMessage.gate,
 					malfunctionIds,
