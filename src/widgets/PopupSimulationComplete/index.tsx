@@ -7,11 +7,14 @@ import Button from '@/shared/UI/Button';
 import { useSubscription } from '@/shared/hooks/useSubscription';
 import { useAppDispatch } from '@/shared/hooks/store';
 import { closeModal } from '@/store/modalSlice';
+import Image from 'next/image';
+import { useSimulationCompleteConfig } from '@/shared/hooks/useSimulationCompleteConfig';
 
 export const PopupSimulationComplete: FC = () => {
 	const router = useRouter();
 	const dispatch = useAppDispatch();
 	const subscriptionType = useSubscription();
+	const config = useSimulationCompleteConfig(subscriptionType);
 	const [simulationId, setSimulationId] = useState<string | null>(null);
 
 	// Получаем simulationId из sessionStorage при открытии модального окна
@@ -43,24 +46,27 @@ export const PopupSimulationComplete: FC = () => {
 		}
 	};
 
-	const buttonText =
-		subscriptionType === 'free' ? 'Пройти опрос' : 'Узнать результат';
-
 	return (
-		<div className={styles.popup}>
+		<div className={styles.popup} style={{ width: config.width }}>
 			<div className={styles.popup__content}>
+				<Image
+					className={styles.popup__img}
+					src='/svg/success.svg'
+					width={145}
+					height={145}
+					alt='успешно'
+				/>
 				<p className={styles.popup__text}>
-					Вы закончили, что бы узнать результат пройдите опрос
+					{config.messageText}
 				</p>
-				<div className={styles.popup__buttons}>
-					<Button
-						width={307}
-						height={38}
-						text={buttonText}
-						onClick={handleMainButtonClick}
-					/>
-				</div>
+				<Button
+					className={styles.popup__button}
+					width={config.buttonWidth}
+					height={55}
+					text={config.buttonText}
+					onClick={handleMainButtonClick}
+				/>
 			</div>
 		</div>
 	);
-};
+}; 

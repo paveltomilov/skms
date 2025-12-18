@@ -7,11 +7,10 @@
 }
 
 .list {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-	max-height: 300px;
-	overflow-y: none;
 	overflow-x: auto;
 
 	-ms-overflow-style: none; /* Для IE и Edge */
@@ -21,11 +20,24 @@
 	}
 
 	&__item {
+		position: relative;
 		display: flex;
 		flex-direction: column;
 		gap: 16px;
-		border-top: 1px solid #a4a4a4;
 		padding: 24px 0;
+		width: 90%;
+
+		&:not(:first-child) {
+			&:before {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 98%;
+				height: 1px;
+				background-color: #a4a4a4;
+			}
+		}
 
 		&__top {
 			display: flex;
@@ -48,4 +60,39 @@
 			border: none;
 		}
 	}
+}
+
+.wrap {
+	position: relative;
+}
+
+.scroll_button_top,
+.scroll_button_bottom {
+	position: absolute;
+	right: 0;
+	width: 16px;
+	height: 16px;
+	border: none;
+	padding: unset;
+	background-color: transparent;
+	z-index: 1;
+	cursor: pointer;
+}
+
+.scroll_button_top[disabled],
+.scroll_button_bottom[disabled] {
+	cursor: default;
+
+	svg path {
+		fill: variables.$gray-disabled-color;
+	}
+}
+
+.scroll_button_top {
+	top: 30px;
+	transform: rotate(180deg);
+}
+
+.scroll_button_bottom {
+	bottom: 28px;
 }
