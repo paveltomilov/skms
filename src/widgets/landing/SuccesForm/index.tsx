@@ -21,7 +21,7 @@ const SuccesForm: FC = () => {
 				<Image
 					className={styles.succes__img__size}
 					src="/images/succes.png"
-					alt=""
+					alt="Данные успешно отправлены"
 					width={268}
 					height={274}
 				/>
