@@ -131,50 +131,10 @@
 }
 
 .inputError {
-	border-color: var(--basic-error);
+	border-color: #ff6b6b;
 }
 .errorMsg {
 	position: absolute;
 	top: 70px;
-	color: var(--basic-error);
-}
-
-.buttonDisabled {
-	background: #ffffff !important;
-	color: var(--lan-very-dark-gray) !important;
-	border-color: var(--lan-very-dark-gray) !important;
-	cursor: not-allowed !important;
-}
-
-.succes {
-	display: flex;
-
-	&__info {
-		max-width: 504px;
-		margin-right: auto;
-	}
-
-	&__title {
-		font-family: var(--second-family);
-		font-weight: 600;
-		font-size: 32px;
-		line-height: 128%;
-		text-transform: uppercase;
-		color: var(--lan-very-dark-mostly-black-blue);
-		margin-bottom: 24px;
-	}
-
-	&__descr {
-		font-family: var(--second-family);
-		font-weight: 500;
-		font-size: 17px;
-		line-height: 128%;
-		letter-spacing: 0.01em;
-		color: var(--lan-very-dark-mostly-black-blue);
-	}
-
-	&__img {
-		padding-top: 59px;
-		padding-bottom: 59px;
-	}
+	color: #ff6b6b;
 }

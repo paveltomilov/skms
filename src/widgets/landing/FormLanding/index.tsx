@@ -2,12 +2,11 @@
 
 import { useState, ChangeEvent, useCallback } from 'react';
 import axios from 'axios';
-import Image from 'next/image';
-
-// import Popup from '../Popup';
 import Button from '../Button';
 import ConsentCheckbox from '../ConsentCheckbox';
 import styles from './styles.module.scss';
+import SuccesForm from '../SuccesForm';
+import ErrorForm from '../ErrorForm';
 
 type FormValues = {
 	name: string;
@@ -111,7 +110,9 @@ function FormLanding() {
 					!rawValue.includes('@') ||
 					!isValidEmailDomain(rawValue)
 				)
-					setEmailError('Email введен некорректно');
+					setEmailError(
+						'Похоже, в email есть опечатка.\n Проверьте,пожалуйста, введенные данные',
+					);
 				else setEmailError(null);
 			}
 		},
@@ -145,52 +146,25 @@ function FormLanding() {
 				headers: { 'Content-Type': 'application/json' },
 			});
 			setStatus('success');
-			// setForm({
-			// 	name: '',
-			// 	company: '',
-			// 	email: '',
-			// 	phone: '',
-			// });
+
 			setConsent(false);
-		} catch (err) {
-			console.error(err);
+		} catch {
 			setStatus('error');
 			setConsent(false);
 		} finally {
-			setTimeout(() => setStatus('idle'), 30000);
+			setForm({
+				name: '',
+				company: '',
+				email: '',
+				phone: '',
+			});
+			setTimeout(() => setStatus('idle'), 4000);
 		}
 	};
 
 	return status === 'success' || status === 'error' ? (
 		<div className={styles.successContainer}>
-			{status === 'success' ? (
-				<div className={`${styles.form} ${styles.succes}`}>
-					<div className={styles.succes__info}>
-						<h2 className={styles.succes__title}>
-							Спасибо,мы получили вашу заявку
-						</h2>
-						<p className={styles.succes__descr}>
-							Наш специалист свяжется с вами в ближайшее время,
-							чтобы уточнить детали и помочь с выбором решения
-						</p>
-					</div>
-					<div className={styles.succes__img}>
-						<Image
-							src="/images/succes.png"
-							alt=""
-							width={268}
-							height={274}
-						/>
-					</div>
-				</div>
-			) : (
-				<div className={styles.form}>
-					<h2 className={styles.form__title}>Ошибка при отправке</h2>
-					<p>
-						Попробуйте ещё раз позже или свяжитесь с нами напрямую.
-					</p>
-				</div>
-			)}
+			{status === 'success' ? <SuccesForm /> : <ErrorForm />}
 		</div>
 	) : (
 		<form onSubmit={handleSubmit} className={styles.form}>
@@ -218,7 +192,6 @@ function FormLanding() {
 					}`}
 					text={'ОТПРАВИТЬ'}
 					type="submit"
-					disabled={!isFormValid() || status === 'sending'}
 					width={604}
 					height={40}
 					radius={4}
