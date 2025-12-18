@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, RefObject } from 'react';
 
 export const useArrowNavigation = (containerRef: RefObject<HTMLElement | null>) => {

@@ -4,13 +4,14 @@
 .list {
 	position: absolute;
 	top: 45px;
-	left: 342px;
+	left: 327px;
+	display: block;
+	border: 1px solid #8a8a8a;
 	width: 486px;
 	height: auto;
-	display: block;
 	overflow: hidden;
 	background-color: variables.$white-color;
-	border: 1px solid #8a8a8a;
+	z-index: 2;
 
 	-ms-overflow-style: none; /* Для IE и Edge */
 	scrollbar-width: none; /* Для Firefox */
