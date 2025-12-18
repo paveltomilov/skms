@@ -66,6 +66,7 @@ export function createMessageHandler(dispatch: AppDispatch) {
 				// Обновляем данные симуляции в Redux
 				dispatch(
 					setSimulation({
+						simulationId: initMessage.simulation_id,
 						gate: initMessage.gate,
 						malfunctions: malfunctionsForState,
 					}),
@@ -76,11 +77,47 @@ export function createMessageHandler(dispatch: AppDispatch) {
 					dispatch(activateMalfunction(malfunctionId));
 				});
 
-				console.info(
-					'[WebSocket] Инициализация симуляции:',
-					initMessage.gate,
+				// Открываем попап о начале симуляции только если он еще не был показан для этой симуляции
+				// Проверяем sessionStorage, чтобы избежать повторного показа при перезагрузке страницы
+				if (typeof window !== 'undefined') {
+					if (initMessage.simulation_id !== undefined) {
+						const shownSimulationId = sessionStorage.getItem(
+							'shownStartSimulationId',
+						);
+						const currentSimulationId = String(
+							initMessage.simulation_id,
+						);
+
+						if (shownSimulationId !== currentSimulationId) {
+							dispatch(openModal('infoStartSimulation'));
+							sessionStorage.setItem(
+								'shownStartSimulationId',
+								currentSimulationId,
+							);
+						}
+					} else {
+						// Если simulation_id нет, показываем попап один раз за сессию
+						const hasShownWithoutId = sessionStorage.getItem(
+							'shownStartSimulationWithoutId',
+						);
+						if (!hasShownWithoutId) {
+							dispatch(openModal('infoStartSimulation'));
+							sessionStorage.setItem(
+								'shownStartSimulationWithoutId',
+								'true',
+							);
+						}
+					}
+				} else {
+					// На сервере (SSR) всегда показываем попап (но это не должно происходить)
+					dispatch(openModal('infoStartSimulation'));
+				}
+
+				console.info('[WebSocket] Инициализация симуляции:', {
+					simulation_id: initMessage.simulation_id,
+					gate: initMessage.gate,
 					malfunctionIds,
-				);
+				});
 				return;
 			}
 

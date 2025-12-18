@@ -21,6 +21,7 @@ interface StartSimulationPayload {
 }
 
 interface SetSimulationPayload {
+	simulationId?: number;
 	gate?: string;
 	malfunctions: Array<{
 		malfunction_id: string;
@@ -46,6 +47,9 @@ const simulationSlice = createSlice({
 		},
 		setSimulation: (state, action: PayloadAction<SetSimulationPayload>) => {
 			// Устанавливаем данные симуляции из WebSocket сообщения инициализации
+			if (action.payload.simulationId !== undefined) {
+				state.simulationId = action.payload.simulationId;
+			}
 			if (action.payload.gate) {
 				state.gate = action.payload.gate;
 			}
