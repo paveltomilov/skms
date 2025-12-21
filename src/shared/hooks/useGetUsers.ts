@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { getUsers } from '../utils/getUsers/getUsers';
+import { getUsers } from '../api';
 import { Role, User } from '../types/users';
 
 export const useGetUsers = (role: Role) => {

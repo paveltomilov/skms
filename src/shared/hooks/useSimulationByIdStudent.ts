@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useUserCookies } from './useUserCookies';
-import { getSimulations } from '../utils/getSimulations/getSimulations';
-import { stopSimulation } from '../utils/stopSimulation';
+import { getSimulations, stopSimulation } from '../api';
 import { AxiosError } from 'axios';
 
 interface IUseSimulation {

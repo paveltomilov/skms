@@ -1,4 +1,128 @@
 ---
 alwaysApply: true
 ---
-проект на next 15 с TS, используем scss, axios, RTK.
+
+# Service Rules for SMS (Skill Management System)
+
+## 1. General
+
+-   Follow Feature-Sliced Design (FSD).
+-   Use TypeScript (strict mode). No `any`.
+-   Use React function components and hooks.
+-   Keep code simple, modular, and maintainable.
+
+## 2. Project Structure (FSD)
+
+The only valid folders:
+
+-   src/app
+-   src/widgets
+-   src/entities
+-   src/features
+-   src/shared
+-   src/store
+
+Rules:
+
+-   shared → UI, hooks, utils, types, configs.
+-   entities → domain models and UI.
+-   features → user actions and business logic.
+-   widgets → composite UI blocks.
+-   app → routing, layouts, providers.
+
+## 3. Path Aliases
+
+Use only:
+
+-   `@/*` → `src/*`
+-   `@public/*` → project root.
+
+## 4. Styling
+
+-   Use SCSS Modules only (`*.module.scss`).
+-   Use `classnames` for dynamic styles.
+-   No inline CSS except minor cases.
+
+## 5. State Management
+
+-   Use Redux Toolkit.
+-   Use slices for each domain.
+-   Persist only allowed slices (`windows`, `percent`).
+-   No non-serializable values in Redux.
+-   All async logic must use RTK thunks.
+
+## 6. API & Networking
+
+-   Use Axios instance from `shared/lib/api`.
+-   Include interceptors for access/refresh tokens.
+-   No raw `fetch()` unless explicitly required.
+-   All API responses must be typed.
+
+## 7. Authentication
+
+-   Access token → localStorage.
+-   Refresh token → HTTP-only cookies.
+-   Token refresh handled automatically in interceptors.
+
+## 8. WebSocket
+
+-   Use `useWebSocket` hook.
+-   WS URL must come from environment variables.
+-   Implement reconnect and error handling.
+
+## 9. Components
+
+-   One component per folder:
+    ComponentName/
+    ComponentName.tsx  
+     ComponentName.module.scss  
+     index.ts
+
+Rules:
+
+-   Props must be strictly typed.
+-   No default exports.
+-   Use small, focused components.
+
+## 10. Testing
+
+-   Use Jest + Testing Library.
+-   Test all features and reusable components.
+-   Add mocks for SVG, images, API calls.
+
+## 11. Storybook
+
+-   Every reusable UI component must have a story.
+-   Follow CSF3 format.
+-   Keep story files minimal and consistent.
+
+## 12. Code Quality
+
+-   Follow ESLint config strictly.
+-   No warnings in PRs.
+-   Use Prettier for formatting.
+-   No commented-out code.
+-   No console logs.
+
+## 13. Performance
+
+-   Use React.memo, useCallback, useMemo when necessary.
+-   Avoid large rerenders.
+-   Apply lazy loading for heavy components.
+-   Avoid storing large or complex objects in Redux.
+
+## 14. Security
+
+-   Do not expose sensitive data.
+-   Validate all inputs and API responses.
+-   Handle all errors gracefully.
+
+## 15. Cursor Agent Specific
+
+-   Follow FSD boundaries strictly.
+-   Only create files inside valid layers.
+-   Do not restructure architecture unless explicitly asked.
+-   Maintain existing coding style and naming.
+-   Always use TypeScript types and interfaces.
+-   When editing existing files, preserve structure and logic.
+-   Return only code when user requests generation.

@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useAppSelector } from './store';
 import { useUserCookies } from './useUserCookies';
-import { deleteUser } from '../utils/deleteUser/deleteUser';
+import { deleteUser } from '../api';
 
 export const useDeleteUser = () => {
 	const studentId = useAppSelector(
@@ -29,7 +29,7 @@ export const useDeleteUser = () => {
 		setSuccess(false);
 
 		try {
-			await deleteUser(studentId); 
+			await deleteUser(studentId);
 			setSuccess(true);
 		} catch (err) {
 			setError(err instanceof Error ? err.message : 'Неизвестная ошибка');

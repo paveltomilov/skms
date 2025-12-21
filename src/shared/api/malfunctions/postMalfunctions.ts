@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import { CircuitElement } from '../../types/scheme';
+import { CircuitElement } from '@/shared/types/scheme';
 
 export const postMalfunctions = async (
     urlBase: string | undefined,
@@ -37,3 +37,4 @@ export const postMalfunctions = async (
         throw new Error(message);
     }
 };
+

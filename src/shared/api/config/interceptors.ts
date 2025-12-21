@@ -3,9 +3,8 @@ import axios, {
 	AxiosResponse,
 	InternalAxiosRequestConfig,
 } from 'axios';
-import { getCookie } from 'cookies-next';
+import { deleteCookie, getCookie } from 'cookies-next';
 import { RefreshResponse } from '@/shared/types/typesAuth';
-import { logout } from '@/shared/lib/auth';
 
 export let accessToken: string | null = null;
 
@@ -39,14 +38,24 @@ export const setAccessToken = (token: string | null): void => {
 	accessToken = token;
 };
 
-export const setupResponseInterceptor = (urlBase: string) => {
+// Функция для выхода (перенесена из auth.ts для разрыва циклической зависимости)
+const clearAuthData = (): void => {
+	localStorage.removeItem('accessToken');
+	deleteCookie('refreshToken');
+	deleteCookie('first_name');
+	deleteCookie('last_name');
+	deleteCookie('role');
+	setAccessToken(null);
+};
+
+const setupResponseInterceptor = (urlBase: string) => {
 	axios.interceptors.response.use(
 		(response: AxiosResponse) => response,
 		async (error: AxiosError) => {
 			const originalRequest = error.config as ExtendedAxiosRequestConfig;
 
 			if (originalRequest.url?.includes('/auth/refresh')) {
-				logout();
+				clearAuthData();
 				return Promise.reject(error);
 			}
 
@@ -98,7 +107,7 @@ export const setupResponseInterceptor = (urlBase: string) => {
 					throw new Error('Ошибка получения refresh token');
 				} catch (refreshError) {
 					processQueue(refreshError, null);
-					logout();
+					clearAuthData();
 					window.location.href = '/login';
 					return Promise.reject(refreshError);
 				} finally {
@@ -111,7 +120,7 @@ export const setupResponseInterceptor = (urlBase: string) => {
 };
 
 // Устанавливаем интерцептор для добавления токена в запросы
-export const setupRequestInterceptor = () => {
+const setupRequestInterceptor = () => {
 	axios.interceptors.request.use(
 		(config: InternalAxiosRequestConfig) => {
 			if (accessToken && config.headers) {
