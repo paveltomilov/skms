@@ -11,11 +11,14 @@ import {
 	getIndicator,
 } from '@/shared/utils/loginFunctions/loginFunctions';
 import { useLoginForm } from '@/shared/hooks/useLoginForm';
-import { postAuth } from '@/shared/lib/auth';
-import { postRegistration } from '@/shared/lib/registration';
+import { postAuth, postRegistration } from '@/shared/api';
 import { LoginFormData } from '@/shared/types/login';
-import {getDashboardRoute, UserRole} from '@/shared/configs/routes';
-import {EMAIL_MAX_LENGTH, NAME_SURNAME_MAX_LENGTH, PASSWORD_MAX_LENGTH} from '@/shared/configs/login';
+import { getDashboardRoute, UserRole } from '@/shared/configs/routes';
+import {
+	EMAIL_MAX_LENGTH,
+	NAME_SURNAME_MAX_LENGTH,
+	PASSWORD_MAX_LENGTH,
+} from '@/shared/configs/login';
 
 interface FormProps {
 	toggleRegisterMode: 'register' | 'login' | 'createUser';
@@ -32,7 +35,7 @@ export interface FieldConfig {
 	label: string;
 	type: string;
 	placeholder: string;
-	maxLength: number,
+	maxLength: number;
 }
 
 const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
@@ -79,10 +82,11 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 					},
 			  ]
 			: []) as FieldConfig[]),
-		{ 	name: 'email', 
-		  	label: 'Email', 
-		  	type: 'email', 
-		  	placeholder: 'Email',
+		{
+			name: 'email',
+			label: 'Email',
+			type: 'email',
+			placeholder: 'Email',
 			maxLength: EMAIL_MAX_LENGTH,
 		},
 		{
@@ -172,8 +176,13 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 					response.errorText || 'Неверные учётные данные',
 				);
 			}
-		} catch {
+		} catch (error) {
 			setServerErrors(PASSWORD_ERROR);
+			const errorMessage =
+				error instanceof Error
+					? error.message 
+					: 'Произошла ошибка при авторизации';
+			setAuthErrorText(errorMessage);
 		}
 	};
 	const handleSubmit: FormEventHandler<HTMLFormElement> = async event => {
@@ -201,10 +210,16 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 				<label className={styles.form_inner_label}>
 					<input
 						type="checkbox"
-						name={toggleRegisterMode === 'register' ? 'policy' : 'remember'}
+						name={
+							toggleRegisterMode === 'register'
+								? 'policy'
+								: 'remember'
+						}
 						className={styles.form_inner_label__checkbox}
 						checked={
-							toggleRegisterMode === 'register' ? policyAccepted : rememberMe
+							toggleRegisterMode === 'register'
+								? policyAccepted
+								: rememberMe
 						}
 						onChange={e =>
 							toggleRegisterMode === 'register'
@@ -212,10 +227,16 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 								: handleRememberMeChange(e.target.checked)
 						}
 					/>
-					{toggleRegisterMode === 'register' ? 'Соглашаюсь на' : 'Запомнить'}
+					{toggleRegisterMode === 'register'
+						? 'Соглашаюсь на'
+						: 'Запомнить'}
 				</label>
 				<Link
-					href={toggleRegisterMode === 'register' ? '/policy' : '/recovery'}
+					href={
+						toggleRegisterMode === 'register'
+							? '/policy'
+							: '/recovery'
+					}
 					className={styles.form_inner__forget}
 				>
 					{toggleRegisterMode === 'register'
@@ -227,8 +248,12 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 			<Button
 				width={toggleRegisterMode === 'register' ? 278 : 171}
 				height={55}
-				aria-label={toggleRegisterMode === 'register' ? 'Подтвердить' : 'Войти'}
-				text={toggleRegisterMode === 'register' ? 'Подтвердить' : 'Войти'}
+				aria-label={
+					toggleRegisterMode === 'register' ? 'Подтвердить' : 'Войти'
+				}
+				text={
+					toggleRegisterMode === 'register' ? 'Подтвердить' : 'Войти'
+				}
 				className={styles.form__button}
 				disabled={!isValid}
 			/>

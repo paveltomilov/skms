@@ -2,13 +2,15 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Malfunction } from '@/shared/types/scheme';
 
 export interface SimulationState {
-	simulationId: string | null;
+	simulationId: number | null;
+	gate: string | null;
 	originalMalfunctions: Malfunction[];
 	foundMalfunctionIds: string[];
 }
 
 const initialState: SimulationState = {
 	simulationId: null,
+	gate: null,
 	originalMalfunctions: [],
 	foundMalfunctionIds: [],
 };
@@ -16,6 +18,14 @@ const initialState: SimulationState = {
 interface StartSimulationPayload {
 	simulationId: string;
 	originalMalfunctions: Malfunction[];
+}
+
+interface SetSimulationPayload {
+	gate?: string;
+	malfunctions: Array<{
+		malfunction_id: string;
+		description?: string;
+	}>;
 }
 
 const simulationSlice = createSlice({
@@ -26,12 +36,25 @@ const simulationSlice = createSlice({
 			state,
 			action: PayloadAction<StartSimulationPayload>,
 		) => {
-			state.simulationId = action.payload.simulationId;
+			state.simulationId = Number(action.payload.simulationId);
 			// Создаем глубокую копию массива, чтобы предотвратить мутацию
 			state.originalMalfunctions =
 				action.payload.originalMalfunctions.map(malfunction => ({
 					...malfunction,
 				}));
+			state.foundMalfunctionIds = [];
+		},
+		setSimulation: (state, action: PayloadAction<SetSimulationPayload>) => {
+			// Устанавливаем данные симуляции из WebSocket сообщения инициализации
+			if (action.payload.gate) {
+				state.gate = action.payload.gate;
+			}
+			// Преобразуем массив с malfunction_id и description в формат Malfunction
+			state.originalMalfunctions = action.payload.malfunctions.map(m => ({
+				id: m.malfunction_id,
+				name: m.description || m.malfunction_id,
+				active: true,
+			}));
 			state.foundMalfunctionIds = [];
 		},
 		markMalfunctionAsFound: (state, action: PayloadAction<string>) => {
@@ -41,12 +64,8 @@ const simulationSlice = createSlice({
 				state.foundMalfunctionIds.push(malfunctionId);
 			}
 		},
-		completeSimulation: state => {
-			state.simulationId = null;
-			state.originalMalfunctions = [];
-			state.foundMalfunctionIds = [];
-		},
 		resetSimulation: () => {
+			// Сброс/завершение симуляции - возвращаем начальное состояние
 			return initialState;
 		},
 	},
@@ -54,8 +73,8 @@ const simulationSlice = createSlice({
 
 export const {
 	startSimulation,
+	setSimulation,
 	markMalfunctionAsFound,
-	completeSimulation,
 	resetSimulation,
 } = simulationSlice.actions;
 

@@ -4,7 +4,7 @@ import styles from './style.module.scss';
 import Form from '@/widgets/Form';
 import { FC, useCallback, useEffect, useState } from 'react';
 import PopupRegistrationDone from '@/entities/PopupRegistrationDone';
-import { checkAuth } from '@/shared/lib/auth';
+import { checkAuth } from '@/shared/api';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/shared/hooks/useAuth';
 import { getDashboardRoute, UserRole } from '@/shared/configs/routes';

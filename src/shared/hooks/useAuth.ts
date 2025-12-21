@@ -2,11 +2,8 @@
 
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import {
-	checkAuth,
-	getAccessToken,
-	initAccessFromStorage,
-} from '@/shared/lib/auth';
+import { checkAuth, getAccessToken, initAccessFromStorage } from '@/shared/api';
+import { initializeInterceptors } from '@/shared/api/config/interceptors';
 import { getCookie } from 'cookies-next';
 import { isPublicRoute, UserRole } from '@/shared/configs/routes';
 import { useAppDispatch } from '@/shared/hooks/store';
@@ -27,6 +24,11 @@ export const useAuth = () => {
 	const currentAccessToken = getAccessToken();
 
 	useEffect(() => {
+		// Инициализируем интерцепторы при первом рендере
+		const urlBase = process.env.NEXT_PUBLIC_API_BASE_URL;
+		if (urlBase) {
+			initializeInterceptors(urlBase);
+		}
 		initAccessFromStorage();
 		let isMounted = true;
 

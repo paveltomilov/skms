@@ -1,10 +1,11 @@
 'use client';
 
 import { FC } from 'react';
-import { useAppSelector } from '@/shared/hooks/store';
+import { useSearchParams } from 'next/navigation';
 
 const StatsPage: FC = () => {
-	const simulationId = useAppSelector(state => state.simulation.simulationId);
+	const searchParams = useSearchParams();
+	const simulationId = searchParams.get('id');
 
 	return (
 		<div style={{ padding: '40px', textAlign: 'center' }}>

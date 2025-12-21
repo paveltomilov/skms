@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState, useCallback } from 'react';
 import Image from 'next/image';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
@@ -6,9 +6,9 @@ import { useRouter } from 'next/navigation';
 import cn from 'classnames';
 import ModalHeader from '@/entities/ModalHeader';
 import { useUserCookies } from '@/shared/hooks/useUserCookies';
-import { logout } from '@/shared/lib/auth';
-import EllipseClose from '@/shared/UI/icons/EllipseClose';
-import { useAppDispatch } from '@/shared/hooks/store';
+import { logout } from '@/shared/api';
+
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import { openModal } from '@/store/modalSlice';
 
 interface PopupUserInfoProps {
@@ -20,10 +20,17 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 	className,
 	handlePopupClose,
 }) => {
+	const simulation = useAppSelector(state => state.simulation);
 	const router = useRouter();
 	const dispatch = useAppDispatch();
 	const [isActiveStudentSimulation, setIsActiveStudentSimulation] =
 		useState<boolean>(false);
+
+	const handleStopSimulation = useCallback(() => {
+		// Открываем попап подтверждения прерывания симуляции
+		dispatch(openModal('abortSimulationConfirm'));
+	}, [dispatch]);
+
 	const isActiveSimulation: boolean = true; // в будущем статус от websocket
 	const { firstName, lastName, role } = useUserCookies();
 	const status =
@@ -44,11 +51,6 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 	};
 
 	const fullName = firstName && lastName ? `${firstName} ${lastName}` : '—';
-
-	const handleAbortSimulation = () => {
-		handlePopupClose();
-		dispatch(openModal('abortSimulation'));
-	};
 
 	return (
 		<div className={cn(className, styles.userInfo)}>
@@ -75,27 +77,34 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 					</div>
 				</div>
 				<ul className={styles.userInfo__more}>
-					{isActiveStudentSimulation && (
+					{simulation.simulationId !== null && (
 						<li>
-							<div
-								className={styles.userInfo__more__item}
+							<Button
+								width={90}
+								height={34}
 								aria-label="Прервать попытку"
-								onClick={handleAbortSimulation}
-							>
-								<EllipseClose size="xs" typeWidth="think" />
-								Прервать попытку
-							</div>
+								text="Прервать попытку"
+								className={styles.buttonText}
+								onClick={handleStopSimulation}
+								image={{
+									src: '/svg/abortSim.svg',
+									width: 16,
+									height: 16,
+								}}
+							/>
 						</li>
 					)}
-					<li>
-						<Image
-							src="/svg/history.svg"
-							alt="history"
-							width={16}
-							height={16}
-						/>
-						История сессий
-					</li>
+					{isActiveStudentSimulation && (
+						<li>
+							<Image
+								src="/svg/history.svg"
+								alt="history"
+								width={16}
+								height={16}
+							/>
+							История сессий
+						</li>
+					)}
 					<li>
 						<Image
 							src="/svg/support.svg"

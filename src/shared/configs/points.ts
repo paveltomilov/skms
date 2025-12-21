@@ -156,6 +156,23 @@ function enrichPointsWithElements(
 }
 
 /**
+ * Извлекает состояния из объектов точек.
+ * @param SCHEME_POINTS - объект с точками схемы
+ * @returns объект с состояниями точек (ключ - ID точки, значение - состояние)
+ */
+function extractStates(
+	schemePoints: Record<string, IPoint>,
+): Record<string, boolean> {
+	const result: Record<string, boolean> = {};
+	for (const key in schemePoints) {
+		if (Object.prototype.hasOwnProperty.call(schemePoints, key)) {
+			result[key] = schemePoints[key].state ?? false;
+		}
+	}
+	return result;
+}
+
+/**
  * Вычисляет состояние точек на основе элементов, подключенных к ним.
  * Точка считается активной (true), если хотя бы один элемент, подключенный к ней как endPoint,
  * имеет активный startPoint (true) и сопротивление меньше высокого сопротивления.
@@ -229,20 +246,6 @@ export function calculatePointsState(
 		result[pointId] = hasActiveElement;
 	}
 
-	return result;
-}
-
-/**
- * Извлекает состояния из объектов точек.
- * @param SCHEME_POINTS - объект с точками схемы
- * @returns объект с состояниями точек (ключ - ID точки, значение - состояние)
- */
-function extractStates(SCHEME_POINTS: Record<string, IPoint>) {
-	const result: Record<string, boolean> = {};
-
-	for (const key in SCHEME_POINTS) {
-		result[key] = SCHEME_POINTS[key].state;
-	}
 	return result;
 }
 
@@ -439,6 +442,7 @@ export const SCHEME_POINTS: Record<string, IPoint> = {
 // Базовые точки с обогащением элементов, подключенных как endPoint
 export const SCHEME_POINTS_BASE: Record<string, IPoint> =
 	enrichPointsWithElements(SCHEME_POINTS);
+
 
 // Состояния точек (только boolean значения без координат и элементов)
 // Вычисляются на основе начальной схемы перед помещением в Redux store
