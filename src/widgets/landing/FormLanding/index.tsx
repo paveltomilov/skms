@@ -1,75 +1,74 @@
 'use client';
-import { useState, ChangeEvent, FormEvent, useCallback } from 'react';
+
+import { useState, ChangeEvent, useCallback } from 'react';
+import axios from 'axios';
+import { FormValues, SubmitStatus } from '@/shared/types/form';
+import { isValidEmailDomain } from '@/shared/utils/emailUtils/emailUtils';
 import Button from '../Button';
+import ConsentCheckbox from '../ConsentCheckbox';
 import styles from './styles.module.scss';
+import SuccesForm from '../SuccesForm';
+import ErrorForm from '../ErrorForm';
 
-type FormValues = {
-	name: string;
-	company: string;
-	email: string;
-	phone: string;
-	consent: boolean;
-};
-
-type FieldKey = keyof Omit<FormValues, 'consent'>;
-
-interface Field {
-	key: FieldKey;
-	label: string;
-	type: 'text' | 'email' | 'tel';
-	placeholder: string;
-	required: boolean;
-}
-
-const fields: ReadonlyArray<Field> = [
-	{
-		key: 'name',
-		label: 'Ваше имя',
-		type: 'text',
-		placeholder: 'ФИО',
-		required: true,
-	},
+const fields = [
+	{ key: 'name', label: 'Ваше имя', type: 'text', placeholder: 'ФИО' },
 	{
 		key: 'email',
 		label: 'Почта',
-		type: 'email',
+		type: 'text',
 		placeholder: 'Введите Вашу почту',
-		required: true,
 	},
 	{
 		key: 'company',
 		label: 'Компания',
 		type: 'text',
 		placeholder: 'Название компании',
-		required: false,
 	},
 	{
 		key: 'phone',
 		label: 'Телефон',
 		type: 'tel',
 		placeholder: 'Ваш номер телефона',
-		required: false,
 	},
 ] as const;
 
-const FormField = ({
+interface FormFieldProps {
+	label: string;
+	value: string | number;
+	onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+	type?: string;
+	placeholder?: string;
+	error?: string | null;
+	leadsEndpoint?: string;
+}
+
+const FormField: React.FC<FormFieldProps> = ({
 	label,
 	value,
 	onChange,
+	error,
 	...rest
-}: {
-	label: string;
-	value: string;
-	onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-} & React.ComponentProps<'input'>) => (
+}) => (
 	<div className={styles.form__field}>
-		<label className={styles.label}>{label}</label>
+		<label htmlFor={label} className={styles.label}>
+			{label}
+		</label>
+
 		<input
+			id={label}
 			value={value}
 			onChange={onChange}
-			className={styles.input}
+			aria-invalid={!!error}
+			aria-describedby={error ? `${label}-error` : undefined}
+			className={`${styles.input} ${error ? styles.inputError : ''}`}
 			{...rest}
 		/>
+
+		{error && (
+			<p id={`${label}-error`} className={styles.errorMsg}>
+				{error}
+			</p>
+		)}
 	</div>
 );
 
@@ -79,47 +78,88 @@ function FormLanding() {
 		company: '',
 		email: '',
 		phone: '',
-		consent: false,
 	});
 
+	const [consent, setConsent] = useState(false);
+	const [emailError, setEmailError] = useState<string | null>(null);
+	const [status, setStatus] = useState<SubmitStatus>('idle');
+
 	const handleInputChange = useCallback(
-		(key: keyof Omit<FormValues, 'consent'>) => {
-			return (e: ChangeEvent<HTMLInputElement>) => {
-				setForm(prev => ({
-					...prev,
-					[key]: e.target.value,
-				}));
-			};
+		(key: keyof FormValues) => (e: ChangeEvent<HTMLInputElement>) => {
+			const rawValue = e.target.value;
+
+			setForm(prev => ({ ...prev, [key]: rawValue }));
+
+			if (key === 'email') {
+				if (
+					!rawValue ||
+					!rawValue.includes('@') ||
+					!isValidEmailDomain(rawValue)
+				)
+					setEmailError(
+						'Похоже, в email есть опечатка.\nПроверьте, пожалуйста, введенные данные',
+					);
+				else setEmailError(null);
+			}
 		},
+
 		[],
 	);
 
-	const handleConsentChange = () =>
-		setForm(prev => ({ ...prev, consent: !prev.consent }));
-
-	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-
-		if (!form.name.trim() || !form.email.trim()) {
-			alert('Заполните обязательные поля');
-			return;
-		}
-
-		if (!form.consent) {
-			alert('Необходимо дать согласие на обработку персональных данных');
-			return;
-		}
-		alert('Форма не отправлена');
+	const isFormValid = () => {
+		const { name, company, email, phone } = form;
+		return (
+			!!name && !!company && !!email && !!phone && !emailError && consent
+		);
 	};
 
-	return (
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+
+		if (!isFormValid()) return;
+
+		setStatus('sending');
+
+		const payload = {
+			full_name: form.name,
+			company: form.company,
+			email: form.email,
+			phone: form.phone,
+		};
+
+		try {
+			const leadsEndpoint = process.env
+				.NEXT_PUBLIC_LANDING_LEADS as string;
+
+			await axios.post(leadsEndpoint, payload);
+			setStatus('success');
+
+			setConsent(false);
+		} catch {
+			setStatus('error');
+			setConsent(false);
+		} finally {
+			setForm({
+				name: '',
+				company: '',
+				email: '',
+				phone: '',
+			});
+			setTimeout(() => setStatus('idle'), 8000);
+		}
+	};
+
+	return status === 'success' || status === 'error' ? (
+		<div className={styles.successContainer}>
+			{status === 'success' ? <SuccesForm /> : <ErrorForm />}
+		</div>
+	) : (
 		<form onSubmit={handleSubmit} className={styles.form}>
 			<h2 className={styles.form__title}>
 				Хотите&nbsp;узнать&nbsp;больше? Мы&nbsp;с вами свяжемся!
 			</h2>
-
 			<div className={styles.form__container}>
-				{fields.map(({ key, label, type, placeholder, required }) => (
+				{fields.map(({ key, label, type, placeholder }) => (
 					<FormField
 						key={key}
 						label={label}
@@ -127,40 +167,24 @@ function FormLanding() {
 						onChange={handleInputChange(key)}
 						type={type}
 						placeholder={placeholder}
-						required={required}
+						error={key === 'email' ? emailError : undefined}
 					/>
 				))}
 			</div>
 
 			<div className={styles.form__sogl}>
-				<div className={styles.form__button}>
-					<Button
-						text="отправить"
-						color="var(--lan-very-dark-mostly-black-blue)"
-						bgColor="var(--lan-bright-cyan---lime-green)"
-						width={0}
-						height={40}
-						radius={4}
-						border="1px solid var(--lan-very-dark-gray)"
-					/>
-				</div>
-
-				<div className={styles.form__check}>
-					<input
-						className={styles.input__checkbox}
-						id="consent"
-						type="checkbox"
-						checked={form.consent}
-						onChange={handleConsentChange}
-						required
-					/>
-					<label htmlFor="consent" className={styles.checkbox__descr}>
-						Я даю согласие на обработку&nbsp;
-						<span className={styles.checkbox__descr_span}>
-							персональных данных
-						</span>
-					</label>
-				</div>
+				<Button
+					className={`${styles.form__button} ${
+						isFormValid() ? styles.btnValid : styles.btnInvalid
+					}`}
+					text={'ОТПРАВИТЬ'}
+					type="submit"
+					width={604}
+					height={40}
+					radius={4}
+					border="1px solid var(--lan-very-dark-gray)"
+				/>
+				<ConsentCheckbox value={consent} onChange={setConsent} />
 			</div>
 		</form>
 	);
