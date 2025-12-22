@@ -1,15 +1,15 @@
 'use client';
 
-import {SimulationItemData} from '@/shared/types/simulation';
+import { SimulationItemData } from '@/shared/types/simulation';
 import 'simplebar-react/dist/simplebar.min.css';
-import {FC, useEffect, useState} from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import Close from '@/shared/UI/icons/Close';
 import LineRupture from '@/shared/UI/icons/LineRupture/LineRupture';
 import cn from 'classnames';
 import ScrollArrow from '@/shared/UI/icons/ScrollArrow';
-import {useScrollControls} from '@/shared/hooks/useScrollControls';
+import { useScrollControls } from '@/shared/hooks/useScrollControls';
 import dynamic from 'next/dynamic';
 
 const SimpleBar = dynamic(
@@ -59,8 +59,12 @@ const ListMalfunction: FC<Props> = ({ data, deleteItem }) => {
 		}
 	}, [data, isClient]);
 
-	const renderItem = (item: SimulationItemData, index: number) => (
-		<li key={`${item.element_id}:${item.malfunction_id}`} className={styles.list__item}>
+	const renderItem = useCallback((item: SimulationItemData, index: number) => (
+		<li key={`${item.element_id}:${item.malfunction_id}`}
+			className={cn(styles.list__item, {
+				[styles.list__item_scrollable]: isScrollable,
+				[styles.list__item_not_scrollable]: !isScrollable,
+			})}>
 			<div className={styles.list__item__top}>
 				<span className={styles.list__item__name}>
 					{index < 9 ? `Неисправность_0${index + 1}` : `Неисправность_${index + 1}`}
@@ -76,7 +80,7 @@ const ListMalfunction: FC<Props> = ({ data, deleteItem }) => {
 			<span className={styles.list__item__description}>Элемент: {item.element}</span>
 			<span className={styles.list__item__description}>Неисправность: {item.malfunctions}</span>
 		</li>
-	);
+	), [isScrollable]);
 
 	const renderScrollButtons = () => (
 		<>
