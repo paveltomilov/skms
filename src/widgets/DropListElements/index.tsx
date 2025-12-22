@@ -8,7 +8,6 @@ import Side from '@/shared/UI/icons/Side';
 import { CircuitElement } from '@/shared/types/scheme';
 import cn from 'classnames';
 import { useArrowNavigation } from '@/shared/hooks/useArrowNavigation';
-import LineRupture from '@/shared/UI/icons/LineRupture/LineRupture';
 import {useScrollControls} from '@/shared/hooks/useScrollControls';
 import ScrollArrow from '@/shared/UI/icons/ScrollArrow';
 
@@ -146,7 +145,6 @@ const DropListElements: FC<Props> = ({
 					</SimpleBar>
 				</ul>
 			</div>
-			<LineRupture />
 		</>
 	);
 };

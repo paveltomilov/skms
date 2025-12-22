@@ -7,6 +7,7 @@ import Button from '@/shared/UI/Button';
 import Actuator from '@/shared/UI/Actuator';
 import { rightBottomOne } from '@/shared/configs/TAGroupElements';
 import useShowModal from '@/shared/hooks/useShowModal';
+import { useAppSelector } from '@/shared/hooks/store';
 
 interface Props {
 	className?: string;
@@ -15,11 +16,19 @@ interface Props {
 
 const TARightDown: FC<Props> = ({ className, windows }) => {
 	const handleModalNotification = useShowModal('notification');
+	const percent = useAppSelector(store => store.percent);
 	return (
 		<div className={cn(className)}>
 			<div className={styles.container}>
 				<div className={styles.container_element}>
-					<div className={styles.container_element_box}>
+					<div
+						className={styles.container_element_box}
+						style={
+							{
+								'--dynamic-top': `${100 - percent}%`,
+							} as React.CSSProperties
+						}
+					>
 						<Window data={windows.w88} right />
 						<span className={styles.container_element_box__text}>
 							{windows.w88.title}
@@ -33,7 +42,14 @@ const TARightDown: FC<Props> = ({ className, windows }) => {
 						className={styles.container_element_box__button}
 						onClick={handleModalNotification}
 					/>
-					<div className={styles.container_element_box}>
+					<div
+						className={styles.container_element_box}
+						style={
+							{
+								'--dynamic-top': `${100 - percent}%`,
+							} as React.CSSProperties
+						}
+					>
 						<Window data={windows.w89} right />
 						<span className={styles.container_element_box__text}>
 							{windows.w89.title}
