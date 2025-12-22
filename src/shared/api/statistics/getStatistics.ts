@@ -21,3 +21,5 @@ export async function getStudentStatistics(id:number): Promise<StudentStatistics
     throw new Error(message);
   };
 };
+
+

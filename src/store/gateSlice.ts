@@ -17,7 +17,7 @@ const gateStateSlice = createSlice({
 	initialState,
 
 	reducers: {
-		setActiveGate: (state, action: PayloadAction<string>) => {
+		setActiveGate: (state, action: PayloadAction<string | null>) => {
 			state.activeGateId = action.payload;
 		},
 		setGateState: (

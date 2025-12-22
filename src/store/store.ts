@@ -45,6 +45,8 @@ const store = configureStore({
 		getDefaultMiddleware({
 			serializableCheck: {
 				ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
+				// Увеличиваем порог предупреждения для больших состояний
+				warnAfter: 128, // по умолчанию 32ms
 			},
 		}),
 });

@@ -1,8 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import {
-	requestPasswordReset,
-	verifyRecoveryCode,
-} from '@/shared/lib/passwordRecovery';
+import { requestPasswordReset, verifyRecoveryCode } from '@/shared/api';
 
 export const useRecoveryCode = (initialCount = 60) => {
 	const [code, setCode] = useState<string[]>(['_', '_', '_', '_', '_', '_']);

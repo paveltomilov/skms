@@ -16,6 +16,15 @@ const circuitSlice = createSlice({
 			action: PayloadAction<string>,
 		) {
 			const malfunctionId = action.payload;
+
+			// Проверяем, что malfunctionId не undefined или пустая строка
+			if (!malfunctionId || typeof malfunctionId !== 'string') {
+				console.error(
+					`Invalid malfunction ID: "${malfunctionId}". Expected non-empty string.`,
+				);
+				return;
+			}
+
 			// ID неисправности имеет формат: elementId.suffix (например, 'c.0.1', 'c.3.0.4.1.4.1')
 			// Находим последнюю точку для разделения ID элемента и номера неисправности
 			const lastDotIndex = malfunctionId.lastIndexOf('.');
@@ -138,6 +147,15 @@ const circuitSlice = createSlice({
 			action: PayloadAction<string>,
 		) {
 			const malfunctionId = action.payload;
+
+			// Проверяем, что malfunctionId не undefined или пустая строка
+			if (!malfunctionId || typeof malfunctionId !== 'string') {
+				console.error(
+					`Invalid malfunction ID: "${malfunctionId}". Expected non-empty string.`,
+				);
+				return;
+			}
+
 			// ID неисправности имеет формат: elementId.suffix (например, 'c.0.1', 'c.3.0.4.1.4.1')
 			// Находим последнюю точку для разделения ID элемента и номера неисправности
 			const lastDotIndex = malfunctionId.lastIndexOf('.');
@@ -181,7 +199,9 @@ const circuitSlice = createSlice({
 				});
 
 				// Если деактивируем "Обрыв провода", возвращаем исходное сопротивление
-				if (malfunctionName === 'Обрыв провода') {
+				// Используем trim() для удаления возможных пробелов, как при активации
+				const trimmedName = malfunctionName.trim();
+				if (trimmedName === 'Обрыв провода') {
 					try {
 						// Получаем исходный элемент из начального состояния схемы
 						const originalElement = findElementByID(

@@ -13,21 +13,8 @@
 
 	&__text {
 		@include mixins.text(20px, 400);
-        line-height: 100%;
+		line-height: 100%;
 		max-width: 468px;
-        text-align: center;
-
-	}
-
-	&__buttons {
-		display: flex;
-		flex-direction: row;
-		gap: 28px;
-		justify-content: space-between;
-
-        & button span {
-            @include mixins.text(32px, 400);
-            line-height: 100%;
-        }
+		text-align: center;
 	}
 }

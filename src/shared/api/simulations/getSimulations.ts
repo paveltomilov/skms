@@ -21,3 +21,5 @@ export async function getSimulations(role: Role): Promise<SimulationGetData[]> {
 		throw new Error(message);
 	}
 }
+
+
