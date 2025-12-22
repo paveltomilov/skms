@@ -200,6 +200,9 @@ const FormRecovery: FC<FormRecoveryProps> = ({ steps, setSteps, isOpen }) => {
 						maxLength={PASSWORD_MAX_LENGTH}
 						required
 					/>
+					<span className={styles.recoveryForm__description}>
+						Продублируйте новый пароль
+					</span>
 					<LoginInput
 						label={'Пароль'}
 						type={'password'}

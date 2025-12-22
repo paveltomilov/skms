@@ -2,10 +2,23 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { LoginFormData, ValidationStatus } from '@/shared/types/login';
 import {
 	config,
+	CONTAINS_DIGITS_REGEX,
+	CYRILLIC_REGEX,
+	DOUBLE_DASHES_OR_DOTS_REGEX,
+	DOUBLE_DASHES_REGEX, DOUBLE_SPACES_REGEX,
+	EMAIL_DOMAIN_MAX_LENGTH,
+	EMAIL_LOCAL_MAX_LENGTH,
+	EMAIL_MAX_LENGTH,
+	FORBIDDEN_SYMBOLS_REGEX,
 	initialState,
 	NAME_SURNAME_MAX_LENGTH,
+	PASSWORD_LOWERCASE_REGEX,
 	PASSWORD_MAX_LENGTH,
-	PASSWORD_MIN_LENGTH
+	PASSWORD_MIN_LENGTH,
+	PASSWORD_SPECIAL_CHARS_REGEX,
+	PASSWORD_UPPERCASE_REGEX,
+	SPACES_REGEX,
+	STARTS_WITH_DOT_OR_DASH_REGEX
 } from '@/shared/configs/login';
 import {
 	checkFormValidity,
@@ -20,6 +33,36 @@ const getValidationMessage = (fieldName: keyof LoginFormData, value: string): st
 	const triggedValue:string = value.trim();
 
 	switch (fieldName) {
+		case 'email':
+			const atIndex:number = triggedValue.indexOf('@');
+			const localPart:string = triggedValue.slice(0, atIndex);
+			const domainPart:string = triggedValue.slice(atIndex + 1);
+
+			if (localPart.length > EMAIL_LOCAL_MAX_LENGTH) {
+				return 'Локальная часть (до @) ≤ 64 символов';
+			}
+			if (domainPart.length > EMAIL_DOMAIN_MAX_LENGTH) {
+				return 'Доменная часть (после @) ≤ 63 символов не включая точку';
+			}
+			if (triggedValue.length > EMAIL_MAX_LENGTH - 1) {
+				return `Длина Email не должна превышать ${EMAIL_MAX_LENGTH} символа`;
+			}
+			if (SPACES_REGEX.test(triggedValue)) {
+				return 'Пробелы не допускаются';
+			}
+			if (CYRILLIC_REGEX.test(triggedValue)) {
+				return 'Кириллица не допускается';
+			}
+			if (FORBIDDEN_SYMBOLS_REGEX.test(triggedValue)) {
+				return 'Запрещенные символы';
+			}
+			if (DOUBLE_DASHES_OR_DOTS_REGEX.test(triggedValue)) {
+				return 'Два тире или две точки подряд';
+			}
+			if (STARTS_WITH_DOT_OR_DASH_REGEX.test(localPart)) {
+				return 'Начало email с точки или тире';
+			}
+			return 'E-mail введен не корректно';
 		case 'password':
 			if (triggedValue.length < PASSWORD_MIN_LENGTH) {
 				return `Пароль должен содержать не менее ${PASSWORD_MIN_LENGTH} символов`;
@@ -27,11 +70,17 @@ const getValidationMessage = (fieldName: keyof LoginFormData, value: string): st
 			if (triggedValue.length > PASSWORD_MAX_LENGTH) {
 				return `Пароль должен содержать не более ${PASSWORD_MAX_LENGTH} символов`;
 			}
-			if (!/[A-Z]/.test(triggedValue)) {
-				return 'Отсутствует символ в верхнем регистре';
+			if (!PASSWORD_UPPERCASE_REGEX.test(triggedValue)) {
+				return 'Отсутствует заглавная латинская буква';
 			}
-			if (/[а-яёА-ЯЁ]/.test(triggedValue)) {
-				return 'Пароль не должен содержать кириллицу';
+			if (!PASSWORD_LOWERCASE_REGEX.test(triggedValue)) {
+				return 'Отсутствует строчная латинская буква';
+			}
+			if (!CONTAINS_DIGITS_REGEX.test(triggedValue)) {
+				return 'Отсутствует цифра';
+			}
+			if (!PASSWORD_SPECIAL_CHARS_REGEX.test(triggedValue)) {
+				return 'Отсутствует специальный символ';
 			}
 			return 'Пароль должен содержать заглавную и строчную букву, цифру и специальный символ';
 
@@ -40,7 +89,19 @@ const getValidationMessage = (fieldName: keyof LoginFormData, value: string): st
 			if (triggedValue.length > NAME_SURNAME_MAX_LENGTH) {
 				return `Поле должно содержать не более ${NAME_SURNAME_MAX_LENGTH} символов`;
 			}
-			return 'Поле может содержать только буквы латиницы, пробел, тире и цифры';
+			if (DOUBLE_SPACES_REGEX.test(triggedValue)) {
+				return 'Не допускаются двойные пробелы';
+			}
+			if (CYRILLIC_REGEX.test(triggedValue)) {
+				return 'Не допускается кириллица';
+			}
+			if (CONTAINS_DIGITS_REGEX.test(triggedValue)) {
+				return 'Не допускаются цифры';
+			}
+			if (DOUBLE_DASHES_REGEX.test(triggedValue)) {
+				return 'Не допускаются два тире подряд';
+			}
+			return 'Поле может содержать только буквы латиницы, пробел, тире';
 
 		default:
 			const fieldConfig = config.find(field => field.name === fieldName);
