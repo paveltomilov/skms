@@ -2,18 +2,13 @@
 
 import { useState, ChangeEvent, useCallback } from 'react';
 import axios from 'axios';
+import { FormValues, SubmitStatus } from '@/shared/types/form';
+import { isValidEmailDomain } from '@/shared/utils/emailUtils/emailUtils';
 import Button from '../Button';
 import ConsentCheckbox from '../ConsentCheckbox';
 import styles from './styles.module.scss';
 import SuccesForm from '../SuccesForm';
 import ErrorForm from '../ErrorForm';
-
-type FormValues = {
-	name: string;
-	company: string;
-	email: string;
-	phone: string;
-};
 
 const fields = [
 	{ key: 'name', label: 'Ваше имя', type: 'text', placeholder: 'ФИО' },
@@ -37,16 +32,6 @@ const fields = [
 	},
 ] as const;
 
-type SubmitStatus = 'idle' | 'sending' | 'success' | 'error';
-
-const isValidEmailDomain = (email: string): boolean => {
-	const atIndex = email.lastIndexOf('@');
-	if (atIndex === -1) return false;
-	const domainPart = email.slice(atIndex + 1);
-	const domainRegex = /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-	return domainRegex.test(domainPart);
-};
-
 interface FormFieldProps {
 	label: string;
 	value: string | number;
@@ -54,6 +39,7 @@ interface FormFieldProps {
 	type?: string;
 	placeholder?: string;
 	error?: string | null;
+	leadsEndpoint?: string;
 }
 
 const FormField: React.FC<FormFieldProps> = ({
@@ -111,7 +97,7 @@ function FormLanding() {
 					!isValidEmailDomain(rawValue)
 				)
 					setEmailError(
-						'Похоже, в email есть опечатка.\n Проверьте,пожалуйста, введенные данные',
+						'Похоже, в email есть опечатка.\nПроверьте, пожалуйста, введенные данные',
 					);
 				else setEmailError(null);
 			}
@@ -142,7 +128,10 @@ function FormLanding() {
 		};
 
 		try {
-			await axios.post('http://127.0.0.1:8000/api/leads/', payload, {
+			const leadsEndpoint = process.env
+				.NEXT_PUBLIC_LANDING_LEADS as string;
+
+			await axios.post(leadsEndpoint, payload, {
 				headers: { 'Content-Type': 'application/json' },
 			});
 			setStatus('success');
@@ -158,7 +147,7 @@ function FormLanding() {
 				email: '',
 				phone: '',
 			});
-			setTimeout(() => setStatus('idle'), 4000);
+			setTimeout(() => setStatus('idle'), 8000);
 		}
 	};
 
