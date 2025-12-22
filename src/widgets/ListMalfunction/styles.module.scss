@@ -25,7 +25,14 @@
 		flex-direction: column;
 		gap: 16px;
 		padding: 24px 0;
-		width: 90%;
+
+		&_scrollable {
+			width: 90%;
+		}
+
+		&_not_1scrollable {
+			width: 100%;
+		}
 
 		&:not(:first-child) {
 			&:before {
@@ -51,7 +58,6 @@
 		}
 
 		&__description {
-			width: 310px;
 			@include mixins.text(16px, 400);
 		}
 
