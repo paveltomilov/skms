@@ -131,9 +131,7 @@ function FormLanding() {
 			const leadsEndpoint = process.env
 				.NEXT_PUBLIC_LANDING_LEADS as string;
 
-			await axios.post(leadsEndpoint, payload, {
-				headers: { 'Content-Type': 'application/json' },
-			});
+			await axios.post(leadsEndpoint, payload);
 			setStatus('success');
 
 			setConsent(false);
