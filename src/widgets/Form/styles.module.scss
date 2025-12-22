@@ -56,7 +56,6 @@
           background-color: variables.$white-color;
 
           &::before {
-            background-image: url('/svg/black_done.svg');
             opacity: 1;
           }
         }
