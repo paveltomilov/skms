@@ -67,7 +67,7 @@ const getValidationMessage = (fieldName: keyof LoginFormData, value: string): st
 			if (triggedValue.length < PASSWORD_MIN_LENGTH) {
 				return `Пароль должен содержать не менее ${PASSWORD_MIN_LENGTH} символов`;
 			}
-			if (triggedValue.length > PASSWORD_MAX_LENGTH) {
+			if (triggedValue.length > PASSWORD_MAX_LENGTH - 1) {
 				return `Пароль должен содержать не более ${PASSWORD_MAX_LENGTH} символов`;
 			}
 			if (!PASSWORD_UPPERCASE_REGEX.test(triggedValue)) {
@@ -86,7 +86,7 @@ const getValidationMessage = (fieldName: keyof LoginFormData, value: string): st
 
 		case 'first_name':
 		case 'last_name':
-			if (triggedValue.length > NAME_SURNAME_MAX_LENGTH) {
+			if (triggedValue.length > NAME_SURNAME_MAX_LENGTH - 1) {
 				return `Поле должно содержать не более ${NAME_SURNAME_MAX_LENGTH} символов`;
 			}
 			if (DOUBLE_SPACES_REGEX.test(triggedValue)) {
