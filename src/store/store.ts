@@ -14,6 +14,7 @@ import updateListReducer from './updateListSlice';
 import UserInfoSlice from '@/store/userInfoSlice';
 import simulationReducer from './simulationSlice';
 import emergencyStatusReducer from './emergencyStatusSlice';
+import timerReduser from './timerSlice';
 
 const rootReducer = combineReducers({
 	updateList: updateListReducer,
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
 	userInfo: UserInfoSlice,
 	simulation: simulationReducer,
 	emergencyStatus: emergencyStatusReducer,
+	timer:timerReduser,
 });
 
 const persistConfig = {

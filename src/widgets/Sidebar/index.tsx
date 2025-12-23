@@ -17,6 +17,7 @@ import { SIMULATION_MALFUNCTIONS } from '@/shared/configs/simulationMalfunctions
 import SimulationControl from '@/entities/SimulationControl';
 import { toggleEmergency } from '@/store/emergencyStatusSlice';
 import cn from 'classnames';
+import { resetTimer, startTimer } from '@/store/timerSlice';
 
 const Sidebar = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -62,6 +63,8 @@ const Sidebar = () => {
 
 		// Открываем попап с уведомлением о запуске симуляции
 		dispatch(openModal('infoStartSimulation'));
+		dispatch(resetTimer());
+		dispatch(startTimer());
 	}, [simulation, dispatch, showToast]);
 
 	return (
