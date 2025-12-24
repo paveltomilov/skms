@@ -10,7 +10,7 @@ import { logout } from '@/shared/api';
 
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import { openModal } from '@/store/modalSlice';
-import { stopTimer } from '@/store/timerSlice';
+import { resetTimer, stopTimer } from '@/store/timerSlice';
 
 interface PopupUserInfoProps {
 	handlePopupClose: () => void;
@@ -48,6 +48,7 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 
 	const handleLogout = () => {
 		// Централизованный выход: чистим access + refresh и связанные cookie
+		dispatch(resetTimer());
 		logout();
 		router.push('/');
 	};
