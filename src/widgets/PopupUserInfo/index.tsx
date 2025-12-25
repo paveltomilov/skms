@@ -10,6 +10,7 @@ import { logout } from '@/shared/api';
 
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import { openModal } from '@/store/modalSlice';
+import { resetTimer, stopTimer } from '@/store/timerSlice';
 
 interface PopupUserInfoProps {
 	handlePopupClose: () => void;
@@ -29,6 +30,7 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 	const handleStopSimulation = useCallback(() => {
 		// Открываем попап подтверждения прерывания симуляции
 		dispatch(openModal('abortSimulationConfirm'));
+		dispatch(stopTimer());
 	}, [dispatch]);
 
 	const isActiveSimulation: boolean = true; // в будущем статус от websocket
@@ -46,6 +48,7 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 
 	const handleLogout = () => {
 		// Централизованный выход: чистим access + refresh и связанные cookie
+		dispatch(resetTimer());
 		logout();
 		router.push('/');
 	};

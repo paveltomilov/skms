@@ -10,6 +10,7 @@ import modalReducer, { type ModalState } from '@/store/modalSlice';
 import gateReducer from '@/store/gateSlice';
 import trainingReducer from '@/store/trainingSlice';
 import circuitReducer from '@/store/circuitSlice';
+import timerReducer from '@/store/timerSlice';
 
 // Мокаем зависимости
 jest.mock('@/shared/hooks/useUserCookies', () => ({
@@ -60,6 +61,7 @@ const createMockStore = (
 			gate: gateReducer,
 			training: trainingReducer,
 			circuit: circuitReducer,
+			timer: timerReducer,
 		},
 		preloadedState: {
 			simulation: simulationState as SimulationState,
