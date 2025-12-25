@@ -43,7 +43,7 @@ const Sidebar = () => {
 		}
 
 		// Генерируем уникальный ID симуляции
-		const simulationId = `sim-${Date.now()}`;
+		const simulationId = `${Date.now()}`;
 
 		// Инициализируем симуляцию с неисправностями из константы
 		dispatch(
