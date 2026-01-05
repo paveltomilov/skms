@@ -12,22 +12,22 @@ import { FC } from 'react';
 import Footer from '@/widgets/landing/Footer';
 
 const LandingPage: FC = () => {
-    return (
-        <div className={'landing'}>
-            <Header />
-            <main>
-                <HeroLanding />
-            </main>
-            <About />
-            <Product />
-            <Advantages />
-            <ForWhom />
-            <Reviews />
-            <Survey />
-            <FormSection />
-            <Footer />
-        </div>
-    );
+	return (
+		<div className={'landing'}>
+			<Header />
+			<main>
+				<HeroLanding />
+			</main>
+			<About />
+			<Product />
+			<Advantages />
+			<ForWhom />
+			<Reviews />
+			<Survey />
+			<FormSection />
+			<Footer />
+		</div>
+	);
 };
 
 export default LandingPage;

@@ -1,0 +1,131 @@
+.error {
+	display: flex;
+	padding: 50px;
+	border-radius: 12px;
+	background: var(--lan-very-dark-mostly-black-blue-2);
+	margin-bottom: 24px;
+
+	@media (max-width: 1200px) {
+		padding: 44px 44px 51px 44px;
+	}
+
+	@media (max-width: 992px) {
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding: 53px 44px;
+	}
+
+	@media (max-width: 576px) {
+		height: 649px;
+		flex-direction: column-reverse;
+		justify-content: flex-end;
+		padding: 33px 16px;
+		margin-bottom: 14px;
+	}
+
+	&__info {
+		max-width: 504px;
+		margin-right: auto;
+
+		@media (max-width: 992px) {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			margin-right: 0;
+		}
+	}
+
+	&__title {
+		font-family: var(--second-family);
+		font-weight: 600;
+		font-size: 32px;
+		line-height: 128%;
+		text-transform: uppercase;
+		color: var(--lan-light-grayish-blue);
+		margin-bottom: 24px;
+
+		@media (max-width: 576px) {
+			font-size: 20px;
+			text-align: center;
+			margin-bottom: 16px;
+		}
+	}
+
+	&__top {
+		margin-bottom: 24px;
+
+		@media (max-width: 576px) {
+			margin-bottom: 16px;
+		}
+	}
+
+	&__bottom {
+		margin-bottom: 16px;
+	}
+
+	&__descr {
+		font-family: var(--second-family);
+		font-weight: 500;
+		font-size: 17px;
+		line-height: 128%;
+		letter-spacing: 0.01em;
+		color: var(--lan-light-grayish-cyan);
+
+		@media (max-width: 992px) {
+			text-align: center;
+		}
+
+		&__mobile {
+			@media (max-width: 576px) {
+				display: block;
+				text-align: center;
+			}
+		}
+	}
+
+	&__mail {
+		font-family: var(--second-family);
+		font-weight: 500;
+		font-size: 24px;
+		line-height: 128%;
+		text-transform: uppercase;
+		text-decoration: underline;
+		text-decoration-skip-ink: none;
+		color: var(--lan-light-grayish-blue);
+
+		@media (max-width: 992px) {
+			margin-bottom: 44px;
+		}
+
+		@media (max-width: 576px) {
+			font-size: 20px;
+		}
+	}
+
+	&__img {
+		padding-top: 59px;
+		padding-bottom: 59px;
+
+		@media (max-width: 1200px) {
+			padding-top: 71px;
+			padding-bottom: 71px;
+		}
+
+		@media (max-width: 992px) {
+			padding: 0;
+		}
+
+		@media (max-width: 576px) {
+			margin-bottom: 45px;
+		}
+
+		&__size {
+			@media (max-width: 768px) {
+				width: 156px;
+				height: auto;
+			}
+		}
+	}
+}
