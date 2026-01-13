@@ -5,7 +5,6 @@ export interface TrainingState {
 	studentId: number | null;
 	malfunctionCurrent: string;
 	currentStudent: User | null;
-	studentId: number | null;
 }
 
 const initialState: TrainingState = {
@@ -18,7 +17,7 @@ const trainingSlice = createSlice({
 	name: 'training',
 	initialState,
 	reducers: {
-		setStudentId: (state, {payload}: PayloadAction<number>) => {
+		setStudentId: (state, { payload }: PayloadAction<number>) => {
 			state.studentId = payload;
 		},
 		setCurrentStudent: (state, { payload }: PayloadAction<User>) => {
@@ -33,7 +32,11 @@ const trainingSlice = createSlice({
 	},
 });
 
-export const { setMalfunctionCurrent, setCurrentStudent, clearCurrentStudent, setStudentId } =
-	trainingSlice.actions;
+export const {
+	setMalfunctionCurrent,
+	setCurrentStudent,
+	clearCurrentStudent,
+	setStudentId,
+} = trainingSlice.actions;
 
 export default trainingSlice.reducer;
