@@ -1,0 +1,31 @@
+/* CustomRadio.module.css */
+.radioGroup {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.customRadio {
+	cursor: pointer;
+	position: relative;
+	padding-left: 28px;
+	user-select: none;
+}
+
+.indicator {
+	content: '';
+	position: absolute;
+	left: 31px;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 18px;
+	height: 18px;
+	border: 2px solid #555;
+	border-radius: 50%; /* или 50% для круга */
+	background: white;
+}
+
+.customRadio input:checked + .indicator {
+	background-color: green;
+	border-color: white;
+}

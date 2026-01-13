@@ -10,22 +10,24 @@ import Survey from '@/widgets/landing/Survey';
 import './styles/globals-landing.scss';
 import { FC } from 'react';
 import Footer from '@/widgets/landing/Footer';
+import CheckboxGroup from '@/widgets/landing/Survey1280';
 
 const LandingPage: FC = () => {
 	return (
 		<div className={'landing'}>
-			<Header />
+			{/* <Header /> */}
 			<main>
-				<HeroLanding />
+				{/* <HeroLanding /> */}
+				<CheckboxGroup />
 			</main>
-			<About />
-			<Product />
-			<Advantages />
-			<ForWhom />
-			<Reviews />
-			<Survey />
-			<FormSection />
-			<Footer />
+			{/* <About /> */}
+			{/* <Product /> */}
+			{/* <Advantages /> */}
+			{/* <ForWhom /> */}
+			{/* <Reviews /> */}
+			{/* <Survey /> */}
+			{/* <FormSection /> */}
+			{/* <Footer /> */}
 		</div>
 	);
 };
