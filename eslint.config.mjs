@@ -36,6 +36,9 @@ const eslintConfig = [
 			'*.login.ts',
 			'*.mjs',
 			'*.d.ts',
+			'**/__tests__/**',
+			'**/*.test.tsx',
+			'**/*.test.ts',
 		],
 		rules: {
 			semi: ['error'],
