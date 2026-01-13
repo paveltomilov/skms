@@ -1,7 +1,7 @@
 // SurveyApp.tsx - упрощенная версия
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 
 import styles from './styles.module.scss';
 import TopCircle from '../IconSvg/topCircle';

@@ -62,8 +62,8 @@ const SurveyApp: React.FC = () => {
 	};
 
 	const handleNext = () => {
-		if (currentStep < steps.length - 1) {
-			setCurrentStep(prev => prev + 1);
+		// if (currentStep < steps.length - 1) {
+		// 	setCurrentStep(prev => prev + 1);
 		// } else {
 		// 	// Отправка опроса при последнем шаге
 		// 	const surveyResults = steps.flatMap(step =>
