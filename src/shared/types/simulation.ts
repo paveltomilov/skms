@@ -3,6 +3,7 @@ interface Malfunction {
 }
 
 export interface SimulationFormData {
+	gate: string;
 	user: number;
 	malfunctions: Malfunction[];
 }

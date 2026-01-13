@@ -28,12 +28,13 @@ const FormMalfunction: FC = () => {
 
 	const dispatch = useAppDispatch();
 	const router = useRouter();
-
+	const gate = useAppSelector(state => state.gate.activeGateId);
 	const { urlBase, access, elements } = useRequestData();
 
 	const handleSetSimulation = async (malfunctionsArray: string) => {
 		if (studentId) {
 			const formData: SimulationFormData = {
+				gate: gate || '',
 				user: studentId,
 				malfunctions: [{ malfunction_id: malfunctionsArray }],
 			};
