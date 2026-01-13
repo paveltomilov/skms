@@ -46,7 +46,7 @@ const useSetSimulation = (): IResponse => {
 	>([]);
 	const [showListMalfunction, setShowListMalfunction] =
 		useState<boolean>(false);
-
+	const gate = useAppSelector(state => state.gate.activeGateId);
 	const { urlBase, access, elements: defaultElements } = useRequestData();
 	const studentId = useAppSelector(
 		state => state.training.currentStudent?.id,
@@ -102,7 +102,7 @@ const useSetSimulation = (): IResponse => {
 	);
 
 	const handleSetSimulation = async () => {
-		if (!studentId || listIsEmpty) {
+		if (!studentId || listIsEmpty || !gate) {
 			const errorText = listIsEmpty
 				? 'Cписок неисправностей пуст'
 				: 'Студент не выбран';
@@ -114,6 +114,7 @@ const useSetSimulation = (): IResponse => {
 		}
 
 		const formData: SimulationFormData = {
+			gate: gate || '',
 			user: studentId,
 			malfunctions: listMalfunction.map(item => {
 				return { malfunction_id: item.malfunction_id };

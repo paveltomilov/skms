@@ -31,13 +31,7 @@ export async function postSimulation(
 	try {
 		const response = await axios.post(
 			`${urlBase}/simulation/`,
-			simulationData,
-			{
-				headers: {
-					Authorization: `Bearer ${access}`,
-					'Content-Type': 'application/json',
-				},
-			},
+			simulationData
 		);
 
 		return {
