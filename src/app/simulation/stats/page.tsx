@@ -1,21 +1,18 @@
 'use client';
 
 import { FC } from 'react';
+import { useParams } from 'next/navigation';
 
-interface StatsPageProps {
-	params: {
-		id: string;
-	};
-}
+const StatsPage: FC = () => {
+	const params = useParams();
+	const id = params?.id as string | undefined;
 
-const StatsPage: FC<StatsPageProps> = ({ params }) => {
 	return (
 		<div style={{ padding: '40px', textAlign: 'center' }}>
 			<h1>Статистика вашей сессии</h1>
-			<p>ID симуляции: {params.id}</p>
+			<p>ID симуляции: {id || 'не указан'}</p>
 		</div>
 	);
 };
 
 export default StatsPage;
-
