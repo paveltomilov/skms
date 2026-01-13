@@ -1,0 +1,22 @@
+.survey__container {
+	position: relative;
+	border: 1px solid rgba(66, 228, 101, 0.24);
+	border-radius: 24px;
+	width: 856px;
+	height: 672px;
+	background-image: url(/images/set.png);
+}
+
+.svg1 {
+	position: absolute;
+	top: 0;
+	right: 0;
+	border-radius: 24px;
+}
+
+.svg2 {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	border-radius: 24px;
+}

@@ -7,10 +7,10 @@
 // import Product from '@/widgets/landing/Product';
 // import Reviews from '@/widgets/landing/Reviews';
 // import Survey from '@/widgets/landing/Survey';
+import SurveyApp from '@/widgets/landing/SurveyApp';
 import './styles/globals-landing.scss';
 import { FC } from 'react';
 // import Footer from '@/widgets/landing/Footer';
-import CheckboxGroup from '@/widgets/landing/Survey1280';
 
 const LandingPage: FC = () => {
 	return (
@@ -18,7 +18,7 @@ const LandingPage: FC = () => {
 			{/* <Header /> */}
 			<main>
 				{/* <HeroLanding /> */}
-				<CheckboxGroup />
+				<SurveyApp />
 			</main>
 			{/* <About /> */}
 			{/* <Product /> */}

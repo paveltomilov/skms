@@ -1,0 +1,47 @@
+.checkbox__container {
+	width: 100%;
+}
+
+.header__container {
+	border-radius: 24px 24px 0 0;
+	padding: 32px 40px;
+	width: 100%;
+	height: 150px;
+	background: var(--lan-bright-cyan---lime-green);
+}
+
+.radioGroup {
+	color: white;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.hiddenRadio {
+	opacity: 0;
+}
+
+.customRadio {
+	cursor: pointer;
+	position: relative;
+	padding-left: 28px;
+	user-select: none;
+}
+
+.indicator {
+	content: '';
+	position: absolute;
+	left: 32px;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 18px;
+	height: 18px;
+	border: 2px solid #555;
+	border-radius: 50%;
+	background: white;
+}
+
+.customRadio input:checked + .indicator {
+	background-color: green;
+	border-color: white;
+}
