@@ -15,6 +15,7 @@
 		background-size: cover;
 		padding: 86px 38px;
 		box-sizing: border-box;
+		z-index: 1;
 	}
 
 	&__img {
@@ -57,6 +58,7 @@
 		top: 0;
 		right: 0;
 		border-radius: 24px;
+		z-index: -1;
 	}
 
 	&__svg2 {
@@ -64,5 +66,6 @@
 		left: 0;
 		bottom: 0;
 		border-radius: 24px;
+		z-index: -1;
 	}
 }

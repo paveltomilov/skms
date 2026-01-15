@@ -1,12 +1,12 @@
 // SurveyApp.tsx - упрощенная версия
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, FC } from 'react';
 import Question1 from '../Question1';
 import Question2 from '../Question2';
 import styles from './styles.module.scss';
 
-const SurveyApp: React.FC = () => {
+const QuestionsList: FC = () => {
 	const [currentStep, setCurrentStep] = useState<number>(0);
 	const [answers, setAnswers] = useState<Record<string, string | null>>({});
 
@@ -105,4 +105,4 @@ const SurveyApp: React.FC = () => {
 	);
 };
 
-export default SurveyApp;
+export default QuestionsList;

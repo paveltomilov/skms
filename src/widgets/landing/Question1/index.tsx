@@ -20,41 +20,45 @@ const Question1: React.FC = () => {
 	const [otherText, setOtherText] = useState<string>('');
 
 	return (
-		<div className={styles.checkbox__container}>
-			<header className={styles.header__container}>
-				<h2>Кем вы работаете?</h2>
-			</header>
-			<div className={styles.radioGroup}>
-				{OPTIONS.map(opt => {
-					const isOther = opt.id === 5 && selected === 5;
+		<div className={'container'}>
+			<div className={styles.checkbox__container}>
+				<header className={styles.header__container}>
+					<h2>Кем вы работаете?</h2>
+				</header>
+				<div className={styles.radioGroup}>
+					{OPTIONS.map(opt => {
+						const isOther = opt.id === 5 && selected === 5;
 
-					return (
-						<label key={opt.id} className={styles.customRadio}>
-							<input
-								className={styles.hiddenRadio}
-								type="radio"
-								name="option"
-								checked={selected === opt.id}
-								onChange={() => {
-									setSelected(opt.id);
-									if (opt.id !== 5) setOtherText('');
-								}}
-							/>
-							<span className={styles.indicator} />
-
-							{isOther ? (
+						return (
+							<label key={opt.id} className={styles.customRadio}>
 								<input
-									type="text"
-									placeholder="Укажите, пожалуйста..."
-									value={otherText}
-									onChange={e => setOtherText(e.target.value)}
+									className={styles.hiddenRadio}
+									type="radio"
+									name="option"
+									checked={selected === opt.id}
+									onChange={() => {
+										setSelected(opt.id);
+										if (opt.id !== 5) setOtherText('');
+									}}
 								/>
-							) : (
-								<span>{opt.label}</span>
-							)}
-						</label>
-					);
-				})}
+								<span className={styles.indicator} />
+
+								{isOther ? (
+									<input
+										type="text"
+										placeholder="Укажите, пожалуйста..."
+										value={otherText}
+										onChange={e =>
+											setOtherText(e.target.value)
+										}
+									/>
+								) : (
+									<span>{opt.label}</span>
+								)}
+							</label>
+						);
+					})}
+				</div>
 			</div>
 		</div>
 	);

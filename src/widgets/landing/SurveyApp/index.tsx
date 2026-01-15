@@ -1,4 +1,3 @@
-// SurveyApp.tsx - упрощенная версия
 'use client';
 
 import React, { useState } from 'react';
@@ -34,6 +33,7 @@ const SurveyApp: React.FC = () => {
 				width={515}
 				height={48}
 				text="Начать"
+				href="/questions"
 			/>
 			<ConsentCheckbox value={consent} onChange={setConsent} />
 			<BottomCircle className={styles.survey__svg2} />
