@@ -1,4 +1,4 @@
-import { AppDispatch } from '@/store/store';
+import { AppDispatch, RootState } from '@/store/store';
 import {
 	WebSocketIncomingMessage,
 	SimulationInitMessage,
@@ -27,22 +27,36 @@ import { openModal } from '@/store/modalSlice';
 /**
  * Обработчик входящих WebSocket сообщений
  * Диспатчит соответствующие действия в Redux store
+ * @param dispatch - функция для диспатча действий Redux
+ * @param getState - функция для получения текущего состояния Redux (опционально)
  */
-export function createMessageHandler(dispatch: AppDispatch) {
+export function createMessageHandler(
+	dispatch: AppDispatch,
+	getState?: () => RootState,
+) {
 	return (message: WebSocketIncomingMessage): void => {
 		// Проверяем наличие поля type для определения типа сообщения
 		const messageAny = message as unknown as Record<string, unknown>;
 
 		// Обработка сообщений без поля type (инициализация симуляции)
 		if (!('type' in messageAny) || !messageAny.type) {
-			// Проверяем наличие полей gate и malfunctions
-			if ('gate' in messageAny && 'malfunctions' in messageAny) {
+			// Проверяем наличие поля malfunctions (gate может быть null, но malfunctions обязательны)
+			if ('malfunctions' in messageAny && Array.isArray(messageAny.malfunctions)) {
 				const initMessage = message as SimulationInitMessage;
 
-				// Извлекаем ID неисправностей: каждый объект содержит один ключ со строковым значением
-				// Формат: [{"additionalProp1":"c.0.1"}, {"additionalProp2":"c.3.0.3.0"}]
+				// Извлекаем ID неисправностей
+				// Поддерживаем два формата:
+				// 1. [{"additionalProp1":"c.0.1"}, {"additionalProp2":"c.3.0.3.0"}]
+				// 2. [{"malfunction_id": "c.1.2"}]
 				const malfunctionIds = initMessage.malfunctions
-					.map(m => Object.values(m)[0])
+					.map(m => {
+						// Если есть ключ "malfunction_id", используем его
+						if ('malfunction_id' in m && typeof m.malfunction_id === 'string') {
+							return m.malfunction_id;
+						}
+						// Иначе берем первое значение из объекта
+						return Object.values(m)[0];
+					})
 					.filter((id): id is string => typeof id === 'string');
 
 				// Преобразуем для состояния симуляции
@@ -64,9 +78,29 @@ export function createMessageHandler(dispatch: AppDispatch) {
 					);
 				}
 
-				// Обновляем данные симуляции в Redux
+				// Проверяем, что это новая симуляция (с simulation_id, gate и malfunctions)
+				// gate может быть null, но должен быть определен (не undefined)
+				const isNewSimulation =
+					initMessage.simulation_id !== undefined &&
+					initMessage.simulation_id !== null &&
+					initMessage.gate !== undefined &&
+					initMessage.malfunctions.length > 0;
+
+				// Получаем текущий simulationId из Redux для сравнения
+				let currentSimulationId: number | null = null;
+				if (getState) {
+					currentSimulationId = getState().simulation.simulationId;
+				}
+
+				// Проверяем, что это действительно новая симуляция (отличается от текущей)
+				const isDifferentSimulation =
+					isNewSimulation &&
+					initMessage.simulation_id !== currentSimulationId;
+
+				// Обновляем данные симуляции в Redux (включая simulation_id)
 				dispatch(
 					setSimulation({
+						simulation_id: initMessage.simulation_id,
 						gate: initMessage.gate,
 						malfunctions: malfunctionsForState,
 					}),
@@ -77,17 +111,35 @@ export function createMessageHandler(dispatch: AppDispatch) {
 					dispatch(activateMalfunction(malfunctionId));
 				});
 
-				console.info(
-					'[WebSocket] Инициализация симуляции:',
-					initMessage.gate,
-					malfunctionIds,
-				);
+				// Если это новая симуляция, показываем попап начала симуляции
+				if (isDifferentSimulation) {
+					dispatch(openModal('infoStartSimulation'));
+					console.info(
+						'[WebSocket] ✓ Новая симуляция обнаружена, открыт попап начала симуляции:',
+						{
+							simulation_id: initMessage.simulation_id,
+							gate: initMessage.gate,
+							malfunctionIds,
+						},
+					);
+				} else {
+					console.info(
+						'[WebSocket] ✓ Инициализация симуляции обработана:',
+						{
+							simulation_id: initMessage.simulation_id,
+							gate: initMessage.gate,
+							malfunctionIds,
+							isNewSimulation,
+							currentSimulationId,
+						},
+					);
+				}
 				return;
 			}
 
-			// Если нет type и нет gate/malfunctions, это неизвестное сообщение
+			// Если нет type и нет malfunctions, это неизвестное сообщение
 			console.warn(
-				'[WebSocket] Сообщение без поля type и без gate/malfunctions:',
+				'[WebSocket] Сообщение без поля type и без malfunctions:',
 				message,
 			);
 			return;

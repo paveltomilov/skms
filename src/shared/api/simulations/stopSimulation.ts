@@ -9,6 +9,10 @@ export async function stopSimulation(id: number) {
 		throw new Error('отсутствует токен');
 	}
 
+	if (!urlBase) {
+		throw new Error('API базовый URL не настроен');
+	}
+
 	try {
 		const response = await axios.patch(
 			`${urlBase}/simulation/${id}/`,
@@ -25,12 +29,24 @@ export async function stopSimulation(id: number) {
 		return response.data;
 	} catch (error) {
 		const axiosError = error as AxiosError<{ detail?: string }>;
+
+		// Если симуляция не найдена (404), это не критично - возможно, она уже была остановлена
+		if (axiosError.response?.status === 404) {
+			console.warn(
+				'[stopSimulation] Симуляция не найдена на бэкенде (возможно, уже остановлена):',
+				id,
+			);
+			// Возвращаем успешный результат, так как цель (остановка) уже достигнута
+			return {
+				success: true,
+				message: 'Симуляция уже остановлена или не найдена',
+			};
+		}
+
 		const message =
 			axiosError.response?.data?.detail ??
 			'Не удалось остановить симуляцию';
-		console.log(error);
+		console.error('[stopSimulation] Ошибка:', error);
 		throw new Error(message);
 	}
 }
-
-

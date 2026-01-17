@@ -5,6 +5,7 @@ import { createMessageHandler } from '@/shared/lib/websocket/messageHandlers';
 import { WebSocketStatus } from '@/shared/types/websocket';
 import { getCookie } from 'cookies-next';
 import { UserRole } from '@/shared/configs/routes';
+import store from '@/store/store';
 
 /**
  * Хук для работы с WebSocket соединением
@@ -57,8 +58,8 @@ export const useWebSocket = () => {
 		// Подключаемся к WebSocket
 		managerRef.current.connect(wsURL, token);
 
-		// Создаем обработчик сообщений с диспатчем в Redux
-		const messageHandler = createMessageHandler(dispatch);
+		// Создаем обработчик сообщений с диспатчем в Redux и функцией получения состояния
+		const messageHandler = createMessageHandler(dispatch, () => store.getState());
 
 		// Подписываемся на сообщения
 		const unsubscribeMessage = managerRef.current.onMessage(messageHandler);

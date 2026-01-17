@@ -29,10 +29,11 @@ export interface OutgoingMessage {
  */
 /**
  * Сообщение инициализации симуляции
- * Формат: {"gate":"g2","malfunctions":[{"additionalProp1":"c.0.1"}]}
+ * Формат: {"simulation_id": 12, "gate":"g2" или null, "malfunctions":[{"additionalProp1":"c.0.1"}]}
  */
 export interface SimulationInitMessage {
-	gate?: string;
+	simulation_id?: number;
+	gate?: string | null;
 	malfunctions: Array<Record<string, string>>;
 }
 
