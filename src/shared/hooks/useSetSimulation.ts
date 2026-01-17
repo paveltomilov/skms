@@ -12,10 +12,7 @@ import {
 } from 'react';
 import { SimulationFormData, SimulationItemData } from '../types/simulation';
 import { clearCurrentStudent } from '@/store/trainingSlice';
-import {
-	postSimulation,
-	ResponseData,
-} from '../api';
+import { postSimulation, ResponseData } from '../api';
 import { closeModal } from '@/store/modalSlice';
 
 interface IResponse {
@@ -51,6 +48,8 @@ const useSetSimulation = (): IResponse => {
 	const studentId = useAppSelector(
 		state => state.training.currentStudent?.id,
 	);
+
+	const idActiveGate = useAppSelector(state => state.gate.activeGateId);
 
 	useEffect(() => {
 		if (defaultElements) setElements(defaultElements);
@@ -102,10 +101,12 @@ const useSetSimulation = (): IResponse => {
 	);
 
 	const handleSetSimulation = async () => {
-		if (!studentId || listIsEmpty) {
+		if (!studentId || listIsEmpty || !idActiveGate) {
 			const errorText = listIsEmpty
 				? 'Cписок неисправностей пуст'
-				: 'Студент не выбран';
+				: !studentId
+				? 'Студент не выбран'
+				: 'Не задан id задвижки';
 			setSuccess(false);
 			setErrors(errorText);
 			setData(null);
@@ -118,6 +119,7 @@ const useSetSimulation = (): IResponse => {
 			malfunctions: listMalfunction.map(item => {
 				return { malfunction_id: item.malfunction_id };
 			}),
+			gate: idActiveGate,
 		};
 		setErrors(null);
 		setIsLoading(true);

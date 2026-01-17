@@ -25,13 +25,13 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 	const dispatch = useAppDispatch();
 	const [isActiveStudentSimulation, setIsActiveStudentSimulation] =
 		useState<boolean>(false);
+	const isActiveSimulation = useAppSelector((store)=> store.simulation.foundMalfunctionIds).length > 0;
 
 	const handleStopSimulation = useCallback(() => {
 		// Открываем попап подтверждения прерывания симуляции
 		dispatch(openModal('abortSimulationConfirm'));
 	}, [dispatch]);
 
-	const isActiveSimulation: boolean = true; // в будущем статус от websocket
 	const { firstName, lastName, role } = useUserCookies();
 	const status =
 		role === 'admin'
