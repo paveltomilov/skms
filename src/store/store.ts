@@ -13,6 +13,8 @@ import percentReducer from './percentSlice';
 import updateListReducer from './updateListSlice';
 import UserInfoSlice from '@/store/userInfoSlice';
 import simulationReducer from './simulationSlice';
+import emergencyStatusReducer from './emergencyStatusSlice';
+import timerReducer from './timerSlice';
 
 const rootReducer = combineReducers({
 	updateList: updateListReducer,
@@ -27,12 +29,14 @@ const rootReducer = combineReducers({
 	training: trainingReducer,
 	userInfo: UserInfoSlice,
 	simulation: simulationReducer,
+	emergencyStatus: emergencyStatusReducer,
+	timer: timerReducer,
 });
 
 const persistConfig = {
 	key: 'appWindows',
 	storage,
-	whitelist: ['windows', 'percent', 'simulation'], // cписок reduces сохраняемых в localStorage
+	whitelist: ['windows', 'percent', 'simulation', 'timer'], // cписок reduces сохраняемых в localStorage
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -1,18 +1,16 @@
 'use client';
 
 import { FC } from 'react';
+import { useParams } from 'next/navigation';
 
-interface SurveyPageProps {
-	params: {
-		id: string;
-	};
-}
+const SurveyPage: FC = () => {
+	const params = useParams();
+	const id = params?.id as string | undefined;
 
-const SurveyPage: FC<SurveyPageProps> = ({ params }) => {
 	return (
 		<div style={{ padding: '40px', textAlign: 'center' }}>
 			<h1>Опрос завершён. Спасибо!</h1>
-			<p>ID симуляции: {params.id}</p>
+			<p>ID симуляции: {id || 'не указан'}</p>
 		</div>
 	);
 };

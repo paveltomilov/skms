@@ -36,6 +36,15 @@
 		"dist",
 		"storybook-static",
 		"**/*.bundle.js",
-		"coverage"
+		"coverage",
+		"playwright.config.ts",
+		"jest.config.ts",
+		"jest.setup.ts",
+		"e2e",
+		"**/__tests__/**",
+		"**/*.test.ts",
+		"**/*.test.tsx",
+		"**/*.spec.ts",
+		"**/*.spec.tsx"
 	]
 }

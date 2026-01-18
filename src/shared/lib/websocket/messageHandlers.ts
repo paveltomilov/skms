@@ -1,4 +1,4 @@
-import { AppDispatch } from '@/store/store';
+import { AppDispatch} from '@/store/store';
 import {
 	WebSocketIncomingMessage,
 	SimulationInitMessage,
@@ -30,22 +30,36 @@ import { openModal } from '@/store/modalSlice';
 /**
  * Обработчик входящих WebSocket сообщений
  * Диспатчит соответствующие действия в Redux store
+ * @param dispatch - функция для диспатча действий Redux
+ * @param getState - функция для получения текущего состояния Redux (опционально)
  */
-export function createMessageHandler(dispatch: AppDispatch) {
+export function createMessageHandler(
+	dispatch: AppDispatch,
+	
+) {
 	return (message: WebSocketIncomingMessage): void => {
 		// Проверяем наличие поля type для определения типа сообщения
 		const messageAny = message as unknown as Record<string, unknown>;
 
 		// Обработка сообщений без поля type (инициализация симуляции)
 		if (!('type' in messageAny) || !messageAny.type) {
-			// Проверяем наличие полей gate и malfunctions
-			if ('gate' in messageAny && 'malfunctions' in messageAny) {
+			// Проверяем наличие поля malfunctions (gate может быть null, но malfunctions обязательны)
+			if ('malfunctions' in messageAny && Array.isArray(messageAny.malfunctions)) {
 				const initMessage = message as SimulationInitMessage;
 
-				// Извлекаем ID неисправностей: каждый объект содержит один ключ со строковым значением
-				// Формат: [{"additionalProp1":"c.0.1"}, {"additionalProp2":"c.3.0.3.0"}]
+				// Извлекаем ID неисправностей
+				// Поддерживаем два формата:
+				// 1. [{"additionalProp1":"c.0.1"}, {"additionalProp2":"c.3.0.3.0"}]
+				// 2. [{"malfunction_id": "c.1.2"}]
 				const malfunctionIds = initMessage.malfunctions
-					.map(m => Object.values(m)[0])
+					.map(m => {
+						// Если есть ключ "malfunction_id", используем его
+						if ('malfunction_id' in m && typeof m.malfunction_id === 'string') {
+							return m.malfunction_id;
+						}
+						// Иначе берем первое значение из объекта
+						return Object.values(m)[0];
+					})
 					.filter((id): id is string => typeof id === 'string');
 
 				// Преобразуем для состояния симуляции
@@ -67,7 +81,7 @@ export function createMessageHandler(dispatch: AppDispatch) {
 					);
 				}
 
-				// Обновляем данные симуляции в Redux
+				// Обновляем данные симуляции в Redux (включая simulation_id)
 				dispatch(
 					setSimulation({
 						simulationId: initMessage.simulation_id,
@@ -125,9 +139,9 @@ export function createMessageHandler(dispatch: AppDispatch) {
 				return;
 			}
 
-			// Если нет type и нет gate/malfunctions, это неизвестное сообщение
+			// Если нет type и нет malfunctions, это неизвестное сообщение
 			console.warn(
-				'[WebSocket] Сообщение без поля type и без gate/malfunctions:',
+				'[WebSocket] Сообщение без поля type и без malfunctions:',
 				message,
 			);
 			return;

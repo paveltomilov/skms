@@ -43,7 +43,6 @@ const useSetSimulation = (): IResponse => {
 	>([]);
 	const [showListMalfunction, setShowListMalfunction] =
 		useState<boolean>(false);
-
 	const { urlBase, access, elements: defaultElements } = useRequestData();
 	const studentId = useAppSelector(
 		state => state.training.currentStudent?.id,
@@ -115,11 +114,11 @@ const useSetSimulation = (): IResponse => {
 		}
 
 		const formData: SimulationFormData = {
+			gate: idActiveGate,
 			user: studentId,
 			malfunctions: listMalfunction.map(item => {
 				return { malfunction_id: item.malfunction_id };
 			}),
-			gate: idActiveGate,
 		};
 		setErrors(null);
 		setIsLoading(true);

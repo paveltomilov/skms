@@ -1,12 +1,11 @@
 import { FC } from 'react';
 import styles from './styles.module.scss';
+import { useTimer } from '@/shared/hooks/useTimer';
 
 
 const Timer:FC = () => {
 
-    const hh:number = 1;
-    const mm:number = 24;
-    const ss:number = 60;
+    const { hh, mm, ss } = useTimer();
 
     return (
         <div className={styles.timer}>

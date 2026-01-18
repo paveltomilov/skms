@@ -13,6 +13,10 @@ export async function stopSimulation(id: number) {
 		throw new Error('Отсутствует токен доступа');
 	}
 
+	if (!urlBase) {
+		throw new Error('API базовый URL не настроен');
+	}
+
 	try {
 		// Используем interceptors для добавления Authorization заголовка
 		// Это обеспечивает консистентность с остальными запросами (как при входе)

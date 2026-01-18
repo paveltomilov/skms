@@ -12,7 +12,8 @@ const Survey: FC = () => {
 					title="Ваше мнение помогает нам развиваться"
 				/>
 				<p className={styles.survey__description}>
-					Ответьте на несколько вопросов — это займёт всего пару минут
+					z Ответьте на несколько вопросов — это займёт всего пару
+					минут
 				</p>
 				<Button
 					className={styles.survey__button}

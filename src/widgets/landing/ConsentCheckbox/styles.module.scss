@@ -1,0 +1,77 @@
+/* styles.module.scss */
+
+.checkbox {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	@media (max-width: 767px) {
+		width: 418px;
+	}
+	@media (max-width: 576px) {
+		width: 329px;
+	}
+
+	&__input {
+		position: absolute;
+		opacity: 0;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+	}
+
+	&__descr {
+		position: relative;
+		padding-left: 37px; /* место для кастомного чекбокса */
+		cursor: pointer;
+		user-select: none;
+		font-family: var(--second-family);
+		font-weight: 500;
+		font-size: 13px;
+		line-height: 100%;
+		color: var(--lan-very-dark-gray);
+
+		&__span {
+			text-decoration: underline;
+		}
+
+		/* ---- псевдо‑элементы чекбокса ---- */
+		&::before {
+			content: '';
+			position: absolute;
+			left: 0;
+			top: 50%;
+			transform: translateY(-50%);
+			width: 22px;
+			height: 22px;
+			background: var(--lan-bright-cyan---lime-green);
+			border: 1px solid var(--lan-very-dark-gray);
+			border-radius: 4px;
+			transition: all 0.2s ease;
+		}
+
+		&::after {
+			content: '';
+			position: absolute;
+			left: 7px; /* отступ внутри чекбокса */
+			top: 50%;
+			transform: translateY(-50%) rotate(45deg);
+			width: 6px;
+			height: 12px;
+			border-right: 2px solid var(--lan-very-dark-gray);
+			border-bottom: 2px solid var(--lan-very-dark-gray);
+			opacity: 0;
+			transition: opacity 0.15s ease;
+		}
+	}
+}
+
+/* стили при отмеченном чекбоксе */
+.checkbox__input:checked + .checkbox__descr::before {
+	background: #93f2a8;
+	border-color: #93f2a8;
+}
+.checkbox__input:checked + .checkbox__descr::after {
+	opacity: 1;
+}
