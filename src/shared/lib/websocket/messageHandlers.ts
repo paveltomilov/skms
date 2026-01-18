@@ -19,7 +19,11 @@ import {
 } from '@/store/gateSlice';
 import { setVoltagePoints } from '@/store/pointsSlice';
 import { GATE_STATE_TYPE } from '@/shared/types/gate';
-import { setSimulation, resetSimulation } from '@/store/simulationSlice';
+import {
+	resetSimulation,
+	setCompletedSimulationId,
+	setSimulation,
+} from '@/store/simulationSlice';
 import { activateMalfunction } from '@/store/circuitSlice';
 import { openModal } from '@/store/modalSlice';
 
@@ -136,18 +140,14 @@ export function createMessageHandler(dispatch: AppDispatch) {
 				const finishedMessage = message as
 					| SimulationFinishedStudentMessage
 					| SimulationFinishedTeacherMessage;
-
-				// Сохраняем simulation_id в sessionStorage для PopupSimulationComplete
-				if (finishedMessage.simulation_id) {
-					sessionStorage.setItem(
-						'completedSimulationId',
-						String(finishedMessage.simulation_id),
-					);
-				}
+				const completedId = finishedMessage.simulation_id;
 
 				// Обрабатываем завершение симуляции
 				// resetSimulation возвращает начальное состояние
 				dispatch(resetSimulation());
+				if (completedId) {
+					dispatch(setCompletedSimulationId(completedId));
+				}
 
 				// Открываем модалку о завершении симуляции
 				dispatch(openModal('simulationComplete'));

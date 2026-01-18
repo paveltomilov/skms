@@ -3,6 +3,7 @@ import { Malfunction } from '@/shared/types/scheme';
 
 export interface SimulationState {
 	simulationId: number | null;
+	completedSimulationId: number | null;
 	gate: string | null;
 	originalMalfunctions: Malfunction[];
 	foundMalfunctionIds: string[];
@@ -10,6 +11,7 @@ export interface SimulationState {
 
 const initialState: SimulationState = {
 	simulationId: null,
+	completedSimulationId: null,
 	gate: null,
 	originalMalfunctions: [],
 	foundMalfunctionIds: [],
@@ -68,6 +70,12 @@ const simulationSlice = createSlice({
 				state.foundMalfunctionIds.push(malfunctionId);
 			}
 		},
+		setCompletedSimulationId: (state, action: PayloadAction<number>) => {
+			state.completedSimulationId = action.payload;
+		},
+		clearCompletedSimulationId: state => {
+			state.completedSimulationId = null;
+		},
 		resetSimulation: () => {
 			// Сброс/завершение симуляции - возвращаем начальное состояние
 			return initialState;
@@ -79,6 +87,8 @@ export const {
 	startSimulation,
 	setSimulation,
 	markMalfunctionAsFound,
+	setCompletedSimulationId,
+	clearCompletedSimulationId,
 	resetSimulation,
 } = simulationSlice.actions;
 

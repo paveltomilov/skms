@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { InitialStateScheme } from '@/shared/types/scheme';
 import { initialStateScheme } from '@/shared/configs/scheme';
 import { BASE_RESISTANCE_CONSTANT } from '@/shared/configs/elementKind';
+import { highResistanceMalfunctionIds } from '@/shared/configs/implementedMalfunctions';
 
 const initialState: InitialStateScheme = initialStateScheme;
 
@@ -77,37 +78,33 @@ const circuitSlice = createSlice({
 
 				// Если неисправность - "Обрыв провода", устанавливаем высокое сопротивление
 				// Используем trim() для удаления возможных пробелов и проверяем точное совпадение
-				const trimmedName = malfunctionName.trim();
-				const isWireBreak = trimmedName === 'Обрыв провода';
+				const isHighResistance =
+					highResistanceMalfunctionIds.includes(malfunctionId);
 
 				console.info(
-					`[DEBUG] Проверка обрыва провода для "${malfunctionId}":`,
+					`[DEBUG] Проверка высокой сопротивляемости для "${malfunctionId}":`,
 					{
-						originalName: malfunctionName,
-						trimmedName,
-						expectedName: 'Обрыв провода',
-						isMatch: isWireBreak,
-						nameLength: trimmedName.length,
-						expectedLength: 'Обрыв провода'.length,
+						malfunctionName,
+						isMatch: isHighResistance,
 					},
-				);
+				); 
 
-				if (isWireBreak) {
+				if (isHighResistance) {
 					const oldResistance = element.resistance;
 					element.resistance =
 						BASE_RESISTANCE_CONSTANT.highResistance;
 					console.info(
-						`✓ Установлено высокое сопротивление для элемента "${elementId}" из-за обрыва провода`,
+						`✓ Установлено высокое сопротивление для элемента "${elementId}" из-за неисправности`,
 						{
 							oldResistance,
 							newResistance:
 								BASE_RESISTANCE_CONSTANT.highResistance,
-							malfunctionName: trimmedName,
+							malfunctionName,
 						},
 					);
 				} else {
 					console.info(
-						`✗ Имя неисправности "${trimmedName}" не совпадает с "Обрыв провода"`,
+						`✗ Неисправность "${malfunctionId}" не требует высокого сопротивления`,
 					);
 				}
 

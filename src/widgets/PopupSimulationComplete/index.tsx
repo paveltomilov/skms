@@ -5,10 +5,11 @@ import { useRouter } from 'next/navigation';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import { useSubscription } from '@/shared/hooks/useSubscription';
-import { useAppDispatch } from '@/shared/hooks/store';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import { closeModal } from '@/store/modalSlice';
 import Image from 'next/image';
 import { useSimulationCompleteConfig } from '@/shared/hooks/useSimulationCompleteConfig';
+import { clearCompletedSimulationId } from '@/store/simulationSlice';
 
 export const PopupSimulationComplete: FC = () => {
 	const router = useRouter();
@@ -16,18 +17,18 @@ export const PopupSimulationComplete: FC = () => {
 	const subscriptionType = useSubscription();
 	const config = useSimulationCompleteConfig(subscriptionType);
 	const [simulationId, setSimulationId] = useState<string | null>(null);
+	const completedSimulationId = useAppSelector(
+		state => state.simulation.completedSimulationId,
+	);
 
-	// Получаем simulationId из sessionStorage при открытии модального окна
+	// Получаем simulationId из Redux при открытии модального окна
 	useEffect(() => {
-		const savedSimulationId = sessionStorage.getItem(
-			'completedSimulationId',
-		);
-		if (savedSimulationId) {
-			setSimulationId(savedSimulationId);
+		if (completedSimulationId) {
+			setSimulationId(String(completedSimulationId));
 			// Очищаем после использования
-			sessionStorage.removeItem('completedSimulationId');
+			dispatch(clearCompletedSimulationId());
 		}
-	}, []);
+	}, [completedSimulationId, dispatch]);
 
 	const handleMainButtonClick = () => {
 		// Закрываем модалку перед редиректом

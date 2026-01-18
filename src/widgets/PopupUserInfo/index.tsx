@@ -1,4 +1,4 @@
-import { FC, useEffect, useState, useCallback } from 'react';
+import { FC, useCallback } from 'react';
 import Image from 'next/image';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
@@ -23,9 +23,6 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 	const simulation = useAppSelector(state => state.simulation);
 	const router = useRouter();
 	const dispatch = useAppDispatch();
-	const [isActiveStudentSimulation, setIsActiveStudentSimulation] =
-		useState<boolean>(false);
-	const isActiveSimulation = useAppSelector((store)=> store.simulation.foundMalfunctionIds).length > 0;
 
 	const handleStopSimulation = useCallback(() => {
 		// Открываем попап подтверждения прерывания симуляции
@@ -39,10 +36,6 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 			: role === 'teacher'
 			? 'Преподаватель'
 			: 'Cтудент';
-
-	useEffect(() => {
-		setIsActiveStudentSimulation(role === 'student' && isActiveSimulation);
-	}, [role, isActiveSimulation]);
 
 	const handleLogout = () => {
 		// Централизованный выход: чистим access + refresh и связанные cookie
@@ -94,8 +87,7 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 							/>
 						</li>
 					)}
-					{isActiveStudentSimulation && (
-						<li>
+											<li>
 							<Image
 								src="/svg/history.svg"
 								alt="history"
@@ -103,8 +95,8 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 								height={16}
 							/>
 							История сессий
-						</li>
-					)}
+						</li>  
+					
 					<li>
 						<Image
 							src="/svg/support.svg"
