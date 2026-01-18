@@ -50,15 +50,13 @@ const Gate: FC<Props> = ({
 	const positions = GATE_POSITION[position];
 	const isVertical = position === 'vertical';
 	const hasGateError: boolean = malfunctions.length > 0;
-	const showError = hasGateError && errorBlink;
-	const shouldBlink = showError;
+	const shouldBlink = hasGateError && errorBlink;
 	return (
 		<div className={cn(styles.gate__wrapper, className)} onClick={onClick}>
 			<div
 				className={cn(styles.gate, {
 					[styles.gate_vertical]: isVertical,
 					[styles.gate_shadow]: shadow,
-					[styles.isActiveError]: showError,
 					[styles.isActiveErrorBlink]: shouldBlink,
 				})}
 			>
