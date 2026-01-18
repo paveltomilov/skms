@@ -1,18 +1,26 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
-import TopCircle from '../IconSvg/topCircle';
-import BottomCircle from '../IconSvg/bottomCircle';
-import Button from '../Button';
-import ConsentCheckbox from '../ConsentCheckbox';
+import TopCircle from '../topCircle';
+import BottomCircle from '../bottomCircle';
+import Button from '../../Button';
+import ConsentCheckbox from '../../ConsentCheckbox';
 import styles from './styles.module.scss';
 
-const SurveyApp: React.FC = () => {
-	const [consent, setConsent] = useState(false);
+type SurveyStartProps = {
+	onStart: () => void;
+	consent: boolean;
+	setConsent: (value: boolean) => void;
+};
 
+const SurveyStart: React.FC<SurveyStartProps> = ({
+	onStart,
+	consent,
+	setConsent,
+}) => {
 	return (
-		<div className={`${styles.survey__container} container`}>
+		<div className={styles.survey__container}>
 			<TopCircle className={styles.survey__svg1} />
 			<Image
 				className={styles.survey__img}
@@ -33,12 +41,12 @@ const SurveyApp: React.FC = () => {
 				width={515}
 				height={48}
 				text="Начать"
-				href="/questions"
+				onClick={onStart}
 			/>
 			<ConsentCheckbox value={consent} onChange={setConsent} />
-			<BottomCircle className={styles.survey__svg2} />
+			<BottomCircle className={styles.survey__svg2} />)
 		</div>
 	);
 };
 
-export default SurveyApp;
+export default SurveyStart;

@@ -55,3 +55,22 @@
 		}
 	}
 }
+
+.modal__overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: var(--lan-very-dark-mostly-black-blue);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+}
+
+.button__closed {
+	position: absolute;
+	top: 24px;
+	right: 24px;
+}
