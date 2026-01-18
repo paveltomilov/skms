@@ -13,6 +13,7 @@ import { UnitsMeasurement } from '@/shared/types/window';
 import { useAppSelector } from '@/shared/hooks/store';
 import { useOpenGatePopup } from '@/shared/hooks/useOpenGatePopup';
 import useShowModal from '@/shared/hooks/useShowModal';
+import { useIsSimulationActive } from '@/shared/hooks/useIsSimulationActive';
 
 interface Props {
 	className?: string;
@@ -25,6 +26,7 @@ const TAMidDown: FC<Props> = ({ className, windows}) => {
 	const handleModalNotification = useShowModal('notification');
 
 	const openGatePopup = useOpenGatePopup();
+	const isSimulationActive = useIsSimulationActive();
 	return (
 		<div className={cn(className, styles.container)}>
 			<div className={styles.windowsTop}>
@@ -63,6 +65,7 @@ const TAMidDown: FC<Props> = ({ className, windows}) => {
 						position="vertical"
 						onClick={() => openGatePopup('g9')}
 						malfunctions={g9.malfunctions}
+						errorBlink={isSimulationActive}
 					/>
 				</div>
 				<div className={styles.windowsBottom__pump}>
@@ -91,6 +94,7 @@ const TAMidDown: FC<Props> = ({ className, windows}) => {
 						position="vertical"
 						onClick={() => openGatePopup('g10')}
 						malfunctions={g10.malfunctions}
+						errorBlink={isSimulationActive}
 					/>
 				</div>
 				<div className={styles.windowsBottom__info}>
