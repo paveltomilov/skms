@@ -21,6 +21,7 @@ const Question1: React.FC = () => {
 	const [selected, setSelected] = useState<number | null>(null);
 	const [otherText, setOtherText] = useState<string>('');
 	const [currentIconIndex, setCurrentIconIndex] = useState(0);
+	console.log(currentIconIndex);
 
 	return (
 		<div className={styles.question__container}>
