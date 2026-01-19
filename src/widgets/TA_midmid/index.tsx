@@ -5,7 +5,7 @@ import Window from '@/shared/UI/Window';
 import Gate from '@/shared/UI/Gate';
 import cn from 'classnames';
 import WindowRectCard from '@/shared/UI/WindowRectCard';
-import { WINDOWS } from '@/shared/configs/window';
+import { WindowsState } from '@/shared/configs/window';
 import Actuator from '@/shared/UI/Actuator';
 import { ACTUATORS } from '@/shared/configs/actuator';
 import { useAppSelector } from '@/shared/hooks/store';
@@ -14,9 +14,10 @@ import useShowModal from '@/shared/hooks/useShowModal';
 
 interface Props {
 	className?: string;
+	windows: WindowsState;
 }
 
-const TAMidMId: FC<Props> = ({ className }) => {
+const TAMidMId: FC<Props> = ({ className, windows }) => {
 	const { g4, g5 } = useAppSelector(state => state.gate.gates);
 	const handleModalNotification = useShowModal('notification');
 	const openGatePopup = useOpenGatePopup();
@@ -37,11 +38,11 @@ const TAMidMId: FC<Props> = ({ className }) => {
 
 				{/* 2-й столбец: окна слева */}
 				<section className={styles.windowsLeft}>
-					<Window data={WINDOWS.w41} right />
-					<Window data={WINDOWS.w45} right />
-					<Window data={WINDOWS.w50} right />
-					<Window data={WINDOWS.w52} right />
-					<Window data={WINDOWS.w53} right />
+					<Window data={windows.w41} right />
+					<Window data={windows.w45} right />
+					<Window data={windows.w50} right />
+					<Window data={windows.w52} right />
+					<Window data={windows.w53} right />
 				</section>
 
 				{/* 3-й столбец: средний левый блок */}
@@ -54,17 +55,17 @@ const TAMidMId: FC<Props> = ({ className }) => {
 					>
 						Отборы из ЦСД, ЦНД
 					</h3>
-					<Window data={WINDOWS.w42} right />
+					<Window data={windows.w42} right />
 					<div className={styles.rectAndWindow}>
 						<WindowRectCard
 							color="yellow"
-							maxValue={WINDOWS.w46.maxValue}
-							minValue={WINDOWS.w46.minValue}
-							currentValue={WINDOWS.w46.currentValue}
-							unitsMeasurement={WINDOWS.w46.unitsMeasurement}
-							title={WINDOWS.w46.title}
+							maxValue={windows.w46.maxValue}
+							minValue={windows.w46.minValue}
+							currentValue={windows.w46.currentValue}
+							unitsMeasurement={windows.w46.unitsMeasurement}
+							title={windows.w46.title}
 						/>
-						<Window data={WINDOWS.w47} right />
+						<Window data={windows.w47} right />
 					</div>
 					<div className={styles.middleSection__arrowButtons}>
 						<Actuator
@@ -82,13 +83,13 @@ const TAMidMId: FC<Props> = ({ className }) => {
 
 				{/* 4-й столбец: средний правый блок */}
 				<section className={styles.rightMiddleSection}>
-					<Window data={WINDOWS.w43} right />
+					<Window data={windows.w43} right />
 					<WindowRectCard
-						maxValue={WINDOWS.w48.maxValue}
-						minValue={WINDOWS.w48.minValue}
-						currentValue={WINDOWS.w48.currentValue}
-						unitsMeasurement={WINDOWS.w48.unitsMeasurement}
-						title={WINDOWS.w48.title}
+						maxValue={windows.w48.maxValue}
+						minValue={windows.w48.minValue}
+						currentValue={windows.w48.currentValue}
+						unitsMeasurement={windows.w48.unitsMeasurement}
+						title={windows.w48.title}
 					/>
 					<div className={styles.rightMiddleSection__arrowButtons}>
 						<Actuator
@@ -106,9 +107,9 @@ const TAMidMId: FC<Props> = ({ className }) => {
 
 				{/* 5-й столбец: окна справа + кнопка */}
 				<section className={styles.windowsRight}>
-					<Window data={WINDOWS.w44} right />
-					<Window data={WINDOWS.w49} right />
-					<Window data={WINDOWS.w51} right />
+					<Window data={windows.w44} right />
+					<Window data={windows.w49} right />
+					<Window data={windows.w51} right />
 					<Button
 						width={88}
 						height={28}
@@ -129,20 +130,20 @@ const TAMidMId: FC<Props> = ({ className }) => {
 						text="ПНД"
 						onClick={handleModalNotification}
 					/>
-					<Window data={WINDOWS.w57} right />
-					<Window data={WINDOWS.w61} right />
+					<Window data={windows.w57} right />
+					<Window data={windows.w61} right />
 				</div>
 
 				<section className={styles.bottomSelect}>
 					<h3 className={styles.textLabel}>V отб.</h3>
-					<Window data={WINDOWS.w54} right />
+					<Window data={windows.w54} right />
 					<WindowRectCard
 						color="yellow"
-						maxValue={WINDOWS.w58.maxValue}
-						minValue={WINDOWS.w58.minValue}
-						currentValue={WINDOWS.w58.currentValue}
-						unitsMeasurement={WINDOWS.w58.unitsMeasurement}
-						title={WINDOWS.w58.title}
+						maxValue={windows.w58.maxValue}
+						minValue={windows.w58.minValue}
+						currentValue={windows.w58.currentValue}
+						unitsMeasurement={windows.w58.unitsMeasurement}
+						title={windows.w58.title}
 					/>
 				</section>
 
@@ -151,17 +152,18 @@ const TAMidMId: FC<Props> = ({ className }) => {
 					textTopLeft={g4.name}
 					position="vertical"
 					onClick={() => openGatePopup('g4')}
+					malfunctions={g4.malfunctions}
 				/>
 
 				<section className={styles.bottomSelect}>
 					<h3 className={styles.textLabel}>VI отб.</h3>
-					<Window data={WINDOWS.w55} right />
+					<Window data={windows.w55} right />
 					<WindowRectCard
-						maxValue={WINDOWS.w59.maxValue}
-						minValue={WINDOWS.w59.minValue}
-						currentValue={WINDOWS.w59.currentValue}
-						unitsMeasurement={WINDOWS.w59.unitsMeasurement}
-						title={WINDOWS.w59.title}
+						maxValue={windows.w59.maxValue}
+						minValue={windows.w59.minValue}
+						currentValue={windows.w59.currentValue}
+						unitsMeasurement={windows.w59.unitsMeasurement}
+						title={windows.w59.title}
 					/>
 				</section>
 
@@ -170,17 +172,18 @@ const TAMidMId: FC<Props> = ({ className }) => {
 					textTopLeft={g5.name}
 					position="vertical"
 					onClick={() => openGatePopup('g5')}
+					malfunctions={g5.malfunctions}
 				/>
 
 				<section className={styles.bottomSelect}>
 					<h3 className={styles.textLabel}>VII отб.</h3>
-					<Window data={WINDOWS.w56} right />
+					<Window data={windows.w56} right />
 					<WindowRectCard
-						maxValue={WINDOWS.w60.maxValue}
-						minValue={WINDOWS.w60.minValue}
-						currentValue={WINDOWS.w60.currentValue}
-						unitsMeasurement={WINDOWS.w60.unitsMeasurement}
-						title={WINDOWS.w60.title}
+						maxValue={windows.w60.maxValue}
+						minValue={windows.w60.minValue}
+						currentValue={windows.w60.currentValue}
+						unitsMeasurement={windows.w60.unitsMeasurement}
+						title={windows.w60.title}
 					/>
 				</section>
 			</section>

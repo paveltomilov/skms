@@ -5,6 +5,12 @@ import ScrewConnection from '@/shared/UI/ScrewConnection';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import { AppDispatch, RootState } from '@/store/store';
 import { togglePointState } from '@/store/pointsSlice';
+import {
+	JUNCTION_BOX_OUTPUT_POINT_PHASE_B_ID,
+	MOTOR_WINDING_CONTACT_POINT_PHASE_A_ID,
+	MOTOR_WINDING_CONTACT_POINT_PHASE_C_ID,
+	POWER_CIRCUIT_NEUTRAL_ID,
+} from '@/shared/configs/powerCircuit/constants';
 
 const PopupClamp = () => {
 	const dispatch = useAppDispatch<AppDispatch>();
@@ -28,15 +34,23 @@ const PopupClamp = () => {
 							turn_A="180"
 						/>
 						<ScrewConnection
-							pointId="p.p.1.4.1.2"
+							pointId={MOTOR_WINDING_CONTACT_POINT_PHASE_A_ID}
 							screwStatus={
-								screwStates['p.p.1.4.1.2'] ? 'close' : 'open'
+								screwStates[
+									MOTOR_WINDING_CONTACT_POINT_PHASE_A_ID
+								]
+									? 'close'
+									: 'open'
 							}
 							className={styles.top__screw}
 							provodLocation="left"
 							textRight="A"
 							onToggle={() =>
-								dispatch(togglePointState('p.p.1.4.1.2'))
+								dispatch(
+									togglePointState(
+										MOTOR_WINDING_CONTACT_POINT_PHASE_A_ID,
+									),
+								)
 							}
 						/>
 						<ProvodConstructor
@@ -46,13 +60,19 @@ const PopupClamp = () => {
 							turn_A="0"
 						/>
 						<ScrewConnection
-							pointId="p.p.n"
+							pointId={POWER_CIRCUIT_NEUTRAL_ID}
 							screwStatus={
-								screwStates['p.p.n'] ? 'close' : 'open'
+								screwStates[POWER_CIRCUIT_NEUTRAL_ID]
+									? 'close'
+									: 'open'
 							}
 							className={styles.top__connect}
-							provodLocation="left"
-							onToggle={() => dispatch(togglePointState('p.p.n'))}
+							provodLocation="right"
+							onToggle={() =>
+								dispatch(
+									togglePointState(POWER_CIRCUIT_NEUTRAL_ID),
+								)
+							}
 						/>
 						<ProvodConstructor
 							className={styles.top__topA}
@@ -75,25 +95,39 @@ const PopupClamp = () => {
 							retreatMarker={20}
 						/>
 						<ScrewConnection
-							pointId="p.p.2.5"
+							pointId={JUNCTION_BOX_OUTPUT_POINT_PHASE_B_ID}
 							screwStatus={
-								screwStates['p.p.2.5'] ? 'close' : 'open'
+								screwStates[
+									JUNCTION_BOX_OUTPUT_POINT_PHASE_B_ID
+								]
+									? 'close'
+									: 'open'
 							}
 							className={styles.center__screw}
 							provodLocation="left"
 							textRight="B"
 							onToggle={() =>
-								dispatch(togglePointState('p.p.2.5'))
+								dispatch(
+									togglePointState(
+										JUNCTION_BOX_OUTPUT_POINT_PHASE_B_ID,
+									),
+								)
 							}
 						/>
 						<ScrewConnection
-							pointId="p.p.n"
+							pointId={POWER_CIRCUIT_NEUTRAL_ID}
 							screwStatus={
-								screwStates['p.p.n'] ? 'close' : 'open'
+								screwStates[POWER_CIRCUIT_NEUTRAL_ID]
+									? 'close'
+									: 'open'
 							}
 							className={styles.center__connect}
-							provodLocation="left"
-							onToggle={() => dispatch(togglePointState('p.p.n'))}
+							provodLocation="right"
+							onToggle={() =>
+								dispatch(
+									togglePointState(POWER_CIRCUIT_NEUTRAL_ID),
+								)
+							}
 						/>
 						<ProvodConstructor
 							className={styles.center__topA}
@@ -126,13 +160,19 @@ const PopupClamp = () => {
 							turn_A="270"
 						/>
 						<ScrewConnection
-							pointId="p.p.n"
+							pointId={POWER_CIRCUIT_NEUTRAL_ID}
 							screwStatus={
-								screwStates['p.p.n'] ? 'close' : 'open'
+								screwStates[POWER_CIRCUIT_NEUTRAL_ID]
+									? 'close'
+									: 'open'
 							}
 							className={styles.bottom__connect}
-							provodLocation="left"
-							onToggle={() => dispatch(togglePointState('p.p.n'))}
+							provodLocation="right"
+							onToggle={() =>
+								dispatch(
+									togglePointState(POWER_CIRCUIT_NEUTRAL_ID),
+								)
+							}
 						/>
 						<ProvodConstructor
 							className={styles.bottom__topA}
@@ -147,15 +187,21 @@ const PopupClamp = () => {
 						/>
 					</div>
 					<ScrewConnection
-						pointId="p.p.3.4.1.2"
+						pointId={MOTOR_WINDING_CONTACT_POINT_PHASE_C_ID}
 						screwStatus={
-							screwStates['p.p.3.4.1.2'] ? 'close' : 'open'
+							screwStates[MOTOR_WINDING_CONTACT_POINT_PHASE_C_ID]
+								? 'close'
+								: 'open'
 						}
 						className={styles.bottom__screw}
 						provodLocation="left"
 						textRight="C"
 						onToggle={() =>
-							dispatch(togglePointState('p.p.3.4.1.2'))
+							dispatch(
+								togglePointState(
+									MOTOR_WINDING_CONTACT_POINT_PHASE_C_ID,
+								),
+							)
 						}
 					/>
 				</div>

@@ -22,9 +22,14 @@ export type MultimeterMode =
 	| 'DCV_2000m'
 	| 'DCV_200m';
 
+export interface ProbeConnItem {
+	pointId: UniqueIdentifier | null;
+	dropId: UniqueIdentifier | null;
+}
+
 export interface ProbeConnection {
-	red: UniqueIdentifier | null;
-	black: UniqueIdentifier | null;
+	red: ProbeConnItem | null;
+	black: ProbeConnItem | null;
 }
 
 /** Состояние щупа */

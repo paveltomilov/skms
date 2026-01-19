@@ -2,7 +2,7 @@ import { FC } from 'react';
 import cn from 'classnames';
 import styles from './styles.module.scss';
 import Window from '@/shared/UI/Window';
-import { WINDOWS } from '@/shared/configs/window';
+import { WindowsState } from '@/shared/configs/window';
 import Gate from '@/shared/UI/Gate';
 import { GATES } from '@/shared/configs/gate';
 import { useOpenGatePopup } from '@/shared/hooks/useOpenGatePopup';
@@ -11,9 +11,10 @@ import useShowModal from '@/shared/hooks/useShowModal';
 
 interface Props {
 	className?: string;
+	windows: WindowsState;
 }
 
-const KARightTop: FC<Props> = ({ className }) => {
+const KARightTop: FC<Props> = ({ className, windows }) => {
 	const openGatePopup = useOpenGatePopup();
 	const handleModalNotification = useShowModal('notification');
 	return (
@@ -26,12 +27,14 @@ const KARightTop: FC<Props> = ({ className }) => {
 						textTop={GATES.g14.name}
 						disable
 						onClick={() => openGatePopup('g14')}
+						malfunctions={GATES.g14.malfunctions}
 					/>
 					<Gate
 						state={GATES.g15.states}
 						textTop={GATES.g15.name}
 						disable
 						onClick={() => openGatePopup('g15')}
+						malfunctions={GATES.g15.malfunctions}
 					/>
 				</div>
 				<span className={styles.windowTop__text}>
@@ -42,9 +45,9 @@ const KARightTop: FC<Props> = ({ className }) => {
 			<div className={styles.windowMiddle}>
 				<div className={styles.windowMiddle__wrapperWindow}>
 					<span className={styles.word}>А</span>
-					<Window data={WINDOWS.w183} right />
-					<Window data={WINDOWS.w184} right />
-					<Window data={WINDOWS.w185} right />
+					<Window data={windows.w183} right />
+					<Window data={windows.w184} right />
+					<Window data={windows.w185} right />
 				</div>
 				<div className={styles.windowMiddle__boxGate}>
 					<Gate className={styles.gate} state="magenta" power />
@@ -54,27 +57,27 @@ const KARightTop: FC<Props> = ({ className }) => {
 				</div>
 				<div className={styles.windowMiddle__wrapperWindow}>
 					<span className={styles.word}>Б</span>
-					<Window data={WINDOWS.w189} right />
-					<Window data={WINDOWS.w200} right />
-					<Window data={WINDOWS.w201} right />
+					<Window data={windows.w189} right />
+					<Window data={windows.w200} right />
+					<Window data={windows.w201} right />
 				</div>
 				<div className={styles.windowMiddle__right}>
-					<Window data={WINDOWS.w202} right />
-					<Window data={WINDOWS.w203} right />
+					<Window data={windows.w202} right />
+					<Window data={windows.w203} right />
 				</div>
 			</div>
 			<div className={styles.windowBottom}>
 				<div className={styles.windowBottom__box}>
 					<span className={styles.text}>Нагрузка котла</span>
 					<div className={styles.wrapperWindow}>
-						<Window data={WINDOWS.w186} right />
-						<Window data={WINDOWS.w187} right />
+						<Window data={windows.w186} right />
+						<Window data={windows.w187} right />
 					</div>
 				</div>
 				<div className={styles.windowBottom__bottom}>
 					<Window
 						className={styles.window}
-						data={WINDOWS.w181}
+						data={windows.w181}
 						right
 						colorText="white"
 					/>

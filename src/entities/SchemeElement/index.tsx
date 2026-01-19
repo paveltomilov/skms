@@ -3,7 +3,7 @@
 import styles from './styles.module.scss';
 import { FC } from 'react';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
-import { HIGH_RESISTANCE } from '@/shared/configs/scheme';
+import { BASE_RESISTANCE_CONSTANT } from '@/shared/configs/elementKind';
 import { findElementByID } from '@/shared/utils/findElementByID/scheme';
 import { closeAllModal, Modals, openModal } from '@/store/modalSlice';
 
@@ -15,21 +15,24 @@ interface Prop {
 
 export const SchemeElement: FC<Prop> = ({ id, title, type }) => {
 	const dispatch = useAppDispatch();
-
 	const activeProb = useAppSelector(state => state.multimeter.activeProb);
-
+	const circuit = useAppSelector(state => state.circuit);
 	const handleOpen = () => {
 		dispatch(closeAllModal());
 		dispatch(openModal(type));
 	};
 
 	// для визуализации состояния элементов схемы
-	const schemeElement = findElementByID(
-		id,
-		useAppSelector(state => state.circuit),
-	);
+	let schemeElement;
+	try {
+		schemeElement = findElementByID(id, circuit);
+	} catch {
+		// Если элемент не найден, используем дефолтное значение
+		schemeElement = null;
+	}
 
-	const resistance = schemeElement?.resistance === HIGH_RESISTANCE;
+	const resistance =
+		schemeElement?.resistance === BASE_RESISTANCE_CONSTANT.highResistance;
 
 	const elementClassName = `${styles.element} ${styles[id]} ${
 		!activeProb && styles.element_hover

@@ -1,5 +1,12 @@
 import type { LampIndicatorColor } from '../types/icon';
 import { MarkerName } from '../types/markers';
+import {
+	CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID,
+	CONTROL_CIRCUIT_NEUTRAL_ID,
+	LAMP_KRUZA_P_CLOSED_ID,
+	LAMP_KRUZA_P_OPEN_ID,
+	OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID,
+} from './controlCircuit/constants';
 
 export interface Connection {
 	marker: MarkerName;
@@ -25,15 +32,15 @@ export const columns: LampColumn[] = [
 		id: 'closed',
 		title: 'Закрыто',
 		color: 'white',
-	pointIds: ['p.c.3.1.2'],
-	elementId: 'c.3.2.3.3',
+		pointIds: [OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID], // А19 - p.c.3.0.2 (выход концевика "Открыто")
+		elementId: LAMP_KRUZA_P_CLOSED_ID,
 		colors: {
 			on: 'lamp_white_on',
 			off: 'lamp_white_off',
 		},
 		points: [
-			{ marker: 'A', point: 'p.c.3.1.2' },
-			{ marker: 'N', point: 'p.c.n' },
+			{ marker: 'A', point: OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID }, // А19
+			{ marker: 'N', point: CONTROL_CIRCUIT_NEUTRAL_ID },
 		],
 		position: 'left',
 	},
@@ -41,15 +48,15 @@ export const columns: LampColumn[] = [
 		id: 'open',
 		title: 'Открыто',
 		color: 'lamp_green',
-	pointIds: ['p.c.3.2.2'],
-	elementId: 'c.3.1.3.3',
+		pointIds: [CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID], // А11 - p.c.3.1.2 (выход концевика "Закрыто")
+		elementId: LAMP_KRUZA_P_OPEN_ID,
 		colors: {
 			on: 'lamp_green_on',
 			off: 'lamp_green_off',
 		},
 		points: [
-			{ marker: 'A', point: 'p.c.3.2.2' },
-			{ marker: 'N', point: 'p.c.n' },
+			{ marker: 'A', point: CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID }, // А11
+			{ marker: 'N', point: CONTROL_CIRCUIT_NEUTRAL_ID },
 		],
 		position: 'right',
 	},

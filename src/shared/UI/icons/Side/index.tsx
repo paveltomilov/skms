@@ -17,9 +17,9 @@ const Side: FC<Props> = ({ color = 'default', transform, className }) => {
 
 	return (
 		<svg
-			width="9"
-			height="16"
-			viewBox="0 0 9 16"
+			width="7"
+			height="10"
+			viewBox="0 0 7 10"
 			color={colors}
 			transform={transforms}
 			preserveAspectRatio="xMidYMid meet"

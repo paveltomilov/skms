@@ -5,7 +5,6 @@
 .gates {
 	position: absolute;
 	display: grid;
-	z-index: 2;
 	grid-template-columns: 24px 69px 3px 62px 242px 79px 1fr;
 	grid-template-rows: 59px 36px 80px 20px 16px 20px 1fr;
 	grid-template-areas:

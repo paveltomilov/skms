@@ -1,4 +1,25 @@
 import { MarkerName } from '../types/markers';
+import {
+	CLOSE_INTERLOCK_OUTPUT_POINT_ID,
+	COMMANDS_CLOSE_POINT_ID,
+	OPEN_INTERLOCK_OUTPUT_POINT_ID,
+	CONTROL_CIRCUIT_NEUTRAL_ID,
+	COMANDS_OPEN_POINT_ID,
+} from './controlCircuit/constants';
+import {
+	POINT_BEFORE_STARTER_OPEN_PHASE_A_ID,
+	POINT_BEFORE_STARTER_OPEN_PHASE_B_ID,
+	POINT_BEFORE_STARTER_OPEN_PHASE_C_ID,
+	POINT_AFTER_STARTER_OPEN_PHASE_A_ID,
+	POINT_AFTER_STARTER_OPEN_PHASE_B_ID,
+	POINT_AFTER_STARTER_OPEN_PHASE_C_ID,
+	POINT_BEFORE_STARTER_CLOSE_PHASE_B_ID,
+	POINT_BEFORE_STARTER_CLOSE_PHASE_C_ID,
+	POINT_BEFORE_STARTER_CLOSE_PHASE_A_ID,
+	POINT_AFTER_STARTER_CLOSE_PHASE_B_ID,
+	POINT_AFTER_STARTER_CLOSE_PHASE_A_ID,
+	POINT_AFTER_STARTER_CLOSE_PHASE_C_ID,
+} from './powerCircuit/constants';
 
 export interface Connection {
 	marker: MarkerName;
@@ -8,85 +29,85 @@ export interface Connection {
 export const actuatorsConnectionsLeft: Connection[] = [
 	{
 		marker: 'A1',
-		point: 'p.p.1.3.1',
+		point: POINT_BEFORE_STARTER_OPEN_PHASE_A_ID,
 	},
 	{
 		marker: 'B1',
-		point: 'p.p.2.3.1',
+		point: POINT_BEFORE_STARTER_OPEN_PHASE_B_ID,
 	},
 	{
 		marker: 'C1',
-		point: 'p.p.3.3.1',
+		point: POINT_BEFORE_STARTER_OPEN_PHASE_C_ID,
 	},
 	{
 		marker: 'A4',
-		point: 'p.c.3.2.3.2.1',
+		point: COMMANDS_CLOSE_POINT_ID,
 	},
 	{
 		marker: 'A13',
-		point: 'p.c.3.1.3.2.2',
+		point: OPEN_INTERLOCK_OUTPUT_POINT_ID,
 	},
 	{
 		marker: 'A21',
-		point: 'p.p.1.4.1.1',
+		point: POINT_AFTER_STARTER_OPEN_PHASE_A_ID,
 	},
 	{
 		marker: 'B21',
-		point: 'p.p.2.4.1',
+		point: POINT_AFTER_STARTER_OPEN_PHASE_B_ID,
 	},
 	{
 		marker: 'C21',
-		point: 'p.p.3.4.1.1',
+		point: POINT_AFTER_STARTER_OPEN_PHASE_C_ID,
 	},
 	{
 		marker: 'A21',
-		point: 'p.c.3.2.3.2.2',
+		point: CLOSE_INTERLOCK_OUTPUT_POINT_ID,
 	},
 	{
 		marker: 'N',
-		point: 'p.c.n',
+		point: CONTROL_CIRCUIT_NEUTRAL_ID,
 	},
 ];
 
 export const actuatorsConnectionsRight: Connection[] = [
 	{
 		marker: 'L1',
-		point: 'p.p.1.3.2',
+		point: POINT_BEFORE_STARTER_CLOSE_PHASE_A_ID,
 	},
 	{
 		marker: 'L2',
-		point: 'p.p.2.3.2',
+		point: POINT_BEFORE_STARTER_CLOSE_PHASE_B_ID,
 	},
 	{
 		marker: 'L3',
-		point: 'p.p.3.3.2',
+		point: POINT_BEFORE_STARTER_CLOSE_PHASE_C_ID,
 	},
 	{
 		marker: 'A2',
-		point: 'p.c.3.1.3.2.1',
+		point: COMANDS_OPEN_POINT_ID,
 	},
 	{
 		marker: 'A21',
-		point: 'p.c.3.2.3.2.2',
+		point: CLOSE_INTERLOCK_OUTPUT_POINT_ID,
 	},
 	{
 		marker: 'A21',
-		point: 'p.p.1.4.2.1',
+		point: POINT_AFTER_STARTER_CLOSE_PHASE_A_ID,
 	},
 	{
 		marker: 'B21',
-		point: 'p.p.2.4.2',
+		point:POINT_AFTER_STARTER_CLOSE_PHASE_B_ID,
 	},
 	{
 		marker: 'C21',
-		point: 'p.p.3.4.2.1',
+		point: POINT_AFTER_STARTER_CLOSE_PHASE_C_ID,	
 	},
 	{
 		marker: 'A13',
-		point: 'p.c.3.1.3.2.2',
+		point: OPEN_INTERLOCK_OUTPUT_POINT_ID,
 	},
 	{
 		marker: 'N',
-		point: 'p.c.n',
+		point: CONTROL_CIRCUIT_NEUTRAL_ID,
 	},
 ];

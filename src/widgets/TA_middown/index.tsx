@@ -3,7 +3,7 @@ import cn from 'classnames';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import Window from '@/shared/UI/Window';
-import { WINDOWS } from '@/shared/configs/window';
+import { WindowsState } from '@/shared/configs/window';
 import { ACTUATORS } from '@/shared/configs/actuator';
 import Actuator from '@/shared/UI/Actuator';
 import Gate from '@/shared/UI/Gate';
@@ -16,10 +16,11 @@ import useShowModal from '@/shared/hooks/useShowModal';
 
 interface Props {
 	className?: string;
+	windows: WindowsState;
 }
 const dropPressure: UnitsMeasurement = 'dP';
 
-const TAMidDown: FC<Props> = ({ className }) => {
+const TAMidDown: FC<Props> = ({ className, windows}) => {
 	const { g9, g10 } = useAppSelector(state => state.gate.gates);
 	const handleModalNotification = useShowModal('notification');
 
@@ -39,7 +40,7 @@ const TAMidDown: FC<Props> = ({ className }) => {
 				<div className={styles.windowsBottom__pump}>
 					<Window
 						className={styles.flexRow}
-						data={WINDOWS.w62}
+						data={windows.w62}
 						right
 					/>
 					<div className={styles.windowsBottom__actuator}>
@@ -49,7 +50,7 @@ const TAMidDown: FC<Props> = ({ className }) => {
 							textBottomRight={ACTUATORS.a6.name}
 						/>
 						<Window
-							data={WINDOWS.w64}
+							data={windows.w64}
 							bottom
 							left
 							textLeft={dropPressure}
@@ -61,12 +62,13 @@ const TAMidDown: FC<Props> = ({ className }) => {
 						textRight={g9.name}
 						position="vertical"
 						onClick={() => openGatePopup('g9')}
+						malfunctions={g9.malfunctions}
 					/>
 				</div>
 				<div className={styles.windowsBottom__pump}>
 					<Window
 						className={styles.flexRow}
-						data={WINDOWS.w63}
+						data={windows.w63}
 						right
 					/>
 					<div className={styles.windowsBottom__actuatorRight}>
@@ -76,7 +78,7 @@ const TAMidDown: FC<Props> = ({ className }) => {
 							textBottomRight={ACTUATORS.a7.name}
 						/>
 						<Window
-							data={WINDOWS.w65}
+							data={windows.w65}
 							right
 							left
 							textLeft={dropPressure}
@@ -88,6 +90,7 @@ const TAMidDown: FC<Props> = ({ className }) => {
 						textRight={g10.name}
 						position="vertical"
 						onClick={() => openGatePopup('g10')}
+						malfunctions={g10.malfunctions}
 					/>
 				</div>
 				<div className={styles.windowsBottom__info}>
@@ -101,13 +104,13 @@ const TAMidDown: FC<Props> = ({ className }) => {
 					<div className={styles.windowsBottom__frame}>
 						<Window
 							className={styles.flexRow}
-							data={WINDOWS.w66}
+							data={windows.w66}
 							right
 						/>
 						<Rectangle />
 						<Window
 							className={styles.flexRow}
-							data={WINDOWS.w67}
+							data={windows.w67}
 							right
 						/>
 						<Attention

@@ -7,20 +7,28 @@ import ProbeHolder from '@/shared/UI/icons/ProbeHolder';
 import Probe from '@/entities/Probe';
 import { useEffect } from 'react';
 import { getMultimeterAction } from '@/store/actions/multimiter/getMultimeterAction';
-import { MultimeterModePropPayload, attachProbe, detachProbe } from '@/store/multimeterSlice';
 import {
-	CONTROL_CIRCUIT_NEUTRAL_ID,
-	POWER_CIRCUIT_NEUTRAL_ID,
-} from '@/shared/configs/points';
+	MultimeterModePropPayload,
+	attachProbe,
+	detachProbe,
+} from '@/store/multimeterSlice';
+import { CONTROL_CIRCUIT_NEUTRAL_ID } from '@/shared/configs/controlCircuit/constants';
+import { POWER_CIRCUIT_NEUTRAL_ID } from '@/shared/configs/powerCircuit/constants';
 
 const Multimeter: React.FC = () => {
 	const dispatch = useAppDispatch();
 
 	const { currentMode, displayValue, activeProb, probeConnections } =
 		useAppSelector(state => state.multimeter);
+	const isAnyModalOpen = useAppSelector(state =>
+		Object.values(state.modal).some(Boolean),
+	);
 
-	const redProbe = probeConnections.red;
-	const blackProbe = probeConnections.black;
+	const redConn = probeConnections.red;
+	const blackConn = probeConnections.black;
+
+	const redProbe = redConn?.pointId ?? null;
+	const blackProbe = blackConn?.pointId ?? null;
 
 	const redIsPowerPoint = useAppSelector(
 		state => state.points[redProbe as string],
@@ -52,7 +60,7 @@ const Multimeter: React.FC = () => {
 
 	//Фиксируем черный щуп на нейтрали при измерении напряжения
 	useEffect(() => {
-		if (!isVoltageMode) {
+		if (!isVoltageMode || isAnyModalOpen) {
 			dispatch(detachProbe('black'));
 			return;
 		}
@@ -61,9 +69,10 @@ const Multimeter: React.FC = () => {
 			attachProbe({
 				probeColor: 'black',
 				pointId: CONTROL_CIRCUIT_NEUTRAL_ID,
+				dropId: CONTROL_CIRCUIT_NEUTRAL_ID,
 			}),
 		);
-	}, [dispatch, isVoltageMode]);
+	}, [dispatch, isAnyModalOpen, isVoltageMode]);
 
 	useEffect(() => {
 		dispatch(modeAction(probeState));

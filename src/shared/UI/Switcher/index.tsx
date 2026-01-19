@@ -1,18 +1,16 @@
 'use client';
 import styles from './styles.module.scss';
 import { FC, useCallback, useRef } from 'react';
-import {
-	BASE_RESISTANCE,
-	HIGH_RESISTANCE,
-	INPUT_CIRCUIT_BREAKER_ID,
-} from '@/shared/configs/scheme';
+import { INPUT_CIRCUIT_BREAKER_ID } from '@/shared/configs/powerCircuit/constants';
+import { BASE_RESISTANCE } from '@/shared/configs/schemeElements';
+import { BASE_RESISTANCE_CONSTANT } from '@/shared/configs/elementKind';
 import { useAppDispatch } from '@/shared/hooks/store';
 import SwitchHandle from '../icons/SwitchHandle';
 import { SWITCHER_ANGLES } from '@/shared/configs/knob';
 import { setResistance } from '@/store/circuitSlice';
 import { SwitchMode } from '@/shared/types/switch';
 import { useRotateKnob } from '@/shared/hooks/useRotateKnob';
-
+//import { getResistanceByKind } from '@/shared/utils/getResistanceByKind/getResistanceByKind';
 interface Props {
 	mode: SwitchMode;
 }
@@ -33,7 +31,7 @@ const Switcher: FC<Props> = ({ mode }) => {
 				const resistance =
 					selectedMode === 'on'
 						? BASE_RESISTANCE[id]
-						: HIGH_RESISTANCE;
+						: BASE_RESISTANCE_CONSTANT.highResistance;
 				dispatch(setResistance({ id, value: resistance }));
 			}
 		}

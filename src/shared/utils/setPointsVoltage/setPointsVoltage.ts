@@ -1,69 +1,38 @@
+import {
+	PHASE_A_POINT_ID,
+	PHASE_B_POINT_ID,
+	PHASE_C_POINT_ID,
+	POWER_CIRCUIT_NEUTRAL_ID,
+} from '@/shared/configs/powerCircuit/constants';
+import { CONTROL_CIRCUIT_NEUTRAL_ID } from '@/shared/configs/controlCircuit/constants';
 import { InitialStateScheme } from '@/shared/types/scheme';
-import { findElementByID } from '../findElementByID/scheme';
+import { calculatePointsState } from '@/shared/configs/points';
 
-function calcPoint(
-	idPreviousPoint: boolean,
-	scheme: InitialStateScheme,
-	idElement: string,
-): boolean {
-	const element = findElementByID(idElement, scheme);
-	if (idPreviousPoint === true && element.resistance < 1000000) {
-		return true;
-	} else {
-		return false;
-	}
-}
-
+/**
+ * Вычисляет новые состояния точек на основе текущего состояния схемы.
+ * Сначала устанавливает базовые точки (фазы и нейтрали),
+ * затем вычисляет состояния остальных точек на основе элементов схемы.
+ * @param currentScheme - текущее состояние схемы с элементами
+ * @param points - текущие состояния точек
+ * @returns объект с обновленными состояниями точек
+ */
 export function setNewVoltagePoints(
-	scheme: InitialStateScheme,
+	currentScheme: InitialStateScheme,
 	points: Record<string, boolean>,
-	setVoltagePoints: (points: Record<string, boolean>) => void,
 ): Record<string, boolean> {
-	const pointsAcc = JSON.parse(JSON.stringify(points)) as Record<
-		string,
-		boolean
-	>;
+	// Создаем копию текущего состояния точек
+	const updatedPoints = { ...points };
 
-	pointsAcc['p.c.1'] = calcPoint(pointsAcc['p.c.0'], scheme, 'c.1');
+	// Шаг 1: Устанавливаем базовые точки
+	// Фазы A, B, C всегда под напряжением
+	updatedPoints[PHASE_A_POINT_ID] = true;
+	updatedPoints[PHASE_B_POINT_ID] = true;
+	updatedPoints[PHASE_C_POINT_ID] = true;
 
-	pointsAcc['p.c.2'] = calcPoint(pointsAcc['p.c.1'], scheme, 'c.2');
+	// Нейтрали всегда без напряжения
+	updatedPoints[POWER_CIRCUIT_NEUTRAL_ID] = false;
+	updatedPoints[CONTROL_CIRCUIT_NEUTRAL_ID] = false;
 
-	pointsAcc['p.c.3.1.1'] = calcPoint(pointsAcc['p.c.2'], scheme, 'c.3.1.1');
-
-	pointsAcc['p.c.3.1.2'] = calcPoint(
-		pointsAcc['p.c.3.1.1'],
-		scheme,
-		'c.3.1.2',
-	);
-
-	pointsAcc['p.c.3.1.3.2.1'] =
-		calcPoint(pointsAcc['p.c.3.1.2'], scheme, 'c.3.1.3.2.1.1') ||
-		calcPoint(pointsAcc['p.c.3.1.2'], scheme, 'c.3.1.3.2.1.2');
-
-	pointsAcc['p.c.3.1.3.2.2'] = calcPoint(
-		pointsAcc['p.c.3.1.3.2.1'],
-		scheme,
-		'c.3.1.3.2.2',
-	);
-
-	pointsAcc['p.c.3.2.1'] = calcPoint(pointsAcc['p.c.2'], scheme, 'c.3.2.1');
-
-	pointsAcc['p.c.3.2.2'] = calcPoint(
-		pointsAcc['p.c.3.2.1'],
-		scheme,
-		'c.3.2.2',
-	);
-
-	pointsAcc['p.c.3.2.3.2.1'] =
-		calcPoint(pointsAcc['p.c.3.2.2'], scheme, 'c.3.2.3.2.1.1') ||
-		calcPoint(pointsAcc['p.c.3.2.2'], scheme, 'c.3.2.3.2.1.2');
-
-	pointsAcc['p.c.3.2.3.2.2'] = calcPoint(
-		pointsAcc['p.c.3.2.3.2.1'],
-		scheme,
-		'c.3.2.3.2.2',
-	);
-
-	setVoltagePoints(pointsAcc);
-	return pointsAcc;
+	// Шаг 2: Вычисляем состояния остальных точек на основе элементов схемы
+	return calculatePointsState(updatedPoints, currentScheme);
 }

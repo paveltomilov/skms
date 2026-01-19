@@ -24,7 +24,7 @@ export const PopupGateControl: FC = () => {
 
 	return (
 		<div className={styles.popup}>
-			<div className={styles.message}>3и до слива из ПВД-5 в конд-р</div>
+			<div className={styles.message}>{gate.description}</div>
 			<div className={styles.diagnostic}>
 				<div className={styles.hash}>#</div>
 				<Button
@@ -39,7 +39,11 @@ export const PopupGateControl: FC = () => {
 			<div className={styles.gate}>
 				<div className={styles.percent}>{gate.position}</div>
 				<div className={styles.percentSymbol}>%Откр.</div>
-				<Gate className={styles.symbol} state={gate.states} />
+				<Gate
+					className={styles.symbol}
+					state={gate.states}
+					malfunctions={gate.malfunctions}
+				/>
 			</div>
 			<div className={styles.buttons}>
 				<Button

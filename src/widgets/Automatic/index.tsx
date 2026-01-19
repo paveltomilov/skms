@@ -7,10 +7,8 @@ import Switcher from '@/shared/UI/Switcher';
 import { AutomatButton } from '@/shared/UI/AutomatButton';
 import { useAppSelector } from '@/shared/hooks/store';
 import { findElementByID } from '@/shared/utils/findElementByID/scheme';
-import {
-	CONTROL_CIRCUIT_BREAKER_ID,
-	HIGH_RESISTANCE,
-} from '@/shared/configs/scheme';
+import { CONTROL_CIRCUIT_BREAKER_ID } from '@/shared/configs/controlCircuit/constants';
+import { BASE_RESISTANCE_CONSTANT } from '@/shared/configs/elementKind';
 import { getInputCircuitBreakerState } from '@/shared/utils/getInputCircuitBreakerState/getInputCircuitBreakerState';
 import { useGateControlButtons } from '@/shared/hooks/useGateControlButtons';
 
@@ -26,7 +24,10 @@ export const Automatic: FC = () => {
 	const switcherMode = getInputCircuitBreakerState();
 
 	const tumblerMode =
-		controlCircuitBreaker.resistance === HIGH_RESISTANCE ? 'off' : 'on';
+		controlCircuitBreaker.resistance ===
+		BASE_RESISTANCE_CONSTANT.highResistance
+			? 'off'
+			: 'on';
 
 	const isAssembled = switcherMode === 'on' && tumblerMode === 'on';
 

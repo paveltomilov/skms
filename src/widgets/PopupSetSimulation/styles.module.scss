@@ -1,45 +1,24 @@
+@use '@/shared/scss/mixins.module';
 @use '@/shared/scss/variables.module';
 
-
 .popup {
-    width: 343px;
-    height: 253px;
-    background: variables.$primary-color;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-}
+	width: 362px;
+	background: variables.$primary-color;
 
-.element {
-    font-size: 20px;
-    font-weight: 500;
-}
+	&__wrapper {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+		padding: 6px 18px;
+	}
 
-.malfunction {
-    background: white;
-    position: relative;
-
-    &__select {
-        width: 305px;
-        height: 49px;
-        border-radius: 0;
-        padding-left: 5px;
-    }
-}
-
-.malfunction::after {
-    content: '';
-    width: 26px;
-    height: 47px;
-    background-image: url('/svg/chevron.svg');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-color: variables.$primary-color;
-    position: absolute;
-    right: 1px;
-    top: 1px;
-    pointer-events: none;
-    z-index: 0;
-    box-shadow: variables.$default-button-box-shadow;
+	&__btn {
+		&__first {
+			margin: 0 0 24px;
+		}
+		& span {
+			@include mixins.text(20px, 400);
+		}
+	}
 }

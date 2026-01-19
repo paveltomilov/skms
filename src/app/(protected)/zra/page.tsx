@@ -1,5 +1,5 @@
 import { FC, Suspense } from 'react';
-import ZraPage from '@/_pages/zra';
+import ZraPage from '@/pages/zra';
 import Loading from '../../loading';
 
 const Zra: FC = () => {

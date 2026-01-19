@@ -1,0 +1,104 @@
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
+
+.title {
+	@include mixins.text(20px, 500);
+	margin: 0 auto 16px 0;
+}
+
+.list {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	overflow-x: auto;
+
+	-ms-overflow-style: none; /* Для IE и Edge */
+	scrollbar-width: none; /* Для Firefox */
+	&::-webkit-scrollbar {
+		display: none; /* Для WebKit */
+	}
+
+	&__item {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		padding: 24px 0;
+
+		&_scrollable {
+			width: 90%;
+		}
+
+		&_not_1scrollable {
+			width: 100%;
+		}
+
+		&:not(:first-child) {
+			&:before {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 98%;
+				height: 1px;
+				background-color: #a4a4a4;
+			}
+		}
+
+		&__top {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+			padding: 3px 3px 0 0;
+		}
+		&__name {
+			@include mixins.text(20px, 500);
+		}
+
+		&__description {
+			@include mixins.text(16px, 400);
+		}
+
+		&:nth-child(1) {
+			padding: 0 0 24px;
+			border: none;
+		}
+	}
+}
+
+.wrap {
+	position: relative;
+}
+
+.scroll_button_top,
+.scroll_button_bottom {
+	position: absolute;
+	right: 0;
+	width: 16px;
+	height: 16px;
+	border: none;
+	padding: unset;
+	background-color: transparent;
+	z-index: 1;
+	cursor: pointer;
+}
+
+.scroll_button_top[disabled],
+.scroll_button_bottom[disabled] {
+	cursor: default;
+
+	svg path {
+		fill: variables.$gray-disabled-color;
+	}
+}
+
+.scroll_button_top {
+	top: 30px;
+	transform: rotate(180deg);
+}
+
+.scroll_button_bottom {
+	bottom: 28px;
+}

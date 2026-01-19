@@ -25,7 +25,7 @@
 	position: absolute;
 	top: 0;
 	left: -146px;
-	padding: 60px 8px;
+	padding: 55px 8px;
 	height: 100%;
 	background: #c0c0c0;
 	border-right: 1px solid #8a8a8a;
@@ -41,11 +41,21 @@
 		font-size: 14px;
 	}
 
+	.buttonText__list span {
+		font-size: 12px;
+	}
+
 	.sidebarContent {
 		display: flex;
 		flex-direction: column;
-		row-gap: 12px;
-		margin-right: -20px;
+		justify-content: space-between;
+
+		.sidebarButtons {
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+			margin-right: -20px;
+		}
 	}
 }
 
@@ -83,5 +93,17 @@
 
 	&:hover::before {
 		background: #b0b0b0;
+	}
+}
+
+.buttonHigh {
+	&__attention span {
+		color: variables.$error-button;
+	}
+
+	span {
+		@include mixins.text(14px, 400);
+		white-space: normal;
+		text-align: center;
 	}
 }

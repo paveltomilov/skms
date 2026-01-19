@@ -6,8 +6,8 @@ import Window from '../Window';
 
 interface Props {
 	color: 'blue' | 'yellow';
-	value1: number;
-	value2: number;
+	value1: number | null;
+	value2: number | null;
 	minValue: number;
 	maxValue: number;
 	className?: string;
@@ -23,7 +23,7 @@ const WindowCircleCard: FC<Props> = ({
 }) => {
 	// Создаём градиент по value1, где заполненная часть - это цвет, а остальное - прозрачное
 	const backgroundStyle = {
-		background: getTubFill(color, value1, minValue, maxValue),
+		background: getTubFill(color, value1 as number, minValue, maxValue),
 	};
 
 	const window = cn(styles.window, className && className);

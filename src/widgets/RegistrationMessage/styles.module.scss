@@ -1,0 +1,58 @@
+@use '@/shared/scss/variables.module';
+@use '@/shared/scss/mixins.module';
+
+.response {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	padding: 32px 32px 28px;
+	gap: 8px;
+
+	&__left {
+		padding: 4px 0 0;
+	}
+
+	&__right {
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+		align-items: flex-start;
+		justify-content: center;
+	}
+
+	&__message {
+		line-height: 38px;
+		@include mixins.text(32px, 400);
+		width: 334px;
+	}
+	&__list {
+		display: flex;
+		flex-direction: column;
+		gap: 22px;
+		padding-left: 8px;
+	}
+	&__item {
+		@include mixins.text(20px, 400);
+		font-weight: 400;
+		display: flex;
+		flex-direction: row;
+		gap: 48px;
+		
+		& b {
+			@include mixins.text(20px, 500);
+		}
+	}
+	&__line {
+		display: block;
+		width: 75px;
+
+		&__password {
+			display: flex;
+			flex-direction: row;
+			gap: 8px;
+		}
+	}
+	&__btn {
+		transform: translateY(-30%);
+	}
+}
