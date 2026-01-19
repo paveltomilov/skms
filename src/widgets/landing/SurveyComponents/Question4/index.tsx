@@ -12,28 +12,26 @@ type Option = {
 const OPTIONS: Option[] = [
 	{
 		id: 1,
-		label: 'Регулярно — несколько раз в год (плановое, повторное обучение)',
+		label: 'Полностью удовлетворён',
 	},
-	{ id: 2, label: 'Один раз в год' },
-	{ id: 3, label: 'Только при приеме новых сотрудников' },
+	{ id: 2, label: 'Скорее удовлетворён' },
+	{ id: 3, label: 'Нейтрально' },
 	{
 		id: 4,
-		label: 'При необходимости — когда появляются изменения в оборудовании или технологиях',
+		label: 'Скорее не удовлетворён',
 	},
-	{ id: 5, label: 'Обучение проводится редко и формально' },
-	{ id: 6, label: 'Затрудняюсь ответить' },
+	{ id: 5, label: 'Совсем не удовлетворён' },
 ];
 
-const Question2: React.FC = () => {
+const Question4: React.FC = () => {
 	const [selected, setSelected] = useState<number | null>(null);
 
 	return (
 		<div className={styles.question__container}>
 			<header className={styles.header__container}>
 				<h2 className={styles.header__title}>
-					Как часто на вашем предприятии проводится обучение
-					сотрудников (по профессиональным навыкам, охране труда,
-					технике безопасности и другим направлениям)?
+					Насколько вы удовлетворены тем,
+					<br /> как проходит обучение сотрудников сейчас?
 				</h2>
 			</header>
 			<div className={styles.radio__group}>
@@ -66,4 +64,4 @@ const Question2: React.FC = () => {
 	);
 };
 
-export default Question2;
+export default Question4;

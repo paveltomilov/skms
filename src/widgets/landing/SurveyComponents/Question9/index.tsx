@@ -12,27 +12,29 @@ type Option = {
 const OPTIONS: Option[] = [
 	{
 		id: 1,
-		label: 'Наставничество на рабочем месте\n (обучение под руководством более опытного сотрудника или инструктора)',
+		label: 'Отработка аварийных ситуаций / внештатных режимов',
 	},
-	{ id: 2, label: 'Учебные центры' },
-	{ id: 3, label: 'Самостоятельно через практику' },
+	{
+		id: 2,
+		label: 'Доведение навыков до автоматизма, формирование привычки безопасности',
+	},
+	{ id: 3, label: 'Диагностика и устранение неисправностей' },
 	{
 		id: 4,
-		label: 'Видео-уроки / вебинары',
+		label: 'Пуск / остановка оборудования',
 	},
-	{ id: 5, label: 'Теоретические материалы (PDF, инструкции, презентации)' },
-	{ id: 6, label: 'Цифровые симуляторы / тренажёры' },
-	{ id: 7, label: 'Другое' },
+	{ id: 5, label: 'Работа с интерфейсом / ПТК' },
+	{ id: 6, label: 'Другое' },
 ];
 
-const Question3: React.FC = () => {
+const Question9: React.FC = () => {
 	const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
 	const [otherText, setOtherText] = useState<string>('');
 
 	const handleSelect = (id: number) => {
 		if (selectedOptions.includes(id)) {
 			setSelectedOptions(prev => prev.filter(item => item !== id));
-			if (id === 7) setOtherText('');
+			if (id === 6) setOtherText('');
 			return;
 		}
 
@@ -47,15 +49,14 @@ const Question3: React.FC = () => {
 		<div className={styles.question__container}>
 			<header className={styles.header__container}>
 				<h2 className={styles.header__title}>
-					Какие форматы обучения используются на&nbsp;вашем
-					предприятии&nbsp;&mdash; как для новых сотрудников, так
-					и&nbsp;для действующего персонала?
+					Какие навыки или ситуации, по вашему мнению,
+					нуждаются&nbsp;в&nbsp;тренировке&nbsp;в&nbsp;первую очередь?
 				</h2>
 			</header>
 			<div className={styles.radio__group}>
 				{OPTIONS.map(opt => {
 					const isSelected = selectedOptions.includes(opt.id);
-					const showOtherInput = opt.id === 7 && isSelected;
+					const showOtherInput = opt.id === 6 && isSelected;
 					const canToggle = !isSelected || !maxReached;
 
 					return (
@@ -96,4 +97,4 @@ const Question3: React.FC = () => {
 	);
 };
 
-export default Question3;
+export default Question9;

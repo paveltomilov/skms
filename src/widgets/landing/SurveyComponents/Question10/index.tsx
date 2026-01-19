@@ -12,27 +12,40 @@ type Option = {
 const OPTIONS: Option[] = [
 	{
 		id: 1,
-		label: 'Наставничество на рабочем месте\n (обучение под руководством более опытного сотрудника или инструктора)',
+		label: 'Бюджет / высокая стоимость',
 	},
-	{ id: 2, label: 'Учебные центры' },
-	{ id: 3, label: 'Самостоятельно через практику' },
+	{
+		id: 2,
+		label: 'Сотрудники не заинтересованы в обучении',
+	},
+	{ id: 3, label: 'Недоверие к эффективности' },
 	{
 		id: 4,
-		label: 'Видео-уроки / вебинары',
+		label: 'Отсутствие инициативы или поддержки со стороны руководства',
 	},
-	{ id: 5, label: 'Теоретические материалы (PDF, инструкции, презентации)' },
-	{ id: 6, label: 'Цифровые симуляторы / тренажёры' },
-	{ id: 7, label: 'Другое' },
+	{
+		id: 5,
+		label: 'Недостаток IT-инфраструктуры (техника, интернет, доступ к ПК)',
+	},
+	{
+		id: 6,
+		label: 'Сложность согласований / бюрократия',
+	},
+	{
+		id: 7,
+		label: 'Отсутствуют подходящие решения на рынке\n(нет качественных, удобных платформ под специфику производства)',
+	},
+	{ id: 8, label: 'Другое' },
 ];
 
-const Question3: React.FC = () => {
+const Question10: React.FC = () => {
 	const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
 	const [otherText, setOtherText] = useState<string>('');
 
 	const handleSelect = (id: number) => {
 		if (selectedOptions.includes(id)) {
 			setSelectedOptions(prev => prev.filter(item => item !== id));
-			if (id === 7) setOtherText('');
+			if (id === 8) setOtherText('');
 			return;
 		}
 
@@ -47,15 +60,14 @@ const Question3: React.FC = () => {
 		<div className={styles.question__container}>
 			<header className={styles.header__container}>
 				<h2 className={styles.header__title}>
-					Какие форматы обучения используются на&nbsp;вашем
-					предприятии&nbsp;&mdash; как для новых сотрудников, так
-					и&nbsp;для действующего персонала?
+					Что мешает внедрять и развивать цифровое обучение
+					на&nbsp;вашем&nbsp;предприятии?
 				</h2>
 			</header>
 			<div className={styles.radio__group}>
 				{OPTIONS.map(opt => {
 					const isSelected = selectedOptions.includes(opt.id);
-					const showOtherInput = opt.id === 7 && isSelected;
+					const showOtherInput = opt.id === 8 && isSelected;
 					const canToggle = !isSelected || !maxReached;
 
 					return (
@@ -96,4 +108,4 @@ const Question3: React.FC = () => {
 	);
 };
 
-export default Question3;
+export default Question10;

@@ -1,8 +1,8 @@
 'use client';
 import { useState } from 'react';
 import styles from './styles.module.scss';
-import RadioCheck from '../check';
-import RadioChecked from '../checked';
+import RadioCheck from '../radioCheck';
+import RadioChecked from '../radioChecked';
 
 type Option = {
 	id: number;

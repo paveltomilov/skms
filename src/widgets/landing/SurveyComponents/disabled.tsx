@@ -3,11 +3,10 @@ import React from 'react';
 type Props = {
 	size?: number | string;
 	className?: string;
-	disabled: boolean;
 	onClick?: React.MouseEventHandler<SVGSVGElement>;
 };
 
-const Check: React.FC<Props> = ({ size, className, onClick, disabled }) => (
+const Disabled: React.FC<Props> = ({ size, className, onClick }) => (
 	<svg
 		className={className ?? ''}
 		width={size ?? '24'}
@@ -23,11 +22,12 @@ const Check: React.FC<Props> = ({ size, className, onClick, disabled }) => (
 			width="22"
 			height="22"
 			rx="2"
-			stroke={disabled ? '#BFBFBF' : '#42E465'}
-			fill={disabled ? '#BFBFBF' : 'none'}
+			fill="#BFBFBF"
+			fillOpacity="0.52"
+			stroke="#BFBFBF"
 			strokeWidth="2"
 		/>
 	</svg>
 );
 
-export default Check;
+export default Disabled;

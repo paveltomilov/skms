@@ -12,20 +12,20 @@ type Option = {
 const OPTIONS: Option[] = [
 	{
 		id: 1,
-		label: 'Наставничество на рабочем месте\n (обучение под руководством более опытного сотрудника или инструктора)',
+		label: 'Слишком много теории, мало практики',
 	},
-	{ id: 2, label: 'Учебные центры' },
-	{ id: 3, label: 'Самостоятельно через практику' },
+	{ id: 2, label: 'Новички совершают ошибки после обучения' },
+	{ id: 3, label: 'Сложно отследить прогресс / результаты обучения' },
 	{
 		id: 4,
-		label: 'Видео-уроки / вебинары',
+		label: 'Низкая вовлечённость / мотивация',
 	},
-	{ id: 5, label: 'Теоретические материалы (PDF, инструкции, презентации)' },
-	{ id: 6, label: 'Цифровые симуляторы / тренажёры' },
+	{ id: 5, label: 'Обучение занимает слишком много времени' },
+	{ id: 6, label: 'Нет единой системы обучения' },
 	{ id: 7, label: 'Другое' },
 ];
 
-const Question3: React.FC = () => {
+const Question5: React.FC = () => {
 	const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
 	const [otherText, setOtherText] = useState<string>('');
 
@@ -47,9 +47,7 @@ const Question3: React.FC = () => {
 		<div className={styles.question__container}>
 			<header className={styles.header__container}>
 				<h2 className={styles.header__title}>
-					Какие форматы обучения используются на&nbsp;вашем
-					предприятии&nbsp;&mdash; как для новых сотрудников, так
-					и&nbsp;для действующего персонала?
+					Какие проблемы чаще всего возникают при обучении?
 				</h2>
 			</header>
 			<div className={styles.radio__group}>
@@ -96,4 +94,4 @@ const Question3: React.FC = () => {
 	);
 };
 
-export default Question3;
+export default Question5;

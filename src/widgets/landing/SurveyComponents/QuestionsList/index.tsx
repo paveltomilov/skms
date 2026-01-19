@@ -8,6 +8,13 @@ import styles from './styles.module.scss';
 import Back from '../back';
 import Next from '../next';
 import Question3 from '../Question3';
+import Question4 from '../Question4';
+import Question5 from '../Question5';
+import Question6 from '../Question6';
+import Question7 from '../Question7';
+import Question8 from '../Question8';
+import Question9 from '../Question9';
+import Question10 from '../Question10';
 
 export interface QuestionsListProps {
 	currentIndex: number;
@@ -20,6 +27,13 @@ const questions = [
 	<Question1 key="q1" />,
 	<Question2 key="q2" />,
 	<Question3 key="q3" />,
+	<Question4 key="q4" />,
+	<Question5 key="q5" />,
+	<Question6 key="q6" />,
+	<Question7 key="q7" />,
+	<Question8 key="q8" />,
+	<Question9 key="q9" />,
+	<Question10 key="q10" />,
 	// ... другие вопросы
 ];
 
