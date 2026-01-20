@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
-import Check from '../check';
-import Checked from '../checked';
+import Check from '../../IconSvg/check';
+import Checked from '../../IconSvg/checked';
 import styles from './styles.module.scss';
 
 type Option = {
@@ -12,27 +12,26 @@ type Option = {
 const OPTIONS: Option[] = [
 	{
 		id: 1,
-		label: 'Слишком много теории, мало практики',
+		label: 'Да, сотрудники самостоятельно проходят обучение онлайн\n(видео,YouTube, вебинары и др.)',
 	},
-	{ id: 2, label: 'Новички совершают ошибки после обучения' },
-	{ id: 3, label: 'Сложно отследить прогресс / результаты обучения' },
+	{ id: 2, label: 'Да, есть внутренняя корпоративная платформа обучения' },
+	{ id: 3, label: 'Да, есть имитационные цифровые тренажёры' },
 	{
 		id: 4,
-		label: 'Низкая вовлечённость / мотивация',
+		label: 'Нет, обучение проходит только в очном формате\n (инструктажи, тесты, практические занятия и др.)',
 	},
-	{ id: 5, label: 'Обучение занимает слишком много времени' },
-	{ id: 6, label: 'Нет единой системы обучения' },
-	{ id: 7, label: 'Другое' },
+	{ id: 5, label: 'Нет' },
+	{ id: 6, label: 'Другое' },
 ];
 
-const Question5: React.FC = () => {
+const Question6: React.FC = () => {
 	const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
 	const [otherText, setOtherText] = useState<string>('');
 
 	const handleSelect = (id: number) => {
 		if (selectedOptions.includes(id)) {
 			setSelectedOptions(prev => prev.filter(item => item !== id));
-			if (id === 7) setOtherText('');
+			if (id === 6) setOtherText('');
 			return;
 		}
 
@@ -47,13 +46,15 @@ const Question5: React.FC = () => {
 		<div className={styles.question__container}>
 			<header className={styles.header__container}>
 				<h2 className={styles.header__title}>
-					Какие проблемы чаще всего возникают при обучении?
+					Используются&nbsp;ли у&nbsp;вас сейчас какие-либо
+					цифровые&nbsp;решения&nbsp;для&nbsp;обучения
+					на&nbsp;производстве?
 				</h2>
 			</header>
 			<div className={styles.radio__group}>
 				{OPTIONS.map(opt => {
 					const isSelected = selectedOptions.includes(opt.id);
-					const showOtherInput = opt.id === 7 && isSelected;
+					const showOtherInput = opt.id === 6 && isSelected;
 					const canToggle = !isSelected || !maxReached;
 
 					return (
@@ -94,4 +95,4 @@ const Question5: React.FC = () => {
 	);
 };
 
-export default Question5;
+export default Question6;

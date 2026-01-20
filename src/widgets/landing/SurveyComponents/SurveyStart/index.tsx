@@ -2,8 +2,8 @@
 
 import React from 'react';
 import Image from 'next/image';
-import TopCircle from '../topCircle';
-import BottomCircle from '../bottomCircle';
+import TopCircle from '../../IconSvg/topCircle';
+import BottomCircle from '../../IconSvg/bottomCircle';
 import Button from '../../Button';
 import ConsentCheckbox from '../../ConsentCheckbox';
 import styles from './styles.module.scss';
@@ -44,7 +44,7 @@ const SurveyStart: React.FC<SurveyStartProps> = ({
 				onClick={onStart}
 			/>
 			<ConsentCheckbox value={consent} onChange={setConsent} />
-			<BottomCircle className={styles.survey__svg2} />)
+			<BottomCircle className={styles.survey__svg2} />
 		</div>
 	);
 };

@@ -29,7 +29,7 @@
 	font-size: 17px;
 	line-height: 128%;
 	color: var(--lan-light-grayish-blue);
-	margin-bottom: auto;
+	margin-bottom: 24px;
 }
 
 .svg__container {
@@ -45,14 +45,14 @@
 	}
 }
 
-.info__descrition {
+.info__description {
 	font-family: var(--second-family);
 	font-style: italic;
 	font-weight: 400;
 	font-size: 15px;
 	line-height: 128%;
 	color: var(--lan-gray);
-	padding: 24px 40px 20px 5px;
+	padding-left: 40px;
 }
 
 .input__other {

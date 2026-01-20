@@ -4,7 +4,7 @@ import Button from '../Button';
 import SectionTitle from '../SectionTitle';
 import styles from './styles.module.scss';
 import SurveyApp from '../SurveyComponents/SurveyApp';
-import ButtonClosed from '../SurveyComponents/closed';
+import ButtonClosed from '../IconSvg/closed';
 
 const Survey: FC = () => {
 	const [isOpen, setIsOpen] = useState(false);
