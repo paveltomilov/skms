@@ -1,5 +1,4 @@
 export type QuestionType = 'radio' | 'checkbox';
-
 export interface Question {
 	id: number;
 	title: string;
