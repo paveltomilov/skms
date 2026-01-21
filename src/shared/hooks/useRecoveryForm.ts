@@ -46,9 +46,9 @@ const getValidationMessage = (fieldName: keyof RecoveryFormData, value: string):
 				return 'Локальная часть (до @) ≤ 64 символов';
 			}
 			if (domainPart.length > EMAIL_DOMAIN_MAX_LENGTH) {
-				return 'Доменная часть (после @) ≤ 63 символов не включая точку';
+				return 'Доменная часть (после @) ≤ 63 символов';
 			}
-			if (triggedValue.length > EMAIL_MAX_LENGTH - 1) {
+			if (triggedValue.length > EMAIL_MAX_LENGTH) {
 				return `Длина Email не должна превышать ${EMAIL_MAX_LENGTH} символа`;
 			}
 			if (SPACES_REGEX.test(triggedValue)) {
@@ -72,7 +72,7 @@ const getValidationMessage = (fieldName: keyof RecoveryFormData, value: string):
 			if (triggedValue.length < PASSWORD_MIN_LENGTH) {
 				return 'Пароль должен содержать не менее 12 символов';
 			}
-			if (triggedValue.length > PASSWORD_MAX_LENGTH - 1) {
+			if (triggedValue.length > PASSWORD_MAX_LENGTH) {
 				return 'Пароль должен содержать не более 100 символов';
 			}
 			if (!PASSWORD_UPPERCASE_REGEX.test(triggedValue)) {

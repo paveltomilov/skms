@@ -155,7 +155,7 @@ const FormRecovery: FC<FormRecoveryProps> = ({ steps, setSteps, isOpen }) => {
 							? configMap.email?.warnMessage
 							: undefined
 					}
-					maxLength={EMAIL_MAX_LENGTH}
+					maxLength={EMAIL_MAX_LENGTH + 1}
 					required
 				/>
 			)}
@@ -197,7 +197,7 @@ const FormRecovery: FC<FormRecoveryProps> = ({ steps, setSteps, isOpen }) => {
 								? getWarnMessage('password')
 								: undefined
 						}
-						maxLength={PASSWORD_MAX_LENGTH}
+						maxLength={PASSWORD_MAX_LENGTH + 1}
 						required
 					/>
 					<span className={styles.recoveryForm__description}>
@@ -239,7 +239,7 @@ const FormRecovery: FC<FormRecoveryProps> = ({ steps, setSteps, isOpen }) => {
 								? getWarnMessage('confirm_password')
 								: undefined
 						}
-						maxLength={PASSWORD_MAX_LENGTH}
+						maxLength={PASSWORD_MAX_LENGTH + 1}
 						required
 					/>
 				</>
