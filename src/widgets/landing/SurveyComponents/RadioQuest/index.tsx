@@ -81,10 +81,18 @@ const RadioQuest: React.FC<RadioQuestProps> = ({
 			<div className={styles.radio__group}>
 				{options.map(opt => {
 					const isSelected = selected === opt.id;
-					const isOther = isOtherOption(opt.id) && isSelected;
+					// ИСПРАВЛЯЕМ ЭТУ СТРОКУ:
+					// Теперь проверяем только является ли вариант "Другим"
+					const isOther = isOtherOption(opt.id);
+					// А это проверяем отдельно - выбран ли он
+					const isOtherSelected = isOther && isSelected;
 
 					return (
-						<label key={opt.id} className={styles.custom__radio}>
+						// Добавляем особый класс для варианта "Другое"
+						<label
+							key={opt.id}
+							className={`${styles.custom__radio} ${isOther ? styles.other__option : ''} ${isOtherSelected ? styles.other__selected : ''}`}
+						>
 							<input
 								className={styles.custom__radio__input}
 								type="radio"
@@ -97,17 +105,28 @@ const RadioQuest: React.FC<RadioQuestProps> = ({
 								{isSelected ? <RadioCheck /> : <RadioChecked />}
 							</div>
 
-							{isOther ? (
-								<input
-									className={styles.input__other}
-									type="text"
-									value={currentOtherText}
-									onChange={e =>
-										handleOtherTextChange(e.target.value)
-									}
-								/>
+							{isOtherSelected ? (
+								<div className={styles.other__container}>
+									<input
+										className={styles.input__other}
+										type="text"
+										value={currentOtherText}
+										onChange={e =>
+											handleOtherTextChange(
+												e.target.value,
+											)
+										}
+										autoFocus
+									/>
+								</div>
 							) : (
-								<span>{opt.label}</span>
+								<span
+									className={
+										isOther ? styles.other__label : ''
+									}
+								>
+									{opt.label}
+								</span>
 							)}
 						</label>
 					);

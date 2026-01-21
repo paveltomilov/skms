@@ -63,3 +63,17 @@
 	border-bottom: 1px solid var(--lan-light-grayish-blue);
 	width: 728px;
 }
+
+.other__label {
+	font-family: var(--second-family);
+	font-weight: 400;
+	font-size: 17px;
+	line-height: 128%;
+	color: var(--lan-gray);
+}
+
+.limit__message {
+	border-radius: 100%;
+	stroke-width: 1px;
+	stroke: #979a9a;
+}
