@@ -5,10 +5,12 @@ import Gate from '@/shared/UI/Gate';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import { openModal } from '@/store/modalSlice';
 import { useGateControlButtons } from '@/shared/hooks/useGateControlButtons';
+import { useIsSimulationActive } from '@/shared/hooks/useIsSimulationActive';
 
 export const PopupGateControl: FC = () => {
 	const gateId = useAppSelector(state => state.gate.activeGateId) ?? 'g1';
 	const gate = useAppSelector(state => state.gate.gates[gateId]);
+	const isSimulationActive = useIsSimulationActive();
 
 	const dispatch = useAppDispatch();
 
@@ -43,6 +45,7 @@ export const PopupGateControl: FC = () => {
 					className={styles.symbol}
 					state={gate.states}
 					malfunctions={gate.malfunctions}
+					errorBlink={isSimulationActive}
 				/>
 			</div>
 			<div className={styles.buttons}>

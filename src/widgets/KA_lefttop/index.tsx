@@ -20,6 +20,7 @@ import { useAppSelector } from '@/shared/hooks/store';
 import { useOpenGatePopup } from '@/shared/hooks/useOpenGatePopup';
 import useShowModal from '@/shared/hooks/useShowModal';
 import { RootState } from '@/store/store';
+import { useIsSimulationActive } from '@/shared/hooks/useIsSimulationActive';
 
 interface Props {
 	className?: string;
@@ -32,6 +33,7 @@ const KALeftTop: FC<Props> = ({ className, windows }) => {
 	const openGatePopup = useOpenGatePopup();
 
 	const handleModalNotification = useShowModal('notification');
+	const isSimulationActive = useIsSimulationActive();
 	return (
 		<div className={cn(className, styles.container)}>
 			<div className={styles.textSpan}>
@@ -86,6 +88,7 @@ const KALeftTop: FC<Props> = ({ className, windows }) => {
 						textRight={g11.name}
 						onClick={() => openGatePopup('g11')}
 						malfunctions={g11.malfunctions}
+						errorBlink={isSimulationActive}
 					/>
 					<Gate
 						state={g12.states}
@@ -93,6 +96,7 @@ const KALeftTop: FC<Props> = ({ className, windows }) => {
 						textRight={g12.name}
 						onClick={() => openGatePopup('g12')}
 						malfunctions={g12.malfunctions}
+						errorBlink={isSimulationActive}
 					/>
 				</div>
 				<span className={styles.windowGateContainer__text}>

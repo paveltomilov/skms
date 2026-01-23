@@ -9,6 +9,7 @@ import { Malfunction } from '@/shared/types/scheme';
 describe('simulationSlice', () => {
 	const initialState: SimulationState = {
 		simulationId: null,
+		completedSimulationId: null,
 		gate: null,
 		originalMalfunctions: [],
 		foundMalfunctionIds: [],
@@ -109,6 +110,7 @@ describe('simulationSlice', () => {
 			const newState = simulationReducer(stateWithSimulation, action);
 
 			expect(newState.simulationId).toBeNull();
+			expect(newState.completedSimulationId).toBeNull();
 			expect(newState.originalMalfunctions).toEqual([]);
 			expect(newState.foundMalfunctionIds).toEqual([]);
 		});
@@ -118,6 +120,7 @@ describe('simulationSlice', () => {
 		it('должен корректно восстановить состояние после startSimulation', () => {
 			const persistedState: SimulationState = {
 				simulationId: 456,
+				completedSimulationId: null,
 				gate: null,
 				originalMalfunctions: mockMalfunctions,
 				foundMalfunctionIds: ['m1'],
@@ -133,6 +136,7 @@ describe('simulationSlice', () => {
 		it('должен сохранить originalMalfunctions без изменений после восстановления', () => {
 			const persistedState: SimulationState = {
 				simulationId: 456,
+				completedSimulationId: null,
 				gate: null,
 				originalMalfunctions: mockMalfunctions,
 				foundMalfunctionIds: ['m1', 'm2'],

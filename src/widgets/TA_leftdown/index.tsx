@@ -10,6 +10,7 @@ import { useAppSelector } from '@/shared/hooks/store';
 import { useOpenGatePopup } from '@/shared/hooks/useOpenGatePopup';
 import useShowModal from '@/shared/hooks/useShowModal';
 import { WindowsState } from '@/shared/configs/window';
+import { useIsSimulationActive } from '@/shared/hooks/useIsSimulationActive';
 
 interface Props {
 	className?: string;
@@ -21,6 +22,7 @@ const TALeftDown: FC<Props> = ({ className, windows }) => {
 	const handleModalNotification = useShowModal('notification');
 
 	const openGatePopup = useOpenGatePopup();
+	const isSimulationActive = useIsSimulationActive();
 
 	return (
 		<div className={cn(className, styles.container)}>
@@ -32,6 +34,7 @@ const TALeftDown: FC<Props> = ({ className, windows }) => {
 					textLeft={g7.name}
 					onClick={() => openGatePopup('g7')}
 					malfunctions={g7.malfunctions}
+					errorBlink={isSimulationActive}
 				/>
 				<Gate
 					className={styles.gates__mid}
@@ -40,6 +43,7 @@ const TALeftDown: FC<Props> = ({ className, windows }) => {
 					textLeft={g6.name}
 					onClick={() => openGatePopup('g6')}
 					malfunctions={g6.malfunctions}
+					errorBlink={isSimulationActive}
 				/>
 				<Gate
 					className={styles.gates__right}
@@ -48,6 +52,7 @@ const TALeftDown: FC<Props> = ({ className, windows }) => {
 					textRight={g8.name}
 					onClick={() => openGatePopup('g8')}
 					malfunctions={g8.malfunctions}
+					errorBlink={isSimulationActive}
 				/>
 			</div>
 			<div className={styles.cards}>
