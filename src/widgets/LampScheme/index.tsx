@@ -16,6 +16,7 @@ import type { LampIndicatorColor } from '@/shared/types/icon';
 import type { AppDispatch, RootState } from '@/store/store';
 import { togglePointState } from '@/store/pointsSlice';
 
+// Палитра цветов ламп (вкл/выкл)
 const PALETTE: Record<
 	'white' | 'lamp_green',
 	{ on: LampIndicatorColor; off: LampIndicatorColor }
@@ -24,8 +25,10 @@ const PALETTE: Record<
 	lamp_green: { on: 'lamp_green_on', off: 'lamp_green_off' },
 };
 
+// Состояние точки может быть boolean или объект со state
 type PointValue = boolean | { state?: boolean | null } | undefined;
 
+// Приведение значения точки к boolean
 const toBoolean = (value: PointValue): boolean => {
 	if (typeof value === 'boolean') {
 		return value;
@@ -40,14 +43,19 @@ const toBoolean = (value: PointValue): boolean => {
 
 export const LampScheme: FC = () => {
 	const dispatch = useAppDispatch<AppDispatch>();
+	// Точки (напряжение/состояние клемм)
 	const points = useAppSelector(
 		state => state.points as Record<string, PointValue>,
 	);
+	
+	// Те же points используются для отображения состояния клемм
 	const screwStates = useAppSelector(
 		(state: RootState) => state.points as Record<string, PointValue>,
 	);
+	// Схема, где у ламп есть сопротивление
 	const circuit = useAppSelector(state => state.circuit);
 
+	// Определение цвета лампы по напряжению и сопротивлению
 	const resolveLampColor = useCallback(
 		(
 			paletteKey: 'white' | 'lamp_green',
@@ -57,6 +65,7 @@ export const LampScheme: FC = () => {
 			const colors = PALETTE[paletteKey];
 			const hasVoltage = pointIds.some(id => toBoolean(points[id]));
 
+			// Без напряжения лампа не горит
 			if (!hasVoltage) {
 				return colors.off;
 			}
@@ -69,8 +78,10 @@ export const LampScheme: FC = () => {
 					element.resistance <
 						BASE_RESISTANCE_CONSTANT.highResistance;
 
+				// Если сопротивление в норме — лампа горит
 				return hasNormalResistance ? colors.on : colors.off;
 			} catch {
+				// Если элемент не найден — считаем лампу выключенной
 				return colors.off;
 			}
 		},

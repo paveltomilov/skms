@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import LampScheme from '../index';
-import type { LampIndicatorColor } from '@/shared/types/icon';
+import type { LampIndicatorColor } from '../../../shared/types/icon';
 
 jest.mock('@/shared/UI/LampIndicator', () => ({
 	__esModule: true,
@@ -46,14 +46,14 @@ jest.mock('@/shared/utils/findElementByID/scheme', () => ({
 }));
 
 import {
-	CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID,
 	LAMP_KRUZA_P_CLOSED_ID,
 	LAMP_KRUZA_P_OPEN_ID,
-	OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID,
-} from '@/shared/configs/controlCircuit/constants';
+	CLOSE_TERMINAL_BLOCK_POINT_ID,
+	OPEN_TERMINAL_BLOCK_POINT_ID,
+} from '../../../shared/configs/controlCircuit/constants';
 
-const CLOSED_POINT_ID = OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID; // А19 - для лампы "Закрыто"
-const OPEN_POINT_ID = CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID; // А11 - для лампы "Открыто"
+const CLOSED_POINT_ID = OPEN_TERMINAL_BLOCK_POINT_ID; // А19 - для лампы "Закрыто"
+const OPEN_POINT_ID = CLOSE_TERMINAL_BLOCK_POINT_ID; // А11 - для лампы "Открыто"
 const CLOSED_ELEMENT_ID = LAMP_KRUZA_P_CLOSED_ID;
 const OPEN_ELEMENT_ID = LAMP_KRUZA_P_OPEN_ID;
 
