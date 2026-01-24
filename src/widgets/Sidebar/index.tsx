@@ -1,71 +1,37 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import Chevron from '@/shared/UI/icons/Chevron';
 import { useUserCookies } from '@/shared/hooks/useUserCookies';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import { clearCurrentStudent } from '@/store/trainingSlice';
-import { startSimulation } from '@/store/simulationSlice';
-import { useToast } from '@/shared/hooks/useToast';
-import Toast from '@/shared/UI/Toast';
-import { openModal } from '@/store/modalSlice';
-import { setActiveGate } from '@/store/gateSlice';
-import { activateMalfunction } from '@/store/circuitSlice';
-import { SIMULATION_MALFUNCTIONS } from '@/shared/configs/simulationMalfunctions';
 import SimulationControl from '@/entities/SimulationControl';
-import { toggleEmergency } from '@/store/emergencyStatusSlice';
-import cn from 'classnames';
-import { resetTimer, startTimer } from '@/store/timerSlice';
+import { deactivateMalfunction } from '@/store/circuitSlice';
+import { markMalfunctionAsFound } from '@/store/simulationSlice';
 
 const Sidebar = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const dispatch = useAppDispatch();
-	const simulation = useAppSelector(state => state.simulation);
-	const { toasts, showToast, removeToast } = useToast();
-	const emergencyStatus = useAppSelector(store => store.emergencyStatus);
+	const originalMalfunctions = useAppSelector(
+		state => state.simulation.originalMalfunctions,
+	);
 
 	const handleToggleSidebar = () => setIsOpen(!isOpen);
 
 	const { role } = useUserCookies();
 
 	const isAdmin = role === 'admin';
-
-	const handleStartSimulation = useCallback(() => {
-		// Проверка: симуляция уже активна
-		if (simulation.simulationId !== null) {
-			showToast(
-				'Симуляция уже активна. Завершите текущую перед началом новой.',
-				'info',
-			);
-			return;
-		}
-
-		// Генерируем уникальный ID симуляции
-		const simulationId = `${Date.now()}`;
-
-		// Инициализируем симуляцию с неисправностями из константы
-		dispatch(
-			startSimulation({
-				simulationId,
-				originalMalfunctions: SIMULATION_MALFUNCTIONS.malfunctions,
-			}),
-		);
-
-		// Устанавливаем активную задвижку из константы
-		dispatch(setActiveGate(SIMULATION_MALFUNCTIONS.gateId));
-
-		// Активируем неисправности в схеме
-		SIMULATION_MALFUNCTIONS.malfunctions.forEach(malfunction => {
-			dispatch(activateMalfunction(malfunction.id));
+	const handleSimulateAllFound = () => {
+		// Сбрасываем активные неисправности и сопротивления в исходное состояние
+		originalMalfunctions.forEach(malfunction => {
+			dispatch(deactivateMalfunction(malfunction.id));
 		});
-
-		// Открываем попап с уведомлением о запуске симуляции
-		dispatch(openModal('infoStartSimulation'));
-		dispatch(resetTimer());
-		dispatch(startTimer());
-	}, [simulation, dispatch, showToast]);
+		originalMalfunctions.forEach(malfunction => {
+			dispatch(markMalfunctionAsFound(malfunction.id));
+		});
+	};
 
 	return (
 		<>
@@ -95,6 +61,14 @@ const Sidebar = () => {
 							href="/ptk"
 							onClick={() => dispatch(clearCurrentStudent())}
 						/>
+						<Button
+							width={90}
+							height={24}
+							aria-label="Имитация: все неисправности найдены"
+							text="Все неиспр."
+							className={styles.buttonText}
+							onClick={handleSimulateAllFound}
+						/>
 						{role != 'student' && (
 							<Button
 								width={90}
@@ -110,26 +84,6 @@ const Sidebar = () => {
 								onClick={() => dispatch(clearCurrentStudent())}
 							/>
 						)}
-
-						<Button
-							width={90}
-							height={34}
-							aria-label="Начать симуляцию"
-							text="Начать симуляцию"
-							className={styles.buttonHigh}
-							disabled={simulation.simulationId !== null}
-							onClick={handleStartSimulation}
-						/>
-						<Button
-							width={90}
-							height={38}
-							aria-label="Аварийный останов"
-							text="Аварийный останов"
-							className={cn(styles.buttonHigh, {
-								[styles.buttonHigh__attention]: emergencyStatus,
-							})}
-							onClick={() => dispatch(toggleEmergency())}
-						/>
 					</div>
 					{role === 'student' && <SimulationControl />}
 				</div>
@@ -142,14 +96,6 @@ const Sidebar = () => {
 						className={styles.toggleButtonIcon}
 					/>
 				</button>
-				{toasts.map(toast => (
-					<Toast
-						key={toast.id}
-						message={toast.message}
-						type={toast.type}
-						onClose={() => removeToast(toast.id)}
-					/>
-				))}
 			</div>
 		</>
 	);

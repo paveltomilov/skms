@@ -6,6 +6,7 @@ import { closeModal, openModal } from '@/store/modalSlice';
 import { resetSimulation } from '@/store/simulationSlice';
 import { deactivateMalfunction } from '@/store/circuitSlice';
 import { setActiveGate } from '@/store/gateSlice';
+import { stopSimulation } from '@/shared/api';
 
 export const PopupAbortSimulationConfirm: FC = () => {
 	const dispatch = useAppDispatch();
@@ -15,27 +16,69 @@ export const PopupAbortSimulationConfirm: FC = () => {
 	const handleConfirm = async () => {
 		setIsLoading(true);
 
-		// Деактивируем все неисправности из симуляции
-		if (simulation.originalMalfunctions.length > 0) {
-			simulation.originalMalfunctions.forEach(malfunction => {
-				dispatch(deactivateMalfunction(malfunction.id));
-			});
+		try {
+			// Отправляем запрос на бэкенд для прерывания симуляции
+			if (simulation.simulationId !== null) {
+				console.log('simulation.simulationId', simulation.simulationId);
+				await stopSimulation(simulation.simulationId);
+			}
+
+			// Деактивируем все неисправности из симуляции
+			if (simulation.originalMalfunctions.length > 0) {
+				simulation.originalMalfunctions.forEach(malfunction => {
+					dispatch(deactivateMalfunction(malfunction.id));
+				});
+			}
+
+			// Сбрасываем активную задвижку
+			dispatch(setActiveGate(null));
+
+			// Сбрасываем состояние симуляции до дефолтного
+			// Используем resetSimulation(), который возвращает initialState
+			// Это должно установить simulationId в null, что разблокирует кнопку "Начать симуляцию"
+			dispatch(resetSimulation());
+
+			// Очищаем sessionStorage для попапа о начале симуляции
+			if (typeof window !== 'undefined') {
+				sessionStorage.removeItem('shownStartSimulationId');
+				sessionStorage.removeItem('shownStartSimulationWithoutId');
+			}
+
+			// Закрываем окно подтверждения
+			dispatch(closeModal('abortSimulationConfirm'));
+
+			// Открываем финальное окно с сообщением о негативном результате
+			dispatch(openModal('abortSimulation'));
+		} catch (error) {
+			console.error('Ошибка при прерывании симуляции:', error);
+			// В случае ошибки все равно продолжаем процесс прерывания на клиенте
+			// Деактивируем все неисправности из симуляции
+			if (simulation.originalMalfunctions.length > 0) {
+				simulation.originalMalfunctions.forEach(malfunction => {
+					dispatch(deactivateMalfunction(malfunction.id));
+				});
+			}
+
+			// Сбрасываем активную задвижку
+			dispatch(setActiveGate(null));
+
+			// Сбрасываем состояние симуляции
+			dispatch(resetSimulation());
+
+			// Очищаем sessionStorage
+			if (typeof window !== 'undefined') {
+				sessionStorage.removeItem('shownStartSimulationId');
+				sessionStorage.removeItem('shownStartSimulationWithoutId');
+			}
+
+			// Закрываем окно подтверждения
+			dispatch(closeModal('abortSimulationConfirm'));
+
+			// Открываем финальное окно
+			dispatch(openModal('abortSimulation'));
+		} finally {
+			setIsLoading(false);
 		}
-
-		// Сбрасываем активную задвижку
-		dispatch(setActiveGate(null));
-
-		// Сбрасываем состояние симуляции до дефолтного
-		// Используем resetSimulation(), который возвращает initialState
-		// Это должно установить simulationId в null, что разблокирует кнопку "Начать симуляцию"
-		dispatch(resetSimulation());
-
-		// Закрываем окно подтверждения
-		dispatch(closeModal('abortSimulationConfirm'));
-
-		// Открываем финальное окно с сообщением о негативном результате
-		dispatch(openModal('abortSimulation'));
-		setIsLoading(false);
 	};
 
 	const handleCancel = () => {

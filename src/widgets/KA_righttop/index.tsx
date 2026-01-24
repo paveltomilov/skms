@@ -8,6 +8,7 @@ import { GATES } from '@/shared/configs/gate';
 import { useOpenGatePopup } from '@/shared/hooks/useOpenGatePopup';
 import Button from '@/shared/UI/Button';
 import useShowModal from '@/shared/hooks/useShowModal';
+import { useIsSimulationActive } from '@/shared/hooks/useIsSimulationActive';
 
 interface Props {
 	className?: string;
@@ -17,6 +18,7 @@ interface Props {
 const KARightTop: FC<Props> = ({ className, windows }) => {
 	const openGatePopup = useOpenGatePopup();
 	const handleModalNotification = useShowModal('notification');
+	const isSimulationActive = useIsSimulationActive();
 	return (
 		<div className={cn(className, styles.container)}>
 			<div className={styles.windowTop}>
@@ -28,6 +30,7 @@ const KARightTop: FC<Props> = ({ className, windows }) => {
 						disable
 						onClick={() => openGatePopup('g14')}
 						malfunctions={GATES.g14.malfunctions}
+						errorBlink={isSimulationActive}
 					/>
 					<Gate
 						state={GATES.g15.states}
@@ -35,6 +38,7 @@ const KARightTop: FC<Props> = ({ className, windows }) => {
 						disable
 						onClick={() => openGatePopup('g15')}
 						malfunctions={GATES.g15.malfunctions}
+						errorBlink={isSimulationActive}
 					/>
 				</div>
 				<span className={styles.windowTop__text}>

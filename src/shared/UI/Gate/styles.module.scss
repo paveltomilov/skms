@@ -110,7 +110,7 @@
 }
 
 
-.isActiveError {
+.isActiveErrorBlink {
 	outline: 2px solid variables.$error-input;
 	animation: variables.$blinkingBorder;
 }

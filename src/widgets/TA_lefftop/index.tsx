@@ -8,6 +8,7 @@ import { WindowsState } from '@/shared/configs/window';
 import { useAppSelector } from '@/shared/hooks/store';
 import { useOpenGatePopup } from '@/shared/hooks/useOpenGatePopup';
 import useShowModal from '@/shared/hooks/useShowModal';
+import { useIsSimulationActive } from '@/shared/hooks/useIsSimulationActive';
 
 interface Props {
 	className?: string;
@@ -19,6 +20,7 @@ const TALeftTop: FC<Props> = ({ className, windows }) => {
 	const handleModalNotification = useShowModal('notification');
 
 	const openGatePopup = useOpenGatePopup();
+	const isSimulationActive = useIsSimulationActive();
 
 	return (
 		<div className={cn(className, styles.container)}>
@@ -55,6 +57,7 @@ const TALeftTop: FC<Props> = ({ className, windows }) => {
 				onClick={() => openGatePopup('g1')}
 				className={styles.gate}
 				malfunctions={g1.malfunctions}
+				errorBlink={isSimulationActive}
 			/>
 			<div className={styles.windowMedium__right}>
 				<Window data={windows.w4} right />

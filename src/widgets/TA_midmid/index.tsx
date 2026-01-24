@@ -11,6 +11,7 @@ import { ACTUATORS } from '@/shared/configs/actuator';
 import { useAppSelector } from '@/shared/hooks/store';
 import { useOpenGatePopup } from '@/shared/hooks/useOpenGatePopup';
 import useShowModal from '@/shared/hooks/useShowModal';
+import { useIsSimulationActive } from '@/shared/hooks/useIsSimulationActive';
 
 interface Props {
 	className?: string;
@@ -21,6 +22,7 @@ const TAMidMId: FC<Props> = ({ className, windows }) => {
 	const { g4, g5 } = useAppSelector(state => state.gate.gates);
 	const handleModalNotification = useShowModal('notification');
 	const openGatePopup = useOpenGatePopup();
+	const isSimulationActive = useIsSimulationActive();
 	return (
 		<div className={cn(className, styles.container)}>
 			{/* Верхний блок с 5 колонками */}
@@ -153,6 +155,7 @@ const TAMidMId: FC<Props> = ({ className, windows }) => {
 					position="vertical"
 					onClick={() => openGatePopup('g4')}
 					malfunctions={g4.malfunctions}
+					errorBlink={isSimulationActive}
 				/>
 
 				<section className={styles.bottomSelect}>
@@ -173,6 +176,7 @@ const TAMidMId: FC<Props> = ({ className, windows }) => {
 					position="vertical"
 					onClick={() => openGatePopup('g5')}
 					malfunctions={g5.malfunctions}
+					errorBlink={isSimulationActive}
 				/>
 
 				<section className={styles.bottomSelect}>

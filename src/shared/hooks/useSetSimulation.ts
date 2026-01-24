@@ -12,10 +12,7 @@ import {
 } from 'react';
 import { SimulationFormData, SimulationItemData } from '../types/simulation';
 import { clearCurrentStudent } from '@/store/trainingSlice';
-import {
-	postSimulation,
-	ResponseData,
-} from '../api';
+import { postSimulation, ResponseData } from '../api';
 import { closeModal } from '@/store/modalSlice';
 
 interface IResponse {
@@ -46,11 +43,12 @@ const useSetSimulation = (): IResponse => {
 	>([]);
 	const [showListMalfunction, setShowListMalfunction] =
 		useState<boolean>(false);
-	const gate = useAppSelector(state => state.gate.activeGateId);
 	const { urlBase, access, elements: defaultElements } = useRequestData();
 	const studentId = useAppSelector(
 		state => state.training.currentStudent?.id,
 	);
+
+	const idActiveGate = useAppSelector(state => state.gate.activeGateId);
 
 	useEffect(() => {
 		if (defaultElements) setElements(defaultElements);
@@ -102,10 +100,12 @@ const useSetSimulation = (): IResponse => {
 	);
 
 	const handleSetSimulation = async () => {
-		if (!studentId || listIsEmpty || !gate) {
+		if (!studentId || listIsEmpty || !idActiveGate) {
 			const errorText = listIsEmpty
 				? 'Cписок неисправностей пуст'
-				: 'Студент не выбран';
+				: !studentId
+				? 'Студент не выбран'
+				: 'Не задан id задвижки';
 			setSuccess(false);
 			setErrors(errorText);
 			setData(null);
@@ -114,7 +114,7 @@ const useSetSimulation = (): IResponse => {
 		}
 
 		const formData: SimulationFormData = {
-			gate: gate || '',
+			gate: idActiveGate,
 			user: studentId,
 			malfunctions: listMalfunction.map(item => {
 				return { malfunction_id: item.malfunction_id };

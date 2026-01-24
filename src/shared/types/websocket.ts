@@ -26,12 +26,15 @@ export interface OutgoingMessage {
 /**
  * Сообщение инициализации симуляции (без поля type)
  * Отправляется при подключении или создании симуляции
+ * Поддерживает  формат:
+ *  {"gate": "g2", "malfunctions": [{"additionalProp1": "c.0.1"}]}
  */
 /**
  * Сообщение инициализации симуляции
- * Формат: {"gate":"g2","malfunctions":[{"additionalProp1":"c.0.1"}]}
+ * Формат: {"simulation_id": 8, "gate":"g2","malfunctions":[{"additionalProp1":"c.0.1"}]}
  */
 export interface SimulationInitMessage {
+	simulation_id?: number;
 	gate?: string;
 	malfunctions: Array<Record<string, string>>;
 }
@@ -123,16 +126,6 @@ export interface SimulationStatusMessage {
 }
 
 /**
- * Сообщение об обновлении неисправностей задвижки
- * Формат: {"gate": "g1", "malfunctions": [{"malfunction_id": "c.0.1", "description": "..."}]}
- * ⚠️ Устаревший формат, используется SimulationInitMessage
- */
-export interface GateMalfunctionsUpdateMessage {
-	gate: string;
-	malfunctions: Array<Record<string, string>>;
-}
-
-/**
  * Тип для всех возможных входящих сообщений
  */
 export type WebSocketIncomingMessage =
@@ -145,8 +138,7 @@ export type WebSocketIncomingMessage =
 	| CircuitUpdateMessage
 	| PointsUpdateMessage
 	| ErrorMessage
-	| SimulationStatusMessage
-	| GateMalfunctionsUpdateMessage;
+	| SimulationStatusMessage;
 
 /**
  * Callback для обработки входящих сообщений
