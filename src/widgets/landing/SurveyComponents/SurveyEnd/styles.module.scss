@@ -45,7 +45,6 @@
 		line-height: 136%;
 		text-transform: uppercase;
 		color: var(--lan-very-dark-mostly-black-blue);
-		margin-bottom: 12px;
 	}
 
 	&__svg1 {
@@ -68,15 +67,31 @@
 .form {
 	display: flex;
 	max-width: 776px;
+	margin-bottom: 12px;
 
 	&__button {
-		background: none;
+		background: inherit;
 		font-family: var(--second-family);
 		font-weight: 600;
 		font-size: 14px;
 		line-height: 136%;
 		text-transform: uppercase;
 		color: var(--lan-light-grayish-blue);
+
+		&:hover,
+		&:focus {
+			background: inherit;
+		}
+
+		&.button__disabled {
+			cursor: not-allowed;
+		}
+
+		&.button__submitted {
+			border: 1px solid var(--lan-bright-cyan---lime-green);
+			background: var(--lan-bright-cyan---lime-green);
+			color: var(--lan-very-dark-mostly-black-blue);
+		}
 	}
 
 	&__email {

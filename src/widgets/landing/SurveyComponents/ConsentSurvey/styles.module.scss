@@ -1,0 +1,43 @@
+/* styles.module.scss */
+
+.checkbox {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	@media (max-width: 767px) {
+		width: 418px;
+	}
+	@media (max-width: 576px) {
+		width: 329px;
+	}
+
+	&__input {
+		opacity: 0;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+	}
+
+	&__descr {
+		cursor: pointer;
+		user-select: none;
+		font-family: var(--second-family);
+		font-weight: 400;
+		font-size: 15px;
+		line-height: 100%;
+		color: var(--lan-gray);
+
+		&__span {
+			text-decoration: underline;
+			color: var(--lan-bright-cyan---lime-green);
+		}
+	}
+
+	&__svg {
+		position: absolute;
+		top: -2px;
+		left: -25px;
+	}
+}

@@ -163,6 +163,7 @@ const QuestionsList: React.FC<QuestionsListProps> = ({
 					/>
 
 					<Button
+						className={styles.button__next}
 						icon={<Next />}
 						text={''}
 						onClick={handleNextOrFinish}

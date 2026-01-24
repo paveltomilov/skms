@@ -1,5 +1,6 @@
 .survey {
 	&__container {
+		position: relative;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -70,7 +71,9 @@
 }
 
 .button__closed {
-	position: absolute;
+	position: fixed;
+	cursor: pointer;
 	top: 24px;
 	right: 24px;
+	z-index: 1002;
 }

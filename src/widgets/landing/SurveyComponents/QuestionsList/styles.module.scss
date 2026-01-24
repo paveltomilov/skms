@@ -36,6 +36,16 @@
 	background-color: var(--lan-very-dark-mostly-black-blue);
 	border: 1px solid var(--lan-gray);
 	margin-right: 8px;
+
+	&:hover {
+		background-color: inherit;
+	}
+}
+
+.button__next {
+	&:hover {
+		background-color: var(--lan-bright-cyan---lime-green);
+	}
 }
 
 .counter {
@@ -50,7 +60,7 @@
 .bottom {
 	display: flex;
 	margin-top: auto;
-	padding: 24px 40px;
+	padding: 21px 40px;
 	align-items: flex-end;
 }
 

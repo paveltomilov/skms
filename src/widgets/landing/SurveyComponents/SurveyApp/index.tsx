@@ -47,11 +47,7 @@ const SurveyApp: React.FC = () => {
 	return (
 		<>
 			{showEnd ? (
-				<SurveyEnd
-					onStart={handleStart}
-					consent={false}
-					setConsent={setConsent}
-				/>
+				<SurveyEnd onStart={handleStart} />
 			) : showQuestions ? (
 				<QuestionsList
 					key={currentQuestion}
