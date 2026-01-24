@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, useCallback } from 'react';
+import { FC, useMemo } from 'react';
 import cn from 'classnames';
 import LampIndicator from '@/shared/UI/LampIndicator';
 import Marker from '@/shared/UI/Marker';
@@ -9,21 +9,10 @@ import styles from './styles.module.scss';
 import { columns } from '@/shared/configs/lampsScheme';
 import ScrewConnection from '@/shared/UI/ScrewConnection';
 import ProvodLine from '@/shared/UI/icons/ProvodLine';
-import { findElementByID } from '@/shared/utils/findElementByID/scheme';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
-import { BASE_RESISTANCE_CONSTANT } from '@/shared/configs/elementKind';
-import type { LampIndicatorColor } from '@/shared/types/icon';
 import type { AppDispatch, RootState } from '@/store/store';
 import { togglePointState } from '@/store/pointsSlice';
-
-// Палитра цветов ламп (вкл/выкл)
-const PALETTE: Record<
-	'white' | 'lamp_green',
-	{ on: LampIndicatorColor; off: LampIndicatorColor }
-> = {
-	white: { on: 'lamp_white_on', off: 'lamp_white_off' },
-	lamp_green: { on: 'lamp_green_on', off: 'lamp_green_off' },
-};
+import { useLampIndicators } from '@/shared/hooks/useLampIndicators';
 
 // Состояние точки может быть boolean или объект со state
 type PointValue = boolean | { state?: boolean | null } | undefined;
@@ -43,49 +32,14 @@ const toBoolean = (value: PointValue): boolean => {
 
 export const LampScheme: FC = () => {
 	const dispatch = useAppDispatch<AppDispatch>();
-	// Точки (напряжение/состояние клемм)
-	const points = useAppSelector(
-		state => state.points as Record<string, PointValue>,
-	);
-	
 	// Те же points используются для отображения состояния клемм
 	const screwStates = useAppSelector(
 		(state: RootState) => state.points as Record<string, PointValue>,
 	);
-	// Схема, где у ламп есть сопротивление
-	const circuit = useAppSelector(state => state.circuit);
-
-	// Определение цвета лампы по напряжению и сопротивлению
-	const resolveLampColor = useCallback(
-		(
-			paletteKey: 'white' | 'lamp_green',
-			pointIds: string[],
-			elementId: string,
-		) => {
-			const colors = PALETTE[paletteKey];
-			const hasVoltage = pointIds.some(id => toBoolean(points[id]));
-
-			// Без напряжения лампа не горит
-			if (!hasVoltage) {
-				return colors.off;
-			}
-
-			try {
-				const element = findElementByID(elementId, circuit);
-				const hasNormalResistance =
-					typeof element?.resistance === 'number' &&
-					isFinite(element.resistance) &&
-					element.resistance <
-						BASE_RESISTANCE_CONSTANT.highResistance;
-
-				// Если сопротивление в норме — лампа горит
-				return hasNormalResistance ? colors.on : colors.off;
-			} catch {
-				// Если элемент не найден — считаем лампу выключенной
-				return colors.off;
-			}
-		},
-		[circuit, points],
+	const lampIndicators = useLampIndicators();
+	const indicatorById = useMemo(
+		() => new Map(lampIndicators.map(indicator => [indicator.id, indicator])),
+		[lampIndicators],
 	);
 
 	return (
@@ -94,9 +48,7 @@ export const LampScheme: FC = () => {
 				({
 					id,
 					title,
-					color,
-					pointIds,
-					elementId,
+					colors,
 					points: connections,
 					position,
 				}) => (
@@ -109,7 +61,7 @@ export const LampScheme: FC = () => {
 					>
 						<h3 id={`lamp-${id}`}>{title}</h3>
 						<LampIndicator
-							color={resolveLampColor(color, pointIds, elementId)}
+							color={indicatorById.get(id)?.color ?? colors.off}
 							aria-hidden
 						/>
 
