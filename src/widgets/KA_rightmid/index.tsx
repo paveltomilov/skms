@@ -11,6 +11,7 @@ import { useAppSelector } from '@/shared/hooks/store';
 import { useOpenGatePopup } from '@/shared/hooks/useOpenGatePopup';
 import Window from '@/shared/UI/Window';
 import useShowModal from '@/shared/hooks/useShowModal';
+import { useIsSimulationActive } from '@/shared/hooks/useIsSimulationActive';
 
 interface Props {
 	className?: string;
@@ -21,6 +22,7 @@ const KARightMid: FC<Props> = ({ className, windows }) => {
 	const { g16 } = useAppSelector(state => state.gate.gates);
 	const openGatePopup = useOpenGatePopup();
 	const handleModalNotification = useShowModal('notification');
+	const isSimulationActive = useIsSimulationActive();
 	return (
 		<div className={cn(className, styles.container)}>
 			<div className={styles.columnLeft}>
@@ -47,6 +49,7 @@ const KARightMid: FC<Props> = ({ className, windows }) => {
 						textLeft={g16.name}
 						onClick={() => openGatePopup('g16')}
 						malfunctions={g16.malfunctions}
+						errorBlink={isSimulationActive}
 					/>
 					<div className={styles.columnLeft__right_bottom}>
 						<Window data={windows.w204} right />

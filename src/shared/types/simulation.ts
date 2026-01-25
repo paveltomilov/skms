@@ -6,6 +6,7 @@ export interface SimulationFormData {
 	gate: string;
 	user: number;
 	malfunctions: Malfunction[];
+
 }
 
 export interface SimulationGetData {

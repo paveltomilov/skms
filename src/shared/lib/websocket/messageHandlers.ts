@@ -1,4 +1,4 @@
-import { AppDispatch } from '@/store/store';
+import { AppDispatch} from '@/store/store';
 import {
 	WebSocketIncomingMessage,
 	SimulationInitMessage,
@@ -10,7 +10,6 @@ import {
 	PointsUpdateMessage,
 	SimulationStatusMessage,
 	ErrorMessage,
-	GateMalfunctionsUpdateMessage,
 } from '@/shared/types/websocket';
 import {
 	setGatePosition,
@@ -20,29 +19,47 @@ import {
 } from '@/store/gateSlice';
 import { setVoltagePoints } from '@/store/pointsSlice';
 import { GATE_STATE_TYPE } from '@/shared/types/gate';
-import { setSimulation, resetSimulation } from '@/store/simulationSlice';
+import {
+	resetSimulation,
+	setCompletedSimulationId,
+	setSimulation,
+} from '@/store/simulationSlice';
 import { activateMalfunction } from '@/store/circuitSlice';
 import { openModal } from '@/store/modalSlice';
 
 /**
  * Обработчик входящих WebSocket сообщений
  * Диспатчит соответствующие действия в Redux store
+ * @param dispatch - функция для диспатча действий Redux
+ * @param getState - функция для получения текущего состояния Redux (опционально)
  */
-export function createMessageHandler(dispatch: AppDispatch) {
+export function createMessageHandler(
+	dispatch: AppDispatch,
+	
+) {
 	return (message: WebSocketIncomingMessage): void => {
 		// Проверяем наличие поля type для определения типа сообщения
 		const messageAny = message as unknown as Record<string, unknown>;
 
 		// Обработка сообщений без поля type (инициализация симуляции)
 		if (!('type' in messageAny) || !messageAny.type) {
-			// Проверяем наличие полей gate и malfunctions
-			if ('gate' in messageAny && 'malfunctions' in messageAny) {
+			// Проверяем наличие поля malfunctions (gate может быть null, но malfunctions обязательны)
+			if ('malfunctions' in messageAny && Array.isArray(messageAny.malfunctions)) {
 				const initMessage = message as SimulationInitMessage;
 
-				// Извлекаем ID неисправностей: каждый объект содержит один ключ со строковым значением
-				// Формат: [{"additionalProp1":"c.0.1"}, {"additionalProp2":"c.3.0.3.0"}]
+				// Извлекаем ID неисправностей
+				// Поддерживаем два формата:
+				// 1. [{"additionalProp1":"c.0.1"}, {"additionalProp2":"c.3.0.3.0"}]
+				// 2. [{"malfunction_id": "c.1.2"}]
 				const malfunctionIds = initMessage.malfunctions
-					.map(m => Object.values(m)[0])
+					.map(m => {
+						// Если есть ключ "malfunction_id", используем его
+						if ('malfunction_id' in m && typeof m.malfunction_id === 'string') {
+							return m.malfunction_id;
+						}
+						// Иначе берем первое значение из объекта
+						return Object.values(m)[0];
+					})
 					.filter((id): id is string => typeof id === 'string');
 
 				// Преобразуем для состояния симуляции
@@ -64,9 +81,10 @@ export function createMessageHandler(dispatch: AppDispatch) {
 					);
 				}
 
-				// Обновляем данные симуляции в Redux
+				// Обновляем данные симуляции в Redux (включая simulation_id)
 				dispatch(
 					setSimulation({
+						simulationId: initMessage.simulation_id,
 						gate: initMessage.gate,
 						malfunctions: malfunctionsForState,
 					}),
@@ -77,17 +95,53 @@ export function createMessageHandler(dispatch: AppDispatch) {
 					dispatch(activateMalfunction(malfunctionId));
 				});
 
-				console.info(
-					'[WebSocket] Инициализация симуляции:',
-					initMessage.gate,
+				// Открываем попап о начале симуляции только если он еще не был показан для этой симуляции
+				// Проверяем sessionStorage, чтобы избежать повторного показа при перезагрузке страницы
+				if (typeof window !== 'undefined') {
+					if (initMessage.simulation_id !== undefined) {
+						const shownSimulationId = sessionStorage.getItem(
+							'shownStartSimulationId',
+						);
+						const currentSimulationId = String(
+							initMessage.simulation_id,
+						);
+
+						if (shownSimulationId !== currentSimulationId) {
+							dispatch(openModal('infoStartSimulation'));
+							sessionStorage.setItem(
+								'shownStartSimulationId',
+								currentSimulationId,
+							);
+						}
+					} else {
+						// Если simulation_id нет, показываем попап один раз за сессию
+						const hasShownWithoutId = sessionStorage.getItem(
+							'shownStartSimulationWithoutId',
+						);
+						if (!hasShownWithoutId) {
+							dispatch(openModal('infoStartSimulation'));
+							sessionStorage.setItem(
+								'shownStartSimulationWithoutId',
+								'true',
+							);
+						}
+					}
+				} else {
+					// На сервере (SSR) всегда показываем попап (но это не должно происходить)
+					dispatch(openModal('infoStartSimulation'));
+				}
+
+				console.info('[WebSocket] Инициализация симуляции:', {
+					simulation_id: initMessage.simulation_id,
+					gate: initMessage.gate,
 					malfunctionIds,
-				);
+				});
 				return;
 			}
 
-			// Если нет type и нет gate/malfunctions, это неизвестное сообщение
+			// Если нет type и нет malfunctions, это неизвестное сообщение
 			console.warn(
-				'[WebSocket] Сообщение без поля type и без gate/malfunctions:',
+				'[WebSocket] Сообщение без поля type и без malfunctions:',
 				message,
 			);
 			return;
@@ -100,18 +154,14 @@ export function createMessageHandler(dispatch: AppDispatch) {
 				const finishedMessage = message as
 					| SimulationFinishedStudentMessage
 					| SimulationFinishedTeacherMessage;
-
-				// Сохраняем simulation_id в sessionStorage для PopupSimulationComplete
-				if (finishedMessage.simulation_id) {
-					sessionStorage.setItem(
-						'completedSimulationId',
-						String(finishedMessage.simulation_id),
-					);
-				}
+				const completedId = finishedMessage.simulation_id;
 
 				// Обрабатываем завершение симуляции
 				// resetSimulation возвращает начальное состояние
 				dispatch(resetSimulation());
+				if (completedId) {
+					dispatch(setCompletedSimulationId(completedId));
+				}
 
 				// Открываем модалку о завершении симуляции
 				dispatch(openModal('simulationComplete'));
@@ -130,7 +180,7 @@ export function createMessageHandler(dispatch: AppDispatch) {
 				const userLogMessage = message as UserLogMessage;
 				// TODO: Добавить обработку лога действия в userLogSlice (для учителя)
 				// dispatch(addUserLog(userLogMessage.data));
-				console.log(
+				console.info(
 					'[WebSocket] Лог действия студента:',
 					userLogMessage.data,
 				);
@@ -179,7 +229,7 @@ export function createMessageHandler(dispatch: AppDispatch) {
 			case 'simulation_status': {
 				const statusMessage = message as SimulationStatusMessage;
 				// TODO: Добавить обработку статуса симуляции в simulationSlice
-				console.log('Simulation status update:', statusMessage);
+				console.info('Simulation status update:', statusMessage);
 				break;
 			}
 
@@ -193,34 +243,11 @@ export function createMessageHandler(dispatch: AppDispatch) {
 
 			case 'circuit_update': {
 				// TODO: Добавить обработку обновления схемы
-				console.log('Circuit update received:', message);
+				console.info('Circuit update received:', message);
 				break;
 			}
 
 			default: {
-				// Обработка устаревшего формата GateMalfunctionsUpdateMessage
-				if ('gate' in messageAny && 'malfunctions' in messageAny) {
-					const malfunctionsMessage =
-						message as unknown as GateMalfunctionsUpdateMessage;
-					// Преобразуем массив объектов в массив строк (ID неисправностей)
-					const malfunctionIds: string[] =
-						malfunctionsMessage.malfunctions.flatMap(malfunction =>
-							Object.values(malfunction),
-						);
-					dispatch(
-						setGateMalfunctions({
-							id: malfunctionsMessage.gate,
-							malfunctions: malfunctionIds,
-						}),
-					);
-					console.log(
-						'[WebSocket] Обновлены неисправности задвижки (устаревший формат):',
-						malfunctionsMessage.gate,
-						malfunctionIds,
-					);
-					break;
-				}
-
 				// Неизвестное сообщение
 				const unknownMessage = message as { type?: string };
 				console.warn(

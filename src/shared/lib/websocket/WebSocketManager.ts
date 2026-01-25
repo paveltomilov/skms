@@ -29,6 +29,7 @@ class WebSocketManager {
 	private maxReconnectDelay = 30000; // Максимальная задержка в мс
 	private reconnectTimer: NodeJS.Timeout | null = null;
 	private isManualClose = false;
+	private lastCloseCode: number | null = null;
 
 	private constructor() {
 		// Приватный конструктор для singleton
@@ -73,11 +74,14 @@ class WebSocketManager {
 			return;
 		}
 
+		// Сохраняем новые параметры
 		this.url = url;
 		this.token = token;
 		this.isManualClose = false;
 		this.reconnectAttempts = 0;
 
+		// Если есть старое соединение, которое закрыто или закрывается,
+		// doConnect() закроет его перед созданием нового
 		this.doConnect();
 	}
 
@@ -125,6 +129,10 @@ class WebSocketManager {
 				? this.url.slice(0, -1)
 				: this.url;
 			const wsUrl = `${cleanUrl}/?token=${this.token}`;
+			console.info(
+				'[WebSocket] ⟳ Попытка подключения к:',
+				wsUrl.replace(/\?token=.*/, '?token=***'),
+			);
 			this.ws = new WebSocket(wsUrl);
 
 			this.ws.addEventListener('open', this.handleOpen.bind(this));
@@ -146,6 +154,7 @@ class WebSocketManager {
 		this.setStatus(WebSocketStatus.CONNECTED);
 		this.reconnectAttempts = 0;
 		this.reconnectDelay = 1000;
+		this.lastCloseCode = null;
 
 		// Отправляем все сообщения из очереди
 		this.flushMessageQueue();
@@ -198,7 +207,105 @@ class WebSocketManager {
 	 * Обработчик ошибки
 	 */
 	private handleError(error: Event): void {
-		console.error('[WebSocket] ✗ Ошибка соединения:', error);
+		const wsUrl = this.ws
+			? `${this.url?.replace(/\?token=.*/, '')}?token=***`
+			: 'не определен';
+
+		const readyStateMap: Record<number, string> = {
+			0: 'CONNECTING',
+			1: 'OPEN',
+			2: 'CLOSING',
+			3: 'CLOSED',
+		};
+
+		const readyState = this.ws
+			? readyStateMap[this.ws.readyState] ||
+			  `UNKNOWN(${this.ws.readyState})`
+			: 'null';
+
+		// Получаем дополнительную информацию об ошибке
+		const errorInfo: Record<string, unknown> = {
+			url: wsUrl,
+			readyState,
+			readyStateCode: this.ws?.readyState,
+			errorType: error.type,
+			hasToken: !!this.token,
+			tokenLength: this.token?.length || 0,
+		};
+
+		// Если есть WebSocket в error.target, добавляем его состояние
+		if (error.target instanceof WebSocket) {
+			const ws = error.target;
+			errorInfo.wsUrl = ws.url.replace(/\?token=.*/, '?token=***');
+			errorInfo.wsReadyState =
+				readyStateMap[ws.readyState] || `UNKNOWN(${ws.readyState})`;
+
+			// Если состояния различаются, это важная информация
+			if (this.ws && this.ws.readyState !== ws.readyState) {
+				errorInfo.stateMismatch = {
+					description: 'Состояния WebSocket различаются',
+					thisWsState: readyStateMap[this.ws.readyState],
+					errorTargetState: readyStateMap[ws.readyState],
+					note: 'Это может указывать на то, что соединение закрылось во время установки',
+				};
+			}
+		}
+
+		console.error('[WebSocket] ✗ Ошибка соединения:', errorInfo);
+
+		// Дополнительная диагностика
+		const currentState = this.ws?.readyState;
+		const isConnecting = currentState === WebSocket.CONNECTING;
+		const isClosed = currentState === WebSocket.CLOSED;
+
+		if (isConnecting || isClosed) {
+			const diagnosticInfo: Record<string, unknown> = {
+				status: isConnecting ? 'CONNECTING' : 'CLOSED',
+				description: isConnecting
+					? 'Соединение пытается установиться, но не может завершиться'
+					: 'Соединение было закрыто до установления',
+				possibleCauses: {
+					serverUnavailable: 'Сервер недоступен или не запущен',
+					invalidURL: 'Неправильный URL или порт',
+					networkError: 'Проблемы с сетью или файрволом',
+					invalidToken: 'Невалидный или истекший токен',
+					serverNotResponding:
+						'Сервер не отвечает на WebSocket запросы',
+					connectionRefused:
+						'Сервер отклонил соединение (проверьте токен и настройки)',
+				},
+				checklist: [
+					`Проверьте доступность сервера: ${this.url?.replace(
+						/\/ws\/.*/,
+						'',
+					)}`,
+					'Убедитесь, что Django сервер запущен',
+					'Проверьте настройки Django Channels и ASGI',
+					'Проверьте консоль сервера на наличие ошибок',
+					'Проверьте настройки CORS и WebSocket в Django',
+					'Убедитесь, что эндпоинт /ws/simulation/student/ существует',
+				],
+			};
+
+			// Если соединение закрыто сразу после попытки подключения
+			if (isClosed && this.reconnectAttempts === 0) {
+				diagnosticInfo.immediateClose = {
+					description:
+						'Соединение закрылось сразу после попытки подключения',
+					likelyCause:
+						'Сервер не принимает WebSocket соединения или токен невалиден',
+					action: 'Проверьте логи сервера и убедитесь, что WebSocket правильно настроен',
+				};
+			}
+
+			console.error(
+				`[WebSocket] Соединение в состоянии ${
+					isConnecting ? 'CONNECTING' : 'CLOSED'
+				}:`,
+				diagnosticInfo,
+			);
+		}
+
 		this.setStatus(WebSocketStatus.ERROR);
 	}
 
@@ -206,13 +313,66 @@ class WebSocketManager {
 	 * Обработчик закрытия соединения
 	 */
 	private handleClose(event: CloseEvent): void {
-		console.info('[WebSocket] ⊗ Соединение закрыто', {
+		const closeCodeMessages: Record<number, string> = {
+			1000: 'Нормальное закрытие',
+			1001: 'Удаленная сторона ушла',
+			1002: 'Ошибка протокола',
+			1003: 'Неподдерживаемый тип данных',
+			1006: 'Ненормальное закрытие (без кода)',
+			1007: 'Невалидные данные',
+			1008: 'Нарушение политики',
+			1009: 'Сообщение слишком большое',
+			1011: 'Внутренняя ошибка сервера',
+		};
+
+		const closeInfo = {
 			code: event.code,
-			reason: event.reason,
+			reason: event.reason || 'Не указана',
 			wasClean: event.wasClean,
-		});
+			message: closeCodeMessages[event.code] || 'Неизвестный код',
+		};
+
+		console.info('[WebSocket] ⊗ Соединение закрыто', closeInfo);
+
+		// Если закрытие было ненормальным, логируем дополнительную информацию
+		if (!event.wasClean) {
+			const errorDetails: Record<string, unknown> = {
+				code: event.code,
+				reason: event.reason || 'Не указана',
+				url: this.url?.replace(/\?token=.*/, '?token=***'),
+				message: closeCodeMessages[event.code] || 'Неизвестный код',
+			};
+
+			// Специальная обработка для кода 1006
+			if (event.code === 1006) {
+				errorDetails.diagnosis = {
+					description:
+						'Соединение не может быть установлено. Сервер не отвечает или недоступен.',
+					possibleCauses: [
+						'Сервер WebSocket не запущен на указанном адресе',
+						'Неправильный URL или порт',
+						'Проблемы с сетью или файрволом',
+						'Сервер не поддерживает WebSocket протокол',
+						'Токен невалиден или истек',
+					],
+					recommendations: [
+						'Проверьте, запущен ли Django сервер',
+						'Убедитесь, что Django Channels настроен правильно',
+						'Проверьте доступность сервера: curl http://127.0.0.1:8000',
+						'Проверьте токен в localStorage',
+						'Проверьте настройки CORS и ASGI',
+					],
+				};
+			}
+
+			console.error(
+				'[WebSocket] Соединение закрыто ненормально:',
+				errorDetails,
+			);
+		}
 
 		this.ws = null;
+		this.lastCloseCode = event.code;
 		this.setStatus(WebSocketStatus.DISCONNECTED);
 
 		// Переподключаемся только если закрытие не было ручным
@@ -221,6 +381,17 @@ class WebSocketManager {
 			this.reconnectAttempts < this.maxReconnectAttempts
 		) {
 			this.scheduleReconnect();
+		} else if (this.reconnectAttempts >= this.maxReconnectAttempts) {
+			console.error(
+				'[WebSocket] ✗ Достигнуто максимальное количество попыток переподключения.',
+				{
+					attempts: this.reconnectAttempts,
+					maxAttempts: this.maxReconnectAttempts,
+					lastCloseCode: this.lastCloseCode,
+					message:
+						'WebSocket не будет переподключаться автоматически. Проверьте доступность сервера.',
+				},
+			);
 		}
 	}
 
@@ -245,8 +416,24 @@ class WebSocketManager {
 			this.maxReconnectDelay,
 		);
 
+		const reconnectInfo: Record<string, unknown> = {
+			attempt: this.reconnectAttempts,
+			maxAttempts: this.maxReconnectAttempts,
+			delayMs: delay,
+			url: this.url?.replace(/\?token=.*/, '?token=***'),
+		};
+
+		if (this.lastCloseCode !== null) {
+			reconnectInfo.lastCloseCode = this.lastCloseCode;
+			if (this.lastCloseCode === 1006) {
+				reconnectInfo.note =
+					'Последняя ошибка: 1006 (Сервер недоступен). Убедитесь, что сервер запущен.';
+			}
+		}
+
 		console.info(
 			`[WebSocket] Планируется попытка переподключения #${this.reconnectAttempts} через ${delay}ms`,
+			reconnectInfo,
 		);
 
 		this.reconnectTimer = setTimeout(() => {
