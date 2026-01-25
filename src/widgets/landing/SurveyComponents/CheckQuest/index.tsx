@@ -1,21 +1,10 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Check from '../../IconSvg/check';
 import Checked from '../../IconSvg/checked';
+import { CheckQuestProps } from '@/shared/types/question';
 import styles from './styles.module.scss';
-
-type Option = {
-	id: number;
-	label: string;
-};
-
-interface CheckQuestProps {
-	options: Option[];
-	maxSelections?: number;
-	selectedIds?: number[];
-	otherText?: string;
-	onSelectionChange: (selectedIds: number[], otherText?: string) => void;
-}
+import Info from '../../IconSvg/info';
 
 const CheckQuest: React.FC<CheckQuestProps> = ({
 	options,
@@ -23,14 +12,34 @@ const CheckQuest: React.FC<CheckQuestProps> = ({
 	selectedIds = [],
 	otherText = '',
 	onSelectionChange,
+	initialSelectedIds = [],
+	initialOtherText = '',
 }) => {
-	const [selectedOptions, setSelectedOptions] =
-		useState<number[]>(selectedIds);
-	const [currentOtherText, setCurrentOtherText] = useState<string>(otherText);
+	const [selectedOptions, setSelectedOptions] = useState<number[]>(() => {
+		return initialSelectedIds.length > 0 ? initialSelectedIds : selectedIds;
+	});
+	const [currentOtherText, setCurrentOtherText] = useState<string>(() => {
+		return initialOtherText || otherText;
+	});
 	const [showInfoForId, setShowInfoForId] = useState<number | null>(null);
 	const [tooltipTimer, setTooltipTimer] = useState<NodeJS.Timeout | null>(
 		null,
 	);
+
+	useEffect(() => {
+		if (
+			selectedIds.length > 0 &&
+			JSON.stringify(selectedIds) !== JSON.stringify(selectedOptions)
+		) {
+			setSelectedOptions(selectedIds);
+		}
+	}, [selectedIds]);
+
+	useEffect(() => {
+		if (otherText !== currentOtherText) {
+			setCurrentOtherText(otherText);
+		}
+	}, [otherText]);
 
 	const otherOption = options.find(opt => opt.label === 'Другое');
 	const isOtherOption = (id: number) => {
@@ -38,6 +47,7 @@ const CheckQuest: React.FC<CheckQuestProps> = ({
 	};
 
 	const maxReached = selectedOptions.length >= maxSelections;
+
 	const handleSelect = (id: number) => {
 		let newSelected: number[];
 
@@ -59,7 +69,12 @@ const CheckQuest: React.FC<CheckQuestProps> = ({
 		} else if (selectedOptions.length < maxSelections) {
 			newSelected = [...selectedOptions, id];
 			setSelectedOptions(newSelected);
-			onSelectionChange(newSelected, currentOtherText);
+
+			if (isOtherOption(id)) {
+				onSelectionChange(newSelected, currentOtherText || '');
+			} else {
+				onSelectionChange(newSelected, currentOtherText);
+			}
 
 			setShowInfoForId(null);
 			if (tooltipTimer) {
@@ -168,32 +183,7 @@ const CheckQuest: React.FC<CheckQuestProps> = ({
 														styles.info__icon
 													}
 												>
-													<svg
-														width="13"
-														height="13"
-														viewBox="0 0 13 13"
-														fill="none"
-														xmlns="http://www.w3.org/2000/svg"
-													>
-														<circle
-															cx="6.5"
-															cy="6.5"
-															r="6"
-															stroke="#979A9A"
-															strokeWidth="1"
-														/>
-														<text
-															x="6.5"
-															y="9"
-															textAnchor="middle"
-															fontSize="8"
-															fill="#979A9A"
-															fontWeight="bold"
-															fontFamily="Arial, sans-serif"
-														>
-															i
-														</text>
-													</svg>
+													<Info />
 												</span>
 											)}
 											{showTooltip && (
@@ -208,6 +198,12 @@ const CheckQuest: React.FC<CheckQuestProps> = ({
 															styles.tooltip__content
 														}
 													>
+														<Info
+															className={
+																styles.tooltip__content_svg
+															}
+															size={19}
+														/>
 														Можно выбрать не более
 														трех вариантов
 													</div>

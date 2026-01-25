@@ -41,15 +41,15 @@ const SurveyEnd: React.FC<SurveyEndProps> = ({ onStart }) => {
 		}
 	};
 
-	// Определяем, должна ли кнопка быть неактивной
 	const isButtonDisabled = !email.trim() || isSubmitting || isSubmitted;
 	return (
 		<div className={styles.survey__container}>
 			<TopCircle className={styles.survey__svg1} />
 
 			<h2 className={styles.survey__title}>
-				Спасибо! Ваши ответы помогут улучшить цифровое обучение в
-				промышленности
+				<span className={styles.survey__title_span}>Спасибо!</span>{' '}
+				Ваши&nbsp;ответы&nbsp;помогут
+				улучшить&nbsp;цифровое&nbsp;обучение в&nbsp;промышленности
 			</h2>
 
 			<p className={styles.survey__description}>
@@ -74,8 +74,6 @@ const SurveyEnd: React.FC<SurveyEndProps> = ({ onStart }) => {
         ${isSubmitted ? styles.button__submitted : ''}
     `}
 					radius={4}
-					width={256}
-					height={48}
 					text={isSubmitted ? 'ОТПРАВЛЕНО' : 'отправить'}
 					type="submit"
 					border="1px solid var(--lan-light-grayish-blue)"
@@ -85,8 +83,6 @@ const SurveyEnd: React.FC<SurveyEndProps> = ({ onStart }) => {
 			<Button
 				className={styles.survey__button}
 				radius={4}
-				width={776}
-				height={48}
 				text="протестировать тренажер"
 				onClick={onStart}
 			/>

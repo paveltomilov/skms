@@ -1,140 +1,126 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import Button from '../../Button';
 import { questionnaireConfig } from '@/shared/configs/questions';
-import styles from './styles.module.scss';
 import Back from '../../IconSvg/back';
 import Next from '../../IconSvg/next';
-import CheckQuest from '../CheckQuest';
-import RadioQuest from '../RadioQuest';
-
-export interface QuestionsListProps {
-	currentIndex: number;
-	onNext: () => void;
-	onPrev: () => void;
-	onFinish?: () => void;
-}
+import QuestionRenderer from '../QuestionRenderer/QuestionRenderer';
+import { QuestionsListProps } from '@/shared/types/question';
+import styles from './styles.module.scss';
 
 const QuestionsList: React.FC<QuestionsListProps> = ({
 	currentIndex,
 	onNext,
 	onPrev,
 	onFinish,
+	initialAnswers,
+	initialOtherTexts,
+	onRadioChange,
+	onCheckboxChange,
 }) => {
 	const questions = questionnaireConfig.questions;
 	const isLastQuestion = currentIndex === questions.length - 1;
-
-	const [answers, setAnswers] = useState<Record<number, string | string[]>>(
-		{},
-	);
-	const [otherTexts, setOtherTexts] = useState<Record<number, string>>({});
-
 	const currentQuestion = questions[currentIndex];
 
-	const handleRadioChange = (questionId: number, selectedValue: string) => {
-		setAnswers(prev => ({ ...prev, [questionId]: selectedValue }));
-	};
+	const [answers, setAnswers] = useState(initialAnswers);
+	const [otherTexts, setOtherTexts] = useState(initialOtherTexts);
+	const [showError, setShowError] = useState(false);
 
-	const handleCheckboxChange = (
-		questionId: number,
-		selectedIds: number[],
-		otherText?: string,
-	) => {
-		const selectedOptions = selectedIds
-			.map(id => {
-				const question = questions.find(q => q.id === questionId);
+	useEffect(() => {
+		setAnswers(initialAnswers);
+		setOtherTexts(initialOtherTexts);
+	}, [initialAnswers, initialOtherTexts]);
+
+	const isCurrentAnswerValid = useMemo(() => {
+		const answer = answers[currentQuestion.id];
+		if (!answer) return false;
+
+		if (currentQuestion.type === 'radio') {
+			const radioAnswer =
+				typeof answer === 'string' ? answer : String(answer);
+			if (radioAnswer.trim() === '') return false;
+			if (radioAnswer === 'Другое') {
+				const otherText = otherTexts[currentQuestion.id];
+				return !!(otherText && otherText.trim());
+			}
+			return true;
+		}
+
+		if (currentQuestion.type === 'checkbox') {
+			const checkboxAnswers = Array.isArray(answer) ? answer : [];
+			if (checkboxAnswers.length === 0) return false;
+
+			const hasOther = checkboxAnswers.some(
+				a => a === 'Другое' || a.startsWith('Другое: '),
+			);
+
+			if (hasOther) {
+				const otherText = otherTexts[currentQuestion.id];
+				return !!(otherText && otherText.trim());
+			}
+			return true;
+		}
+
+		return false;
+	}, [answers, otherTexts, currentQuestion.id, currentQuestion.type]);
+
+	const handleRadioChange = useCallback(
+		(questionId: number, selectedValue: string) => {
+			setAnswers(prev => ({ ...prev, [questionId]: selectedValue }));
+			onRadioChange(questionId, selectedValue);
+			setShowError(false);
+		},
+		[onRadioChange],
+	);
+
+	const handleCheckboxChange = useCallback(
+		(questionId: number, selectedIds: number[], otherText?: string) => {
+			const question = questions.find(q => q.id === questionId);
+
+			const selectedOptions: string[] = [];
+
+			selectedIds.forEach(id => {
 				if (question && question.options[id - 1]) {
 					if (question.options[id - 1] === 'Другое' && otherText) {
-						return `Другое: ${otherText}`;
+						selectedOptions.push(`Другое: ${otherText}`);
+					} else if (question.options[id - 1]) {
+						selectedOptions.push(question.options[id - 1]);
 					}
-					return question.options[id - 1];
-				}
-				return '';
-			})
-			.filter(Boolean);
-
-		setAnswers(prev => ({ ...prev, [questionId]: selectedOptions }));
-
-		if (otherText !== undefined) {
-			setOtherTexts(prev => ({ ...prev, [questionId]: otherText }));
-		}
-	};
-
-	const handleNextOrFinish = () => {
-		if (isLastQuestion) {
-			const finalData = {
-				answers,
-				otherTexts,
-				completedAt: new Date().toISOString(),
-			};
-			console.log('Финальные данные:', finalData);
-
-			if (onFinish) onFinish();
-		} else {
-			onNext();
-		}
-	};
-
-	const renderQuestion = () => {
-		const question = currentQuestion;
-
-		const optionsWithIds = question.options.map((option, index) => ({
-			id: index + 1,
-			label: option,
-		}));
-
-		if (question.type === 'radio') {
-			return (
-				<RadioQuest
-					key={question.id}
-					options={optionsWithIds}
-					selected={(answers[question.id] as string) || ''}
-					setSelected={(value: string) =>
-						handleRadioChange(question.id, value)
-					}
-					otherText={otherTexts[question.id] || ''}
-					setOtherText={(text: string) =>
-						setOtherTexts(prev => ({
-							...prev,
-							[question.id]: text,
-						}))
-					}
-				/>
-			);
-		} else if (question.type === 'checkbox') {
-			const selectedIds: number[] = [];
-			const currentAnswers = (answers[question.id] as string[]) || [];
-
-			currentAnswers.forEach(answer => {
-				const cleanAnswer = answer.replace('Другое: ', '');
-				const index = question.options.findIndex(
-					opt => opt === cleanAnswer || opt === 'Другое',
-				);
-				if (index !== -1) {
-					selectedIds.push(index + 1);
 				}
 			});
 
-			return (
-				<CheckQuest
-					key={question.id}
-					options={optionsWithIds}
-					maxSelections={3}
-					allowOther={question.options.includes('Другое')}
-					onSelectionChange={(selectedIds, otherText) =>
-						handleCheckboxChange(
-							question.id,
-							selectedIds,
-							otherText,
-						)
-					}
-				/>
-			);
+			setAnswers(prev => ({ ...prev, [questionId]: selectedOptions }));
+
+			onCheckboxChange(questionId, selectedIds, otherText);
+			setShowError(false);
+
+			if (otherText !== undefined) {
+				setOtherTexts(prev => ({ ...prev, [questionId]: otherText }));
+			}
+		},
+		[onCheckboxChange, questions],
+	);
+
+	const handleNextOrFinish = useCallback(() => {
+		if (!isCurrentAnswerValid) {
+			setShowError(true);
+			return;
 		}
 
-		return null;
-	};
+		setShowError(false);
+
+		if (isLastQuestion) {
+			onFinish?.();
+		} else {
+			onNext();
+		}
+	}, [isCurrentAnswerValid, isLastQuestion, onFinish, onNext]);
+
+	const handlePrev = useCallback(() => {
+		setShowError(false);
+		onPrev();
+	}, [onPrev]);
 
 	return (
 		<div className={styles.questions__container}>
@@ -143,7 +129,17 @@ const QuestionsList: React.FC<QuestionsListProps> = ({
 					{currentQuestion.title}
 				</h2>
 			</header>
-			<div className={styles.question__wrapper}>{renderQuestion()}</div>
+
+			<div className={styles.question__wrapper}>
+				<QuestionRenderer
+					question={currentQuestion}
+					answers={answers}
+					otherTexts={otherTexts}
+					onRadioChange={handleRadioChange}
+					onCheckboxChange={handleCheckboxChange}
+					setOtherTexts={setOtherTexts}
+				/>
+			</div>
 
 			<div className={styles.bottom}>
 				<div className={styles.counter}>
@@ -151,13 +147,17 @@ const QuestionsList: React.FC<QuestionsListProps> = ({
 				</div>
 
 				<div className={styles.navigation}>
+					{!isLastQuestion && showError && (
+						<div className={styles.explanation}>
+							Вы не выбрали ответ — можно вернуться позже
+						</div>
+					)}
+
 					<Button
 						className={styles.button__back}
 						icon={<Back />}
 						text=""
-						onClick={onPrev}
-						width={48}
-						height={46}
+						onClick={handlePrev}
 						radius={4}
 						border="1px solid var(--lan-grey)"
 					/>
@@ -167,8 +167,8 @@ const QuestionsList: React.FC<QuestionsListProps> = ({
 						icon={<Next />}
 						text={''}
 						onClick={handleNextOrFinish}
-						width={116}
-						height={46}
+						width={118}
+						height={48}
 						radius={4}
 					/>
 				</div>

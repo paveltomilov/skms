@@ -1,8 +1,68 @@
-export type QuestionType = 'radio' | 'checkbox';
 export interface Question {
 	id: number;
+	type: 'radio' | 'checkbox';
 	title: string;
-	type: QuestionType;
 	options: string[];
-	required?: boolean;
+}
+
+export interface QuestionRendererProps {
+	question: Question;
+	answers: Record<number, string | string[]>;
+	otherTexts: Record<number, string>;
+	onRadioChange: (questionId: number, selectedValue: string) => void;
+	onCheckboxChange: (
+		questionId: number,
+		selectedIds: number[],
+		otherText?: string,
+	) => void;
+	setOtherTexts: React.Dispatch<React.SetStateAction<Record<number, string>>>;
+}
+
+export interface QuestionsListProps {
+	currentIndex: number;
+	onNext: () => void;
+	onPrev: () => void;
+	onFinish?: () => void;
+	initialAnswers: Record<number, string | string[]>;
+	initialOtherTexts: Record<number, string>;
+	onRadioChange: (questionId: number, selectedValue: string) => void;
+	onCheckboxChange: (
+		questionId: number,
+		selectedIds: number[],
+		otherText?: string,
+	) => void;
+}
+
+export type Option = {
+	id: number;
+	label: string;
+};
+
+export interface CheckQuestProps {
+	options: Option[];
+	maxSelections?: number;
+	selectedIds?: number[];
+	otherText?: string;
+	onSelectionChange: (selectedIds: number[], otherText?: string) => void;
+	initialSelectedIds?: number[];
+	initialOtherText?: string;
+}
+
+export interface ConfirmDialogProps {
+	className: string;
+	isOpen: boolean;
+	title: string;
+	onConfirm: () => void;
+	onCancel: () => void;
+	confirmText?: string;
+	cancelText?: string;
+	overlayColor?: string;
+}
+
+export interface RadioQuestProps {
+	options?: Option[];
+	selected?: string;
+	otherText?: string;
+	setSelected?: (value: string) => void;
+	setOtherText?: (text: string) => void;
 }

@@ -1,38 +1,37 @@
 'use client';
-import { useState } from 'react';
-import styles from './styles.module.scss';
+import { useState, useEffect } from 'react';
 import RadioCheck from '../../IconSvg/radioCheck';
 import RadioChecked from '../../IconSvg/radioChecked';
-
-type Option = {
-	id: number;
-	label: string;
-};
-
-interface RadioQuestProps {
-	options?: Option[];
-	selectedValue?: string | null;
-	otherText?: string;
-	onChange?: (selectedLabel: string, otherText?: string) => void;
-}
+import { RadioQuestProps } from '@/shared/types/question';
+import styles from './styles.module.scss';
 
 const RadioQuest: React.FC<RadioQuestProps> = ({
 	options = [],
-	selectedValue = null,
+	selected = '', // Теперь строка, а не null
 	otherText = '',
-	onChange,
+	setSelected,
+	setOtherText,
 }) => {
-	const [selected, setSelected] = useState<number | null>(() => {
-		if (selectedValue && options.length > 0) {
-			const foundOption = options.find(
-				opt => opt.label === selectedValue,
-			);
-			return foundOption ? foundOption.id : null;
-		}
-		return null;
-	});
-
+	const [selectedId, setSelectedId] = useState<number | null>(null);
 	const [currentOtherText, setCurrentOtherText] = useState<string>(otherText);
+
+	useEffect(() => {
+		if (selected && options.length > 0) {
+			const foundOption = options.find(opt => opt.label === selected);
+			if (foundOption) {
+				setSelectedId(foundOption.id);
+			} else {
+				setSelectedId(null);
+			}
+		} else {
+			setSelectedId(null);
+		}
+	}, [selected, options]);
+
+	useEffect(() => {
+		setCurrentOtherText(otherText);
+	}, [otherText]);
+
 	const findOptionById = (id: number) => options.find(opt => opt.id === id);
 	const isOtherOption = (id: number) => {
 		const option = findOptionById(id);
@@ -43,27 +42,26 @@ const RadioQuest: React.FC<RadioQuestProps> = ({
 		const option = findOptionById(optionId);
 		if (!option) return;
 
-		setSelected(optionId);
+		setSelectedId(optionId);
 
 		if (option.label !== 'Другое') {
 			setCurrentOtherText('');
+			if (setOtherText) {
+				setOtherText('');
+			}
 		}
 
-		if (onChange) {
-			if (option.label === 'Другое') {
-				onChange(option.label, currentOtherText);
-			} else {
-				onChange(option.label, '');
-			}
+		if (setSelected) {
+			setSelected(option.label);
 		}
 	};
 
 	const handleOtherTextChange = (text: string) => {
 		setCurrentOtherText(text);
-		if (onChange && selected) {
-			const option = findOptionById(selected);
-			if (option?.label === 'Другое') {
-				onChange(option.label, text);
+
+		if (selectedId && isOtherOption(selectedId)) {
+			if (setOtherText) {
+				setOtherText(text);
 			}
 		}
 	};
@@ -80,15 +78,11 @@ const RadioQuest: React.FC<RadioQuestProps> = ({
 		<div className={styles.question__container}>
 			<div className={styles.radio__group}>
 				{options.map(opt => {
-					const isSelected = selected === opt.id;
-					// ИСПРАВЛЯЕМ ЭТУ СТРОКУ:
-					// Теперь проверяем только является ли вариант "Другим"
+					const isSelected = selectedId === opt.id;
 					const isOther = isOtherOption(opt.id);
-					// А это проверяем отдельно - выбран ли он
 					const isOtherSelected = isOther && isSelected;
 
 					return (
-						// Добавляем особый класс для варианта "Другое"
 						<label
 							key={opt.id}
 							className={`${styles.custom__radio} ${isOther ? styles.other__option : ''} ${isOtherSelected ? styles.other__selected : ''}`}

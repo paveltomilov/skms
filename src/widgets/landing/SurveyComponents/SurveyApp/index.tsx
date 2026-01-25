@@ -5,13 +5,16 @@ import SurveyStart from '../SurveyStart';
 import { questionnaireConfig } from '@/shared/configs/questions';
 import QuestionsList from '../QuestionsList';
 import SurveyEnd from '../SurveyEnd';
-// import styles from './styles.module.scss';
 
 const SurveyApp: React.FC = () => {
 	const [consent, setConsent] = useState(false);
 	const [showQuestions, setShowQuestions] = useState(false);
 	const [currentQuestion, setCurrentQuestion] = useState<number>(0);
 	const [showEnd, setShowEnd] = useState(false);
+	const [answers, setAnswers] = useState<Record<number, string | string[]>>(
+		{},
+	);
+	const [otherTexts, setOtherTexts] = useState<Record<number, string>>({});
 
 	const questions = questionnaireConfig.questions;
 	const totalQuestions = questions.length;
@@ -30,7 +33,6 @@ const SurveyApp: React.FC = () => {
 
 	const handlePrevQuestion = () => {
 		if (currentQuestion === 0) {
-			// Если это первый вопрос - возвращаемся к SurveyStart
 			setShowQuestions(false);
 		} else if (currentQuestion > 0) {
 			setCurrentQuestion(prev => prev - 1);
@@ -39,9 +41,47 @@ const SurveyApp: React.FC = () => {
 
 	const handleFinishSurvey = () => {
 		console.log('Опрос завершен!');
-		// Можно добавить дополнительные действия
+		console.log('Все ответы:', answers);
+		console.log('Тексты "Другое":', otherTexts);
+
+		// Можно добавить отправку данных на сервер
+
 		setShowQuestions(false);
 		setShowEnd(true);
+	};
+
+	const updateAnswers = (questionId: number, answer: string | string[]) => {
+		setAnswers(prev => ({ ...prev, [questionId]: answer }));
+	};
+
+	const handleRadioChange = (questionId: number, selectedValue: string) => {
+		updateAnswers(questionId, selectedValue);
+	};
+
+	const handleCheckboxChange = (
+		questionId: number,
+		selectedIds: number[],
+		otherText?: string,
+	) => {
+		const question = questions.find(q => q.id === questionId);
+
+		const selectedOptions = selectedIds
+			.map(id => {
+				if (question && question.options[id - 1]) {
+					if (question.options[id - 1] === 'Другое' && otherText) {
+						return `Другое: ${otherText}`;
+					}
+					return question.options[id - 1];
+				}
+				return '';
+			})
+			.filter(Boolean);
+
+		setAnswers(prev => ({ ...prev, [questionId]: selectedOptions }));
+
+		if (otherText !== undefined) {
+			setOtherTexts(prev => ({ ...prev, [questionId]: otherText }));
+		}
 	};
 
 	return (
@@ -50,11 +90,15 @@ const SurveyApp: React.FC = () => {
 				<SurveyEnd onStart={handleStart} />
 			) : showQuestions ? (
 				<QuestionsList
-					key={currentQuestion}
+					key={`question-${currentQuestion}`}
 					currentIndex={currentQuestion}
 					onNext={handleNextQuestion}
 					onPrev={handlePrevQuestion}
 					onFinish={handleFinishSurvey}
+					initialAnswers={answers}
+					initialOtherTexts={otherTexts}
+					onRadioChange={handleRadioChange}
+					onCheckboxChange={handleCheckboxChange}
 				/>
 			) : (
 				<SurveyStart

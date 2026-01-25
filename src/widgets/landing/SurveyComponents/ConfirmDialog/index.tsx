@@ -1,25 +1,12 @@
 'use client';
-
 import React, { FC } from 'react';
 import Button from '../../Button';
+import { ConfirmDialogProps } from '@/shared/types/question';
 import styles from './styles.module.scss';
-
-interface ConfirmDialogProps {
-	className: string;
-	isOpen: boolean;
-	title: string;
-	message?: string;
-	onConfirm: () => void;
-	onCancel: () => void;
-	confirmText?: string;
-	cancelText?: string;
-	overlayColor?: string;
-}
 
 const ConfirmDialog: FC<ConfirmDialogProps> = ({
 	isOpen,
 	title,
-	message,
 	onConfirm,
 	onCancel,
 	confirmText = 'Да',
@@ -62,19 +49,13 @@ const ConfirmDialog: FC<ConfirmDialogProps> = ({
 						{title}
 					</h3>
 
-					{message && (
-						<p className={styles.confirm__dialog_message}>
-							{message}
-						</p>
-					)}
-
 					<div className={styles.confirm__dialog_buttons}>
 						<Button
 							className={`${styles.confirm__button} ${styles.cancel__button}`}
 							text={cancelText}
 							onClick={onCancel}
-							width={140}
-							height={40}
+							width={145}
+							height={44}
 							radius={4}
 							type="button"
 						/>
@@ -82,8 +63,8 @@ const ConfirmDialog: FC<ConfirmDialogProps> = ({
 							className={`${styles.confirm__button} ${styles.confirm__button_yes}`}
 							text={confirmText}
 							onClick={onConfirm}
-							width={140}
-							height={40}
+							width={182}
+							height={48}
 							radius={4}
 							type="button"
 						/>

@@ -15,6 +15,10 @@
 		padding: 86px 38px;
 		box-sizing: border-box;
 		z-index: 1;
+
+		@media (max-width: 1200px) {
+			width: 696px;
+		}
 	}
 
 	&__title {
@@ -26,6 +30,10 @@
 		text-align: center;
 		color: var(--lan-light-grayish-blue);
 		margin-bottom: 4px;
+
+		&_span {
+			display: block;
+		}
 	}
 
 	&__description {
@@ -39,12 +47,18 @@
 	}
 
 	&__button {
+		width: 776px;
+		height: 48px;
 		font-family: var(--second-family);
 		font-weight: 600;
 		font-size: 14px;
 		line-height: 136%;
 		text-transform: uppercase;
 		color: var(--lan-very-dark-mostly-black-blue);
+
+		@media (max-width: 1200px) {
+			width: 616px;
+		}
 	}
 
 	&__svg1 {
@@ -70,6 +84,8 @@
 	margin-bottom: 12px;
 
 	&__button {
+		width: 254px;
+		height: 46px;
 		background: inherit;
 		font-family: var(--second-family);
 		font-weight: 600;
@@ -77,6 +93,10 @@
 		line-height: 136%;
 		text-transform: uppercase;
 		color: var(--lan-light-grayish-blue);
+
+		@media (max-width: 1200px) {
+			width: 238px;
+		}
 
 		&:hover,
 		&:focus {
@@ -96,8 +116,8 @@
 
 	&__email {
 		all: unset;
-		width: 496px;
-		height: 48px;
+		width: 494px;
+		height: 46px;
 		border: 1px solid var(--lan-light-grayish-blue);
 		border-radius: 4px;
 		margin-right: 24px;
@@ -107,5 +127,9 @@
 		line-height: 100%;
 		color: var(--lan-gray);
 		padding: 0 16px;
+
+		@media (max-width: 1200px) {
+			width: 318px;
+		}
 	}
 }

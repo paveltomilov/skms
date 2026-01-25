@@ -66,13 +66,11 @@ const Survey: FC = () => {
 					<ConfirmDialog
 						className={styles.modal__closed}
 						isOpen={showConfirmDialog}
-						title="Вы уверены, что хотите закрыть опрос?"
-						message="Ваши ответы не будут сохранены"
+						title="Вы уверены, что хотите выйти?"
 						onConfirm={handleConfirmClose}
 						onCancel={handleCancelClose}
-						confirmText="Да, закрыть"
-						cancelText="Нет, остаться"
-						overlayColor="rgba(10, 10, 20, 0.8)" // 0A0A14 80%
+						confirmText="Да, выйти"
+						cancelText="Отмена"
 					/>
 				</>
 			)}

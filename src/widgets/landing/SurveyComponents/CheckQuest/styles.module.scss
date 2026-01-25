@@ -79,6 +79,10 @@
 			width: 728px;
 			height: 1px;
 			background: rgba(191, 191, 191, 0.52);
+
+			@media (max-width: 1200px) {
+				width: 565px;
+			}
 		}
 	}
 
@@ -110,6 +114,7 @@
 	position: absolute;
 	top: 50%;
 	left: 100%;
+
 	transform: translateY(-50%) translateX(8px);
 	white-space: nowrap;
 	border-top: 2px solid var(--lan-bright-cyan---lime-green);
@@ -125,10 +130,17 @@
 	z-index: 1000;
 
 	&__content {
+		display: flex;
+		align-items: center;
 		font-family: var(--second-family);
 		font-weight: 400;
 		font-size: 14px;
 		color: var(--lan-very-dark-mostly-black-blue);
+
+		&_svg {
+			margin-right: 11px;
+			margin-bottom: 2px;
+		}
 	}
 }
 

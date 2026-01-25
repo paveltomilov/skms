@@ -5,8 +5,8 @@ import Image from 'next/image';
 import TopCircle from '../../IconSvg/topCircle';
 import BottomCircle from '../../IconSvg/bottomCircle';
 import Button from '../../Button';
-import styles from './styles.module.scss';
 import ConsentSurvey from '../ConsentSurvey';
+import styles from './styles.module.scss';
 
 type SurveyStartProps = {
 	onStart: () => void;
@@ -30,7 +30,7 @@ const SurveyStart: React.FC<SurveyStartProps> = ({
 				height={223}
 			/>
 			<h2 className={styles.survey__title}>
-				Помогите нам сделать обучение лучше
+				Помогите нам сделать&nbsp;обучение&nbsp;лучше
 			</h2>
 			<p className={styles.survey__description}>
 				Вместе создадим сильный и удобный симулятор
