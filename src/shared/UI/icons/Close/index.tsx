@@ -27,16 +27,13 @@ const Close: FC<Props> = ({
 			width={sizes.width}
 			height={sizes.height}
 			viewBox={viewBox}
-			color={colors}
+			fill={colors}
+			stroke={colors}
 			strokeWidth={strokeWidth && strokeWidth}
 			preserveAspectRatio="xMidYMid meet"
 			className={className && className}
 		>
-			<use
-				xlinkHref={'/svg/sprite.svg#close'}
-				width="100%"
-				height="100%"
-			/>
+			<use href={'/svg/sprite.svg#close'} width="100%" height="100%" />
 		</svg>
 	);
 };

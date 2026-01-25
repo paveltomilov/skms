@@ -6,6 +6,7 @@
 	display: flex;
 	grid-area: center;
 	cursor: pointer;
+	padding: 2px;
 
 	& > :nth-child(2) {
 		margin-left: -1px;
@@ -68,10 +69,12 @@
 
 		&_left {
 			grid-area: left;
+			transform: translateX(-2px);
 		}
 
 		&_right {
 			grid-area: right;
+			transform: translateX(2px);
 		}
 	}
 
@@ -104,4 +107,10 @@
 	&__animation {
 		animation: variables.$blink;
 	}
+}
+
+
+.isActiveErrorBlink {
+	outline: 2px solid variables.$error-input;
+	animation: variables.$blinkingBorder;
 }

@@ -2,7 +2,7 @@ import { FC } from 'react';
 import cn from 'classnames';
 import styles from './styles.module.scss';
 import Window from '@/shared/UI/Window';
-import { WINDOWS } from '@/shared/configs/window';
+import { WindowsState } from '@/shared/configs/window';
 import Rectangle from '@/shared/UI/icons/Rectangle';
 import Button from '@/shared/UI/Button';
 import Tdm from '@/shared/UI/Tdm';
@@ -12,9 +12,10 @@ import useShowModal from '@/shared/hooks/useShowModal';
 
 interface Props {
 	className?: string;
+	windows: WindowsState;
 }
 
-const KARightDown: FC<Props> = ({ className }) => {
+const KARightDown: FC<Props> = ({ className, windows }) => {
 	const text1C: Prefix = '1c';
 	const text2C: Prefix = '2c';
 	const handleModalNotification = useShowModal('notification');
@@ -23,18 +24,18 @@ const KARightDown: FC<Props> = ({ className }) => {
 		<div className={cn(className, styles.container)}>
 			<div className={styles.windowsTop}>
 				<div className={styles.windowsTop__left}>
-					<Window data={WINDOWS.w178} right colorText="white" />
+					<Window data={windows.w178} right colorText="white" />
 				</div>
 				<div className={styles.windowsTop__middle}>
 					<div className={styles.windowsTop__middle_item}>
 						<span className={styles.windowsTop__middle_item_text}>
 							{text1C}
 						</span>
-						<Window data={WINDOWS.w206} right />
+						<Window data={windows.w206} right />
 					</div>
 					<div className={styles.windowsTop__middle_item}>
 						<Window
-							data={WINDOWS.w210}
+							data={windows.w210}
 							right
 							left
 							textLeft={text2C}
@@ -54,7 +55,7 @@ const KARightDown: FC<Props> = ({ className }) => {
 					/>
 					<Window
 						className={styles.windowsTop__right_window}
-						data={WINDOWS.w219}
+						data={windows.w219}
 						right
 					/>
 				</div>
@@ -63,7 +64,7 @@ const KARightDown: FC<Props> = ({ className }) => {
 				<div className={styles.windowsMiddle__left}>
 					<div className={styles.windowsMiddle__left_line}>
 						<div className={styles.windowsMiddle__left_line_box}>
-							<Window data={WINDOWS.w220} right />
+							<Window data={windows.w220} right />
 							<Rectangle />
 						</div>
 						<Tdm
@@ -74,13 +75,13 @@ const KARightDown: FC<Props> = ({ className }) => {
 						/>
 						<Window
 							className={styles.windowsMiddle__left_line_window}
-							data={WINDOWS.w223}
+							data={windows.w223}
 							right
 						/>
 					</div>
 					<div className={styles.windowsMiddle__left_line}>
 						<div className={styles.windowsMiddle__left_line_box}>
-							<Window data={WINDOWS.w221} right />
+							<Window data={windows.w221} right />
 							<Rectangle outlined />
 						</div>
 						<Tdm
@@ -91,7 +92,7 @@ const KARightDown: FC<Props> = ({ className }) => {
 						/>
 						<Window
 							className={styles.windowsMiddle__left_line_window}
-							data={WINDOWS.w224}
+							data={windows.w224}
 							right
 						/>
 					</div>
@@ -99,7 +100,7 @@ const KARightDown: FC<Props> = ({ className }) => {
 				<div className={styles.windowsMiddle__middle}>
 					<Window
 						className={styles.windowsMiddle__middle_window}
-						data={WINDOWS.w234}
+						data={windows.w234}
 						bottom
 					/>
 					<span className={styles.windowsMiddle__middle_text}>
@@ -107,7 +108,7 @@ const KARightDown: FC<Props> = ({ className }) => {
 					</span>
 					<Window
 						className={styles.windowsMiddle__middle_window}
-						data={WINDOWS.w235}
+						data={windows.w235}
 						bottom
 					/>
 				</div>
@@ -137,7 +138,7 @@ const KARightDown: FC<Props> = ({ className }) => {
 						/>
 						<Window
 							className={styles.windowsBottom__left_line_window}
-							data={WINDOWS.w222}
+							data={windows.w222}
 							right
 						/>
 					</div>
@@ -150,13 +151,13 @@ const KARightDown: FC<Props> = ({ className }) => {
 				</div>
 				<div className={styles.windowsBottom__middle}>
 					<div className={styles.windowsBottom__middle_box}>
-						<Window data={WINDOWS.w225} right />
+						<Window data={windows.w225} right />
 						<Rectangle outlined />
 					</div>
 					<div className={styles.windowsBottom__middle_box}>
-						<Window data={WINDOWS.w226} right />
+						<Window data={windows.w226} right />
 						<Rectangle outlined />
-						<Window data={WINDOWS.w227} right />
+						<Window data={windows.w227} right />
 					</div>
 				</div>
 				<div className={styles.windowsBottom__right}>

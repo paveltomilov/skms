@@ -1,0 +1,119 @@
+.header {
+	position: sticky;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 20;
+	background-color: transparent;
+	transition: all 0.2s ease-in-out;
+
+	&__container {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding-top: 24px;
+		padding-bottom: 24px;
+
+		@media (max-width: 576px) {
+			padding-top: 64px;
+		}
+	}
+
+	&__nav {
+		font-family: var(--second-family);
+		font-weight: 500;
+		font-size: 15px;
+		line-height: 100%;
+		color: var(--lan-light-grayish-blue);
+		margin-right: auto;
+
+		@media (max-width: 1200px) {
+			display: none;
+		}
+	}
+
+	&__link {
+		font-family: var(--second-family);
+		font-weight: 500;
+		font-size: 15px;
+		line-height: 100%;
+		color: var(--lan-light-grayish-blue);
+		margin-right: 12px;
+		transition: all 0.2s ease-in-out;
+
+		&:hover,
+		&:focus {
+			color: var(--lan-bright-cyan---lime-green);
+		}
+
+		@media (max-width: 1200px) {
+			margin-right: 27px;
+			color: var(--lan-bright-cyan---lime-green);
+		}
+
+		@media (max-width: 576px) {
+			display: none;
+		}
+	}
+
+	&__arrow {
+		margin-right: 32px;
+		cursor: pointer;
+
+		@media (max-width: 1200px) {
+			display: none;
+		}
+	}
+
+	&__login {
+		font-family: var(--second-family);
+		font-weight: 500;
+		font-size: 15px;
+		line-height: 100%;
+		color: var(--lan-very-dark-mostly-black-blue);
+		background: var(--lan-light-grayish-blue);
+		margin-right: 12px;
+		transition: all 0.2s ease-in-out;
+
+		&:hover,
+		&:focus {
+			background: var(--lan-light-grayish-cyan);
+		}
+
+		@media (max-width: 1200px) {
+			background: var(--lan-bright-cyan---lime-green);
+			transition: all 0.2s ease-in-out;
+			margin-right: 22px;
+
+			&:hover,
+			&:focus {
+				background: #93f2a8;
+			}
+		}
+
+		@media (max-width: 576px) {
+			margin-right: 10px;
+		}
+	}
+
+	&__register {
+		font-family: var(--second-family);
+		font-weight: 500;
+		font-size: 15px;
+		line-height: 100%;
+		text-align: center;
+		color: var(--lan-very-dark-mostly-black-blue);
+
+		@media (max-width: 1200px) {
+			display: none;
+		}
+	}
+
+	&__burger {
+		z-index: 21;
+	}
+}
+
+.headerScrolled {
+	background-color: var(--lan-very-dark-mostly-black-blue);
+}

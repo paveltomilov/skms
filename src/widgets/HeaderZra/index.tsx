@@ -1,29 +1,12 @@
 'use client';
 
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import style from './styles.module.scss';
 import Button from '@/shared/UI/Button';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useGateControlButtons } from '@/shared/hooks/useGateControlButtons';
 import GateWindow from '@/entities/GateWindow';
 
 const HeaderZra: FC = () => {
-	// вынести в дальнейшем в отдельный компонент
-	const router = useRouter();
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-	useEffect(() => {
-		const token = localStorage.getItem('token');
-		setIsLoggedIn(!!token);
-	}, []);
-
-	const handleLogout = () => {
-		localStorage.removeItem('token');
-		setIsLoggedIn(false);
-		router.push('/login');
-	};
-	//////////////////////////////////////////////////////
 
 	const {
 		handleButton,
@@ -41,13 +24,6 @@ const HeaderZra: FC = () => {
 		<header className={style.header}>
 			<div className={style.wrapper}>
 				<span className={style.defense}>Работа защит</span>
-
-				{/* временно пока не появится в макете кнопка для выхода */}
-				{isLoggedIn ? (
-					<button onClick={handleLogout}>выйти</button>
-				) : (
-					<Link href="/login">войти</Link>
-				)}
 
 				<div className={style.part}>
 					<span className={style.name}>птк</span>

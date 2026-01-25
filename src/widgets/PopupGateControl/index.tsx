@@ -5,10 +5,12 @@ import Gate from '@/shared/UI/Gate';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import { openModal } from '@/store/modalSlice';
 import { useGateControlButtons } from '@/shared/hooks/useGateControlButtons';
+import { useIsSimulationActive } from '@/shared/hooks/useIsSimulationActive';
 
 export const PopupGateControl: FC = () => {
 	const gateId = useAppSelector(state => state.gate.activeGateId) ?? 'g1';
 	const gate = useAppSelector(state => state.gate.gates[gateId]);
+	const isSimulationActive = useIsSimulationActive();
 
 	const dispatch = useAppDispatch();
 
@@ -24,7 +26,7 @@ export const PopupGateControl: FC = () => {
 
 	return (
 		<div className={styles.popup}>
-			<div className={styles.message}>3и до слива из ПВД-5 в конд-р</div>
+			<div className={styles.message}>{gate.description}</div>
 			<div className={styles.diagnostic}>
 				<div className={styles.hash}>#</div>
 				<Button
@@ -39,7 +41,12 @@ export const PopupGateControl: FC = () => {
 			<div className={styles.gate}>
 				<div className={styles.percent}>{gate.position}</div>
 				<div className={styles.percentSymbol}>%Откр.</div>
-				<Gate className={styles.symbol} state={gate.states} />
+				<Gate
+					className={styles.symbol}
+					state={gate.states}
+					malfunctions={gate.malfunctions}
+					errorBlink={isSimulationActive}
+				/>
 			</div>
 			<div className={styles.buttons}>
 				<Button

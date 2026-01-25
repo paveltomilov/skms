@@ -23,6 +23,7 @@ const config: Config = {
 
 	//A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
 	moduleNameMapper: {
+		'^@/pages/(.*)$': '<rootDir>/src/page-views/$1',
 		'^@/(.*)$': '<rootDir>/src/$1',
 		'^@c/(.*)$': '<rootDir>/src/components/$1',
 	},
@@ -31,6 +32,12 @@ const config: Config = {
 
 	// The test environment that will be used for testing
 	testEnvironment: 'jsdom',
+
+	// Игнорируем e2e тесты (они запускаются через Playwright)
+	testPathIgnorePatterns: ['/node_modules/', '/e2e/', '/.next/'],
+
+	// Игнорируем папки при сканировании модулей
+	modulePathIgnorePatterns: ['/.next/', '/node_modules/'],
 };
 
 const jestConfigWithOverrides = async () => {

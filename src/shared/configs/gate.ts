@@ -12,10 +12,12 @@ export const GATES: Record<string, IGate> = {
 	// TA
 	// left_top
 	g1: {
-		name: 'ГП3-Б',
+		name: 'ГПЗ-Б',
+		description: 'ГП3-Б',
+		kks: 'M1LAB50AA001',
 		states: GATE_STATE_TYPE.open,
 		position: 100,
-		malfunctions: ['p.1.2.1', 'p.1.1.1'], //массив неисправностей
+		malfunctions: [], //массив неисправностей
 		controlSwitch: false,
 		powerSwitch: false,
 	},
@@ -23,6 +25,8 @@ export const GATES: Record<string, IGate> = {
 	// left_mid
 	g2: {
 		name: 'ГП3-А',
+		description: 'ГП3-А',
+		kks: 'M1LAB10AA001',
 		states: GATE_STATE_TYPE.open,
 		position: 100,
 		malfunctions: [], // если массив неисправностей пустой, значит задвижка исправна
@@ -31,6 +35,8 @@ export const GATES: Record<string, IGate> = {
 	},
 	g3: {
 		name: '1ПВ-5',
+		description: 'Здв 1 на пит воде до гр. ПВД',
+		kks: 'M1LAB10AA004',
 		states: GATE_STATE_TYPE.open,
 		position: 100,
 		malfunctions: [],
@@ -41,6 +47,8 @@ export const GATES: Record<string, IGate> = {
 	// left_down
 	g6: {
 		name: '1ПВ-4',
+		description: 'Здв 2 на пит воде до гр. ПВД',
+		kks: 'M1LAB10AA002',
 		states: GATE_STATE_TYPE.open,
 		position: 100,
 		malfunctions: [],
@@ -49,6 +57,8 @@ export const GATES: Record<string, IGate> = {
 	},
 	g7: {
 		name: '1ПВ-21',
+		description: 'Здв на обводе ПВД по пит воде',
+		kks: 'M1LAB11AA001',
 		states: GATE_STATE_TYPE.close,
 		position: 0,
 		malfunctions: [],
@@ -57,6 +67,8 @@ export const GATES: Record<string, IGate> = {
 	},
 	g8: {
 		name: '1ПЭНА-2',
+		description: 'Здв 1 на напоре ПЭН-1А',
+		kks: 'M1LAB01AA002',
 		states: GATE_STATE_TYPE.open,
 		position: 100,
 		malfunctions: [],
@@ -67,6 +79,8 @@ export const GATES: Record<string, IGate> = {
 	//mid_mid
 	g4: {
 		name: '1Кпсг2–3',
+		description: 'Здв на отборе из ПСГ-2 за ПНД-1',
+		kks: 'M1NAB23AA001',
 		states: GATE_STATE_TYPE.open,
 		position: 100,
 		malfunctions: [],
@@ -75,6 +89,8 @@ export const GATES: Record<string, IGate> = {
 	},
 	g5: {
 		name: '1Кпсг1–3',
+		description: 'Здв на отборе из ПСГ-1 за ПНД-1',
+		kks: 'M1NAB13AA001',
 		states: GATE_STATE_TYPE.open,
 		position: 100,
 		malfunctions: [],
@@ -85,6 +101,8 @@ export const GATES: Record<string, IGate> = {
 	// mid_down
 	g9: {
 		name: '1ПЭНБ-2',
+		description: 'Здв 1 на напоре ПЭН-1Б',
+		kks: 'M1LAB02AA002',
 		states: GATE_STATE_TYPE.open,
 		position: 100,
 		malfunctions: [],
@@ -93,6 +111,8 @@ export const GATES: Record<string, IGate> = {
 	},
 	g10: {
 		name: '1ПЭНВ-2',
+		description: 'Здв 1 на напоре ПЭН-1В',
+		kks: 'M1LAB03AA002',
 		states: GATE_STATE_TYPE.open,
 		position: 100,
 		malfunctions: [],
@@ -104,6 +124,8 @@ export const GATES: Record<string, IGate> = {
 	//left_top
 	g11: {
 		name: '1АСБ-1',
+		description: 'Здв 1 на авар сбросе из бар-н',
+		kks: 'H1HAN10AA001',
 		states: GATE_STATE_TYPE.close,
 		position: 100,
 		malfunctions: [],
@@ -112,6 +134,8 @@ export const GATES: Record<string, IGate> = {
 	},
 	g12: {
 		name: '1АСБ-2',
+		description: 'Здв 2 на авар сбросе из бар-н',
+		kks: 'H1HAN10AA002',
 		states: GATE_STATE_TYPE.open,
 		position: 0,
 		malfunctions: [],
@@ -122,6 +146,8 @@ export const GATES: Record<string, IGate> = {
 	//right_top
 	g14: {
 		name: '1ПП-4',
+		description: 'Здв 1 продувки пароперегревателя',
+		kks: 'M1LBA91AA001',
 		states: GATE_STATE_TYPE.noPower,
 		position: 100,
 		malfunctions: [],
@@ -130,6 +156,8 @@ export const GATES: Record<string, IGate> = {
 	},
 	g15: {
 		name: '1ПП-5',
+		description: 'Здв 2 продувки пароперегревателя',
+		kks: 'M1LBA91AA002',
 		states: GATE_STATE_TYPE.noPower,
 		position: 100,
 		malfunctions: [],
@@ -140,6 +168,8 @@ export const GATES: Record<string, IGate> = {
 	//right_mid
 	g16: {
 		name: '1РВЭК-1',
+		description: 'Регулятор воды экономайзера ',
+		kks: 'M1LAB10AA005',
 		states: GATE_STATE_TYPE.close,
 		position: 0,
 		malfunctions: [],

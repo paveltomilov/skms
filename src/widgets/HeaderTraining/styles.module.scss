@@ -11,14 +11,19 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 10px 32px 10px 106px;
+        padding: 10px 32px 10px 109px;
         background: variables.$secondary-color;
         border-bottom: 1px solid variables.$gray-disabled-color;
 
         .buttons {
-            width: 448px;
+            width: 443px;
             display: flex;
             justify-content: space-between;
+            align-items: center;
+
+            &__wide {
+                width: 501px;
+            }
         }
 
         .button {

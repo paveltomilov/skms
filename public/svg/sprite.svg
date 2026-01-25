@@ -1,27 +1,31 @@
 <svg xmlns="http://www.w3.org/2000/svg">
     <!-- галочка -->
-    <symbol id="accept" width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <symbol id="accept" width="16" height="16"
+        viewBox="0 0 16 16" fill="none">
         <path fill-rule="evenodd" clip-rule="evenodd"
             d="M0.800049 5.48705L6.76669 13.5981L15.2 1.59998" stroke="currentColor"
             stroke-width="2" />
     </symbol>
 
     <!-- восклицательный знак -->
-    <symbol id="exclamation" width="4" height="14" viewBox="0 0 4 14" fill="none">
+    <symbol id="exclamation" width="4" height="14"
+        viewBox="0 0 4 14" fill="none">
         <path
             d="M3.40625 0.203125L3.11621 9.08887H1.00684L0.708008 0.203125H3.40625ZM0.637695 11.8398C0.637695 11.4648 0.766602 11.1543 1.02441 10.9082C1.28809 10.6562 1.63379 10.5303 2.06152 10.5303C2.49512 10.5303 2.84082 10.6562 3.09863 10.9082C3.35645 11.1543 3.48535 11.4648 3.48535 11.8398C3.48535 12.2031 3.35645 12.5107 3.09863 12.7627C2.84082 13.0146 2.49512 13.1406 2.06152 13.1406C1.63379 13.1406 1.28809 13.0146 1.02441 12.7627C0.766602 12.5107 0.637695 12.2031 0.637695 11.8398Z"
             fill="currentColor" />
     </symbol>
 
     <!-- вопросительный знак -->
-    <symbol id="question" width="8" height="16" viewBox="0 0 8 16" fill="none">
+    <symbol id="question" width="8" height="16"
+        viewBox="0 0 8 16" fill="none">
         <path
             d="M4.57617 10.9961H2.75977C2.76628 10.3711 2.82161 9.86003 2.92578 9.46289C3.03646 9.05924 3.21549 8.69141 3.46289 8.35938C3.71029 8.02734 4.03906 7.64974 4.44922 7.22656C4.7487 6.92057 5.02214 6.63411 5.26953 6.36719C5.52344 6.09375 5.72852 5.80078 5.88477 5.48828C6.04102 5.16927 6.11914 4.78841 6.11914 4.3457C6.11914 3.89648 6.03776 3.50911 5.875 3.18359C5.71875 2.85807 5.48438 2.60742 5.17188 2.43164C4.86589 2.25586 4.48503 2.16797 4.0293 2.16797C3.65169 2.16797 3.29362 2.23633 2.95508 2.37305C2.61654 2.50977 2.3431 2.72135 2.13477 3.00781C1.92643 3.28776 1.81901 3.6556 1.8125 4.11133H0.00585938C0.0188802 3.37565 0.201172 2.74414 0.552734 2.2168C0.910807 1.68945 1.39258 1.28581 1.99805 1.00586C2.60352 0.725911 3.2806 0.585938 4.0293 0.585938C4.85612 0.585938 5.55924 0.735677 6.13867 1.03516C6.72461 1.33464 7.17057 1.76432 7.47656 2.32422C7.78255 2.8776 7.93555 3.53516 7.93555 4.29688C7.93555 4.88281 7.8151 5.42318 7.57422 5.91797C7.33984 6.40625 7.03711 6.86523 6.66602 7.29492C6.29492 7.72461 5.90104 8.13477 5.48438 8.52539C5.1263 8.85742 4.88542 9.23177 4.76172 9.64844C4.63802 10.0651 4.57617 10.5143 4.57617 10.9961ZM2.68164 14.0918C2.68164 13.7988 2.77279 13.5514 2.95508 13.3496C3.13737 13.1478 3.40104 13.0469 3.74609 13.0469C4.09766 13.0469 4.36458 13.1478 4.54688 13.3496C4.72917 13.5514 4.82031 13.7988 4.82031 14.0918C4.82031 14.3717 4.72917 14.6126 4.54688 14.8145C4.36458 15.0163 4.09766 15.1172 3.74609 15.1172C3.40104 15.1172 3.13737 15.0163 2.95508 14.8145C2.77279 14.6126 2.68164 14.3717 2.68164 14.0918Z"
             fill="currentColor" />
     </symbol>
 
     <!-- лупа -->
-    <symbol id="search" width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <symbol id="search" width="16" height="16"
+        viewBox="0 0 16 16" fill="none">
         <path fill-rule="evenodd" clip-rule="evenodd"
             d="M13.6417 6.53134C13.6417 9.03394 11.613 11.0627 9.11038 11.0627C6.60778 11.0627 4.57903 9.03394 4.57903 6.53134C4.57903 4.02875 6.60778 2 9.11038 2C11.613 2 13.6417 4.02875 13.6417 6.53134ZM15.6417 6.53134C15.6417 10.1385 12.7175 13.0627 9.11038 13.0627C7.75466 13.0627 6.49542 12.6496 5.45164 11.9425L1.41423 15.98L0 14.5658L3.98527 10.5804C3.10472 9.46742 2.57903 8.06077 2.57903 6.53134C2.57903 2.92418 5.50321 0 9.11038 0C12.7175 0 15.6417 2.92418 15.6417 6.53134Z"
             fill="currentColor" />
@@ -29,12 +33,14 @@
 
 
     <!-- треугольник черный -->
-    <symbol id="side" width="9" height="16" viewBox="0 0 9 16" fill="none">
+    <symbol id="side" width="9" height="16"
+        viewBox="0 0 9 16" fill="none">
         <path d="M0.878638 15.7782L9 8L0.878638 0.22183L0.878638 15.7782Z" fill="currentColor" />
     </symbol>
 
     <!-- микрофон -->
-    <symbol id="micro" width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <symbol
+        id="micro" width="20" height="20" viewBox="0 0 20 20" fill="none">
         <g clip-path="url(#clip0_23_4465)">
             <path
                 d="M7.75 2.85603V17.144L3.74044 13.5698L3.45603 13.3163H3.07502H1V6.68369H3.07502H3.45603L3.74044 6.43017L7.75 2.85603Z"
@@ -55,7 +61,8 @@
     </symbol>
 
     <!-- крестик в кружочке -->
-    <symbol id="ellipseClose" width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <symbol
+        id="ellipseClose" width="20" height="20" viewBox="0 0 20 20" fill="none">
         <g clip-path="url(#clip0_23_4477)">
             <path fill-rule="evenodd" clip-rule="evenodd"
                 d="M10 18C14.4183 18 18 14.4183 18 10C18 5.58172 14.4183 2 10 2C5.58172 2 2 5.58172 2 10C2 14.4183 5.58172 18 10 18ZM10 19C14.9706 19 19 14.9706 19 10C19 5.02944 14.9706 1 10 1C5.02944 1 1 5.02944 1 10C1 14.9706 5.02944 19 10 19Z"
@@ -77,13 +84,22 @@
         </defs>
     </symbol>
 
+    <symbol
+        id="ellipseCloseThin" width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <circle cx="8" cy="8" r="6.5" stroke="black" />
+        <path d="M11 5L5 11" stroke="black" />
+        <path d="M5 5L11 11" stroke="black" />
+    </symbol>
+
     <!-- крестик -->
-    <symbol id="close" width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <symbol
+        id="close" width="20" height="20" viewBox="0 0 20 20" fill="none">
         <path d="M2 18L18 2M2 2L18 18" stroke="currentColor" />
     </symbol>
 
     <!-- стрелка -->
-    <symbol id="curvedArrow" width="30" height="20" viewBox="0 0 30 20" fill="none">
+    <symbol id="curvedArrow"
+        width="30" height="20" viewBox="0 0 30 20" fill="none">
         <g clip-path="url(#clip0_23_4505)">
             <path
                 d="M1.45521 10L9.57187 2.3224V5.13889V5.15625V6.15625H10.5719C18.6351 6.15625 22.5061 7.87716 24.6247 9.46364C26.7921 11.0867 28.0179 13.574 28.6065 15.8457C27.4817 15.1599 26.4024 14.684 25.1512 14.3707C23.2382 13.8916 20.9807 13.809 17.643 13.809C16.4734 13.809 15.9257 13.8222 15.4009 13.8354L15.3711 13.8361C14.8677 13.8488 14.3768 13.8611 13.3308 13.8611H10.5719H9.57187V14.8611V17.6776L1.45521 10Z"
@@ -97,7 +113,8 @@
     </symbol>
 
     <!-- решетка -->
-    <symbol id="sharp" width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <symbol
+        id="sharp" width="20" height="20" viewBox="0 0 20 20" fill="none">
         <rect x="1" y="1" width="18" height="18" />
         <rect x="1" y="1" width="18" height="18" stroke="currentColor" stroke-width="2" />
         <path
@@ -106,7 +123,8 @@
     </symbol>
 
     <!-- фильтр -->
-    <symbol id="filter" width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <symbol id="filter" width="20" height="20"
+        viewBox="0 0 20 20" fill="none">
         <line x1="1.41421" y1="12" x2="7" y2="17.5858" stroke="currentColor" stroke-width="2"
             stroke-linecap="square" />
         <line x1="1" y1="-1" x2="8.8995" y2="-1"
@@ -120,21 +138,24 @@
     </symbol>
 
     <!-- простая стрелка -->
-    <symbol id="arrow_page" width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <symbol id="arrow_page"
+        width="20" height="20" viewBox="0 0 20 20" fill="none">
         <path fill-rule="evenodd" clip-rule="evenodd"
             d="M1.92013 9.28925L1.20203 9.99999L1.92013 10.7107L8.6725 17.3938L10.0794 15.9724L5.05551 11H18.798V8.99999H5.05551L10.0794 4.02762L8.6725 2.60614L1.92013 9.28925Z"
             fill="currentColor" />
     </symbol>
 
     <!-- домик -->
-    <symbol id="home" width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <symbol id="home" width="20" height="20"
+        viewBox="0 0 20 20" fill="none">
         <path fill-rule="evenodd" clip-rule="evenodd"
             d="M10.005 3.01562L6.46 7H13.55L10.005 3.01562ZM10.005 0.00562162L10.01 0H10L10.005 0.00562162ZM2 9L10.005 0.00562162L18 9H2ZM16 18V12H4V18H16ZM2 10H18V20H2V10Z"
             fill="currentColor" />
     </symbol>
 
     <!-- учеба -->
-    <symbol id="training" width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <symbol id="training" width="20" height="20"
+        viewBox="0 0 20 20" fill="none">
         <path fill-rule="evenodd" clip-rule="evenodd"
             d="M8.4031 8.21849C7.82403 8.36867 7.29575 8.57556 6.86469 8.77122L4.09743 7.60074L10 3.44581L15.9026 7.60074L13.1353 8.77122C12.7043 8.57556 12.176 8.36867 11.5969 8.21849C11.1117 8.09065 10.5687 8 10 8C9.43126 8 8.88829 8.09065 8.4031 8.21849ZM2.17041 8.95721L5 10.1541V10.3758V14.6242V15.0763L5.33944 15.3749L6 14.6242C5.33944 15.3749 5.33973 15.3752 5.34002 15.3755L5.34064 15.376L5.342 15.3772L5.34516 15.3799L5.35327 15.3869L5.37658 15.4067C5.39525 15.4223 5.42018 15.4427 5.45121 15.4673C5.51323 15.5164 5.59987 15.5822 5.70977 15.659C5.92917 15.8122 6.2439 16.011 6.64308 16.2085C7.43976 16.6025 8.59187 17 10 17C11.4081 17 12.5602 16.6025 13.3569 16.2085C13.7561 16.011 14.0708 15.8122 14.2902 15.659C14.4001 15.5822 14.4868 15.5164 14.5488 15.4673C14.5798 15.4427 14.6048 15.4223 14.6234 15.4067L14.6467 15.3869L14.6548 15.3799L14.658 15.3772L14.6594 15.376L14.66 15.3755C14.6603 15.3752 14.6606 15.3749 14 14.6242L14.6606 15.3749L15 15.0763V14.6242V10.3758V10.1541L17.8296 8.95721L18.5078 8.67034C18.7257 10.552 18.7988 12.1626 18.74 13.0408C18.7127 14.5881 18.412 16.027 18.0943 17.5473C18.063 17.6973 18.0314 17.8482 18 18H20C19.5641 15.9063 19.3694 13.8733 19.173 11.8218C19.069 10.7359 18.9646 9.64476 18.8236 8.53679L20 8.03919L18.5991 7.05307C17.9565 3.91098 15.803 -0.102754 12.6274 2.84944L10 1L1.92702 6.68272L0 8.03919L2.17041 8.95721ZM13.0785 3.16703C15.4718 1.00924 17.4404 3.9342 18.1792 6.7575L18.073 6.68272L13.0785 3.16703ZM7 14.1165V11C7 11 7.85243 10.4317 8.91468 10.1519C9.27824 10.0582 9.64703 10 10 10C10.353 10 10.7217 10.0582 11.0853 10.1519C12.1476 10.4317 13 11 13 11V14.1165C12.8611 14.2058 12.6832 14.3104 12.4703 14.4157C11.876 14.7096 11.0282 15 10 15C8.97185 15 8.12396 14.7096 7.52971 14.4157C7.31679 14.3104 7.1389 14.2058 7 14.1165ZM6.65973 13.8726L6.6595 13.8725L6.65857 13.8717L6.65712 13.8704L6.65585 13.8693C6.65572 13.8692 6.65702 13.8703 6.65973 13.8726ZM13.3403 13.8726L13.3441 13.8693L13.3429 13.8704L13.3414 13.8717L13.3405 13.8725L13.3403 13.8726Z"
             fill="currentColor" />
@@ -142,28 +163,32 @@
     </symbol>
 
     <!-- ПТК -->
-    <symbol id="ptk" width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <symbol id="ptk" width="20" height="20"
+        viewBox="0 0 20 20" fill="none">
         <path fill-rule="evenodd" clip-rule="evenodd"
             d="M10 7.55L13.42 2H6.58L10 7.55ZM3 0H17L10.838 10L17 20H3L9.16198 10L3 0ZM13.42 18L10 12.45L6.58 18H13.42Z"
             fill="currentColor" />
     </symbol>
 
     <!-- симулятор -->
-    <symbol id="simulator" width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <symbol id="simulator" width="20" height="20"
+        viewBox="0 0 20 20" fill="none">
         <path fill-rule="evenodd" clip-rule="evenodd"
             d="M9 4.98999V0H11V4.98999H13V6.98999H7V4.98999H9ZM18 9H2V18H8V17H10V18H11V17H13V18H18V9ZM18 7H20V9V18V20H18H2H0V18V9V7H2H18ZM5.01001 11.99V9.97H7.01001V11.99H9.03V13.99H7.01001V16H5.01001V13.99H3V11.99H5.01001ZM16 11.97C16.5523 11.97 17 11.5223 17 10.97C17 10.4177 16.5523 9.97 16 9.97C15.4477 9.97 15 10.4177 15 10.97C15 11.5223 15.4477 11.97 16 11.97ZM14 12.34C14 12.8923 13.5523 13.34 13 13.34C12.4477 13.34 12 12.8923 12 12.34C12 11.7877 12.4477 11.34 13 11.34C13.5523 11.34 14 11.7877 14 12.34ZM16 14.97C16.5523 14.97 17 14.5223 17 13.97C17 13.4177 16.5523 12.97 16 12.97C15.4477 12.97 15 13.4177 15 13.97C15 14.5223 15.4477 14.97 16 14.97ZM14 15.34C14 15.8923 13.5523 16.34 13 16.34C12.4477 16.34 12 15.8923 12 15.34C12 14.7877 12.4477 14.34 13 14.34C13.5523 14.34 14 14.7877 14 15.34Z"
             fill="currentColor" />
     </symbol>
 
     <!-- схема -->
-    <symbol id="scheme" width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <symbol id="scheme" width="20" height="20"
+        viewBox="0 0 20 20" fill="none">
         <path fill-rule="evenodd" clip-rule="evenodd"
             d="M4 0V5.26264L7.66714 11.3649L5.95287 12.3951L2.14287 6.05509L2 5.81736V5.54V0H4ZM4 20V11.88H2V20H4ZM16.5801 13.1731V8H14.5801V13.1194C13.0882 13.52 11.99 14.8817 11.99 16.5C11.99 18.433 13.557 20 15.49 20C17.423 20 18.99 18.433 18.99 16.5C18.99 14.9476 17.9793 13.6313 16.5801 13.1731ZM15.49 15C14.6616 15 13.99 15.6716 13.99 16.5C13.99 17.3284 14.6616 18 15.49 18C16.3184 18 16.99 17.3284 16.99 16.5C16.99 15.6716 16.3184 15 15.49 15ZM11.12 0V8H13.12V0H11.12Z"
             fill="currentColor" />
     </symbol>
 
     <!-- внимание -->
-    <symbol id="attention" width="26" height="26" viewBox="0 0 26 26" fill="none">
+    <symbol id="attention" width="26" height="26"
+        viewBox="0 0 26 26" fill="none">
         <g clip-path="url(#clip0_23_4494)">
             <path d="M24.3585 25H1.59479L12.6095 2.23625L24.3585 25Z" stroke="currentColor"
                 stroke-width="2" />
@@ -179,7 +204,8 @@
     </symbol>
 
     <!-- обратная связь -->
-    <symbol id="feedback" width="34" height="29" viewBox="0 0 34 29" fill="none">
+    <symbol
+        id="feedback" width="34" height="29" viewBox="0 0 34 29" fill="none">
         <mask id="path-1-inside-1_1398_12691" fill="white">
             <path fill-rule="evenodd" clip-rule="evenodd"
                 d="M27.4729 1.28448C28.3351 1.28448 29.0341 1.98344 29.0341 2.84565V21.7893C29.0341 22.6515 28.3351 23.3504 27.4729 23.3504H26.7115L26.7115 27.2729C26.7115 27.9683 25.8707 28.3165 25.379 27.8248L20.9046 23.3504H1.56108C0.698872 23.3504 -8.39233e-05 22.6515 -8.39233e-05 21.7893V2.84565C-8.39233e-05 1.98344 0.698874 1.28448 1.56108 1.28448H27.4729Z" />
@@ -199,7 +225,8 @@
     </symbol>
 
     <!-- успех -->
-    <symbol id="success" width="28" height="28" viewBox="0 0 28 28" fill="none">
+    <symbol id="success" width="28"
+        height="28" viewBox="0 0 28 28" fill="none">
         <g clip-path="url(#clip0_23_4498)">
             <path
                 d="M0 14C0 6.26801 6.26801 0 14 0C21.732 0 28 6.26801 28 14C28 21.732 21.732 28 14 28C6.26801 28 0 21.732 0 14Z"
@@ -216,7 +243,8 @@
     </symbol>
 
     <!-- ошибка -->
-    <symbol id="error" width="28" height="28" viewBox="0 0 28 28" fill="none">
+    <symbol
+        id="error" width="28" height="28" viewBox="0 0 28 28" fill="none">
         <g clip-path="url(#clip0_23_4500)">
             <path
                 d="M0 14C0 6.26801 6.26801 0 14 0C21.732 0 28 6.26801 28 14C28 21.732 21.732 28 14 28C6.26801 28 0 21.732 0 14Z"
@@ -233,31 +261,36 @@
     </symbol>
 
     <!-- стрелка(угловая скобка) -->
-    <symbol id="chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <symbol
+        id="chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
         <path fill-rule="evenodd" clip-rule="evenodd"
             d="M12.8787 11.2929L13.5858 12L15 10.5858L14.2929 9.87868L9.41421 5L8.70711 4.29289L8 3.58579L7.29289 4.29289L6.58579 5L1.70711 9.87868L1 10.5858L2.41421 12L3.12132 11.2929L8 6.41421L12.8787 11.2929Z"
             fill="currentColor" />
     </symbol>
 
     <!-- стрелка цветная(угловая скобка) -->
-    <symbol id="chevron_color" width="14" height="13" viewBox="0 0 14 13" fill="none">
+    <symbol id="chevron_color" width="14" height="13"
+        viewBox="0 0 14 13" fill="none">
         <path fill-rule="evenodd" clip-rule="evenodd"
             d="M6.99995 0.270935L13.8574 11.7001L12.1425 12.7291L6.99995 4.15824L1.85744 12.7291L0.142456 11.7001L6.99995 0.270935Z"
             fill="currentColor" />
     </symbol>
 
     <!-- стрелка (закрашенный треугольник) -->
-    <symbol id="filled" width="12" height="16" viewBox="0 0 12 16" fill="none">
+    <symbol id="filled" width="12" height="16"
+        viewBox="0 0 12 16" fill="none">
         <path d="M6 0L12 16H0L6 0Z" fill="currentColor" />
     </symbol>
 
     <!-- стрелка (обведенный треугольник) -->
-    <symbol id="outlined" width="12" height="16" viewBox="0 0 12 16" fill="none">
+    <symbol id="outlined"
+        width="12" height="16" viewBox="0 0 12 16" fill="none">
         <path d="M0.7215 15.5L6 1.424L11.2785 15.5H0.7215Z" stroke="currentColor" />
     </symbol>
 
     <!-- стрелка (загнутая в футере) -->
-    <symbol id="arrow_change" width="48" height="18" viewBox="0 0 48 18" fill="none">
+    <symbol
+        id="arrow_change" width="48" height="18" viewBox="0 0 48 18" fill="none">
         <path
             d="M33.3433 0.0203204C30.7819 -0.0253907 30.4181 0.0203158 28.0841 0.0203158C28.0841 0.0203158 28.069 0.0203158 28.0538 0.0203158C28.0386 0.0203158 28.0386 0.0203158 28.0235 0.0203158C25.6895 0.0203158 23.2342 0.0660269 20.6577 0.111738C5.62288 0.401241 6.01694 7.71501 6.01694 7.71501V11.0519H0L10.2455 18L20.4909 11.0519H14.4892V7.71501C14.4892 2.91535 18.5055 1.22404 25.0226 1.22404C31.5397 1.22404 35.6167 2.82393 35.6167 7.62359H43.763H47.9991C47.9991 7.62359 48.378 0.309824 33.3433 0.0203204Z"
             fill="currentColor" />
@@ -265,13 +298,15 @@
 
 
     <!-- треугольник -->
-    <symbol id="triangle" width="20" height="19" viewBox="0 0 20 19" fill="none">
+    <symbol id="triangle" width="20" height="19"
+        viewBox="0 0 20 19" fill="none">
         <path d="M10 17.9265L0.828182 0.5H19.1718L10 17.9265Z" fill="currentColor"
             stroke="" />
     </symbol>
 
     <!-- наличие напряжения -->
-    <symbol id="power" width="10" height="10" viewBox="0 0 10 10" fill="none">
+    <symbol id="power" width="10" height="10" viewBox="0 0 10 10"
+        fill="none">
 
         <path fill-rule="evenodd" clip-rule="evenodd"
             d="M10 0.83728V8.83728L9.12038 9.16268L3.44129 2.53707L0.640184 5.76822L0 5L3.17992 1.45317L3.87964 1.51188L9.00001 7.48565V0.83728H10Z"
@@ -280,7 +315,8 @@
 
     <!-- тильда в кружочке -->
 
-    <symbol id="tilde" width="26" height="26" viewBox="0 0 26 26" fill="none">
+    <symbol id="tilde" width="26" height="26"
+        viewBox="0 0 26 26" fill="none">
         <g clip-path="url(#clip0_23_4814)">
             <circle cx="13" cy="13" r="12.5" fill="currentColor" stroke="black" />
             <path
@@ -295,13 +331,15 @@
     </symbol>
 
     <!-- стрелка(угловая скобка) в кружочке -->
-    <symbol id="circle_chevron" width="30" height="30" viewBox="0 0 30 30" fill="none">
+    <symbol
+        id="circle_chevron" width="30" height="30" viewBox="0 0 30 30" fill="none">
         <circle cx="15" cy="15" r="14" stroke="currentColor" stroke-width="2" />
         <path d="M25.6565 24L14.8711 3L4.09399 24" stroke="currentColor" stroke-width="2" />
     </symbol>
 
     <!-- стрелка обычная в кружочке -->
-    <symbol id="circle_arrow" width="36" height="36" viewBox="0 0 36 36" fill="none">
+    <symbol
+        id="circle_arrow" width="36" height="36" viewBox="0 0 36 36" fill="none">
         <g clip-path="url(#clip0_23_4840)">
             <path
                 d="M17.9999 1.50732C8.89176 1.50732 1.50732 8.89176 1.50732 17.9999C1.50732 27.1081 8.89176 34.4925 17.9999 34.4925C27.1081 34.4925 34.4925 27.1081 34.4925 17.9999C34.4925 8.89176 27.1081 1.50732 17.9999 1.50732ZM14.5152 20.8196V24.8098L4.31639 18.0053L14.5152 11.1901V15.1802H31.6835V20.825H14.5152V20.8196Z"
@@ -319,24 +357,28 @@
 
 
     <!-- статус -->
-    <symbol id="longWave" width="45" height="42" viewBox="0 0 45 42" fill="none">
+    <symbol
+        id="longWave" width="45" height="42" viewBox="0 0 45 42" fill="none">
         <path d="M0 23H8.56863L22.2059 41V1L36.6372 23H45" stroke="currentColor" stroke-width="2"
             stroke-linejoin="bevel" />
     </symbol>
 
-    <symbol id="shortWave" width="26" height="44" viewBox="0 0 26 44" fill="none">
+    <symbol id="shortWave" width="26" height="44"
+        viewBox="0 0 26 44" fill="none">
         <path d="M0.00244141 22H4.84558L13.0024 43V1L21.1544 22H25.9975" stroke="currentColor"
             stroke-width="2" />
     </symbol>
 
-    <symbol id="crash" width="42" height="42" viewBox="0 0 42 42" fill="none">
+    <symbol id="crash" width="42" height="42"
+        viewBox="0 0 42 42" fill="none">
         <path d="M21 1.41421L40.5858 21L21 40.5858L1.41421 21L21 1.41421Z" stroke="currentColor"
             stroke-width="2" stroke-linejoin="round" />
         <line x1="21" y1="0" x2="21" y2="42" stroke="currentColor" stroke-width="2" />
     </symbol>
 
     <!-- прямоугольник с крестиком -->
-    <symbol id="rectangle" width="40" height="28" viewBox="0 0 40 28" fill="none">
+    <symbol
+        id="rectangle" width="40" height="28" viewBox="0 0 40 28" fill="none">
         <rect x="2.43269" y="2.43269" width="35.1346" height="23.1346" fill="currentColor"
             stroke="black"
             stroke-width="0.865385" />
@@ -346,7 +388,8 @@
     </symbol>
 
     <!-- огонь -->
-    <symbol id="fire" width="52" height="36" viewBox="0 0 52 36" fill="none">
+    <symbol
+        id="fire" width="52" height="36" viewBox="0 0 52 36" fill="none">
         <g clip-path="url(#clip0_23_4627)">
             <path
                 d="M0.0937956 17.2C-0.542611 29.36 2.21515 35.0667 3.67358 36.4H47.0288C52.12 33.84 52.3322 23.6 51.8018 18.8C50.8472 21.04 45.3052 25.6 42.6535 27.6C43.2899 24.4 41.5928 17.4667 40.6647 14.4C39.7101 16.32 37.0849 17.0667 35.8917 17.2C35.5735 11.76 31.7815 5.06672 29.9254 2.40005C30.88 4.96005 28.4669 10.4 27.1411 12.8C25.9478 11.2 23.4817 7.92005 23.1635 7.60005C22.8453 7.28005 21.1748 10.9334 20.3793 12.8C18.47 11.2 16.9321 4.13338 16.4017 0.800049C13.6174 4.40005 13.6174 20 12.8219 17.2C12.1855 14.96 9.90507 10.6667 8.84439 8.80005C8.84439 14.6667 8.36709 26.24 6.45787 25.6C4.54865 24.96 1.41965 19.7334 0.0937956 17.2Z"
@@ -366,7 +409,8 @@
     </symbol>
 
     <!-- ТДМ -->
-    <symbol id="tdm" width="41" height="35" viewBox="0 0 41 35" fill="none">
+    <symbol
+        id="tdm" width="41" height="35" viewBox="0 0 41 35" fill="none">
         <mask id="path-1-inside-1_23_4619" fill="white">
             <path fill-rule="evenodd" clip-rule="evenodd"
                 d="M0.888916 0H25.4049H25.405C33.9565 5.48853e-05 40.8888 6.96449 40.8888 15.5556C40.8888 19.8166 39.1834 23.6776 36.4209 26.487L39.5986 35H11.2115L14.3891 26.4872C11.6265 23.6777 9.92107 19.8167 9.92107 15.5556C9.92107 13.7374 10.2315 11.9922 10.8021 10.3704H0.888916V0Z" />
@@ -382,7 +426,8 @@
 
 
     <!-- элементы схемы -->
-    <symbol id="yb08" width="74" height="35" viewBox="0 0 74 35" fill="none">
+    <symbol id="yb08"
+        width="74" height="35" viewBox="0 0 74 35" fill="none">
         <path d="M73 0.5H1V34.5H73V0.5Z" stroke="currentColor" stroke-miterlimit="10" />
         <path d="M53.6928 17.5H48.6807" stroke="currentColor" stroke-miterlimit="10" />
         <path d="M20 17.5H25.9786L48.3739 7.5" stroke="currentColor" stroke-miterlimit="10" />
@@ -391,7 +436,8 @@
     </symbol>
 
 
-    <symbol id="xb10" width="74" height="47" viewBox="0 0 74 47" fill="none">
+    <symbol
+        id="xb10" width="74" height="47" viewBox="0 0 74 47" fill="none">
         <path d="M73 0.5H1V46.5H73V0.5Z" stroke="currentColor" stroke-miterlimit="10" />
         <path d="M20 14.5H1V32.5H20V14.5Z" fill="white" stroke="currentColor" stroke-miterlimit="10" />
         <path d="M73 14.5H54V32.5H73V14.5Z" fill="white" stroke="currentColor"
@@ -404,11 +450,13 @@
             fill="currentColor" />
     </symbol>
 
-    <symbol id="cabinet" width="26" height="43" viewBox="0 0 26 43" fill="none">
+    <symbol id="cabinet" width="26" height="43"
+        viewBox="0 0 26 43" fill="none">
         <path d="M25 1H1V42H25V1Z" fill="white" stroke="currentColor" stroke-miterlimit="10" />
     </symbol>
 
-    <symbol id="lamp" width="32" height="31" viewBox="0 0 32 31" fill="none">
+    <symbol
+        id="lamp" width="32" height="31" viewBox="0 0 32 31" fill="none">
         <path
             d="M16 30.5C24.2843 30.5 31 23.7843 31 15.5C31 7.21573 24.2843 0.5 16 0.5C7.71573 0.5 1 7.21573 1 15.5C1 23.7843 7.71573 30.5 16 30.5Z"
             fill="white" stroke="currentColor" stroke-miterlimit="10" />
@@ -416,7 +464,8 @@
         <path d="M5.2207 4.7207L26.4266 25.9266" stroke="currentColor" stroke-miterlimit="10" />
     </symbol>
 
-    <symbol id="engine" width="140" height="114" viewBox="0 0 140 114" fill="none">
+    <symbol
+        id="engine" width="140" height="114" viewBox="0 0 140 114" fill="none">
         <path
             d="M99 10V33.4536L56.5168 94.3663M56.5168 94.3663L14.5 33.4955L14.5 10.0293M56.5168 94.3663L56.5 10"
             stroke="black" stroke-miterlimit="10" />
@@ -446,7 +495,8 @@
     </symbol>
 
 
-    <symbol id="f01" width="57" height="55" viewBox="0 0 57 55" fill="none">
+    <symbol id="f01" width="57" height="55" viewBox="0 0 57 55"
+        fill="none">
         <path d="M28.6349 30.3426L35.1883 26.5992L33.3914 23.2182L26.6698 26.7938L28.6349 30.3426Z"
             stroke="black" stroke-miterlimit="10" />
         <path d="M43.546 22.2754L22.9732 33.4933H10" stroke="black" stroke-miterlimit="10" />
@@ -461,7 +511,8 @@
             fill="black" />
     </symbol>
 
-    <symbol id="n322" width="64" height="58" viewBox="0 0 64 58" fill="none">
+    <symbol id="n322" width="64" height="58" viewBox="0 0 64 58"
+        fill="none">
         <path d="M11 27.5H17.5913L40.8295 40.8283M36.9999 48V27.5H52.9034" stroke="black"
             stroke-miterlimit="10" />
         <path
@@ -475,7 +526,8 @@
             fill="black" />
     </symbol>
 
-    <symbol id="p31" width="268" height="92" viewBox="0 0 268 92" fill="none">
+    <symbol id="p31" width="268" height="92"
+        viewBox="0 0 268 92" fill="none">
         <path d="M131.64 58.2685L125.173 47.5477H138.106L131.64 58.2685Z" fill="white" />
         <path
             d="M35.9927 51.7303H127.696M129.515 37.0455L129.5 10.0428M167.5 36.9465L167.485 10M201.015 36.9893L201 10.0428M235.004 36.9893L234.988 10.0428M87.5151 35.544L87.5 10.0428M45.5 35.2699L45.4849 10.0428M232 81.9358V61.8615L222.109 40.8749M198.5 81.9358V61.8615L188.43 40.8749M160.5 81.9358V61.8615L150.769 40.8749M119.759 40.8124L130 61.8033V81.9358M77.6562 40.8124L87.5 61.8033L87.5084 61.8622V81.9358M34.9956 40.9786L45.4874 61.8033L45.5 61.8622V81.9358M45.5 40.5627C42.9867 40.5627 40.9155 38.4902 40.9155 35.9753C40.9155 33.4604 42.9867 31.3879 45.5 31.3879V40.5627ZM87.5148 40.8761C85.0015 40.8761 82.9303 38.8035 82.9303 36.2887C82.9303 33.7738 85.0015 31.7012 87.5148 31.7012V40.8761ZM129.515 40.8761C127.001 40.8761 124.93 38.8035 124.93 36.2887C124.93 33.7738 127.001 31.7012 129.515 31.7012V40.8761ZM167.5 40.8332C164.987 40.8332 162.915 38.7607 162.915 36.2458C162.915 33.7309 164.987 31.6584 167.5 31.6584V40.8332ZM201.015 40.8761C198.502 40.8761 196.431 38.8035 196.431 36.2887C196.431 33.7738 198.502 31.7012 201.015 31.7012V40.8761ZM235.004 40.8761C232.49 40.8761 230.419 38.8035 230.419 36.2887C230.419 33.7738 232.49 31.7012 235.004 31.7012V40.8761ZM131.64 58.2685L125.173 47.5477H138.106L131.64 58.2685Z"
@@ -525,7 +577,8 @@
             fill="black" />
     </symbol>
 
-    <symbol id="q01" width="151" height="105" viewBox="0 0 151 105" fill="none">
+    <symbol id="q01" width="151" height="105"
+        viewBox="0 0 151 105" fill="none">
         <path
             d="M104.607 70.4036C106.812 70.4036 108.599 68.6157 108.599 66.4102C108.599 64.2047 106.812 62.4167 104.607 62.4167C102.403 62.4167 100.616 64.2047 100.616 66.4102C100.616 68.6157 102.403 70.4036 104.607 70.4036Z"
             fill="white" />
@@ -555,7 +608,8 @@
             stroke="black" stroke-miterlimit="10" />
     </symbol>
 
-    <symbol id="s01" width="64" height="57" viewBox="0 0 64 57" fill="none">
+    <symbol id="s01" width="64"
+        height="57" viewBox="0 0 64 57" fill="none">
         <path d="M41.9301 25.665L20.9531 35.499H11.0371M44.313 35.5H53.9274" stroke="black"
             stroke-miterlimit="10" />
         <path
@@ -572,7 +626,8 @@
             fill="black" />
     </symbol>
 
-    <symbol id="sq3" width="68" height="66" viewBox="0 0 68 66" fill="none">
+    <symbol id="sq3" width="68" height="66" viewBox="0 0 68 66"
+        fill="none">
         <path
             d="M30.9917 29.8326C33.1962 29.8326 34.9833 28.0447 34.9833 25.8391C34.9833 23.6336 33.1962 21.8457 30.9917 21.8457C28.7871 21.8457 27 23.6336 27 25.8391C27 28.0447 28.7871 29.8326 30.9917 29.8326Z"
             fill="white" stroke="black" stroke-miterlimit="10" />
@@ -590,7 +645,8 @@
             fill="black" />
     </symbol>
     <!--  ручка переключателя -->
-    <symbol id="handle" width="20" height="130" viewBox="0 0 20 130" fill="none">
+    <symbol id="handle" width="20" height="130"
+        viewBox="0 0 20 130" fill="none">
         <g>
             <rect x="0.5" y="0.500122" width="20" height="130" rx="1" fill="#1F1F1F" />
         </g>
@@ -616,7 +672,8 @@
         </defs>
     </symbol>
     <!-- пустой контакт -->
-    <symbol id="channel" width="30" height="30" viewBox="0 0 30 30" fill="none">
+    <symbol
+        id="channel" width="30" height="30" viewBox="0 0 30 30" fill="none">
         <g clip-path="url(#clip0_5903_28372)">
             <circle cx="15" cy="15" r="14.5" fill="#E6E6E6" stroke="black" />
             <circle cx="15" cy="15" r="11.0385" fill="url(#paint0_linear_5903_28372)" stroke="black" />
@@ -633,7 +690,8 @@
         </defs>
     </symbol>
     <!-- винт контакта -->
-    <symbol id="screw" width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <symbol
+        id="screw" width="20" height="20" viewBox="0 0 20 20" fill="none">
         <path
             d="M10 1.5C14.6944 1.5 18.5 5.30558 18.5 10C18.5 14.6944 14.6944 18.5 10 18.5C5.30558 18.5 1.5 14.6944 1.5 10C1.5 5.30558 5.30558 1.5 10 1.5Z"
             fill="#EAEAEA" stroke="black" />
@@ -653,110 +711,173 @@
     </symbol>
 
     <!-- наконечник провода pin-->
-    <symbol id="pin" width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <symbol
+        id="pin" width="16" height="16" viewBox="0 0 16 16" fill="none">
         <circle cx="8" cy="8" r="7.5" fill="#FFDC52" stroke="black" />
         <circle cx="8" cy="8" r="4.5" fill="white" stroke="black" />
-    </symbol> 
-    
+    </symbol>
+
     <!-- прерывание кабеля -->
 
-    <symbol id="breakLine" width="56" height="10" viewBox="0 0 56 10" fill="none">
+    <symbol
+        id="breakLine" width="56" height="10" viewBox="0 0 56 10" fill="none">
         <path
             d="M2 4.88905C2 4.88905 10.5 -1.61119 27.9999 4.88899C45.4998 11.3892 53.9999 4.88899 53.9999 4.88899"
             stroke="#B1B1B1" stroke-width="4" stroke-linecap="round" />
     </symbol>
 
-  <!-- НИЗ: статичный корпус -->
-  
-  <symbol id="lampIndicator-base" viewBox="0 0 291 403">
-    <rect x="35.5" y="110.791" width="219" height="5.98413" fill="#CECECE" stroke="#BFBFBF"/>
+    <!-- НИЗ: статичный корпус -->
 
-    <rect x="0.5" y="-0.5" width="205.032" height="54.873"
-          transform="matrix(1 0 0 -1 41.9834 171.148)"
-          fill="url(#paint0_base)" stroke="#BFBFBF"/>
-    <rect x="0.5" y="-0.5" width="149.159" height="5.98413"
-          transform="matrix(1 0 0 -1 69.9199 177.132)"
-          fill="#CECECE" stroke="#BFBFBF"/>
-    <rect x="0.5" y="-0.5" width="149.159" height="5.98413"
-          transform="matrix(1 0 0 -1 69.9199 183.116)"
-          fill="#CECECE" stroke="#BFBFBF"/>
+    <symbol
+        id="lampIndicator-base" viewBox="0 0 291 403">
+        <rect x="35.5" y="110.791" width="219" height="5.98413" fill="#CECECE" stroke="#BFBFBF" />
 
-    <rect x="0.5" y="-0.5" width="149.159" height="184.079"
-          transform="matrix(1 0 0 -1 69.9199 367.195)"
-          fill="url(#paint1_base)" stroke="#BFBFBF"/>
-    <rect x="0.5" y="-0.5" width="149.159" height="33.9206"
-          transform="matrix(1 0 0 -1 69.9199 401.116)"
-          fill="url(#paint2_base)" stroke="#BFBFBF"/>
+        <rect x="0.5" y="-0.5" width="205.032" height="54.873"
+            transform="matrix(1 0 0 -1 41.9834 171.148)"
+            fill="url(#paint0_base)" stroke="#BFBFBF" />
+        <rect x="0.5" y="-0.5" width="149.159" height="5.98413"
+            transform="matrix(1 0 0 -1 69.9199 177.132)"
+            fill="#CECECE" stroke="#BFBFBF" />
+        <rect x="0.5" y="-0.5" width="149.159" height="5.98413"
+            transform="matrix(1 0 0 -1 69.9199 183.116)"
+            fill="#CECECE" stroke="#BFBFBF" />
 
-    <path d="M175.866 250.198H219.144V228.5H175.866C169.874 228.5 165.017 233.357 165.017 239.349C165.017 245.34 169.874 250.198 175.866 250.198Z"
-          fill="url(#paint3_base)" stroke="#BFBFBF"/>
-    <path d="M175.866 279.881H219.144V258.183H175.866C169.874 258.183 165.017 263.04 165.017 269.031C165.017 275.023 169.874 279.881 175.866 279.881Z"
-          fill="url(#paint4_base)" stroke="#BFBFBF"/>
-    <path d="M112.698 250.198H70.4209V228.5H112.698C118.69 228.5 123.548 233.357 123.548 239.349C123.548 245.34 118.69 250.198 112.698 250.198Z"
-          fill="url(#paint5_base)" stroke="#BFBFBF"/>
-    <path d="M112.698 279.881H70.4209V258.183H112.698C118.69 258.183 123.548 263.04 123.548 269.031C123.548 275.023 118.69 279.881 112.698 279.881Z"
-          fill="url(#paint6_base)" stroke="#BFBFBF"/>
+        <rect x="0.5" y="-0.5" width="149.159" height="184.079"
+            transform="matrix(1 0 0 -1 69.9199 367.195)"
+            fill="url(#paint1_base)" stroke="#BFBFBF" />
+        <rect x="0.5" y="-0.5" width="149.159" height="33.9206"
+            transform="matrix(1 0 0 -1 69.9199 401.116)"
+            fill="url(#paint2_base)" stroke="#BFBFBF" />
 
-    <rect x="0.5" y="-0.5" width="72.3333" height="40.1484"
-          transform="matrix(1 0 0 -1 55.9521 171.148)"
-          fill="url(#paint7_base)" stroke="#BFBFBF"/>
-    <rect x="0.5" y="-0.5" width="72.3333" height="40.1484"
-          transform="matrix(1 0 0 -1 162.461 171.148)"
-          fill="url(#paint8_base)" stroke="#BFBFBF"/>
+        <path
+            d="M175.866 250.198H219.144V228.5H175.866C169.874 228.5 165.017 233.357 165.017 239.349C165.017 245.34 169.874 250.198 175.866 250.198Z"
+            fill="url(#paint3_base)" stroke="#BFBFBF" />
+        <path
+            d="M175.866 279.881H219.144V258.183H175.866C169.874 258.183 165.017 263.04 165.017 269.031C165.017 275.023 169.874 279.881 175.866 279.881Z"
+            fill="url(#paint4_base)" stroke="#BFBFBF" />
+        <path
+            d="M112.698 250.198H70.4209V228.5H112.698C118.69 228.5 123.548 233.357 123.548 239.349C123.548 245.34 118.69 250.198 112.698 250.198Z"
+            fill="url(#paint5_base)" stroke="#BFBFBF" />
+        <path
+            d="M112.698 279.881H70.4209V258.183H112.698C118.69 258.183 123.548 263.04 123.548 269.031C123.548 275.023 118.69 279.881 112.698 279.881Z"
+            fill="url(#paint6_base)" stroke="#BFBFBF" />
 
-    <defs>
-      <linearGradient id="paint0_base" x1="5.23809" y1="61.1111" x2="221.746" y2="-16.5873" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#EAEAEA"/><stop offset="1" stop-color="#EFEFEF"/>
-      </linearGradient>
-      <linearGradient id="paint1_base" x1="3.81759" y1="202.431" x2="180.83" y2="188.454" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#EAEAEA"/><stop offset="1" stop-color="#FCFCFC"/>
-      </linearGradient>
-      <linearGradient id="paint2_base" x1="3.81759" y1="38.1944" x2="155.389" y2="-25.2353" gradientUnits="userSpaceOnUse">
-        <stop stop-color="white"/><stop offset="1" stop-color="white"/>
-      </linearGradient>
-      <linearGradient id="paint3_base" x1="165.918" y1="225.872" x2="227.849" y2="240.51" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#E4E2E2"/><stop offset="1" stop-color="#E8E8E8"/>
-      </linearGradient>
-      <linearGradient id="paint4_base" x1="165.918" y1="255.554" x2="227.849" y2="270.192" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#E4E2E2"/><stop offset="1" stop-color="#E8E8E8"/>
-      </linearGradient>
-      <linearGradient id="paint5_base" x1="122.672" y1="225.872" x2="61.7484" y2="240.011" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#E4E2E2"/><stop offset="1" stop-color="#E8E8E8"/>
-      </linearGradient>
-      <linearGradient id="paint6_base" x1="122.672" y1="255.554" x2="61.7484" y2="269.693" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#E4E2E2"/><stop offset="1" stop-color="#E8E8E8"/>
-      </linearGradient>
-      <linearGradient id="paint7_base" x1="1.86441" y1="45.0061" x2="86.3109" y2="30.3595" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#E5E5E5"/><stop offset="1" stop-color="#DDDDDD"/>
-      </linearGradient>
-      <linearGradient id="paint8_base" x1="1.86441" y1="45.0061" x2="86.3109" y2="30.3595" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#E5E5E5"/><stop offset="1" stop-color="#DDDDDD"/>
-      </linearGradient>
-    </defs>
-  </symbol>
+        <rect x="0.5" y="-0.5" width="72.3333" height="40.1484"
+            transform="matrix(1 0 0 -1 55.9521 171.148)"
+            fill="url(#paint7_base)" stroke="#BFBFBF" />
+        <rect x="0.5" y="-0.5" width="72.3333" height="40.1484"
+            transform="matrix(1 0 0 -1 162.461 171.148)"
+            fill="url(#paint8_base)" stroke="#BFBFBF" />
 
-  <!-- ВЕРХ: шапка лампы + ореол-->
-  <symbol id="lampIndicator-top" viewBox="0 0 291 403">
-    <g filter="url(#filter0_top)">
-      <ellipse cx="145.5" cy="73.5" rx="109.5" ry="37.5"
-               fill="currentColor" fill-opacity="1"/>
-    </g>
+        <defs>
+            <linearGradient id="paint0_base" x1="5.23809" y1="61.1111" x2="221.746" y2="-16.5873"
+                gradientUnits="userSpaceOnUse">
+                <stop stop-color="#EAEAEA" />
+                <stop offset="1" stop-color="#EFEFEF" />
+            </linearGradient>
+            <linearGradient id="paint1_base" x1="3.81759" y1="202.431" x2="180.83" y2="188.454"
+                gradientUnits="userSpaceOnUse">
+                <stop stop-color="#EAEAEA" />
+                <stop offset="1" stop-color="#FCFCFC" />
+            </linearGradient>
+            <linearGradient id="paint2_base" x1="3.81759" y1="38.1944" x2="155.389" y2="-25.2353"
+                gradientUnits="userSpaceOnUse">
+                <stop offset="0" stop-color="var(--lamp-bottom-start, #FFFFFF)" />
+                <stop offset="1" stop-color="var(--lamp-bottom-end, #E8E8E8)" />
+            </linearGradient>
+            <linearGradient id="paint3_base" x1="165.918" y1="225.872" x2="227.849" y2="240.51"
+                gradientUnits="userSpaceOnUse">
+                <stop stop-color="#E4E2E2" />
+                <stop offset="1" stop-color="#E8E8E8" />
+            </linearGradient>
+            <linearGradient id="paint4_base" x1="165.918" y1="255.554" x2="227.849" y2="270.192"
+                gradientUnits="userSpaceOnUse">
+                <stop stop-color="#E4E2E2" />
+                <stop offset="1" stop-color="#E8E8E8" />
+            </linearGradient>
+            <linearGradient id="paint5_base" x1="122.672" y1="225.872" x2="61.7484" y2="240.011"
+                gradientUnits="userSpaceOnUse">
+                <stop stop-color="#E4E2E2" />
+                <stop offset="1" stop-color="#E8E8E8" />
+            </linearGradient>
+            <linearGradient id="paint6_base" x1="122.672" y1="255.554" x2="61.7484" y2="269.693"
+                gradientUnits="userSpaceOnUse">
+                <stop stop-color="#E4E2E2" />
+                <stop offset="1" stop-color="#E8E8E8" />
+            </linearGradient>
+            <linearGradient id="paint7_base" x1="1.86441" y1="45.0061" x2="86.3109" y2="30.3595"
+                gradientUnits="userSpaceOnUse">
+                <stop stop-color="#E5E5E5" />
+                <stop offset="1" stop-color="#DDDDDD" />
+            </linearGradient>
+            <linearGradient id="paint8_base" x1="1.86441" y1="45.0061" x2="86.3109" y2="30.3595"
+                gradientUnits="userSpaceOnUse">
+                <stop stop-color="#E5E5E5" />
+                <stop offset="1" stop-color="#DDDDDD" />
+            </linearGradient>
+        </defs>
+    </symbol>
 
-    <path opacity="0.6"
-          d="M145 36.7119C161.599 36.7119 180.985 35.7187 199.229 38.0322C217.463 40.3447 234.447 45.9518 246.255 59.0742C251.581 64.9929 254.354 71.2868 254.493 77.6162H35.5059C35.6448 71.2868 38.4192 64.993 43.7451 59.0742C55.5532 45.9518 72.5366 40.3447 90.7715 38.0322C109.015 35.7187 128.401 36.7119 145 36.7119Z"
-          fill="currentColor" stroke="#696969"/>
+    <!-- ВЕРХ: шапка лампы + ореол-->
+    <symbol
+        id="lampIndicator-top" viewBox="0 0 291 403">
 
-    <rect opacity="0.6" x="35.5" y="76.8711" width="219" height="33.9206"
-          fill="currentColor" stroke="#696969"/>
+        <path
+            d="M145 36.7119C161.599 36.7119 180.985 35.7187 199.229 38.0322C217.463 40.3447 234.447 45.9518 246.255 59.0742C251.581 64.9929 254.354 71.2868 254.493 77.6162H35.5059C35.6448 71.2868 38.4192 64.993 43.7451 59.0742C55.5532 45.9518 72.5366 40.3447 90.7715 38.0322C109.015 35.7187 128.401 36.7119 145 36.7119Z"
+            fill="currentColor" stroke="#696969" />
 
-    <defs>
-      <filter id="filter0_top" x="0.6" y="0.6" width="289.8" height="145.8" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-        <feGaussianBlur stdDeviation="17.7" result="effect1_foregroundBlur"/>
-      </filter>
-    </defs>
-  </symbol>
+        <rect x="35.5" y="76.8711" width="219" height="33.9206"
+            fill="currentColor" stroke="#696969" />
+
+        <defs>
+            <filter id="filter0_top" x="0.6" y="0.6" width="289.8" height="145.8"
+                filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                <feGaussianBlur stdDeviation="17.7" result="effect1_foregroundBlur" />
+            </filter>
+        </defs>
+    </symbol>
+
+    <!-- ВЕРХ: ореол-->
+
+    <symbol
+        id="lampIndicator-light" viewBox="0 0 291 403">
+        <g filter="url(#filter0_top)">
+            <ellipse cx="145.5" cy="73.5" rx="109.5" ry="37.5"
+                fill="currentColor" fill-opacity="1" />
+        </g>
+
+    </symbol>
+    <!-- Значок копировать-->
+    <symbol id="iconCopy"
+        width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M13.3333 1.66699V5.83366H17.5M13.3333 1.66699L17.5 5.83366M13.3333 1.66699H7.5V14.167H17.5V5.83366"
+            stroke="black" stroke-width="2" />
+        <path d="M5.00016 4.16699H3.3335V18.3337H14.1668V16.667"
+            stroke="black" stroke-width="2" />
+    </symbol>
+    <!-- Линия разрыва группы списка-->
+    <symbol id="lineRupture" width="326" height="2" viewBox="0 0 326 2" fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <g filter="url(#filter0_i_7714_30382)">
+            <path d="M0 1H286.763H326" stroke="black" stroke-width="2" stroke-miterlimit="10" />
+        </g>
+        <defs>
+            <filter id="filter0_i_7714_30382" x="0" y="0" width="326" height="2"
+                filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                <feColorMatrix in="SourceAlpha" type="matrix"
+                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+                <feOffset dx="-2" dy="-1.45714" />
+                <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
+                <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0" />
+                <feBlend mode="normal" in2="shape" result="effect1_innerShadow_7714_30382" />
+            </filter>
+        </defs>
+    </symbol>
+
 
 </svg>
-

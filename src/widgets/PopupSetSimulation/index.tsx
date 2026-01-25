@@ -1,50 +1,71 @@
+'use client';
 import { FC } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
-
-const malfunctions: string[] =
-    [
-        'Неисправность 1',
-        'Неисправность 2',
-        'Неисправность 3',
-        'Неисправность 4',
-        'Неисправность 5',
-        'Неисправность 6',
-    ];
+import LineRupture from '@/shared/UI/icons/LineRupture/LineRupture';
+import MalfunctionSelector from '../MalfunctionSelector';
+import ListMalfunction from '../ListMalfunction';
+import useSetSimulation from '@/shared/hooks/useSetSimulation';
+import ErrorMessageText from '../ErrorMessageText';
+import cn from 'classnames';
 
 export const PopupSetSimulation: FC = () => {
-    return (
-        <div className={styles.popup}>
-            <Button
-                width={307}
-                height={38}
-                text='+ Добавить элемент'
-            />
-            <div className={styles.element}>Название элемента</div>
-            <div className={styles.malfunction}>
-                <select
-                    name="malfunction"
-                    id="malfunction-select"
-                    className={styles.malfunction__select}
-                    onChange={e => console.log(e.target.value)}
-                >
-                    {malfunctions.map((mal) => (
-                        <option key={mal} value={mal} className='opt'>
-                            {mal}
-                        </option>
-                    ))}
-                </select>
-            </div>
-            <Button
-                width={307}
-                height={38}
-                text='Удалить симуляцию'
-            />
-            <Button
-                width={307}
-                height={38}
-                text='Назначить симуляцию'
-            />
-        </div>
-    );
+	const {
+		errors,
+		setShowListMalfunction,
+		showListMalfunction,
+		handleChoiceMalfunction,
+		elements,
+		listMalfunction,
+		handleDeleteItem,
+		listIsEmpty,
+		handleSetSimulation,
+		isLoading,
+	} = useSetSimulation();
+
+	return (
+		<div className={styles.popup}>
+			<div className={styles.popup__wrapper}>
+				<Button
+					aria-label={'Добавить неисправность'}
+					className={cn(styles.popup__btn, {
+						[styles.popup__btn__first]: !showListMalfunction,
+					})}
+					width={326}
+					height={38}
+					text="+ Добавить неисправность"
+					onClick={() => setShowListMalfunction(true)}
+				/>
+				{showListMalfunction && (
+					<MalfunctionSelector
+						setMalfun={handleChoiceMalfunction}
+						data={elements}
+						closeList={setShowListMalfunction}
+					/>
+				)}
+				<LineRupture />
+				{listMalfunction.length ? (
+					<ListMalfunction
+						data={listMalfunction}
+						deleteItem={handleDeleteItem}
+					/>
+				) : null}
+
+				<Button
+					aria-label={'Назначить симуляцию'}
+					className={styles.popup__btn}
+					width={326}
+					height={38}
+					disabled={listIsEmpty || isLoading}
+					text={
+						isLoading
+							? 'Создание симуляции...'
+							: 'Назначить симуляцию'
+					}
+					onClick={handleSetSimulation}
+				/>
+				{errors && <ErrorMessageText text={errors} />}
+			</div>
+		</div>
+	);
 };

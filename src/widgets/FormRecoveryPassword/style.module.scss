@@ -50,6 +50,9 @@
   }
 
   &__button {
+    &:disabled {
+      background-color: variables.$secondary-color;
+    }
     span {
       @include mixins.text(32px, 400);
       line-height: 1;

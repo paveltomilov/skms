@@ -12,6 +12,7 @@ interface Props {
 	disable?: boolean;
 	power?: boolean;
 	shadow?: boolean;
+	errorBlink?: boolean;
 	position?: 'horizontal' | 'vertical';
 	textTop?: string;
 	textTopLeft?: string;
@@ -23,6 +24,7 @@ interface Props {
 	textRight?: string;
 	onClick?: () => void;
 	className?: string;
+	malfunctions?: string[];
 }
 
 const Gate: FC<Props> = ({
@@ -31,6 +33,7 @@ const Gate: FC<Props> = ({
 	disable = false,
 	power = false,
 	shadow = false,
+	errorBlink = true,
 	textTop,
 	textTopLeft,
 	textTopRight,
@@ -41,18 +44,21 @@ const Gate: FC<Props> = ({
 	textRight,
 	onClick,
 	className,
+	malfunctions = [],
 }) => {
 	const states = GATE_STATE[state];
 	const positions = GATE_POSITION[position];
 	const isVertical = position === 'vertical';
+	const hasGateError: boolean = malfunctions.length > 0;
+	const shouldBlink = hasGateError && errorBlink;
 	return (
-		<div
-			className={`${styles.gate__wrapper} ${className && className}`}
-			onClick={onClick}
-		>
+		<div className={cn(styles.gate__wrapper, className)} onClick={onClick}>
 			<div
-				className={`${styles.gate}
-			${isVertical && styles.gate_vertical} ${shadow && styles.gate_shadow}`}
+				className={cn(styles.gate, {
+					[styles.gate_vertical]: isVertical,
+					[styles.gate_shadow]: shadow,
+					[styles.isActiveErrorBlink]: shouldBlink,
+				})}
 			>
 				<Triangle
 					color={states.left.color}

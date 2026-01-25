@@ -6,20 +6,23 @@ import WindowRectCard from '@/shared/UI/WindowRectCard';
 import Window from '@/shared/UI/Window';
 import Button from '@/shared/UI/Button';
 import ArrowButton from '@/shared/UI/Actuator';
-import { WINDOWS } from '@/shared/configs/window';
 import { useAppSelector } from '@/shared/hooks/store';
 import { useOpenGatePopup } from '@/shared/hooks/useOpenGatePopup';
 import useShowModal from '@/shared/hooks/useShowModal';
+import { WindowsState } from '@/shared/configs/window';
+import { useIsSimulationActive } from '@/shared/hooks/useIsSimulationActive';
 
 interface Props {
 	className?: string;
+	windows: WindowsState;
 }
 
-const TALeftDown: FC<Props> = ({ className }) => {
+const TALeftDown: FC<Props> = ({ className, windows }) => {
 	const { g7, g6, g8 } = useAppSelector(state => state.gate.gates);
 	const handleModalNotification = useShowModal('notification');
 
 	const openGatePopup = useOpenGatePopup();
+	const isSimulationActive = useIsSimulationActive();
 
 	return (
 		<div className={cn(className, styles.container)}>
@@ -30,6 +33,8 @@ const TALeftDown: FC<Props> = ({ className }) => {
 					position="vertical"
 					textLeft={g7.name}
 					onClick={() => openGatePopup('g7')}
+					malfunctions={g7.malfunctions}
+					errorBlink={isSimulationActive}
 				/>
 				<Gate
 					className={styles.gates__mid}
@@ -37,6 +42,8 @@ const TALeftDown: FC<Props> = ({ className }) => {
 					position="vertical"
 					textLeft={g6.name}
 					onClick={() => openGatePopup('g6')}
+					malfunctions={g6.malfunctions}
+					errorBlink={isSimulationActive}
 				/>
 				<Gate
 					className={styles.gates__right}
@@ -44,66 +51,68 @@ const TALeftDown: FC<Props> = ({ className }) => {
 					position="vertical"
 					textRight={g8.name}
 					onClick={() => openGatePopup('g8')}
+					malfunctions={g8.malfunctions}
+					errorBlink={isSimulationActive}
 				/>
 			</div>
 			<div className={styles.cards}>
 				<WindowRectCard
 					color="blue"
-					title={WINDOWS.w27.title}
-					currentValue={WINDOWS.w27.currentValue}
-					unitsMeasurement={WINDOWS.w27.unitsMeasurement}
-					minValue={WINDOWS.w27.minValue}
-					maxValue={WINDOWS.w27.maxValue}
+					title={windows.w27.title}
+					currentValue={windows.w27.currentValue}
+					unitsMeasurement={windows.w27.unitsMeasurement}
+					minValue={windows.w27.minValue}
+					maxValue={windows.w27.maxValue}
 					className={styles.cards__leftup}
 				/>
 				<WindowRectCard
 					color="blue"
-					title={WINDOWS.w32.title}
-					currentValue={WINDOWS.w32.currentValue}
-					unitsMeasurement={WINDOWS.w32.unitsMeasurement}
-					minValue={WINDOWS.w32.minValue}
-					maxValue={WINDOWS.w32.maxValue}
+					title={windows.w32.title}
+					currentValue={windows.w32.currentValue}
+					unitsMeasurement={windows.w32.unitsMeasurement}
+					minValue={windows.w32.minValue}
+					maxValue={windows.w32.maxValue}
 					className={styles.cards__leftmid}
 				/>
 				<WindowRectCard
 					color="blue"
-					title={WINDOWS.w30.title}
-					currentValue={WINDOWS.w30.currentValue}
-					unitsMeasurement={WINDOWS.w30.unitsMeasurement}
-					minValue={WINDOWS.w30.minValue}
-					maxValue={WINDOWS.w30.maxValue}
+					title={windows.w30.title}
+					currentValue={windows.w30.currentValue}
+					unitsMeasurement={windows.w30.unitsMeasurement}
+					minValue={windows.w30.minValue}
+					maxValue={windows.w30.maxValue}
 					className={styles.cards__leftdown}
 				/>
 				<WindowRectCard
 					color="blue"
-					currentValue={WINDOWS.w29.currentValue}
-					unitsMeasurement={WINDOWS.w29.unitsMeasurement}
-					minValue={WINDOWS.w29.minValue}
-					maxValue={WINDOWS.w29.maxValue}
+					currentValue={windows.w29.currentValue}
+					unitsMeasurement={windows.w29.unitsMeasurement}
+					minValue={windows.w29.minValue}
+					maxValue={windows.w29.maxValue}
 					className={styles.cards__right}
 				/>
 			</div>
 			<div className={styles.windows}>
 				<div className={styles.windows__leftup}>
-					<Window data={WINDOWS.w28} right />
+					<Window data={windows.w28} right />
 				</div>
 				<div className={styles.windows__leftmid}>
-					<Window data={WINDOWS.w31} right />
+					<Window data={windows.w31} right />
 				</div>
 				<div className={styles.windows__leftdown}>
-					<Window data={WINDOWS.w33} right />
+					<Window data={windows.w33} right />
 				</div>
 				<div className={styles.windows__midup}>
-					<Window data={WINDOWS.w34} right />
+					<Window data={windows.w34} right />
 				</div>
 				<div className={styles.windows__middown}>
-					<Window data={WINDOWS.w35} right />
+					<Window data={windows.w35} right />
 				</div>
 				<div className={styles.windows__rightup}>
-					<Window data={WINDOWS.w36} right />
+					<Window data={windows.w36} right />
 				</div>
 				<div className={styles.windows__rightdown}>
-					<Window data={WINDOWS.w37} bottom left textLeft="dP" />
+					<Window data={windows.w37} bottom left textLeft="dP" />
 				</div>
 			</div>
 			<div className={styles.text}>

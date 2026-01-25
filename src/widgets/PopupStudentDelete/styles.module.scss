@@ -1,29 +1,36 @@
-
 @use '@/shared/scss/variables.module';
 @use '@/shared/scss/mixins.module';
 
 .popup {
-    width: 572px;
-    height: 189px;
-    background: variables.$primary-color;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items:center
+	width: 572px;
+	background: variables.$primary-color;
+}
+
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 28px;
+	padding: 32px 34px 20px;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
 }
 
 .info {
-    margin-top: 46px;
-    @include mixins.text(20px, 400);
-    text-transform: uppercase;
+	@include mixins.text(20px, 400);
+
+	&__success {
+		display: block;
+		margin: 30px;
+	}
 }
 
 .button {
-    margin-bottom: 46px;
-    background-color: variables.$secondary-color;
+	margin-bottom: auto;
+	background-color: variables.$secondary-color;
 
-    span {
-        @include mixins.text(32px, 400);
-        line-height: 1;
-    }
+	span {
+		@include mixins.text(32px, 400);
+		line-height: 1;
+	}
 }

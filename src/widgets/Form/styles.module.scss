@@ -39,22 +39,24 @@
         &::before {
           content: '';
           position: absolute;
-          top: 2px;
-          left: 6px;
-          border-right: 2px solid transparent;
-          border-bottom: 2px solid transparent;
-          width: 10px;
-          height: 15px;
-          transform: rotate(45deg);
+          top: 50%;
+          left: 50%;
+          width: 16px;
+          height: 16px;
+          background-image: url('/svg/black_done.svg');
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: contain;
           transition: variables.$transition;
+          transform: translate(-50%, -50%);
+          opacity: 0;
         }
 
         &:checked {
           background-color: variables.$white-color;
 
           &::before {
-            border-right-color: variables.$black-color;
-            border-bottom-color: variables.$black-color;
+            opacity: 1;
           }
         }
       }
@@ -62,6 +64,7 @@
 
     &__forget {
       @include mixins.text(20px, 400);
+      color: variables.$blue-color;
       text-decoration: none;
     }
   }

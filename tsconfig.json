@@ -20,21 +20,31 @@
 		],
 		"paths": {
 			"@/*": ["./src/*"],
+			"@/pages/*": ["./src/page-views/*"],
 			"@public/*": ["./*"]
 		}
 	},
 	"include": [
-		"svgr.d.ts",
-		"next-env.d.ts",
 		"**/*.ts",
 		"**/*.tsx",
+		"next-env.d.ts",
+		"svgr.d.ts",
 		".next/types/**/*.ts"
-, "src/widgets/Environment"	],
+	],
 	"exclude": [
 		"node_modules",
 		"dist",
 		"storybook-static",
 		"**/*.bundle.js",
-		"coverage"
+		"coverage",
+		"playwright.config.ts",
+		"jest.config.ts",
+		"jest.setup.ts",
+		"e2e",
+		"**/__tests__/**",
+		"**/*.test.ts",
+		"**/*.test.tsx",
+		"**/*.spec.ts",
+		"**/*.spec.tsx"
 	]
 }

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import cn from 'classnames';
 import styles from './styles.module.scss';
-import { WINDOWS } from '@/shared/configs/window';
+import { WindowsState } from '@/shared/configs/window';
 import Rectangle from '@/shared/UI/icons/Rectangle';
 import Button from '@/shared/UI/Button';
 import Tdm from '@/shared/UI/Tdm';
@@ -11,30 +11,33 @@ import { useAppSelector } from '@/shared/hooks/store';
 import { useOpenGatePopup } from '@/shared/hooks/useOpenGatePopup';
 import Window from '@/shared/UI/Window';
 import useShowModal from '@/shared/hooks/useShowModal';
+import { useIsSimulationActive } from '@/shared/hooks/useIsSimulationActive';
 
 interface Props {
 	className?: string;
+	windows: WindowsState;
 }
 
-const KARightMid: FC<Props> = ({ className }) => {
+const KARightMid: FC<Props> = ({ className, windows }) => {
 	const { g16 } = useAppSelector(state => state.gate.gates);
 	const openGatePopup = useOpenGatePopup();
 	const handleModalNotification = useShowModal('notification');
+	const isSimulationActive = useIsSimulationActive();
 	return (
 		<div className={cn(className, styles.container)}>
 			<div className={styles.columnLeft}>
 				<div className={styles.columnLeft__left}>
 					<div className={styles.columnLeft__left_top}>
-						<Window data={WINDOWS.w189} right colorText="white" />
+						<Window data={windows.w189} right colorText="white" />
 					</div>
 					<div className={styles.columnLeft__left_mid}>
-						<Window data={WINDOWS.w174} right colorText="white" />
-						<Window data={WINDOWS.w175} right colorText="white" />
+						<Window data={windows.w174} right colorText="white" />
+						<Window data={windows.w175} right colorText="white" />
 					</div>
 
 					<div className={styles.columnLeft__left_bottom}>
-						<Window data={WINDOWS.w176} right colorText="white" />
-						<Window data={WINDOWS.w177} right colorText="white" />
+						<Window data={windows.w176} right colorText="white" />
+						<Window data={windows.w177} right colorText="white" />
 					</div>
 				</div>
 				<div className={styles.columnLeft__right}>
@@ -44,11 +47,13 @@ const KARightMid: FC<Props> = ({ className }) => {
 						state={g16.states}
 						position="vertical"
 						textLeft={g16.name}
-						onClick={() => openGatePopup('g6')}
+						onClick={() => openGatePopup('g16')}
+						malfunctions={g16.malfunctions}
+						errorBlink={isSimulationActive}
 					/>
 					<div className={styles.columnLeft__right_bottom}>
-						<Window data={WINDOWS.w204} right />
-						<Window data={WINDOWS.w205} right />
+						<Window data={windows.w204} right />
+						<Window data={windows.w205} right />
 					</div>
 				</div>
 			</div>
@@ -62,19 +67,19 @@ const KARightMid: FC<Props> = ({ className }) => {
 					<div className={styles.columnMid__left_bottom}>
 						<div className={styles.columnMid__left_bottom_box}>
 							<Window
-								data={WINDOWS.w206}
+								data={windows.w206}
 								right
 								left
 								textLeft="1c"
 							/>
 							<Window
-								data={WINDOWS.w207}
+								data={windows.w207}
 								right
 								left
 								textLeft="2c"
 							/>
 						</div>
-						<Window data={WINDOWS.w208} bottom />
+						<Window data={windows.w208} bottom />
 					</div>
 				</div>
 				<div className={styles.columnMid__mid}>
@@ -102,22 +107,22 @@ const KARightMid: FC<Props> = ({ className }) => {
 				</div>
 				<div className={styles.columnMid__right}>
 					<div className={styles.columnMid__right_top}>
-						<Window data={WINDOWS.w211} right />
-						<Window data={WINDOWS.w236} right />
-						<Window data={WINDOWS.w212} right />
+						<Window data={windows.w211} right />
+						<Window data={windows.w236} right />
+						<Window data={windows.w212} right />
 					</div>
 					<div className={styles.columnMid__right_bottom}>
-						<Window data={WINDOWS.w213} right />
+						<Window data={windows.w213} right />
 						<Rectangle color="white" className={styles.rectangle} />
-						<Window data={WINDOWS.w214} right />
+						<Window data={windows.w214} right />
 					</div>
 				</div>
 			</div>
 			<div className={styles.columnRight}>
 				<div className={styles.columnRight__top}>
-					<Window data={WINDOWS.w215} right />
-					<Window data={WINDOWS.w216} right />
-					<Window data={WINDOWS.w217} right />
+					<Window data={windows.w215} right />
+					<Window data={windows.w216} right />
+					<Window data={windows.w217} right />
 				</div>
 				<div className={styles.columnRight__mid}>
 					<Button
@@ -136,7 +141,7 @@ const KARightMid: FC<Props> = ({ className }) => {
 					/>
 				</div>
 				<div className={styles.columnRight__bottom}>
-					<Window data={WINDOWS.w218} right />
+					<Window data={windows.w218} right />
 				</div>
 			</div>
 		</div>
