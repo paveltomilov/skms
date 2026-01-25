@@ -71,14 +71,14 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 						label: 'Имя',
 						type: 'text',
 						placeholder: 'Имя',
-						maxLength: NAME_SURNAME_MAX_LENGTH,
+						maxLength: NAME_SURNAME_MAX_LENGTH + 1,
 					},
 					{
 						name: 'last_name',
 						label: 'Фамилия',
 						type: 'text',
 						placeholder: 'Фамилия',
-						maxLength: NAME_SURNAME_MAX_LENGTH,
+						maxLength: NAME_SURNAME_MAX_LENGTH + 1,
 					},
 			  ]
 			: []) as FieldConfig[]),
@@ -87,14 +87,14 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 			label: 'Email',
 			type: 'email',
 			placeholder: 'Email',
-			maxLength: EMAIL_MAX_LENGTH,
+			maxLength: EMAIL_MAX_LENGTH + 1,
 		},
 		{
 			name: 'password',
 			label: 'Пароль',
 			type: 'password',
 			placeholder: 'Пароль',
-			maxLength: PASSWORD_MAX_LENGTH,
+			maxLength: PASSWORD_MAX_LENGTH + 1,
 		},
 	];
 

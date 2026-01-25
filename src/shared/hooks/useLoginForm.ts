@@ -42,9 +42,9 @@ const getValidationMessage = (fieldName: keyof LoginFormData, value: string): st
 				return 'Локальная часть (до @) ≤ 64 символов';
 			}
 			if (domainPart.length > EMAIL_DOMAIN_MAX_LENGTH) {
-				return 'Доменная часть (после @) ≤ 63 символов не включая точку';
+				return 'Доменная часть (после @) ≤ 63 символов';
 			}
-			if (triggedValue.length > EMAIL_MAX_LENGTH - 1) {
+			if (triggedValue.length > EMAIL_MAX_LENGTH) {
 				return `Длина Email не должна превышать ${EMAIL_MAX_LENGTH} символа`;
 			}
 			if (SPACES_REGEX.test(triggedValue)) {
@@ -67,7 +67,7 @@ const getValidationMessage = (fieldName: keyof LoginFormData, value: string): st
 			if (triggedValue.length < PASSWORD_MIN_LENGTH) {
 				return `Пароль должен содержать не менее ${PASSWORD_MIN_LENGTH} символов`;
 			}
-			if (triggedValue.length > PASSWORD_MAX_LENGTH - 1) {
+			if (triggedValue.length > PASSWORD_MAX_LENGTH) {
 				return `Пароль должен содержать не более ${PASSWORD_MAX_LENGTH} символов`;
 			}
 			if (!PASSWORD_UPPERCASE_REGEX.test(triggedValue)) {
@@ -86,22 +86,19 @@ const getValidationMessage = (fieldName: keyof LoginFormData, value: string): st
 
 		case 'first_name':
 		case 'last_name':
-			if (triggedValue.length > NAME_SURNAME_MAX_LENGTH - 1) {
+			if (triggedValue.length > NAME_SURNAME_MAX_LENGTH) {
 				return `Поле должно содержать не более ${NAME_SURNAME_MAX_LENGTH} символов`;
 			}
 			if (DOUBLE_SPACES_REGEX.test(triggedValue)) {
-				return 'Не допускаются двойные пробелы';
+				return 'Не допускается более двух пробелов подряд';
 			}
 			if (CYRILLIC_REGEX.test(triggedValue)) {
 				return 'Не допускается кириллица';
 			}
-			if (CONTAINS_DIGITS_REGEX.test(triggedValue)) {
-				return 'Не допускаются цифры';
-			}
 			if (DOUBLE_DASHES_REGEX.test(triggedValue)) {
-				return 'Не допускаются два тире подряд';
+				return 'Не допускается более двух тире подряд';
 			}
-			return 'Поле может содержать только буквы латиницы, пробел, тире';
+			return 'Поле может содержать только буквы латиницы, пробел, тире и цифры';
 
 		default:
 			const fieldConfig = config.find(field => field.name === fieldName);
