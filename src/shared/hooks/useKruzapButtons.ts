@@ -12,12 +12,11 @@ import { KRUZAP_BUTTONS_CONFIG } from '../configs/header';
 import { useRef } from 'react';
 import { GATE_STATE_TYPE } from '../types/gate';
 import { BASE_RESISTANCE } from '../configs/schemeElements';
-import {
-	BASE_RESISTANCE_CONSTANT,
-	ELEMENT_KIND,
-} from '../configs/elementKind';
+import { BASE_RESISTANCE_CONSTANT, ELEMENT_KIND } from '../configs/elementKind';
 import { getResistanceByKind } from '../utils/getResistanceByKind/getResistanceByKind';
 import store from '@/store/store';
+import { INPUT_CIRCUIT_BREAKER_ID } from '../configs/powerCircuit/constants';
+import { useGetMalfunctionSwitchLimit } from './useGetMalfunctionSwitchLimit';
 
 /**
  * Хук для управления кнопками КРУЗАП.
@@ -41,6 +40,43 @@ export const useKruzapButtons = () => {
 		useAppSelector(state => state.circuit),
 	);
 
+	// Получаем фазу А вводного автомата от которой запитывается схемы управления
+	const inputCircuitBreakerPhaseAElement = findElementByID(
+		INPUT_CIRCUIT_BREAKER_ID[0],
+		useAppSelector(state => state.circuit),
+	);
+
+	// Проверяем состояние контактов вводного автомата фазы А
+	const isOpenInputBreakerPhaseA =
+		inputCircuitBreakerPhaseAElement.resistance >=
+		BASE_RESISTANCE_CONSTANT.highResistance;
+
+	// Получаем неисправности концевых выключателей
+	const {
+		hasMalfunctionNoContactSwitchOpenElement,
+		hasMalfunctionNoContactSwitchCloseElement,
+		hasMalfunctionStuckContactSwitchOpenElement,
+		hasMalfunctionStuckContactSwitchCloseElement,
+	} = useGetMalfunctionSwitchLimit();
+
+	if (hasMalfunctionNoContactSwitchCloseElement) {
+		dispatch(
+			setResistance({
+				id: LIMIT_SWITCH_CLOSE_ID,
+				value: BASE_RESISTANCE_CONSTANT.highResistance,
+			}),
+		);
+	}
+
+	if (hasMalfunctionNoContactSwitchOpenElement) {
+		dispatch(
+			setResistance({
+				id: LIMIT_SWITCH_OPEN_ID,
+				value: BASE_RESISTANCE_CONSTANT.highResistance,
+			}),
+		);
+	}
+
 	// Получаем элементы кнопок ПТК из схемы для проверки их состояния
 	const openPtkElement = findElementByID(
 		INSERT_NDO_CMD_OPEN_PTK_ID,
@@ -60,11 +96,19 @@ export const useKruzapButtons = () => {
 	// - соответствующий концевой выключатель разомкнут ИЛИ
 	// - какая-либо кнопка ПТК активна (сопротивление = 0)
 	const openKruzapDisabled =
-		limitSwitchOpenElement.resistance ===
-			BASE_RESISTANCE_CONSTANT.highResistance || isAnyPtkButtonActive;
+		hasMalfunctionNoContactSwitchOpenElement ||
+		hasMalfunctionStuckContactSwitchOpenElement
+			? false
+			: limitSwitchOpenElement.resistance ===
+					BASE_RESISTANCE_CONSTANT.highResistance ||
+			  isAnyPtkButtonActive;
 	const closeKruzapDisabled =
-		limitSwitchCloseElement.resistance ===
-			BASE_RESISTANCE_CONSTANT.highResistance || isAnyPtkButtonActive;
+		hasMalfunctionNoContactSwitchCloseElement ||
+		hasMalfunctionStuckContactSwitchCloseElement
+			? false
+			: limitSwitchCloseElement.resistance ===
+					BASE_RESISTANCE_CONSTANT.highResistance ||
+			  isAnyPtkButtonActive;
 
 	// Определяем состояние задвижки (закрыта/открыта) на основе концевых выключателей
 	const openOn =
@@ -157,7 +201,31 @@ export const useKruzapButtons = () => {
 	};
 
 	const handleKruzapButton = (button: 'close' | 'open') => {
+		// При наличии неисправности останавливаем обработчик событий
+		if (hasMalfunctionNoContactSwitchCloseElement && button === 'close') {
+			console.info(
+				'Активна неиспраность <Нет контакта> концевого выключателя цепи ЗАКРЫТЬ ',
+			);
+			return;
+		}
+
+		if (hasMalfunctionNoContactSwitchOpenElement && button === 'open') {
+			console.info(
+				'Активна неиспраность <Нет контакта> концевого выключателя цепи ОТКРЫТЬ ',
+			);
+			return;
+		}
+
+		// Проверяем наличие питания в цепи управления
+		if (isOpenInputBreakerPhaseA) {
+			console.info(
+				'Нет питания сети управления ВВОДНОЙ АВТОМАТ РАЗОБРАН',
+			);
+			return;
+		}
+
 		// Обновляем сопротивления, которые меняются сразу после нажатия на кнопку "Открыть"/"Закрыть"
+
 		KRUZAP_BUTTONS_CONFIG[button].forEach(action => {
 			dispatch(setResistance(action));
 		});
