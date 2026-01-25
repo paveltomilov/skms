@@ -12,12 +12,10 @@ import { KRUZAP_BUTTONS_CONFIG } from '../configs/header';
 import { useRef } from 'react';
 import { GATE_STATE_TYPE } from '../types/gate';
 import { BASE_RESISTANCE } from '../configs/schemeElements';
-import {
-	BASE_RESISTANCE_CONSTANT,
-	ELEMENT_KIND,
-} from '../configs/elementKind';
+import { BASE_RESISTANCE_CONSTANT, ELEMENT_KIND } from '../configs/elementKind';
 import { getResistanceByKind } from '../utils/getResistanceByKind/getResistanceByKind';
 import store from '@/store/store';
+import { useGetMalfunctionKruzapButtons } from './useGetMalfunctionKruzapButtons';
 
 /**
  * Хук для управления кнопками КРУЗАП.
@@ -26,6 +24,13 @@ import store from '@/store/store';
  */
 export const useKruzapButtons = () => {
 	const dispatch = useAppDispatch();
+
+	// Получаем возможные неисправсноии кнопок КРУЗА-П
+
+	const {
+		hasMalfunctionNoContactKruzapOpenButton,
+		hasMalfunctionNoContactKruzapCloseButton,
+	} = useGetMalfunctionKruzapButtons();
 
 	// Получаем id активной задвижки из стора
 	const gateId = useAppSelector(state => state.gate.activeGateId) ?? 'g1';
@@ -157,6 +162,22 @@ export const useKruzapButtons = () => {
 	};
 
 	const handleKruzapButton = (button: 'close' | 'open') => {
+
+		// Проверяем кнопки на наличие неисправности 'Нет контакта, цепь не замыкается'
+		if (button === 'open' && hasMalfunctionNoContactKruzapOpenButton) {
+			console.info(
+				'Кнопка ОТКРЫТЬ КРУЗА-П имеет активную неисправность "Нет контакта, цепь не замыкается"',
+			);
+			return;
+		}
+
+		if (button === 'close' && hasMalfunctionNoContactKruzapCloseButton) {
+			console.info(
+				'Кнопка ЗАКРЫТЬ КРУЗА-П имеет активную неисправность "Нет контакта, цепь не замыкается"',
+			);
+			return;
+		}
+
 		// Обновляем сопротивления, которые меняются сразу после нажатия на кнопку "Открыть"/"Закрыть"
 		KRUZAP_BUTTONS_CONFIG[button].forEach(action => {
 			dispatch(setResistance(action));
