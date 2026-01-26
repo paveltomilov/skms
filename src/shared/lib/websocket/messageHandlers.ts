@@ -1,4 +1,4 @@
-import { AppDispatch} from '@/store/store';
+import { AppDispatch } from '@/store/store';
 import {
 	WebSocketIncomingMessage,
 	SimulationInitMessage,
@@ -26,6 +26,7 @@ import {
 } from '@/store/simulationSlice';
 import { activateMalfunction } from '@/store/circuitSlice';
 import { openModal } from '@/store/modalSlice';
+import { updateList } from '@/store/updateListSlice';
 
 /**
  * Обработчик входящих WebSocket сообщений
@@ -33,10 +34,7 @@ import { openModal } from '@/store/modalSlice';
  * @param dispatch - функция для диспатча действий Redux
  * @param getState - функция для получения текущего состояния Redux (опционально)
  */
-export function createMessageHandler(
-	dispatch: AppDispatch,
-	
-) {
+export function createMessageHandler(dispatch: AppDispatch) {
 	return (message: WebSocketIncomingMessage): void => {
 		// Проверяем наличие поля type для определения типа сообщения
 		const messageAny = message as unknown as Record<string, unknown>;
@@ -44,7 +42,10 @@ export function createMessageHandler(
 		// Обработка сообщений без поля type (инициализация симуляции)
 		if (!('type' in messageAny) || !messageAny.type) {
 			// Проверяем наличие поля malfunctions (gate может быть null, но malfunctions обязательны)
-			if ('malfunctions' in messageAny && Array.isArray(messageAny.malfunctions)) {
+			if (
+				'malfunctions' in messageAny &&
+				Array.isArray(messageAny.malfunctions)
+			) {
 				const initMessage = message as SimulationInitMessage;
 
 				// Извлекаем ID неисправностей
@@ -54,7 +55,10 @@ export function createMessageHandler(
 				const malfunctionIds = initMessage.malfunctions
 					.map(m => {
 						// Если есть ключ "malfunction_id", используем его
-						if ('malfunction_id' in m && typeof m.malfunction_id === 'string') {
+						if (
+							'malfunction_id' in m &&
+							typeof m.malfunction_id === 'string'
+						) {
 							return m.malfunction_id;
 						}
 						// Иначе берем первое значение из объекта
@@ -163,8 +167,10 @@ export function createMessageHandler(
 					dispatch(setCompletedSimulationId(completedId));
 				}
 
-				// Открываем модалку о завершении симуляции
-				dispatch(openModal('simulationComplete'));
+				// Открываем модалку о завершении симуляции в учетной завписи студента
+				if (!('student_name' in finishedMessage)) {
+					dispatch(openModal('simulationComplete'));
+				}
 
 				console.info(
 					'[WebSocket] Симуляция завершена:',
@@ -173,6 +179,8 @@ export function createMessageHandler(
 					finishedMessage.time_spent,
 					'секунд',
 				);
+				dispatch(updateList());
+
 				break;
 			}
 
