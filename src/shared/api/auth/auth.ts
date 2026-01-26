@@ -1,16 +1,18 @@
 import axios from 'axios';
-import { deleteCookie, getCookie, setCookie } from 'cookies-next';
+import { deleteCookie, setCookie } from 'cookies-next';
 import { LoginFormData, LoginResponse } from '@/shared/types/login';
 import {
 	accessToken,
 	initializeInterceptors,
 	setAccessToken,
 } from '@/shared/api/config/interceptors';
+import {deleteRefreshToken} from '@/shared/api/auth/deleteRefreshToken';
 
 const urlBase = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 // Ленивая инициализация интерцепторов для избежания циклической зависимости
 let interceptorsInitialized = false;
+let rememberUser = false;
 const ensureInterceptorsInitialized = () => {
 	if (!interceptorsInitialized && urlBase) {
 		initializeInterceptors(urlBase);
@@ -32,9 +34,8 @@ export function initAccessFromStorage() {
 export async function checkAuth(): Promise<{ valid: boolean }> {
 	ensureInterceptorsInitialized();
 	const access = localStorage.getItem('accessToken');
-	const refreshFromCookie = getCookie('refreshToken');
 
-	if (!access || !refreshFromCookie) {
+	if (!access) {
 		logout();
 		return { valid: false };
 	}
@@ -44,6 +45,7 @@ export async function checkAuth(): Promise<{ valid: boolean }> {
 
 export async function postAuth(
 	formData: LoginFormData,
+	remember: boolean,
 ): Promise<IPostAuthResponse> {
 	if (!urlBase) {
 		return {
@@ -55,31 +57,38 @@ export async function postAuth(
 
 	ensureInterceptorsInitialized();
 	try {
-		const response = await axios.post<LoginResponse>(`${urlBase}/auth/`, {
-			email: formData.email,
-			password: formData.password,
-		});
+		const response = await axios.post<LoginResponse>(
+			`${urlBase}/auth/`,
+			{
+					email: formData.email,
+					password: formData.password,
+					remember: remember,
+			},
+			{withCredentials: true})
+		;
 
-		const { access, refresh, first_name, last_name, role } = response.data;
+		const { access, first_name, last_name, role } = response.data;
 
-		if (!access || !refresh) {
-			throw new Error('Токены не получены');
+		if (!access) {
+			throw new Error('Access token не получен');
 		}
 
 		if (response.statusText == 'OK') {
 			setAccessToken(access);
 			localStorage.setItem('accessToken', access);
-			setCookie('refreshToken', refresh);
 			setCookie('first_name', first_name);
 			setCookie('last_name', last_name);
 			setCookie('role', role);
+
+			if (remember) {
+				rememberUser = true;
+			}
 
 			return { success: true, role };
 		}
 
 		return { success: false };
 	} catch (err: unknown) {
-		console.log(err);
 		let errorText: string | undefined;
 		if (axios.isAxiosError(err)) {
 			// Обработка ошибок подключения
@@ -140,9 +149,11 @@ export function getAccessToken(): string | null {
 // Функция для выхода
 export function logout(): void {
 	localStorage.removeItem('accessToken');
-	deleteCookie('refreshToken');
 	deleteCookie('first_name');
 	deleteCookie('last_name');
 	deleteCookie('role');
 	setAccessToken(null);
+	if (rememberUser) {
+		deleteRefreshToken();
+	}
 }
