@@ -29,6 +29,10 @@
 		line-height: 100%;
 		color: var(--lan-gray);
 
+		@media (max-width: 576px) {
+			font-size: 12px;
+		}
+
 		&__span {
 			text-decoration: underline;
 			color: var(--lan-bright-cyan---lime-green);
@@ -37,7 +41,12 @@
 
 	&__svg {
 		position: absolute;
-		top: -2px;
-		left: -25px;
+		top: -3px;
+		left: -7%;
+
+		@media (max-width: 767px) {
+			left: -4%;
+			top: -5px;
+		}
 	}
 }

@@ -44,12 +44,11 @@ const SurveyEnd: React.FC<SurveyEndProps> = ({ onStart }) => {
 	const isButtonDisabled = !email.trim() || isSubmitting || isSubmitted;
 	return (
 		<div className={styles.survey__container}>
-			<TopCircle className={styles.survey__svg1} />
+			<TopCircle className={styles.survey__svg_top} />
 
 			<h2 className={styles.survey__title}>
-				<span className={styles.survey__title_span}>Спасибо!</span>{' '}
-				Ваши&nbsp;ответы&nbsp;помогут
-				улучшить&nbsp;цифровое&nbsp;обучение в&nbsp;промышленности
+				<span className={styles.survey__title_span}>Спасибо!</span>
+				Ваши ответы помогут улучшить цифровое обучение в промышленности
 			</h2>
 
 			<p className={styles.survey__description}>
@@ -59,12 +58,11 @@ const SurveyEnd: React.FC<SurveyEndProps> = ({ onStart }) => {
 
 			<form onSubmit={handleSubmit} className={styles.form}>
 				<input
-					className={styles.form__email}
+					className={`${styles.form__email} ${isSubmitted ? styles.email__submitted : ''}`}
 					type="email"
 					placeholder="Введите E-mail"
 					value={email}
 					onChange={handleEmailChange}
-					disabled={isSubmitting || isSubmitted}
 					required
 				/>
 				<Button
@@ -76,7 +74,6 @@ const SurveyEnd: React.FC<SurveyEndProps> = ({ onStart }) => {
 					radius={4}
 					text={isSubmitted ? 'ОТПРАВЛЕНО' : 'отправить'}
 					type="submit"
-					border="1px solid var(--lan-light-grayish-blue)"
 				/>
 			</form>
 
@@ -87,7 +84,7 @@ const SurveyEnd: React.FC<SurveyEndProps> = ({ onStart }) => {
 				onClick={onStart}
 			/>
 
-			<BottomCircle className={styles.survey__svg2} />
+			<BottomCircle className={styles.survey__svg_bottom} />
 		</div>
 	);
 };

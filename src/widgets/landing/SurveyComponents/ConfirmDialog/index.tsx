@@ -6,12 +6,8 @@ import styles from './styles.module.scss';
 
 const ConfirmDialog: FC<ConfirmDialogProps> = ({
 	isOpen,
-	title,
 	onConfirm,
 	onCancel,
-	confirmText = 'Да',
-	cancelText = 'Нет',
-	overlayColor = 'rgba(10, 10, 20, 0.8)',
 }) => {
 	if (!isOpen) return null;
 
@@ -35,38 +31,25 @@ const ConfirmDialog: FC<ConfirmDialogProps> = ({
 			className={styles.confirm__overlay}
 			onClick={handleOverlayClick}
 			onKeyDown={handleKeyDown}
-			role="dialog"
-			aria-modal="true"
-			aria-labelledby="confirm-dialog-title"
-			style={{ backgroundColor: overlayColor }}
 		>
 			<div className={styles.confirm__dialog}>
 				<div className={styles.confirm__dialog_content}>
-					<h3
-						id="confirm-dialog-title"
-						className={styles.confirm__dialog_title}
-					>
-						{title}
+					<h3 className={styles.confirm__dialog_title}>
+						Вы уверены, что хотите выйти?
 					</h3>
 
 					<div className={styles.confirm__dialog_buttons}>
 						<Button
-							className={`${styles.confirm__button} ${styles.cancel__button}`}
-							text={cancelText}
+							className={`${styles.confirm__button} ${styles.confirm__button_no}`}
+							text="ОТМЕНА"
 							onClick={onCancel}
-							width={145}
-							height={44}
 							radius={4}
-							type="button"
 						/>
 						<Button
 							className={`${styles.confirm__button} ${styles.confirm__button_yes}`}
-							text={confirmText}
+							text="ДА, ВЫЙТИ"
 							onClick={onConfirm}
-							width={182}
-							height={48}
 							radius={4}
-							type="button"
 						/>
 					</div>
 				</div>

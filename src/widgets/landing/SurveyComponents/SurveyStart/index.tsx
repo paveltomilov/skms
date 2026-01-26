@@ -30,7 +30,7 @@ const SurveyStart: React.FC<SurveyStartProps> = ({
 				height={223}
 			/>
 			<h2 className={styles.survey__title}>
-				Помогите нам сделать&nbsp;обучение&nbsp;лучше
+				Помогите&nbsp;нам сделать&nbsp;обучение&nbsp;лучше
 			</h2>
 			<p className={styles.survey__description}>
 				Вместе создадим сильный и удобный симулятор

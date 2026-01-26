@@ -141,20 +141,20 @@ const QuestionsList: React.FC<QuestionsListProps> = ({
 				/>
 			</div>
 
-			<div className={styles.bottom}>
-				<div className={styles.counter}>
+			<div className={styles.footer}>
+				<div className={styles.footer__counter}>
 					Шаг: {currentIndex + 1}/{questions.length}
 				</div>
 
-				<div className={styles.navigation}>
+				<div className={styles.footer__navigation}>
 					{!isLastQuestion && showError && (
-						<div className={styles.explanation}>
+						<div className={styles.footer__navigation_explanation}>
 							Вы не выбрали ответ — можно вернуться позже
 						</div>
 					)}
 
 					<Button
-						className={styles.button__back}
+						className={styles.footer__button_back}
 						icon={<Back />}
 						text=""
 						onClick={handlePrev}
@@ -163,7 +163,7 @@ const QuestionsList: React.FC<QuestionsListProps> = ({
 					/>
 
 					<Button
-						className={styles.button__next}
+						className={styles.footer__button_next}
 						icon={<Next />}
 						text={''}
 						onClick={handleNextOrFinish}

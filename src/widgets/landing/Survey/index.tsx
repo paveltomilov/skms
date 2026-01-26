@@ -66,11 +66,8 @@ const Survey: FC = () => {
 					<ConfirmDialog
 						className={styles.modal__closed}
 						isOpen={showConfirmDialog}
-						title="Вы уверены, что хотите выйти?"
 						onConfirm={handleConfirmClose}
 						onCancel={handleCancelClose}
-						confirmText="Да, выйти"
-						cancelText="Отмена"
 					/>
 				</>
 			)}

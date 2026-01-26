@@ -76,4 +76,9 @@
 	top: 24px;
 	right: 24px;
 	z-index: 1002;
+
+	@media (max-width: 576px) {
+		top: 17px;
+		right: 17px;
+	}
 }

@@ -51,12 +51,8 @@ export interface CheckQuestProps {
 export interface ConfirmDialogProps {
 	className: string;
 	isOpen: boolean;
-	title: string;
 	onConfirm: () => void;
 	onCancel: () => void;
-	confirmText?: string;
-	cancelText?: string;
-	overlayColor?: string;
 }
 
 export interface RadioQuestProps {

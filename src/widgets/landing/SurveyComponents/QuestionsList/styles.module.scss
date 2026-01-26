@@ -40,65 +40,68 @@
 	}
 }
 
-.button__back {
-	width: 48px;
-	height: 46px;
-	background-color: var(--lan-very-dark-mostly-black-blue);
-	border: 1px solid var(--lan-gray);
-	margin-right: 8px;
-
-	@media (max-width: 1200px) {
-		height: 42px;
-	}
-
-	&:hover {
-		background-color: inherit;
-	}
-}
-
-.button__next {
-	width: 118px;
-	height: 48px;
-
-	@media (max-width: 1200px) {
-		width: 102px;
-		height: 44px;
-	}
-	&:hover {
-		background-color: var(--lan-bright-cyan---lime-green);
-	}
-}
-
-.counter {
-	font-family: var(--second-family);
-	font-weight: 400;
-	font-size: 17px;
-	line-height: 128%;
-	color: var(--lan-gray);
-	margin-right: auto;
-}
-
-.bottom {
+.footer {
 	display: flex;
 	margin-top: auto;
 	padding: 5px 40px 21px;
 	align-items: flex-end;
-}
 
-.button__disabled {
-	cursor: not-allowed;
-	pointer-events: none;
-}
+	&__counter {
+		font-family: var(--second-family);
+		font-weight: 400;
+		font-size: 17px;
+		line-height: 128%;
+		color: var(--lan-gray);
+		margin-right: auto;
+	}
 
-.navigation {
-	max-width: 176px;
-}
+	&__navigation {
+		max-width: 176px;
 
-.explanation {
-	font-family: var(--second-family);
-	font-weight: 400;
-	font-size: 13px;
-	line-height: 120%;
-	color: var(--lan-gray);
-	margin-bottom: 20px;
+		@media (max-width: 1200px) {
+			max-width: 160px;
+		}
+
+		@media (max-width: 576px) {
+			max-width: 172px;
+		}
+
+		&_explanation {
+			font-family: var(--second-family);
+			font-weight: 400;
+			font-size: 13px;
+			line-height: 120%;
+			color: var(--lan-gray);
+			margin-bottom: 20px;
+		}
+	}
+
+	&__button_back {
+		width: 48px;
+		height: 46px;
+		background-color: var(--lan-very-dark-mostly-black-blue);
+		border: 1px solid var(--lan-gray);
+		margin-right: 8px;
+
+		@media (max-width: 1200px) {
+			height: 42px;
+		}
+
+		&:hover {
+			background-color: inherit;
+		}
+	}
+
+	&__button_next {
+		width: 118px;
+		height: 48px;
+
+		@media (max-width: 1200px) {
+			width: 102px;
+			height: 44px;
+		}
+		&:hover {
+			background-color: var(--lan-bright-cyan---lime-green);
+		}
+	}
 }
