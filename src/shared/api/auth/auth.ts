@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { deleteCookie, setCookie } from 'cookies-next';
+import {deleteCookie, getCookie, setCookie} from 'cookies-next';
 import { LoginFormData, LoginResponse } from '@/shared/types/login';
 import {
 	accessToken,
@@ -12,7 +12,6 @@ const urlBase = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 // Ленивая инициализация интерцепторов для избежания циклической зависимости
 let interceptorsInitialized = false;
-let rememberUser = false;
 const ensureInterceptorsInitialized = () => {
 	if (!interceptorsInitialized && urlBase) {
 		initializeInterceptors(urlBase);
@@ -79,10 +78,7 @@ export async function postAuth(
 			setCookie('first_name', first_name);
 			setCookie('last_name', last_name);
 			setCookie('role', role);
-
-			if (remember) {
-				rememberUser = true;
-			}
+			setCookie('remember', remember);
 
 			return { success: true, role };
 		}
@@ -148,12 +144,16 @@ export function getAccessToken(): string | null {
 
 // Функция для выхода
 export function logout(): void {
+	const rememberUser = getCookie('remember');
+
 	localStorage.removeItem('accessToken');
 	deleteCookie('first_name');
 	deleteCookie('last_name');
 	deleteCookie('role');
 	setAccessToken(null);
-	if (rememberUser) {
+
+	if (rememberUser === 'true') {
 		deleteRefreshToken();
+		deleteCookie('remember');
 	}
 }
