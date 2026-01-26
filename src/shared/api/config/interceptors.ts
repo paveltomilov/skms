@@ -8,7 +8,7 @@ import {RefreshResponse} from '@/shared/types/typesAuth';
 
 export let accessToken: string | null = null;
 
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
 
 // Интерцептор для автоматического обновления токенов
 let isRefreshing = false;
@@ -85,7 +85,7 @@ const setupResponseInterceptor = (urlBase: string) => {
                     const refreshRes = await axios.post<RefreshResponse>(
                         `${urlBase}/auth/refresh/`,
                         {},
-                        {withCredentials: true},
+                        {withCredentials: false},
                     );
 
                     if (refreshRes.status === 200 && refreshRes.data.access) {
@@ -135,7 +135,7 @@ const setupRequestInterceptor = () => {
 				!config.url?.includes('/auth/')) {
                 config.headers.Authorization = `Bearer ${accessToken}`;
             }
-			config.withCredentials = true;
+			config.withCredentials = false;
             return config;
         },
         (error: AxiosError) => Promise.reject(error),

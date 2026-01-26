@@ -61,9 +61,10 @@ export async function postAuth(
 			{
 					email: formData.email,
 					password: formData.password,
-					remember: remember,
+					// remember: remember,
 			},
-			{withCredentials: true})
+			{withCredentials: false}
+			)
 		;
 
 		const { access, first_name, last_name, role } = response.data;
