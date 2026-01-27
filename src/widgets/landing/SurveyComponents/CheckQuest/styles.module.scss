@@ -20,6 +20,7 @@
 }
 
 .radio__group {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	padding: 40px 20px 10px 20px;
@@ -30,10 +31,19 @@
 	line-height: 128%;
 	color: var(--lan-light-grayish-blue);
 	margin-bottom: 14px;
+
+	@media (max-width: 576px) {
+		padding: 33px 30px 10px 0;
+		gap: 12px;
+	}
 }
 
 .svg__container {
 	margin-right: 23px;
+
+	@media (max-width: 576px) {
+		margin-right: 13px;
+	}
 }
 
 .custom__radio {
@@ -53,6 +63,10 @@
 	line-height: 128%;
 	color: var(--lan-gray);
 	padding-left: 40px;
+
+	@media (max-width: 576px) {
+		padding-left: 17px;
+	}
 }
 
 .input__other {
@@ -83,6 +97,14 @@
 			@media (max-width: 1200px) {
 				width: 565px;
 			}
+
+			@media (max-width: 767px) {
+				width: 88%;
+			}
+
+			@media (max-width: 576px) {
+				left: 58px;
+			}
 		}
 	}
 
@@ -106,14 +128,13 @@
 }
 
 .text__container {
-	position: relative;
 	display: inline-block;
 }
 
 .tooltip {
 	position: absolute;
-	top: 50%;
-	left: 100%;
+	top: 88px;
+	left: 50%;
 
 	transform: translateY(-50%) translateX(8px);
 	white-space: nowrap;

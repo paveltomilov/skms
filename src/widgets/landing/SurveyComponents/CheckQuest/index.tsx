@@ -139,7 +139,11 @@ const CheckQuest: React.FC<CheckQuestProps> = ({
 								/>
 								<div className={styles.svg__container}>
 									{isSelected ? (
-										<Checked />
+										<Checked
+											className={
+												styles.svg__container_element
+											}
+										/>
 									) : (
 										<Check
 											disabled={!isSelected && maxReached}
