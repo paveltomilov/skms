@@ -167,7 +167,7 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 	// Обработка авторизации
 	const handleAuth = async () => {
 		try {
-			const response = await postAuth(values);
+			const response = await postAuth(values, rememberMe);
 			if (response.success) {
 				router.push(getDashboardRoute(response.role as UserRole));
 			} else {
