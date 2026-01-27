@@ -33,7 +33,7 @@ const Training = () => {
 			) : (
 				<section className={styles.training}>
 					<div className={styles.training__title}>{nameList}</div>
-					<div className={styles.training__cards}>
+					<div className={styles.training__cards} key={updateListNumber}>
 						{users.map(user => (
 							<UserCard
 								key={user.id}
