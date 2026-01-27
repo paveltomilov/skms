@@ -61,9 +61,9 @@ export async function postAuth(
 			{
 					email: formData.email,
 					password: formData.password,
-					// remember: remember,
+					remember: remember,
 			},
-			{withCredentials: false}
+			{withCredentials: true}
 			)
 		;
 
