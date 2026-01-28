@@ -105,6 +105,7 @@ const QuestionsList: React.FC<QuestionsListProps> = ({
 	const handleNextOrFinish = useCallback(() => {
 		if (!isCurrentAnswerValid) {
 			setShowError(true);
+
 			return;
 		}
 
@@ -147,7 +148,7 @@ const QuestionsList: React.FC<QuestionsListProps> = ({
 				</div>
 
 				<div className={styles.footer__navigation}>
-					{!isLastQuestion && showError && (
+					{showError && (
 						<div className={styles.footer__navigation_explanation}>
 							Вы не выбрали ответ — можно вернуться позже
 						</div>

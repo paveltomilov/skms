@@ -3,6 +3,7 @@ export interface Question {
 	type: 'radio' | 'checkbox';
 	title: string;
 	options: string[];
+	required: boolean;
 }
 
 export interface QuestionRendererProps {
@@ -31,6 +32,8 @@ export interface QuestionsListProps {
 		selectedIds: number[],
 		otherText?: string,
 	) => void;
+	showError?: boolean;
+	onShowErrorChange?: (questionId: number, show: boolean) => void;
 }
 
 export type Option = {

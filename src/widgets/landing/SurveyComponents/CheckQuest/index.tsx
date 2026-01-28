@@ -98,7 +98,7 @@ const CheckQuest: React.FC<CheckQuestProps> = ({
 
 			const timer = setTimeout(() => {
 				setShowInfoForId(null);
-			}, 10000);
+			}, 3000);
 
 			setTooltipTimer(timer);
 		}
@@ -188,30 +188,30 @@ const CheckQuest: React.FC<CheckQuestProps> = ({
 													}
 												>
 													<Info />
-												</span>
-											)}
-											{showTooltip && (
-												<div
-													className={styles.tooltip}
-													onClick={e =>
-														e.stopPropagation()
-													}
-												>
 													<div
 														className={
-															styles.tooltip__content
+															styles.tooltip
+														}
+														onClick={e =>
+															e.stopPropagation()
 														}
 													>
 														<Info
 															className={
-																styles.tooltip__content_svg
+																styles.tooltip__svg
 															}
 															size={19}
 														/>
-														Можно выбрать не более
-														трех вариантов
+														<p
+															className={
+																styles.tooltip__description
+															}
+														>
+															Можно выбрать не
+															более трех вариантов
+														</p>
 													</div>
-												</div>
+												</span>
 											)}
 										</div>
 									)}

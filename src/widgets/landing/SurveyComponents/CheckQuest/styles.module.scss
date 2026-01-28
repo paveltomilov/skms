@@ -20,7 +20,6 @@
 }
 
 .radio__group {
-	position: relative;
 	display: flex;
 	flex-direction: column;
 	padding: 40px 20px 10px 20px;
@@ -50,6 +49,11 @@
 	display: flex;
 	align-items: center;
 	white-space: pre-line;
+
+	@media (max-width: 576px) {
+		align-items: flex-start;
+	}
+
 	&__input {
 		opacity: 0;
 	}
@@ -133,11 +137,9 @@
 
 .tooltip {
 	position: absolute;
-	top: 88px;
-	left: 50%;
-
-	transform: translateY(-50%) translateX(8px);
-	white-space: nowrap;
+	top: 0;
+	left: 31px;
+	display: flex;
 	border-top: 2px solid var(--lan-bright-cyan---lime-green);
 	border-radius: 4px;
 	padding: 16px 8px;
@@ -150,21 +152,42 @@
 	background: var(--lan-light-grayish-blue);
 	z-index: 1000;
 
-	&__content {
-		display: flex;
-		align-items: center;
+	@media (max-width: 767px) {
+		align-items: flex-start;
+		width: 140px;
+		height: 69px;
+		padding: 0;
+	}
+
+	&__description {
 		font-family: var(--second-family);
 		font-weight: 400;
 		font-size: 14px;
 		color: var(--lan-very-dark-mostly-black-blue);
 
-		&_svg {
-			margin-right: 11px;
-			margin-bottom: 2px;
+		@media (max-width: 767px) {
+			font-size: 12px;
+			line-height: 14px;
+			padding-top: 12px;
+			padding-right: 8px;
+		}
+	}
+
+	&__svg {
+		margin-right: 11px;
+		margin-bottom: 2px;
+
+		@media (max-width: 767px) {
+			width: 30%;
+			height: 30%;
+			margin-right: 8px;
+			margin-left: 8px;
+			margin-top: 12px;
 		}
 	}
 }
-
 .info__icon {
+	position: relative;
 	padding-left: 8px;
+	margin-right: 11px;
 }
