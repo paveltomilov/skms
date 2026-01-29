@@ -1,5 +1,5 @@
 'use client';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import LineRupture from '@/shared/UI/icons/LineRupture/LineRupture';
@@ -8,6 +8,7 @@ import ListMalfunction from '../ListMalfunction';
 import useSetSimulation from '@/shared/hooks/useSetSimulation';
 import ErrorMessageText from '../ErrorMessageText';
 import cn from 'classnames';
+import useDetectMalfunction from '@/shared/hooks/useDetectMalfunction';
 
 export const PopupSetSimulation: FC = () => {
 	const {
@@ -22,6 +23,18 @@ export const PopupSetSimulation: FC = () => {
 		handleSetSimulation,
 		isLoading,
 	} = useSetSimulation();
+
+	const {
+		selectedMalfunction,
+		isStudent,
+		isSelected,
+		handleSelectMalfunction,
+		handleDetectMalfunction,
+	} = useDetectMalfunction();
+
+	useEffect(() => {
+		console.log('selectedMalfunction обновлен:', selectedMalfunction);
+	}, [selectedMalfunction]);
 
 	return (
 		<div className={styles.popup}>
@@ -39,6 +52,7 @@ export const PopupSetSimulation: FC = () => {
 				{showListMalfunction && (
 					<MalfunctionSelector
 						setMalfun={handleChoiceMalfunction}
+						selectMalfun={handleSelectMalfunction}
 						data={elements}
 						closeList={setShowListMalfunction}
 					/>
@@ -50,20 +64,36 @@ export const PopupSetSimulation: FC = () => {
 						deleteItem={handleDeleteItem}
 					/>
 				) : null}
+				{isStudent
+					? <Button
+						data-ignore-click-outside="true"
+						aria-label={'Определить неисправность'}
+						className={`${styles.popup__btn} ignore-click-outside`}
+						width={326}
+						height={38}
+						disabled={!isSelected || isLoading}
+						text={
+							isLoading
+								? 'Создание неисправности...'
+								: 'Определить неисправность'
+						}
+						onClick={handleDetectMalfunction}
+					/>
+					: <Button
+						aria-label={'Назначить симуляцию'}
+						className={styles.popup__btn}
+						width={326}
+						height={38}
+						disabled={listIsEmpty || isLoading}
+						text={
+							isLoading
+								? 'Создание симуляции...'
+								: 'Назначить симуляцию'
+						}
+						onClick={handleSetSimulation}
 
-				<Button
-					aria-label={'Назначить симуляцию'}
-					className={styles.popup__btn}
-					width={326}
-					height={38}
-					disabled={listIsEmpty || isLoading}
-					text={
-						isLoading
-							? 'Создание симуляции...'
-							: 'Назначить симуляцию'
-					}
-					onClick={handleSetSimulation}
-				/>
+					/>
+				}
 				{errors && <ErrorMessageText text={errors} />}
 			</div>
 		</div>
