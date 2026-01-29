@@ -2,8 +2,8 @@ import { useMemo } from 'react';
 import { columns } from '@/shared/configs/lampsScheme';
 import { useAppSelector } from '@/shared/hooks/store';
 import { findElementByID } from '@/shared/utils/findElementByID/scheme';
-import { BASE_RESISTANCE_CONSTANT } from '@/shared/configs/elementKind';
 import type { LampIndicatorColor } from '@/shared/types/icon';
+import { BASE_RESISTANCE } from '@/shared/configs/schemeElements';
 
 type PointValue = boolean | { state?: boolean | null } | undefined;
 
@@ -33,7 +33,7 @@ export const useLampIndicators = (): LampIndicatorState[] => {
 
 	return useMemo(
 		() =>
-			columns.map(({ id, pointIds, elementId, colors }) => {
+			columns.map(({ id, pointIds, elementId, colors, elementIds }) => {
 				const hasVoltage = pointIds.some(pointId =>
 					toBoolean(points[pointId]),
 				);
@@ -42,12 +42,31 @@ export const useLampIndicators = (): LampIndicatorState[] => {
 				if (hasVoltage) {
 					try {
 						const element = findElementByID(elementId, circuit);
-						const hasNormalResistance =
+						const baseResistance = BASE_RESISTANCE[elementId];
+						const hasBaseLampResistance =
 							typeof element?.resistance === 'number' &&
 							isFinite(element.resistance) &&
-							element.resistance <
-								BASE_RESISTANCE_CONSTANT.highResistance;
-						isOn = hasNormalResistance;
+							element.resistance === baseResistance;
+
+						const hasBaseContacts = elementIds.every(
+							({ elementId: contactId }) => {
+								const contactElement = findElementByID(
+									contactId,
+									circuit,
+								);
+								const baseContactResistance =
+									BASE_RESISTANCE[contactId];
+								return (
+									typeof contactElement?.resistance ===
+										'number' &&
+									isFinite(contactElement.resistance) &&
+									contactElement.resistance ===
+										baseContactResistance
+								);
+							},
+						);
+
+						isOn = hasBaseLampResistance && hasBaseContacts;
 					} catch {
 						isOn = false;
 					}

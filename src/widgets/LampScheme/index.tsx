@@ -10,32 +10,46 @@ import { columns } from '@/shared/configs/lampsScheme';
 import ScrewConnection from '@/shared/UI/ScrewConnection';
 import ProvodLine from '@/shared/UI/icons/ProvodLine';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
-import type { AppDispatch, RootState } from '@/store/store';
-import { togglePointState } from '@/store/pointsSlice';
+import type { AppDispatch } from '@/store/store';
 import { useLampIndicators } from '@/shared/hooks/useLampIndicators';
-
-// Состояние точки может быть boolean или объект со state
-type PointValue = boolean | { state?: boolean | null } | undefined;
-
-// Приведение значения точки к boolean
-const toBoolean = (value: PointValue): boolean => {
-	if (typeof value === 'boolean') {
-		return value;
-	}
-
-	if (value && typeof value === 'object' && 'state' in value) {
-		return Boolean((value as { state?: boolean }).state);
-	}
-
-	return false;
-};
+import { findElementByID } from '@/shared/utils/findElementByID/scheme';
+import { BASE_RESISTANCE_CONSTANT } from '@/shared/configs/elementKind';
+import { setResistance } from '@/store/circuitSlice';
+import { BASE_RESISTANCE } from '@/shared/configs/schemeElements';
 
 export const LampScheme: FC = () => {
 	const dispatch = useAppDispatch<AppDispatch>();
-	// Те же points используются для отображения состояния клемм
-	const screwStates = useAppSelector(
-		(state: RootState) => state.points as Record<string, PointValue>,
-	);
+	const circuit = useAppSelector(state => state.circuit);
+	const handleTogglePoint = (elementId: string) => {
+		const element = findElementByID(elementId, circuit);
+		const baseResistance = BASE_RESISTANCE[elementId];
+		const isBaseResistance =
+			typeof element?.resistance === 'number' &&
+			element.resistance === baseResistance;
+		const nextResistance = isBaseResistance
+			? BASE_RESISTANCE_CONSTANT.highResistance
+			: baseResistance;
+
+		dispatch(
+			setResistance({
+				id: elementId,
+				value: nextResistance,
+			}),
+		);
+	};
+	const getContactState = (elementId: string): boolean => {
+		try {
+			const element = findElementByID(elementId, circuit);
+			const resistance = element?.resistance;
+			if (typeof resistance !== 'number') {
+				return false;
+			}
+			return resistance < BASE_RESISTANCE_CONSTANT.highResistance;
+		} catch {
+			return false;
+		}
+	};
+			
 	const lampIndicators = useLampIndicators();
 	const indicatorById = useMemo(
 		() => new Map(lampIndicators.map(indicator => [indicator.id, indicator])),
@@ -49,7 +63,7 @@ export const LampScheme: FC = () => {
 					id,
 					title,
 					colors,
-					points: connections,
+					elementIds,
 					position,
 				}) => (
 					<section
@@ -66,9 +80,9 @@ export const LampScheme: FC = () => {
 						/>
 
 						<ul className={styles.foot} aria-label="Список клемм">
-							{connections.map(({ marker, point }) => {
-								const screwState = toBoolean(
-									screwStates[point],
+							{elementIds.map(({ marker, elementId: contactElementId }) => {
+								const screwState = getContactState(
+									contactElementId,
 								);
 
 								return (
@@ -83,13 +97,13 @@ export const LampScheme: FC = () => {
 											aria-hidden
 										/>
 										<ScrewConnection
-											pointId={point}
+											pointId={contactElementId}
 											screwStatus={
 												screwState ? 'close' : 'open'
 											}
 											onToggle={() =>
-												dispatch(
-													togglePointState(point),
+												handleTogglePoint(
+													contactElementId,
 												)
 											}
 											className={styles.pin__screw}
