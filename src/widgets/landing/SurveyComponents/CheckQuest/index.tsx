@@ -4,7 +4,7 @@ import Check from '../../IconSvg/check';
 import Checked from '../../IconSvg/checked';
 import { CheckQuestProps } from '@/shared/types/question';
 import styles from './styles.module.scss';
-import Info from '../../IconSvg/info';
+import InfoTooltip from '../Tooltip';
 
 const CheckQuest: React.FC<CheckQuestProps> = ({
 	options,
@@ -25,22 +25,51 @@ const CheckQuest: React.FC<CheckQuestProps> = ({
 	const [tooltipTimer, setTooltipTimer] = useState<NodeJS.Timeout | null>(
 		null,
 	);
+	const [tooltipPosition, setTooltipPosition] = useState<'right' | 'bottom'>(
+		'right',
+	);
+
+	// Используем MediaQueryList для отслеживания медиа-запросов
+	const [isMobile, setIsMobile] = useState(false);
+	const [isTablet, setIsTablet] = useState(false);
 
 	useEffect(() => {
-		if (
-			selectedIds.length > 0 &&
-			JSON.stringify(selectedIds) !== JSON.stringify(selectedOptions)
-		) {
-			setSelectedOptions(selectedIds);
-		}
-	}, [selectedIds]);
+		// Создаем MediaQueryList объекты
+		const mobileMediaQuery = window.matchMedia('(max-width: 767px)');
+		const tabletMediaQuery = window.matchMedia(
+			'(min-width: 768px) and (max-width: 1023px)',
+		);
 
-	useEffect(() => {
-		if (otherText !== currentOtherText) {
-			setCurrentOtherText(otherText);
-		}
-	}, [otherText]);
+		const handleMobileChange = (e: MediaQueryListEvent) => {
+			setIsMobile(e.matches);
+		};
 
+		const handleTabletChange = (e: MediaQueryListEvent) => {
+			setIsTablet(e.matches);
+		};
+
+		// Устанавливаем начальные значения
+		setIsMobile(mobileMediaQuery.matches);
+		setIsTablet(tabletMediaQuery.matches);
+
+		// Добавляем слушатели
+		mobileMediaQuery.addEventListener('change', handleMobileChange);
+		tabletMediaQuery.addEventListener('change', handleTabletChange);
+
+		return () => {
+			mobileMediaQuery.removeEventListener('change', handleMobileChange);
+			tabletMediaQuery.removeEventListener('change', handleTabletChange);
+		};
+	}, []);
+
+	// Функция для получения порога на основе текущего устройства
+	const getThreshold = () => {
+		if (isMobile) return 200; // Для мобильных
+		if (isTablet) return 255; // Для планшетов
+		return 420; // Для десктопов
+	};
+
+	// Находим опцию "Другое"
 	const otherOption = options.find(opt => opt.label === 'Другое');
 	const isOtherOption = (id: number) => {
 		return otherOption && id === otherOption.id;
@@ -88,8 +117,31 @@ const CheckQuest: React.FC<CheckQuestProps> = ({
 		onSelectionChange(selectedOptions, text);
 	};
 
-	const handleDisabledClick = (id: number) => {
+	const handleDisabledClick = (id: number, event: React.MouseEvent) => {
 		if (maxReached && !selectedOptions.includes(id)) {
+			const textContainer = event.currentTarget.querySelector(
+				`.${styles.text__container}`,
+			);
+
+			if (textContainer) {
+				const textSpan = textContainer.querySelector('span');
+				if (textSpan) {
+					const width = textSpan.getBoundingClientRect().width;
+					const threshold = getThreshold();
+					setTooltipPosition(width > threshold ? 'bottom' : 'right');
+
+					// Для отладки
+					console.log(
+						'Ширина текста:',
+						width,
+						'Порог:',
+						threshold,
+						'Позиция:',
+						width > threshold ? 'bottom' : 'right',
+					);
+				}
+			}
+
 			setShowInfoForId(id);
 
 			if (tooltipTimer) {
@@ -103,6 +155,15 @@ const CheckQuest: React.FC<CheckQuestProps> = ({
 			setTooltipTimer(timer);
 		}
 	};
+
+	// Очистка таймера при размонтировании
+	useEffect(() => {
+		return () => {
+			if (tooltipTimer) {
+				clearTimeout(tooltipTimer);
+			}
+		};
+	}, [tooltipTimer]);
 
 	return (
 		<div className={styles.question__container}>
@@ -126,7 +187,7 @@ const CheckQuest: React.FC<CheckQuestProps> = ({
 								onClick={e => {
 									if (isDisabled) {
 										e.preventDefault();
-										handleDisabledClick(opt.id);
+										handleDisabledClick(opt.id, e);
 									}
 								}}
 							>
@@ -182,36 +243,21 @@ const CheckQuest: React.FC<CheckQuestProps> = ({
 												{opt.label}
 											</span>
 											{showTooltip && (
-												<span
-													className={
-														styles.info__icon
+												<InfoTooltip
+													right={
+														tooltipPosition ===
+														'right'
+															? -10
+															: undefined
 													}
-												>
-													<Info />
-													<div
-														className={
-															styles.tooltip
-														}
-														onClick={e =>
-															e.stopPropagation()
-														}
-													>
-														<Info
-															className={
-																styles.tooltip__svg
-															}
-															size={19}
-														/>
-														<p
-															className={
-																styles.tooltip__description
-															}
-														>
-															Можно выбрать не
-															более трех вариантов
-														</p>
-													</div>
-												</span>
+													bottom={
+														tooltipPosition ===
+														'bottom'
+															? -10
+															: undefined
+													}
+													show={true}
+												/>
 											)}
 										</div>
 									)}
