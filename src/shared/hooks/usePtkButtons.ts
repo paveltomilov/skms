@@ -11,11 +11,16 @@ import {
 	LIMIT_SWITCH_OPEN_ID,
 	CLOSE_CMD_PTK_BRANCH_POINT_ID,
 	OPEN_CMD_PTK_BRANCH_POINT_ID,
+	CONTROL_POWER_FEED_POINT_ID,
 } from '../configs/controlCircuit/constants';
 import { getResistanceByKind } from '../utils/getResistanceByKind/getResistanceByKind';
-import { INPUT_CIRCUIT_BREAKER_ID } from '../configs/powerCircuit/constants';
+import {
+	INPUT_CIRCUIT_BREAKER_ID,
+	INPUT_CIRCUIT_BREAKER_OUTPUTS_POINTS_ID,
+} from '../configs/powerCircuit/constants';
 import { useGetMalfunctionSwitchLimit } from './useGetMalfunctionSwitchLimit';
 import { PositionClose, PositionOpen } from '../configs/gate';
+import { togglePointState } from '@/store/pointsSlice';
 
 const TimeShutdownInputBreaker: number = 2;
 const TimeUpdateInterval: number = 1000;
@@ -382,6 +387,16 @@ export const usePtkButtons = () => {
 										}),
 									),
 								);
+								INPUT_CIRCUIT_BREAKER_OUTPUTS_POINTS_ID.forEach(
+									point => {
+										dispatch(togglePointState(point));
+									},
+								);
+								dispatch(
+									togglePointState(
+										CONTROL_POWER_FEED_POINT_ID,
+									),
+								);
 								PTK_BUTTONS_CONFIG.open.forEach(action => {
 									if (action.id !== LIMIT_SWITCH_OPEN_ID) {
 										dispatch(setResistance(action));
@@ -520,6 +535,17 @@ export const usePtkButtons = () => {
 										}),
 									),
 								);
+								INPUT_CIRCUIT_BREAKER_OUTPUTS_POINTS_ID.forEach(
+									point => {
+										dispatch(togglePointState(point));
+									},
+								);
+								dispatch(
+									togglePointState(
+										CONTROL_POWER_FEED_POINT_ID,
+									),
+								);
+
 								PTK_BUTTONS_CONFIG.close.forEach(action => {
 									if (action.id !== LIMIT_SWITCH_OPEN_ID) {
 										dispatch(setResistance(action));
