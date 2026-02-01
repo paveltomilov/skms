@@ -2,6 +2,8 @@ import { usePtkButtons } from './usePtkButtons';
 import { useKruzapButtons } from './useKruzapButtons';
 import { useAppSelector } from './store';
 
+export type TypeButtons = 'open' | 'close' | 'stop';
+
 /**
  * Объединяющий хук для управления кнопками задвижки.
  * Использует отдельные хуки для ПТК и КРУЗАП, обеспечивая обратную совместимость.

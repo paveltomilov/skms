@@ -7,11 +7,13 @@ import { useAppSelector } from './store';
 
 export const useGetMalfunctionSwitchLimit = () => {
 	// Получаем концевые выключатели для проверки состояния
+	/** Концевой выключатель цепи ОТКРЫТЬ */
 	const limitSwitchOpenElement = findElementByID(
 		LIMIT_SWITCH_OPEN_ID,
 		useAppSelector(state => state.circuit),
 	);
 
+	/** Концевой выключатель цепи ЗАКРЫТЬ */
 	const limitSwitchCloseElement = findElementByID(
 		LIMIT_SWITCH_CLOSE_ID,
 		useAppSelector(state => state.circuit),
@@ -20,9 +22,9 @@ export const useGetMalfunctionSwitchLimit = () => {
 	// Получаем активные несиспрановности концевых выключателей
 	const listActiveMalfunctionsLimitSwitchOpenElement =
 		limitSwitchOpenElement.malfunctions.filter(m => m.active);
+
 	const listActiveMalfunctionsLimitSwitchCloseElement =
 		limitSwitchCloseElement.malfunctions.filter(m => m.active);
-
 	// Проверяем наличие неисправности 'Нет контакта' концевых выключателей
 	const hasMalfunctionNoContactSwitchOpenElement =
 		listActiveMalfunctionsLimitSwitchOpenElement.some(
@@ -56,6 +58,8 @@ export const useGetMalfunctionSwitchLimit = () => {
 		);
 
 	return {
+		limitSwitchOpenElement,
+		limitSwitchCloseElement,
 		hasMalfunctionNoContactSwitchOpenElement,
 		hasMalfunctionNoContactSwitchCloseElement,
 		hasMalfunctionStuckContactSwitchOpenElement,
