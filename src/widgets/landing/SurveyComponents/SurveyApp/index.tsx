@@ -40,12 +40,6 @@ const SurveyApp: React.FC = () => {
 	};
 
 	const handleFinishSurvey = () => {
-		console.log('Опрос завершен!');
-		console.log('Все ответы:', answers);
-		console.log('Тексты "Другое":', otherTexts);
-
-		// Можно добавить отправку данных на сервер
-
 		setShowQuestions(false);
 		setShowEnd(true);
 	};

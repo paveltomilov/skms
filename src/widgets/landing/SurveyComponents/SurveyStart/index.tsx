@@ -42,8 +42,14 @@ const SurveyStart: React.FC<SurveyStartProps> = ({
 				height={48}
 				text="Начать"
 				onClick={onStart}
+				type="button"
 			/>
 			<ConsentSurvey value={consent} onChange={setConsent} />
+			<p className={styles.survey__info}>
+				Ваши ответы будут использоваться&nbsp;исключительно
+				в&nbsp;исследовательских&nbsp;целях и не передаются третьим
+				лицам
+			</p>
 			<BottomCircle className={styles.survey__svg2} />
 		</div>
 	);

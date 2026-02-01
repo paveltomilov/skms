@@ -44,12 +44,14 @@ const ConfirmDialog: FC<ConfirmDialogProps> = ({
 							text="ОТМЕНА"
 							onClick={onCancel}
 							radius={4}
+							type="button"
 						/>
 						<Button
 							className={`${styles.confirm__button} ${styles.confirm__button_yes}`}
 							text="ДА, ВЫЙТИ"
 							onClick={onConfirm}
 							radius={4}
+							type="button"
 						/>
 					</div>
 				</div>

@@ -161,6 +161,7 @@ const QuestionsList: React.FC<QuestionsListProps> = ({
 						onClick={handlePrev}
 						radius={4}
 						border="1px solid var(--lan-grey)"
+						type="button"
 					/>
 
 					<Button
@@ -171,6 +172,7 @@ const QuestionsList: React.FC<QuestionsListProps> = ({
 						width={118}
 						height={48}
 						radius={4}
+						type="button"
 					/>
 				</div>
 			</div>

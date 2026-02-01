@@ -7,7 +7,7 @@ import styles from './styles.module.scss';
 
 const RadioQuest: React.FC<RadioQuestProps> = ({
 	options = [],
-	selected = '', // Теперь строка, а не null
+	selected = '',
 	otherText = '',
 	setSelected,
 	setOtherText,

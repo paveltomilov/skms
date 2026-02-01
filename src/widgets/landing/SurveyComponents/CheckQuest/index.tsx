@@ -29,12 +29,10 @@ const CheckQuest: React.FC<CheckQuestProps> = ({
 		'right',
 	);
 
-	// Используем MediaQueryList для отслеживания медиа-запросов
 	const [isMobile, setIsMobile] = useState(false);
 	const [isTablet, setIsTablet] = useState(false);
 
 	useEffect(() => {
-		// Создаем MediaQueryList объекты
 		const mobileMediaQuery = window.matchMedia('(max-width: 767px)');
 		const tabletMediaQuery = window.matchMedia(
 			'(min-width: 768px) and (max-width: 1023px)',
@@ -48,11 +46,9 @@ const CheckQuest: React.FC<CheckQuestProps> = ({
 			setIsTablet(e.matches);
 		};
 
-		// Устанавливаем начальные значения
 		setIsMobile(mobileMediaQuery.matches);
 		setIsTablet(tabletMediaQuery.matches);
 
-		// Добавляем слушатели
 		mobileMediaQuery.addEventListener('change', handleMobileChange);
 		tabletMediaQuery.addEventListener('change', handleTabletChange);
 
@@ -62,14 +58,12 @@ const CheckQuest: React.FC<CheckQuestProps> = ({
 		};
 	}, []);
 
-	// Функция для получения порога на основе текущего устройства
 	const getThreshold = () => {
-		if (isMobile) return 200; // Для мобильных
-		if (isTablet) return 255; // Для планшетов
-		return 420; // Для десктопов
+		if (isMobile) return 200;
+		if (isTablet) return 255;
+		return 420;
 	};
 
-	// Находим опцию "Другое"
 	const otherOption = options.find(opt => opt.label === 'Другое');
 	const isOtherOption = (id: number) => {
 		return otherOption && id === otherOption.id;
@@ -129,16 +123,6 @@ const CheckQuest: React.FC<CheckQuestProps> = ({
 					const width = textSpan.getBoundingClientRect().width;
 					const threshold = getThreshold();
 					setTooltipPosition(width > threshold ? 'bottom' : 'right');
-
-					// Для отладки
-					console.log(
-						'Ширина текста:',
-						width,
-						'Порог:',
-						threshold,
-						'Позиция:',
-						width > threshold ? 'bottom' : 'right',
-					);
 				}
 			}
 
@@ -156,7 +140,6 @@ const CheckQuest: React.FC<CheckQuestProps> = ({
 		}
 	};
 
-	// Очистка таймера при размонтировании
 	useEffect(() => {
 		return () => {
 			if (tooltipTimer) {

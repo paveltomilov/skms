@@ -98,4 +98,20 @@
 		border-radius: 24px;
 		z-index: -1;
 	}
+
+	&__info {
+		max-width: 512px;
+		font-family: var(--second-family);
+		font-weight: 400;
+		font-size: 15px;
+		line-height: 128%;
+		text-align: center;
+		color: var(--lan-gray);
+		padding: 10px;
+
+		@media (max-width: 576px) {
+			max-width: 312px;
+			font-size: 12px;
+		}
+	}
 }

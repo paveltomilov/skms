@@ -1,4 +1,3 @@
-// components/InfoTooltip/InfoTooltip.tsx
 'use client';
 
 import Info from '../../IconSvg/info';
@@ -11,7 +10,7 @@ interface InfoTooltipProps {
 	right?: number | string;
 	bottom?: number | string;
 	className?: string;
-	show?: boolean; // Добавляем пропс для управления видимостью
+	show?: boolean;
 }
 
 const InfoTooltip = ({
@@ -20,7 +19,7 @@ const InfoTooltip = ({
 	right,
 	bottom,
 	className = '',
-	show = false, // По умолчанию скрыт
+	show = false,
 }: InfoTooltipProps) => {
 	const tooltipStyle: CSSProperties = {};
 
@@ -33,14 +32,11 @@ const InfoTooltip = ({
 			typeof bottom === 'number' ? `${bottom}px` : bottom;
 	}
 
-	// Добавляем класс visible если show = true
-	const tooltipClassName = `${styles.tooltip} ${show ? styles.visible : ''} ${className}`;
-
 	return (
-		<div className={styles.info__icon}>
+		<div className={`${styles.tooltip} ${className}`}>
 			<Info size={size} />
 			<div
-				className={tooltipClassName}
+				className={`${styles.tooltip__content} ${show ? styles.tooltip__content_visible : ''}`}
 				onClick={e => e.stopPropagation()}
 				style={
 					Object.keys(tooltipStyle).length > 0
@@ -48,8 +44,8 @@ const InfoTooltip = ({
 						: undefined
 				}
 			>
-				<Info className={styles.tooltip__svg} size={19} />
-				<p className={styles.tooltip__description}>{text}</p>
+				<Info className={styles.tooltip__content_svg} size={19} />
+				<p className={styles.tooltip__content_description}>{text}</p>
 			</div>
 		</div>
 	);

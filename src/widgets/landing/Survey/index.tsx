@@ -24,8 +24,6 @@ const Survey: FC = () => {
 	const handleConfirmClose = () => {
 		setIsOpen(false);
 		setShowConfirmDialog(false);
-		// Здесь можно добавить дополнительную логику при закрытии
-		console.log('Опрос закрыт пользователем');
 	};
 
 	return (

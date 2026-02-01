@@ -8,6 +8,7 @@ import styles from './styles.module.scss';
 
 type SurveyEndProps = {
 	onStart: () => void;
+	email?: string;
 };
 
 const SurveyEnd: React.FC<SurveyEndProps> = ({ onStart }) => {
@@ -27,7 +28,6 @@ const SurveyEnd: React.FC<SurveyEndProps> = ({ onStart }) => {
 		setIsSubmitting(true);
 
 		try {
-			console.log('Email отправлен:', email);
 			setIsSubmitted(true);
 
 			setTimeout(() => {
@@ -82,6 +82,7 @@ const SurveyEnd: React.FC<SurveyEndProps> = ({ onStart }) => {
 				radius={4}
 				text="протестировать тренажер"
 				onClick={onStart}
+				type="button"
 			/>
 
 			<BottomCircle className={styles.survey__svg_bottom} />
