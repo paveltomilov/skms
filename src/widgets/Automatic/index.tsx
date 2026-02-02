@@ -50,7 +50,7 @@ export const Automatic: FC = () => {
 				/>
 			</div>
 			<Switcher mode={switcherMode} />
-			<Tumbler mode={tumblerMode} />
+			<Tumbler mode={tumblerMode} switcherValue={switcherMode}/>
 		</div>
 	);
 };
