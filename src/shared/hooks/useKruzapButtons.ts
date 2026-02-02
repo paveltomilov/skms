@@ -9,7 +9,7 @@ import { findElementByID } from '../utils/findElementByID/scheme';
 import { useAppDispatch, useAppSelector } from './store';
 import { setResistance } from '@/store/circuitSlice';
 import { KRUZAP_BUTTONS_CONFIG } from '../configs/header';
-import { useRef } from 'react';
+import {useMemo, useRef} from 'react';
 import { GATE_STATE_TYPE } from '../types/gate';
 import { BASE_RESISTANCE } from '../configs/schemeElements';
 import { BASE_RESISTANCE_CONSTANT, ELEMENT_KIND } from '../configs/elementKind';
@@ -24,7 +24,7 @@ import { TypeButtons } from './useGateControlButtons';
  */
 export const useKruzapButtons = () => {
 	const dispatch = useAppDispatch();
-
+	const circuit = useAppSelector(state => state.circuit);
 	// Получаем возможные неисправсноии кнопок КРУЗА-П
 
 	const {
@@ -35,26 +35,27 @@ export const useKruzapButtons = () => {
 	// Получаем id активной задвижки из стора
 	const gateId = useAppSelector(state => state.gate.activeGateId) ?? 'g1';
 
+
 	// Получаем концевые выключатели из схемы
-	const limitSwitchOpenElement = findElementByID(
-		LIMIT_SWITCH_OPEN_ID,
-		useAppSelector(state => state.circuit),
+	const limitSwitchOpenElement = useMemo(() =>
+			findElementByID(LIMIT_SWITCH_OPEN_ID, circuit),
+		[circuit]
 	);
 
-	const limitSwitchCloseElement = findElementByID(
-		LIMIT_SWITCH_CLOSE_ID,
-		useAppSelector(state => state.circuit),
+	const limitSwitchCloseElement = useMemo(() =>
+			findElementByID(LIMIT_SWITCH_CLOSE_ID, circuit),
+		[circuit]
 	);
 
 	// Получаем элементы кнопок ПТК из схемы для проверки их состояния
-	const openPtkElement = findElementByID(
-		INSERT_NDO_CMD_OPEN_PTK_ID,
-		useAppSelector(state => state.circuit),
+	const openPtkElement = useMemo(() =>
+			findElementByID(INSERT_NDO_CMD_OPEN_PTK_ID, circuit),
+		[circuit]
 	);
 
-	const closePtkElement = findElementByID(
-		INSERT_NDO_CMD_CLOSE_PTK_ID,
-		useAppSelector(state => state.circuit),
+	const closePtkElement = useMemo(() =>
+			findElementByID(INSERT_NDO_CMD_CLOSE_PTK_ID, circuit),
+		[circuit]
 	);
 
 	// Проверяем, активна ли какая-либо кнопка ПТК (сопротивление = 0)
