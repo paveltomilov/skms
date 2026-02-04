@@ -5,7 +5,7 @@ import { SwitchMode } from '../types/switch';
 export function useSwitchingTumbler(
 	handleRef: React.RefObject<HTMLDivElement | null>,
 	initialMode: SwitchMode,
-	isFaultActive: boolean = true
+	isFaultActive: boolean = false
 ) {
 	const [currentMode, setCurrentMode] = useState<SwitchMode>(initialMode);
 	const isDragging = useRef(false);

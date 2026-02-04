@@ -5,7 +5,7 @@ export function useRotateKnob<T extends string>(
 	knobRef: React.RefObject<SVGSVGElement | null>,
 	modeAngles: Record<T, number>,
 	initialMode: T,
-	isFaultActive: boolean = true
+	isFaultActive: boolean = false
 ) {
 	const [angle, setAngle] = useState<number>(modeAngles[initialMode]);
 	const isDragging = useRef(false);
