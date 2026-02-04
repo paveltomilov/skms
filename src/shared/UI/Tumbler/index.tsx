@@ -12,13 +12,14 @@ import { SwitchMode } from '@/shared/types/switch';
 
 interface Props {
 	mode: SwitchMode;
+	isFaultActive?: boolean;
 }
 
-const Tumbler: FC<Props> = ({ mode }) => {
+const Tumbler: FC<Props> = ({ mode, isFaultActive }) => {
 	const handleRef = useRef<HTMLDivElement | null>(null);
 
 	// логика перемещения тумблера внутри кастомного хука
-	const { currentMode, onMouseDown } = useSwitchingTumbler(handleRef, mode);
+	const { currentMode, onMouseDown } = useSwitchingTumbler(handleRef, mode, isFaultActive);
 
 	const dispatch = useAppDispatch();
 
