@@ -11,10 +11,13 @@ import { CONTROL_CIRCUIT_BREAKER_ID } from '@/shared/configs/controlCircuit/cons
 import { BASE_RESISTANCE_CONSTANT } from '@/shared/configs/elementKind';
 import { getInputCircuitBreakerState } from '@/shared/utils/getInputCircuitBreakerState/getInputCircuitBreakerState';
 import { useGateControlButtons } from '@/shared/hooks/useGateControlButtons';
+import { useLampIndicators } from '@/shared/hooks/useLampIndicators';
 
 export const Automatic: FC = () => {
-	const { handleButton, stopGateMovement, openOn, closeOn } =
-		useGateControlButtons();
+	const { handleButton, stopGateMovement } = useGateControlButtons();
+	const lampIndicators = useLampIndicators();
+	const closedLamp = lampIndicators.find(lamp => lamp.id === 'closed');
+	const openLamp = lampIndicators.find(lamp => lamp.id === 'open');
 
 	const controlCircuitBreaker = findElementByID(
 		CONTROL_CIRCUIT_BREAKER_ID,
@@ -35,14 +38,14 @@ export const Automatic: FC = () => {
 		<div className={styles.automatic}>
 			<div className={styles.automatic__buttons}>
 				<AutomatButton
-					state={isAssembled && closeOn ? 'on' : 'off'}
+					state={closedLamp?.isOn ? 'on' : 'off'}
 					type="open"
 					disabled={!isAssembled}
 					onMouseDown={() => handleButton('kruzap', 'open')}
 					onMouseUp={() => stopGateMovement('kruzap')}
 				/>
 				<AutomatButton
-					state={isAssembled && openOn ? 'on' : 'off'}
+					state={openLamp?.isOn ? 'on' : 'off'}
 					type="close"
 					disabled={!isAssembled}
 					onMouseDown={() => handleButton('kruzap', 'close')}
