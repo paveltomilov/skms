@@ -32,8 +32,8 @@ const Scheme: FC = () => {
 	useGateMalfunctions();
 
 	// для состояния точек (вынести в отдельный хук)
-	//const points = useAppSelector(state => state.points);
-	// const scheme = useAppSelector(state => state.circuit);
+	const points = useAppSelector(state => state.points);
+	const scheme = useAppSelector(state => state.circuit);
 
 	// Комплексный пересчет схемы: точки и контакты пересчитываются одновременно до стабильного состояния
 	useEffect(() => {
@@ -101,7 +101,7 @@ const Scheme: FC = () => {
 			);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [dispatch]);
+	}, [dispatch, scheme, points]);
 
 	return (
 		<div className={styles.scheme}>
