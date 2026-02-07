@@ -1,9 +1,9 @@
-import { usePtkButtons } from './usePtkButtons';
+﻿import { usePtkButtons } from './usePtkButtons';
 import { useKruzapButtons } from './useKruzapButtons';
 import { useAppSelector } from './store';
 
 export type TypeButtons = 'open' | 'close' | 'stop';
-
+type TypeButtonsMode = 'ptk' | 'kruzap';
 /**
  * Объединяющий хук для управления кнопками задвижки.
  * Использует отдельные хуки для ПТК и КРУЗАП, обеспечивая обратную совместимость.
@@ -17,7 +17,7 @@ export const useGateControlButtons = () => {
 
 	// Объединяющая функция для обратной совместимости
 	// При нажатии на один тип кнопок, останавливаем движение другого типа
-	const handleButton = (type: 'ptk' | 'kruzap', button: 'close' | 'open') => {
+	const handleButton = (type: TypeButtonsMode, button: TypeButtons) => {
 		if (type === 'ptk') {
 			// Останавливаем движение КРУЗАП, если оно активно
 			kruzapButtons.stopKruzapMovement();
@@ -30,7 +30,7 @@ export const useGateControlButtons = () => {
 	};
 
 	// Объединяющая функция для остановки движения
-	const stopGateMovement = (type: 'ptk' | 'kruzap') => {
+	const stopGateMovement = (type: TypeButtonsMode) => {
 		if (type === 'ptk') {
 			ptkButtons.stopPtkMovement();
 		} else {

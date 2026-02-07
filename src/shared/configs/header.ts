@@ -6,7 +6,21 @@ import {
 	INSERT_NDO_CMD_OPEN_PTK_ID,
 } from './controlCircuit/constants';
 
-export const PTK_BUTTONS_CONFIG = {
+interface ResistanceAction {
+	id: string;
+	value: number;
+}
+
+interface ButtonsConfig {
+	[key: string]: ResistanceAction[];
+	open: ResistanceAction[];
+	close: ResistanceAction[];
+	stop: ResistanceAction[];
+	opening: ResistanceAction[];
+	closing: ResistanceAction[];
+}
+
+export const PTK_BUTTONS_CONFIG: ButtonsConfig = {
 	// Срабатывает сразу после нажатия на кнопку открыть ПТК
 	open: [
 		{
@@ -49,7 +63,7 @@ export const PTK_BUTTONS_CONFIG = {
 	],
 };
 
-export const KRUZAP_BUTTONS_CONFIG = {
+export const KRUZAP_BUTTONS_CONFIG: ButtonsConfig = {
 	// Срабатывает сразу после нажатия на кнопку открыть Крузап
 	open: [
 		{

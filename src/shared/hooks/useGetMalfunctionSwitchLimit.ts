@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import {
 	LIMIT_SWITCH_CLOSE_ID,
 	LIMIT_SWITCH_OPEN_ID,
@@ -6,17 +7,18 @@ import { findElementByID } from '../utils/findElementByID/scheme';
 import { useAppSelector } from './store';
 
 export const useGetMalfunctionSwitchLimit = () => {
+	const circuit = useAppSelector(state => state.circuit);
 	// Получаем концевые выключатели для проверки состояния
 	/** Концевой выключатель цепи ОТКРЫТЬ */
-	const limitSwitchOpenElement = findElementByID(
-		LIMIT_SWITCH_OPEN_ID,
-		useAppSelector(state => state.circuit),
+	const limitSwitchOpenElement = useMemo(
+		() => findElementByID(LIMIT_SWITCH_OPEN_ID, circuit),
+		[circuit],
 	);
 
 	/** Концевой выключатель цепи ЗАКРЫТЬ */
-	const limitSwitchCloseElement = findElementByID(
-		LIMIT_SWITCH_CLOSE_ID,
-		useAppSelector(state => state.circuit),
+	const limitSwitchCloseElement = useMemo(
+		() => findElementByID(LIMIT_SWITCH_CLOSE_ID, circuit),
+		[circuit],
 	);
 
 	// Получаем активные несиспрановности концевых выключателей

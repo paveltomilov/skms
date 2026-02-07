@@ -3,7 +3,7 @@ import { findElementByID } from '../utils/findElementByID/scheme';
 import { useAppDispatch, useAppSelector } from './store';
 import { setResistance } from '@/store/circuitSlice';
 import { PTK_BUTTONS_CONFIG } from '../configs/header';
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import { GATE_STATE_TYPE } from '../types/gate';
 import { BASE_RESISTANCE_CONSTANT, ELEMENT_KIND } from '../configs/elementKind';
 import {
@@ -21,6 +21,7 @@ import {
 import { useGetMalfunctionSwitchLimit } from './useGetMalfunctionSwitchLimit';
 import { PositionClose, PositionOpen } from '../configs/gate';
 import { togglePointState } from '@/store/pointsSlice';
+import { TypeButtons } from './useGateControlButtons';
 
 const TimeShutdownInputBreaker: number = 2;
 const TimeUpdateInterval: number = 1000;
@@ -32,6 +33,7 @@ const TimeUpdateInterval: number = 1000;
 
 export const usePtkButtons = () => {
 	const dispatch = useAppDispatch();
+	const circuit = useAppSelector(state => state.circuit);
 
 	// Получаем id активной задвижки из стора
 	const gateId = useAppSelector(state => state.gate.activeGateId) ?? 'g1';
@@ -48,9 +50,9 @@ export const usePtkButtons = () => {
 
 	// Получаем фазу А вводного автомата от которой запитывается схемы управления
 	/** Фаза вводного автомата питающая сеть управления */
-	const inputCircuitBreakerPhaseAElement = findElementByID(
-		INPUT_CIRCUIT_BREAKER_ID[0],
-		useAppSelector(state => state.circuit),
+	const inputCircuitBreakerPhaseAElement = useMemo(
+		() => findElementByID(INPUT_CIRCUIT_BREAKER_ID[0], circuit),
+		[circuit],
 	);
 
 	// Проверяем состояние контактов вводного автомата фазы А
@@ -256,7 +258,7 @@ export const usePtkButtons = () => {
 		}
 	};
 
-	const handlePtkButton = (button: 'close' | 'open') => {
+	const handlePtkButton = (button: TypeButtons) => {
 		if (inputBrakerInterval.current) {
 			clearInterval(inputBrakerInterval.current);
 			inputBrakerInterval.current = null;
@@ -269,7 +271,6 @@ export const usePtkButtons = () => {
 			);
 			return;
 		}
-
 		// Обновляем сопротивления, которые меняются сразу после нажатия на кнопку "Открыть"/"Закрыть"
 		PTK_BUTTONS_CONFIG[button].forEach(action => {
 			console.log(
@@ -465,11 +466,13 @@ export const usePtkButtons = () => {
 
 				// Обновляем концевые выключатели на основе текущего положения
 				// Концевой "открыто": разомкнут если position === 100%, иначе замкнут
+				// При наличии неисправности ЗАЛИПШИЙ КОНТАКТ концевого выключателя остается замкнут
 				const shouldOpenBeOpen =
 					gatePosition.current >= PositionOpen &&
 					!hasMalfunctionStuckContactSwitchOpenElement
 						? BASE_RESISTANCE_CONSTANT.highResistance
 						: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
+
 				if (limitSwitchOpenElement.resistance !== shouldOpenBeOpen) {
 					dispatch(
 						setResistance({
@@ -480,11 +483,13 @@ export const usePtkButtons = () => {
 				}
 
 				// Концевой "закрыто": разомкнут если position === 0%, иначе замкнут
+				// При наличии неисправности ЗАЛИПШИЙ КОНТАКТ концевого выключателя остается замкнут
 				const shouldCloseBeOpen =
 					gatePosition.current <= PositionClose &&
 					!hasMalfunctionStuckContactSwitchCloseElement
 						? BASE_RESISTANCE_CONSTANT.highResistance
 						: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
+
 				if (limitSwitchCloseElement.resistance !== shouldCloseBeOpen) {
 					dispatch(
 						setResistance({
@@ -495,6 +500,7 @@ export const usePtkButtons = () => {
 				}
 
 				if (gatePosition.current <= PositionClose) {
+					// при наличии неисправности запуск таймера на отключения вводного автомата
 					if (hasMalfunctionStuckContactSwitchCloseElement) {
 						let timerTriggeringInputAutomaton = 0;
 
@@ -547,7 +553,7 @@ export const usePtkButtons = () => {
 								);
 
 								PTK_BUTTONS_CONFIG.close.forEach(action => {
-									if (action.id !== LIMIT_SWITCH_OPEN_ID) {
+									if (action.id !== LIMIT_SWITCH_CLOSE_ID) {
 										dispatch(setResistance(action));
 									}
 								});
