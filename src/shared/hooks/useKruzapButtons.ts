@@ -14,11 +14,20 @@ import { GATE_STATE_TYPE } from '../types/gate';
 import { BASE_RESISTANCE } from '../configs/schemeElements';
 import { BASE_RESISTANCE_CONSTANT, ELEMENT_KIND } from '../configs/elementKind';
 import { getResistanceByKind } from '../utils/getResistanceByKind/getResistanceByKind';
-import { INPUT_CIRCUIT_BREAKER_ID } from '../configs/powerCircuit/constants';
+import {
+	INPUT_CIRCUIT_BREAKER_ID,
+	INPUT_CIRCUIT_BREAKER_OUTPUTS_POINTS_ID,
+} from '../configs/powerCircuit/constants';
 import { useGetMalfunctionSwitchLimit } from './useGetMalfunctionSwitchLimit';
 import { PositionClose, PositionOpen } from '../configs/gate';
 import { useGetMalfunctionKruzapButtons } from './useGetMalfunctionKruzapButtons';
 import { TypeButtons } from './useGateControlButtons';
+import { TimeShutdownInputBreaker } from './usePtkButtons';
+import { togglePointState } from '@/store/pointsSlice';
+
+const timeStepIntervalGateMoving = 100;
+const newTimeShutdownInputBreaker =
+	(TimeShutdownInputBreaker * 1000) / timeStepIntervalGateMoving;
 
 /**
  * Хук для управления кнопками КРУЗАП.
@@ -136,8 +145,13 @@ export const useKruzapButtons = () => {
 	// Создаём интервал в ref, чтобы к нему можно было обращаться и изменять его в функциях stopKruzapMovement и handleKruzapButton
 	const gateInterval = useRef<NodeJS.Timeout | null>(null);
 
+	const timerTriggeringInputAutomaton = useRef<number>(0);
+
 	// Функция для остановки движения задвижки через КРУЗАП
 	const stopKruzapMovement = () => {
+		if (timerTriggeringInputAutomaton.current) {
+			timerTriggeringInputAutomaton.current = 0;
+		}
 		// Обновляем сопротивления, которые меняются сразу после отпускания кнопки
 		KRUZAP_BUTTONS_CONFIG.stop.forEach(action => {
 			dispatch(setResistance(action));
@@ -199,6 +213,13 @@ export const useKruzapButtons = () => {
 			console.info(
 				'Активна неиспраность <Нет контакта> концевого выключателя цепи ЗАКРЫТЬ ',
 			);
+			return;
+		}
+		if (hasMalfunctionNoContactSwitchOpenElement && button === 'open') {
+			console.info(
+				'Активна неиспраность <Нет контакта> концевого выключателя цепи ОТКРЫТЬ ',
+			);
+			return;
 		}
 		// Проверяем кнопки на наличие неисправности 'Нет контакта, цепь не замыкается'
 		if (button === 'open' && hasMalfunctionNoContactKruzapOpenButton) {
@@ -207,23 +228,16 @@ export const useKruzapButtons = () => {
 			);
 			return;
 		}
-
-		if (hasMalfunctionNoContactSwitchOpenElement && button === 'open') {
+		if (button === 'close' && hasMalfunctionNoContactKruzapCloseButton) {
 			console.info(
-				'Активна неиспраность <Нет контакта> концевого выключателя цепи ОТКРЫТЬ ',
+				'Кнопка ЗАКРЫТЬ КРУЗА-П имеет активную неисправность "Нет контакта, цепь не замыкается"',
 			);
 			return;
 		}
-
 		// Проверяем наличие питания в цепи управления
 		if (isOpenInputBreakerPhaseA) {
 			console.info(
 				'Нет питания сети управления ВВОДНОЙ АВТОМАТ РАЗОБРАН',
-			);
-		}
-		if (button === 'close' && hasMalfunctionNoContactKruzapCloseButton) {
-			console.info(
-				'Кнопка ЗАКРЫТЬ КРУЗА-П имеет активную неисправность "Нет контакта, цепь не замыкается"',
 			);
 			return;
 		}
@@ -255,7 +269,8 @@ export const useKruzapButtons = () => {
 				// Обновляем концевые выключатели на основе текущего положения
 				// Концевой "открыто": разомкнут если position === 100%, иначе замкнут
 				const shouldOpenBeOpen =
-					gatePosition.current >= PositionOpen
+					gatePosition.current >= PositionOpen &&
+					!hasMalfunctionStuckContactSwitchOpenElement
 						? BASE_RESISTANCE_CONSTANT.highResistance
 						: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
 				if (limitSwitchOpenElement.resistance !== shouldOpenBeOpen) {
@@ -269,7 +284,8 @@ export const useKruzapButtons = () => {
 
 				// Концевой "закрыто": разомкнут если position === 0%, иначе замкнут
 				const shouldCloseBeOpen =
-					gatePosition.current <= PositionClose
+					gatePosition.current <= PositionClose &&
+					!hasMalfunctionStuckContactSwitchCloseElement
 						? BASE_RESISTANCE_CONSTANT.highResistance
 						: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
 				if (limitSwitchCloseElement.resistance !== shouldCloseBeOpen) {
@@ -283,7 +299,32 @@ export const useKruzapButtons = () => {
 
 				if (gatePosition.current >= PositionOpen) {
 					gatePosition.current = PositionOpen;
+					if (hasMalfunctionStuckContactSwitchOpenElement) {
+						if (
+							timerTriggeringInputAutomaton.current ===
+							newTimeShutdownInputBreaker
+						) {
+							INPUT_CIRCUIT_BREAKER_ID.forEach(item =>
+								dispatch(
+									setResistance({
+										id: item,
+										value: BASE_RESISTANCE_CONSTANT.highResistance,
+									}),
+								),
+							);
+							INPUT_CIRCUIT_BREAKER_OUTPUTS_POINTS_ID.forEach(
+								point => {
+									dispatch(togglePointState(point));
+								},
+							);
+							stopKruzapMovement();
+						}
+						timerTriggeringInputAutomaton.current++;
+						return;
+					}
+
 					stopKruzapMovement();
+
 					dispatch(
 						setGateState({
 							id: gateId,
@@ -350,6 +391,30 @@ export const useKruzapButtons = () => {
 
 				if (gatePosition.current <= PositionClose) {
 					gatePosition.current = PositionClose;
+					if (hasMalfunctionStuckContactSwitchCloseElement) {
+						if (
+							timerTriggeringInputAutomaton.current ===
+							newTimeShutdownInputBreaker
+						) {
+							INPUT_CIRCUIT_BREAKER_ID.forEach(item =>
+								dispatch(
+									setResistance({
+										id: item,
+										value: BASE_RESISTANCE_CONSTANT.highResistance,
+									}),
+								),
+							);
+							INPUT_CIRCUIT_BREAKER_OUTPUTS_POINTS_ID.forEach(
+								point => {
+									dispatch(togglePointState(point));
+								},
+							);
+							stopKruzapMovement();
+						}
+						timerTriggeringInputAutomaton.current++;
+						return;
+					}
+
 					stopKruzapMovement();
 					dispatch(
 						setGateState({
@@ -380,7 +445,7 @@ export const useKruzapButtons = () => {
 
 			// Логируем текущее положение задвижки для отладки
 			console.log(`Положение задвижки: ${gatePosition.current}%`);
-		}, 100);
+		}, timeStepIntervalGateMoving);
 	};
 
 	return {

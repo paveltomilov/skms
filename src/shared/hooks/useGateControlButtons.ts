@@ -2,7 +2,7 @@
 import { useKruzapButtons } from './useKruzapButtons';
 import { useAppSelector } from './store';
 
-export type TypeButtons = 'open' | 'close' | 'stop';
+export type TypeButtons = 'open' | 'close';
 type TypeButtonsMode = 'ptk' | 'kruzap';
 /**
  * Объединяющий хук для управления кнопками задвижки.

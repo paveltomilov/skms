@@ -11,7 +11,6 @@ import {
 	LIMIT_SWITCH_OPEN_ID,
 	CLOSE_CMD_PTK_BRANCH_POINT_ID,
 	OPEN_CMD_PTK_BRANCH_POINT_ID,
-	CONTROL_POWER_FEED_POINT_ID,
 } from '../configs/controlCircuit/constants';
 import { getResistanceByKind } from '../utils/getResistanceByKind/getResistanceByKind';
 import {
@@ -23,8 +22,8 @@ import { PositionClose, PositionOpen } from '../configs/gate';
 import { togglePointState } from '@/store/pointsSlice';
 import { TypeButtons } from './useGateControlButtons';
 
-const TimeShutdownInputBreaker: number = 2;
-const TimeUpdateInterval: number = 1000;
+export const TimeShutdownInputBreaker: number = 1;
+export const TimeUpdateInterval: number = 1000;
 
 /**
  * Хук для управления кнопками ПТК.
@@ -121,7 +120,9 @@ export const usePtkButtons = () => {
 			BASE_RESISTANCE_CONSTANT.highResistance &&
 			!hasMalfunctionNoContactSwitchOpenElement) ||
 		openButtonFinished ||
-		(closeButtonFinished && !openCmdPtkBranchPointVoltage);
+		(closeButtonFinished &&
+			!openCmdPtkBranchPointVoltage &&
+			!hasMalfunctionNoContactSwitchOpenElement);
 
 	// У кнопок ПТК "Закрыть" - дизейбл если:
 	// - кнопка "Открыть" активна (движется) ИЛИ
@@ -134,7 +135,9 @@ export const usePtkButtons = () => {
 			BASE_RESISTANCE_CONSTANT.highResistance &&
 			!hasMalfunctionNoContactSwitchCloseElement) ||
 		closeButtonFinished ||
-		(openButtonFinished && !closeCmdPtkBranchPointVoltage);
+		(openButtonFinished &&
+			!closeCmdPtkBranchPointVoltage &&
+			!hasMalfunctionNoContactSwitchCloseElement);
 
 	// Кнопка "Стоп" дизейблена, когда не нажаты кнопки "Открыть" и "Закрыть" ПТК
 	const stopPtkDisabled = !openPtkActive && !closePtkActive;
@@ -271,14 +274,6 @@ export const usePtkButtons = () => {
 			);
 			return;
 		}
-		// Обновляем сопротивления, которые меняются сразу после нажатия на кнопку "Открыть"/"Закрыть"
-		PTK_BUTTONS_CONFIG[button].forEach(action => {
-			console.log(
-				`Изменение сопротивления для ${action.id}: ${action.value}`,
-			);
-			dispatch(setResistance(action));
-		});
-
 		// проверяем концевые выключатели на наличие неисправности 'Нет контакта'
 		if (hasMalfunctionNoContactSwitchCloseElement && button === 'close') {
 			console.info(
@@ -293,6 +288,13 @@ export const usePtkButtons = () => {
 			);
 			return;
 		}
+		// Обновляем сопротивления, которые меняются сразу после нажатия на кнопку "Открыть"/"Закрыть"
+		PTK_BUTTONS_CONFIG[button].forEach(action => {
+			console.log(
+				`Изменение сопротивления для ${action.id}: ${action.value}`,
+			);
+			dispatch(setResistance(action));
+		});
 
 		// Очищаем предыдущий интервал
 		if (gateInterval.current) {
@@ -393,11 +395,6 @@ export const usePtkButtons = () => {
 										dispatch(togglePointState(point));
 									},
 								);
-								dispatch(
-									togglePointState(
-										CONTROL_POWER_FEED_POINT_ID,
-									),
-								);
 								PTK_BUTTONS_CONFIG.open.forEach(action => {
 									if (action.id !== LIMIT_SWITCH_OPEN_ID) {
 										dispatch(setResistance(action));
@@ -435,6 +432,7 @@ export const usePtkButtons = () => {
 								states: GATE_STATE_TYPE.open,
 							}),
 						);
+						stopPtkMovement();
 					}
 					gatePosition.current = PositionOpen;
 
@@ -546,12 +544,6 @@ export const usePtkButtons = () => {
 										dispatch(togglePointState(point));
 									},
 								);
-								dispatch(
-									togglePointState(
-										CONTROL_POWER_FEED_POINT_ID,
-									),
-								);
-
 								PTK_BUTTONS_CONFIG.close.forEach(action => {
 									if (action.id !== LIMIT_SWITCH_CLOSE_ID) {
 										dispatch(setResistance(action));
@@ -589,6 +581,7 @@ export const usePtkButtons = () => {
 								states: GATE_STATE_TYPE.close,
 							}),
 						);
+						stopPtkMovement();
 					}
 					gatePosition.current = PositionClose;
 
