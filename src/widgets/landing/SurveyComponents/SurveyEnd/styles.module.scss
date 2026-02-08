@@ -160,10 +160,6 @@
 			background: inherit;
 		}
 
-		&.button__disabled {
-			cursor: not-allowed;
-		}
-
 		&.button__submitted {
 			border: 1px solid var(--lan-bright-cyan---lime-green);
 			background: var(--lan-bright-cyan---lime-green);

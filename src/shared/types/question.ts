@@ -1,9 +1,12 @@
 export interface Question {
+	question_type: unknown;
 	id: number;
-	type: 'radio' | 'checkbox';
 	title: string;
+	type: 'radio' | 'checkbox';
 	options: string[];
-	required: boolean;
+	choices?: Choice[];
+	maxSelections?: number;
+	description?: string;
 }
 
 export interface QuestionRendererProps {
@@ -20,6 +23,7 @@ export interface QuestionRendererProps {
 }
 
 export interface QuestionsListProps {
+	questions: Question[];
 	currentIndex: number;
 	onNext: () => void;
 	onPrev: () => void;
@@ -64,4 +68,9 @@ export interface RadioQuestProps {
 	otherText?: string;
 	setSelected?: (value: string) => void;
 	setOtherText?: (text: string) => void;
+}
+
+export interface Choice {
+	id: number;
+	value: string;
 }

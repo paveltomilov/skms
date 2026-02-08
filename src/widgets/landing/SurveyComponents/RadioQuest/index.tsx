@@ -88,7 +88,7 @@ const RadioQuest: React.FC<RadioQuestProps> = ({
 							className={`${styles.custom__radio} ${isOther ? styles.other__option : ''} ${isOtherSelected ? styles.other__selected : ''}`}
 						>
 							<input
-								className={styles.custom__radio__input}
+								className={styles.custom__radio_input}
 								type="radio"
 								name="option"
 								checked={isSelected}

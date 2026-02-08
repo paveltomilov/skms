@@ -2,14 +2,16 @@
 
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import Button from '../../Button';
-import { questionnaireConfig } from '@/shared/configs/questions';
 import Back from '../../IconSvg/back';
 import Next from '../../IconSvg/next';
 import QuestionRenderer from '../QuestionRenderer/QuestionRenderer';
 import { QuestionsListProps } from '@/shared/types/question';
 import styles from './styles.module.scss';
 
+// Обновляем интерфейс, чтобы включить questions
+
 const QuestionsList: React.FC<QuestionsListProps> = ({
+	questions,
 	currentIndex,
 	onNext,
 	onPrev,
@@ -19,7 +21,6 @@ const QuestionsList: React.FC<QuestionsListProps> = ({
 	onRadioChange,
 	onCheckboxChange,
 }) => {
-	const questions = questionnaireConfig.questions;
 	const isLastQuestion = currentIndex === questions.length - 1;
 	const currentQuestion = questions[currentIndex];
 
@@ -33,6 +34,8 @@ const QuestionsList: React.FC<QuestionsListProps> = ({
 	}, [initialAnswers, initialOtherTexts]);
 
 	const isCurrentAnswerValid = useMemo(() => {
+		if (!currentQuestion) return false;
+
 		const answer = answers[currentQuestion.id];
 		if (!answer) return false;
 
@@ -63,7 +66,7 @@ const QuestionsList: React.FC<QuestionsListProps> = ({
 		}
 
 		return false;
-	}, [answers, otherTexts, currentQuestion.id, currentQuestion.type]);
+	}, [answers, otherTexts, currentQuestion]);
 
 	const handleRadioChange = useCallback(
 		(questionId: number, selectedValue: string) => {
@@ -81,17 +84,18 @@ const QuestionsList: React.FC<QuestionsListProps> = ({
 			const selectedOptions: string[] = [];
 
 			selectedIds.forEach(id => {
-				if (question && question.options[id - 1]) {
-					if (question.options[id - 1] === 'Другое' && otherText) {
+				if (question && question.options && question.options[id]) {
+					if (question.options[id] === 'Другое' && otherText) {
 						selectedOptions.push(`Другое: ${otherText}`);
-					} else if (question.options[id - 1]) {
-						selectedOptions.push(question.options[id - 1]);
+					} else if (question.options[id]) {
+						selectedOptions.push(question.options[id]);
 					}
 				}
 			});
 
 			setAnswers(prev => ({ ...prev, [questionId]: selectedOptions }));
 
+			// Передаем в родительский компонент
 			onCheckboxChange(questionId, selectedIds, otherText);
 			setShowError(false);
 
@@ -101,11 +105,9 @@ const QuestionsList: React.FC<QuestionsListProps> = ({
 		},
 		[onCheckboxChange, questions],
 	);
-
 	const handleNextOrFinish = useCallback(() => {
 		if (!isCurrentAnswerValid) {
 			setShowError(true);
-
 			return;
 		}
 
@@ -127,7 +129,7 @@ const QuestionsList: React.FC<QuestionsListProps> = ({
 		<div className={styles.questions__container}>
 			<header className={styles.header__container}>
 				<h2 className={styles.header__title}>
-					{currentQuestion.title}
+					{currentQuestion?.title || 'Вопрос не найден'}
 				</h2>
 			</header>
 

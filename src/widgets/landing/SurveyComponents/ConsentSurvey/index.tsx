@@ -32,7 +32,7 @@ const ConsentSurvey = ({ value, onChange }: ConsentProps) => {
 			</label>
 			<label htmlFor="consent" className={styles.checkbox__descr}>
 				Я согласен(а) на&nbsp;
-				<span className={styles.checkbox__descr__span}>
+				<span className={styles.checkbox__descr_span}>
 					обработку персональных данных
 				</span>
 			</label>

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import axios from 'axios';
 import TopCircle from '../../IconSvg/topCircle';
 import BottomCircle from '../../IconSvg/bottomCircle';
 import Button from '../../Button';
@@ -8,40 +9,49 @@ import styles from './styles.module.scss';
 
 type SurveyEndProps = {
 	onStart: () => void;
-	email?: string;
 };
 
-const SurveyEnd: React.FC<SurveyEndProps> = ({ onStart }) => {
+interface ServerAnswer {
+	question: number;
+	answer_choices: number[];
+	other_text?: string;
+}
+
+const SURVEY_ANSWERS_KEY = 'survey_answers';
+const SURVEY_SUBMIT_URL = process.env.NEXT_PUBLIC_SURVEY_SUBMIT_URL as string;
+
+function SurveyEnd({ onStart }: SurveyEndProps) {
 	const [email, setEmail] = useState('');
 	const [isSubmitted, setIsSubmitted] = useState(false);
-	const [isSubmitting, setIsSubmitting] = useState(false);
 
-	const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setEmail(e.target.value);
-	};
-
-	const handleSubmit = async (e: React.FormEvent) => {
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		if (!email.trim() || isSubmitting || isSubmitted) return;
-
-		setIsSubmitting(true);
-
 		try {
+			const raw = localStorage.getItem(SURVEY_ANSWERS_KEY);
+			if (!raw) return;
+
+			const { answers = [] } = JSON.parse(raw) as {
+				answers?: ServerAnswer[];
+			};
+
+			await axios.post(SURVEY_SUBMIT_URL, {
+				lead_email: email.trim(),
+				answers,
+			});
+
+			localStorage.removeItem(SURVEY_ANSWERS_KEY);
 			setIsSubmitted(true);
 
 			setTimeout(() => {
-				setIsSubmitted(false);
 				setEmail('');
-			}, 4000);
-		} catch (error) {
-			console.error('Ошибка отправки:', error);
-		} finally {
-			setIsSubmitting(false);
+				setIsSubmitted(false);
+			}, 3000);
+		} catch (err) {
+			console.error('Ошибка отправки:', err);
 		}
 	};
 
-	const isButtonDisabled = !email.trim() || isSubmitting || isSubmitted;
 	return (
 		<div className={styles.survey__container}>
 			<TopCircle className={styles.survey__svg_top} />
@@ -53,7 +63,7 @@ const SurveyEnd: React.FC<SurveyEndProps> = ({ onStart }) => {
 
 			<p className={styles.survey__description}>
 				Если остались идеи или предложения по улучшению — оставьте
-				e-mail, мы с Вами свяжемся
+				e‑mail, мы с Вами свяжемся
 			</p>
 
 			<form onSubmit={handleSubmit} className={styles.form}>
@@ -62,16 +72,18 @@ const SurveyEnd: React.FC<SurveyEndProps> = ({ onStart }) => {
 					type="email"
 					placeholder="Введите E-mail"
 					value={email}
-					onChange={handleEmailChange}
-					required
+					onChange={e => setEmail(e.target.value)}
+					disabled={isSubmitted}
 				/>
+
 				<Button
 					className={`
-        ${styles.form__button}
-        ${isButtonDisabled ? styles.button__disabled : ''}
-        ${isSubmitted ? styles.button__submitted : ''}
-    `}
+						${styles.form__button}
+						${isSubmitted ? styles.button__submitted : ''}
+					`}
 					radius={4}
+					width={256}
+					height={48}
 					text={isSubmitted ? 'ОТПРАВЛЕНО' : 'отправить'}
 					type="submit"
 				/>
@@ -80,6 +92,8 @@ const SurveyEnd: React.FC<SurveyEndProps> = ({ onStart }) => {
 			<Button
 				className={styles.survey__button}
 				radius={4}
+				width={776}
+				height={48}
 				text="протестировать тренажер"
 				onClick={onStart}
 				type="button"
@@ -88,6 +102,6 @@ const SurveyEnd: React.FC<SurveyEndProps> = ({ onStart }) => {
 			<BottomCircle className={styles.survey__svg_bottom} />
 		</div>
 	);
-};
+}
 
 export default SurveyEnd;

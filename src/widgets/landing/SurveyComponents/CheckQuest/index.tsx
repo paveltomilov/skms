@@ -175,7 +175,7 @@ const CheckQuest: React.FC<CheckQuestProps> = ({
 								}}
 							>
 								<input
-									className={styles.custom__radio__input}
+									className={styles.custom__radio_input}
 									type="checkbox"
 									checked={isSelected}
 									disabled={!canToggle}
