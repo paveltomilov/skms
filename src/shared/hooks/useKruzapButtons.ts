@@ -149,6 +149,7 @@ export const useKruzapButtons = () => {
 
 	// Функция для остановки движения задвижки через КРУЗАП
 	const stopKruzapMovement = () => {
+		// Сбрасываем таймер отвечающего за выключение вводно автомата
 		if (timerTriggeringInputAutomaton.current) {
 			timerTriggeringInputAutomaton.current = 0;
 		}
@@ -166,7 +167,8 @@ export const useKruzapButtons = () => {
 
 			// Концевой "открыто": разомкнут если position === 100%, иначе замкнут
 			const shouldOpenBeOpen =
-				currentPosition >= PositionOpen
+				currentPosition >= PositionOpen &&
+				!hasMalfunctionStuckContactSwitchOpenElement
 					? BASE_RESISTANCE_CONSTANT.highResistance
 					: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
 			if (limitSwitchOpenElement.resistance !== shouldOpenBeOpen) {
@@ -180,7 +182,8 @@ export const useKruzapButtons = () => {
 
 			// Концевой "закрыто": разомкнут если position === 0%, иначе замкнут
 			const shouldCloseBeOpen =
-				currentPosition <= PositionClose
+				currentPosition <= PositionClose &&
+				!hasMalfunctionStuckContactSwitchCloseElement
 					? BASE_RESISTANCE_CONSTANT.highResistance
 					: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
 			if (limitSwitchCloseElement.resistance !== shouldCloseBeOpen) {
@@ -208,6 +211,10 @@ export const useKruzapButtons = () => {
 	};
 
 	const handleKruzapButton = (button: TypeButtons) => {
+		// Сбрасываем таймер отвечающего за выключение вводно автомата
+		if (timerTriggeringInputAutomaton.current) {
+			timerTriggeringInputAutomaton.current = 0;
+		}
 		// При наличии неисправности останавливаем обработчик событий
 		if (hasMalfunctionNoContactSwitchCloseElement && button === 'close') {
 			console.info(
@@ -363,7 +370,8 @@ export const useKruzapButtons = () => {
 				// Концевой "открыто": разомкнут если position === 100%, иначе замкнут
 
 				const shouldOpenBeOpen =
-					gatePosition.current >= PositionOpen
+					gatePosition.current >= PositionOpen &&
+					!hasMalfunctionStuckContactSwitchOpenElement
 						? BASE_RESISTANCE_CONSTANT.highResistance
 						: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
 				if (limitSwitchOpenElement.resistance !== shouldOpenBeOpen) {
@@ -377,7 +385,8 @@ export const useKruzapButtons = () => {
 
 				// Концевой "закрыто": разомкнут если position === 0%, иначе замкнут
 				const shouldCloseBeOpen =
-					gatePosition.current <= PositionClose
+					gatePosition.current <= PositionClose &&
+					!hasMalfunctionStuckContactSwitchCloseElement
 						? BASE_RESISTANCE_CONSTANT.highResistance
 						: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
 				if (limitSwitchCloseElement.resistance !== shouldCloseBeOpen) {

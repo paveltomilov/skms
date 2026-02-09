@@ -220,7 +220,8 @@ export const usePtkButtons = () => {
 			// Концевой "открыто": разомкнут если position === 100%, иначе замкнут
 
 			const shouldOpenBeOpen =
-				currentPosition >= PositionOpen
+				currentPosition >= PositionOpen &&
+				!hasMalfunctionStuckContactSwitchOpenElement
 					? BASE_RESISTANCE_CONSTANT.highResistance
 					: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
 			if (limitSwitchOpenElement.resistance !== shouldOpenBeOpen) {
@@ -234,7 +235,8 @@ export const usePtkButtons = () => {
 
 			// Концевой "закрыто": разомкнут если position === 0%, иначе замкнут
 			const shouldCloseBeOpen =
-				currentPosition <= PositionClose
+				currentPosition <= PositionClose &&
+				!hasMalfunctionStuckContactSwitchCloseElement
 					? BASE_RESISTANCE_CONSTANT.highResistance
 					: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
 			if (limitSwitchCloseElement.resistance !== shouldCloseBeOpen) {
@@ -248,7 +250,8 @@ export const usePtkButtons = () => {
 
 			dispatch(
 				setGatePosition({ id: gateId, position: gatePosition.current }),
-			); // Диспатчим текущее положение при остановке
+			); 
+			// Диспатчим текущее положение при остановке
 			dispatch(
 				setGateState({
 					id: gateId,
@@ -373,7 +376,6 @@ export const usePtkButtons = () => {
 								timerTriggeringInputAutomaton ===
 								TimeShutdownInputBreaker
 							) {
-								stopPtkMovement();
 								dispatch(
 									setGateState({
 										id: gateId,
@@ -407,6 +409,7 @@ export const usePtkButtons = () => {
 									clearInterval(inputBrakerInterval.current);
 									inputBrakerInterval.current = null;
 								}
+								stopPtkMovement();
 							}
 
 							timerTriggeringInputAutomaton++;
@@ -522,7 +525,6 @@ export const usePtkButtons = () => {
 								timerTriggeringInputAutomaton ===
 								TimeShutdownInputBreaker
 							) {
-								stopPtkMovement();
 								dispatch(
 									setGateState({
 										id: gateId,
@@ -556,6 +558,7 @@ export const usePtkButtons = () => {
 									clearInterval(inputBrakerInterval.current);
 									inputBrakerInterval.current = null;
 								}
+								stopPtkMovement();
 							}
 
 							timerTriggeringInputAutomaton++;
