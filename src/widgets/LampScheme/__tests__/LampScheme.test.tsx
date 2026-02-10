@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import LampScheme from '../index';
-import type { LampIndicatorColor } from '@/shared/types/icon';
+import type { LampIndicatorColor } from '../../../shared/types/icon';
 
 jest.mock('@/shared/UI/LampIndicator', () => ({
 	__esModule: true,
@@ -46,16 +46,29 @@ jest.mock('@/shared/utils/findElementByID/scheme', () => ({
 }));
 
 import {
-	CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID,
 	LAMP_KRUZA_P_CLOSED_ID,
 	LAMP_KRUZA_P_OPEN_ID,
-	OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID,
-} from '@/shared/configs/controlCircuit/constants';
+	CLOSED_LAMP_BRANCH_POINT_ID,
+	OPEN_LAMP_BRANCH_POINT_ID,
+	WIRE_BEFORE_LAMP_KRUZA_P_CLOSED_ID,
+	WIRE_LAMP_KRUZA_P_CLOSED_TO_NEUTRAL_ID,
+	WIRE_BEFORE_LAMP_KRUZA_P_OPEN_ID,
+	WIRE_LAMP_KRUZA_P_OPEN_TO_NEUTRAL_ID,
+} from '../../../shared/configs/controlCircuit/constants';
+import { BASE_RESISTANCE } from '../../../shared/configs/schemeElements';
 
-const CLOSED_POINT_ID = OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID; // А19 - для лампы "Закрыто"
-const OPEN_POINT_ID = CLOSE_LIMIT_SWITCH_OUTPUT_POINT_ID; // А11 - для лампы "Открыто"
+const CLOSED_POINT_ID = CLOSED_LAMP_BRANCH_POINT_ID; // А19 - для лампы "Закрыто"
+const OPEN_POINT_ID = OPEN_LAMP_BRANCH_POINT_ID; // А11 - для лампы "Открыто"
 const CLOSED_ELEMENT_ID = LAMP_KRUZA_P_CLOSED_ID;
 const OPEN_ELEMENT_ID = LAMP_KRUZA_P_OPEN_ID;
+const CLOSED_CONTACTS = [
+	WIRE_BEFORE_LAMP_KRUZA_P_CLOSED_ID,
+	WIRE_LAMP_KRUZA_P_CLOSED_TO_NEUTRAL_ID,
+];
+const OPEN_CONTACTS = [
+	WIRE_BEFORE_LAMP_KRUZA_P_OPEN_ID,
+	WIRE_LAMP_KRUZA_P_OPEN_TO_NEUTRAL_ID,
+];
 
 type PointValue = boolean | { state?: boolean } | undefined;
 
@@ -71,7 +84,7 @@ const renderLampScheme = (
 	);
 
 	mockFindElementByID.mockImplementation((id: string) => ({
-		resistance: resistances[id] ?? 100,
+		resistance: resistances[id] ?? BASE_RESISTANCE[id],
 	}));
 
 	render(<LampScheme />);
@@ -130,7 +143,13 @@ describe('LampScheme', () => {
 			},
 			{
 				[CLOSED_ELEMENT_ID]: 1_000_000_000,
-				[OPEN_ELEMENT_ID]: 100,
+				[OPEN_ELEMENT_ID]: BASE_RESISTANCE[OPEN_ELEMENT_ID],
+				...Object.fromEntries(
+					CLOSED_CONTACTS.map(id => [id, BASE_RESISTANCE[id]]),
+				),
+				...Object.fromEntries(
+					OPEN_CONTACTS.map(id => [id, BASE_RESISTANCE[id]]),
+				),
 			},
 		);
 

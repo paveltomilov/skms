@@ -13,7 +13,7 @@ import {
 	OPEN_CMD_PTK_BRANCH_POINT_ID,
 } from '../configs/controlCircuit/constants';
 import { getResistanceByKind } from '../utils/getResistanceByKind/getResistanceByKind';
-import store from '@/store/store';
+import { TypeButtons } from './useGateControlButtons';
 
 /**
  * Хук для управления кнопками ПТК.
@@ -115,19 +115,14 @@ export const usePtkButtons = () => {
 			gateInterval.current = null;
 
 			// Обновляем концевые выключатели на основе текущего положения при остановке
-			const currentCircuit = store.getState().circuit;
 			const currentPosition = gatePosition.current;
 
 			// Концевой "открыто": разомкнут если position === 100%, иначе замкнут
-			const limitSwitchOpen = findElementByID(
-				LIMIT_SWITCH_OPEN_ID,
-				currentCircuit,
-			);
 			const shouldOpenBeOpen =
 				currentPosition >= 100
 					? BASE_RESISTANCE_CONSTANT.highResistance
 					: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
-			if (limitSwitchOpen.resistance !== shouldOpenBeOpen) {
+			if (limitSwitchOpenElement.resistance !== shouldOpenBeOpen) {
 				dispatch(
 					setResistance({
 						id: LIMIT_SWITCH_OPEN_ID,
@@ -137,15 +132,11 @@ export const usePtkButtons = () => {
 			}
 
 			// Концевой "закрыто": разомкнут если position === 0%, иначе замкнут
-			const limitSwitchClose = findElementByID(
-				LIMIT_SWITCH_CLOSE_ID,
-				currentCircuit,
-			);
 			const shouldCloseBeOpen =
 				currentPosition <= 0
 					? BASE_RESISTANCE_CONSTANT.highResistance
 					: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
-			if (limitSwitchClose.resistance !== shouldCloseBeOpen) {
+			if (limitSwitchCloseElement.resistance !== shouldCloseBeOpen) {
 				dispatch(
 					setResistance({
 						id: LIMIT_SWITCH_CLOSE_ID,
@@ -169,7 +160,7 @@ export const usePtkButtons = () => {
 		}
 	};
 
-	const handlePtkButton = (button: 'close' | 'open') => {
+	const handlePtkButton = (button: TypeButtons) => {
 		// Обновляем сопротивления, которые меняются сразу после нажатия на кнопку "Открыть"/"Закрыть"
 		PTK_BUTTONS_CONFIG[button].forEach(action => {
 			console.log(
@@ -186,9 +177,6 @@ export const usePtkButtons = () => {
 
 		// Запускаем новый интервал
 		gateInterval.current = setInterval(() => {
-			// Получаем актуальное состояние схемы из store для проверки концевых выключателей
-			const currentCircuit = store.getState().circuit;
-
 			// Обновляем положение задвижки
 			if (button === 'open') {
 				gatePosition.current += 1;
@@ -201,15 +189,11 @@ export const usePtkButtons = () => {
 
 				// Обновляем концевые выключатели на основе текущего положения
 				// Концевой "открыто": разомкнут если position === 100%, иначе замкнут
-				const limitSwitchOpen = findElementByID(
-					LIMIT_SWITCH_OPEN_ID,
-					currentCircuit,
-				);
 				const shouldOpenBeOpen =
 					gatePosition.current >= 100
 						? BASE_RESISTANCE_CONSTANT.highResistance
 						: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
-				if (limitSwitchOpen.resistance !== shouldOpenBeOpen) {
+				if (limitSwitchOpenElement.resistance !== shouldOpenBeOpen) {
 					dispatch(
 						setResistance({
 							id: LIMIT_SWITCH_OPEN_ID,
@@ -219,15 +203,11 @@ export const usePtkButtons = () => {
 				}
 
 				// Концевой "закрыто": разомкнут если position === 0%, иначе замкнут
-				const limitSwitchClose = findElementByID(
-					LIMIT_SWITCH_CLOSE_ID,
-					currentCircuit,
-				);
 				const shouldCloseBeOpen =
 					gatePosition.current <= 0
 						? BASE_RESISTANCE_CONSTANT.highResistance
 						: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
-				if (limitSwitchClose.resistance !== shouldCloseBeOpen) {
+				if (limitSwitchCloseElement.resistance !== shouldCloseBeOpen) {
 					dispatch(
 						setResistance({
 							id: LIMIT_SWITCH_CLOSE_ID,
@@ -289,15 +269,11 @@ export const usePtkButtons = () => {
 
 				// Обновляем концевые выключатели на основе текущего положения
 				// Концевой "открыто": разомкнут если position === 100%, иначе замкнут
-				const limitSwitchOpen = findElementByID(
-					LIMIT_SWITCH_OPEN_ID,
-					currentCircuit,
-				);
 				const shouldOpenBeOpen =
 					gatePosition.current >= 100
 						? BASE_RESISTANCE_CONSTANT.highResistance
 						: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
-				if (limitSwitchOpen.resistance !== shouldOpenBeOpen) {
+				if (limitSwitchOpenElement.resistance !== shouldOpenBeOpen) {
 					dispatch(
 						setResistance({
 							id: LIMIT_SWITCH_OPEN_ID,
@@ -307,15 +283,11 @@ export const usePtkButtons = () => {
 				}
 
 				// Концевой "закрыто": разомкнут если position === 0%, иначе замкнут
-				const limitSwitchClose = findElementByID(
-					LIMIT_SWITCH_CLOSE_ID,
-					currentCircuit,
-				);
 				const shouldCloseBeOpen =
 					gatePosition.current <= 0
 						? BASE_RESISTANCE_CONSTANT.highResistance
 						: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
-				if (limitSwitchClose.resistance !== shouldCloseBeOpen) {
+				if (limitSwitchCloseElement.resistance !== shouldCloseBeOpen) {
 					dispatch(
 						setResistance({
 							id: LIMIT_SWITCH_CLOSE_ID,
