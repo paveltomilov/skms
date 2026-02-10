@@ -26,6 +26,7 @@ import { PopupAbortSimulationConfirm } from '../PopupAbortSimulationConfirm';
 import { useUserCookies } from '@/shared/hooks/useUserCookies';
 import { PopupInfo } from '../PopupInfo';
 import { PopupSimulationComplete } from '../PopupSimulationComplete';
+import { PopupDetectInfo } from '../PopupDetectInfo';
 
 interface IModals {
 	condition: boolean;
@@ -56,11 +57,15 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		infoStartSimulation,
 		infoUnfinished,
 		simulationComplete,
+		detectInfo,
+		detectInfoError,
 	} = useAppSelector((state): ModalState => state.modal);
 
 	const { role } = useUserCookies();
 
 	const isAdmin = role === 'admin';
+	const isStudent = role === 'student';
+
 
 	const isOne =
 		automatic ||
@@ -81,7 +86,10 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		note ||
 		infoStartSimulation ||
 		infoUnfinished ||
-		simulationComplete;
+		simulationComplete ||
+		detectInfo ||
+		detectInfoError;
+
 
 	const gateId = useAppSelector(state => state.gate.activeGateId as string);
 	const student = useAppSelector(state => state.training.currentStudent);
@@ -162,7 +170,7 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		{
 			condition: setSimulation,
 			id: 'setSimulation',
-			headerTitle: `Задать симуляцию ${gateName}`,
+			headerTitle: `${isStudent ? 'Определить неисправность' : 'Задать симуляцию'} ${gateName}`,
 			gateId: undefined,
 			component: <PopupSetSimulation />,
 		},
@@ -228,6 +236,19 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			headerTitle: 'Симуляция завершена',
 			gateId: undefined,
 			component: <PopupSimulationComplete />,
+		},
+		{
+			condition: detectInfo,
+			id: 'detectInfo',
+			headerTitle: 'Определение неисправности',
+			gateId: undefined,
+			component: <PopupDetectInfo />,
+		}, {
+			condition: detectInfoError,
+			id: 'detectInfoError',
+			headerTitle: 'Определение неисправности',
+			gateId: undefined,
+			component: <PopupDetectInfo error />,
 		},
 	];
 	// отключаем скролл страницы
