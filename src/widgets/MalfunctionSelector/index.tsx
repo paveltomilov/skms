@@ -12,14 +12,21 @@ import DropListMalfunction from '../DropListMalfunction';
 import DropListElements from '../DropListElements';
 import { useClickOutside } from '@/shared/hooks/useClickOutside';
 import { useClickEscape } from '@/shared/hooks/useClickEscape';
+import { useUserCookies } from '@/shared/hooks/useUserCookies';
 
 interface Props {
 	setMalfun: (simulation: SimulationItemData) => void;
+	selectMalfun: (malfunction: string) => void;
 	data: CircuitElement[];
 	closeList: Dispatch<SetStateAction<boolean>>;
 }
 
-const MalfunctionSelector: FC<Props> = ({ setMalfun, data, closeList }) => {
+const MalfunctionSelector: FC<Props> = ({ 
+	setMalfun, 
+	selectMalfun, 
+	data, 
+	closeList,
+ }) => {
 	const [choiceElement, setChoiceElement] = useState<CircuitElement | null>(
 		null,
 	);
@@ -29,9 +36,12 @@ const MalfunctionSelector: FC<Props> = ({ setMalfun, data, closeList }) => {
 	const dropListMalfunctionRef = useRef<HTMLDivElement>(null);
 	const dropListElementsRef = useRef<HTMLDivElement>(null);
 
+	const {role} = useUserCookies();
+
 	// Закрываем список при клике вне его
-	useClickOutside(dropListElementsRef, dropListMalfunctionRef, () =>
-		closeList(false),
+	useClickOutside(
+		[dropListElementsRef, dropListMalfunctionRef], 
+		() => closeList(false),
 	);
 
 	useClickEscape(dropListElementsRef, dropListMalfunctionRef, () => {
@@ -55,7 +65,12 @@ const MalfunctionSelector: FC<Props> = ({ setMalfun, data, closeList }) => {
 
 	const handleChoice = useCallback(
 		(malfunction: Malfunction) => {
-			if (choiceElement)
+			if (choiceElement) {
+				if (role === 'student') {
+					selectMalfun(malfunction.id);
+					setChoiceElement(null);
+					return;
+				}
 				setMalfun({
 					malfunction_id: malfunction.id,
 					malfunctions: malfunction.name,
@@ -63,6 +78,7 @@ const MalfunctionSelector: FC<Props> = ({ setMalfun, data, closeList }) => {
 					element: choiceElement.name,
 				});
 			setChoiceElement(null);
+			}
 		},
 		[choiceElement, setMalfun],
 	);

@@ -23,7 +23,9 @@ export type Modals =
 	| 'abortSimulationConfirm'
 	| 'infoStartSimulation'
 	| 'infoUnfinished'
-	| 'simulationComplete';
+	| 'simulationComplete'
+	| 'detectInfo'
+	| 'detectInfoError';
 
 export type ModalState = Record<Modals, boolean>;
 
@@ -51,6 +53,8 @@ const initialState: ModalState = {
 	infoStartSimulation: false,
 	infoUnfinished: false,
 	simulationComplete: false,
+	detectInfo: false,
+	detectInfoError: false,
 };
 
 const modalSlice = createSlice({

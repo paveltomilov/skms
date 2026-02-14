@@ -19,7 +19,7 @@ const SimulationControl: FC<{ className?: string }> = ({ className }) => {
 		const allMalfunctionsFound =
 			simulation.originalMalfunctions.length > 0 &&
 			simulation.originalMalfunctions.length ===
-				simulation.foundMalfunctionIds.length;
+			simulation.foundMalfunctionIds.length;
 
 		if (allMalfunctionsFound) {
 			if (simulation.simulationId !== null) {
@@ -52,8 +52,20 @@ const SimulationControl: FC<{ className?: string }> = ({ className }) => {
 		}
 	};
 
+	const handleDetectMalfunction = () => {
+		dispatch(openModal('setSimulation'));
+	};
+
 	return (
 		<div className={cn(styles.control, className)}>
+			<Button
+				width={89}
+				height={38}
+				aria-label={'Определить неисправность'}
+				text={'Определить неисправность'}
+				className={styles.control__buttonFinish}
+				onClick={handleDetectMalfunction}
+			/>
 			<Button
 				width={89}
 				height={38}

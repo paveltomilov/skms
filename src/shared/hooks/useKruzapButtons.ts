@@ -9,15 +9,13 @@ import { findElementByID } from '../utils/findElementByID/scheme';
 import { useAppDispatch, useAppSelector } from './store';
 import { setResistance } from '@/store/circuitSlice';
 import { KRUZAP_BUTTONS_CONFIG } from '../configs/header';
-import { useRef } from 'react';
+import {useMemo, useRef} from 'react';
 import { GATE_STATE_TYPE } from '../types/gate';
 import { BASE_RESISTANCE } from '../configs/schemeElements';
-import {
-	BASE_RESISTANCE_CONSTANT,
-	ELEMENT_KIND,
-} from '../configs/elementKind';
+import { BASE_RESISTANCE_CONSTANT, ELEMENT_KIND } from '../configs/elementKind';
 import { getResistanceByKind } from '../utils/getResistanceByKind/getResistanceByKind';
-import store from '@/store/store';
+import { useGetMalfunctionKruzapButtons } from './useGetMalfunctionKruzapButtons';
+import { TypeButtons } from './useGateControlButtons';
 
 /**
  * Хук для управления кнопками КРУЗАП.
@@ -26,30 +24,38 @@ import store from '@/store/store';
  */
 export const useKruzapButtons = () => {
 	const dispatch = useAppDispatch();
+	const circuit = useAppSelector(state => state.circuit);
+	// Получаем возможные неисправсноии кнопок КРУЗА-П
+
+	const {
+		hasMalfunctionNoContactKruzapOpenButton,
+		hasMalfunctionNoContactKruzapCloseButton,
+	} = useGetMalfunctionKruzapButtons();
 
 	// Получаем id активной задвижки из стора
 	const gateId = useAppSelector(state => state.gate.activeGateId) ?? 'g1';
 
+
 	// Получаем концевые выключатели из схемы
-	const limitSwitchOpenElement = findElementByID(
-		LIMIT_SWITCH_OPEN_ID,
-		useAppSelector(state => state.circuit),
+	const limitSwitchOpenElement = useMemo(() =>
+			findElementByID(LIMIT_SWITCH_OPEN_ID, circuit),
+		[circuit]
 	);
 
-	const limitSwitchCloseElement = findElementByID(
-		LIMIT_SWITCH_CLOSE_ID,
-		useAppSelector(state => state.circuit),
+	const limitSwitchCloseElement = useMemo(() =>
+			findElementByID(LIMIT_SWITCH_CLOSE_ID, circuit),
+		[circuit]
 	);
 
 	// Получаем элементы кнопок ПТК из схемы для проверки их состояния
-	const openPtkElement = findElementByID(
-		INSERT_NDO_CMD_OPEN_PTK_ID,
-		useAppSelector(state => state.circuit),
+	const openPtkElement = useMemo(() =>
+			findElementByID(INSERT_NDO_CMD_OPEN_PTK_ID, circuit),
+		[circuit]
 	);
 
-	const closePtkElement = findElementByID(
-		INSERT_NDO_CMD_CLOSE_PTK_ID,
-		useAppSelector(state => state.circuit),
+	const closePtkElement = useMemo(() =>
+			findElementByID(INSERT_NDO_CMD_CLOSE_PTK_ID, circuit),
+		[circuit]
 	);
 
 	// Проверяем, активна ли какая-либо кнопка ПТК (сопротивление = 0)
@@ -102,19 +108,14 @@ export const useKruzapButtons = () => {
 			gateInterval.current = null;
 
 			// Обновляем концевые выключатели на основе текущего положения при остановке
-			const currentCircuit = store.getState().circuit;
 			const currentPosition = gatePosition.current;
 
 			// Концевой "открыто": разомкнут если position === 100%, иначе замкнут
-			const limitSwitchOpen = findElementByID(
-				LIMIT_SWITCH_OPEN_ID,
-				currentCircuit,
-			);
 			const shouldOpenBeOpen =
 				currentPosition >= 100
 					? BASE_RESISTANCE_CONSTANT.highResistance
 					: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
-			if (limitSwitchOpen.resistance !== shouldOpenBeOpen) {
+			if (limitSwitchOpenElement.resistance !== shouldOpenBeOpen) {
 				dispatch(
 					setResistance({
 						id: LIMIT_SWITCH_OPEN_ID,
@@ -124,15 +125,11 @@ export const useKruzapButtons = () => {
 			}
 
 			// Концевой "закрыто": разомкнут если position === 0%, иначе замкнут
-			const limitSwitchClose = findElementByID(
-				LIMIT_SWITCH_CLOSE_ID,
-				currentCircuit,
-			);
 			const shouldCloseBeOpen =
 				currentPosition <= 0
 					? BASE_RESISTANCE_CONSTANT.highResistance
 					: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
-			if (limitSwitchClose.resistance !== shouldCloseBeOpen) {
+			if (limitSwitchCloseElement.resistance !== shouldCloseBeOpen) {
 				dispatch(
 					setResistance({
 						id: LIMIT_SWITCH_CLOSE_ID,
@@ -156,7 +153,22 @@ export const useKruzapButtons = () => {
 		}
 	};
 
-	const handleKruzapButton = (button: 'close' | 'open') => {
+	const handleKruzapButton = (button: TypeButtons) => {
+		// Проверяем кнопки на наличие неисправности 'Нет контакта, цепь не замыкается'
+		if (button === 'open' && hasMalfunctionNoContactKruzapOpenButton) {
+			console.info(
+				'Кнопка ОТКРЫТЬ КРУЗА-П имеет активную неисправность "Нет контакта, цепь не замыкается"',
+			);
+			return;
+		}
+
+		if (button === 'close' && hasMalfunctionNoContactKruzapCloseButton) {
+			console.info(
+				'Кнопка ЗАКРЫТЬ КРУЗА-П имеет активную неисправность "Нет контакта, цепь не замыкается"',
+			);
+			return;
+		}
+
 		// Обновляем сопротивления, которые меняются сразу после нажатия на кнопку "Открыть"/"Закрыть"
 		KRUZAP_BUTTONS_CONFIG[button].forEach(action => {
 			dispatch(setResistance(action));
@@ -170,9 +182,6 @@ export const useKruzapButtons = () => {
 
 		// Запускаем новый интервал
 		gateInterval.current = setInterval(() => {
-			// Получаем актуальное состояние схемы из store для проверки концевых выключателей
-			const currentCircuit = store.getState().circuit;
-
 			// Обновляем положение задвижки
 			if (button === 'open') {
 				gatePosition.current += 1;
@@ -185,15 +194,11 @@ export const useKruzapButtons = () => {
 
 				// Обновляем концевые выключатели на основе текущего положения
 				// Концевой "открыто": разомкнут если position === 100%, иначе замкнут
-				const limitSwitchOpen = findElementByID(
-					LIMIT_SWITCH_OPEN_ID,
-					currentCircuit,
-				);
 				const shouldOpenBeOpen =
 					gatePosition.current >= 100
 						? BASE_RESISTANCE_CONSTANT.highResistance
 						: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
-				if (limitSwitchOpen.resistance !== shouldOpenBeOpen) {
+				if (limitSwitchOpenElement.resistance !== shouldOpenBeOpen) {
 					dispatch(
 						setResistance({
 							id: LIMIT_SWITCH_OPEN_ID,
@@ -203,15 +208,11 @@ export const useKruzapButtons = () => {
 				}
 
 				// Концевой "закрыто": разомкнут если position === 0%, иначе замкнут
-				const limitSwitchClose = findElementByID(
-					LIMIT_SWITCH_CLOSE_ID,
-					currentCircuit,
-				);
 				const shouldCloseBeOpen =
 					gatePosition.current <= 0
 						? BASE_RESISTANCE_CONSTANT.highResistance
 						: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
-				if (limitSwitchClose.resistance !== shouldCloseBeOpen) {
+				if (limitSwitchCloseElement.resistance !== shouldCloseBeOpen) {
 					dispatch(
 						setResistance({
 							id: LIMIT_SWITCH_CLOSE_ID,
@@ -259,15 +260,12 @@ export const useKruzapButtons = () => {
 
 				// Обновляем концевые выключатели на основе текущего положения
 				// Концевой "открыто": разомкнут если position === 100%, иначе замкнут
-				const limitSwitchOpen = findElementByID(
-					LIMIT_SWITCH_OPEN_ID,
-					currentCircuit,
-				);
+
 				const shouldOpenBeOpen =
 					gatePosition.current >= 100
 						? BASE_RESISTANCE_CONSTANT.highResistance
 						: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
-				if (limitSwitchOpen.resistance !== shouldOpenBeOpen) {
+				if (limitSwitchOpenElement.resistance !== shouldOpenBeOpen) {
 					dispatch(
 						setResistance({
 							id: LIMIT_SWITCH_OPEN_ID,
@@ -277,15 +275,11 @@ export const useKruzapButtons = () => {
 				}
 
 				// Концевой "закрыто": разомкнут если position === 0%, иначе замкнут
-				const limitSwitchClose = findElementByID(
-					LIMIT_SWITCH_CLOSE_ID,
-					currentCircuit,
-				);
 				const shouldCloseBeOpen =
 					gatePosition.current <= 0
 						? BASE_RESISTANCE_CONSTANT.highResistance
 						: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
-				if (limitSwitchClose.resistance !== shouldCloseBeOpen) {
+				if (limitSwitchCloseElement.resistance !== shouldCloseBeOpen) {
 					dispatch(
 						setResistance({
 							id: LIMIT_SWITCH_CLOSE_ID,
