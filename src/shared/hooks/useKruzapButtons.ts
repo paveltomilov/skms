@@ -9,7 +9,7 @@ import { findElementByID } from '../utils/findElementByID/scheme';
 import { useAppDispatch, useAppSelector } from './store';
 import { setResistance } from '@/store/circuitSlice';
 import { KRUZAP_BUTTONS_CONFIG } from '../configs/header';
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { GATE_STATE_TYPE } from '../types/gate';
 import { BASE_RESISTANCE } from '../configs/schemeElements';
 import { BASE_RESISTANCE_CONSTANT, ELEMENT_KIND } from '../configs/elementKind';
@@ -64,29 +64,34 @@ export const useKruzapButtons = () => {
 		INPUT_CIRCUIT_BREAKER_ID[0],
 		useAppSelector(state => state.circuit),
 	);
-
 	// Проверяем состояние контактов вводного автомата фазы А
 	const isOpenInputBreakerPhaseA =
 		inputCircuitBreakerPhaseAElement.resistance >=
 		BASE_RESISTANCE_CONSTANT.highResistance;
 
-	if (hasMalfunctionNoContactSwitchCloseElement) {
-		dispatch(
-			setResistance({
-				id: LIMIT_SWITCH_CLOSE_ID,
-				value: BASE_RESISTANCE_CONSTANT.highResistance,
-			}),
-		);
-	}
+	useEffect(() => {
+		if (hasMalfunctionNoContactSwitchCloseElement) {
+			dispatch(
+				setResistance({
+					id: LIMIT_SWITCH_CLOSE_ID,
+					value: BASE_RESISTANCE_CONSTANT.highResistance,
+				}),
+			);
+		}
 
-	if (hasMalfunctionNoContactSwitchOpenElement) {
-		dispatch(
-			setResistance({
-				id: LIMIT_SWITCH_OPEN_ID,
-				value: BASE_RESISTANCE_CONSTANT.highResistance,
-			}),
-		);
-	}
+		if (hasMalfunctionNoContactSwitchOpenElement) {
+			dispatch(
+				setResistance({
+					id: LIMIT_SWITCH_OPEN_ID,
+					value: BASE_RESISTANCE_CONSTANT.highResistance,
+				}),
+			);
+		}
+	}, [
+		hasMalfunctionNoContactSwitchCloseElement,
+		hasMalfunctionNoContactSwitchOpenElement,
+		dispatch,
+	]);
 
 	// Получаем элементы кнопок ПТК из схемы для проверки их состояния
 	const openPtkElement = useMemo(

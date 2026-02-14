@@ -3,7 +3,7 @@ import { findElementByID } from '../utils/findElementByID/scheme';
 import { useAppDispatch, useAppSelector } from './store';
 import { setResistance } from '@/store/circuitSlice';
 import { PTK_BUTTONS_CONFIG } from '../configs/header';
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { GATE_STATE_TYPE } from '../types/gate';
 import { BASE_RESISTANCE_CONSTANT, ELEMENT_KIND } from '../configs/elementKind';
 import {
@@ -59,23 +59,29 @@ export const usePtkButtons = () => {
 		inputCircuitBreakerPhaseAElement.resistance >=
 		BASE_RESISTANCE_CONSTANT.highResistance;
 
-	if (hasMalfunctionStuckContactSwitchCloseElement) {
-		dispatch(
-			setResistance({
-				id: LIMIT_SWITCH_CLOSE_ID,
-				value: BASE_RESISTANCE_CONSTANT.blockingContact,
-			}),
-		);
-	}
+	useEffect(() => {
+		if (hasMalfunctionStuckContactSwitchCloseElement) {
+			dispatch(
+				setResistance({
+					id: LIMIT_SWITCH_CLOSE_ID,
+					value: BASE_RESISTANCE_CONSTANT.blockingContact,
+				}),
+			);
+		}
 
-	if (hasMalfunctionStuckContactSwitchOpenElement) {
-		dispatch(
-			setResistance({
-				id: LIMIT_SWITCH_OPEN_ID,
-				value: BASE_RESISTANCE_CONSTANT.blockingContact,
-			}),
-		);
-	}
+		if (hasMalfunctionStuckContactSwitchOpenElement) {
+			dispatch(
+				setResistance({
+					id: LIMIT_SWITCH_OPEN_ID,
+					value: BASE_RESISTANCE_CONSTANT.blockingContact,
+				}),
+			);
+		}
+	}, [
+		hasMalfunctionStuckContactSwitchCloseElement,
+		hasMalfunctionStuckContactSwitchOpenElement,
+		dispatch,
+	]);
 
 	// Получаем текущее состояние задвижки
 	const gateState = useAppSelector(state => state.gate.gates[gateId].states);
@@ -250,7 +256,7 @@ export const usePtkButtons = () => {
 
 			dispatch(
 				setGatePosition({ id: gateId, position: gatePosition.current }),
-			); 
+			);
 			// Диспатчим текущее положение при остановке
 			dispatch(
 				setGateState({
