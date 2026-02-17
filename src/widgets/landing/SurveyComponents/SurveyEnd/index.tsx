@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import TopCircle from '../../IconSvg/topCircle';
 import BottomCircle from '../../IconSvg/bottomCircle';
@@ -23,9 +23,22 @@ const SURVEY_SUBMIT_URL = process.env.NEXT_PUBLIC_SURVEY_SUBMIT_URL as string;
 function SurveyEnd({ onStart }: SurveyEndProps) {
 	const [email, setEmail] = useState('');
 	const [isSubmitted, setIsSubmitted] = useState(false);
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+	useEffect(() => {
+		return () => {
+			if (timeoutRef.current) {
+				clearTimeout(timeoutRef.current);
+			}
+		};
+	}, []);
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+
+		if (isSubmitting || isSubmitted) return;
+		setIsSubmitting(true);
 
 		try {
 			const raw = localStorage.getItem(SURVEY_ANSWERS_KEY);
@@ -43,12 +56,15 @@ function SurveyEnd({ onStart }: SurveyEndProps) {
 			localStorage.removeItem(SURVEY_ANSWERS_KEY);
 			setIsSubmitted(true);
 
-			setTimeout(() => {
+			timeoutRef.current = setTimeout(() => {
 				setEmail('');
 				setIsSubmitted(false);
+				timeoutRef.current = null;
 			}, 3000);
 		} catch (err) {
 			console.error('Ошибка отправки:', err);
+		} finally {
+			setIsSubmitting(false);
 		}
 	};
 

@@ -1,9 +1,14 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import RadioQuest from '../RadioQuest';
-import { QuestionRendererProps } from '@/shared/types/question';
 import CheckQuest from '../CheckQuest';
+import { QuestionRendererProps, OptionWithId } from '@/shared/types/question';
+
+const QUESTION_TYPES = {
+	CHOICE: 'choice',
+	MULTI: 'multi',
+} as const;
 
 const QuestionRenderer: React.FC<QuestionRendererProps> = ({
 	question,
@@ -13,29 +18,28 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({
 	onCheckboxChange,
 	setOtherTexts,
 }) => {
-	const questionType = useMemo(() => {
+	const questionType = useMemo((): 'radio' | 'checkbox' => {
 		const apiType = question.question_type;
 
 		switch (apiType) {
-			case 'choice':
+			case QUESTION_TYPES.CHOICE:
 				return 'radio';
-			case 'multi':
+			case QUESTION_TYPES.MULTI:
 				return 'checkbox';
-
 			default:
 				return question.type || 'radio';
 		}
 	}, [question.question_type, question.type]);
 
-	const optionsWithIds = useMemo(() => {
-		if (question.choices && question.choices.length > 0) {
+	const optionsWithIds = useMemo((): OptionWithId[] => {
+		if (question.choices?.length) {
 			return question.choices.map(choice => ({
 				id: choice.id,
 				label: choice.value,
 			}));
 		}
 
-		if (question.options && question.options.length > 0) {
+		if (question.options?.length) {
 			return question.options.map((option, index) => ({
 				id: index + 1,
 				label: option,
@@ -43,85 +47,55 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({
 		}
 
 		return [];
-	}, [question.choices, question.options, questionType]);
+	}, [question.choices, question.options]);
 
-	const getCheckboxSelectedIds = useMemo(() => {
+	const handleOtherTextChange = useCallback(
+		(text: string) => {
+			setOtherTexts(prev => ({
+				...prev,
+				[question.id]: text,
+			}));
+		},
+		[question.id, setOtherTexts],
+	);
+
+	const handleRadioSelect = useCallback(
+		(value: string) => {
+			onRadioChange(question.id, value);
+		},
+		[question.id, onRadioChange],
+	);
+
+	const handleCheckboxSelect = useCallback(
+		(selectedIds: number[], otherText?: string) => {
+			onCheckboxChange(question.id, selectedIds, otherText);
+		},
+		[question.id, onCheckboxChange],
+	);
+
+	const currentRadioAnswer = useMemo((): string => {
 		const answer = answers[question.id];
 
-		if (!answer || !Array.isArray(answer)) {
-			return [];
+		if (answer && typeof answer === 'object' && 'value' in answer) {
+			const value = answer.value;
+			return typeof value === 'string' ? value : '';
 		}
 
-		const currentAnswers = answer as string[];
-		const selectedIds: number[] = [];
-
-		if (question.choices && question.choices.length > 0) {
-			question.choices.forEach(choice => {
-				const isSelected = currentAnswers.some(answerText => {
-					if (choice.value === 'Другое') {
-						return (
-							answerText === 'Другое' ||
-							answerText.startsWith('Другое: ')
-						);
-					}
-					return answerText === choice.value;
-				});
-
-				if (isSelected) {
-					selectedIds.push(choice.id);
-				}
-			});
-		} else if (question.options && question.options.length > 0) {
-			question.options.forEach((option, index) => {
-				const isSelected = currentAnswers.some(answerText => {
-					if (option === 'Другое') {
-						return (
-							answerText === 'Другое' ||
-							answerText.startsWith('Другое: ')
-						);
-					}
-					return answerText === option;
-				});
-
-				if (isSelected) {
-					selectedIds.push(index + 1);
-				}
-			});
+		if (typeof answer === 'string') {
+			return answer;
 		}
 
-		return selectedIds;
-	}, [answers, question.id, question.choices, question.options]);
-
-	const handleOtherTextChange = (text: string) => {
-		setOtherTexts(prev => ({
-			...prev,
-			[question.id]: text,
-		}));
-	};
-
-	const handleRadioSelect = (value: string) => {
-		onRadioChange(question.id, value);
-	};
-
-	const handleCheckboxSelect = (
-		selectedIds: number[],
-		otherText?: string,
-	) => {
-		onCheckboxChange(question.id, selectedIds, otherText);
-	};
+		return '';
+	}, [answers, question.id]);
 
 	switch (questionType) {
 		case 'radio':
-			const answer = answers[question.id];
-			const currentAnswer =
-				(typeof answer === 'string' ? answer : '') || '';
-
 			return (
 				<RadioQuest
-					key={`radio-${question.id}`}
 					options={optionsWithIds}
-					selected={currentAnswer}
+					selected={currentRadioAnswer}
 					otherText={otherTexts[question.id] || ''}
+					otherOptionLabel="Другое"
 					setSelected={handleRadioSelect}
 					setOtherText={handleOtherTextChange}
 				/>
@@ -133,13 +107,13 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({
 					key={`checkbox-${question.id}`}
 					options={optionsWithIds}
 					maxSelections={question.maxSelections || 3}
-					selectedIds={getCheckboxSelectedIds}
 					otherText={otherTexts[question.id] || ''}
 					onSelectionChange={handleCheckboxSelect}
-					initialSelectedIds={getCheckboxSelectedIds}
-					initialOtherText={otherTexts[question.id] || ''}
 				/>
 			);
+
+		default:
+			return null;
 	}
 };
 

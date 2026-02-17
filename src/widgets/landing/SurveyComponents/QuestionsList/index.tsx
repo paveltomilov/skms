@@ -5,10 +5,10 @@ import Button from '../../Button';
 import Back from '../../IconSvg/back';
 import Next from '../../IconSvg/next';
 import QuestionRenderer from '../QuestionRenderer/QuestionRenderer';
-import { QuestionsListProps } from '@/shared/types/question';
+import { QuestionsListProps, QuestionAnswer } from '@/shared/types/question';
 import styles from './styles.module.scss';
 
-// Обновляем интерфейс, чтобы включить questions
+type Answers = Record<number, QuestionAnswer>;
 
 const QuestionsList: React.FC<QuestionsListProps> = ({
 	questions,
@@ -24,7 +24,7 @@ const QuestionsList: React.FC<QuestionsListProps> = ({
 	const isLastQuestion = currentIndex === questions.length - 1;
 	const currentQuestion = questions[currentIndex];
 
-	const [answers, setAnswers] = useState(initialAnswers);
+	const [answers, setAnswers] = useState<Answers>(initialAnswers);
 	const [otherTexts, setOtherTexts] = useState(initialOtherTexts);
 	const [showError, setShowError] = useState(false);
 
@@ -51,7 +51,11 @@ const QuestionsList: React.FC<QuestionsListProps> = ({
 		}
 
 		if (currentQuestion.type === 'checkbox') {
-			const checkboxAnswers = Array.isArray(answer) ? answer : [];
+			const checkboxAnswers = Array.isArray(answer)
+				? answer
+				: answer.value && Array.isArray(answer.value)
+					? answer.value
+					: [];
 			if (checkboxAnswers.length === 0) return false;
 
 			const hasOther = checkboxAnswers.some(
@@ -70,41 +74,89 @@ const QuestionsList: React.FC<QuestionsListProps> = ({
 
 	const handleRadioChange = useCallback(
 		(questionId: number, selectedValue: string) => {
-			setAnswers(prev => ({ ...prev, [questionId]: selectedValue }));
-			onRadioChange(questionId, selectedValue);
-			setShowError(false);
+			// Находим вопрос и выбранный вариант
+			const question = questions.find(q => q.id === questionId);
+			if (!question || !question.choices) return;
+
+			const selectedChoice = question.choices.find(
+				choice => choice.value === selectedValue,
+			);
+
+			if (selectedChoice) {
+				// Создаем полный объект QuestionAnswer
+				const answer: QuestionAnswer = {
+					selectedId: selectedChoice.id,
+					value: selectedValue,
+					choiceIds: selectedChoice.id,
+					...(selectedValue === 'Другое' && { otherText: '' }),
+				};
+
+				// Обновляем состояние с полным объектом
+				setAnswers(prev => ({
+					...prev,
+					[questionId]: answer,
+				}));
+
+				// Вызываем родительский обработчик
+				onRadioChange(questionId, selectedValue);
+				setShowError(false);
+			}
 		},
-		[onRadioChange],
+		[onRadioChange, questions], // Добавлена зависимость questions
 	);
 
 	const handleCheckboxChange = useCallback(
 		(questionId: number, selectedIds: number[], otherText?: string) => {
 			const question = questions.find(q => q.id === questionId);
 
-			const selectedOptions: string[] = [];
+			if (!question || !question.choices) return;
+
+			// Получаем значения для выбранных ID
+			const selectedValues: string[] = [];
 
 			selectedIds.forEach(id => {
-				if (question && question.options && question.options[id]) {
-					if (question.options[id] === 'Другое' && otherText) {
-						selectedOptions.push(`Другое: ${otherText}`);
-					} else if (question.options[id]) {
-						selectedOptions.push(question.options[id]);
+				const choice = question.choices?.find(c => c.id === id);
+				if (choice) {
+					if (choice.value === 'Другое' && otherText) {
+						selectedValues.push(`Другое: ${otherText}`);
+					} else {
+						selectedValues.push(choice.value);
 					}
 				}
 			});
 
-			setAnswers(prev => ({ ...prev, [questionId]: selectedOptions }));
+			// Создаем объект QuestionAnswer
+			const answer: QuestionAnswer = {
+				selectedId: selectedIds.length > 0 ? selectedIds[0] : 0, // Для чекбоксов можно использовать первый ID или сделать поле опциональным
+				value: selectedValues,
+				choiceIds: selectedIds,
+			};
 
-			// Передаем в родительский компонент
+			// Добавляем otherText если есть
+			if (otherText !== undefined) {
+				answer.otherText = otherText;
+				setOtherTexts(prev => ({ ...prev, [questionId]: otherText }));
+			} else {
+				// Очищаем otherText если его нет
+				setOtherTexts(prev => {
+					const newState = { ...prev };
+					delete newState[questionId];
+					return newState;
+				});
+			}
+
+			// Обновляем answers с полным объектом
+			setAnswers(prev => ({
+				...prev,
+				[questionId]: answer,
+			}));
+
 			onCheckboxChange(questionId, selectedIds, otherText);
 			setShowError(false);
-
-			if (otherText !== undefined) {
-				setOtherTexts(prev => ({ ...prev, [questionId]: otherText }));
-			}
 		},
 		[onCheckboxChange, questions],
 	);
+
 	const handleNextOrFinish = useCallback(() => {
 		if (!isCurrentAnswerValid) {
 			setShowError(true);
@@ -127,14 +179,15 @@ const QuestionsList: React.FC<QuestionsListProps> = ({
 
 	return (
 		<div className={styles.questions__container}>
-			<header className={styles.header__container}>
+			<div className={styles.header__container}>
 				<h2 className={styles.header__title}>
-					{currentQuestion?.title || 'Вопрос не найден'}
+					{currentQuestion?.title}
 				</h2>
-			</header>
+			</div>
 
 			<div className={styles.question__wrapper}>
 				<QuestionRenderer
+					key={currentQuestion.id}
 					question={currentQuestion}
 					answers={answers}
 					otherTexts={otherTexts}

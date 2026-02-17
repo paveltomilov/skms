@@ -1,7 +1,8 @@
 export interface Question {
-	question_type: unknown;
+	question_type: 'choice' | 'multi' | string;
 	id: number;
 	title: string;
+	text?: string;
 	type: 'radio' | 'checkbox';
 	options: string[];
 	choices?: Choice[];
@@ -11,8 +12,8 @@ export interface Question {
 
 export interface QuestionRendererProps {
 	question: Question;
-	answers: Record<number, string | string[]>;
-	otherTexts: Record<number, string>;
+	answers: Record<number, QuestionAnswer>;
+	otherTexts: OtherTexts;
 	onRadioChange: (questionId: number, selectedValue: string) => void;
 	onCheckboxChange: (
 		questionId: number,
@@ -28,7 +29,7 @@ export interface QuestionsListProps {
 	onNext: () => void;
 	onPrev: () => void;
 	onFinish?: () => void;
-	initialAnswers: Record<number, string | string[]>;
+	initialAnswers: Record<number, QuestionAnswer>;
 	initialOtherTexts: Record<number, string>;
 	onRadioChange: (questionId: number, selectedValue: string) => void;
 	onCheckboxChange: (
@@ -46,9 +47,8 @@ export type Option = {
 };
 
 export interface CheckQuestProps {
-	options: Option[];
+	options: OptionWithId[];
 	maxSelections?: number;
-	selectedIds?: number[];
 	otherText?: string;
 	onSelectionChange: (selectedIds: number[], otherText?: string) => void;
 	initialSelectedIds?: number[];
@@ -63,14 +63,53 @@ export interface ConfirmDialogProps {
 }
 
 export interface RadioQuestProps {
-	options?: Option[];
+	options?: OptionWithId[];
 	selected?: string;
 	otherText?: string;
 	setSelected?: (value: string) => void;
 	setOtherText?: (text: string) => void;
+	otherOptionLabel: string;
 }
 
 export interface Choice {
 	id: number;
 	value: string;
+}
+
+export type AnswerValue = string | string[] | null;
+
+export interface Answers {
+	[questionId: number]: AnswerValue;
+}
+
+export interface OtherTexts {
+	[questionId: number]: string;
+}
+
+export interface OptionWithId {
+	id: number;
+	label: string;
+}
+
+export interface ServerQuestion {
+	id: number;
+	text: string;
+	question_type: string;
+	choices: Array<{
+		id: number;
+		value: string;
+	}>;
+}
+
+export interface AnswerStorage {
+	question: number;
+	answer_choices: number[];
+	other_text?: string;
+}
+
+export interface QuestionAnswer {
+	value: string | string[];
+	choiceIds: number | number[];
+	otherText?: string;
+	selectedId: number;
 }

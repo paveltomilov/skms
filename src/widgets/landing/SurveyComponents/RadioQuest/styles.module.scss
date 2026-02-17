@@ -48,6 +48,7 @@
 .custom__radio {
 	display: flex;
 	align-items: center;
+	cursor: pointer;
 
 	&_input {
 		opacity: 0;
@@ -73,7 +74,7 @@
 			content: '';
 			position: absolute;
 			bottom: 2px;
-			left: 47px;
+			left: 66px;
 			width: 728px;
 			height: 1px;
 			background: rgba(191, 191, 191, 0.52);
@@ -87,7 +88,8 @@
 			}
 
 			@media (max-width: 576px) {
-				left: 40px;
+				width: 88%;
+				left: 57px;
 			}
 		}
 	}

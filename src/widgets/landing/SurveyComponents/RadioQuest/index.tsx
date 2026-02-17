@@ -11,40 +11,31 @@ const RadioQuest: React.FC<RadioQuestProps> = ({
 	otherText = '',
 	setSelected,
 	setOtherText,
+	otherOptionLabel,
 }) => {
-	const [selectedId, setSelectedId] = useState<number | null>(null);
 	const [currentOtherText, setCurrentOtherText] = useState<string>(otherText);
-
-	useEffect(() => {
-		if (selected && options.length > 0) {
-			const foundOption = options.find(opt => opt.label === selected);
-			if (foundOption) {
-				setSelectedId(foundOption.id);
-			} else {
-				setSelectedId(null);
-			}
-		} else {
-			setSelectedId(null);
-		}
-	}, [selected, options]);
 
 	useEffect(() => {
 		setCurrentOtherText(otherText);
 	}, [otherText]);
 
+	const findOptionByLabel = (label: string) =>
+		options.find(opt => opt.label === label);
 	const findOptionById = (id: number) => options.find(opt => opt.id === id);
+
+	const selectedOption = findOptionByLabel(selected);
+	const selectedId = selectedOption?.id ?? null;
+
 	const isOtherOption = (id: number) => {
 		const option = findOptionById(id);
-		return option?.label === 'Другое';
+		return option?.label === otherOptionLabel;
 	};
 
 	const handleSelection = (optionId: number) => {
 		const option = findOptionById(optionId);
 		if (!option) return;
 
-		setSelectedId(optionId);
-
-		if (option.label !== 'Другое') {
+		if (option.label !== otherOptionLabel) {
 			setCurrentOtherText('');
 			if (setOtherText) {
 				setOtherText('');
@@ -60,9 +51,7 @@ const RadioQuest: React.FC<RadioQuestProps> = ({
 		setCurrentOtherText(text);
 
 		if (selectedId && isOtherOption(selectedId)) {
-			if (setOtherText) {
-				setOtherText(text);
-			}
+			setOtherText?.(text);
 		}
 	};
 
@@ -79,7 +68,7 @@ const RadioQuest: React.FC<RadioQuestProps> = ({
 			<div className={styles.radio__group}>
 				{options.map(opt => {
 					const isSelected = selectedId === opt.id;
-					const isOther = isOtherOption(opt.id);
+					const isOther = opt.label === 'Другое';
 					const isOtherSelected = isOther && isSelected;
 
 					return (
@@ -110,7 +99,6 @@ const RadioQuest: React.FC<RadioQuestProps> = ({
 												e.target.value,
 											)
 										}
-										autoFocus
 									/>
 								</div>
 							) : (
