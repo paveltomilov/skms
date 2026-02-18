@@ -1,10 +1,7 @@
 'use client';
 import styles from './styles.module.scss';
 import { FC, useEffect } from 'react';
-import {
-	BASE_RESISTANCE,
-	SCHEME_ELEMENTS,
-} from '@/shared/configs/schemeElements';
+import { SCHEME_ELEMENTS } from '@/shared/configs/schemeElements';
 import { SchemeElement } from '@/entities/SchemeElement';
 import { SchemePoint } from '@/entities/SchemePoint';
 import { useAppSelector, useAppDispatch } from '@/shared/hooks/store';
@@ -18,13 +15,9 @@ import { setNewVoltagePoints } from '@/shared/utils/setPointsVoltage/setPointsVo
 import { updateStarterContacts } from '@/shared/utils/updateStarterContacts/updateStarterContacts';
 import { setResistance } from '@/store/circuitSlice';
 import store from '@/store/store';
-import { useGetMalfunctionInputBreaker } from '@/shared/hooks/useGetMalfunctionInputBreaker';
-import { INPUT_CIRCUIT_BREAKER_ID } from '@/shared/configs/powerCircuit/constants';
-import { BASE_RESISTANCE_CONSTANT } from '@/shared/configs/elementKind';
 
 const Scheme: FC = () => {
 	const dispatch = useAppDispatch();
-	const { isActiveMalfunctionNoVoltage } = useGetMalfunctionInputBreaker();
 
 	// для рендера щупов
 	const activeProbe = useAppSelector(
@@ -41,20 +34,6 @@ const Scheme: FC = () => {
 	// для состояния точек (вынести в отдельный хук)
 	//const points = useAppSelector(state => state.points);
 	const scheme = useAppSelector(state => state.circuit);
-
-	useEffect(() => {
-		if (isActiveMalfunctionNoVoltage) {
-			for (const id of INPUT_CIRCUIT_BREAKER_ID) {
-				const resistance = BASE_RESISTANCE_CONSTANT.highResistance;
-				dispatch(setResistance({ id, value: resistance }));
-			}
-		} else {
-			for (const id of INPUT_CIRCUIT_BREAKER_ID) {
-				const resistance = BASE_RESISTANCE[id];
-				dispatch(setResistance({ id, value: resistance }));
-			}
-		}
-	}, [isActiveMalfunctionNoVoltage, dispatch]);
 
 	// Комплексный пересчет схемы: точки и контакты пересчитываются одновременно до стабильного состояния
 	useEffect(() => {

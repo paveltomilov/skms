@@ -122,7 +122,7 @@ export const INPUT_CIRCUIT_BREAKER_ID = [
 	INPUT_BREAKER_CONTACT_PHASE_A_ID,
 	INPUT_BREAKER_CONTACT_PHASE_B_ID,
 	INPUT_BREAKER_CONTACT_PHASE_C_ID,
-] as const;
+];
 
 /**
  * Массив ID контактов пускателя цепи ОТКРЫТЬ для всех трех фаз.
@@ -132,7 +132,7 @@ export const STARTER_CONTACTS_OPEN_ID = [
 	STARTER_CONTACT_OPEN_PHASE_A_ID,
 	STARTER_CONTACT_OPEN_PHASE_B_ID,
 	STARTER_CONTACT_OPEN_PHASE_C_ID,	
-] as const;
+];
 
 /**
  * Массив ID контактов пускателя цепи ЗАКРЫТЬ для всех трех фаз.
@@ -142,7 +142,7 @@ export const STARTER_CONTACTS_CLOSE_ID = [
 	STARTER_CONTACT_CLOSE_PHASE_A_ID,
 	STARTER_CONTACT_CLOSE_PHASE_B_ID,
 	STARTER_CONTACT_CLOSE_PHASE_C_ID,
-] as const;
+];
 
 /**
  * Массив ID обмоток двигателя для всех трех фаз.
@@ -152,4 +152,4 @@ export const MOTOR_WINDINGS_ID = [
 	MOTOR_WINDING_PHASE_A_ID,
 	MOTOR_WINDING_PHASE_B_ID,
 	MOTOR_WINDING_PHASE_C_ID,
-] as const;
+];
