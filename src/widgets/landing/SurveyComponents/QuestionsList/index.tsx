@@ -74,7 +74,6 @@ const QuestionsList: React.FC<QuestionsListProps> = ({
 
 	const handleRadioChange = useCallback(
 		(questionId: number, selectedValue: string) => {
-			// Находим вопрос и выбранный вариант
 			const question = questions.find(q => q.id === questionId);
 			if (!question || !question.choices) return;
 
@@ -83,7 +82,6 @@ const QuestionsList: React.FC<QuestionsListProps> = ({
 			);
 
 			if (selectedChoice) {
-				// Создаем полный объект QuestionAnswer
 				const answer: QuestionAnswer = {
 					selectedId: selectedChoice.id,
 					value: selectedValue,
@@ -91,18 +89,16 @@ const QuestionsList: React.FC<QuestionsListProps> = ({
 					...(selectedValue === 'Другое' && { otherText: '' }),
 				};
 
-				// Обновляем состояние с полным объектом
 				setAnswers(prev => ({
 					...prev,
 					[questionId]: answer,
 				}));
 
-				// Вызываем родительский обработчик
 				onRadioChange(questionId, selectedValue);
 				setShowError(false);
 			}
 		},
-		[onRadioChange, questions], // Добавлена зависимость questions
+		[onRadioChange, questions],
 	);
 
 	const handleCheckboxChange = useCallback(
@@ -111,7 +107,6 @@ const QuestionsList: React.FC<QuestionsListProps> = ({
 
 			if (!question || !question.choices) return;
 
-			// Получаем значения для выбранных ID
 			const selectedValues: string[] = [];
 
 			selectedIds.forEach(id => {
@@ -125,19 +120,16 @@ const QuestionsList: React.FC<QuestionsListProps> = ({
 				}
 			});
 
-			// Создаем объект QuestionAnswer
 			const answer: QuestionAnswer = {
-				selectedId: selectedIds.length > 0 ? selectedIds[0] : 0, // Для чекбоксов можно использовать первый ID или сделать поле опциональным
+				selectedId: selectedIds.length > 0 ? selectedIds[0] : 0,
 				value: selectedValues,
 				choiceIds: selectedIds,
 			};
 
-			// Добавляем otherText если есть
 			if (otherText !== undefined) {
 				answer.otherText = otherText;
 				setOtherTexts(prev => ({ ...prev, [questionId]: otherText }));
 			} else {
-				// Очищаем otherText если его нет
 				setOtherTexts(prev => {
 					const newState = { ...prev };
 					delete newState[questionId];
@@ -145,7 +137,6 @@ const QuestionsList: React.FC<QuestionsListProps> = ({
 				});
 			}
 
-			// Обновляем answers с полным объектом
 			setAnswers(prev => ({
 				...prev,
 				[questionId]: answer,

@@ -44,15 +44,18 @@ export interface QuestionsListProps {
 export type Option = {
 	id: number;
 	label: string;
+	isOther?: boolean;
 };
 
-export interface CheckQuestProps {
-	options: OptionWithId[];
+export interface CheckQuestProps<
+	T extends { id: number; label: string } = OptionWithId,
+> {
+	options: T[];
 	maxSelections?: number;
 	otherText?: string;
+	otherOptionId?: number;
+	otherOptionLabel?: string;
 	onSelectionChange: (selectedIds: number[], otherText?: string) => void;
-	initialSelectedIds?: number[];
-	initialOtherText?: string;
 }
 
 export interface ConfirmDialogProps {

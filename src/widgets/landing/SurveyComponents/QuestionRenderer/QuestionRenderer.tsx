@@ -3,7 +3,7 @@
 import React, { useMemo, useCallback } from 'react';
 import RadioQuest from '../RadioQuest';
 import CheckQuest from '../CheckQuest';
-import { QuestionRendererProps, OptionWithId } from '@/shared/types/question';
+import { QuestionRendererProps, Option } from '@/shared/types/question';
 
 const QUESTION_TYPES = {
 	CHOICE: 'choice',
@@ -31,11 +31,12 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({
 		}
 	}, [question.question_type, question.type]);
 
-	const optionsWithIds = useMemo((): OptionWithId[] => {
+	const optionsWithIds = useMemo((): Option[] => {
 		if (question.choices?.length) {
 			return question.choices.map(choice => ({
 				id: choice.id,
 				label: choice.value,
+				isOther: choice.value === 'Другое' || choice.value === 'Other',
 			}));
 		}
 
@@ -43,6 +44,7 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({
 			return question.options.map((option, index) => ({
 				id: index + 1,
 				label: option,
+				isOther: option === 'Другое' || option === 'Other',
 			}));
 		}
 

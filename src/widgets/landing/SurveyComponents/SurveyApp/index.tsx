@@ -60,6 +60,7 @@ const SurveyApp: React.FC = () => {
 						return {
 							id: q.id,
 							title: q.text,
+							text: q.text,
 							type: questionType,
 							question_type: q.question_type,
 							options: options,
@@ -67,7 +68,6 @@ const SurveyApp: React.FC = () => {
 						};
 					})
 					.sort((a, b) => a.id - b.id);
-				console.log('Formatted questions:', formattedQuestions);
 				setQuestions(formattedQuestions);
 			} catch (err) {
 				console.error('Ошибка при загрузке вопросов:', err);
@@ -84,6 +84,8 @@ const SurveyApp: React.FC = () => {
 				const savedAnswers = localStorage.getItem(SURVEY_ANSWERS_KEY);
 
 				if (savedAnswers) {
+					setShowEnd(true);
+					setShowQuestions(false);
 				}
 			} catch (error) {
 				console.error(
@@ -149,7 +151,6 @@ const SurveyApp: React.FC = () => {
 		try {
 			const surveyData = {
 				answers: answersForStorage,
-				timestamp: new Date().toISOString(),
 				totalQuestions: totalQuestions,
 			};
 
@@ -157,7 +158,6 @@ const SurveyApp: React.FC = () => {
 				SURVEY_ANSWERS_KEY,
 				JSON.stringify(surveyData),
 			);
-			console.log('Ответы сохранены в localStorage:', surveyData);
 		} catch (error) {
 			console.error('Ошибка при сохранении в localStorage:', error);
 		}

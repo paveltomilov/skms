@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useCallback } from 'react';
 import RadioCheck from '../../IconSvg/radioCheck';
 import RadioChecked from '../../IconSvg/radioChecked';
 import { RadioQuestProps } from '@/shared/types/question';
@@ -11,49 +11,51 @@ const RadioQuest: React.FC<RadioQuestProps> = ({
 	otherText = '',
 	setSelected,
 	setOtherText,
-	otherOptionLabel,
+	otherOptionLabel = 'Другое',
 }) => {
-	const [currentOtherText, setCurrentOtherText] = useState<string>(otherText);
+	const findOptionByLabel = useCallback(
+		(label: string) => options.find(opt => opt.label === label),
+		[options],
+	);
 
-	useEffect(() => {
-		setCurrentOtherText(otherText);
-	}, [otherText]);
-
-	const findOptionByLabel = (label: string) =>
-		options.find(opt => opt.label === label);
-	const findOptionById = (id: number) => options.find(opt => opt.id === id);
+	const findOptionById = useCallback(
+		(id: number) => options.find(opt => opt.id === id),
+		[options],
+	);
 
 	const selectedOption = findOptionByLabel(selected);
 	const selectedId = selectedOption?.id ?? null;
 
-	const isOtherOption = (id: number) => {
-		const option = findOptionById(id);
-		return option?.label === otherOptionLabel;
-	};
+	const isOtherOption = useCallback(
+		(id: number) => {
+			const option = findOptionById(id);
+			return option?.label === otherOptionLabel;
+		},
+		[findOptionById, otherOptionLabel],
+	);
 
-	const handleSelection = (optionId: number) => {
-		const option = findOptionById(optionId);
-		if (!option) return;
+	const handleSelection = useCallback(
+		(optionId: number) => {
+			const option = findOptionById(optionId);
+			if (!option) return;
 
-		if (option.label !== otherOptionLabel) {
-			setCurrentOtherText('');
-			if (setOtherText) {
-				setOtherText('');
+			if (option.label !== otherOptionLabel) {
+				setOtherText?.('');
 			}
-		}
 
-		if (setSelected) {
-			setSelected(option.label);
-		}
-	};
+			setSelected?.(option.label);
+		},
+		[findOptionById, otherOptionLabel, setSelected, setOtherText],
+	);
 
-	const handleOtherTextChange = (text: string) => {
-		setCurrentOtherText(text);
-
-		if (selectedId && isOtherOption(selectedId)) {
-			setOtherText?.(text);
-		}
-	};
+	const handleOtherTextChange = useCallback(
+		(text: string) => {
+			if (selectedId && isOtherOption(selectedId)) {
+				setOtherText?.(text);
+			}
+		},
+		[selectedId, isOtherOption, setOtherText],
+	);
 
 	if (options.length === 0) {
 		return (
@@ -68,7 +70,7 @@ const RadioQuest: React.FC<RadioQuestProps> = ({
 			<div className={styles.radio__group}>
 				{options.map(opt => {
 					const isSelected = selectedId === opt.id;
-					const isOther = opt.label === 'Другое';
+					const isOther = opt.label === otherOptionLabel;
 					const isOtherSelected = isOther && isSelected;
 
 					return (
@@ -93,7 +95,7 @@ const RadioQuest: React.FC<RadioQuestProps> = ({
 									<input
 										className={styles.input__other}
 										type="text"
-										value={currentOtherText}
+										value={otherText}
 										onChange={e =>
 											handleOtherTextChange(
 												e.target.value,

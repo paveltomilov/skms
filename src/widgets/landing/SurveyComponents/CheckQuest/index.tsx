@@ -1,31 +1,32 @@
 'use client';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import Check from '../../IconSvg/check';
 import Checked from '../../IconSvg/checked';
-import { CheckQuestProps } from '@/shared/types/question';
+import { CheckQuestProps, Option } from '@/shared/types/question';
 import styles from './styles.module.scss';
 import InfoTooltip from '../Tooltip';
 
-const CheckQuest: React.FC<CheckQuestProps> = ({
+const CheckQuest: React.FC<CheckQuestProps<Option>> = ({
 	options,
 	maxSelections = 3,
 	otherText = '',
 	onSelectionChange,
 }) => {
 	const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
-	const [currentOtherText, setCurrentOtherText] = useState<string>('');
 	const [showInfoForId, setShowInfoForId] = useState<number | null>(null);
-	const [tooltipTimer, setTooltipTimer] = useState<NodeJS.Timeout | null>(
-		null,
-	);
 	const [tooltipPosition, setTooltipPosition] = useState<'right' | 'bottom'>(
 		'right',
 	);
-	const [windowWidtch, setWindowWidth] = useState(0);
+	const [windowWidth, setWindowWidth] = useState(0);
+	const tooltipTimerRef = useRef<NodeJS.Timeout | null>(null);
 
 	useEffect(() => {
-		setCurrentOtherText(otherText);
-	}, [otherText]);
+		return () => {
+			if (tooltipTimerRef.current) {
+				clearTimeout(tooltipTimerRef.current);
+			}
+		};
+	}, []);
 
 	useEffect(() => {
 		const handleResize = () => setWindowWidth(window.innerWidth);
@@ -34,8 +35,8 @@ const CheckQuest: React.FC<CheckQuestProps> = ({
 		return () => window.removeEventListener('resize', handleResize);
 	}, []);
 
-	const isMobile = windowWidtch <= 767;
-	const isTablet = windowWidtch >= 768 && windowWidtch <= 1023;
+	const isMobile = windowWidth <= 767;
+	const isTablet = windowWidth >= 768 && windowWidth <= 1023;
 
 	const large = 200;
 	const small = 255;
@@ -47,7 +48,11 @@ const CheckQuest: React.FC<CheckQuestProps> = ({
 		return max;
 	}, [isMobile, isTablet]);
 
-	const otherOption = options.find(opt => opt.label === 'Другое');
+	const otherOption = useMemo(
+		() => options.find(opt => opt.isOther),
+		[options],
+	);
+
 	const isOtherOption = useCallback(
 		(id: number) => {
 			return otherOption && id === otherOption.id;
@@ -66,29 +71,30 @@ const CheckQuest: React.FC<CheckQuestProps> = ({
 				setSelectedOptions(newSelected);
 
 				if (isOtherOption(id)) {
-					setCurrentOtherText('');
 					onSelectionChange(newSelected, '');
 				} else {
-					onSelectionChange(newSelected, currentOtherText);
+					onSelectionChange(newSelected, otherText);
 				}
 
 				setShowInfoForId(null);
-				if (tooltipTimer) {
-					clearTimeout(tooltipTimer);
+				if (tooltipTimerRef.current) {
+					clearTimeout(tooltipTimerRef.current);
+					tooltipTimerRef.current = null;
 				}
 			} else if (selectedOptions.length < maxSelections) {
 				newSelected = [...selectedOptions, id];
 				setSelectedOptions(newSelected);
 
 				if (isOtherOption(id)) {
-					onSelectionChange(newSelected, currentOtherText || '');
+					onSelectionChange(newSelected, otherText || '');
 				} else {
-					onSelectionChange(newSelected, currentOtherText);
+					onSelectionChange(newSelected, otherText);
 				}
 
 				setShowInfoForId(null);
-				if (tooltipTimer) {
-					clearTimeout(tooltipTimer);
+				if (tooltipTimerRef.current) {
+					clearTimeout(tooltipTimerRef.current);
+					tooltipTimerRef.current = null;
 				}
 			}
 		},
@@ -97,14 +103,12 @@ const CheckQuest: React.FC<CheckQuestProps> = ({
 			isOtherOption,
 			maxSelections,
 			onSelectionChange,
-			currentOtherText,
-			tooltipTimer,
+			otherText,
 		],
 	);
 
 	const handleOtherTextChange = useCallback(
 		(text: string) => {
-			setCurrentOtherText(text);
 			onSelectionChange(selectedOptions, text);
 		},
 		[selectedOptions, onSelectionChange],
@@ -130,32 +134,23 @@ const CheckQuest: React.FC<CheckQuestProps> = ({
 
 				setShowInfoForId(id);
 
-				if (tooltipTimer) {
-					clearTimeout(tooltipTimer);
+				if (tooltipTimerRef.current) {
+					clearTimeout(tooltipTimerRef.current);
 				}
 
-				const timer = setTimeout(() => {
+				tooltipTimerRef.current = setTimeout(() => {
 					setShowInfoForId(null);
+					tooltipTimerRef.current = null;
 				}, 3000);
-
-				setTooltipTimer(timer);
 			}
 		},
-		[maxReached, selectedOptions, getThreshold, tooltipTimer],
+		[maxReached, selectedOptions, getThreshold],
 	);
-
-	useEffect(() => {
-		return () => {
-			if (tooltipTimer) {
-				clearTimeout(tooltipTimer);
-			}
-		};
-	}, [tooltipTimer]);
 
 	const renderOptions = useCallback(() => {
 		return options.map(opt => {
 			const isSelected = selectedOptions.includes(opt.id);
-			const isOther = isOtherOption(opt.id);
+			const isOther = Boolean(opt.isOther);
 			const isOtherSelected = isOther && isSelected;
 			const canToggle = isSelected || !maxReached;
 			const isDisabled = !canToggle && !isSelected;
@@ -165,9 +160,9 @@ const CheckQuest: React.FC<CheckQuestProps> = ({
 				<div key={opt.id} className={styles.option__wrapper}>
 					<label
 						className={`${styles.custom__radio} 
-							${isOther ? styles.other__option : ''} 
-							${isOtherSelected ? styles.other__selected : ''}
-							${isDisabled ? styles.disabled__option : ''}`}
+						${isOther ? styles.other__option : ''} 
+						${isOtherSelected ? styles.other__selected : ''}
+						${isDisabled ? styles.disabled__option : ''}`}
 						onClick={e => {
 							if (isDisabled) {
 								e.preventDefault();
@@ -198,7 +193,7 @@ const CheckQuest: React.FC<CheckQuestProps> = ({
 									<input
 										className={styles.input__other}
 										type="text"
-										value={currentOtherText}
+										value={otherText}
 										onChange={e =>
 											handleOtherTextChange(
 												e.target.value,
@@ -240,12 +235,11 @@ const CheckQuest: React.FC<CheckQuestProps> = ({
 	}, [
 		options,
 		selectedOptions,
-		isOtherOption,
 		maxReached,
 		showInfoForId,
 		handleDisabledClick,
 		handleSelect,
-		currentOtherText,
+		otherText,
 		handleOtherTextChange,
 		tooltipPosition,
 	]);
