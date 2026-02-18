@@ -1,34 +1,32 @@
-import { useEffect, useMemo, useState } from 'react';
-import { INPUT_CIRCUIT_BREAKER_ID } from '../configs/powerCircuit/constants';
+import { useMemo } from 'react';
 import { findElementByID } from '../utils/findElementByID/scheme';
 import { useAppSelector } from './store';
+import type { CircuitElement } from '@/shared/types/scheme';
 
-export const useGetMalfunctionInputBreaker = () => {
-	const [isActiveMalfunctionNoVoltage, setIsActiveMalfunctionNoVoltage] =
-		useState<boolean>(false);
+
+export const useGetMalfunctionCombinedElements = (element: string[]): Record<string, MalfTpl[]> => {
 	const state = useAppSelector(state => state.circuit);
-	const MALFUNCTION_NO_COMMUTATION =
-		'Собирается механически, но нет коммутации';
 
-	// получаем из стора элементы (контакты), из которых состоит автомат
-	const inputCircuitBreakerElements = useMemo(
-		() => INPUT_CIRCUIT_BREAKER_ID.map(id => findElementByID(id, state)),
-		[state],
+	// получаем из стора ID контактов из которых состоит элемент пр.["p.0.7","p.1.7","p.2.7"]
+	const contactsElement = useMemo(
+		() => element
+			.map(id => findElementByID(id, state))
+			.filter((el): el is CircuitElement => el !== undefined),
+		[state, element],
 	);
 
-	// проверяем контакты вводного автоматичекого выключателя на наличие несисправностей "Собирается механически, но нет коммутации"
-	useEffect(() => {
-		setIsActiveMalfunctionNoVoltage(
-			inputCircuitBreakerElements.some(contact =>
-				contact.malfunctions.some(
-					mal =>
-						mal.name === MALFUNCTION_NO_COMMUTATION && mal.active,
-				),
-			),
-		);
-	}, [inputCircuitBreakerElements]);
+	// проверяем контакты элемента на активные неисправности 
+	/** Объект с контатками элемента где свойство обьекта это ID КОНТАКТА которое содержит 
+	 * массив активных неисправностей или пустой массив 
+	 * пр.{"p.0.7": [{ id: 'p.0.7.1', name: 'Обрыв фазы',active: true }]}*/
+	const contactsWithActiveMalfunctions = useMemo(() => {
+		return contactsElement.reduce<Record<string, MalfTpl[]>>((acc, contact) => {
+			acc[contact.id] = contact.malfunctions?.filter(mal => mal.active) ?? [];
+			return acc;
+		}, {});
+	}, [contactsElement]);
 
-	return {
-		isActiveMalfunctionNoVoltage,
-	};
+
+	return contactsWithActiveMalfunctions;
 };
+
