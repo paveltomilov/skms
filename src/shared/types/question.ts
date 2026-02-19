@@ -14,7 +14,11 @@ export interface QuestionRendererProps {
 	question: Question;
 	answers: Record<number, QuestionAnswer>;
 	otherTexts: OtherTexts;
-	onRadioChange: (questionId: number, selectedValue: string) => void;
+	onRadioChange: (
+		questionId: number,
+		selectedValue: string,
+		otherText?: string,
+	) => void;
 	onCheckboxChange: (
 		questionId: number,
 		selectedIds: number[],
@@ -31,7 +35,11 @@ export interface QuestionsListProps {
 	onFinish?: () => void;
 	initialAnswers: Record<number, QuestionAnswer>;
 	initialOtherTexts: Record<number, string>;
-	onRadioChange: (questionId: number, selectedValue: string) => void;
+	onRadioChange: (
+		questionId: number,
+		selectedValue: string,
+		otherText?: string,
+	) => void;
 	onCheckboxChange: (
 		questionId: number,
 		selectedIds: number[],
@@ -65,13 +73,14 @@ export interface ConfirmDialogProps {
 	onCancel: () => void;
 }
 
-export interface RadioQuestProps {
-	options?: OptionWithId[];
+export interface RadioQuestProps<
+	T extends { id: number; label: string } = OptionWithId,
+> {
+	options?: T[];
 	selected?: string;
 	otherText?: string;
 	setSelected?: (value: string) => void;
 	setOtherText?: (text: string) => void;
-	otherOptionLabel: string;
 }
 
 export interface Choice {
@@ -90,6 +99,7 @@ export interface OtherTexts {
 }
 
 export interface OptionWithId {
+	isOther: string;
 	id: number;
 	label: string;
 }

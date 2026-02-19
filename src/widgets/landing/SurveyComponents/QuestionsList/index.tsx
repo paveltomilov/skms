@@ -73,7 +73,7 @@ const QuestionsList: React.FC<QuestionsListProps> = ({
 	}, [answers, otherTexts, currentQuestion]);
 
 	const handleRadioChange = useCallback(
-		(questionId: number, selectedValue: string) => {
+		(questionId: number, selectedValue: string, otherText?: string) => {
 			const question = questions.find(q => q.id === questionId);
 			if (!question || !question.choices) return;
 
@@ -86,15 +86,28 @@ const QuestionsList: React.FC<QuestionsListProps> = ({
 					selectedId: selectedChoice.id,
 					value: selectedValue,
 					choiceIds: selectedChoice.id,
-					...(selectedValue === 'Другое' && { otherText: '' }),
 				};
+
+				if (otherText !== undefined) {
+					answer.otherText = otherText;
+					setOtherTexts(prev => ({
+						...prev,
+						[questionId]: otherText,
+					}));
+				} else {
+					setOtherTexts(prev => {
+						const newState = { ...prev };
+						delete newState[questionId];
+						return newState;
+					});
+				}
 
 				setAnswers(prev => ({
 					...prev,
 					[questionId]: answer,
 				}));
 
-				onRadioChange(questionId, selectedValue);
+				onRadioChange(questionId, selectedValue, otherText);
 				setShowError(false);
 			}
 		},
@@ -178,7 +191,6 @@ const QuestionsList: React.FC<QuestionsListProps> = ({
 
 			<div className={styles.question__wrapper}>
 				<QuestionRenderer
-					key={currentQuestion.id}
 					question={currentQuestion}
 					answers={answers}
 					otherTexts={otherTexts}

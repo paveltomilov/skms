@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import axios from 'axios';
 import SurveyStart from '../SurveyStart';
 import QuestionsList from '../QuestionsList';
@@ -21,8 +21,31 @@ const SurveyApp: React.FC = () => {
 	const [currentQuestion, setCurrentQuestion] = useState<number>(0);
 	const [showEnd, setShowEnd] = useState(false);
 	const [answers, setAnswers] = useState<Record<number, QuestionAnswer>>({});
+	const [rawQuestions, setRawQuestions] = useState<ServerQuestion[]>([]);
 
-	const [questions, setQuestions] = useState<Question[]>([]);
+	const questions = useMemo((): Question[] => {
+		const typeMap: Record<string, 'radio' | 'checkbox'> = {
+			choice: 'radio',
+			multi: 'checkbox',
+		};
+
+		return rawQuestions
+			.map((q: ServerQuestion) => {
+				const options = q.choices.map(choice => choice.value);
+				const questionType = typeMap[q.question_type] || 'radio';
+
+				return {
+					id: q.id,
+					title: q.text,
+					text: q.text,
+					type: questionType,
+					question_type: q.question_type,
+					options: options,
+					choices: q.choices,
+				};
+			})
+			.sort((a, b) => a.id - b.id);
+	}, [rawQuestions]);
 
 	const totalQuestions = questions.length;
 
@@ -47,34 +70,10 @@ const SurveyApp: React.FC = () => {
 						},
 					},
 				);
-
-				const typeMap: Record<string, 'radio' | 'checkbox'> = {
-					choice: 'radio',
-					multi: 'checkbox',
-				};
-
-				const formattedQuestions: Question[] = response.data
-					.map((q: ServerQuestion) => {
-						const options = q.choices.map(choice => choice.value);
-
-						const questionType =
-							typeMap[q.question_type] || 'radio';
-
-						return {
-							id: q.id,
-							title: q.text,
-							text: q.text,
-							type: questionType,
-							question_type: q.question_type,
-							options: options,
-							choices: q.choices,
-						};
-					})
-					.sort((a, b) => a.id - b.id);
-				setQuestions(formattedQuestions);
+				setRawQuestions(response.data);
 			} catch (err) {
 				console.error('Ошибка при загрузке вопросов:', err);
-				setQuestions([]);
+				setRawQuestions([]);
 			}
 		};
 
@@ -125,31 +124,26 @@ const SurveyApp: React.FC = () => {
 		const answersForStorage: AnswerStorage[] = questions
 			.map(question => {
 				const response = answers[question.id];
-				const { choiceIds, otherText = '' } = response;
+				if (!response) return null;
 
-				if (response !== undefined && response !== null) {
-					const choicesArray = Array.isArray(choiceIds)
-						? choiceIds
-						: [choiceIds];
+				const { choiceIds, otherText } = response;
 
-					const answer: AnswerStorage = {
-						question: question.id,
-						answer_choices: choicesArray,
-					};
+				const choicesArray = Array.isArray(choiceIds)
+					? choiceIds
+					: [choiceIds];
 
-					if (otherText) {
-						answer.other_text = otherText;
-					}
+				const answer: AnswerStorage = {
+					question: question.id,
+					answer_choices: choicesArray,
+				};
 
-					return answer;
+				if (otherText && otherText.trim() !== '') {
+					answer.other_text = otherText;
 				}
 
-				return null;
+				return answer;
 			})
-			.filter((answer): answer is AnswerStorage => answer !== null)
-			.filter(
-				answer => answer.answer_choices.length > 0 || answer.other_text,
-			);
+			.filter((answer): answer is AnswerStorage => answer !== null);
 
 		try {
 			const surveyData = {
@@ -169,57 +163,67 @@ const SurveyApp: React.FC = () => {
 		setShowEnd(true);
 	};
 
-	const handleRadioChange = (questionId: number, selectedValue: string) => {
-		const question = questions.find(q => q.id === questionId);
+	const handleRadioChange = useCallback(
+		(questionId: number, selectedValue: string, otherText?: string) => {
+			const question = questions.find(q => q.id === questionId);
+			if (!question || !question.choices) return;
 
-		if (!question || !question.choices) return;
+			const selectedChoice = question.choices.find(
+				choice => choice.value === selectedValue,
+			);
 
-		const selectedChoice = question.choices.find(
-			choice => choice.value === selectedValue,
-		);
+			if (selectedChoice) {
+				setAnswers(prev => {
+					const answer: QuestionAnswer = {
+						selectedId: selectedChoice.id,
+						value: selectedValue,
+						choiceIds: selectedChoice.id,
+					};
 
-		if (selectedChoice) {
-			setAnswers(prev => ({
-				...prev,
-				[questionId]: {
-					selectedId: selectedChoice.id,
-					value: selectedValue,
-					choiceIds: selectedChoice.id,
-					...(selectedValue === 'Другое' && { otherText: '' }),
-				},
-			}));
-		}
-	};
-	const handleCheckboxChange = (
-		questionId: number,
-		selectedIds: number[],
-		otherText?: string,
-	) => {
-		const question = questions.find(q => q.id === questionId);
+					if (otherText !== undefined) {
+						answer.otherText = otherText;
+					}
 
-		if (!question || !question.choices) {
-			console.error('Вопрос не найден или нет choices');
-			return;
-		}
+					return {
+						...prev,
+						[questionId]: answer,
+					};
+				});
+			}
+		},
+		[questions],
+	);
 
-		const selectedValues = selectedIds
-			.map(choiceId => {
-				const choice = question.choices?.find(c => c.id === choiceId);
-				if (!choice) return '';
-				return choice.value;
-			})
-			.filter(Boolean);
+	const handleCheckboxChange = useCallback(
+		(questionId: number, selectedIds: number[], otherText?: string) => {
+			const question = questions.find(q => q.id === questionId);
+			if (!question || !question.choices) return;
 
-		setAnswers(prev => ({
-			...prev,
-			[questionId]: {
-				selectedId: selectedIds.length > 0 ? selectedIds[0] : 0,
-				value: selectedValues,
-				choiceIds: selectedIds,
-				...(otherText !== undefined && { otherText }),
-			},
-		}));
-	};
+			setAnswers(prev => {
+				const answer: QuestionAnswer = {
+					selectedId: selectedIds.length > 0 ? selectedIds[0] : 0,
+					value: selectedIds
+						.map(
+							id =>
+								question.choices?.find(c => c.id === id)
+									?.value || '',
+						)
+						.filter(Boolean),
+					choiceIds: selectedIds,
+				};
+
+				if (otherText !== undefined) {
+					answer.otherText = otherText;
+				}
+
+				return {
+					...prev,
+					[questionId]: answer,
+				};
+			});
+		},
+		[questions],
+	);
 
 	return (
 		<>

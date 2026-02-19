@@ -1,18 +1,29 @@
 'use client';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import RadioCheck from '../../IconSvg/radioCheck';
 import RadioChecked from '../../IconSvg/radioChecked';
-import { RadioQuestProps } from '@/shared/types/question';
+import { RadioQuestProps, Option } from '@/shared/types/question';
 import styles from './styles.module.scss';
 
-const RadioQuest: React.FC<RadioQuestProps> = ({
+const RadioQuest: React.FC<RadioQuestProps<Option>> = ({
 	options = [],
 	selected = '',
 	otherText = '',
 	setSelected,
 	setOtherText,
-	otherOptionLabel = 'Другое',
 }) => {
+	const otherOption = useMemo(
+		() => options.find(opt => opt.isOther),
+		[options],
+	);
+
+	const isOtherOption = useCallback(
+		(id: number) => {
+			return otherOption && id === otherOption.id;
+		},
+		[otherOption],
+	);
+
 	const findOptionByLabel = useCallback(
 		(label: string) => options.find(opt => opt.label === label),
 		[options],
@@ -26,26 +37,18 @@ const RadioQuest: React.FC<RadioQuestProps> = ({
 	const selectedOption = findOptionByLabel(selected);
 	const selectedId = selectedOption?.id ?? null;
 
-	const isOtherOption = useCallback(
-		(id: number) => {
-			const option = findOptionById(id);
-			return option?.label === otherOptionLabel;
-		},
-		[findOptionById, otherOptionLabel],
-	);
-
 	const handleSelection = useCallback(
 		(optionId: number) => {
 			const option = findOptionById(optionId);
 			if (!option) return;
 
-			if (option.label !== otherOptionLabel) {
+			if (!isOtherOption(optionId)) {
 				setOtherText?.('');
 			}
 
 			setSelected?.(option.label);
 		},
-		[findOptionById, otherOptionLabel, setSelected, setOtherText],
+		[findOptionById, isOtherOption, setSelected, setOtherText],
 	);
 
 	const handleOtherTextChange = useCallback(
@@ -70,7 +73,7 @@ const RadioQuest: React.FC<RadioQuestProps> = ({
 			<div className={styles.radio__group}>
 				{options.map(opt => {
 					const isSelected = selectedId === opt.id;
-					const isOther = opt.label === otherOptionLabel;
+					const isOther = Boolean(opt.isOther);
 					const isOtherSelected = isOther && isSelected;
 
 					return (

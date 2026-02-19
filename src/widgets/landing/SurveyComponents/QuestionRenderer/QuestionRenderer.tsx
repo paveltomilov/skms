@@ -13,10 +13,8 @@ const QUESTION_TYPES = {
 const QuestionRenderer: React.FC<QuestionRendererProps> = ({
 	question,
 	answers,
-	otherTexts,
 	onRadioChange,
 	onCheckboxChange,
-	setOtherTexts,
 }) => {
 	const questionType = useMemo((): 'radio' | 'checkbox' => {
 		const apiType = question.question_type;
@@ -51,21 +49,33 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({
 		return [];
 	}, [question.choices, question.options]);
 
+	const currentRadioAnswer = useMemo((): string => {
+		const answer = answers[question.id];
+		if (answer && typeof answer === 'object' && 'value' in answer) {
+			return typeof answer.value === 'string' ? answer.value : '';
+		}
+		return '';
+	}, [answers, question.id]);
+
+	const currentOtherText = useMemo((): string => {
+		const answer = answers[question.id];
+		return answer?.otherText || '';
+	}, [answers, question.id]);
+
 	const handleOtherTextChange = useCallback(
 		(text: string) => {
-			setOtherTexts(prev => ({
-				...prev,
-				[question.id]: text,
-			}));
+			if (questionType === 'radio' && currentRadioAnswer) {
+				onRadioChange(question.id, currentRadioAnswer, text);
+			}
 		},
-		[question.id, setOtherTexts],
+		[question.id, questionType, currentRadioAnswer, onRadioChange],
 	);
 
 	const handleRadioSelect = useCallback(
 		(value: string) => {
-			onRadioChange(question.id, value);
+			onRadioChange(question.id, value, currentOtherText);
 		},
-		[question.id, onRadioChange],
+		[question.id, onRadioChange, currentOtherText],
 	);
 
 	const handleCheckboxSelect = useCallback(
@@ -75,29 +85,13 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({
 		[question.id, onCheckboxChange],
 	);
 
-	const currentRadioAnswer = useMemo((): string => {
-		const answer = answers[question.id];
-
-		if (answer && typeof answer === 'object' && 'value' in answer) {
-			const value = answer.value;
-			return typeof value === 'string' ? value : '';
-		}
-
-		if (typeof answer === 'string') {
-			return answer;
-		}
-
-		return '';
-	}, [answers, question.id]);
-
 	switch (questionType) {
 		case 'radio':
 			return (
 				<RadioQuest
 					options={optionsWithIds}
 					selected={currentRadioAnswer}
-					otherText={otherTexts[question.id] || ''}
-					otherOptionLabel="Другое"
+					otherText={currentOtherText}
 					setSelected={handleRadioSelect}
 					setOtherText={handleOtherTextChange}
 				/>
@@ -109,7 +103,7 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({
 					key={`checkbox-${question.id}`}
 					options={optionsWithIds}
 					maxSelections={question.maxSelections || 3}
-					otherText={otherTexts[question.id] || ''}
+					otherText={currentOtherText}
 					onSelectionChange={handleCheckboxSelect}
 				/>
 			);
