@@ -19,6 +19,7 @@ interface Props {
 const Switcher: FC<Props> = ({ mode, isFaultActive }) => {
 	const handleRef = useRef<SVGSVGElement | null>(null);
 	const dispatch = useAppDispatch();
+	const { hasMalfunctionNoSwitchingPhasesInputBreaker } = useGetMalfunctionsInputBreaker()
 	const { angle, onMouseDown, getSelectedMode } = useRotateKnob(
 		handleRef,
 		SWITCHER_ANGLES,
@@ -30,14 +31,15 @@ const Switcher: FC<Props> = ({ mode, isFaultActive }) => {
 		const selectedMode = getSelectedMode();
 		if (selectedMode) {
 			for (const id of INPUT_CIRCUIT_BREAKER_ID) {
+				const malfunctionNoSwitching: boolean = hasMalfunctionNoSwitchingPhasesInputBreaker[id] ?? false;
 				const resistance =
-					selectedMode === 'on'
+					selectedMode === 'on' && !malfunctionNoSwitching
 						? BASE_RESISTANCE[id]
 						: BASE_RESISTANCE_CONSTANT.highResistance;
 				dispatch(setResistance({ id, value: resistance }));
 			}
 		}
-	}, [getSelectedMode, dispatch]);
+	}, [getSelectedMode, dispatch, hasMalfunctionNoSwitchingPhasesInputBreaker]);
 
 	return (
 		<div className={styles.switcher}>

@@ -21,11 +21,15 @@ export const Automatic: FC = () => {
 		useAppSelector(state => state.circuit),
 	);
 
-	const switcherMode = getInputCircuitBreakerState();
+	const { hasMalfunctionNoSwitchingPhasesInputBreaker } = useGetMalfunctionsInputBreaker()
+
+	const someMalfunctionNoSwitchingPhasesInputBreaker = hasMalfunctionNoSwitchingPhasesInputBreaker.values().some(mal => mal)
+
+	const switcherMode = getInputCircuitBreakerState() === 'off' && someMalfunctionNoSwitchingPhasesInputBreaker ? 'on' : 'off';
 
 	const tumblerMode =
 		controlCircuitBreaker.resistance ===
-		BASE_RESISTANCE_CONSTANT.highResistance
+			BASE_RESISTANCE_CONSTANT.highResistance
 			? 'off'
 			: 'on';
 

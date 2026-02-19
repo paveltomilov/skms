@@ -15,7 +15,22 @@ const [
 	malfunctionNoSwitching,
 ] = MALF_TPL_BREAKER;
 
-export const useGetMalfunctionInputBreaker = () => {
+const [A, B, C] = INPUT_CIRCUIT_BREAKER_ID;
+
+interface MalfunctionContact {
+	[string]: boolean,
+	[string]: boolean,
+	[string]: boolean,
+}
+
+
+interface MalfunctionContactsInputBreaker {
+	hasMalfunctionBadContactPhasesInputBreaker: MalfunctionContact,
+	hasMalfunctionFalseTriggersPhasesInputBreaker: MalfunctionContact,
+	hasMalfunctionNoSwitchingPhasesInputBreaker: MalfunctionContact,
+}
+
+export const useGetMalfunctionsInputBreaker = (): MalfunctionContactsInputBreaker => {
 	const listActiveMalfunction = useGetMalfunctionCombinedElements(
 		INPUT_CIRCUIT_BREAKER_ID,
 	);
@@ -40,9 +55,9 @@ export const useGetMalfunctionInputBreaker = () => {
 	const useBuildPhaseStates = (template: MalfTpl) =>
 		useMemo(
 			() => ({
-				A: checkMalfunction(INPUT_BREAKER_CONTACT_PHASE_A_ID, template),
-				B: checkMalfunction(INPUT_BREAKER_CONTACT_PHASE_B_ID, template),
-				C: checkMalfunction(INPUT_BREAKER_CONTACT_PHASE_C_ID, template),
+				[A]: checkMalfunction(INPUT_BREAKER_CONTACT_PHASE_A_ID, template),
+				[B]: checkMalfunction(INPUT_BREAKER_CONTACT_PHASE_B_ID, template),
+				[C]: checkMalfunction(INPUT_BREAKER_CONTACT_PHASE_C_ID, template),
 			}),
 			[template],
 		);

@@ -15,6 +15,7 @@ import { setNewVoltagePoints } from '@/shared/utils/setPointsVoltage/setPointsVo
 import { updateStarterContacts } from '@/shared/utils/updateStarterContacts/updateStarterContacts';
 import { setResistance } from '@/store/circuitSlice';
 import store from '@/store/store';
+import { INPUT_CIRCUIT_BREAKER_ID } from '@/shared/configs/powerCircuit/constants';
 
 const Scheme: FC = () => {
 	const dispatch = useAppDispatch();
@@ -27,6 +28,20 @@ const Scheme: FC = () => {
 	const probeConnections = useAppSelector(
 		state => state.multimeter.probeConnections,
 	);
+
+	const { hasMalfunctionNoSwitchingPhasesInputBreaker } = useGetMalfunctionsInputBreaker()
+
+	// Размыкаем контакты вводного автомат при наличии определенных неисправностей
+	useEffect(() => {
+		for (const id of INPUT_CIRCUIT_BREAKER_ID) {
+			const malfunctionNoSwitching: boolean = hasMalfunctionNoSwitchingPhasesInputBreaker[id] ?? false;
+			const resistance =
+				!malfunctionNoSwitching
+					? BASE_RESISTANCE[id]
+					: BASE_RESISTANCE_CONSTANT.highResistance;
+			dispatch(setResistance({ id, value: resistance }));
+		}
+	}, [hasMalfunctionNoSwitchingPhasesInputBreaker])
 
 	// устанавливает значенния неисправностей в тру в схеме задвижки
 	useGateMalfunctions();
