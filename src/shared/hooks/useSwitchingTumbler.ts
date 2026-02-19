@@ -1,11 +1,11 @@
-import {useCallback, useEffect, useRef, useState} from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { SwitchMode } from '../types/switch';
 
 //Управляет перемещением рубильника
 export function useSwitchingTumbler(
 	handleRef: React.RefObject<HTMLDivElement | null>,
 	initialMode: SwitchMode,
-	isFaultActive: boolean = false
+	isFaultActive: boolean = false,
 ) {
 	const [currentMode, setCurrentMode] = useState<SwitchMode>(initialMode);
 	const isDragging = useRef(false);
@@ -14,6 +14,7 @@ export function useSwitchingTumbler(
 	useEffect(() => {
 		setCurrentMode(initialMode);
 	}, [initialMode]);
+
 
 	// Обработка перетаскивания
 	const handleMouseMove = useCallback(
@@ -63,13 +64,17 @@ export function useSwitchingTumbler(
 	const stopDragging = useCallback(() => {
 		isDragging.current = false;
 
-		if (isFaultActive && handleRef.current && handleRef.current.parentElement) {
+		if (
+			isFaultActive &&
+			handleRef.current &&
+			handleRef.current.parentElement
+		) {
 			const switchElement = handleRef.current.parentElement;
 			const maxY = switchElement.getBoundingClientRect().height;
 			handleRef.current.style.transform = `translateY(${maxY}px)`;
 			setCurrentMode('off');
 		}
-		
+
 		window.removeEventListener('mousemove', handleMouseMove);
 		window.removeEventListener('mouseup', stopDragging);
 		window.removeEventListener('mouseleave', stopDragging);
@@ -81,7 +86,9 @@ export function useSwitchingTumbler(
 			isDragging.current = true;
 
 			if (handleRef.current) {
-				const computedStyle = window.getComputedStyle(handleRef.current);
+				const computedStyle = window.getComputedStyle(
+					handleRef.current,
+				);
 				const transform = computedStyle.transform;
 
 				if (transform && transform !== 'none') {

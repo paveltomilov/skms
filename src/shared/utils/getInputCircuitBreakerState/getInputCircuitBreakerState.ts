@@ -12,14 +12,14 @@ export const getInputCircuitBreakerState = (): 'on' | 'off' => {
 			useAppSelector(state => state.circuit),
 		),
 	);
-	const [A, B, C] = inputCircuitBreakerElements
+	const [A, B, C] = inputCircuitBreakerElements;
 
 	// проверяем сопротивление контактов автомата
-	const isContactClose = 
-			A.resistance === BASE_RESISTANCE_CONSTANT.BREAKER && 
-			B.resistance === BASE_RESISTANCE_CONSTANT.BREAKER && 
-			C.resistance === BASE_RESISTANCE_CONSTANT.BREAKER 
+	const isContactOpen =
+		A.resistance === BASE_RESISTANCE_CONSTANT.highResistance &&
+		B.resistance === BASE_RESISTANCE_CONSTANT.highResistance &&
+		C.resistance === BASE_RESISTANCE_CONSTANT.highResistance;
 
 	// если все контакты разомкнут, то автомат выключен, иначе включен
-	return isContactClose ? 'on' : 'off';
+	return isContactOpen ? 'off' : 'on';
 };

@@ -15,10 +15,18 @@ import { setNewVoltagePoints } from '@/shared/utils/setPointsVoltage/setPointsVo
 import { updateStarterContacts } from '@/shared/utils/updateStarterContacts/updateStarterContacts';
 import { setResistance } from '@/store/circuitSlice';
 import store from '@/store/store';
-import { INPUT_CIRCUIT_BREAKER_ID } from '@/shared/configs/powerCircuit/constants';
+import {
+	INPUT_BREAKER_CONTACT_PHASE_A_ID,
+	INPUT_CIRCUIT_BREAKER_ID,
+} from '@/shared/configs/powerCircuit/constants';
+import { BASE_RESISTANCE_CONSTANT } from '@/shared/configs/elementKind';
+import { useGetMalfunctionsInputBreaker } from '@/shared/hooks/useGetMalfunctionInputBreaker';
+import { findElementByID } from '@/shared/utils/findElementByID/scheme';
+import { CONTROL_CIRCUIT_BREAKER_ID } from '@/shared/configs/controlCircuit/constants';
 
 const Scheme: FC = () => {
 	const dispatch = useAppDispatch();
+	const circuit = useAppSelector(state => state.circuit);
 
 	// для рендера щупов
 	const activeProbe = useAppSelector(
@@ -29,32 +37,58 @@ const Scheme: FC = () => {
 		state => state.multimeter.probeConnections,
 	);
 
-	const { hasMalfunctionNoSwitchingPhasesInputBreaker } = useGetMalfunctionsInputBreaker()
+	const { hasMalfunctionNoSwitchingPhasesInputBreaker } =
+		useGetMalfunctionsInputBreaker();
+
+	const resistancePhaseAInputBreaker = findElementByID(
+		INPUT_BREAKER_CONTACT_PHASE_A_ID,
+		circuit,
+	).resistance;
 
 	// Размыкаем контакты вводного автомат при наличии определенных неисправностей
 	useEffect(() => {
-		for (const id of INPUT_CIRCUIT_BREAKER_ID) {
-			const malfunctionNoSwitching: boolean = hasMalfunctionNoSwitchingPhasesInputBreaker[id] ?? false;
-			const resistance =
-				!malfunctionNoSwitching
-					? BASE_RESISTANCE[id]
-					: BASE_RESISTANCE_CONSTANT.highResistance;
-			dispatch(setResistance({ id, value: resistance }));
+		if (
+			!Object.values(hasMalfunctionNoSwitchingPhasesInputBreaker).some(
+				i => i,
+			)
+		) {
+			return;
 		}
-	}, [hasMalfunctionNoSwitchingPhasesInputBreaker])
+		INPUT_CIRCUIT_BREAKER_ID.forEach(id => {
+			const malfunctionNoSwitching: boolean =
+				hasMalfunctionNoSwitchingPhasesInputBreaker[id];
+			if (!malfunctionNoSwitching) {
+				return;
+			}
+			const resistance = BASE_RESISTANCE_CONSTANT.highResistance;
+			dispatch(setResistance({ id, value: resistance }));
+		});
+	}, [hasMalfunctionNoSwitchingPhasesInputBreaker]);
 
 	// устанавливает значенния неисправностей в тру в схеме задвижки
 	useGateMalfunctions();
 
 	// для состояния точек (вынести в отдельный хук)
-	//const points = useAppSelector(state => state.points);
+	const points = useAppSelector(state => state.points);
 	const scheme = useAppSelector(state => state.circuit);
 
 	// Комплексный пересчет схемы: точки и контакты пересчитываются одновременно до стабильного состояния
 	useEffect(() => {
-		const maxIterations = 10; // Защита от бесконечного цикла
+		const maxIterations = 15; // Защита от бесконечного цикла
 		let iteration = 0;
 		let hasChanges = true;
+		// Размыкаем автоматический выключатель цепи управления при отсутсвие питания фазы А
+		if (
+			resistancePhaseAInputBreaker ===
+			BASE_RESISTANCE_CONSTANT.highResistance
+		) {
+			dispatch(
+				setResistance({
+					id: CONTROL_CIRCUIT_BREAKER_ID,
+					value: BASE_RESISTANCE_CONSTANT.highResistance,
+				}),
+			);
+		}
 
 		// Цикл пересчета до стабильного состояния
 		while (hasChanges && iteration < maxIterations) {
@@ -112,11 +146,17 @@ const Scheme: FC = () => {
 
 		if (iteration >= maxIterations) {
 			console.warn(
-				'Достигнут лимит итераций пересчета схемы (10). Возможна рекурсия.',
+				'Достигнут лимит итераций пересчета схемы (15). Возможна рекурсия.',
 			);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [scheme, dispatch]);
+	}, [
+		scheme,
+		points,
+		hasMalfunctionNoSwitchingPhasesInputBreaker,
+		resistancePhaseAInputBreaker,
+		dispatch,
+	]);
 
 	return (
 		<div className={styles.scheme}>

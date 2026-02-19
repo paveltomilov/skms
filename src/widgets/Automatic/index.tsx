@@ -11,21 +11,29 @@ import { CONTROL_CIRCUIT_BREAKER_ID } from '@/shared/configs/controlCircuit/cons
 import { BASE_RESISTANCE_CONSTANT } from '@/shared/configs/elementKind';
 import { getInputCircuitBreakerState } from '@/shared/utils/getInputCircuitBreakerState/getInputCircuitBreakerState';
 import { useGateControlButtons } from '@/shared/hooks/useGateControlButtons';
+import { INPUT_BREAKER_CONTACT_PHASE_A_ID } from '@/shared/configs/powerCircuit/constants';
 
 export const Automatic: FC = () => {
 	const { handleButton, stopGateMovement, openOn, closeOn } =
 		useGateControlButtons();
+	const circuit = useAppSelector(state => state.circuit);
 
 	const controlCircuitBreaker = findElementByID(
 		CONTROL_CIRCUIT_BREAKER_ID,
-		useAppSelector(state => state.circuit),
+		circuit,
 	);
+	const resistancePhaseAInputBreaker = findElementByID(
+		INPUT_BREAKER_CONTACT_PHASE_A_ID,
+		circuit,
+	).resistance;
 
 	const switcherMode = getInputCircuitBreakerState();
 
 	const tumblerMode =
 		controlCircuitBreaker.resistance ===
-		BASE_RESISTANCE_CONSTANT.highResistance
+			BASE_RESISTANCE_CONSTANT.highResistance ||
+		resistancePhaseAInputBreaker ===
+			BASE_RESISTANCE_CONSTANT.highResistance
 			? 'off'
 			: 'on';
 

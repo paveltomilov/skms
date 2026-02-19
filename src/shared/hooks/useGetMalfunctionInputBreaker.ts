@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { MALF_TPL_BREAKER } from '../configs/malfunctionTemplates';
 import {
 	INPUT_BREAKER_CONTACT_PHASE_A_ID,
@@ -18,63 +18,87 @@ const [
 const [A, B, C] = INPUT_CIRCUIT_BREAKER_ID;
 
 interface MalfunctionContact {
-	[string]: boolean,
-	[string]: boolean,
-	[string]: boolean,
+	[key: string]: boolean;
 }
-
-
 interface MalfunctionContactsInputBreaker {
-	hasMalfunctionBadContactPhasesInputBreaker: MalfunctionContact,
-	hasMalfunctionFalseTriggersPhasesInputBreaker: MalfunctionContact,
-	hasMalfunctionNoSwitchingPhasesInputBreaker: MalfunctionContact,
+	hasMalfunctionBadContactPhasesInputBreaker: MalfunctionContact;
+	hasMalfunctionFalseTriggersPhasesInputBreaker: MalfunctionContact;
+	hasMalfunctionNoSwitchingPhasesInputBreaker: MalfunctionContact;
 }
 
-export const useGetMalfunctionsInputBreaker = (): MalfunctionContactsInputBreaker => {
-	const listActiveMalfunction = useGetMalfunctionCombinedElements(
-		INPUT_CIRCUIT_BREAKER_ID,
-	);
-
-	/**
-	 * Проверка наличия неисправности по шаблону
-	 * @param contactId ID контакта (например, "p.0.7")
-	 * @param template Шаблон неисправности с полями { name: string; suffix: string }
-	 * @returns true если найдена неисправность, соответствующая шаблону
-	 */
-	const checkMalfunction = (phaseId: string, template: MalfTpl) => {
-		return (
-			listActiveMalfunction[phaseId]?.some(
-				mal =>
-					mal.name === template.name ||
-					mal.id.slice(-2) === template.suffix,
-			) ?? false
-		);
-	};
-
-	// Оптимизированная генерация состояний по фазам
-	const useBuildPhaseStates = (template: MalfTpl) =>
-		useMemo(
-			() => ({
-				[A]: checkMalfunction(INPUT_BREAKER_CONTACT_PHASE_A_ID, template),
-				[B]: checkMalfunction(INPUT_BREAKER_CONTACT_PHASE_B_ID, template),
-				[C]: checkMalfunction(INPUT_BREAKER_CONTACT_PHASE_C_ID, template),
-			}),
-			[template],
-		);
-
-	const hasMalfunctionBadContactPhasesInputBreaker = useBuildPhaseStates(
-		malfunctionBadContact,
-	);
-	const hasMalfunctionFalseTriggersPhasesInputBreaker = useBuildPhaseStates(
-		malfunctionFalseTriggers,
-	);
-	const hasMalfunctionNoSwitchingPhasesInputBreaker = useBuildPhaseStates(
-		malfunctionNoSwitching,
-	);
-
-	return {
-		hasMalfunctionBadContactPhasesInputBreaker,
-		hasMalfunctionFalseTriggersPhasesInputBreaker,
-		hasMalfunctionNoSwitchingPhasesInputBreaker,
-	};
+const defaultObj: MalfunctionContactsInputBreaker = {
+	hasMalfunctionBadContactPhasesInputBreaker: {
+		A: false,
+		B: false,
+		C: false,
+	},
+	hasMalfunctionFalseTriggersPhasesInputBreaker: {
+		A: false,
+		B: false,
+		C: false,
+	},
+	hasMalfunctionNoSwitchingPhasesInputBreaker: {
+		A: false,
+		B: false,
+		C: false,
+	},
 };
+
+export const useGetMalfunctionsInputBreaker =
+	(): MalfunctionContactsInputBreaker => {
+		const [malfunctionsObj, setMalfunctionsObj] =
+			useState<MalfunctionContactsInputBreaker>(defaultObj);
+		const listActiveMalfunction = useGetMalfunctionCombinedElements(
+			INPUT_CIRCUIT_BREAKER_ID,
+		);
+
+		useEffect(() => {
+			/**
+			 * Проверка наличия неисправности по шаблону
+			 * @param contactId ID контакта (например, "p.0.7")
+			 * @param template Шаблон неисправности с полями { name: string; suffix: string }
+			 * @returns true если найдена неисправность, соответствующая шаблону
+			 */
+			const checkMalfunction = (phaseId: string, template: MalfTpl) => {
+				return (
+					listActiveMalfunction[phaseId]?.some(
+						mal =>
+							mal.name === template.name ||
+							mal.id.slice(-2) === template.suffix,
+					) ?? false
+				);
+			};
+
+			// Оптимизированная генерация состояний по фазам
+			const buildPhaseStates = (template: MalfTpl) => {
+				return {
+					[A]: checkMalfunction(
+						INPUT_BREAKER_CONTACT_PHASE_A_ID,
+						template,
+					),
+					[B]: checkMalfunction(
+						INPUT_BREAKER_CONTACT_PHASE_B_ID,
+						template,
+					),
+					[C]: checkMalfunction(
+						INPUT_BREAKER_CONTACT_PHASE_C_ID,
+						template,
+					),
+				};
+			};
+
+			setMalfunctionsObj({
+				hasMalfunctionBadContactPhasesInputBreaker: buildPhaseStates(
+					malfunctionBadContact,
+				),
+				hasMalfunctionFalseTriggersPhasesInputBreaker: buildPhaseStates(
+					malfunctionFalseTriggers,
+				),
+				hasMalfunctionNoSwitchingPhasesInputBreaker: buildPhaseStates(
+					malfunctionNoSwitching,
+				),
+			});
+		}, [listActiveMalfunction]);
+
+		return malfunctionsObj;
+	};
