@@ -18,7 +18,7 @@ interface ServerAnswer {
 }
 
 const SURVEY_ANSWERS_KEY = 'survey_answers';
-const SURVEY_SUBMIT_URL = process.env.NEXT_PUBLIC_SURVEY_SUBMIT_URL as string;
+const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL as string;
 
 function SurveyEnd({ onStart }: SurveyEndProps) {
 	const [email, setEmail] = useState('');
@@ -48,7 +48,7 @@ function SurveyEnd({ onStart }: SurveyEndProps) {
 				answers?: ServerAnswer[];
 			};
 
-			await axios.post(SURVEY_SUBMIT_URL, {
+			await axios.post(`${API_URL}/surveys/submit/`, {
 				lead_email: email.trim(),
 				answers,
 			});

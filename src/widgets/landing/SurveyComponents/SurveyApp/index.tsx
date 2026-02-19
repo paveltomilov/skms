@@ -13,7 +13,7 @@ import {
 } from '@/shared/types/question';
 
 const SURVEY_ANSWERS_KEY = 'survey_answers';
-const API_URL = process.env.NEXT_PUBLIC_API_SURVEYS_URL as string;
+const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL as string;
 
 const SurveyApp: React.FC = () => {
 	const [consent, setConsent] = useState(false);
@@ -39,11 +39,14 @@ const SurveyApp: React.FC = () => {
 	useEffect(() => {
 		const fetchQuestions = async () => {
 			try {
-				const response = await axios.get<ServerQuestion[]>(API_URL, {
-					params: {
-						question_group: 'lead',
+				const response = await axios.get<ServerQuestion[]>(
+					`${API_URL}/surveys/questions/`,
+					{
+						params: {
+							question_group: 'lead',
+						},
 					},
-				});
+				);
 
 				const typeMap: Record<string, 'radio' | 'checkbox'> = {
 					choice: 'radio',
