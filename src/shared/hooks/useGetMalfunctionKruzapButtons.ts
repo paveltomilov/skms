@@ -20,7 +20,7 @@ export const useGetMalfunctionKruzapButtons = () => {
 		[circuit],
 	);
 
-	const buttonKruzapСlose = useMemo(
+	const buttonKruzapClose = useMemo(
 		() =>
 			findElementByID(
 				BUTTON_KRUZA_P_CLOSE_ID,
@@ -36,7 +36,7 @@ export const useGetMalfunctionKruzapButtons = () => {
 		});
 
 	const listActiveMalfunctionKruzapButtonClose =
-		buttonKruzapСlose.malfunctions.filter(m => {
+		buttonKruzapClose.malfunctions.filter(m => {
 			return m.active;
 		});
 
@@ -66,7 +66,7 @@ export const useGetMalfunctionKruzapButtons = () => {
 
 	return {
 		buttonKruzapOpen,
-		buttonKruzapСlose,
+		buttonKruzapClose,
 		hasMalfunctionNoContactKruzapOpenButton,
 		hasMalfunctionNoContactKruzapCloseButton,
 		hasMalfunctionFalseTriggerKruzapOpenButton,
