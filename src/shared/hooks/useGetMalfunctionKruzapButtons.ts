@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import {
 	BUTTON_KRUZA_P_CLOSE_ID,
 	BUTTON_KRUZA_P_OPEN_ID,
@@ -5,16 +6,27 @@ import {
 import { findElementByID } from '../utils/findElementByID/scheme';
 import { useAppSelector } from './store';
 
+
 export const useGetMalfunctionKruzapButtons = () => {
+	const circuit = useAppSelector(state => state.circuit);
+
 	// Получаем элементы кнопки КРУЗА-П
-	const buttonKruzapOpen = findElementByID(
-		BUTTON_KRUZA_P_OPEN_ID,
-		useAppSelector(state => state.circuit),
+	const buttonKruzapOpen = useMemo(
+		() =>
+			findElementByID(
+				BUTTON_KRUZA_P_OPEN_ID,
+				circuit,
+			),
+		[circuit],
 	);
 
-	const buttonKruzapСlose = findElementByID(
-		BUTTON_KRUZA_P_CLOSE_ID,
-		useAppSelector(state => state.circuit),
+	const buttonKruzapClose = useMemo(
+		() =>
+			findElementByID(
+				BUTTON_KRUZA_P_CLOSE_ID,
+				circuit,
+			),
+		[circuit],
 	);
 
 	// Получаем массив с неисправностями
@@ -24,7 +36,7 @@ export const useGetMalfunctionKruzapButtons = () => {
 		});
 
 	const listActiveMalfunctionKruzapButtonClose =
-		buttonKruzapСlose.malfunctions.filter(m => {
+		buttonKruzapClose.malfunctions.filter(m => {
 			return m.active;
 		});
 
@@ -53,6 +65,8 @@ export const useGetMalfunctionKruzapButtons = () => {
 		);
 
 	return {
+		buttonKruzapOpen,
+		buttonKruzapClose,
 		hasMalfunctionNoContactKruzapOpenButton,
 		hasMalfunctionNoContactKruzapCloseButton,
 		hasMalfunctionFalseTriggerKruzapOpenButton,

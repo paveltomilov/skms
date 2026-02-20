@@ -174,7 +174,7 @@ export const kontsevojVyklyuchatelOtkryto: CircuitElement = {
 	id: LIMIT_SWITCH_OPEN_ID,
 	name: 'Концевой выключатель открыто',
 	kind: ELEMENT_KIND.LIMIT_SWITCH,
-	resistance: BASE_RESISTANCE_CONSTANT.highResistance,
+	resistance: getResistanceByKind(ELEMENT_KIND.HIGH_RESISTANCE),
 	startPoint: OPEN_LIMIT_SWITCH_INPUT_POINT_ID,
 	endPoint: OPEN_LIMIT_SWITCH_OUTPUT_POINT_ID,
 	malfunctions: buildMalfunctions(
