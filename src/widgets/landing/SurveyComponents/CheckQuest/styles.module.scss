@@ -1,0 +1,137 @@
+.header {
+	&__container {
+		display: flex;
+		align-items: center;
+		border-radius: 24px 24px 0 0;
+		padding: 32px 40px;
+		height: 140px;
+		width: 100%;
+		background: var(--lan-bright-cyan---lime-green);
+	}
+
+	&__title {
+		font-family: var(--second-family);
+		font-weight: 600;
+		font-size: 19px;
+		line-height: 140%;
+		text-transform: uppercase;
+		color: var(--lan-very-dark-mostly-black-blue-2);
+	}
+}
+
+.radio__group {
+	display: flex;
+	flex-direction: column;
+	padding: 40px 20px 10px 20px;
+	gap: 15px;
+	font-family: var(--second-family);
+	font-weight: 400;
+	font-size: 17px;
+	line-height: 128%;
+	color: var(--lan-light-grayish-blue);
+	margin-bottom: 14px;
+
+	@media (max-width: 576px) {
+		padding: 33px 30px 10px 0;
+		gap: 12px;
+	}
+}
+
+.svg__container {
+	margin-right: 23px;
+
+	@media (max-width: 576px) {
+		margin-right: 13px;
+	}
+}
+
+.custom__radio {
+	display: flex;
+	align-items: center;
+
+	@media (max-width: 576px) {
+		align-items: flex-start;
+	}
+
+	&_input {
+		opacity: 0;
+	}
+}
+
+.info__description {
+	font-family: var(--second-family);
+	font-style: italic;
+	font-weight: 400;
+	font-size: 15px;
+	line-height: 128%;
+	color: var(--lan-gray);
+	padding-left: 40px;
+
+	@media (max-width: 576px) {
+		padding-left: 17px;
+	}
+}
+
+.input__other {
+	all: unset;
+	background: inherit;
+	border: none;
+	color: var(--lan-light-grayish-blue);
+}
+
+.other {
+	&__option {
+		position: relative;
+		font-family: var(--second-family);
+		font-weight: 400;
+		font-size: 17px;
+		line-height: 128%;
+		color: var(--lan-gray);
+
+		&::after {
+			content: '';
+			position: absolute;
+			bottom: 2px;
+			left: 64px;
+			width: 728px;
+			height: 1px;
+			background: rgba(191, 191, 191, 0.52);
+
+			@media (max-width: 1200px) {
+				width: 565px;
+			}
+
+			@media (max-width: 767px) {
+				width: 88%;
+			}
+
+			@media (max-width: 576px) {
+				left: 58px;
+			}
+		}
+	}
+
+	&__selected::after {
+		background: var(--lan-light-grayish-blue);
+	}
+}
+
+.other__label {
+	font-family: var(--second-family);
+	font-weight: 400;
+	font-size: 17px;
+	line-height: 128%;
+	color: var(--lan-gray);
+}
+
+.limit__message {
+	border-radius: 100%;
+	stroke-width: 1px;
+	stroke: #979a9a;
+}
+
+.text__container {
+	white-space: pre-line;
+	display: inline-block;
+	cursor: pointer;
+}

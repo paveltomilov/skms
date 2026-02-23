@@ -1,0 +1,136 @@
+.questions__container {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	border: 1px solid rgba(66, 228, 101, 0.24);
+	border-radius: 24px;
+	width: 856px;
+	height: auto;
+	min-height: 672px;
+	background-size: cover;
+	box-sizing: border-box;
+
+	@media (max-width: 1200px) {
+		width: 696px;
+	}
+
+	@media (max-width: 576px) {
+		height: 100%;
+		padding-top: 58px;
+		border: none;
+		border-radius: 0;
+	}
+}
+
+.header {
+	&__container {
+		display: flex;
+		align-items: center;
+		border-radius: 24px 24px 0 0;
+		padding: 32px 40px;
+		width: 100%;
+		height: 140px;
+		background: var(--lan-bright-cyan---lime-green);
+
+		@media (max-width: 576px) {
+			padding: 17px;
+			border-radius: 10px 10px 0 0;
+		}
+	}
+
+	&__title {
+		font-family: var(--second-family);
+		font-weight: 600;
+		font-size: 19px;
+		line-height: 140%;
+		text-transform: uppercase;
+		color: var(--lan-very-dark-mostly-black-blue-2);
+
+		@media (max-width: 1200px) {
+			font-size: 18px;
+		}
+
+		@media (max-width: 576px) {
+			font-weight: 700;
+			font-size: 15px;
+		}
+	}
+}
+
+.footer {
+	display: flex;
+	margin-top: auto;
+	padding: 5px 40px 21px;
+	align-items: flex-end;
+
+	@media (max-width: 576px) {
+		padding: 8px 17px;
+	}
+
+	&__counter {
+		font-family: var(--second-family);
+		font-weight: 400;
+		font-size: 17px;
+		line-height: 128%;
+		color: var(--lan-gray);
+		margin-right: auto;
+	}
+
+	&__navigation {
+		max-width: 176px;
+
+		@media (max-width: 1200px) {
+			max-width: 160px;
+		}
+
+		@media (max-width: 576px) {
+			max-width: 172px;
+		}
+
+		&_explanation {
+			font-family: var(--second-family);
+			font-weight: 400;
+			font-size: 13px;
+			line-height: 120%;
+			color: var(--lan-gray);
+			margin-bottom: 20px;
+		}
+	}
+
+	&__button_back {
+		width: 48px;
+		height: 46px;
+		background-color: var(--lan-very-dark-mostly-black-blue);
+		border: 1px solid var(--lan-gray);
+		margin-right: 8px;
+
+		@media (max-width: 1200px) {
+			height: 42px;
+		}
+
+		@media (max-width: 576px) {
+			margin-right: 4px;
+		}
+
+		&:hover {
+			background-color: inherit;
+		}
+	}
+
+	&__button_next {
+		width: 118px;
+		height: 48px;
+
+		@media (max-width: 1200px) {
+			width: 102px;
+			height: 44px;
+		}
+
+		@media (max-width: 576px) {
+			width: 118px;
+		}
+		&:hover {
+			background-color: var(--lan-bright-cyan---lime-green);
+		}
+	}
+}

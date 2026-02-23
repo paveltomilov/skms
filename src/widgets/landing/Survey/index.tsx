@@ -1,9 +1,31 @@
-import React, { FC } from 'react';
-import styles from './styles.module.scss';
+'use client';
+import React, { FC, useState } from 'react';
 import Button from '../Button';
 import SectionTitle from '../SectionTitle';
+import styles from './styles.module.scss';
+import SurveyApp from '../SurveyComponents/SurveyApp';
+import ButtonClosed from '../IconSvg/closed';
+import ConfirmDialog from '../SurveyComponents/ConfirmDialog';
 
 const Survey: FC = () => {
+	const [isOpen, setIsOpen] = useState(false);
+	const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+
+	const openCloseConfirm = () => {
+		setShowConfirmDialog(true);
+	};
+
+	const openModal = () => setIsOpen(true);
+
+	const handleCancelClose = () => {
+		setShowConfirmDialog(false);
+	};
+
+	const handleConfirmClose = () => {
+		setIsOpen(false);
+		setShowConfirmDialog(false);
+	};
+
 	return (
 		<section className={styles.survey}>
 			<div className={`${styles.survey__container} container`}>
@@ -12,8 +34,7 @@ const Survey: FC = () => {
 					title="Ваше мнение помогает нам развиваться"
 				/>
 				<p className={styles.survey__description}>
-					z Ответьте на несколько вопросов — это займёт всего пару
-					минут
+					Ответьте на несколько вопросов — это займёт всего пару минут
 				</p>
 				<Button
 					className={styles.survey__button}
@@ -21,8 +42,33 @@ const Survey: FC = () => {
 					width={0}
 					height={40}
 					radius={4}
+					onClick={openModal}
 				/>
 			</div>
+			{isOpen && (
+				<>
+					<div
+						className={`${styles.modal__overlay} ${
+							showConfirmDialog
+								? styles.modal__overlay__darkened
+								: ''
+						}`}
+					>
+						<ButtonClosed
+							className={styles.button__closed}
+							onClick={openCloseConfirm}
+						/>
+
+						<SurveyApp />
+					</div>
+					<ConfirmDialog
+						className={styles.modal__closed}
+						isOpen={showConfirmDialog}
+						onConfirm={handleConfirmClose}
+						onCancel={handleCancelClose}
+					/>
+				</>
+			)}
 		</section>
 	);
 };

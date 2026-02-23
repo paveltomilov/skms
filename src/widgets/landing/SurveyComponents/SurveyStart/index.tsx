@@ -1,0 +1,58 @@
+'use client';
+
+import React from 'react';
+import Image from 'next/image';
+import TopCircle from '../../IconSvg/topCircle';
+import BottomCircle from '../../IconSvg/bottomCircle';
+import Button from '../../Button';
+import ConsentSurvey from '../ConsentSurvey';
+import styles from './styles.module.scss';
+
+type SurveyStartProps = {
+	onStart: () => void;
+	consent: boolean;
+	setConsent: (value: boolean) => void;
+};
+
+const SurveyStart: React.FC<SurveyStartProps> = ({
+	onStart,
+	consent,
+	setConsent,
+}) => {
+	return (
+		<div className={styles.survey__container}>
+			<TopCircle className={styles.survey__svg1} />
+			<Image
+				className={styles.survey__img}
+				src="/images/survey_img.png"
+				alt="Картинка"
+				width={512}
+				height={223}
+			/>
+			<h2 className={styles.survey__title}>
+				Помогите&nbsp;нам сделать&nbsp;обучение&nbsp;лучше
+			</h2>
+			<p className={styles.survey__description}>
+				Вместе создадим сильный и удобный симулятор
+			</p>
+			<Button
+				className={styles.survey__button}
+				radius={4}
+				width={515}
+				height={48}
+				text="Начать"
+				onClick={onStart}
+				type="button"
+			/>
+			<ConsentSurvey value={consent} onChange={setConsent} />
+			<p className={styles.survey__info}>
+				Ваши ответы будут использоваться&nbsp;исключительно
+				в&nbsp;исследовательских&nbsp;целях и не передаются третьим
+				лицам
+			</p>
+			<BottomCircle className={styles.survey__svg2} />
+		</div>
+	);
+};
+
+export default SurveyStart;
