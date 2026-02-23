@@ -7,8 +7,9 @@ import {
 } from '../types/gate';
 import { IconTransform } from '../types/icon';
 import { ICON_COLOR } from './icon';
-
+/** Положение задвижки 0 */
 export const PositionClose: number = 0;
+/** Положение задвижки 100 */
 export const PositionOpen: number = 100;
 
 export const GATES: Record<string, IGate> = {
@@ -309,3 +310,5 @@ export const GATE_POSITION: GatePosition = {
 		right: 'rotate180' as keyof Omit<IconTransform, 'mirror'>,
 	},
 };
+
+
