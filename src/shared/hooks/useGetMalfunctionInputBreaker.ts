@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { MALF_TPL_BREAKER } from '../configs/malfunctionTemplates';
 import {
 	INPUT_BREAKER_CONTACT_PHASE_A_ID,
@@ -6,8 +6,9 @@ import {
 	INPUT_BREAKER_CONTACT_PHASE_C_ID,
 	INPUT_CIRCUIT_BREAKER_ID,
 } from '../configs/powerCircuit/constants';
-import { useGetMalfunctionCombinedElements } from './useGetMalfunctionCombinedElements';
+import { getMalfunctionCombinedElements } from '../utils/getMalfunctionCombinedElements/getMalfunctionCombinedElements';
 import { MalfTpl } from '../types/scheme';
+import { useAppSelector } from './store';
 
 const [
 	malfunctionBadContact,
@@ -48,9 +49,15 @@ export const useGetMalfunctionsInputBreaker =
 	(): MalfunctionContactsInputBreaker => {
 		const [malfunctionsObj, setMalfunctionsObj] =
 			useState<MalfunctionContactsInputBreaker>(defaultObj);
-		const listActiveMalfunction = useGetMalfunctionCombinedElements(
-			INPUT_CIRCUIT_BREAKER_ID,
-		);
+
+		const circuit = useAppSelector(state => state.circuit);
+
+		const listActiveMalfunction = useMemo(() => {
+			return getMalfunctionCombinedElements(
+				INPUT_CIRCUIT_BREAKER_ID,
+				circuit,
+			);
+		}, [circuit]);
 
 		useEffect(() => {
 			/**

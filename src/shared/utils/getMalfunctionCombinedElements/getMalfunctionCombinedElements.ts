@@ -1,7 +1,9 @@
-import { useMemo } from 'react';
-import { findElementByID } from '../utils/findElementByID/scheme';
-import { useAppSelector } from './store';
-import type { CircuitElement, Malfunction } from '@/shared/types/scheme';
+import { findElementByID } from '../findElementByID/scheme';
+import type {
+	CircuitElement,
+	InitialStateScheme,
+	Malfunction,
+} from '@/shared/types/scheme';
 
 /**
  * Получаем объект с контактами элемента, где свойство объекта — это ID КОНТАКТА,
@@ -25,31 +27,22 @@ import type { CircuitElement, Malfunction } from '@/shared/types/scheme';
  * 	"p.2.7": []
  * }
  */
-export const useGetMalfunctionCombinedElements = (
+export const getMalfunctionCombinedElements = (
 	element: string[],
+	state: InitialStateScheme,
 ): Record<string, Malfunction[]> => {
-	const state = useAppSelector(state => state.circuit);
-
 	// получаем из стора ID контактов из которых состоит элемент пр.["p.0.7","p.1.7","p.2.7"]
-	const contactsElement = useMemo(
-		() =>
-			element
-				.map(id => findElementByID(id, state))
-				.filter((el): el is CircuitElement => el !== undefined),
-		[state, element],
-	);
+	const contactsElement = element
+		.map(id => findElementByID(id, state))
+		.filter((el): el is CircuitElement => el !== undefined);
 
 	// проверяем контакты элемента на активные неисправности
-	const contactsWithActiveMalfunctions = useMemo(() => {
-		return contactsElement.reduce<Record<string, Malfunction[]>>(
-			(acc, contact) => {
-				acc[contact.id] =
-					contact.malfunctions?.filter(mal => mal.active) ?? [];
-				return acc;
-			},
-			{},
-		);
-	}, [contactsElement]);
+	const contactsWithActiveMalfunctions = contactsElement.reduce<
+		Record<string, Malfunction[]>
+	>((acc, contact) => {
+		acc[contact.id] = contact.malfunctions?.filter(mal => mal.active) ?? [];
+		return acc;
+	}, {});
 
 	return contactsWithActiveMalfunctions;
 };
