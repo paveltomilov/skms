@@ -1,4 +1,8 @@
 import {
+	LIMIT_SWITCH_CLOSE_ID,
+	LIMIT_SWITCH_OPEN_ID,
+} from './controlCircuit/constants';
+import {
 	INPUT_BREAKER_CONTACT_PHASE_A_ID,
 	INPUT_BREAKER_CONTACT_PHASE_B_ID,
 	INPUT_BREAKER_CONTACT_PHASE_C_ID,
@@ -33,6 +37,20 @@ export const implementedMalfunctions: ImplementedMalfunctionsConfigItem[] = [
 	{
 		elementId: INPUT_BREAKER_CONTACT_PHASE_C_ID,
 		malfunctionIds: [`${INPUT_BREAKER_CONTACT_PHASE_C_ID}.3`],
+	},
+	{
+		elementId: LIMIT_SWITCH_OPEN_ID,
+		malfunctionIds: [
+			`${LIMIT_SWITCH_OPEN_ID}.1`,
+			`${LIMIT_SWITCH_OPEN_ID}.2`,
+		],
+	},
+	{
+		elementId: LIMIT_SWITCH_CLOSE_ID,
+		malfunctionIds: [
+			`${LIMIT_SWITCH_CLOSE_ID}.1`,
+			`${LIMIT_SWITCH_CLOSE_ID}.2`,
+		],
 	},
 ];
 
