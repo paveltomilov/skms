@@ -1,4 +1,4 @@
-import { AppDispatch } from '@/store/store';
+import { AppDispatch, RootState } from '@/store/store';
 import {
 	WebSocketIncomingMessage,
 	SimulationInitMessage,
@@ -24,7 +24,7 @@ import {
 	setCompletedSimulationId,
 	setSimulation,
 } from '@/store/simulationSlice';
-import { activateMalfunction } from '@/store/circuitSlice';
+import { activateMalfunction, deactivateMalfunction } from '@/store/circuitSlice';
 import { openModal } from '@/store/modalSlice';
 import { updateList } from '@/store/updateListSlice';
 
@@ -34,7 +34,10 @@ import { updateList } from '@/store/updateListSlice';
  * @param dispatch - функция для диспатча действий Redux
  * @param getState - функция для получения текущего состояния Redux (опционально)
  */
-export function createMessageHandler(dispatch: AppDispatch) {
+export function createMessageHandler(
+	dispatch: AppDispatch,
+	getState?: () => RootState,
+) {
 	return (message: WebSocketIncomingMessage): void => {
 		// Проверяем наличие поля type для определения типа сообщения
 		const messageAny = message as unknown as Record<string, unknown>;
@@ -161,6 +164,23 @@ export function createMessageHandler(dispatch: AppDispatch) {
 				const completedId = finishedMessage.simulation_id;
 
 				// Обрабатываем завершение симуляции
+				if (getState) {
+					const { simulation } = getState(); 
+
+					if (simulation.originalMalfunctions?.length > 0) {
+						simulation.originalMalfunctions.forEach(malfunction => {
+							dispatch(deactivateMalfunction(malfunction.id));
+						});
+					}
+
+					if (simulation.gate) {
+						dispatch(setGateMalfunctions({
+							id: simulation.gate,
+							malfunctions: [],
+						}));
+					}
+				}
+
 				// resetSimulation возвращает начальное состояние
 				dispatch(resetSimulation());
 				if (completedId) {
