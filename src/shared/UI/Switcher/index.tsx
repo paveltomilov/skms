@@ -13,17 +13,15 @@ import { useRotateKnob } from '@/shared/hooks/useRotateKnob';
 //import { getResistanceByKind } from '@/shared/utils/getResistanceByKind/getResistanceByKind';
 interface Props {
 	mode: SwitchMode;
-	isFaultActive?: boolean;
 }
 
-const Switcher: FC<Props> = ({ mode, isFaultActive }) => {
+const Switcher: FC<Props> = ({ mode }) => {
 	const handleRef = useRef<SVGSVGElement | null>(null);
 	const dispatch = useAppDispatch();
 	const { angle, onMouseDown, getSelectedMode } = useRotateKnob(
 		handleRef,
 		SWITCHER_ANGLES,
 		mode,
-		isFaultActive,
 	);
 
 	const handleMouseUp = useCallback(() => {
