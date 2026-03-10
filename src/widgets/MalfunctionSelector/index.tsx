@@ -65,19 +65,22 @@ const MalfunctionSelector: FC<Props> = ({
 
 	const handleChoice = useCallback(
 		(malfunction: Malfunction) => {
+			// Проверяем, что элемент схемы выбран
 			if (choiceElement) {
+				// Для студента — только сохраняем id неисправности для последующего определения
 				if (role === 'student') {
 					selectMalfun(malfunction.id);
 					setChoiceElement(null);
 					return;
 				}
+				// Для учителя — добавляем полный объект в список для назначения симуляции
 				setMalfun({
 					malfunction_id: malfunction.id,
 					malfunctions: malfunction.name,
 					element_id: choiceElement.id,
 					element: choiceElement.name,
 				});
-			setChoiceElement(null);
+				setChoiceElement(null);
 			}
 		},
 		[choiceElement, setMalfun],

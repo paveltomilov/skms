@@ -87,7 +87,7 @@ const circuitSlice = createSlice({
 						malfunctionName,
 						isMatch: isHighResistance,
 					},
-				); 
+				);
 
 				if (isHighResistance) {
 					const oldResistance = element.resistance;

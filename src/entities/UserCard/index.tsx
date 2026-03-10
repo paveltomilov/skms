@@ -8,22 +8,24 @@ import { useRouter } from 'next/navigation';
 import { setCurrentStudent } from '@/store/trainingSlice';
 import { useAppDispatch } from '@/shared/hooks/store';
 import { User } from '@/shared/types/users';
-import { useSimulationByIdStudent } from '@/shared/hooks/useSimulationByIdStudent';
 
 interface Props {
 	className?: string;
 	data: User;
+	hasActiveSimulation?: boolean;
+	onDeleteSimulation?: () => Promise<void>;
 }
 
-const UserCard: FC<Props> = ({ className, data }) => {
+const UserCard: FC<Props> = ({
+	className,
+	data,
+	hasActiveSimulation = false,
+	onDeleteSimulation,
+}) => {
 	const dispatch = useAppDispatch();
 	const router = useRouter();
 	const textDeleteBtn =
 		data.role === 'student' ? 'УДАЛИТЬ УЧЕНИКА' : 'УДАЛИТЬ ПРЕПОДАВАТЕЛЯ';
-
-	const { deleteSimulation, hasActiveSimulation } = useSimulationByIdStudent(
-		data.id,
-	);
 
 	return (
 		<div className={cn(styles.card, className)}>
@@ -48,7 +50,7 @@ const UserCard: FC<Props> = ({ className, data }) => {
 								height={27}
 								text="Удалить симуляцию"
 								className={styles.card__buttons__button}
-								onClick={deleteSimulation}
+								onClick={() => onDeleteSimulation?.()}
 							/>
 						) : (
 							<Button
