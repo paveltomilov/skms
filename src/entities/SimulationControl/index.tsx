@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import { stopSimulation } from '@/shared/api';
 import { resetSimulation, setCompletedSimulationId } from '@/store/simulationSlice';
 import { deactivateMalfunction } from '@/store/circuitSlice';
-import { setActiveGate } from '@/store/gateSlice';
+import { setActiveGate, setGateMalfunctions } from '@/store/gateSlice';
 
 const SimulationControl: FC<{ className?: string }> = ({ className }) => {
 	const dispatch = useAppDispatch();
@@ -36,6 +36,14 @@ const SimulationControl: FC<{ className?: string }> = ({ className }) => {
 				simulation.originalMalfunctions.forEach(malfunction => {
 					dispatch(deactivateMalfunction(malfunction.id));
 				});
+			}
+
+			if (simulation.gate) {
+				dispatch(setGateMalfunctions({
+					id: simulation.gate,
+					malfunctions: [],
+				}),
+				);
 			}
 
 			dispatch(setActiveGate(null));
