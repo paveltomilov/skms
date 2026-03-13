@@ -14,13 +14,14 @@ export function useRotateKnob<T extends string>(
 			const rect = knobRef.current?.getBoundingClientRect();
 			if (!rect) return null;
 
-			const centerX = rect.left + rect.width / 2;
-			const centerY = rect.top + rect.height / 2;
+			const centerX: number = rect.left + rect.width / 2;
+			const centerY: number = rect.top + rect.height / 2;
 
-			const deltaX = clientX - centerX;
-			const deltaY = clientY - centerY;
+			const deltaX: number = clientX - centerX;
+			const deltaY: number = clientY - centerY;
 
-			let newAngle = Math.atan2(deltaY, deltaX) * (180 / Math.PI) + 90;
+			let newAngle: number =
+				Math.atan2(deltaY, deltaX) * (180 / Math.PI) + 90;
 			newAngle = (newAngle + 360) % 360;
 
 			return newAngle;
@@ -32,13 +33,13 @@ export function useRotateKnob<T extends string>(
 	const getClosestModeWithinTolerance = useCallback(
 		(
 			currentAngle: number,
-			tolerance = 10,
+			tolerance: number = 10,
 		): { mode: T; angle: number } | null => {
 			const entries = Object.entries(modeAngles) as [T, number][];
 
 			for (const [mode, modeAngle] of entries) {
-				const diff = Math.abs(modeAngle - currentAngle);
-				const angleDiff = Math.min(diff, 360 - diff); // учёт перехода через 360°
+				const diff: number = Math.abs(modeAngle - currentAngle);
+				const angleDiff: number = Math.min(diff, 360 - diff); // учёт перехода через 360°
 
 				if (angleDiff <= tolerance) {
 					return { mode, angle: modeAngle };
@@ -55,7 +56,10 @@ export function useRotateKnob<T extends string>(
 		(e: MouseEvent) => {
 			if (!isDragging.current) return;
 
-			const rawAngle = calculateAngle(e.clientX, e.clientY);
+			const rawAngle: number | null = calculateAngle(
+				e.clientX,
+				e.clientY,
+			);
 			if (rawAngle === null) return;
 
 			const snapped = getClosestModeWithinTolerance(rawAngle);
@@ -70,6 +74,7 @@ export function useRotateKnob<T extends string>(
 
 		window.removeEventListener('mousemove', handleMouseMove);
 		window.removeEventListener('mouseup', stopDragging);
+		window.removeEventListener('mouseleave', stopDragging);
 	}, [handleMouseMove]);
 
 	const onMouseDown = useCallback(
@@ -79,6 +84,7 @@ export function useRotateKnob<T extends string>(
 
 			window.addEventListener('mousemove', handleMouseMove);
 			window.addEventListener('mouseup', stopDragging);
+			window.addEventListener('mouseleave', stopDragging);
 		},
 		[handleMouseMove, stopDragging],
 	);

@@ -27,13 +27,13 @@ const Switcher: FC<Props> = ({ mode }) => {
 	const handleMouseUp = useCallback(() => {
 		const selectedMode = getSelectedMode();
 		if (selectedMode) {
-			for (const id of INPUT_CIRCUIT_BREAKER_ID) {
+			INPUT_CIRCUIT_BREAKER_ID.forEach(id => {
 				const resistance =
 					selectedMode === 'on'
 						? BASE_RESISTANCE[id]
 						: BASE_RESISTANCE_CONSTANT.highResistance;
 				dispatch(setResistance({ id, value: resistance }));
-			}
+			});
 		}
 	}, [getSelectedMode, dispatch]);
 
