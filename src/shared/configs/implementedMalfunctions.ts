@@ -4,8 +4,6 @@ import {
 } from './controlCircuit/constants';
 import {
 	INPUT_BREAKER_CONTACT_PHASE_A_ID,
-	INPUT_BREAKER_CONTACT_PHASE_B_ID,
-	INPUT_BREAKER_CONTACT_PHASE_C_ID,
 } from './powerCircuit/constants';
 
 export interface ImplementedMalfunctionsConfigItem {
@@ -30,14 +28,15 @@ export const implementedMalfunctions: ImplementedMalfunctionsConfigItem[] = [
 		elementId: INPUT_BREAKER_CONTACT_PHASE_A_ID,
 		malfunctionIds: [`${INPUT_BREAKER_CONTACT_PHASE_A_ID}.3`],
 	},
-	{
-		elementId: INPUT_BREAKER_CONTACT_PHASE_B_ID,
-		malfunctionIds: [`${INPUT_BREAKER_CONTACT_PHASE_B_ID}.3`],
-	},
-	{
-		elementId: INPUT_BREAKER_CONTACT_PHASE_C_ID,
-		malfunctionIds: [`${INPUT_BREAKER_CONTACT_PHASE_C_ID}.3`],
-	},
+	// TODO Реализовать логигу работы средств защиты эл.двигателя при данных неисправностях
+	// {
+	// 	elementId: INPUT_BREAKER_CONTACT_PHASE_B_ID,
+	// 	malfunctionIds: [`${INPUT_BREAKER_CONTACT_PHASE_B_ID}.3`],
+	// },
+	// {
+	// 	elementId: INPUT_BREAKER_CONTACT_PHASE_C_ID,
+	// 	malfunctionIds: [`${INPUT_BREAKER_CONTACT_PHASE_C_ID}.3`],
+	// },
 	{
 		elementId: LIMIT_SWITCH_OPEN_ID,
 		malfunctionIds: [
