@@ -54,6 +54,10 @@ const setupResponseInterceptor = (urlBase: string) => {
         (response: AxiosResponse) => response,
         async (error: AxiosError) => {
             const originalRequest = error.config as ExtendedAxiosRequestConfig;
+
+            if (originalRequest.url?.includes('/auth/') && !originalRequest.url?.includes('/refresh')) {
+                return Promise.reject(error);
+            }
             if (originalRequest.url?.includes('/auth/refresh')) {
                 clearAuthData();
                 return Promise.reject(error);
