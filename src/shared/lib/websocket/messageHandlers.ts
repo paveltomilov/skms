@@ -24,7 +24,10 @@ import {
 	setCompletedSimulationId,
 	setSimulation,
 } from '@/store/simulationSlice';
-import { activateMalfunction, deactivateMalfunction } from '@/store/circuitSlice';
+import {
+	activateMalfunction,
+	deactivateMalfunction,
+} from '@/store/circuitSlice';
 import { openModal } from '@/store/modalSlice';
 import { updateList } from '@/store/updateListSlice';
 
@@ -165,7 +168,7 @@ export function createMessageHandler(
 
 				// Обрабатываем завершение симуляции
 				if (getState) {
-					const { simulation } = getState(); 
+					const { simulation } = getState();
 
 					if (simulation.originalMalfunctions?.length > 0) {
 						simulation.originalMalfunctions.forEach(malfunction => {
@@ -174,10 +177,12 @@ export function createMessageHandler(
 					}
 
 					if (simulation.gate) {
-						dispatch(setGateMalfunctions({
-							id: simulation.gate,
-							malfunctions: [],
-						}));
+						dispatch(
+							setGateMalfunctions({
+								id: simulation.gate,
+								malfunctions: [],
+							}),
+						);
 					}
 				}
 
@@ -189,7 +194,7 @@ export function createMessageHandler(
 
 				// Открываем модалку о завершении симуляции в учетной завписи студента
 				if (!('student_name' in finishedMessage)) {
-					dispatch(openModal('simulationComplete'));
+					dispatch(openModal('simulationInterrupted'));
 				}
 
 				console.info(

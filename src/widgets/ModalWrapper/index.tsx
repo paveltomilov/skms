@@ -27,6 +27,7 @@ import { useUserCookies } from '@/shared/hooks/useUserCookies';
 import { PopupInfo } from '../PopupInfo';
 import { PopupSimulationComplete } from '../PopupSimulationComplete';
 import { PopupDetectInfo } from '../PopupDetectInfo';
+import { PopupSimulationInterrupted } from '../PopupSimulationInterrupted';
 
 interface IModals {
 	condition: boolean;
@@ -57,6 +58,7 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		infoStartSimulation,
 		infoUnfinished,
 		simulationComplete,
+		simulationInterrupted,
 		detectInfo,
 		detectInfoError,
 	} = useAppSelector((state): ModalState => state.modal);
@@ -65,7 +67,6 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 
 	const isAdmin = role === 'admin';
 	const isStudent = role === 'student';
-
 
 	const isOne =
 		automatic ||
@@ -87,9 +88,9 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		infoStartSimulation ||
 		infoUnfinished ||
 		simulationComplete ||
+		simulationInterrupted ||
 		detectInfo ||
 		detectInfoError;
-
 
 	const gateId = useAppSelector(state => state.gate.activeGateId as string);
 	const student = useAppSelector(state => state.training.currentStudent);
@@ -238,12 +239,20 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			component: <PopupSimulationComplete />,
 		},
 		{
+			condition: simulationInterrupted,
+			id: 'simulationInterrupted',
+			headerTitle: 'Симуляция прервана',
+			gateId: undefined,
+			component: <PopupSimulationInterrupted />,
+		},
+		{
 			condition: detectInfo,
 			id: 'detectInfo',
 			headerTitle: 'Определение неисправности',
 			gateId: undefined,
 			component: <PopupDetectInfo />,
-		}, {
+		},
+		{
 			condition: detectInfoError,
 			id: 'detectInfoError',
 			headerTitle: 'Определение неисправности',

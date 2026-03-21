@@ -1,0 +1,44 @@
+@use '@/shared/scss/mixins.module';
+@use '@/shared/scss/variables.module';
+
+.popup {
+	height: 540px;
+	padding: 6px 18px;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background: variables.$primary-color;
+	font-size: 18px;
+
+	&__content {
+		position: relative;
+		width: 100%;
+		height: 398px;
+		margin-top: 70px;
+		@include mixins.flex-space-between;
+		flex-direction: column;
+	}
+
+	&__text {
+		width: 475px;
+		margin-bottom: 20px;
+		@include mixins.flex-center;
+		flex: 1;
+		@include mixins.text(38px, 500);
+		line-height: 100%;
+		letter-spacing: -0.01em;
+		text-align: center;
+	}
+
+	&__button {
+		span {
+			@include mixins.text(32px, 400);
+			line-height: 1;
+		}
+	}
+
+	button {
+		background-color: #b0b0b0;
+	}
+}
