@@ -1,4 +1,4 @@
-import { FC, RefObject, useEffect } from 'react';
+import { FC, RefObject } from 'react';
 import styles from './styles.module.scss';
 import { Malfunction } from '@/shared/types/scheme';
 import { useArrowNavigation } from '@/shared/hooks/useArrowNavigation';
@@ -14,15 +14,6 @@ const DropListMalfunction: FC<Props> = ({
 	handleChoice,
 	forwardRef,
 }) => {
-	useEffect(() => {
-		if (malfunctions && forwardRef.current) {
-			const firstItem =
-				forwardRef.current.querySelector<HTMLElement>('[role="option"]');
-			if (firstItem) {
-				firstItem.focus();
-			}
-		}
-	}, [malfunctions, forwardRef]);
 
 	useArrowNavigation(forwardRef);
 
