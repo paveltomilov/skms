@@ -90,6 +90,9 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		detectInfo ||
 		detectInfoError;
 
+	const isMeasurementOverlayMode =
+		lamps || motor || block_switches || starter;
+
 
 	const gateId = useAppSelector(state => state.gate.activeGateId as string);
 	const student = useAppSelector(state => state.training.currentStudent);
@@ -307,7 +310,8 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		<div
 			className={cn(className, styles.modal__displayNone, {
 				[styles.modal]: isOne,
-				[styles.modal_isBlur]: automatic,
+				[styles.modal_isBlur]: isOne,
+				[styles.modal_allowBackgroundInteraction]: isMeasurementOverlayMode,
 			})}
 			onClick={handleOverlayClick}
 		>
