@@ -241,7 +241,7 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		{
 			condition: simulationInterrupted,
 			id: 'simulationInterrupted',
-			headerTitle: 'Симуляция прервана',
+			headerTitle: 'Симуляция завершена',
 			gateId: undefined,
 			component: <PopupSimulationInterrupted />,
 		},

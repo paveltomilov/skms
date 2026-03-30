@@ -28,11 +28,11 @@ export const PopupSimulationInterrupted: FC = () => {
 					alt="информация"
 				/>
 				<p className={styles.popup__text}>
-					Симуляция прервана преподавателем.
+					Симуляция завершена учителем.
 				</p>
 				<Button
 					className={styles.popup__button}
-					width={200}
+					width={210}
 					height={55}
 					text="Закрыть"
 					onClick={handleClose}
