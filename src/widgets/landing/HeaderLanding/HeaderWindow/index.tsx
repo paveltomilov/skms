@@ -4,23 +4,19 @@ import styles from './styles.module.scss';
 import Link from 'next/link';
 
 import TelegramIcon from '../../IconSvg/telegram';
-import YoutubeIcon from '../../IconSvg/youtube';
+import PlayIcon from '../../IconSvg/play';
 import DzenIcon from '../../IconSvg/dzen';
 import VkIcon from '../../IconSvg/vk';
-import WhatsappIcon from '../../IconSvg/whatsapp';
+import { LANDING_CONTACTS } from '@/shared/configs/landingContacts';
 
 const socialLinks = [
     {
-        href: 'https://www.whatsapp.com/',
-        icon: <WhatsappIcon size={16} className={styles.social__link__icon} />,
-    },
-    {
-        href: 'https://web.telegram.org/',
+        href: LANDING_CONTACTS.telegramUrl,
         icon: <TelegramIcon size={16} className={styles.social__link__icon} />,
     },
     {
-        href: 'https://www.youtube.com/',
-        icon: <YoutubeIcon size={16} className={styles.social__link__icon} />,
+        href: 'https://rutube.ru/',
+        icon: <PlayIcon size={16} className={styles.social__link__icon} />,
     },
     {
         href: 'https://dzen.ru/',
@@ -39,9 +35,9 @@ const HeaderWindow: FC = () => (
                 <span className={styles.mail__span}>Почта</span>
                 <Link
                     className={styles.mail__link}
-                    href="mailto:Skillmanagment@mail.ru"
+                    href={`mailto:${LANDING_CONTACTS.email}`}
                 >
-                    Skillmanagment@mail.ru
+                    {LANDING_CONTACTS.email}
                 </Link>
             </div>
             <div className={styles.social}>

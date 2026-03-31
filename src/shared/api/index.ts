@@ -24,3 +24,10 @@ export * from './malfunctions/postMalfunctions';
 
 // UserLog
 export * from './userlog/postUserLog';
+
+// Surveys
+export * from './surveys/getSurveyQuestions';
+export * from './surveys/postSurveySubmission';
+
+// Leads (лендинг)
+export * from './leads/postLead';

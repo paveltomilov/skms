@@ -205,7 +205,7 @@
 	}
 
 	@media (max-width: 767px) {
-		grid-template-columns: repeat(3, 106px);
+		grid-template-columns: repeat(3, 126px);
 	}
 }
 
@@ -275,11 +275,12 @@
 
 		@media (max-width: 768px) {
 			padding-right: 68px;
+			font-size: 13px;
 		}
 
 		@media (max-width: 576px) {
 			padding-right: 10px;
-			font-size: 13px;
+			font-size: 12px;
 		}
 	}
 }

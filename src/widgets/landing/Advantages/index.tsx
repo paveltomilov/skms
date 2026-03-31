@@ -4,8 +4,6 @@ import React, { FC } from 'react';
 import SectionTitle from '../SectionTitle';
 import Card from './CardAdvantages';
 import { useMediaQuery } from 'react-responsive';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
 import styles from './styles.module.scss';
 
 const advantagesData = [
@@ -60,40 +58,17 @@ const Advantages: FC = () => {
 					/>
 				)}
 
-				{isMobile ? (
-					<Swiper
-						slidesPerView={1.08}
-						spaceBetween={16}
-						breakpoints={{
-							768: { slidesPerView: 2 },
-							1024: { slidesPerView: 3 },
-						}}
-					>
-						{advantagesData.map((item, index) => (
-							<SwiperSlide key={index}>
-								<li className={styles.advantages__list}>
-									<Card
-										title={item.title}
-										description={item.description}
-										gap="24"
-									/>
-								</li>
-							</SwiperSlide>
-						))}
-					</Swiper>
-				) : (
-					<ul className={styles.advantages__list}>
-						{advantagesData.map((item, index) => (
-							<li key={index}>
-								<Card
-									title={item.title}
-									description={item.description}
-									gap="24"
-								/>
-							</li>
-						))}
-					</ul>
-				)}
+				<ul className={styles.advantages__list}>
+					{advantagesData.map((item, index) => (
+						<li key={index}>
+							<Card
+								title={item.title}
+								description={item.description}
+								gap="24"
+							/>
+						</li>
+					))}
+				</ul>
 			</div>
 		</section>
 	);

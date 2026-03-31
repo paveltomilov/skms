@@ -12,7 +12,6 @@ const Navigation: FC<Props> = ({ className }) => {
 		{ href: '#about', label: 'Мы' },
 		{ href: '#product', label: 'Продукт' },
 		{ href: '#advantages', label: 'Преимущества' },
-		{ href: '#reviews', label: 'Отзывы' },
 	];
 
 	return (

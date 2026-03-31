@@ -1,0 +1,18 @@
+.state {
+	text-align: center;
+	padding: 2rem 1rem;
+	max-width: 32rem;
+	margin: 0 auto;
+	font-size: 1rem;
+	line-height: 1.5;
+}
+
+.retry {
+	margin-top: 1rem;
+	padding: 0.5rem 1rem;
+	cursor: pointer;
+	border-radius: 4px;
+	border: 1px solid currentColor;
+	background: transparent;
+	font: inherit;
+}

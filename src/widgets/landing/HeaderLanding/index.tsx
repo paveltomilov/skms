@@ -12,6 +12,7 @@ import Link from 'next/link';
 import Burger from '../Burger';
 import styles from './styles.module.scss';
 import MobileMenu from './BurgerMenu';
+import { LANDING_CONTACTS } from '@/shared/configs/landingContacts';
 
 const Header: FC = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -69,8 +70,8 @@ const Header: FC = () => {
 
 				{isOpen && <HeaderWindow />}
 
-				<Link className={styles.header__link} href="tel:+78452398636">
-					+7 (8452) 39-86-36
+				<Link className={styles.header__link} href={LANDING_CONTACTS.phoneHref}>
+					{LANDING_CONTACTS.phoneText}
 				</Link>
 
 				{isOpen ? (

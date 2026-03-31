@@ -148,6 +148,32 @@
 	}
 
 	&__pointpulse {
-		margin-bottom: 8px;
+		display: block;
+	}
+
+	&__pointpulseBlock {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		gap: 6px;
+
+		@media (max-width: 768px) {
+			align-items: center;
+		}
+	}
+
+	&__pointpulseCaption {
+		margin: 0;
+		font-family: var(--second-family);
+		font-weight: 400;
+		font-size: 12px;
+		line-height: 128%;
+		color: var(--lan-gray);
+		text-align: right;
+		white-space: nowrap;
+
+		@media (max-width: 768px) {
+			text-align: center;
+		}
 	}
 }

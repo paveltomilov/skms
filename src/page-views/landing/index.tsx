@@ -5,7 +5,6 @@ import ForWhom from '@/widgets/landing/ForWhom';
 import Header from '@/widgets/landing/HeaderLanding';
 import HeroLanding from '@/widgets/landing/HearoLanding';
 import Product from '@/widgets/landing/Product';
-import Reviews from '@/widgets/landing/Reviews';
 import Survey from '@/widgets/landing/Survey';
 import './styles/globals-landing.scss';
 import { FC } from 'react';
@@ -22,7 +21,6 @@ const LandingPage: FC = () => {
 			<Product />
 			<Advantages />
 			<ForWhom />
-			<Reviews />
 			<Survey />
 			<FormSection />
 			<Footer />

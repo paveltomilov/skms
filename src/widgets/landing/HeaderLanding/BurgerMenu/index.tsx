@@ -4,9 +4,10 @@ import React from 'react';
 import Link from 'next/link';
 import styles from './styles.module.scss';
 import TelegramIcon from '@/widgets/landing/IconSvg/telegram';
-import YoutubeIcon from '@/widgets/landing/IconSvg/youtube';
+import PlayIcon from '@/widgets/landing/IconSvg/play';
 import DzenIcon from '@/widgets/landing/IconSvg/dzen';
 import VkIcon from '@/widgets/landing/IconSvg/vk';
+import { LANDING_CONTACTS } from '@/shared/configs/landingContacts';
 
 interface MobileMenuProps {
 	isOpen: boolean;
@@ -17,7 +18,6 @@ const items = [
 	{ href: '#about', label: 'О нас' },
 	{ href: '#product', label: 'Продукт' },
 	{ href: '#advantages', label: 'Преимущества' },
-	{ href: '#reviews', label: 'Отзывы' },
 ];
 
 const socialLinks = [
@@ -28,7 +28,7 @@ const socialLinks = [
 		),
 	},
 	{
-		href: 'https://web.telegram.org/',
+		href: LANDING_CONTACTS.telegramUrl,
 		icon: (
 			<TelegramIcon
 				size={24}
@@ -37,9 +37,9 @@ const socialLinks = [
 		),
 	},
 	{
-		href: 'https://www.youtube.com/',
+		href: 'https://rutube.ru/',
 		icon: (
-			<YoutubeIcon
+			<PlayIcon
 				size={24}
 				className={styles.mobile__social__link__icon}
 			/>
@@ -68,9 +68,9 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen }) => (
 			<span className={styles.mobile__mail__span}>Почта</span>
 			<Link
 				className={styles.mobile__mail__link}
-				href="mailto:Skillmanagment@mail.ru"
+				href={`mailto:${LANDING_CONTACTS.email}`}
 			>
-				Skillmanagment@mail.ru
+				{LANDING_CONTACTS.email}
 			</Link>
 		</div>
 		<div className={styles.mobile__social}>
