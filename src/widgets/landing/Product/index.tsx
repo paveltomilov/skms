@@ -3,10 +3,10 @@
 import React, { FC } from 'react';
 import styles from './styles.module.scss';
 import SectionTitle from '../SectionTitle';
+import { LANDING_EXTERNAL_URLS } from '@/shared/configs/landingExternalUrls';
 
 const Product: FC = () => {
-	const embedUrl =
-		'https://rutube.ru/play/embed/8b8728155adfc2bc77dfcc6392fbd19f';
+	const embedUrl = LANDING_EXTERNAL_URLS.rutubeProductVideoEmbed;
 
 	return (
 		<section id="product" className={styles.product}>

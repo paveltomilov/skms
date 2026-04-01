@@ -8,6 +8,7 @@ import PlayIcon from '../../IconSvg/play';
 import DzenIcon from '../../IconSvg/dzen';
 import VkIcon from '../../IconSvg/vk';
 import { LANDING_CONTACTS } from '@/shared/configs/landingContacts';
+import { LANDING_EXTERNAL_URLS } from '@/shared/configs/landingExternalUrls';
 
 const socialLinks = [
     {
@@ -15,15 +16,15 @@ const socialLinks = [
         icon: <TelegramIcon size={16} className={styles.social__link__icon} />,
     },
     {
-        href: 'https://rutube.ru/',
+        href: LANDING_EXTERNAL_URLS.rutubeChannel,
         icon: <PlayIcon size={16} className={styles.social__link__icon} />,
     },
     {
-        href: 'https://dzen.ru/',
+        href: LANDING_EXTERNAL_URLS.dzen,
         icon: <DzenIcon size={16} className={styles.social__link__icon} />,
     },
     {
-        href: 'https://vk.com',
+        href: LANDING_EXTERNAL_URLS.vk,
         icon: <VkIcon size={16} className={styles.social__link__icon} />,
     },
 ];

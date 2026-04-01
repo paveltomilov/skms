@@ -8,6 +8,7 @@ import PlayIcon from '@/widgets/landing/IconSvg/play';
 import DzenIcon from '@/widgets/landing/IconSvg/dzen';
 import VkIcon from '@/widgets/landing/IconSvg/vk';
 import { LANDING_CONTACTS } from '@/shared/configs/landingContacts';
+import { LANDING_EXTERNAL_URLS } from '@/shared/configs/landingExternalUrls';
 
 interface MobileMenuProps {
 	isOpen: boolean;
@@ -22,7 +23,7 @@ const items = [
 
 const socialLinks = [
 	{
-		href: 'https://vk.com',
+		href: LANDING_EXTERNAL_URLS.vk,
 		icon: (
 			<VkIcon size={24} className={styles.mobile__social__link__icon} />
 		),
@@ -37,7 +38,7 @@ const socialLinks = [
 		),
 	},
 	{
-		href: 'https://rutube.ru/',
+		href: LANDING_EXTERNAL_URLS.rutubeChannel,
 		icon: (
 			<PlayIcon
 				size={24}
@@ -46,7 +47,7 @@ const socialLinks = [
 		),
 	},
 	{
-		href: 'https://dzen.ru/',
+		href: LANDING_EXTERNAL_URLS.dzen,
 		icon: (
 			<DzenIcon size={24} className={styles.mobile__social__link__icon} />
 		),

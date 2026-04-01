@@ -6,6 +6,7 @@ import VkIcon from '../IconSvg/vk';
 import PlayIcon from '../IconSvg/play';
 import DzenIcon from '../IconSvg/dzen';
 import { LANDING_CONTACTS } from '@/shared/configs/landingContacts';
+import { LANDING_EXTERNAL_URLS } from '@/shared/configs/landingExternalUrls';
 
 const socialLinks = [
 	{
@@ -15,19 +16,19 @@ const socialLinks = [
 		iconClass: styles.link__icon,
 	},
 	{
-		href: 'https://vk.com',
+		href: LANDING_EXTERNAL_URLS.vk,
 		icon: VkIcon,
 		text: 'Вконтакте',
 		iconClass: styles.link__icon,
 	},
 	{
-		href: 'https://rutube.ru/',
+		href: LANDING_EXTERNAL_URLS.rutubeChannel,
 		icon: PlayIcon,
 		text: 'RuTube',
 		iconClass: styles.link__icon,
 	},
 	{
-		href: 'https://dzen.ru/',
+		href: LANDING_EXTERNAL_URLS.dzen,
 		icon: DzenIcon,
 		text: 'Дзен',
 		iconClass: styles.link__icon__dzen,
