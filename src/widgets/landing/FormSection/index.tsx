@@ -3,30 +3,32 @@ import FormLanding from '../FormLanding';
 import Link from 'next/link';
 import TelegramIcon from '../IconSvg/telegram';
 import VkIcon from '../IconSvg/vk';
-import YoutubeIcon from '../IconSvg/youtube';
+import PlayIcon from '../IconSvg/play';
 import DzenIcon from '../IconSvg/dzen';
+import { LANDING_CONTACTS } from '@/shared/configs/landingContacts';
+import { LANDING_EXTERNAL_URLS } from '@/shared/configs/landingExternalUrls';
 
 const socialLinks = [
 	{
-		href: 'https://web.telegram.org/k/',
+		href: LANDING_CONTACTS.telegramUrl,
 		icon: TelegramIcon,
 		text: 'Telegram',
 		iconClass: styles.link__icon,
 	},
 	{
-		href: 'https://vk.com',
+		href: LANDING_EXTERNAL_URLS.vk,
 		icon: VkIcon,
 		text: 'Вконтакте',
 		iconClass: styles.link__icon,
 	},
 	{
-		href: 'https://www.youtube.com/',
-		icon: YoutubeIcon,
-		text: 'Youtube',
+		href: LANDING_EXTERNAL_URLS.rutubeChannel,
+		icon: PlayIcon,
+		text: 'RuTube',
 		iconClass: styles.link__icon,
 	},
 	{
-		href: 'https://dzen.ru/',
+		href: LANDING_EXTERNAL_URLS.dzen,
 		icon: DzenIcon,
 		text: 'Дзен',
 		iconClass: styles.link__icon__dzen,

@@ -59,7 +59,12 @@ const Survey: FC = () => {
 							onClick={openCloseConfirm}
 						/>
 
-						<SurveyApp />
+						<SurveyApp
+							onSurveySubmitted={() => {
+								setIsOpen(false);
+								setShowConfirmDialog(false);
+							}}
+						/>
 					</div>
 					<ConfirmDialog
 						className={styles.modal__closed}

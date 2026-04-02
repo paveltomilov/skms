@@ -5,8 +5,9 @@
 		position: absolute;
 		top: 28px;
 		left: -9px;
-		width: 199px;
-		height: 142px;
+		width: max-content;
+		height: auto;
+		box-sizing: border-box;
 		padding: 16px 12px;
 		border: 1px solid var(--lan-light-grayish-blue);
 		border-radius: 0 0 12px 12px;

@@ -4,6 +4,7 @@ import styles from './styles.module.scss';
 import Navigation from '../Nav';
 import Image from 'next/image';
 import Link from 'next/link';
+import { LANDING_CONTACTS } from '@/shared/configs/landingContacts';
 
 const Footer: FC = () => {
 	return (
@@ -23,16 +24,16 @@ const Footer: FC = () => {
 						</div>
 						<div className={styles.footer__top__right}>
 							<Link
-								href="mailto:Skillmanagment@mail.ru"
+								href={`mailto:${LANDING_CONTACTS.email}`}
 								className={styles.footer__mail}
 							>
-								Skillmanagment@mail.ru
+								{LANDING_CONTACTS.email}
 							</Link>
 							<Link
-								href="tel:+78452398636"
+								href={LANDING_CONTACTS.phoneHref}
 								className={styles.footer__telephone}
 							>
-								+7 (8452) 39-86-36
+								{LANDING_CONTACTS.phoneText}
 							</Link>
 						</div>
 					</div>
@@ -54,15 +55,20 @@ const Footer: FC = () => {
 								Политики конфиденциальности
 							</Link>
 						</div>
-						<Link href="/">
-							<Image
-								className={styles.footer__pointpulse}
-								src="/svg/pointpulse.svg"
-								alt="Логотип"
-								width={120}
-								height={18}
-							/>
-						</Link>
+						<div className={styles.footer__pointpulseBlock}>
+							<Link href="/">
+								<Image
+									className={styles.footer__pointpulse}
+									src="/svg/pointpulse.svg"
+									alt="PointPulse"
+									width={120}
+									height={18}
+								/>
+							</Link>
+							<p className={styles.footer__pointpulseCaption}>
+								Под тренажёр
+							</p>
+						</div>
 					</div>
 				</div>
 			</div>
