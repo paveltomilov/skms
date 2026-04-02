@@ -2,88 +2,92 @@
 @use '@/shared/scss/mixins.module';
 
 .form {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 30px;
-  width: 100%;
-  max-width: 522px;
-  gap: 30px;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 30px;
+	width: 100%;
+	max-width: 522px;
+	gap: 30px;
 
-  &_inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+	&_inner {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 
-    &_label {
-      display: flex;
-      align-items: center;
-      @include mixins.text(20px, 400);
-      cursor: pointer;
+		&_label {
+			display: flex;
+			align-items: center;
+			@include mixins.text(20px, 400);
+			cursor: pointer;
 
-      &__checkbox {
-        position: relative;
-        margin-right: 15px;
-        width: 24px;
-        height: 24px;
-        border-top: 1px solid variables.$black-color;
-        border-left: 1px solid variables.$black-color;
-        border-right: 1px solid variables.$white-color;
-        border-bottom: 1px solid variables.$white-color;
-        background: variables.$secondary-color;
-        box-shadow: variables.$checkbox-before-box-shadow2;
-        transition: variables.$transition;
-        cursor: pointer;
-        appearance: none;
-        -webkit-appearance: none;
+			&__checkbox {
+				position: relative;
+				margin-right: 15px;
+				width: 24px;
+				height: 24px;
+				border-top: 1px solid variables.$black-color;
+				border-left: 1px solid variables.$black-color;
+				border-right: 1px solid variables.$white-color;
+				border-bottom: 1px solid variables.$white-color;
+				background: variables.$secondary-color;
+				box-shadow: variables.$checkbox-before-box-shadow2;
+				transition: variables.$transition;
+				cursor: pointer;
+				appearance: none;
+				-webkit-appearance: none;
 
-        &::before {
-          content: '';
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          width: 16px;
-          height: 16px;
-          background-image: url('/svg/black_done.svg');
-          background-repeat: no-repeat;
-          background-position: center;
-          background-size: contain;
-          transition: variables.$transition;
-          transform: translate(-50%, -50%);
-          opacity: 0;
-        }
+				&::before {
+					content: '';
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					width: 16px;
+					height: 16px;
+					background-image: url('/svg/black_done.svg');
+					background-repeat: no-repeat;
+					background-position: center;
+					background-size: contain;
+					transition: variables.$transition;
+					transform: translate(-50%, -50%);
+					opacity: 0;
+				}
 
-        &:checked {
-          background-color: variables.$white-color;
+				&:checked {
+					background-color: variables.$white-color;
 
-          &::before {
-            opacity: 1;
-          }
-        }
-      }
-    }
+					&::before {
+						opacity: 1;
+					}
+				}
+			}
+		}
 
-    &__forget {
-      @include mixins.text(20px, 400);
-      color: variables.$blue-color;
-      text-decoration: none;
-    }
-  }
+		&__forget {
+			@include mixins.text(20px, 400);
+			color: variables.$blue-color;
+			text-decoration: none;
+			transition: variables.$transition;
 
-  &__button {
-    background-color: variables.$secondary-color;
+			&:hover {
+				opacity: 0.8;
+			}
+		}
+	}
 
-    span {
-      @include mixins.text(32px, 400);
-      line-height: 1;
-    }
-  }
+	&__button {
+		background-color: variables.$secondary-color;
+
+		span {
+			@include mixins.text(32px, 400);
+			line-height: 1;
+		}
+	}
 }
 
 .policy {
-  justify-content: unset;
+	justify-content: unset;
 
-  .form_inner_label {
-    margin-right: 7px;
-  }
+	.form_inner_label {
+		margin-right: 7px;
+	}
 }
-
