@@ -1,11 +1,18 @@
 import { useCallback, useRef, useState } from 'react';
+import type { MouseEvent as ReactMouseEvent, RefObject } from 'react';
+
+interface UseRotateKnobResult<T extends string> {
+	angle: number;
+	onMouseDown: (e: ReactMouseEvent) => void;
+	getSelectedMode: () => T | null;
+}
 
 //Управляет вращением стрелки
 export function useRotateKnob<T extends string>(
-	knobRef: React.RefObject<SVGSVGElement | null>,
+	knobRef: RefObject<SVGSVGElement | null>,
 	modeAngles: Record<T, number>,
 	initialMode: T,
-) {
+): UseRotateKnobResult<T> {
 	const [angle, setAngle] = useState<number>(modeAngles[initialMode]);
 	const isDragging = useRef(false);
 
@@ -64,7 +71,9 @@ export function useRotateKnob<T extends string>(
 
 			const snapped = getClosestModeWithinTolerance(rawAngle);
 
-			setAngle(snapped ? snapped.angle : rawAngle);
+			// Разрешаем только фиксированные положения режимов:
+			// если не попали в допустимую зону, оставляем предыдущий валидный угол.
+			setAngle(prevAngle => (snapped ? snapped.angle : prevAngle));
 		},
 		[calculateAngle, getClosestModeWithinTolerance],
 	);
@@ -78,7 +87,7 @@ export function useRotateKnob<T extends string>(
 	}, [handleMouseMove]);
 
 	const onMouseDown = useCallback(
-		(e: React.MouseEvent) => {
+		(e: ReactMouseEvent) => {
 			e.preventDefault();
 			isDragging.current = true;
 

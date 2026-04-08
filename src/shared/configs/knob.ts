@@ -1,25 +1,16 @@
-export const MULTIMETER_ANGLES = {
-	OFF: 0,
-	ACV_750: 18,
-	ACV_200: 36,
-	DCA_200u: 54,
-	DCA_2000u: 72,
-	DCA_20m: 90,
-	DCA_200m: 108,
-	DCA_10A: 126,
-	HFE: 144,
-	DIODE: 162,
-	OHM_200: 180,
-	OHM_2000: 198,
-	OHM_20k: 216,
-	OHM_200k: 234,
-	OHM_2000k: 252,
-	DCV_200m: 270,
-	DCV_2000m: 288,
-	DCV_20: 306,
-	DCV_200: 324,
-	DCV_1000: 342,
-};
+import {
+	MULTIMETER_MODES,
+	type MultimeterMode,
+} from '@/shared/configs/multimeterModes';
+
+export const MULTIMETER_ANGLES: Record<MultimeterMode, number> =
+	MULTIMETER_MODES.reduce(
+		(acc, mode) => {
+			acc[mode.id] = mode.angle;
+			return acc;
+		},
+		{} as Record<MultimeterMode, number>,
+	);
 
 export const SWITCHER_ANGLES = {
 	on: 0,

@@ -1,26 +1,7 @@
 import { UniqueIdentifier } from '@dnd-kit/core';
+import type { MultimeterMode as ConfigMultimeterMode } from '@/shared/configs/multimeterModes';
 
-export type MultimeterMode =
-	| 'OFF'
-	| 'ACV_750'
-	| 'ACV_200'
-	| 'DCA_200u'
-	| 'DCA_2000u'
-	| 'DCA_20m'
-	| 'DCA_200m'
-	| 'DCA_10A'
-	| 'HFE'
-	| 'DIODE'
-	| 'OHM_2000k'
-	| 'OHM_200k'
-	| 'OHM_20k'
-	| 'OHM_2000'
-	| 'OHM_200'
-	| 'DCV_1000'
-	| 'DCV_200'
-	| 'DCV_20'
-	| 'DCV_2000m'
-	| 'DCV_200m';
+export type MultimeterMode = ConfigMultimeterMode;
 
 export interface ProbeConnItem {
 	pointId: UniqueIdentifier | null;

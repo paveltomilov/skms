@@ -14,6 +14,7 @@ import {
 } from '@/store/multimeterSlice';
 import { CONTROL_CIRCUIT_NEUTRAL_ID } from '@/shared/configs/controlCircuit/constants';
 import { POWER_CIRCUIT_NEUTRAL_ID } from '@/shared/configs/powerCircuit/constants';
+import { getMultimeterModeConfig } from '@/shared/configs/multimeterModes';
 
 const Multimeter: React.FC = () => {
 	const dispatch = useAppDispatch();
@@ -37,8 +38,8 @@ const Multimeter: React.FC = () => {
 		state => state.points[blackProbe as string],
 	);
 
-	const isVoltageMode =
-		currentMode.startsWith('ACV') || currentMode.startsWith('DCV');
+	const currentModeConfig = getMultimeterModeConfig(currentMode);
+	const isVoltageMode = currentModeConfig.autoAttachNeutralBlack;
 
 	const probeState: MultimeterModePropPayload = {
 		red: {

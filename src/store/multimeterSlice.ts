@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type {
-	MultimeterMode,
 	MultimeterState,
 	ProbeColor,
 	ProbStateProps,
 } from '@/shared/types/multimeter';
+import type { MultimeterMode } from '@/shared/configs/multimeterModes';
 import { UniqueIdentifier } from '@dnd-kit/core';
 import { setACV750Action } from '@/store/actions/multimiter/setACV750Action';
 
@@ -32,6 +32,9 @@ export const multimeterSlice = createSlice({
 	reducers: {
 		setCurrentMode: (state, action: PayloadAction<MultimeterMode>) => {
 			state.currentMode = action.payload;
+		},
+		toggleAllowedMode: state => {
+			state.currentMode = state.currentMode === 'OFF' ? 'ACV_750' : 'OFF';
 		},
 
 		attachProbe: (state, action: PayloadAction<AttachProbePayload>) => {
@@ -76,6 +79,7 @@ export const multimeterSlice = createSlice({
 
 export const {
 	setCurrentMode,
+	toggleAllowedMode,
 	attachProbe,
 	detachProbe,
 	setActiveProb,
