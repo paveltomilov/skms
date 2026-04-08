@@ -87,7 +87,7 @@ const Form: FC<FormProps> = ({ toggleRegisterMode, activateModalSuccess }) => {
 			label: 'Email',
 			type: 'email',
 			placeholder: 'Email',
-			maxLength: EMAIL_MAX_LENGTH + 1,
+			maxLength: EMAIL_MAX_LENGTH,
 		},
 		{
 			name: 'password',
