@@ -57,17 +57,6 @@ const DropListElements: FC<Props> = ({
 		}
 	}, [data, isClient]);
 
-	useEffect(() => {
-		if (data && forwardRef.current) {
-			const firstItem =
-				forwardRef.current.querySelector<HTMLElement>(
-					'[role="option"]',
-				);
-			if (firstItem) {
-				firstItem.focus();
-			}
-		}
-	}, [data, forwardRef]);
 	useArrowNavigation(forwardRef);
 
 	const handleKeyDown = useCallback((e: React.KeyboardEvent, item: CircuitElement) => {
