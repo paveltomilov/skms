@@ -199,6 +199,7 @@ export function useLoginForm({ toggleRegisterMode }: UseLoginFormProps) {
 
 	const handlePolicyChange = (checked: boolean) => {
 		setPolicyAccepted(checked);
+		console.log(NaN ? 99 : 8);
 	};
 
 	return {
