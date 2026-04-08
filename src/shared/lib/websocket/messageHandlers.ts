@@ -22,6 +22,7 @@ import { GATE_STATE_TYPE } from '@/shared/types/gate';
 import {
 	resetSimulation,
 	setCompletedSimulationId,
+	setManualAbort,
 	setSimulation,
 } from '@/store/simulationSlice';
 import {
@@ -53,6 +54,7 @@ export function createMessageHandler(
 				Array.isArray(messageAny.malfunctions)
 			) {
 				const initMessage = message as SimulationInitMessage;
+				dispatch(setManualAbort(false));
 
 				// Извлекаем ID неисправностей
 				// Поддерживаем два формата:
@@ -165,6 +167,7 @@ export function createMessageHandler(
 					| SimulationFinishedStudentMessage
 					| SimulationFinishedTeacherMessage;
 				const completedId = finishedMessage.simulation_id;
+				const isManualAbort = getState?.().simulation.isManualAbort;
 
 				// Обрабатываем завершение симуляции
 				if (getState) {
@@ -193,7 +196,7 @@ export function createMessageHandler(
 				}
 
 				// Открываем модалку о завершении симуляции в учетной завписи студента
-				if (!('student_name' in finishedMessage)) {
+				if (!('student_name' in finishedMessage) && !isManualAbort) {
 					dispatch(openModal('simulationInterrupted'));
 				}
 

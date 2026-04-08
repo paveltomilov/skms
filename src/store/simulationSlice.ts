@@ -7,6 +7,7 @@ export interface SimulationState {
 	gate: string | null;
 	originalMalfunctions: Malfunction[];
 	foundMalfunctionIds: string[];
+	isManualAbort: boolean;
 }
 
 const initialState: SimulationState = {
@@ -15,6 +16,7 @@ const initialState: SimulationState = {
 	gate: null,
 	originalMalfunctions: [],
 	foundMalfunctionIds: [],
+	isManualAbort: false,
 };
 
 interface StartSimulationPayload {
@@ -76,6 +78,9 @@ const simulationSlice = createSlice({
 		clearCompletedSimulationId: state => {
 			state.completedSimulationId = null;
 		},
+		setManualAbort(state, action: PayloadAction<boolean>) {
+			state.isManualAbort = action.payload;
+		},
 		resetSimulation: () => {
 			// Сброс/завершение симуляции - возвращаем начальное состояние
 			return initialState;
@@ -89,6 +94,7 @@ export const {
 	markMalfunctionAsFound,
 	setCompletedSimulationId,
 	clearCompletedSimulationId,
+	setManualAbort,
 	resetSimulation,
 } = simulationSlice.actions;
 
