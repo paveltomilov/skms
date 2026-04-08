@@ -4,7 +4,8 @@ import {
 	config,
 	CONTAINS_DIGITS_REGEX,
 	CYRILLIC_REGEX,
-	DOUBLE_DASHES_REGEX, DOUBLE_SPACES_REGEX,
+	DOUBLE_DASHES_REGEX,
+	DOUBLE_SPACES_REGEX,
 	initialState,
 	NAME_SURNAME_MAX_LENGTH,
 	PASSWORD_LOWERCASE_REGEX,
@@ -22,8 +23,11 @@ export interface UseLoginFormProps {
 	toggleRegisterMode: 'register' | 'login' | 'createUser';
 }
 
-const getValidationMessage = (fieldName: keyof LoginFormData, value: string): string => {
-	const triggedValue:string = value.trim();
+const getValidationMessage = (
+	fieldName: keyof LoginFormData,
+	value: string,
+): string => {
+	const triggedValue: string = value.trim();
 
 	switch (fieldName) {
 		case 'email':
@@ -199,7 +203,6 @@ export function useLoginForm({ toggleRegisterMode }: UseLoginFormProps) {
 
 	const handlePolicyChange = (checked: boolean) => {
 		setPolicyAccepted(checked);
-		console.log(NaN ? 99 : 8);
 	};
 
 	return {
