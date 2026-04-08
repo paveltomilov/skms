@@ -13,6 +13,7 @@ describe('simulationSlice', () => {
 		gate: null,
 		originalMalfunctions: [],
 		foundMalfunctionIds: [],
+		isManualAbort: false,
 	};
 
 	const mockMalfunctions: Malfunction[] = [
