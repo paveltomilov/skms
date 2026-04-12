@@ -1,34 +1,33 @@
 @use '@/shared/scss/variables.module';
 @use '@/shared/scss/mixins.module';
 
-
 .popup {
-    width: 592px;
-    background: variables.$primary-color;
+	width: 592px;
+	background: variables.$primary-color;
 }
 
 .form {
-    margin: 13px 19px 16px 26px;
-    display: flex;
-    gap: 17px;
-    flex-direction: column;
-    justify-content: space-between;
+	margin: 13px 19px 16px 26px;
+	display: flex;
+	gap: 17px;
+	flex-direction: column;
+	justify-content: space-between;
 
-    & label {
-        margin: 0 0 17px;
-    }
+	& label {
+		margin: 5px 0 12px;
+	}
 }
 
 .button {
-    background-color: variables.$secondary-color;
-    margin: 10px 0 0;
+	background-color: variables.$secondary-color;
+	margin: 10px 0 0;
 
-    span {
-        @include mixins.text(32px, 400);
-        line-height: 1;
-    }
+	span {
+		@include mixins.text(32px, 400);
+		line-height: 1;
+	}
 
-    &:disabled {
-        background-color: variables.$secondary-color;
-    }
+	&:disabled {
+		background-color: variables.$secondary-color;
+	}
 }
