@@ -2,6 +2,7 @@ import { FC } from 'react';
 import styles from './styles.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
+import { LANDING_CONTACTS } from '@/shared/configs/landingContacts';
 
 const ErrorForm: FC = () => {
 	return (
@@ -20,9 +21,9 @@ const ErrorForm: FC = () => {
 				</p>
 				<Link
 					className={styles.error__mail}
-					href="mailto:Skillmanagment@mail.ru"
+					href={`mailto:${LANDING_CONTACTS.email}`}
 				>
-					Skillmanagment@mail.ru
+					{LANDING_CONTACTS.email}
 				</Link>
 			</div>
 			<div className={styles.error__img}>

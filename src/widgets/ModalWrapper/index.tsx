@@ -254,18 +254,6 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			component: <PopupDetectInfo error />,
 		},
 	];
-	// отключаем скролл страницы
-	useEffect(() => {
-		if (isOne) {
-			document.body.style.overflow = 'hidden';
-		} else {
-			document.body.style.overflow = '';
-		}
-
-		return () => {
-			document.body.style.overflow = '';
-		};
-	}, [isOne]);
 
 	// Обработка закрытия модальных окон через Esc
 	useEffect(() => {

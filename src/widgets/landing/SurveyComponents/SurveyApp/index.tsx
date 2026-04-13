@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import axios from 'axios';
 import SurveyStart from '../SurveyStart';
 import QuestionsList from '../QuestionsList';
 import SurveyEnd from '../SurveyEnd';
@@ -11,17 +10,29 @@ import {
 	AnswerStorage,
 	QuestionAnswer,
 } from '@/shared/types/question';
+import {
+	getSurveyQuestions,
+	LANDING_SURVEY_QUESTION_GROUP,
+} from '@/shared/api/surveys/getSurveyQuestions';
+import { SURVEY_ANSWERS_STORAGE_KEY } from '@/shared/configs/surveyStorageKey';
+import styles from './SurveyApp.module.scss';
 
-const SURVEY_ANSWERS_KEY = 'survey_answers';
-const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL as string;
+type QuestionsLoadState = 'loading' | 'success' | 'error';
 
-const SurveyApp: React.FC = () => {
+type SurveyAppProps = {
+	/** После успешной отправки ответов на сервер (экран «Спасибо» + email). */
+	onSurveySubmitted?: () => void;
+};
+
+const SurveyApp: React.FC<SurveyAppProps> = ({ onSurveySubmitted }) => {
 	const [consent, setConsent] = useState(false);
 	const [showQuestions, setShowQuestions] = useState(false);
 	const [currentQuestion, setCurrentQuestion] = useState<number>(0);
 	const [showEnd, setShowEnd] = useState(false);
 	const [answers, setAnswers] = useState<Record<number, QuestionAnswer>>({});
 	const [rawQuestions, setRawQuestions] = useState<ServerQuestion[]>([]);
+	const [questionsLoadState, setQuestionsLoadState] =
+		useState<QuestionsLoadState>('loading');
 
 	const questions = useMemo((): Question[] => {
 		const typeMap: Record<string, 'radio' | 'checkbox'> = {
@@ -59,32 +70,23 @@ const SurveyApp: React.FC = () => {
 		return otherTexts;
 	}, [answers]);
 
-	useEffect(() => {
-		const fetchQuestions = async () => {
-			try {
-				const response = await axios.get<ServerQuestion[]>(
-					`${API_URL}/surveys/questions/`,
-					{
-						params: {
-							question_group: 'lead',
-						},
-					},
-				);
-				setRawQuestions(response.data);
-			} catch (err) {
-				console.error('Ошибка при загрузке вопросов:', err);
-				setRawQuestions([]);
-			}
-		};
-
-		fetchQuestions();
+	const loadQuestionsFromApi = useCallback(async () => {
+		setQuestionsLoadState('loading');
+		try {
+			const data = await getSurveyQuestions(LANDING_SURVEY_QUESTION_GROUP);
+			setRawQuestions(data);
+			setQuestionsLoadState('success');
+		} catch {
+			setQuestionsLoadState('error');
+		}
 	}, []);
 
 	useEffect(() => {
-		const loadSavedAnswers = () => {
+		const init = async () => {
 			try {
-				const savedAnswers = localStorage.getItem(SURVEY_ANSWERS_KEY);
-
+				const savedAnswers = localStorage.getItem(
+					SURVEY_ANSWERS_STORAGE_KEY,
+				);
 				if (savedAnswers) {
 					setShowEnd(true);
 					setShowQuestions(false);
@@ -95,13 +97,29 @@ const SurveyApp: React.FC = () => {
 					error,
 				);
 			}
+			// Всегда запрашиваем вопросы (актуальные id для submit и видимость в Network).
+			await loadQuestionsFromApi();
 		};
 
-		loadSavedAnswers();
-	}, []);
+		void init();
+	}, [loadQuestionsFromApi]);
+
+	const handleRestartSurvey = useCallback(() => {
+		try {
+			localStorage.removeItem(SURVEY_ANSWERS_STORAGE_KEY);
+		} catch {
+			// ignore
+		}
+		setShowEnd(false);
+		setShowQuestions(false);
+		setCurrentQuestion(0);
+		setAnswers({});
+		setConsent(false);
+		void loadQuestionsFromApi();
+	}, [loadQuestionsFromApi]);
 
 	const handleStart = () => {
-		if (consent) {
+		if (consent && totalQuestions > 0) {
 			setShowQuestions(true);
 		}
 	};
@@ -152,7 +170,7 @@ const SurveyApp: React.FC = () => {
 			};
 
 			localStorage.setItem(
-				SURVEY_ANSWERS_KEY,
+				SURVEY_ANSWERS_STORAGE_KEY,
 				JSON.stringify(surveyData),
 			);
 		} catch (error) {
@@ -225,10 +243,51 @@ const SurveyApp: React.FC = () => {
 		[questions],
 	);
 
+	if (!showEnd && questionsLoadState === 'loading') {
+		return (
+			<p className={styles.state} role="status">
+				Загрузка вопросов…
+			</p>
+		);
+	}
+
+	if (!showEnd && questionsLoadState === 'error') {
+		return (
+			<div className={styles.state}>
+				<p>Не удалось загрузить вопросы опроса. Проверьте соединение.</p>
+				<button
+					type="button"
+					className={styles.retry}
+					onClick={() => {
+						void loadQuestionsFromApi();
+					}}
+				>
+					Повторить
+				</button>
+			</div>
+		);
+	}
+
+	if (
+		!showEnd &&
+		questionsLoadState === 'success' &&
+		totalQuestions === 0
+	) {
+		return (
+			<p className={styles.state} role="status">
+				Сейчас нет активных вопросов для этого опроса.
+			</p>
+		);
+	}
+
 	return (
 		<>
 			{showEnd ? (
-				<SurveyEnd onStart={handleStart} />
+				<SurveyEnd
+					onStart={handleStart}
+					onRestartSurvey={handleRestartSurvey}
+					onSurveyAccepted={onSurveySubmitted}
+				/>
 			) : showQuestions ? (
 				<QuestionsList
 					questions={questions}

@@ -23,7 +23,8 @@ const eslintConfig = [
 				jsx: true,
 			},
 		},
-		plugins: ['@next/next'],
+		// Не добавляйте `*.mjs`: иначе игнорируется `eslint.config.mjs`, и `next lint`
+		// не находит `@next/next` (calculateConfigForFile возвращает undefined).
 		ignorePatterns: [
 			'storybook-static/',
 			'/.bundle$/',
@@ -34,7 +35,6 @@ const eslintConfig = [
 			'node_modules/',
 			'dist/',
 			'*.login.ts',
-			'*.mjs',
 			'*.d.ts',
 			'**/__tests__/**',
 			'**/*.test.tsx',

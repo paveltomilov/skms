@@ -2,13 +2,12 @@
 
 import React, { FC } from 'react';
 import styles from './styles.module.scss';
-import Button from '../Button';
 import SectionTitle from '../SectionTitle';
-import PlayIcon from '../IconSvg/play';
-import { useMediaQuery } from 'react-responsive';
+import { LANDING_EXTERNAL_URLS } from '@/shared/configs/landingExternalUrls';
 
 const Product: FC = () => {
-	const isMobile = useMediaQuery({ maxWidth: 576 });
+	const embedUrl = LANDING_EXTERNAL_URLS.rutubeProductVideoEmbed;
+
 	return (
 		<section id="product" className={styles.product}>
 			<div className={`${styles.product__container} container`}>
@@ -23,23 +22,16 @@ const Product: FC = () => {
 					</p>
 				</div>
 				<div className={styles.product__media}>
-					{isMobile ? (
-						<Button
-							className={styles.product__button}
-							text={''}
-							width={44}
-							height={44}
-							icon={<PlayIcon className={styles.icon__play} />}
+					<div className={styles.product__videoFrame}>
+						<iframe
+							className={styles.product__video}
+							src={embedUrl}
+							title="Видео о тренажере"
+							allow="autoplay; fullscreen; picture-in-picture"
+							allowFullScreen
+							loading="lazy"
 						/>
-					) : (
-						<Button
-							className={styles.product__button}
-							text={''}
-							width={72}
-							height={72}
-							icon={<PlayIcon className={styles.icon__play} />}
-						/>
-					)}
+					</div>
 				</div>
 			</div>
 		</section>

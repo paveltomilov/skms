@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, ChangeEvent, useCallback } from 'react';
-import axios from 'axios';
 import { FormValues, SubmitStatus } from '@/shared/types/form';
+import { postLead } from '@/shared/api/leads/postLead';
 import { isValidEmailDomain } from '@/shared/utils/emailUtils/emailUtils';
 import Button from '../Button';
 import ConsentCheckbox from '../ConsentCheckbox';
@@ -39,7 +39,6 @@ interface FormFieldProps {
 	type?: string;
 	placeholder?: string;
 	error?: string | null;
-	leadsEndpoint?: string;
 }
 
 const FormField: React.FC<FormFieldProps> = ({
@@ -128,10 +127,7 @@ function FormLanding() {
 		};
 
 		try {
-			const leadsEndpoint = process.env
-				.NEXT_PUBLIC_LANDING_LEADS as string;
-
-			await axios.post(leadsEndpoint, payload);
+			await postLead(payload);
 			setStatus('success');
 
 			setConsent(false);
