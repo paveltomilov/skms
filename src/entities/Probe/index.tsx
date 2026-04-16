@@ -11,6 +11,7 @@ import { SCHEME_POINTS } from '@/shared/configs/points';
 
 interface ProbeProps {
 	color: ProbeColor;
+	isDisabled?: boolean;
 }
 
 // Смещение кончика щупа относительно SVG-бокса
@@ -18,10 +19,14 @@ const PROBE_TIP_OFFSET_X = 9;
 const PROBE_TIP_OFFSET_Y = 1;
 const SCHEME_POINT_SIZE = 24;
 
-export const Probe: React.FC<ProbeProps> = ({ color }) => {
+export const Probe: React.FC<ProbeProps> = ({ color, isDisabled = false }) => {
 	const connection = useAppSelector(
 		state => state.multimeter.probeConnections[color],
 	);
+	const isMeasurementOverlayMode = useAppSelector(state => {
+		const { lamps, motor, block_switches, starter } = state.modal;
+		return lamps || motor || block_switches || starter;
+	});
 	const pointId = connection?.pointId ?? null;
 	const dropId = connection?.dropId ?? null;
 
@@ -42,6 +47,7 @@ export const Probe: React.FC<ProbeProps> = ({ color }) => {
 			color,
 			type: 'probe',
 		},
+		disabled: isDisabled,
 	});
 
 	// Держим кончик щупа по центру активной точки
@@ -78,7 +84,9 @@ export const Probe: React.FC<ProbeProps> = ({ color }) => {
 					left: `${centerX - PROBE_TIP_OFFSET_X}px`,
 					top: `${centerY - PROBE_TIP_OFFSET_Y}px`,
 					position: 'fixed',
-					zIndex: '20',
+					// В measurement-попапах держим щуп под окном попапа, чтобы
+					// не блокировать клики по болтикам внутри попапа.
+					zIndex: isMeasurementOverlayMode ? '109' : '20',
 				} as const;
 
 				setPosStyle(prev =>
@@ -131,7 +139,7 @@ export const Probe: React.FC<ProbeProps> = ({ color }) => {
 			window.removeEventListener('resize', updatePosition);
 			document.removeEventListener('scroll', updatePosition, true);
 		};
-	}, [dropId, droppableContainers, pointId]);
+	}, [dropId, droppableContainers, isMeasurementOverlayMode, pointId]);
 
 	const style = posStyle
 		? posStyle
@@ -148,6 +156,8 @@ export const Probe: React.FC<ProbeProps> = ({ color }) => {
 			}}
 			style={style}
 			className={`${styles.probe} ${styles[color]} ${
+				isDisabled && styles.probe_disabled
+			} ${
 				isDragging && styles.dragging
 			}`}
 			{...listeners}

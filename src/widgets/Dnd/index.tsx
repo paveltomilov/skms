@@ -23,13 +23,20 @@ interface Props {
 
 export const Dnd: React.FC<Props> = ({ children }) => {
 	const dispatch = useAppDispatch();
-
 	const probeConnections = useAppSelector(
 		state => state.multimeter.probeConnections,
 	);
-	const isAnyModalOpen = useAppSelector(state =>
-		Object.values(state.modal).some(Boolean),
-	);
+	const isModalBlockingMultimeter = useAppSelector(state => {
+		return Object.entries(state.modal)
+			.filter(
+				([key]) =>
+					key !== 'lamps' &&
+					key !== 'motor' &&
+					key !== 'block_switches' &&
+					key !== 'starter',
+			)
+			.some(([, value]) => Boolean(value));
+	});
 
 	const handleDragStart = useCallback(
 		({ active }: DragStartEvent) => {
@@ -51,7 +58,13 @@ export const Dnd: React.FC<Props> = ({ children }) => {
 					(dropData as { pointId?: UniqueIdentifier })?.pointId ??
 					over.id;
 				const isPointOccupied = Object.values(probeConnections).some(
-					conn => conn && conn.pointId === pointId,
+					conn =>
+						Boolean(conn) &&
+						(
+							conn as {
+								pointId?: UniqueIdentifier | null;
+							}
+						).pointId === pointId,
 				);
 
 				if (!isPointOccupied) {
@@ -78,11 +91,11 @@ export const Dnd: React.FC<Props> = ({ children }) => {
 	// При подключении к WebSocket сервер автоматически отправляет активную симуляцию (если есть)
 
 	useEffect(() => {
-		if (!isAnyModalOpen) return;
+		if (!isModalBlockingMultimeter) return;
 		dispatch(detachProbe('red'));
 		dispatch(detachProbe('black'));
 		dispatch(setActiveProb(null));
-	}, [dispatch, isAnyModalOpen]);
+	}, [dispatch, isModalBlockingMultimeter]);
 
 	return (
 		<DndContext
