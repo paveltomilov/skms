@@ -7,8 +7,13 @@
 	z-index: 2;
 }
 
+.probe_disabled {
+	pointer-events: none;
+	cursor: default;
+}
+
 .dragging {
-	z-index: 3;
+	z-index: 120;
 	cursor: grabbing;
 }
 

@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import Button from '@/shared/UI/Button';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import { closeModal, openModal } from '@/store/modalSlice';
-import { resetSimulation } from '@/store/simulationSlice';
+import { resetSimulation, setManualAbort } from '@/store/simulationSlice';
 import { deactivateMalfunction } from '@/store/circuitSlice';
 import { setActiveGate, setGateMalfunctions } from '@/store/gateSlice';
 import { stopSimulation } from '@/shared/api';
@@ -15,6 +15,8 @@ export const PopupAbortSimulationConfirm: FC = () => {
 
 	const handleConfirm = async () => {
 		setIsLoading(true);
+
+		dispatch(setManualAbort(true));
 
 		try {
 			// Отправляем запрос на бэкенд для прерывания симуляции
@@ -31,10 +33,11 @@ export const PopupAbortSimulationConfirm: FC = () => {
 			}
 
 			if (simulation.gate) {
-				dispatch(setGateMalfunctions({
-					id: simulation.gate,
-					malfunctions: [],
-				}),
+				dispatch(
+					setGateMalfunctions({
+						id: simulation.gate,
+						malfunctions: [],
+					}),
 				);
 			}
 
