@@ -24,6 +24,7 @@ export type Modals =
 	| 'infoStartSimulation'
 	| 'infoUnfinished'
 	| 'simulationComplete'
+	| 'simulationInterrupted'
 	| 'detectInfo'
 	| 'detectInfoError';
 
@@ -53,6 +54,7 @@ const initialState: ModalState = {
 	infoStartSimulation: false,
 	infoUnfinished: false,
 	simulationComplete: false,
+	simulationInterrupted: false,
 	detectInfo: false,
 	detectInfoError: false,
 };

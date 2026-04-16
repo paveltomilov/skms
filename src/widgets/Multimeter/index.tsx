@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 import styles from './styles.module.scss';
 import { Display } from '@/entities/Display';
 import ControlPanel from '@/entities/ControlPanel';
@@ -10,7 +10,6 @@ import { getMultimeterAction } from '@/store/actions/multimiter/getMultimeterAct
 import {
 	MultimeterModePropPayload,
 	attachProbe,
-	detachProbe,
 } from '@/store/multimeterSlice';
 import { CONTROL_CIRCUIT_NEUTRAL_ID } from '@/shared/configs/controlCircuit/constants';
 import { POWER_CIRCUIT_NEUTRAL_ID } from '@/shared/configs/powerCircuit/constants';
@@ -20,9 +19,22 @@ const Multimeter: React.FC = () => {
 
 	const { currentMode, displayValue, activeProb, probeConnections } =
 		useAppSelector(state => state.multimeter);
-	const isAnyModalOpen = useAppSelector(state =>
-		Object.values(state.modal).some(Boolean),
-	);
+	const isMultimeterOff = currentMode === 'OFF';
+	const isMeasurementOverlayMode = useAppSelector(state => {
+		const { lamps, motor, block_switches, starter } = state.modal;
+		return lamps || motor || block_switches || starter;
+	});
+	const isModalBlockingMultimeter = useAppSelector(state => {
+		return Object.entries(state.modal)
+			.filter(
+				([key]) =>
+					key !== 'lamps' &&
+					key !== 'motor' &&
+					key !== 'block_switches' &&
+					key !== 'starter',
+			)
+			.some(([, value]) => Boolean(value));
+	});
 
 	const redConn = probeConnections.red;
 	const blackConn = probeConnections.black;
@@ -37,8 +49,7 @@ const Multimeter: React.FC = () => {
 		state => state.points[blackProbe as string],
 	);
 
-	const isVoltageMode =
-		currentMode.startsWith('ACV') || currentMode.startsWith('DCV');
+	const isAcv750Mode = currentMode === 'ACV_750';
 
 	const probeState: MultimeterModePropPayload = {
 		red: {
@@ -58,10 +69,14 @@ const Multimeter: React.FC = () => {
 	//Экшен для текущего режима мультиметра
 	const modeAction = getMultimeterAction(currentMode);
 
-	//Фиксируем черный щуп на нейтрали при измерении напряжения
+	// В режиме "только схема" и только на ACV_750 автоматически ставим
+	// чёрный щуп на нейтраль. В measurement-попапах автопривязка отключена.
 	useEffect(() => {
-		if (!isVoltageMode || isAnyModalOpen) {
-			dispatch(detachProbe('black'));
+		if (
+			!isAcv750Mode ||
+			isMeasurementOverlayMode ||
+			isModalBlockingMultimeter
+		) {
 			return;
 		}
 
@@ -72,14 +87,23 @@ const Multimeter: React.FC = () => {
 				dropId: CONTROL_CIRCUIT_NEUTRAL_ID,
 			}),
 		);
-	}, [dispatch, isAnyModalOpen, isVoltageMode]);
+	}, [
+		dispatch,
+		isAcv750Mode,
+		isMeasurementOverlayMode,
+		isModalBlockingMultimeter,
+	]);
 
 	useEffect(() => {
 		dispatch(modeAction(probeState));
 	}, [probeState, modeAction]);
 
 	return (
-		<div className={styles.multimeter}>
+		<div
+			className={`${styles.multimeter} ${
+				isMeasurementOverlayMode ? styles.multimeter_topLayer : ''
+			}`}
+		>
 			<Display value={displayValue} />
 			<ControlPanel mode={currentMode} />
 			<ProbeHolder
@@ -87,7 +111,7 @@ const Multimeter: React.FC = () => {
 			>
 				{/* если щуп не перетаскивается и не прикреплен к схеме, он рендерится мультиметром */}
 				{activeProb !== 'black' && !probeConnections['black'] && (
-					<Probe color="black" />
+					<Probe color="black" isDisabled={isMultimeterOff} />
 				)}
 			</ProbeHolder>
 			<ProbeHolder
@@ -95,7 +119,7 @@ const Multimeter: React.FC = () => {
 			>
 				{/* если щуп не перетаскивается и не прикреплен к схеме, он рендерится мультиметром */}
 				{activeProb !== 'red' && !probeConnections['red'] && (
-					<Probe color="red" />
+					<Probe color="red" isDisabled={isMultimeterOff} />
 				)}
 			</ProbeHolder>
 		</div>

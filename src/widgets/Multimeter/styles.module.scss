@@ -52,4 +52,8 @@
 			top: 150px;
 		}
 	}
+
+	&_topLayer {
+		z-index: 105;
+	}
 }

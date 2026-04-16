@@ -27,6 +27,7 @@ import { useUserCookies } from '@/shared/hooks/useUserCookies';
 import { PopupInfo } from '../PopupInfo';
 import { PopupSimulationComplete } from '../PopupSimulationComplete';
 import { PopupDetectInfo } from '../PopupDetectInfo';
+import { PopupSimulationInterrupted } from '../PopupSimulationInterrupted';
 
 interface IModals {
 	condition: boolean;
@@ -57,6 +58,7 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		infoStartSimulation,
 		infoUnfinished,
 		simulationComplete,
+		simulationInterrupted,
 		detectInfo,
 		detectInfoError,
 	} = useAppSelector((state): ModalState => state.modal);
@@ -65,7 +67,6 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 
 	const isAdmin = role === 'admin';
 	const isStudent = role === 'student';
-
 
 	const isOne =
 		automatic ||
@@ -87,8 +88,12 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		infoStartSimulation ||
 		infoUnfinished ||
 		simulationComplete ||
+		simulationInterrupted ||
 		detectInfo ||
 		detectInfoError;
+
+	const isMeasurementOverlayMode =
+		lamps || motor || block_switches || starter;
 
 
 	const gateId = useAppSelector(state => state.gate.activeGateId as string);
@@ -238,12 +243,20 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 			component: <PopupSimulationComplete />,
 		},
 		{
+			condition: simulationInterrupted,
+			id: 'simulationInterrupted',
+			headerTitle: 'Симуляция завершена',
+			gateId: undefined,
+			component: <PopupSimulationInterrupted />,
+		},
+		{
 			condition: detectInfo,
 			id: 'detectInfo',
 			headerTitle: 'Определение неисправности',
 			gateId: undefined,
 			component: <PopupDetectInfo />,
-		}, {
+		},
+		{
 			condition: detectInfoError,
 			id: 'detectInfoError',
 			headerTitle: 'Определение неисправности',
@@ -295,7 +308,8 @@ const ModalWrapper: FC<{ className?: string }> = ({ className }) => {
 		<div
 			className={cn(className, styles.modal__displayNone, {
 				[styles.modal]: isOne,
-				[styles.modal_isBlur]: automatic,
+				[styles.modal_isBlur]: isOne,
+				[styles.modal_allowBackgroundInteraction]: isMeasurementOverlayMode,
 			})}
 			onClick={handleOverlayClick}
 		>
