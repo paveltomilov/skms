@@ -46,6 +46,14 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 		router.push('/');
 	};
 
+	const handleOpenSessionHistory = useCallback(() => {
+		dispatch(openModal('notification'));
+	}, [dispatch]);
+
+	const handleOpenSupport = useCallback(() => {
+		dispatch(openModal('notification'));
+	}, [dispatch]);
+
 	const fullName = firstName && lastName ? `${firstName} ${lastName}` : '—';
 
 	return (
@@ -90,7 +98,10 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 							/>
 						</li>
 					)}
-											<li>
+					<li
+						className={styles.userInfo__more__item}
+						onClick={handleOpenSessionHistory}
+					>
 							<Image
 								src="/svg/history.svg"
 								alt="history"
@@ -98,9 +109,9 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 								height={16}
 							/>
 							История сессий
-						</li>  
+						</li>
 					
-					<li>
+					<li className={styles.userInfo__more__item} onClick={handleOpenSupport}>
 						<Image
 							src="/svg/support.svg"
 							alt="support"
@@ -110,15 +121,6 @@ const PopupUserInfo: FC<PopupUserInfoProps> = ({
 						Помощь
 					</li>
 
-					<li>
-						<Image
-							src="/svg/add-account.svg"
-							alt="add account"
-							width={16}
-							height={16}
-						/>
-						Добавить аккаунт
-					</li>
 				</ul>
 				<Button
 					width={290}

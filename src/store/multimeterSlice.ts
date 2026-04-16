@@ -64,6 +64,9 @@ export const multimeterSlice = createSlice({
 		/** Выключение питания мультиметра */
 		powerOff: state => {
 			state.displayValue = null;
+			state.probeConnections.red = null;
+			state.probeConnections.black = null;
+			state.activeProb = null;
 		},
 
 		/** Установка значения напряжения на дисплей */

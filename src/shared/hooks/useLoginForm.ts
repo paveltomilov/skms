@@ -4,12 +4,8 @@ import {
 	config,
 	CONTAINS_DIGITS_REGEX,
 	CYRILLIC_REGEX,
-	DOUBLE_DASHES_OR_DOTS_REGEX,
-	DOUBLE_DASHES_REGEX, DOUBLE_SPACES_REGEX,
-	EMAIL_DOMAIN_MAX_LENGTH,
-	EMAIL_LOCAL_MAX_LENGTH,
-	EMAIL_MAX_LENGTH,
-	FORBIDDEN_SYMBOLS_REGEX,
+	DOUBLE_DASHES_REGEX,
+	DOUBLE_SPACES_REGEX,
 	initialState,
 	NAME_SURNAME_MAX_LENGTH,
 	PASSWORD_LOWERCASE_REGEX,
@@ -17,8 +13,6 @@ import {
 	PASSWORD_MIN_LENGTH,
 	PASSWORD_SPECIAL_CHARS_REGEX,
 	PASSWORD_UPPERCASE_REGEX,
-	SPACES_REGEX,
-	STARTS_WITH_DOT_OR_DASH_REGEX
 } from '@/shared/configs/login';
 import {
 	checkFormValidity,
@@ -29,40 +23,15 @@ export interface UseLoginFormProps {
 	toggleRegisterMode: 'register' | 'login' | 'createUser';
 }
 
-const getValidationMessage = (fieldName: keyof LoginFormData, value: string): string => {
-	const triggedValue:string = value.trim();
+const getValidationMessage = (
+	fieldName: keyof LoginFormData,
+	value: string,
+): string => {
+	const triggedValue: string = value.trim();
 
 	switch (fieldName) {
 		case 'email':
-			const atIndex:number = triggedValue.indexOf('@');
-			const localPart:string = triggedValue.slice(0, atIndex);
-			const domainPart:string = triggedValue.slice(atIndex + 1);
-
-			if (localPart.length > EMAIL_LOCAL_MAX_LENGTH) {
-				return 'Локальная часть (до @) ≤ 64 символов';
-			}
-			if (domainPart.length > EMAIL_DOMAIN_MAX_LENGTH) {
-				return 'Доменная часть (после @) ≤ 63 символов';
-			}
-			if (triggedValue.length > EMAIL_MAX_LENGTH) {
-				return `Длина Email не должна превышать ${EMAIL_MAX_LENGTH} символа`;
-			}
-			if (SPACES_REGEX.test(triggedValue)) {
-				return 'Пробелы не допускаются';
-			}
-			if (CYRILLIC_REGEX.test(triggedValue)) {
-				return 'Кириллица не допускается';
-			}
-			if (FORBIDDEN_SYMBOLS_REGEX.test(triggedValue)) {
-				return 'Запрещенные символы';
-			}
-			if (DOUBLE_DASHES_OR_DOTS_REGEX.test(triggedValue)) {
-				return 'Два тире или две точки подряд';
-			}
-			if (STARTS_WITH_DOT_OR_DASH_REGEX.test(localPart)) {
-				return 'Начало email с точки или тире';
-			}
-			return 'E-mail введен не корректно';
+			return 'E-mail введен некорректно';
 		case 'password':
 			if (triggedValue.length < PASSWORD_MIN_LENGTH) {
 				return `Пароль должен содержать не менее ${PASSWORD_MIN_LENGTH} символов`;

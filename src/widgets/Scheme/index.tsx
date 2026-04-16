@@ -32,10 +32,17 @@ const Scheme: FC = () => {
 	const activeProbe = useAppSelector(
 		state => state.multimeter.activeProb,
 	) as ProbeColor;
+	const isMultimeterOff = useAppSelector(
+		state => state.multimeter.currentMode === 'OFF',
+	);
 
 	const probeConnections = useAppSelector(
 		state => state.multimeter.probeConnections,
 	);
+	const isMeasurementOverlayMode = useAppSelector(state => {
+		const { lamps, motor, block_switches, starter } = state.modal;
+		return lamps || motor || block_switches || starter;
+	});
 
 	const { hasMalfunctionNoSwitchingPhasesInputBreaker } =
 		useGetMalfunctionsInputBreaker();
@@ -123,8 +130,10 @@ const Scheme: FC = () => {
 
 			// Применяем изменения точек (если есть)
 			if (pointsChanged) {
-				dispatch(setVoltagePoints(updatedPoints));
-				hasChanges = true;
+				if (!isMeasurementOverlayMode) {
+					dispatch(setVoltagePoints(updatedPoints));
+					hasChanges = true;
+				}
 			}
 
 			// Применяем изменения контактов пускателей (если есть)
@@ -155,6 +164,7 @@ const Scheme: FC = () => {
 		points,
 		hasMalfunctionNoSwitchingPhasesInputBreaker,
 		resistancePhaseAInputBreaker,
+		isMeasurementOverlayMode,
 		dispatch,
 	]);
 
@@ -176,11 +186,17 @@ const Scheme: FC = () => {
 				))}
 
 			{/* если щуп перетаскивается, его рендерит схема */}
-			{activeProbe && <Probe color={activeProbe} />}
+			{activeProbe && (
+				<Probe color={activeProbe} isDisabled={isMultimeterOff} />
+			)}
 
 			{/* если щуп прикреплен к схеме или попапу, его рендерит схема */}
-			{probeConnections['black'] && <Probe color="black" />}
-			{probeConnections['red'] && <Probe color="red" />}
+			{probeConnections['black'] && (
+				<Probe color="black" isDisabled={isMultimeterOff} />
+			)}
+			{probeConnections['red'] && (
+				<Probe color="red" isDisabled={isMultimeterOff} />
+			)}
 		</div>
 	);
 };

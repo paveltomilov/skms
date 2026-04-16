@@ -2,135 +2,168 @@
 @use '@/shared/scss/mixins.module';
 
 .form_item {
-  position: relative;
-  display: flex;
-  flex-direction: column;
+	position: relative;
+	display: flex;
+	flex-direction: column;
 
-  &__label {
-    margin-bottom: 18px;
-    padding-left: 15px;
-    @include mixins.text(20px, 500);
-    line-height: 1;
-    text-align: left;
-  }
+	&__control {
+		position: relative;
+	}
 
-  &__input {
-    padding: 10px 15px;
-    width: 100%;
-    border-top: 2px solid variables.$gray-disabled-color;
-    border-left: 2px solid variables.$gray-disabled-color;
-    border-right: 2px solid variables.$white-color;
-    border-bottom: 2px solid variables.$white-color;
-    max-width: 470px;
-    height: 49px;
-    @include mixins.text(18px, 400);
-    text-align: left;
-    color: variables.$black-color;
-    box-shadow: inset 0 0 0 1px variables.$gray-disabled-color;
-    transition: variables.$transition;
+	&__label {
+		margin-bottom: 18px;
+		padding-left: 15px;
+		@include mixins.text(20px, 500);
+		line-height: 1;
+		text-align: left;
+	}
 
-    &::placeholder {
-      color: variables.$gray-disabled-color;
-    }
+	&__input {
+		padding: 10px 15px;
+		width: 100%;
+		border-top: 2px solid variables.$gray-disabled-color;
+		border-left: 2px solid variables.$gray-disabled-color;
+		border-right: 2px solid variables.$white-color;
+		border-bottom: 2px solid variables.$white-color;
+		max-width: 470px;
+		height: 49px;
+		@include mixins.text(18px, 400);
+		text-align: left;
+		color: variables.$black-color;
+		box-shadow: inset 0 0 0 1px variables.$gray-disabled-color;
+		transition: variables.$transition;
 
-    &:focus {
-      outline: none;
-    }
+		&_password {
+			padding-right: 52px;
+		}
 
-    &[data-error='true'] {
-      border-top-color: variables.$error-input;
-      border-left-color: variables.$error-input;
-    }
+		&::placeholder {
+			color: variables.$gray-disabled-color;
+		}
 
-    &[data-warn='true'] {
-      border-top-color: variables.$warn-input;
-      border-left-color: variables.$warn-input;
-    }
+		&:focus {
+			outline: none;
+		}
 
-    &[data-done='true'] {
-      border-top-color: variables.$success-input;
-      border-left-color: variables.$success-input;
-    }
+		&[data-error='true'] {
+			border-top-color: variables.$error-input;
+			border-left-color: variables.$error-input;
+		}
 
-    &__indicator {
-      position: absolute;
-      right: 2px;
-      bottom: 10px;
-      border-radius: 50%;
-      width: 30px;
-      height: 30px;
+		&[data-warn='true'] {
+			border-top-color: variables.$warn-input;
+			border-left-color: variables.$warn-input;
+		}
 
-      &::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        border-radius: 50%;
-        width: calc(100% - 4px);
-        height: calc(100% - 4px);
-        box-shadow:
-                1px 1px 3px 0 rgba(255, 255, 255, 1) inset,
-                -2px -2px 3px 0px rgba(0, 0, 0, 0.5) inset;
-        transform: translate(-50%, -50%);
-        transition: variables.$transition;
-      }
+		&[data-done='true'] {
+			border-top-color: variables.$success-input;
+			border-left-color: variables.$success-input;
+		}
 
-      &[data-indicator='0'] {
-        background: linear-gradient(149.04deg, #FFFFFF 19.17%, #999999 40.42%);
+		&__indicator {
+			position: absolute;
+			right: 2px;
+			bottom: 10px;
+			border-radius: 50%;
+			width: 30px;
+			height: 30px;
 
-        &::before {
-          background-color: variables.$gray-disabled-color;
-        }
-      }
+			&::before {
+				content: '';
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				border-radius: 50%;
+				width: calc(100% - 4px);
+				height: calc(100% - 4px);
+				box-shadow:
+					1px 1px 3px 0 rgba(255, 255, 255, 1) inset,
+					-2px -2px 3px 0px rgba(0, 0, 0, 0.5) inset;
+				transform: translate(-50%, -50%);
+				transition: variables.$transition;
+			}
 
-      &[data-indicator='1'] {
-        box-shadow:
-                1px 1px 3px 0 rgba(255, 255, 255, 1) inset,
-                -2px -2px 3px 15px rgba(237, 57, 50, 0.5) inset;
+			&[data-indicator='0'] {
+				background: linear-gradient(
+					149.04deg,
+					#ffffff 19.17%,
+					#999999 40.42%
+				);
 
-        &::before {
-          background-color: variables.$error-input;
-        }
-      }
+				&::before {
+					background-color: variables.$gray-disabled-color;
+				}
+			}
 
-      &[data-indicator='2'] {
-        box-shadow:
-                1px 1px 3px 0 rgba(255, 255, 255, 1) inset,
-                -2px -2px 3px 15px rgba(255, 126, 34, 0.5) inset;
+			&[data-indicator='1'] {
+				box-shadow:
+					1px 1px 3px 0 rgba(255, 255, 255, 1) inset,
+					-2px -2px 3px 15px rgba(237, 57, 50, 0.5) inset;
 
-        &::before {
-          background-color: variables.$warn-input;
-        }
-      }
+				&::before {
+					background-color: variables.$error-input;
+				}
+			}
 
-      &[data-indicator='3'] {
-        box-shadow:
-                1px 1px 3px 0 rgba(255, 255, 255, 1) inset,
-                -2px -2px 3px 15px rgba(10, 183, 0, 0.5) inset;
+			&[data-indicator='2'] {
+				box-shadow:
+					1px 1px 3px 0 rgba(255, 255, 255, 1) inset,
+					-2px -2px 3px 15px rgba(255, 126, 34, 0.5) inset;
 
-        &::before {
-          background-color: variables.$success-input;
-        }
-      }
-    }
-  }
+				&::before {
+					background-color: variables.$warn-input;
+				}
+			}
 
-  &__error {
-    position: absolute;
-    left: 15px;
-    bottom: -22px;
-    display: none;
-    @include mixins.text(12px, 400);
-    color: variables.$black-color;
+			&[data-indicator='3'] {
+				box-shadow:
+					1px 1px 3px 0 rgba(255, 255, 255, 1) inset,
+					-2px -2px 3px 15px rgba(10, 183, 0, 0.5) inset;
 
-    &[data-error='true'], {
-      display: block;
-      color: variables.$error-input;
-    }
+				&::before {
+					background-color: variables.$success-input;
+				}
+			}
+		}
+	}
 
-    &[data-warn='true'] {
-      display: block;
-      color: variables.$warn-input;
-    }
-  }
+	&__passwordToggle {
+		position: absolute;
+		right: 68px;
+		top: 50%;
+		transform: translateY(-50%);
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 32px;
+		height: 32px;
+		border: none;
+		background: transparent;
+		cursor: pointer;
+		padding: 0;
+
+		&:focus-visible {
+			outline: 1px solid variables.$black-color;
+			outline-offset: 1px;
+		}
+	}
+
+	&__error {
+		position: absolute;
+		left: 15px;
+		bottom: -22px;
+		display: none;
+		@include mixins.text(12px, 400);
+		color: variables.$black-color;
+
+		&[data-error='true'] {
+			display: block;
+			color: variables.$error-input;
+		}
+
+		&[data-warn='true'] {
+			display: block;
+			color: variables.$warn-input;
+		}
+	}
 }
