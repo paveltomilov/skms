@@ -22,9 +22,13 @@ import { GATE_STATE_TYPE } from '@/shared/types/gate';
 import {
 	resetSimulation,
 	setCompletedSimulationId,
+	setManualAbort,
 	setSimulation,
 } from '@/store/simulationSlice';
-import { activateMalfunction, deactivateMalfunction } from '@/store/circuitSlice';
+import {
+	activateMalfunction,
+	deactivateMalfunction,
+} from '@/store/circuitSlice';
 import { openModal } from '@/store/modalSlice';
 import { updateList } from '@/store/updateListSlice';
 
@@ -50,6 +54,7 @@ export function createMessageHandler(
 				Array.isArray(messageAny.malfunctions)
 			) {
 				const initMessage = message as SimulationInitMessage;
+				dispatch(setManualAbort(false));
 
 				// Извлекаем ID неисправностей
 				// Поддерживаем два формата:
@@ -162,10 +167,11 @@ export function createMessageHandler(
 					| SimulationFinishedStudentMessage
 					| SimulationFinishedTeacherMessage;
 				const completedId = finishedMessage.simulation_id;
+				const isManualAbort = getState?.().simulation.isManualAbort;
 
 				// Обрабатываем завершение симуляции
 				if (getState) {
-					const { simulation } = getState(); 
+					const { simulation } = getState();
 
 					if (simulation.originalMalfunctions?.length > 0) {
 						simulation.originalMalfunctions.forEach(malfunction => {
@@ -174,10 +180,12 @@ export function createMessageHandler(
 					}
 
 					if (simulation.gate) {
-						dispatch(setGateMalfunctions({
-							id: simulation.gate,
-							malfunctions: [],
-						}));
+						dispatch(
+							setGateMalfunctions({
+								id: simulation.gate,
+								malfunctions: [],
+							}),
+						);
 					}
 				}
 
@@ -188,8 +196,8 @@ export function createMessageHandler(
 				}
 
 				// Открываем модалку о завершении симуляции в учетной завписи студента
-				if (!('student_name' in finishedMessage)) {
-					dispatch(openModal('simulationComplete'));
+				if (!('student_name' in finishedMessage) && !isManualAbort) {
+					dispatch(openModal('simulationInterrupted'));
 				}
 
 				console.info(
