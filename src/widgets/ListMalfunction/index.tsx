@@ -111,7 +111,7 @@ const ListMalfunction: FC<Props> = ({ data, deleteItem }) => {
 		<div className={styles.wrap}>
 			{isScrollable && isClient && renderScrollButtons()}
 
-			<p className={styles.title}>Выбранные неисправности</p>
+			<p className={styles.title}>Выбранная неисправность</p>
 
 			<ul className={styles.list}>
 				{isClient ? (

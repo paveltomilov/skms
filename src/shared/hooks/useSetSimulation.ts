@@ -68,20 +68,12 @@ const useSetSimulation = (): IResponse => {
 
 	const handleChoiceMalfunction = useCallback(
 		(simulation: SimulationItemData): void => {
-			if (
-				listMalfunction.some(
-					m => m.malfunction_id === simulation.malfunction_id,
-				)
-			) {
-				setErrors('Эта неисправность уже добавлена');
-				return;
-			}
-
-			setListMalfunction(prev => [...prev, simulation]);
+			// Разрешаем только одну неисправность: новый выбор заменяет предыдущий.
+			setListMalfunction([simulation]);
 			setShowListMalfunction(false);
 			setErrors(null);
 		},
-		[listMalfunction],
+		[],
 	);
 
 	const handleDeleteItem = useCallback(
@@ -116,9 +108,7 @@ const useSetSimulation = (): IResponse => {
 		const formData: SimulationFormData = {
 			gate: idActiveGate,
 			user: studentId,
-			malfunctions: listMalfunction.map(item => {
-				return { malfunction_id: item.malfunction_id };
-			}),
+			malfunctions: [{ malfunction_id: listMalfunction[0].malfunction_id }],
 		};
 		setErrors(null);
 		setIsLoading(true);
