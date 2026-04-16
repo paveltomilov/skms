@@ -25,7 +25,7 @@ const PopupNotificationDev: FC<Props> = ({ className }) => {
 					width={193}
 					height={53}
 				/>
-				<span className={styles.modal__info__text}>22.12.2026</span>
+				<span className={styles.modal__info__text}>Планируемая дата реализации</span>
 			</div>
 		</div>
 	);
