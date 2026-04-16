@@ -55,7 +55,7 @@ const TAMidTop: FC<Props> = ({ className, windows }) => {
 							Осевой сдвиг
 						</span>
 						<span className={styles.windowsBottom__indicators_text}>
-							Вода у газоохладителям
+							Вода к газоохладителям
 						</span>
 					</div>
 					<div className={styles.windowsBottom__indicators_right}>

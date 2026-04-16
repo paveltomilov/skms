@@ -32,7 +32,7 @@ export const config: Login = [
 		name: 'email',
 		required: true,
 		errorMessage: 'Пользователь с таким E-mail уже существует',
-		warnMessage: 'E-mail введен не корректно',
+		warnMessage: 'E-mail введен некорректно',
 		validate: (state: LoginFormData) => {
 			const email: string = state.email?.trim();
 
