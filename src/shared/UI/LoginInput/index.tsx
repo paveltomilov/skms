@@ -1,7 +1,7 @@
 import styles from './styles.module.scss';
 import Image from 'next/image';
 import { FC, useState } from 'react';
-import {InputProps} from '@/shared/types/inputLogin';
+import { InputProps } from '@/shared/types/inputLogin';
 
 
 export const LoginInput: FC<InputProps> = (props) => {
@@ -49,7 +49,11 @@ export const LoginInput: FC<InputProps> = (props) => {
                         aria-label={isPasswordVisible ? 'Скрыть пароль' : 'Показать пароль'}
                         onClick={() => setIsPasswordVisible(prev => !prev)}
                     >
-                        <Image src="/svg/eye.svg" alt="Показать или скрыть пароль" width={24} height={24} />
+                        <Image
+                            src={isPasswordVisible ? '/svg/eye_open.svg' : '/svg/eye.svg'}
+                            alt="Показать или скрыть пароль"
+                            width={24}
+                            height={24} />
                     </button>
                 )}
                 <span data-indicator={indicator} className={styles.form_item__input__indicator}></span>
@@ -60,8 +64,8 @@ export const LoginInput: FC<InputProps> = (props) => {
                     data-warn={warn}
                     className={styles.form_item__error}
                 >
-                {errorMessage || warnMessage}
-            </span>
+                    {errorMessage || warnMessage}
+                </span>
             )}
         </div>
     );
