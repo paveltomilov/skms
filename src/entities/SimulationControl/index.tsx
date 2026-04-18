@@ -6,11 +6,16 @@ import { openModal } from '@/store/modalSlice';
 import Timer from '../Timer';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import { stopSimulation } from '@/shared/api';
-import { resetSimulation, setCompletedSimulationId } from '@/store/simulationSlice';
+import {
+	resetSimulation,
+	setCompletedSimulationId,
+} from '@/store/simulationSlice';
 import { deactivateMalfunction } from '@/store/circuitSlice';
 import { setActiveGate, setGateMalfunctions } from '@/store/gateSlice';
+import { useSessionGuard } from '@/shared/hooks/useSessionGuard';
 
 const SimulationControl: FC<{ className?: string }> = ({ className }) => {
+	useSessionGuard();
 	const dispatch = useAppDispatch();
 	const simulation = useAppSelector(state => state.simulation);
 
@@ -19,7 +24,7 @@ const SimulationControl: FC<{ className?: string }> = ({ className }) => {
 		const allMalfunctionsFound =
 			simulation.originalMalfunctions.length > 0 &&
 			simulation.originalMalfunctions.length ===
-			simulation.foundMalfunctionIds.length;
+				simulation.foundMalfunctionIds.length;
 
 		if (allMalfunctionsFound) {
 			if (simulation.simulationId !== null) {
@@ -39,10 +44,11 @@ const SimulationControl: FC<{ className?: string }> = ({ className }) => {
 			}
 
 			if (simulation.gate) {
-				dispatch(setGateMalfunctions({
-					id: simulation.gate,
-					malfunctions: [],
-				}),
+				dispatch(
+					setGateMalfunctions({
+						id: simulation.gate,
+						malfunctions: [],
+					}),
 				);
 			}
 
