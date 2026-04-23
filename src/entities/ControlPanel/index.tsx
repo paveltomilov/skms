@@ -22,7 +22,7 @@ const ControlPanel: FC<Props> = ({ mode }) => {
 	const dispatch = useAppDispatch();
 
 	const handleMouseUp = useCallback(() => {
-		const selectedMode: MultimeterMode | null = getSelectedMode();
+		const selectedMode = getSelectedMode();
 		if (selectedMode) {
 			dispatch(setCurrentMode(selectedMode));
 			return;

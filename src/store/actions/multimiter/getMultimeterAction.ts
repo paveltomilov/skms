@@ -11,7 +11,7 @@ import {
 import { UnknownAction } from '@reduxjs/toolkit';
 
 type MultimeterModeExecutor = (
-	payload: MultimeterModePropPayload,
+	payload?: MultimeterModePropPayload,
 ) => UnknownAction;
 
 const actionsByHandlerKey: Record<
@@ -19,7 +19,12 @@ const actionsByHandlerKey: Record<
 	MultimeterModeExecutor
 > = {
 	powerOff: () => powerOff(),
-	setACV750: payload => setACV750(payload),
+	setACV750: payload => {
+		if (!payload) {
+			throw new Error('Payload is required for setACV750 action');
+		}
+		return setACV750(payload);
+	},
 };
 
 /**
