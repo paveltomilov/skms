@@ -12,12 +12,24 @@ export function useSessionGuard() {
 			protocols?: string | string[],
 		): WebSocket {
 			const ws = new originalWebSocket(url, protocols);
-			ws.onclose = (event: CloseEvent) => {
-				if (event.code === 1006) {
-					logout();
-					window.location.href = '/login';
+
+			// Слушаем сообщения от бэкенда
+			ws.addEventListener('message', (event: MessageEvent) => {
+				if (typeof event.data === 'string') {
+					try {
+						const data = JSON.parse(event.data) as {
+							type?: string;
+						};
+
+						// Проверяем, пришло ли сообщение об удалении студента
+						if (data.type === 'student_deleted') {
+							logout();
+							window.location.href = '/login';
+						}
+					} catch {}
 				}
-			};
+			});
+
 			return ws;
 		} as unknown as typeof WebSocket;
 
