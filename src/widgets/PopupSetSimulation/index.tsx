@@ -40,13 +40,17 @@ export const PopupSetSimulation: FC = () => {
 		<div className={styles.popup}>
 			<div className={styles.popup__wrapper}>
 				<Button
-					aria-label={'Добавить неисправность'}
+					aria-label={'Выбрать неисправность'}
 					className={cn(styles.popup__btn, {
 						[styles.popup__btn__first]: !showListMalfunction,
 					})}
 					width={326}
 					height={38}
-					text="+ Добавить неисправность"
+					text={
+						listMalfunction.length
+							? 'Заменить неисправность'
+							: '+ Добавить неисправность'
+					}
 					onClick={() => setShowListMalfunction(true)}
 				/>
 				{showListMalfunction && (

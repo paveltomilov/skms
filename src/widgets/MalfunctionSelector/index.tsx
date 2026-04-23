@@ -83,7 +83,7 @@ const MalfunctionSelector: FC<Props> = ({
 				setChoiceElement(null);
 			}
 		},
-		[choiceElement, setMalfun],
+		[choiceElement, role, selectMalfun, setMalfun],
 	);
 
 	return (
