@@ -5,7 +5,7 @@ import { MULTIMETER_ANGLES } from '@/shared/configs/knob';
 import MultimeterArrow from '@/shared/UI/icons/MultimeterArrow';
 import Panel from '@/shared/UI/icons/Panel';
 import { useAppDispatch } from '@/shared/hooks/store';
-import { setCurrentMode } from '@/store/multimeterSlice';
+import { setCurrentMode, toggleAllowedMode } from '@/store/multimeterSlice';
 import { useRotateKnob } from '@/shared/hooks/useRotateKnob';
 
 interface Props {
@@ -23,7 +23,11 @@ const ControlPanel: FC<Props> = ({ mode }) => {
 
 	const handleMouseUp = useCallback(() => {
 		const selectedMode = getSelectedMode();
-		if (selectedMode) dispatch(setCurrentMode(selectedMode));
+		if (selectedMode) {
+			dispatch(setCurrentMode(selectedMode));
+			return;
+		}
+		dispatch(toggleAllowedMode());
 	}, [getSelectedMode, dispatch]);
 
 	return (
