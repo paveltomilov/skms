@@ -12,8 +12,7 @@ import { KRUZAP_BUTTONS_CONFIG } from '../configs/header';
 import { useEffect, useMemo, useRef } from 'react';
 import { GATE_STATE_TYPE } from '../types/gate';
 import { BASE_RESISTANCE } from '../configs/schemeElements';
-import { BASE_RESISTANCE_CONSTANT, ELEMENT_KIND } from '../configs/elementKind';
-import { getResistanceByKind } from '../utils/getResistanceByKind/getResistanceByKind';
+import { BASE_RESISTANCE_CONSTANT } from '../configs/elementKind';
 import {
 	INPUT_CIRCUIT_BREAKER_ID,
 	INPUT_CIRCUIT_BREAKER_OUTPUTS_POINTS_ID,
@@ -24,6 +23,11 @@ import { useGetMalfunctionKruzapButtons } from './useGetMalfunctionKruzapButtons
 import { TypeButtons } from './useGateControlButtons';
 import { TimeShutdownInputBreaker } from './usePtkButtons';
 import { togglePointState } from '@/store/pointsSlice';
+import {
+	createTickSnapshotFromPreset,
+	dispatchSimulationCommand,
+	gateControlPresets,
+} from '@/features/scheme-simulation';
 
 const timeStepIntervalGateMoving = 100;
 const newTimeShutdownInputBreaker =
@@ -152,6 +156,29 @@ export const useKruzapButtons = () => {
 
 	const timerTriggeringInputAutomaton = useRef<number>(0);
 
+	const applyLimitSwitchResistance = (
+		limitSwitchOpenResistance: number,
+		limitSwitchCloseResistance: number,
+	) => {
+		if (limitSwitchOpenElement.resistance !== limitSwitchOpenResistance) {
+			dispatch(
+				setResistance({
+					id: LIMIT_SWITCH_OPEN_ID,
+					value: limitSwitchOpenResistance,
+				}),
+			);
+		}
+
+		if (limitSwitchCloseElement.resistance !== limitSwitchCloseResistance) {
+			dispatch(
+				setResistance({
+					id: LIMIT_SWITCH_CLOSE_ID,
+					value: limitSwitchCloseResistance,
+				}),
+			);
+		}
+	};
+
 	// Функция для остановки движения задвижки через КРУЗАП
 	const stopKruzapMovement = () => {
 		// Сбрасываем таймер отвечающего за выключение вводно автомата
@@ -167,38 +194,25 @@ export const useKruzapButtons = () => {
 			clearInterval(gateInterval.current);
 			gateInterval.current = null;
 
-			// Обновляем концевые выключатели на основе текущего положения при остановке
-			const currentPosition = gatePosition.current;
-
-			// Концевой "открыто": разомкнут если position === 100%, иначе замкнут
-			const shouldOpenBeOpen =
-				currentPosition >= PositionOpen &&
-				!hasMalfunctionStuckContactSwitchOpenElement
-					? BASE_RESISTANCE_CONSTANT.highResistance
-					: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
-			if (limitSwitchOpenElement.resistance !== shouldOpenBeOpen) {
-				dispatch(
-					setResistance({
-						id: LIMIT_SWITCH_OPEN_ID,
-						value: shouldOpenBeOpen,
-					}),
-				);
-			}
-
-			// Концевой "закрыто": разомкнут если position === 0%, иначе замкнут
-			const shouldCloseBeOpen =
-				currentPosition <= PositionClose &&
-				!hasMalfunctionStuckContactSwitchCloseElement
-					? BASE_RESISTANCE_CONSTANT.highResistance
-					: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
-			if (limitSwitchCloseElement.resistance !== shouldCloseBeOpen) {
-				dispatch(
-					setResistance({
-						id: LIMIT_SWITCH_CLOSE_ID,
-						value: shouldCloseBeOpen,
-					}),
-				);
-			}
+			const stopResult = dispatchSimulationCommand({
+				type: 'stop',
+				payload: {
+					snapshot: {
+						currentPosition: gatePosition.current,
+						positionOpen: gateControlPresets.kruzap.positionOpen,
+						positionClose: gateControlPresets.kruzap.positionClose,
+						defaultLimitSwitchResistance:
+							gateControlPresets.kruzap.defaultLimitSwitchResistance,
+						highResistance: gateControlPresets.kruzap.highResistance,
+						hasMalfunctionStuckContactSwitchOpenElement,
+						hasMalfunctionStuckContactSwitchCloseElement,
+					},
+				},
+			});
+			applyLimitSwitchResistance(
+				stopResult.limitSwitchOpenResistance,
+				stopResult.limitSwitchCloseResistance,
+			);
 
 			dispatch(
 				setGatePosition({ id: gateId, position: gatePosition.current }),
@@ -270,46 +284,29 @@ export const useKruzapButtons = () => {
 		gateInterval.current = setInterval(() => {
 			// Обновляем положение задвижки
 			if (button === 'open') {
-				gatePosition.current += 1;
+				const tickResult = dispatchSimulationCommand({
+					type: 'tick',
+					payload: {
+						direction: 'open',
+						snapshot: createTickSnapshotFromPreset('kruzap', gatePosition.current, {
+							hasMalfunctionStuckContactSwitchOpenElement,
+							hasMalfunctionStuckContactSwitchCloseElement,
+						}),
+					},
+				});
+				gatePosition.current = tickResult.nextPosition;
 				dispatch(
 					setGateState({
 						id: gateId,
-						states: GATE_STATE_TYPE.toOpen,
+						states: tickResult.gateState,
 					}),
 				);
+				applyLimitSwitchResistance(
+					tickResult.limitSwitchOpenResistance,
+					tickResult.limitSwitchCloseResistance,
+				);
 
-				// Обновляем концевые выключатели на основе текущего положения
-				// Концевой "открыто": разомкнут если position === 100%, иначе замкнут
-				const shouldOpenBeOpen =
-					gatePosition.current >= PositionOpen &&
-					!hasMalfunctionStuckContactSwitchOpenElement
-						? BASE_RESISTANCE_CONSTANT.highResistance
-						: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
-				if (limitSwitchOpenElement.resistance !== shouldOpenBeOpen) {
-					dispatch(
-						setResistance({
-							id: LIMIT_SWITCH_OPEN_ID,
-							value: shouldOpenBeOpen,
-						}),
-					);
-				}
-
-				// Концевой "закрыто": разомкнут если position === 0%, иначе замкнут
-				const shouldCloseBeOpen =
-					gatePosition.current <= PositionClose &&
-					!hasMalfunctionStuckContactSwitchCloseElement
-						? BASE_RESISTANCE_CONSTANT.highResistance
-						: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
-				if (limitSwitchCloseElement.resistance !== shouldCloseBeOpen) {
-					dispatch(
-						setResistance({
-							id: LIMIT_SWITCH_CLOSE_ID,
-							value: shouldCloseBeOpen,
-						}),
-					);
-				}
-
-				if (gatePosition.current >= PositionOpen) {
+				if (tickResult.shouldStop) {
 					gatePosition.current = PositionOpen;
 					if (hasMalfunctionStuckContactSwitchOpenElement) {
 						if (
@@ -363,47 +360,29 @@ export const useKruzapButtons = () => {
 					}),
 				);
 			} else if (button === 'close') {
-				gatePosition.current -= 1;
+				const tickResult = dispatchSimulationCommand({
+					type: 'tick',
+					payload: {
+						direction: 'close',
+						snapshot: createTickSnapshotFromPreset('kruzap', gatePosition.current, {
+							hasMalfunctionStuckContactSwitchOpenElement,
+							hasMalfunctionStuckContactSwitchCloseElement,
+						}),
+					},
+				});
+				gatePosition.current = tickResult.nextPosition;
 				dispatch(
 					setGateState({
 						id: gateId,
-						states: GATE_STATE_TYPE.toClose,
+						states: tickResult.gateState,
 					}),
 				);
+				applyLimitSwitchResistance(
+					tickResult.limitSwitchOpenResistance,
+					tickResult.limitSwitchCloseResistance,
+				);
 
-				// Обновляем концевые выключатели на основе текущего положения
-				// Концевой "открыто": разомкнут если position === 100%, иначе замкнут
-
-				const shouldOpenBeOpen =
-					gatePosition.current >= PositionOpen &&
-					!hasMalfunctionStuckContactSwitchOpenElement
-						? BASE_RESISTANCE_CONSTANT.highResistance
-						: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
-				if (limitSwitchOpenElement.resistance !== shouldOpenBeOpen) {
-					dispatch(
-						setResistance({
-							id: LIMIT_SWITCH_OPEN_ID,
-							value: shouldOpenBeOpen,
-						}),
-					);
-				}
-
-				// Концевой "закрыто": разомкнут если position === 0%, иначе замкнут
-				const shouldCloseBeOpen =
-					gatePosition.current <= PositionClose &&
-					!hasMalfunctionStuckContactSwitchCloseElement
-						? BASE_RESISTANCE_CONSTANT.highResistance
-						: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
-				if (limitSwitchCloseElement.resistance !== shouldCloseBeOpen) {
-					dispatch(
-						setResistance({
-							id: LIMIT_SWITCH_CLOSE_ID,
-							value: shouldCloseBeOpen,
-						}),
-					);
-				}
-
-				if (gatePosition.current <= PositionClose) {
+				if (tickResult.shouldStop) {
 					gatePosition.current = PositionClose;
 					if (hasMalfunctionStuckContactSwitchCloseElement) {
 						if (

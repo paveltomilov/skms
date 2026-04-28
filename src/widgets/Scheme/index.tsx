@@ -11,8 +11,6 @@ import { ProbeColor } from '@/shared/types/multimeter';
 import { InputCircuitBreaker } from '@/entities/InputCircuitBreaker';
 import { SCHEME_POINTS } from '@/shared/configs/points';
 import { useGateMalfunctions } from '@/shared/hooks/useGateMalfunctions';
-import { setNewVoltagePoints } from '@/shared/utils/setPointsVoltage/setPointsVoltage';
-import { updateStarterContacts } from '@/shared/utils/updateStarterContacts/updateStarterContacts';
 import { setResistance } from '@/store/circuitSlice';
 import store from '@/store/store';
 import {
@@ -23,6 +21,7 @@ import { BASE_RESISTANCE_CONSTANT } from '@/shared/configs/elementKind';
 import { useGetMalfunctionsInputBreaker } from '@/shared/hooks/useGetMalfunctionInputBreaker';
 import { findElementByID } from '@/shared/utils/findElementByID/scheme';
 import { CONTROL_CIRCUIT_BREAKER_ID } from '@/shared/configs/controlCircuit/constants';
+import { runSchemeRecalculationPipeline } from '@/features/scheme-simulation';
 
 const Scheme: FC = () => {
 	const dispatch = useAppDispatch();
@@ -107,25 +106,10 @@ const Scheme: FC = () => {
 			const currentScheme = currentState.circuit;
 			const currentPoints = currentState.points;
 
-			// Шаг 1: Пересчитываем точки на основе текущей схемы
-			const updatedPoints = setNewVoltagePoints(
+			const { updatedPoints, pointsChanged, resistanceChanges } =
+				runSchemeRecalculationPipeline(
 				currentScheme,
 				currentPoints,
-			);
-
-			// Проверяем, изменились ли точки
-			const pointsChanged = Object.keys(updatedPoints).some(
-				key => updatedPoints[key] !== currentPoints[key],
-			);
-
-			// Шаг 2: Пересчитываем контакты пускателей на основе новых точек
-			// Используем обновленные точки, если они изменились
-			const pointsForContacts = pointsChanged
-				? updatedPoints
-				: currentPoints;
-			const resistanceChanges = updateStarterContacts(
-				currentScheme,
-				pointsForContacts,
 			);
 
 			// Применяем изменения точек (если есть)
