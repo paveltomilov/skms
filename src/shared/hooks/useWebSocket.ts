@@ -6,8 +6,7 @@ import { WebSocketStatus } from '@/shared/types/websocket';
 import { getCookie } from 'cookies-next';
 import { UserRole } from '@/shared/configs/routes';
 import store from '@/store/store';
-import { RefreshResponse } from '../types/typesAuth';
-import { getApiInstanceWithCredentials } from '../lib/api';
+import { tryRefreshToken } from '../api/auth/tryRefreshToken';
 
 /**
  * Хук для работы с WebSocket соединением
@@ -26,20 +25,7 @@ export const useWebSocket = () => {
 	);
 	const managerRef = useRef(WebSocketManager.getInstance());
 
-	managerRef.current.setTokenRefreshCallback(async () => {
-		try {
-			const api = getApiInstanceWithCredentials();
-			const { data } = await api.post<RefreshResponse>('/auth/refresh/');
-			if (data.access) {
-				localStorage.setItem('accessToken', data.access);
-				return data.access;
-			}
-			throw new Error('Refresh failed');
-		} catch (e) {
-			console.error('Failed to refresh token:', e);
-			return null;
-		}
-	});
+	managerRef.current.setTokenRefreshCallback(tryRefreshToken);
 
 	// Отслеживаем предыдущий статус для определения изменений
 	const prevStatusRef = useRef<WebSocketStatus>(WebSocketStatus.DISCONNECTED);
