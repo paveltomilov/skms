@@ -6,6 +6,8 @@ import { WebSocketStatus } from '@/shared/types/websocket';
 import { getCookie } from 'cookies-next';
 import { UserRole } from '@/shared/configs/routes';
 import store from '@/store/store';
+import { RefreshResponse } from '../types/typesAuth';
+import { getApiInstanceWithCredentials } from '../lib/api';
 
 /**
  * Хук для работы с WebSocket соединением
@@ -16,12 +18,28 @@ import store from '@/store/store';
  * ⚠️ ВАЖНО: Бэкенд не обрабатывает входящие сообщения через WebSocket
  * Все действия должны выполняться через REST API
  */
+
 export const useWebSocket = () => {
 	const dispatch = useAppDispatch();
 	const [status, setStatus] = useState<WebSocketStatus>(
 		WebSocketStatus.DISCONNECTED,
 	);
 	const managerRef = useRef(WebSocketManager.getInstance());
+
+	managerRef.current.setTokenRefreshCallback(async () => {
+		try {
+			const api = getApiInstanceWithCredentials();
+			const { data } = await api.post<RefreshResponse>('/auth/refresh/');
+			if (data.access) {
+				localStorage.setItem('accessToken', data.access);
+				return data.access;
+			}
+			throw new Error('Refresh failed');
+		} catch (e) {
+			console.error('Failed to refresh token:', e);
+			return null;
+		}
+	});
 
 	// Отслеживаем предыдущий статус для определения изменений
 	const prevStatusRef = useRef<WebSocketStatus>(WebSocketStatus.DISCONNECTED);
