@@ -14,17 +14,16 @@ import {
 } from '../configs/controlCircuit/constants';
 import {
 	INPUT_CIRCUIT_BREAKER_ID,
-	INPUT_CIRCUIT_BREAKER_OUTPUTS_POINTS_ID,
 } from '../configs/powerCircuit/constants';
 import { useGetMalfunctionSwitchLimit } from './useGetMalfunctionSwitchLimit';
 import { PositionClose, PositionOpen } from '../configs/gate';
-import { togglePointState } from '@/store/pointsSlice';
 import { TypeButtons } from './useGateControlButtons';
 import {
 	createTickSnapshotFromPreset,
 	dispatchSimulationCommand,
 	gateControlPresets,
 } from '@/features/scheme-simulation';
+import { dispatchInputBreakerSwitchCommand } from '@/store/inputBreakerSlice';
 
 export const TimeShutdownInputBreaker: number = 1;
 export const TimeUpdateInterval: number = 1000;
@@ -381,20 +380,8 @@ export const usePtkButtons = () => {
 									}),
 								);
 
-								// Отключяем вводной автомат
-								INPUT_CIRCUIT_BREAKER_ID.forEach(item =>
-									dispatch(
-										setResistance({
-											id: item,
-											value: BASE_RESISTANCE_CONSTANT.highResistance,
-										}),
-									),
-								);
-								INPUT_CIRCUIT_BREAKER_OUTPUTS_POINTS_ID.forEach(
-									point => {
-										dispatch(togglePointState(point));
-									},
-								);
+								// Отключяем вводной автомат через FSM-команду.
+								dispatch(dispatchInputBreakerSwitchCommand('off'));
 								PTK_BUTTONS_CONFIG.open.forEach(action => {
 									if (action.id !== LIMIT_SWITCH_OPEN_ID) {
 										dispatch(setResistance(action));
@@ -509,20 +496,8 @@ export const usePtkButtons = () => {
 									}),
 								);
 
-								// Отключяем вводной автомат
-								INPUT_CIRCUIT_BREAKER_ID.forEach(item =>
-									dispatch(
-										setResistance({
-											id: item,
-											value: BASE_RESISTANCE_CONSTANT.highResistance,
-										}),
-									),
-								);
-								INPUT_CIRCUIT_BREAKER_OUTPUTS_POINTS_ID.forEach(
-									point => {
-										dispatch(togglePointState(point));
-									},
-								);
+								// Отключяем вводной автомат через FSM-команду.
+								dispatch(dispatchInputBreakerSwitchCommand('off'));
 								PTK_BUTTONS_CONFIG.close.forEach(action => {
 									if (action.id !== LIMIT_SWITCH_CLOSE_ID) {
 										dispatch(setResistance(action));

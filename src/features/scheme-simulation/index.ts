@@ -1,4 +1,5 @@
 export { dispatchSimulationCommand } from './model/engine/dispatchSimulationCommand';
+export { dispatchAutomationCommand } from './model/engine/dispatchAutomationCommand';
 export { runSchemeRecalculationPipeline } from './model/engine/runSchemeRecalculationPipeline';
 export {
 	createTickSnapshotFromPreset,

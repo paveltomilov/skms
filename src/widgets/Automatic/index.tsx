@@ -21,7 +21,7 @@ import type { SwitchMode } from '@/shared/types/switch';
 // Виджет "Автомат" в модальном окне.
 export const Automatic: FC = () => {
 	// Обработчики удержания/остановки движения задвижки.
-	const { handleButton, stopGateMovement } = useGateControlButtons();
+	const { handleSimulationCommand } = useGateControlButtons();
 	const { switcherMode, tumblerMode, hasVoltageOnControlBreakerInput } =
 		useAppSelector(selectAutomaticPanelState);
 	const switcherModeState = switcherMode as SwitchMode;
@@ -49,9 +49,19 @@ export const Automatic: FC = () => {
 					// Если автоматы не собраны, кнопки блокируются.
 					disabled={!isAssembled}
 					// Запуск движения "открыть" при зажатии.
-					onMouseDown={() => handleButton('kruzap', 'open')}
+					onMouseDown={() =>
+						handleSimulationCommand({
+							type: 'press_open',
+							target: 'kruzap',
+						})
+					}
 					// Остановка движения при отпускании.
-					onMouseUp={() => stopGateMovement('kruzap')}
+					onMouseUp={() =>
+						handleSimulationCommand({
+							type: 'release',
+							target: 'kruzap',
+						})
+					}
 				/>
 				<AutomatButton
 					// Индикация кнопки "close" берется с лампы "Закрыто".
@@ -61,15 +71,41 @@ export const Automatic: FC = () => {
 					// Если автоматы не собраны, кнопки блокируются.
 					disabled={!isAssembled}
 					// Запуск движения "закрыть" при зажатии.
-					onMouseDown={() => handleButton('kruzap', 'close')}
+					onMouseDown={() =>
+						handleSimulationCommand({
+							type: 'press_close',
+							target: 'kruzap',
+						})
+					}
 					// Остановка движения при отпускании.
-					onMouseUp={() => stopGateMovement('kruzap')}
+					onMouseUp={() =>
+						handleSimulationCommand({
+							type: 'release',
+							target: 'kruzap',
+						})
+					}
 				/>
 			</div>
 			{/* Переключатель силового автомата. */}
-			<Switcher mode={switcherModeState} />
+			<Switcher
+				mode={switcherModeState}
+				onModeCommit={nextMode =>
+					handleSimulationCommand({
+						type: nextMode === 'on' ? 'turn_on' : 'turn_off',
+						target: 'input_breaker',
+					})
+				}
+			/>
 			{/* Тумблер автомата управления. */}
-			<Tumbler mode={tumblerModeState} />
+			<Tumbler
+				mode={tumblerModeState}
+				onModeCommit={nextMode =>
+					handleSimulationCommand({
+						type: nextMode === 'on' ? 'turn_on' : 'turn_off',
+						target: 'control_breaker',
+					})
+				}
+			/>
 		</div>
 	);
 };

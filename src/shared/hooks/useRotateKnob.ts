@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { MouseEvent as ReactMouseEvent, RefObject } from 'react';
 
 interface UseRotateKnobResult<T extends string> {
@@ -15,6 +15,13 @@ export function useRotateKnob<T extends string>(
 ): UseRotateKnobResult<T> {
 	const [angle, setAngle] = useState<number>(modeAngles[initialMode]);
 	const isDragging = useRef(false);
+
+	useEffect(() => {
+		if (isDragging.current) {
+			return;
+		}
+		setAngle(modeAngles[initialMode]);
+	}, [initialMode, modeAngles]);
 
 	const calculateAngle = useCallback(
 		(clientX: number, clientY: number): number | null => {

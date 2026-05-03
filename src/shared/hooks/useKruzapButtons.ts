@@ -15,19 +15,18 @@ import { BASE_RESISTANCE } from '../configs/schemeElements';
 import { BASE_RESISTANCE_CONSTANT } from '../configs/elementKind';
 import {
 	INPUT_CIRCUIT_BREAKER_ID,
-	INPUT_CIRCUIT_BREAKER_OUTPUTS_POINTS_ID,
 } from '../configs/powerCircuit/constants';
 import { useGetMalfunctionSwitchLimit } from './useGetMalfunctionSwitchLimit';
 import { PositionClose, PositionOpen } from '../configs/gate';
 import { useGetMalfunctionKruzapButtons } from './useGetMalfunctionKruzapButtons';
 import { TypeButtons } from './useGateControlButtons';
 import { TimeShutdownInputBreaker } from './usePtkButtons';
-import { togglePointState } from '@/store/pointsSlice';
 import {
 	createTickSnapshotFromPreset,
 	dispatchSimulationCommand,
 	gateControlPresets,
 } from '@/features/scheme-simulation';
+import { dispatchInputBreakerSwitchCommand } from '@/store/inputBreakerSlice';
 
 const timeStepIntervalGateMoving = 100;
 const newTimeShutdownInputBreaker =
@@ -313,19 +312,7 @@ export const useKruzapButtons = () => {
 							timerTriggeringInputAutomaton.current ===
 							newTimeShutdownInputBreaker
 						) {
-							INPUT_CIRCUIT_BREAKER_ID.forEach(item =>
-								dispatch(
-									setResistance({
-										id: item,
-										value: BASE_RESISTANCE_CONSTANT.highResistance,
-									}),
-								),
-							);
-							INPUT_CIRCUIT_BREAKER_OUTPUTS_POINTS_ID.forEach(
-								point => {
-									dispatch(togglePointState(point));
-								},
-							);
+							dispatch(dispatchInputBreakerSwitchCommand('off'));
 							stopKruzapMovement();
 						}
 						timerTriggeringInputAutomaton.current++;
@@ -389,19 +376,7 @@ export const useKruzapButtons = () => {
 							timerTriggeringInputAutomaton.current ===
 							newTimeShutdownInputBreaker
 						) {
-							INPUT_CIRCUIT_BREAKER_ID.forEach(item =>
-								dispatch(
-									setResistance({
-										id: item,
-										value: BASE_RESISTANCE_CONSTANT.highResistance,
-									}),
-								),
-							);
-							INPUT_CIRCUIT_BREAKER_OUTPUTS_POINTS_ID.forEach(
-								point => {
-									dispatch(togglePointState(point));
-								},
-							);
+							dispatch(dispatchInputBreakerSwitchCommand('off'));
 							stopKruzapMovement();
 						}
 						timerTriggeringInputAutomaton.current++;

@@ -1,42 +1,18 @@
 'use client';
 import styles from './styles.module.scss';
-import { FC, useEffect, useRef } from 'react';
-import { useSwitchingTumbler } from '@/shared/hooks/useSwitchingTumbler';
-import { BASE_RESISTANCE } from '@/shared/configs/schemeElements';
-import { CONTROL_CIRCUIT_BREAKER_ID } from '@/shared/configs/controlCircuit/constants';
-import { BASE_RESISTANCE_CONSTANT } from '@/shared/configs/elementKind';
-import { useDebounce } from '@/shared/hooks/useDebounce';
-import { useAppDispatch } from '@/shared/hooks/store';
-import { setResistance } from '@/store/circuitSlice';
+import { FC } from 'react';
 import { SwitchMode } from '@/shared/types/switch';
 
 interface Props {
 	mode: SwitchMode;
+	onModeCommit?: (mode: SwitchMode) => void;
 }
 
-const Tumbler: FC<Props> = ({ mode }) => {
-	const handleRef = useRef<HTMLDivElement | null>(null);
-
-	// логика перемещения тумблера внутри кастомного хука
-	const { currentMode, onMouseDown } = useSwitchingTumbler(handleRef, mode);
-
-	const dispatch = useAppDispatch();
-
-	const debouncedMode = useDebounce(currentMode, 1000);
-
-	// Диспатчим debounced значение в store
-	useEffect(() => {
-		const resistance =
-			debouncedMode === 'on'
-				? BASE_RESISTANCE[CONTROL_CIRCUIT_BREAKER_ID]
-				: BASE_RESISTANCE_CONSTANT.highResistance;
-		dispatch(
-			setResistance({
-				id: CONTROL_CIRCUIT_BREAKER_ID,
-				value: resistance,
-			}),
-		);
-	}, [debouncedMode, dispatch]);
+const Tumbler: FC<Props> = ({ mode, onModeCommit }) => {
+	const handleClick = () => {
+		const nextMode: SwitchMode = mode === 'on' ? 'off' : 'on';
+		onModeCommit?.(nextMode);
+	};
 
 	return (
 		<div className={styles.box}>
@@ -51,11 +27,10 @@ const Tumbler: FC<Props> = ({ mode }) => {
 			</div>
 			<div className={styles.tumbler}>
 				<div
-					ref={handleRef}
 					className={`${styles.tumbler__handle} ${
-						currentMode === 'off' && styles.tumbler__handle_off
+						mode === 'off' && styles.tumbler__handle_off
 					} `}
-					onMouseDown={onMouseDown}
+					onClick={handleClick}
 				/>
 			</div>
 			<div className={styles.box__title}>
