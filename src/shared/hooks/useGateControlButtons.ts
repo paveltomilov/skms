@@ -38,6 +38,7 @@ export const useGateControlButtons = () => {
 	const stopGateMovement = (type: TypeButtonsMode) => {
 		if (type === 'ptk') {
 			ptkButtons.stopPtkMovement();
+			kruzapButtons.stopKruzapMovement();
 		} else {
 			kruzapButtons.stopKruzapMovement();
 		}

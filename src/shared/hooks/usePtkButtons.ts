@@ -348,7 +348,10 @@ export const usePtkButtons = () => {
 					tickResult.limitSwitchOpenResistance,
 					tickResult.limitSwitchCloseResistance,
 				);
-				if (tickResult.shouldStop) {
+				if (
+					tickResult.shouldStop ||
+					tickResult.shouldTriggerInputBreakerShutdownTimer
+				) {
 					// при наличии неисправности запуск таймера на отключения вводного автомата
 					if (hasMalfunctionStuckContactSwitchOpenElement) {
 						let timerTriggeringInputAutomaton = 0;
@@ -369,8 +372,9 @@ export const usePtkButtons = () => {
 							console.info(
 								'Задвижка полностью открыта. Положение: 100%',
 							);
+							timerTriggeringInputAutomaton++;
 							if (
-								timerTriggeringInputAutomaton ===
+								timerTriggeringInputAutomaton >=
 								TimeShutdownInputBreaker
 							) {
 								dispatch(
@@ -396,8 +400,6 @@ export const usePtkButtons = () => {
 								}
 								stopPtkMovement();
 							}
-
-							timerTriggeringInputAutomaton++;
 						}, TimeUpdateInterval);
 					} else {
 						// При достижении 100% размыкаем кнопку ПТК "открыть"
@@ -464,7 +466,10 @@ export const usePtkButtons = () => {
 					tickResult.limitSwitchCloseResistance,
 				);
 
-				if (tickResult.shouldStop) {
+				if (
+					tickResult.shouldStop ||
+					tickResult.shouldTriggerInputBreakerShutdownTimer
+				) {
 					// при наличии неисправности запуск таймера на отключения вводного автомата
 					if (hasMalfunctionStuckContactSwitchCloseElement) {
 						let timerTriggeringInputAutomaton = 0;
@@ -485,8 +490,9 @@ export const usePtkButtons = () => {
 							console.info(
 								'Задвижка полностью закрыта. Положение: 0%',
 							);
+							timerTriggeringInputAutomaton++;
 							if (
-								timerTriggeringInputAutomaton ===
+								timerTriggeringInputAutomaton >=
 								TimeShutdownInputBreaker
 							) {
 								dispatch(
@@ -512,8 +518,6 @@ export const usePtkButtons = () => {
 								}
 								stopPtkMovement();
 							}
-
-							timerTriggeringInputAutomaton++;
 						}, TimeUpdateInterval);
 					} else {
 						// При достижении 0% размыкаем кнопку ПТК "закрыть"
