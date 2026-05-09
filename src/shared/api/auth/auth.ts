@@ -1,12 +1,14 @@
 import axios from 'axios';
-import {deleteCookie, getCookie, setCookie} from 'cookies-next';
+import { deleteCookie, getCookie, setCookie } from 'cookies-next';
 import { LoginFormData, LoginResponse } from '@/shared/types/login';
 import {
 	accessToken,
 	initializeInterceptors,
 	setAccessToken,
 } from '@/shared/api/config/interceptors';
-import {deleteRefreshToken} from '@/shared/api/auth/deleteRefreshToken';
+import { deleteRefreshToken } from '@/shared/api/auth/deleteRefreshToken';
+import { tryRefreshToken } from './tryRefreshToken';
+import { verifyToken } from './verifyAccessToken';
 
 const urlBase = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -30,16 +32,63 @@ export function initAccessFromStorage() {
 	if (stored) setAccessToken(stored);
 }
 
+let authCache: { token: string; valid: boolean } | null = null;
+
 export async function checkAuth(): Promise<{ valid: boolean }> {
 	ensureInterceptorsInitialized();
 	const access = localStorage.getItem('accessToken');
 
+	//  При отсутствии токена проверка не валидна
 	if (!access) {
 		logout();
 		return { valid: false };
 	}
+	// Если токен не изменился токен валидный
+	if (authCache?.token === access) {
+		return { valid: authCache.valid };
+	}
 
-	return { valid: true };
+	try {
+		const isValid = await verifyToken(access);
+		if (isValid) {
+			authCache = { token: access, valid: true };
+			return { valid: true };
+		}
+
+		const newToken = await tryRefreshToken();
+		if (newToken) {
+			const isValid = await verifyToken(newToken);
+			if (isValid) {
+				authCache = { token: newToken, valid: true };
+				return { valid: true };
+			}
+		}
+
+		authCache = null;
+		logout();
+		return { valid: false };
+	} catch (error) {
+		console.warn('Ошибка проверки токена, пробуем рефреш:', error);
+		const newToken = await tryRefreshToken();
+		if (newToken) {
+			try {
+				const isValid = await verifyToken(newToken);
+				if (isValid) {
+					authCache = { token: newToken, valid: true };
+					return { valid: true };
+				}
+			} catch (verifyError) {
+				console.warn(
+					'Верификация нового токена не удалась:',
+					verifyError,
+				);
+			}
+		}
+		console.error('Проверка авторизации упала:', error);
+		authCache = null;
+		logout();
+		return { valid: false };
+	}
 }
 
 export async function postAuth(
@@ -59,14 +108,12 @@ export async function postAuth(
 		const response = await axios.post<LoginResponse>(
 			`${urlBase}/auth/`,
 			{
-					email: formData.email,
-					password: formData.password,
-					remember: remember,
+				email: formData.email,
+				password: formData.password,
+				remember: remember,
 			},
-			{withCredentials: true}
-			)
-		;
-
+			{ withCredentials: true },
+		);
 		const { access, first_name, last_name, role } = response.data;
 
 		if (!access) {
