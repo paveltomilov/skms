@@ -88,6 +88,15 @@ export const projectInputBreakerContacts = (
 	return projectedContacts;
 };
 
+export const shouldFalseTrip = (
+	mechanicalState: InputBreakerMechanicalState,
+	faultState: InputBreakerFaultState,
+): boolean => {
+	const isNotOffState = mechanicalState !== 'off';
+
+	return faultState.hasFalseTrigger && isNotOffState;
+};
+
 const hasTemplateMalfunction = (
 	malfunctions: Malfunction[],
 	name: string,

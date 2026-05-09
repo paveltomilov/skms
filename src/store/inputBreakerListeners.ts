@@ -7,6 +7,7 @@ import {
 } from './inputBreakerSlice';
 import {
 	getInputBreakerFaultState,
+	shouldFalseTrip,
 	type InputBreakerMechanicalState,
 	type InputBreakerTransitionStatus,
 } from '@/features/scheme-simulation/model/engine/inputBreakerProjection';
@@ -36,8 +37,7 @@ export const createInputBreakerListenerMiddleware = () => {
 				return;
 			}
 
-			const shouldFailAssemble =
-				targetFromState === 'on' && faultState.hasFalseTrigger;
+			const shouldFailAssemble = shouldFalseTrip(targetFromState, faultState);
 
 			const nextMechanicalState: InputBreakerMechanicalState = shouldFailAssemble
 				? 'off'

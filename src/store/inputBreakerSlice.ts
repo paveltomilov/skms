@@ -9,6 +9,7 @@ import type { RootState } from './store';
 import {
 	getInputBreakerFaultState,
 	projectInputBreakerContacts,
+	shouldFalseTrip,
 	type InputBreakerMechanicalState,
 	type InputBreakerTransitionStatus,
 } from '@/features/scheme-simulation/model/engine/inputBreakerProjection';
@@ -61,8 +62,10 @@ export const syncInputBreakerContactsFromScheme = (): AppThunk => {
 	return (dispatch, getState) => {
 		const state = getState();
 		const faultState = getInputBreakerFaultState(state.circuit);
-		const shouldFalseTripOnSync =
-			faultState.hasFalseTrigger && state.inputBreaker.mechanicalState !== 'off';
+		const shouldFalseTripOnSync = shouldFalseTrip(
+			state.inputBreaker.mechanicalState,
+			faultState,
+		);
 		const mechanicalStateForProjection: InputBreakerMechanicalState =
 			shouldFalseTripOnSync ? 'off' : state.inputBreaker.mechanicalState;
 
