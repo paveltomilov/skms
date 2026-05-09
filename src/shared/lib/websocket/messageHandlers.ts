@@ -22,6 +22,7 @@ import { GATE_STATE_TYPE } from '@/shared/types/gate';
 import {
 	resetSimulation,
 	setCompletedSimulationId,
+	setFinishingByStudent,
 	setManualAbort,
 	setSimulation,
 } from '@/store/simulationSlice';
@@ -29,7 +30,7 @@ import {
 	activateMalfunction,
 	deactivateMalfunction,
 } from '@/store/circuitSlice';
-import { openModal } from '@/store/modalSlice';
+import { closeModal, openModal } from '@/store/modalSlice';
 import { updateList } from '@/store/updateListSlice';
 
 /**
@@ -168,6 +169,8 @@ export function createMessageHandler(
 					| SimulationFinishedTeacherMessage;
 				const completedId = finishedMessage.simulation_id;
 				const isManualAbort = getState?.().simulation.isManualAbort;
+				const isFinishingByStudent =
+					getState?.().simulation.isFinishingByStudent;
 
 				// Обрабатываем завершение симуляции
 				if (getState) {
@@ -196,9 +199,15 @@ export function createMessageHandler(
 				}
 
 				// Открываем модалку о завершении симуляции в учетной завписи студента
-				if (!('student_name' in finishedMessage) && !isManualAbort) {
+				if (
+					!('student_name' in finishedMessage) &&
+					!isManualAbort &&
+					!isFinishingByStudent
+				) {
+					dispatch(closeModal('simulationComplete'));
 					dispatch(openModal('simulationInterrupted'));
 				}
+				dispatch(setFinishingByStudent(false));
 
 				console.info(
 					'[WebSocket] Симуляция завершена:',

@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Презентация: Обучение ТАИ</title>
+    <style>
+      :root {
+        --bg: #071226;
+        --bg-soft: #0b1b33;
+        --surface: rgba(11, 27, 51, 0.84);
+        --surface-border: rgba(148, 163, 184, 0.24);
+        --text: #e2e8f0;
+        --text-strong: #f8fafc;
+        --primary: #60a5fa;
+        --accent: #38bdf8;
+        --muted: #94a3b8;
+        --shadow-lg: 0 24px 48px rgba(3, 8, 19, 0.45);
+        --radius-lg: 24px;
+        --radius-md: 12px;
+        --container-width: 1120px;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family:
+          system-ui,
+          -apple-system,
+          'Segoe UI',
+          Roboto,
+          sans-serif;
+        background:
+          radial-gradient(
+            1200px 700px at 10% 5%,
+            rgba(56, 189, 248, 0.18),
+            transparent 55%
+          ),
+          radial-gradient(
+            900px 600px at 90% 90%,
+            rgba(96, 165, 250, 0.14),
+            transparent 65%
+          ),
+          linear-gradient(145deg, var(--bg) 0%, var(--bg-soft) 100%);
+        color: var(--text);
+        overflow: hidden;
+        height: 100vh;
+      }
+      .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--accent), var(--primary));
+        width: 0%;
+        transition: width 0.3s ease;
+        z-index: 100;
+        box-shadow: 0 2px 10px rgba(56, 189, 248, 0.45);
+      }
+      .slides {
+        position: relative;
+        height: 100vh;
+      }
+      .slide {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+        opacity: 0;
+        transform: translateX(20px);
+        transition:
+          opacity 0.5s ease,
+          transform 0.5s ease;
+        z-index: 1;
+      }
+      .slide::before {
+        content: '';
+        position: absolute;
+        inset: 4.5rem 4.5rem 5.5rem;
+        background: var(--surface);
+        border: 1px solid var(--surface-border);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-lg);
+        backdrop-filter: blur(8px);
+        z-index: -1;
+      }
+      .slide.active {
+        opacity: 1;
+        transform: translateX(0);
+        z-index: 2;
+      }
+      .slide > * {
+        max-width: var(--container-width);
+      }
+      .slide h1 {
+        font-size: clamp(2.2rem, 3.8vw, 3.6rem);
+        margin-bottom: 1.5rem;
+        text-align: center;
+        line-height: 1.2;
+        color: var(--text-strong);
+      }
+      .slide h2 {
+        font-size: clamp(1.85rem, 2.7vw, 2.4rem);
+        margin-bottom: 1rem;
+        color: var(--primary);
+        text-align: center;
+      }
+      .slide p,
+      .slide ul {
+        font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+        line-height: 1.6;
+        max-width: 1000px;
+        text-align: center;
+      }
+      .slide p {
+        color: var(--text);
+      }
+      .slide ul {
+        list-style: none;
+        margin: 1.2rem 0;
+      }
+      .slide li {
+        margin-bottom: 0.7rem;
+      }
+      .slide li::before {
+        content: '•';
+        color: var(--accent);
+        margin-right: 0.5rem;
+      }
+      .slide .highlight {
+        color: var(--primary);
+        font-weight: 700;
+      }
+      .kicker {
+        color: var(--muted);
+        font-size: 1.1rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        margin-bottom: 0.8rem;
+      }
+      .lead {
+        color: var(--muted);
+        font-size: clamp(1.2rem, 2vw, 1.7rem);
+      }
+      .meta {
+        margin-top: 1.6rem;
+      }
+      .flow-note {
+        margin-top: 1rem;
+        color: var(--muted);
+        font-weight: 500;
+      }
+      .badge-row {
+        margin-top: 1.5rem;
+        font-weight: 700;
+        color: var(--text-strong);
+      }
+      .code-chip {
+        margin: 0.5rem 0;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          'Liberation Mono', 'Courier New', monospace;
+        background: rgba(148, 163, 184, 0.14);
+        border: 1px solid rgba(148, 163, 184, 0.24);
+        color: var(--text-strong);
+        padding: 0.7rem 1rem;
+        border-radius: var(--radius-md);
+      }
+      .two-col {
+        display: flex;
+        gap: 2rem;
+        margin-top: 1.2rem;
+        align-items: stretch;
+      }
+      .two-col > div {
+        text-align: left;
+        flex: 1;
+        background: rgba(15, 23, 42, 0.45);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: var(--radius-md);
+        padding: 1rem 1.2rem;
+      }
+      .two-col ul {
+        text-align: left;
+      }
+      .two-col-title {
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: var(--text-strong);
+      }
+      .demo-list {
+        text-align: left !important;
+        max-width: 600px !important;
+        margin: 1.5rem auto !important;
+      }
+      .result-list {
+        text-align: left !important;
+        max-width: 500px !important;
+        margin: 1.5rem auto !important;
+      }
+      .slide .placeholder {
+        margin-top: 1.5rem;
+        padding: 2rem;
+        border: 2px dashed rgba(148, 163, 184, 0.45);
+        border-radius: var(--radius-md);
+        color: var(--muted);
+        background: rgba(15, 23, 42, 0.4);
+      }
+      .qr-placeholder {
+        width: 200px;
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 1rem;
+      }
+      .controls {
+        position: fixed;
+        bottom: 1.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 1rem;
+        z-index: 100;
+      }
+      .controls button {
+        padding: 0.7rem 1.5rem;
+        font-size: 1rem;
+        cursor: pointer;
+        border: 1px solid rgba(96, 165, 250, 0.55);
+        background: rgba(15, 23, 42, 0.86);
+        color: var(--text-strong);
+        border-radius: 10px;
+        transition:
+          background 0.2s,
+          transform 0.2s,
+          border-color 0.2s;
+      }
+      .controls button:hover {
+        background: rgba(30, 64, 175, 0.82);
+        border-color: rgba(56, 189, 248, 0.8);
+        transform: translateY(-1px);
+      }
+      .controls button:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+      .controls button:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+      .counter {
+        position: fixed;
+        bottom: 1.5rem;
+        right: 2rem;
+        font-size: 1.1rem;
+        color: var(--text);
+        z-index: 100;
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px solid rgba(148, 163, 184, 0.3);
+        border-radius: 999px;
+        padding: 0.3rem 0.8rem;
+      }
+      .footer-note {
+        position: fixed;
+        bottom: 1.5rem;
+        left: 2rem;
+        font-size: 0.9rem;
+        color: var(--muted);
+        z-index: 100;
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px solid rgba(148, 163, 184, 0.3);
+        border-radius: 999px;
+        padding: 0.3rem 0.8rem;
+      }
+      @media (max-width: 1100px) {
+        .slide::before {
+          inset: 3rem 2rem 5rem;
+        }
+        .slide {
+          padding: 1rem 1.2rem;
+        }
+        .two-col {
+          flex-direction: column;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .slide,
+        .progress-bar,
+        .controls button {
+          transition: none !important;
+        }
+      }
+      @media print {
+        body {
+          background: #ffffff;
+          color: #0f172a;
+        }
+        .slide {
+          position: static;
+          opacity: 1;
+          transform: none;
+          padding: 1.5rem;
+          page-break-after: always;
+        }
+        .slide::before {
+          display: none;
+        }
+        .slide h1,
+        .slide h2,
+        .slide p,
+        .slide li,
+        .slide .highlight {
+          color: #0f172a !important;
+        }
+        .controls,
+        .counter,
+        .progress-bar,
+        .footer-note {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-bar"></div>
+
+    <main class="slides">
+      <!-- Слайд 1 -->
+      <section class="slide">
+        <h1>
+          Приложение для обучения работников цехов ТАИ<br />действиям в
+          аварийных ситуациях
+        </h1>
+        <p style="color: var(--muted); font-size: 1.8rem">
+          Практико-ориентированное обучение через интерактивные симуляции
+        </p>
+        <p style="margin-top: 2rem">[ФИО руководителя] • [Дата]</p>
+      </section>
+
+      <!-- Слайд 2 -->
+      <section class="slide">
+        <h2>Проблема: почему это важно</h2>
+        <ul>
+          <li>
+            📊 <span class="highlight">70%</span> несчастных случаев —
+            сотрудники со стажем &lt; 1 года
+          </li>
+          <li>
+            ⚠️ <span class="highlight">80%</span> инцидентов — у формально
+            обученных сотрудников
+          </li>
+          <li>
+            ❗ Разрыв между теорией и реальными действиями в критический момент
+          </li>
+        </ul>
+      </section>
+
+      <!-- Слайд 3 -->
+      <section class="slide">
+        <h2>Цель проекта</h2>
+        <p>
+          Снизить риски аварий и травм, переводя обучение из формального в
+          практико-ориентированное:
+        </p>
+        <ul>
+          <li>Интерактивные сценарии</li>
+          <li>Принятие решений в условиях, приближенных к реальным</li>
+          <li>Немедленная обратная связь</li>
+        </ul>
+      </section>
+
+      <!-- Слайд 4 -->
+      <section class="slide">
+        <h2>Преимущества решения</h2>
+        <ul>
+          <li>📱 Гибкий интерфейс — адаптация под разные устройства</li>
+          <li>🌐 Онлайн-доступ — обучение из любой точки</li>
+          <li>📊 Единое качество — стандартизация подготовки</li>
+        </ul>
+        <p style="margin-top: 1.5rem; font-weight: 600">
+          ✓ Масштабируемо &nbsp; ✓ Дистанционно &nbsp; ✓ Эффективно
+        </p>
+      </section>
+
+      <!-- Слайд 5 -->
+      <section class="slide">
+        <h2>Фронтенд: интерактивная схема</h2>
+        <p>
+          Интерактивная электротехническая схема, где каждое действие влияет на
+          состояние элементов:
+        </p>
+        <ul>
+          <li>Точки, сопротивления, контакты</li>
+          <li>Пересчёт до стабильного результата</li>
+          <li>Реальное время, а не «статичная картинка»</li>
+        </ul>
+        <p style="margin-top: 1rem; color: var(--muted)">
+          Действие → Состояние → Пересчёт → Обновление UI
+        </p>
+      </section>
+
+      <!-- Слайд 6 -->
+      <section class="slide">
+        <h2>Фронтенд: realtime и устойчивость</h2>
+        <p>WebSocket-слой с контролем соединения:</p>
+        <ul>
+          <li>🔄 Auto-reconnect (переподключение)</li>
+          <li>📦 Message queue (очередь сообщений)</li>
+          <li>💾 State recovery (восстановление состояния)</li>
+        </ul>
+        <p style="margin-top: 1.5rem; color: var(--muted)">
+          Сервер → WebSocket Manager → Redux → UI
+        </p>
+      </section>
+
+      <!-- Слайд 7 -->
+      <section class="slide">
+        <h2>Фронтенд: архитектура состояния</h2>
+        <p>Redux-слайсы по доменным зонам:</p>
+        <p
+          style="
+            margin: 0.5rem 0;
+            font-family: monospace;
+            background: #e2e8f0;
+            padding: 0.5rem;
+            border-radius: 4px;
+          "
+        >
+          Simulation | Circuit | Timer | Modals | Progress
+        </p>
+        <ul>
+          <li>Сохранение критичных данных между сессиями</li>
+        </ul>
+        <p style="margin-top: 1rem">
+          Login → Scenario → Simulation → Complete → Analytics
+        </p>
+      </section>
+
+      <!-- Слайд 8 -->
+      <section class="slide">
+        <h2>Бэкенд: серверная архитектура</h2>
+        <p>Поддержка запуска и сопровождения симуляций:</p>
+        <ul>
+          <li>🌐 REST API — управляемые операции (Auth, Scenarios, Results)</li>
+          <li>⚡ WebSocket — realtime-события (Simulation events, Updates)</li>
+          <li>🔐 Модель ролей и контроль доступа</li>
+        </ul>
+      </section>
+
+      <!-- Слайд 9 -->
+      <section class="slide">
+        <h2>Дизайн: UX для безопасности</h2>
+        <p>Дизайн для безопасности, а не декоративности. 4 принципа:</p>
+        <ul>
+          <li>👁️ Фокус внимания — приоритетные зоны</li>
+          <li>🚦 Контраст состояний — норма / предупреждение / авария</li>
+          <li>🔁 Предсказуемость — единые паттерны</li>
+          <li>📱 Адаптивность — читаемость на любых экранах</li>
+        </ul>
+      </section>
+
+      <!-- Слайд 10 -->
+      <section class="slide">
+        <h2>QA: контроль качества</h2>
+        <p>Два направления проверок:</p>
+        <div style="display: flex; gap: 3rem; margin-top: 1.5rem">
+          <div style="text-align: left; flex: 1">
+            <p style="font-weight: 600; margin-bottom: 0.5rem">
+              🔧 Логика симуляции
+            </p>
+            <ul style="text-align: left">
+              <li>Корректность расчетов</li>
+              <li>Сценарии неисправностей</li>
+            </ul>
+          </div>
+          <div style="text-align: left; flex: 1">
+            <p style="font-weight: 600; margin-bottom: 0.5rem">
+              👤 Пользовательские сценарии
+            </p>
+            <ul style="text-align: left">
+              <li>End-to-end тесты</li>
+              <li>Network failure tests</li>
+              <li>Обработка ошибок</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Слайд 11 -->
+      <section class="slide">
+        <h2>Демонстрация работы приложения</h2>
+        <ul style="text-align: left; max-width: 600px; margin: 1.5rem auto">
+          <li>🎬 Запуск сценария</li>
+          <li>⚙️ Прохождение ключевого этапа</li>
+          <li>📊 Результаты и аналитика</li>
+        </ul>
+        <p style="margin-top: 1.5rem">
+          ⏱️ Тайминг: 2:30 мин &nbsp; | &nbsp; 📹 Video backup ready
+        </p>
+      </section>
+
+      <!-- Слайд 12 -->
+      <section class="slide">
+        <h2>Демо: процесс работы</h2>
+        <div class="placeholder">
+          [Вставьте скриншоты или видео здесь]<br />
+          Экран 1: Выбор сценария → Экран 2: Схема в процессе → Экран 3:
+          Завершение
+        </div>
+        <p style="margin-top: 1.5rem; color: var(--muted)">
+          ▶️ Нажмите пробел или кликните для перехода к видео/демо
+        </p>
+      </section>
+
+      <!-- Слайд 13 -->
+      <section class="slide">
+        <h2>Демо: результаты</h2>
+        <ul style="text-align: left; max-width: 500px; margin: 1.5rem auto">
+          <li>⏱️ Время прохождения: <span class="highlight">4:32</span></li>
+          <li>
+            ❌ Ошибки: <span class="highlight">1</span> (неверная
+            последовательность)
+          </li>
+          <li>🎯 Точность действий: <span class="highlight">85%</span></li>
+        </ul>
+        <p style="margin-top: 1.5rem">
+          📈 Детальный разбор для пользователя<br />📋 Статистика группы для
+          преподавателя
+        </p>
+      </section>
+
+      <!-- Слайд 14 -->
+      <section class="slide">
+        <h2>Результаты и развитие</h2>
+        <ul>
+          <li>✅ Создано рабочее приложение</li>
+          <li>✅ Практический навык вместо теории</li>
+          <li>✅ Устойчивая realtime-архитектура</li>
+          <li>✅ UX для снижения ошибок</li>
+        </ul>
+        <p style="margin-top: 1.5rem; font-weight: 600">
+          🚀 Roadmap: расширение сценариев → углубление аналитики →
+          масштабирование
+        </p>
+      </section>
+
+      <!-- Слайд 15 -->
+      <section class="slide">
+        <h1>Вопросы и ответы</h1>
+        <p style="margin: 2rem 0">📧 [Email] &nbsp; | &nbsp; 📞 [Телефон]</p>
+        <div
+          class="placeholder"
+          style="
+            width: 200px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1rem;
+          "
+        >
+          [QR-код на демо]
+        </div>
+      </section>
+    </main>
+
+    <div class="controls">
+      <button class="prev">← Назад</button>
+      <button class="next">Далее →</button>
+    </div>
+    <div class="counter">1 / 15</div>
+    <div class="footer-note">Нажмите ← → или Пробел для навигации</div>
+
+    <script>
+      const slides = document.querySelectorAll('.slide');
+      const progressBar = document.querySelector('.progress-bar');
+      const counter = document.querySelector('.counter');
+      const prevBtn = document.querySelector('.prev');
+      const nextBtn = document.querySelector('.next');
+      let current = 0;
+
+      function updateSlide() {
+        slides.forEach((s, i) => {
+          s.classList.toggle('active', i === current);
+        });
+        progressBar.style.width = `${((current + 1) / slides.length) * 100}%`;
+        counter.textContent = `${current + 1} / ${slides.length}`;
+        prevBtn.disabled = current === 0;
+        nextBtn.disabled = current === slides.length - 1;
+      }
+
+      function next() {
+        if (current < slides.length - 1) {
+          current++;
+          updateSlide();
+        }
+      }
+      function prev() {
+        if (current > 0) {
+          current--;
+          updateSlide();
+        }
+      }
+
+      prevBtn.addEventListener('click', prev);
+      nextBtn.addEventListener('click', next);
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') next();
+        if (e.key === 'ArrowLeft') prev();
+      });
+
+      updateSlide();
+    </script>
+  </body>
+</html>

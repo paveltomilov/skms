@@ -16,6 +16,7 @@ import simulationReducer from './simulationSlice';
 import emergencyStatusReducer from './emergencyStatusSlice';
 import timerReducer from './timerSlice';
 import inputBreakerReducer from './inputBreakerSlice';
+import { createInputBreakerListenerMiddleware } from './inputBreakerListeners';
 
 const rootReducer = combineReducers({
 	updateList: updateListReducer,
@@ -38,10 +39,11 @@ const rootReducer = combineReducers({
 const persistConfig = {
 	key: 'appWindows',
 	storage,
-	whitelist: ['windows', 'percent', 'simulation', 'timer'], // cписок reduces сохраняемых в localStorage
+	whitelist: ['windows', 'percent', 'simulation', 'timer', 'inputBreaker'], // cписок reduces сохраняемых в localStorage
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
+const inputBreakerListenerMiddleware = createInputBreakerListenerMiddleware();
 
 const store = configureStore({
 	reducer: persistedReducer,
@@ -52,7 +54,7 @@ const store = configureStore({
 				// Увеличиваем порог предупреждения для больших состояний
 				warnAfter: 128, // по умолчанию 32ms
 			},
-		}),
+		}).prepend(inputBreakerListenerMiddleware.middleware),
 });
 
 export const persistor = persistStore(store);

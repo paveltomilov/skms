@@ -17,14 +17,15 @@ import { findElementByID } from '@/shared/utils/findElementByID/scheme';
 export interface InputBreakerState {
 	mechanicalState: InputBreakerMechanicalState;
 	transitionStatus: InputBreakerTransitionStatus;
+	pendingTarget: 'on' | 'off' | null;
 }
 
-const SWITCH_TRANSITION_DELAY_MS = 100;
-let transitionTimer: ReturnType<typeof setTimeout> | null = null;
+export const SWITCH_TRANSITION_DELAY_MS = 100;
 
 const initialState: InputBreakerState = {
 	mechanicalState: 'on',
 	transitionStatus: 'idle',
+	pendingTarget: null,
 };
 
 const inputBreakerSlice = createSlice({
@@ -38,6 +39,7 @@ const inputBreakerSlice = createSlice({
 			state.mechanicalState =
 				action.payload.target === 'on' ? 'turning_on' : 'turning_off';
 			state.transitionStatus = 'idle';
+			state.pendingTarget = action.payload.target;
 		},
 		finishTransition(
 			state,
@@ -48,6 +50,7 @@ const inputBreakerSlice = createSlice({
 		) {
 			state.mechanicalState = action.payload.mechanicalState;
 			state.transitionStatus = action.payload.transitionStatus;
+			state.pendingTarget = null;
 		},
 	},
 });
@@ -89,38 +92,8 @@ export const syncInputBreakerContactsFromScheme = (): AppThunk => {
 export const dispatchInputBreakerSwitchCommand = (
 	target: 'on' | 'off',
 ): AppThunk => {
-	return (dispatch, getState) => {
-		if (transitionTimer) {
-			clearTimeout(transitionTimer);
-			transitionTimer = null;
-		}
-
+	return dispatch => {
 		dispatch(startTransition({ target }));
-		transitionTimer = setTimeout(() => {
-			const state = getState();
-			const faultState = getInputBreakerFaultState(state.circuit);
-			const shouldFailAssemble = target === 'on' && faultState.hasFalseTrigger;
-
-			const nextMechanicalState: InputBreakerMechanicalState = shouldFailAssemble
-				? 'off'
-				: target === 'on'
-					? 'on'
-					: 'off';
-			const nextTransitionStatus: InputBreakerTransitionStatus =
-				shouldFailAssemble
-					? 'assemble_failed'
-					: target === 'on'
-						? 'assembled'
-						: 'disassembled';
-
-			dispatch(
-				finishTransition({
-					mechanicalState: nextMechanicalState,
-					transitionStatus: nextTransitionStatus,
-				}),
-			);
-			dispatch(syncInputBreakerContactsFromScheme());
-		}, SWITCH_TRANSITION_DELAY_MS);
 	};
 };
 

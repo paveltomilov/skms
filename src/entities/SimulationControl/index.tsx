@@ -2,13 +2,14 @@ import { FC } from 'react';
 import styles from './styles.module.scss';
 import cn from 'classnames';
 import Button from '@/shared/UI/Button';
-import { openModal } from '@/store/modalSlice';
+import { closeModal, openModal } from '@/store/modalSlice';
 import Timer from '../Timer';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store';
 import { stopSimulation } from '@/shared/api';
 import {
 	resetSimulation,
 	setCompletedSimulationId,
+	setFinishingByStudent,
 } from '@/store/simulationSlice';
 import { deactivateMalfunction } from '@/store/circuitSlice';
 import { setActiveGate, setGateMalfunctions } from '@/store/gateSlice';
@@ -27,6 +28,7 @@ const SimulationControl: FC<{ className?: string }> = ({ className }) => {
 				simulation.foundMalfunctionIds.length;
 
 		if (allMalfunctionsFound) {
+			dispatch(setFinishingByStudent(true));
 			if (simulation.simulationId !== null) {
 				try {
 					await stopSimulation(simulation.simulationId);
@@ -54,11 +56,13 @@ const SimulationControl: FC<{ className?: string }> = ({ className }) => {
 
 			dispatch(setActiveGate(null));
 			dispatch(resetSimulation());
+			dispatch(setFinishingByStudent(true));
 			if (completedId) {
 				dispatch(setCompletedSimulationId(completedId));
 			}
 
 			// Открываем попап о завершении симуляции
+			dispatch(closeModal('simulationInterrupted'));
 			dispatch(openModal('simulationComplete'));
 		} else {
 			// Если не все неисправности найдены, показываем предупреждение

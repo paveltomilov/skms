@@ -8,6 +8,7 @@ export interface SimulationState {
 	originalMalfunctions: Malfunction[];
 	foundMalfunctionIds: string[];
 	isManualAbort: boolean;
+	isFinishingByStudent: boolean;
 }
 
 const initialState: SimulationState = {
@@ -17,6 +18,7 @@ const initialState: SimulationState = {
 	originalMalfunctions: [],
 	foundMalfunctionIds: [],
 	isManualAbort: false,
+	isFinishingByStudent: false,
 };
 
 interface StartSimulationPayload {
@@ -48,6 +50,7 @@ const simulationSlice = createSlice({
 					...malfunction,
 				}));
 			state.foundMalfunctionIds = [];
+			state.isFinishingByStudent = false;
 		},
 		setSimulation: (state, action: PayloadAction<SetSimulationPayload>) => {
 			// Устанавливаем данные симуляции из WebSocket сообщения инициализации
@@ -64,6 +67,7 @@ const simulationSlice = createSlice({
 				active: true,
 			}));
 			state.foundMalfunctionIds = [];
+			state.isFinishingByStudent = false;
 		},
 		markMalfunctionAsFound: (state, action: PayloadAction<string>) => {
 			const malfunctionId = action.payload;
@@ -71,6 +75,14 @@ const simulationSlice = createSlice({
 			if (!state.foundMalfunctionIds.includes(malfunctionId)) {
 				state.foundMalfunctionIds.push(malfunctionId);
 			}
+		},
+		deactivateSimulationMalfunction: (state, action: PayloadAction<string>) => {
+			const malfunctionId = action.payload;
+			state.originalMalfunctions = state.originalMalfunctions.map(malfunction =>
+				malfunction.id === malfunctionId
+					? { ...malfunction, active: false }
+					: malfunction,
+			);
 		},
 		setCompletedSimulationId: (state, action: PayloadAction<number>) => {
 			state.completedSimulationId = action.payload;
@@ -80,6 +92,9 @@ const simulationSlice = createSlice({
 		},
 		setManualAbort(state, action: PayloadAction<boolean>) {
 			state.isManualAbort = action.payload;
+		},
+		setFinishingByStudent(state, action: PayloadAction<boolean>) {
+			state.isFinishingByStudent = action.payload;
 		},
 		resetSimulation: () => {
 			// Сброс/завершение симуляции - возвращаем начальное состояние
@@ -92,9 +107,11 @@ export const {
 	startSimulation,
 	setSimulation,
 	markMalfunctionAsFound,
+	deactivateSimulationMalfunction,
 	setCompletedSimulationId,
 	clearCompletedSimulationId,
 	setManualAbort,
+	setFinishingByStudent,
 	resetSimulation,
 } = simulationSlice.actions;
 
