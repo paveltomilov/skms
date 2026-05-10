@@ -26,7 +26,10 @@ export const implementedMalfunctions: ImplementedMalfunctionsConfigItem[] = [
 	},
 	{
 		elementId: INPUT_BREAKER_CONTACT_PHASE_A_ID,
-		malfunctionIds: [`${INPUT_BREAKER_CONTACT_PHASE_A_ID}.3`],
+		malfunctionIds: [
+			`${INPUT_BREAKER_CONTACT_PHASE_A_ID}.2`,
+			`${INPUT_BREAKER_CONTACT_PHASE_A_ID}.3`,
+		],
 	},
 	// TODO Реализовать логигу работы средств защиты эл.двигателя при данных неисправностях
 	// {

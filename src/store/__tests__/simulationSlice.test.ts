@@ -1,7 +1,9 @@
 import simulationReducer, {
+	deactivateSimulationMalfunction,
 	startSimulation,
 	markMalfunctionAsFound,
 	resetSimulation,
+	setFinishingByStudent,
 	SimulationState,
 } from '../simulationSlice';
 import { Malfunction } from '@/shared/types/scheme';
@@ -14,6 +16,7 @@ describe('simulationSlice', () => {
 		originalMalfunctions: [],
 		foundMalfunctionIds: [],
 		isManualAbort: false,
+		isFinishingByStudent: false,
 	};
 
 	const mockMalfunctions: Malfunction[] = [
@@ -96,6 +99,33 @@ describe('simulationSlice', () => {
 			expect(newState.foundMalfunctionIds).toHaveLength(1);
 			expect(newState.foundMalfunctionIds).toEqual(['m1']);
 		});
+
+		it('должен деактивировать неисправность в originalMalfunctions', () => {
+			const stateWithSimulation: SimulationState = {
+				...initialState,
+				simulationId: 123,
+				originalMalfunctions: mockMalfunctions,
+			};
+
+			const action = deactivateSimulationMalfunction('m1');
+			const newState = simulationReducer(stateWithSimulation, action);
+
+			expect(
+				newState.originalMalfunctions.find(malfunction => malfunction.id === 'm1')
+					?.active,
+			).toBe(false);
+			expect(
+				newState.originalMalfunctions.find(malfunction => malfunction.id === 'm2')
+					?.active,
+			).toBe(true);
+		});
+
+		it('должен устанавливать флаг завершения студентом', () => {
+			const action = setFinishingByStudent(true);
+			const newState = simulationReducer(initialState, action);
+
+			expect(newState.isFinishingByStudent).toBe(true);
+		});
 	});
 
 	describe('завершение', () => {
@@ -125,6 +155,8 @@ describe('simulationSlice', () => {
 				gate: null,
 				originalMalfunctions: mockMalfunctions,
 				foundMalfunctionIds: ['m1'],
+				isManualAbort: false,
+				isFinishingByStudent: false,
 			};
 
 			// Проверяем, что состояние корректно
@@ -141,6 +173,8 @@ describe('simulationSlice', () => {
 				gate: null,
 				originalMalfunctions: mockMalfunctions,
 				foundMalfunctionIds: ['m1', 'm2'],
+				isManualAbort: false,
+				isFinishingByStudent: false,
 			};
 
 			// Проверяем, что originalMalfunctions не изменились

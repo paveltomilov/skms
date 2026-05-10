@@ -1,66 +1,111 @@
 'use client';
 
+// Тумблер автомата управления (цепь управления).
 import Tumbler from '@/shared/UI/Tumbler';
+// SCSS-модули для стилей виджета.
 import styles from './styles.module.scss';
+// Тип компонента Function Component.
 import { FC } from 'react';
+// Переключатель силового вводного автомата.
 import Switcher from '@/shared/UI/Switcher';
+// Кнопки "Открыть/Закрыть" для КРУЗАП.
 import { AutomatButton } from '@/shared/UI/AutomatButton';
 import { useAppSelector } from '@/shared/hooks/store';
-import { findElementByID } from '@/shared/utils/findElementByID/scheme';
-import { CONTROL_CIRCUIT_BREAKER_ID } from '@/shared/configs/controlCircuit/constants';
-import { BASE_RESISTANCE_CONSTANT } from '@/shared/configs/elementKind';
-import { getInputCircuitBreakerState } from '@/shared/utils/getInputCircuitBreakerState/getInputCircuitBreakerState';
+// Единый API управления кнопками задвижки.
 import { useGateControlButtons } from '@/shared/hooks/useGateControlButtons';
+// Состояние ламп индикации ("Открыто"/"Закрыто").
 import { useLampIndicators } from '@/shared/hooks/useLampIndicators';
-import { INPUT_BREAKER_CONTACT_PHASE_A_ID } from '@/shared/configs/powerCircuit/constants';
+import { selectAutomaticPanelState } from '@/features/scheme-simulation';
+import type { SwitchMode } from '@/shared/types/switch';
 
+// Виджет "Автомат" в модальном окне.
 export const Automatic: FC = () => {
-	const { handleButton, stopGateMovement } = useGateControlButtons();
-	const circuit = useAppSelector(store => store.circuit);
+	// Обработчики удержания/остановки движения задвижки.
+	const { handleSimulationCommand } = useGateControlButtons();
+	const { switcherMode, tumblerMode, hasVoltageOnControlBreakerInput } =
+		useAppSelector(selectAutomaticPanelState);
+	const switcherModeState = switcherMode as SwitchMode;
+	const tumblerModeState = tumblerMode as SwitchMode;
+	// Актуальные состояния ламп индикации.
 	const lampIndicators = useLampIndicators();
+	// Лампа "Закрыто".
 	const closedLamp = lampIndicators.find(lamp => lamp.id === 'closed');
+	// Лампа "Открыто".
 	const openLamp = lampIndicators.find(lamp => lamp.id === 'open');
 
-	const controlCircuitBreaker = findElementByID(
-		CONTROL_CIRCUIT_BREAKER_ID,
-		circuit,
-	);
-	const resistancePhaseAInputBreaker = findElementByID(
-		INPUT_BREAKER_CONTACT_PHASE_A_ID,
-		circuit,
-	).resistance;
-
-	const switcherMode = getInputCircuitBreakerState();
-
-	const tumblerMode =
-		controlCircuitBreaker.resistance ===
-			BASE_RESISTANCE_CONSTANT.highResistance ||
-		resistancePhaseAInputBreaker === BASE_RESISTANCE_CONSTANT.highResistance
-			? 'off'
-			: 'on';
-
-	const isAssembled = switcherMode === 'on' && tumblerMode === 'on';
+	// Доступность кнопок: на входе автомата управления есть питание.
+	const isAssembled = Boolean(hasVoltageOnControlBreakerInput);
 
 	return (
+		// Контейнер попапа "Автомат".
 		<div className={styles.automatic}>
+			{/* Блок кнопок управления задвижкой. */}
 			<div className={styles.automatic__buttons}>
 				<AutomatButton
-					state={closedLamp?.isOn ? 'on' : 'off'}
+					// Индикация кнопки "open" берется с лампы "Открыто".
+					state={openLamp?.isOn ? 'on' : 'off'}
+					// Кнопка команды открытия.
 					type="open"
+					// Если автоматы не собраны, кнопки блокируются.
 					disabled={!isAssembled}
-					onMouseDown={() => handleButton('kruzap', 'open')}
-					onMouseUp={() => stopGateMovement('kruzap')}
+					// Запуск движения "открыть" при зажатии.
+					onMouseDown={() =>
+						handleSimulationCommand({
+							type: 'press_open',
+							target: 'kruzap',
+						})
+					}
+					// Остановка движения при отпускании.
+					onMouseUp={() =>
+						handleSimulationCommand({
+							type: 'release',
+							target: 'kruzap',
+						})
+					}
 				/>
 				<AutomatButton
-					state={openLamp?.isOn ? 'on' : 'off'}
+					// Индикация кнопки "close" берется с лампы "Закрыто".
+					state={closedLamp?.isOn ? 'on' : 'off'}
+					// Кнопка команды закрытия.
 					type="close"
+					// Если автоматы не собраны, кнопки блокируются.
 					disabled={!isAssembled}
-					onMouseDown={() => handleButton('kruzap', 'close')}
-					onMouseUp={() => stopGateMovement('kruzap')}
+					// Запуск движения "закрыть" при зажатии.
+					onMouseDown={() =>
+						handleSimulationCommand({
+							type: 'press_close',
+							target: 'kruzap',
+						})
+					}
+					// Остановка движения при отпускании.
+					onMouseUp={() =>
+						handleSimulationCommand({
+							type: 'release',
+							target: 'kruzap',
+						})
+					}
 				/>
 			</div>
-			<Switcher mode={switcherMode} />
-			<Tumbler mode={tumblerMode} />
+			{/* Переключатель силового автомата. */}
+			<Switcher
+				mode={switcherModeState}
+				onModeCommit={nextMode =>
+					handleSimulationCommand({
+						type: nextMode === 'on' ? 'turn_on' : 'turn_off',
+						target: 'input_breaker',
+					})
+				}
+			/>
+			{/* Тумблер автомата управления. */}
+			<Tumbler
+				mode={tumblerModeState}
+				onModeCommit={nextMode =>
+					handleSimulationCommand({
+						type: nextMode === 'on' ? 'turn_on' : 'turn_off',
+						target: 'control_breaker',
+					})
+				}
+			/>
 		</div>
 	);
 };

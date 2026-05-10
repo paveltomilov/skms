@@ -1,4 +1,3 @@
-import { setGatePosition, setGateState } from '@/store/gateSlice';
 import {
 	LIMIT_SWITCH_CLOSE_ID,
 	LIMIT_SWITCH_OPEN_ID,
@@ -8,26 +7,19 @@ import {
 import { findElementByID } from '../utils/findElementByID/scheme';
 import { useAppDispatch, useAppSelector } from './store';
 import { setResistance } from '@/store/circuitSlice';
-import { KRUZAP_BUTTONS_CONFIG } from '../configs/header';
-import { useEffect, useMemo, useRef } from 'react';
-import { GATE_STATE_TYPE } from '../types/gate';
+import { useEffect, useMemo } from 'react';
 import { BASE_RESISTANCE } from '../configs/schemeElements';
-import { BASE_RESISTANCE_CONSTANT, ELEMENT_KIND } from '../configs/elementKind';
-import { getResistanceByKind } from '../utils/getResistanceByKind/getResistanceByKind';
+import { BASE_RESISTANCE_CONSTANT } from '../configs/elementKind';
 import {
 	INPUT_CIRCUIT_BREAKER_ID,
-	INPUT_CIRCUIT_BREAKER_OUTPUTS_POINTS_ID,
 } from '../configs/powerCircuit/constants';
 import { useGetMalfunctionSwitchLimit } from './useGetMalfunctionSwitchLimit';
-import { PositionClose, PositionOpen } from '../configs/gate';
 import { useGetMalfunctionKruzapButtons } from './useGetMalfunctionKruzapButtons';
 import { TypeButtons } from './useGateControlButtons';
-import { TimeShutdownInputBreaker } from './usePtkButtons';
-import { togglePointState } from '@/store/pointsSlice';
-
-const timeStepIntervalGateMoving = 100;
-const newTimeShutdownInputBreaker =
-	(TimeShutdownInputBreaker * 1000) / timeStepIntervalGateMoving;
+import {
+	startKruzapMovementThunk,
+	stopKruzapMovementThunk,
+} from '@/store/kruzapMovementThunks';
 
 /**
  * Хук для управления кнопками КРУЗАП.
@@ -134,92 +126,23 @@ export const useKruzapButtons = () => {
 		limitSwitchOpenElement.resistance ===
 		BASE_RESISTANCE[LIMIT_SWITCH_OPEN_ID];
 
-	// Получаем текущее положение задвижки из стора для синхронизации
+	// Получаем текущее положение задвижки из стора
 	const currentGatePosition = useAppSelector(
 		state => state.gate.gates[gateId].position,
 	);
 
-	// Создаём ref для отслеживания положения задвижки
-	const gatePosition = useRef(currentGatePosition);
-
-	// Синхронизируем ref с актуальным значением из стора при его изменении
-	if (gatePosition.current !== currentGatePosition) {
-		gatePosition.current = currentGatePosition;
-	}
-
-	// Создаём интервал в ref, чтобы к нему можно было обращаться и изменять его в функциях stopKruzapMovement и handleKruzapButton
-	const gateInterval = useRef<NodeJS.Timeout | null>(null);
-
-	const timerTriggeringInputAutomaton = useRef<number>(0);
-
 	// Функция для остановки движения задвижки через КРУЗАП
 	const stopKruzapMovement = () => {
-		// Сбрасываем таймер отвечающего за выключение вводно автомата
-		if (timerTriggeringInputAutomaton.current) {
-			timerTriggeringInputAutomaton.current = 0;
-		}
-		// Обновляем сопротивления, которые меняются сразу после отпускания кнопки
-		KRUZAP_BUTTONS_CONFIG.stop.forEach(action => {
-			dispatch(setResistance(action));
-		});
-
-		if (gateInterval.current) {
-			clearInterval(gateInterval.current);
-			gateInterval.current = null;
-
-			// Обновляем концевые выключатели на основе текущего положения при остановке
-			const currentPosition = gatePosition.current;
-
-			// Концевой "открыто": разомкнут если position === 100%, иначе замкнут
-			const shouldOpenBeOpen =
-				currentPosition >= PositionOpen &&
-				!hasMalfunctionStuckContactSwitchOpenElement
-					? BASE_RESISTANCE_CONSTANT.highResistance
-					: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
-			if (limitSwitchOpenElement.resistance !== shouldOpenBeOpen) {
-				dispatch(
-					setResistance({
-						id: LIMIT_SWITCH_OPEN_ID,
-						value: shouldOpenBeOpen,
-					}),
-				);
-			}
-
-			// Концевой "закрыто": разомкнут если position === 0%, иначе замкнут
-			const shouldCloseBeOpen =
-				currentPosition <= PositionClose &&
-				!hasMalfunctionStuckContactSwitchCloseElement
-					? BASE_RESISTANCE_CONSTANT.highResistance
-					: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
-			if (limitSwitchCloseElement.resistance !== shouldCloseBeOpen) {
-				dispatch(
-					setResistance({
-						id: LIMIT_SWITCH_CLOSE_ID,
-						value: shouldCloseBeOpen,
-					}),
-				);
-			}
-
-			dispatch(
-				setGatePosition({ id: gateId, position: gatePosition.current }),
-			); // Диспатчим текущее положение при остановке
-			dispatch(
-				setGateState({
-					id: gateId,
-					states: GATE_STATE_TYPE.intermediate,
-				}),
-			);
-			console.log(
-				`Задвижка остановилась в положении: ${gatePosition.current}%`,
-			);
-		}
+		dispatch(
+			stopKruzapMovementThunk({
+				gateId,
+				hasMalfunctionStuckContactSwitchOpenElement,
+				hasMalfunctionStuckContactSwitchCloseElement,
+			}),
+		);
 	};
 
 	const handleKruzapButton = (button: TypeButtons) => {
-		// Сбрасываем таймер отвечающего за выключение вводно автомата
-		if (timerTriggeringInputAutomaton.current) {
-			timerTriggeringInputAutomaton.current = 0;
-		}
 		// При наличии неисправности останавливаем обработчик событий
 		if (hasMalfunctionNoContactSwitchCloseElement && button === 'close') {
 			console.info(
@@ -254,212 +177,14 @@ export const useKruzapButtons = () => {
 			return;
 		}
 
-		// Обновляем сопротивления, которые меняются сразу после нажатия на кнопку "Открыть"/"Закрыть"
-
-		KRUZAP_BUTTONS_CONFIG[button].forEach(action => {
-			dispatch(setResistance(action));
-		});
-
-		// Очищаем предыдущий интервал
-		if (gateInterval.current) {
-			clearInterval(gateInterval.current);
-			gateInterval.current = null;
-		}
-
-		// Запускаем новый интервал
-		gateInterval.current = setInterval(() => {
-			// Обновляем положение задвижки
-			if (button === 'open') {
-				gatePosition.current += 1;
-				dispatch(
-					setGateState({
-						id: gateId,
-						states: GATE_STATE_TYPE.toOpen,
-					}),
-				);
-
-				// Обновляем концевые выключатели на основе текущего положения
-				// Концевой "открыто": разомкнут если position === 100%, иначе замкнут
-				const shouldOpenBeOpen =
-					gatePosition.current >= PositionOpen &&
-					!hasMalfunctionStuckContactSwitchOpenElement
-						? BASE_RESISTANCE_CONSTANT.highResistance
-						: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
-				if (limitSwitchOpenElement.resistance !== shouldOpenBeOpen) {
-					dispatch(
-						setResistance({
-							id: LIMIT_SWITCH_OPEN_ID,
-							value: shouldOpenBeOpen,
-						}),
-					);
-				}
-
-				// Концевой "закрыто": разомкнут если position === 0%, иначе замкнут
-				const shouldCloseBeOpen =
-					gatePosition.current <= PositionClose &&
-					!hasMalfunctionStuckContactSwitchCloseElement
-						? BASE_RESISTANCE_CONSTANT.highResistance
-						: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
-				if (limitSwitchCloseElement.resistance !== shouldCloseBeOpen) {
-					dispatch(
-						setResistance({
-							id: LIMIT_SWITCH_CLOSE_ID,
-							value: shouldCloseBeOpen,
-						}),
-					);
-				}
-
-				if (gatePosition.current >= PositionOpen) {
-					gatePosition.current = PositionOpen;
-					if (hasMalfunctionStuckContactSwitchOpenElement) {
-						if (
-							timerTriggeringInputAutomaton.current ===
-							newTimeShutdownInputBreaker
-						) {
-							INPUT_CIRCUIT_BREAKER_ID.forEach(item =>
-								dispatch(
-									setResistance({
-										id: item,
-										value: BASE_RESISTANCE_CONSTANT.highResistance,
-									}),
-								),
-							);
-							INPUT_CIRCUIT_BREAKER_OUTPUTS_POINTS_ID.forEach(
-								point => {
-									dispatch(togglePointState(point));
-								},
-							);
-							stopKruzapMovement();
-						}
-						timerTriggeringInputAutomaton.current++;
-						return;
-					}
-
-					stopKruzapMovement();
-
-					dispatch(
-						setGateState({
-							id: gateId,
-							states: GATE_STATE_TYPE.open,
-						}),
-					);
-
-					// При достижении 100% размыкаем элементы открытия (кроме концевых выключателей, они уже обновлены)
-					KRUZAP_BUTTONS_CONFIG.opening.forEach(action => {
-						if (
-							action.id !== LIMIT_SWITCH_OPEN_ID &&
-							action.id !== LIMIT_SWITCH_CLOSE_ID
-						) {
-							dispatch(setResistance(action));
-						}
-					});
-				}
-
-				// Диспатчим обновлённую позицию в Redux store
-				dispatch(
-					setGatePosition({
-						id: gateId,
-						position: gatePosition.current,
-					}),
-				);
-			} else if (button === 'close') {
-				gatePosition.current -= 1;
-				dispatch(
-					setGateState({
-						id: gateId,
-						states: GATE_STATE_TYPE.toClose,
-					}),
-				);
-
-				// Обновляем концевые выключатели на основе текущего положения
-				// Концевой "открыто": разомкнут если position === 100%, иначе замкнут
-
-				const shouldOpenBeOpen =
-					gatePosition.current >= PositionOpen &&
-					!hasMalfunctionStuckContactSwitchOpenElement
-						? BASE_RESISTANCE_CONSTANT.highResistance
-						: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
-				if (limitSwitchOpenElement.resistance !== shouldOpenBeOpen) {
-					dispatch(
-						setResistance({
-							id: LIMIT_SWITCH_OPEN_ID,
-							value: shouldOpenBeOpen,
-						}),
-					);
-				}
-
-				// Концевой "закрыто": разомкнут если position === 0%, иначе замкнут
-				const shouldCloseBeOpen =
-					gatePosition.current <= PositionClose &&
-					!hasMalfunctionStuckContactSwitchCloseElement
-						? BASE_RESISTANCE_CONSTANT.highResistance
-						: getResistanceByKind(ELEMENT_KIND.LIMIT_SWITCH);
-				if (limitSwitchCloseElement.resistance !== shouldCloseBeOpen) {
-					dispatch(
-						setResistance({
-							id: LIMIT_SWITCH_CLOSE_ID,
-							value: shouldCloseBeOpen,
-						}),
-					);
-				}
-
-				if (gatePosition.current <= PositionClose) {
-					gatePosition.current = PositionClose;
-					if (hasMalfunctionStuckContactSwitchCloseElement) {
-						if (
-							timerTriggeringInputAutomaton.current ===
-							newTimeShutdownInputBreaker
-						) {
-							INPUT_CIRCUIT_BREAKER_ID.forEach(item =>
-								dispatch(
-									setResistance({
-										id: item,
-										value: BASE_RESISTANCE_CONSTANT.highResistance,
-									}),
-								),
-							);
-							INPUT_CIRCUIT_BREAKER_OUTPUTS_POINTS_ID.forEach(
-								point => {
-									dispatch(togglePointState(point));
-								},
-							);
-							stopKruzapMovement();
-						}
-						timerTriggeringInputAutomaton.current++;
-						return;
-					}
-
-					stopKruzapMovement();
-					dispatch(
-						setGateState({
-							id: gateId,
-							states: GATE_STATE_TYPE.close,
-						}),
-					);
-
-					// При достижении 0% размыкаем элементы закрытия (кроме концевых выключателей, они уже обновлены)
-					KRUZAP_BUTTONS_CONFIG.closing.forEach(action => {
-						if (
-							action.id !== LIMIT_SWITCH_OPEN_ID &&
-							action.id !== LIMIT_SWITCH_CLOSE_ID
-						) {
-							dispatch(setResistance(action));
-						}
-					});
-				}
-
-				// Диспатчим обновлённую позицию в Redux store
-				dispatch(
-					setGatePosition({
-						id: gateId,
-						position: gatePosition.current,
-					}),
-				);
-			}
-
-			// Логируем текущее положение задвижки для отладки
-			console.log(`Положение задвижки: ${gatePosition.current}%`);
-		}, timeStepIntervalGateMoving);
+		dispatch(
+			startKruzapMovementThunk({
+				button,
+				gateId,
+				hasMalfunctionStuckContactSwitchOpenElement,
+				hasMalfunctionStuckContactSwitchCloseElement,
+			}),
+		);
 	};
 
 	return {

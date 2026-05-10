@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { logout } from '@/shared/api/auth/auth';
+import { logout } from '../api/auth/auth';
 
 export function useSessionGuard() {
 	useEffect(() => {

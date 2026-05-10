@@ -1,6 +1,10 @@
 ﻿import { usePtkButtons } from './usePtkButtons';
 import { useKruzapButtons } from './useKruzapButtons';
-import { useAppSelector } from './store';
+import { useAppDispatch, useAppSelector } from './store';
+import {
+	dispatchAutomationCommand,
+	type UniversalCommand,
+} from '@/features/scheme-simulation/model/engine/dispatchAutomationCommand';
 
 export type TypeButtons = 'open' | 'close';
 type TypeButtonsMode = 'ptk' | 'kruzap';
@@ -9,6 +13,7 @@ type TypeButtonsMode = 'ptk' | 'kruzap';
  * Использует отдельные хуки для ПТК и КРУЗАП, обеспечивая обратную совместимость.
  */
 export const useGateControlButtons = () => {
+	const dispatch = useAppDispatch();
 	const ptkButtons = usePtkButtons();
 	const kruzapButtons = useKruzapButtons();
 
@@ -33,12 +38,21 @@ export const useGateControlButtons = () => {
 	const stopGateMovement = (type: TypeButtonsMode) => {
 		if (type === 'ptk') {
 			ptkButtons.stopPtkMovement();
+			kruzapButtons.stopKruzapMovement();
 		} else {
 			kruzapButtons.stopKruzapMovement();
 		}
 	};
 
+	const handleSimulationCommand = (command: UniversalCommand) => {
+		dispatchAutomationCommand(dispatch, command, {
+			press: (target, button) => handleButton(target, button),
+			release: target => stopGateMovement(target),
+		});
+	};
+
 	return {
+		handleSimulationCommand,
 		handleButton,
 		stopGateMovement,
 		// Состояния кнопок КРУЗАП
