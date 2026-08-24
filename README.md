@@ -1,7 +1,6 @@
 # Skill Management System
 
 Интерфейс веб-приложения, позволяющее имитировать функционирование автоматизированного рабочего места машиниста
-Интерфейс веб-приложения, позволяющее имитировать функционирование автоматизированного рабочего места машиниста
 на программно-техническом комплексе
 
 ## Установка и запуск
@@ -63,10 +62,4 @@ npm run sb
 npm run test
 ```
 
-## Документация для Frontend разработчиков
-
-[проведение код ревью](https://docs.google.com/document/d/1dF586YFDig0hSYadGtKzDV78uuNV4tnh-5j1SvG6Fog/edit?tab=t.0#heading=h.9mk7dwpwhizl)
-
-[Критерии приемки задач для фронтенд-разработки](https://docs.google.com/document/d/1zL6ofLTsn7FiK4khl8eFYUSUA6IZWTIAFgNNWb-xips/edit?tab=t.0#heading=h.6ro64a3gj5jk)
-
-[Организация структуры папок и файлов](https://docs.google.com/document/d/18o2wA3tGDt80-be8OvAjvuYV_8QyJVkupyv1znXLE3I/edit?tab=t.0)
+Демо: https://skms.pro/
